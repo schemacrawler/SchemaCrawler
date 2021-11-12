@@ -34,6 +34,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileInputStream;
@@ -93,7 +94,7 @@ public class LoadSnapshotTest {
       serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
       assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
     } catch (final SchemaCrawlerException | IOException e) {
-      throw new RuntimeException("Could not serialize catalog", e);
+      failTestSetup("Could not serialize catalog", e);
     }
   }
 }

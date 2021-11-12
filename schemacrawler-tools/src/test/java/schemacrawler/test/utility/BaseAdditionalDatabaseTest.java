@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -50,7 +51,7 @@ public abstract class BaseAdditionalDatabaseTest {
       final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection, scriptsResource);
       schemaCreator.run();
     } catch (final SQLException e) {
-      throw new RuntimeException("Could not create database", e);
+      failTestSetup("Could not create database", e);
     }
   }
 

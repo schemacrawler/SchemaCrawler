@@ -91,6 +91,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.condition.JRE;
+import org.opentest4j.TestAbortedException;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -200,6 +201,16 @@ public final class TestUtility {
     } catch (final IOException e) {
       // Ignore exception
     }
+  }
+
+  public static <V> V failTestSetup(final String message) {
+    testAborted(message, null);
+    return null;
+  }
+
+  public static <V> V failTestSetup(final String message, final Exception e) {
+    testAborted(message, e);
+    return null;
   }
 
   public static String fileHeaderOf(final Path tempFile) throws IOException {
@@ -456,6 +467,10 @@ public final class TestUtility {
       reader = null;
     }
     return reader;
+  }
+
+  private static void testAborted(final String message, final Exception e) {
+    throw new TestAbortedException(message, e);
   }
 
   private static void validateXML(final Path testOutputFile, final List<String> failures)

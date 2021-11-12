@@ -39,6 +39,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
@@ -211,7 +212,7 @@ public class OfflineSnapshotTest {
       serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
       assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
     } catch (final SchemaCrawlerException | IOException e) {
-      throw new RuntimeException("Could not serialize catalog", e);
+      failTestSetup("Could not serialize catalog", e);
     }
   }
 

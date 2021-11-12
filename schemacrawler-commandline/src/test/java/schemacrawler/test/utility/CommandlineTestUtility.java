@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
@@ -154,7 +155,7 @@ public final class CommandlineTestUtility {
       state.setCatalog(catalog); // is-loaded
       return state;
     } catch (final SchemaCrawlerException e) {
-      throw new RuntimeException("Could not create loaded shell state", e);
+      return failTestSetup("Could not create loaded shell state", e);
     }
   }
 

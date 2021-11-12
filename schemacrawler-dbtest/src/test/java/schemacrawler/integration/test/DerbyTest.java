@@ -32,6 +32,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -59,7 +60,7 @@ public class DerbyTest extends BaseAdditionalDatabaseTest {
       createDataSource("jdbc:derby:memory:schemacrawler;create=true", null, null);
       createDatabase("/derby.scripts.txt");
     } catch (final ClassNotFoundException e) {
-      throw new RuntimeException("Could not create database", e);
+      failTestSetup("Could not create database", e);
     }
   }
 
