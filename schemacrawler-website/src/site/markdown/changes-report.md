@@ -1,6 +1,13 @@
 # SchemaCrawler Change History
 
 
+<a name="a16.16.01"></a>
+## Release 16.16.01 - 2021-11-12
+
+- Prefer runtime exceptions than checked exceptions
+- Fix #535 - issue when logging offline connections
+
+
 <a name="a16.15.11"></a>
 ## Release 16.15.11 - 2021-11-01
 
