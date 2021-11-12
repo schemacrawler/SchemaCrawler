@@ -6,6 +6,7 @@
 
 - Prefer runtime exceptions than checked exceptions
 - Fix #535 - issue when logging offline connections
+- Remove tests for MonetDB
 
 
 <a name="a16.15.11"></a>

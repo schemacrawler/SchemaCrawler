@@ -88,11 +88,6 @@
       <artifactId>jaybird</artifactId>
       <version>4.0.4.java8</version>
     </dependency>
-    <dependency>
-      <groupId>monetdb</groupId>
-      <artifactId>monetdb-java-lite</artifactId>
-      <version>2.39</version>
-    </dependency>
   </dependencies>
 
   <build>
