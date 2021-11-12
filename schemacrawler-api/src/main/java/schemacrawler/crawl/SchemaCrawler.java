@@ -94,11 +94,7 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * SchemaCrawler uses database meta-data to get the details about the schema.
- *
- * @author Sualeh Fatehi
- */
+/** SchemaCrawler uses database meta-data to get the details about the schema. */
 public final class SchemaCrawler {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class.getName());
@@ -135,7 +131,6 @@ public final class SchemaCrawler {
    * Crawls the database, to obtain database metadata.
    *
    * @return Database metadata
-   * @throws SchemaCrawlerException On an exception
    */
   public Catalog crawl() {
     try {

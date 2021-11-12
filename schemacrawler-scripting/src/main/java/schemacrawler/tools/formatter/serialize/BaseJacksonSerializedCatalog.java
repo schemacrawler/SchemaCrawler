@@ -65,7 +65,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
@@ -130,14 +129,14 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
 
   /** {@inheritDoc} */
   @Override
-  public void save(final OutputStream out) throws SchemaCrawlerException {
+  public void save(final OutputStream out) {
     requireNonNull(out, "No output stream provided");
     save(new OutputStreamWriter(out, UTF_8));
   }
 
   /** {@inheritDoc} */
   @Override
-  public void save(final Writer out) throws SchemaCrawlerException {
+  public void save(final Writer out) {
     requireNonNull(out, "No writer provided");
     try {
       final ObjectMapper mapper = newConfiguredObjectMapper();

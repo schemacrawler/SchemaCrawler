@@ -41,7 +41,6 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -103,7 +102,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   }
 
   @Override
-  public void end() throws SchemaCrawlerException {
+  public void end() {
     LOGGER.log(Level.INFO, "Closing writer");
     out.flush();
     out.close();

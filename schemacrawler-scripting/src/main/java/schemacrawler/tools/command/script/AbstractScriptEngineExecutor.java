@@ -41,7 +41,6 @@ import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.string.StringFormat;
 
@@ -111,5 +110,5 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
     return true;
   }
 
-  protected abstract void obtainScriptEngine() throws SchemaCrawlerException;
+  protected abstract void obtainScriptEngine();
 }

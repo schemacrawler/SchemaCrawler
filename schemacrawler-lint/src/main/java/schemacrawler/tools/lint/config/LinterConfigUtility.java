@@ -41,7 +41,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import us.fatehi.utility.UtilityMarker;
@@ -58,7 +57,6 @@ public final class LinterConfigUtility {
    * Obtain linter configuration from a system property
    *
    * @return LinterConfigs
-   * @throws SchemaCrawlerException
    */
   public static LinterConfigs readLinterConfigs(final LintOptions lintOptions) {
     final LinterConfigs linterConfigs = new LinterConfigs(lintOptions.getConfig());

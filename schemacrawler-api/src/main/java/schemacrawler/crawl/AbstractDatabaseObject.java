@@ -40,11 +40,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.TypedObject;
 import schemacrawler.schemacrawler.Identifiers;
 
-/**
- * Represents a database object.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a database object. */
 abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
     implements DatabaseObject {
 

@@ -39,7 +39,6 @@ import java.util.Map.Entry;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseFormatter;
@@ -57,8 +56,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
       final DiagramOptions options,
       final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     super(options, printVerboseDatabaseInfo, outputOptions, identifierQuoteString);
   }
 
@@ -69,7 +67,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
   }
 
   @Override
-  public void end() throws SchemaCrawlerException {
+  public void end() {
     formattingHelper.append("}").println();
 
     super.end();
@@ -150,7 +148,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
   }
 
   @Override
-  public void handleHeaderEnd() throws SchemaCrawlerException {
+  public void handleHeaderEnd() {
     if (options.isNoInfo() && !outputOptions.hasTitle()) {
       return;
     }
@@ -162,7 +160,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
   }
 
   @Override
-  public void handleHeaderStart() throws SchemaCrawlerException {
+  public void handleHeaderStart() {
     if (options.isNoInfo() && !outputOptions.hasTitle()) {
       return;
     }
@@ -180,12 +178,12 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
   }
 
   @Override
-  public void handleInfoEnd() throws SchemaCrawlerException {
+  public void handleInfoEnd() {
     // No-op
   }
 
   @Override
-  public void handleInfoStart() throws SchemaCrawlerException {
+  public void handleInfoStart() {
     // No-op
   }
 

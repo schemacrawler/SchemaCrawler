@@ -37,7 +37,6 @@ import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -75,7 +74,7 @@ public final class CatalogLoaderRegistry {
     return commandLineCommands;
   }
 
-  public ChainedCatalogLoader newChainedCatalogLoader() throws SchemaCrawlerException {
+  public ChainedCatalogLoader newChainedCatalogLoader() {
     final List<CatalogLoader> chainedCatalogLoaders = instantiateCatalogLoaders();
     return new ChainedCatalogLoader(chainedCatalogLoaders);
   }

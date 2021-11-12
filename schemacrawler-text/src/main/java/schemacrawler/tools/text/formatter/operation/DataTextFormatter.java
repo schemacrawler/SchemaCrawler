@@ -96,7 +96,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
   /** {@inheritDoc} */
   @Override
-  public void end() throws SchemaCrawlerException {
+  public void end() {
     if (operation == OperationType.count) {
       formattingHelper.writeObjectEnd();
     }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -86,7 +85,7 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
     return schemaTextDetailType;
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler() throws SchemaCrawlerException {
+  private SchemaTraversalHandler getSchemaTraversalHandler() {
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
     final SchemaTraversalHandler formatter;
 

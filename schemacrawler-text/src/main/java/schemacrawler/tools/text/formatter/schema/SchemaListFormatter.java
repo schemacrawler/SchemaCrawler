@@ -39,7 +39,6 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -48,11 +47,7 @@ import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.Docum
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import us.fatehi.utility.html.Alignment;
 
-/**
- * Text formatting of schema.
- *
- * @author Sualeh Fatehi
- */
+/** Text formatting of schema. */
 public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
     implements SchemaTraversalHandler {
 
@@ -63,14 +58,12 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
    * @param options Options for text formatting of schema
    * @param outputOptions Options for text formatting of schema
    * @param identifierQuoteString Quote character for identifier
-   * @throws SchemaCrawlerException On an exception
    */
   public SchemaListFormatter(
       final SchemaTextDetailType schemaTextDetailType,
       final SchemaTextOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     super(
         options,
         schemaTextDetailType == SchemaTextDetailType.details,
@@ -86,7 +79,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
 
   /** {@inheritDoc} */
   @Override
-  public void end() throws SchemaCrawlerException {
+  public void end() {
     formattingHelper.writeDocumentEnd();
     super.end();
   }
@@ -201,34 +194,34 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   }
 
   @Override
-  public void handleHeaderEnd() throws SchemaCrawlerException {
+  public void handleHeaderEnd() {
     // No output required
   }
 
   @Override
-  public void handleHeaderStart() throws SchemaCrawlerException {
+  public void handleHeaderStart() {
     // No output required
   }
 
   @Override
-  public void handleInfoEnd() throws SchemaCrawlerException {
+  public void handleInfoEnd() {
     // No output required
   }
 
   @Override
-  public void handleInfoStart() throws SchemaCrawlerException {
+  public void handleInfoStart() {
     // No output required
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleRoutinesEnd() throws SchemaCrawlerException {
+  public void handleRoutinesEnd() {
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleRoutinesStart() throws SchemaCrawlerException {
+  public void handleRoutinesStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Routines");
 
     formattingHelper.writeObjectStart();
@@ -236,13 +229,13 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
 
   /** {@inheritDoc} */
   @Override
-  public void handleSequencesEnd() throws SchemaCrawlerException {
+  public void handleSequencesEnd() {
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleSequencesStart() throws SchemaCrawlerException {
+  public void handleSequencesStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Sequences");
 
     formattingHelper.writeObjectStart();
@@ -250,13 +243,13 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
 
   /** {@inheritDoc} */
   @Override
-  public void handleSynonymsEnd() throws SchemaCrawlerException {
+  public void handleSynonymsEnd() {
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleSynonymsStart() throws SchemaCrawlerException {
+  public void handleSynonymsStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Synonyms");
 
     formattingHelper.writeObjectStart();
@@ -264,13 +257,13 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
 
   /** {@inheritDoc} */
   @Override
-  public void handleTablesEnd() throws SchemaCrawlerException {
+  public void handleTablesEnd() {
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleTablesStart() throws SchemaCrawlerException {
+  public void handleTablesStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Tables");
 
     formattingHelper.writeObjectStart();

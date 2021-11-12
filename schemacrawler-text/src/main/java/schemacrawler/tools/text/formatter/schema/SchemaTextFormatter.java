@@ -73,7 +73,6 @@ import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociation;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -84,11 +83,7 @@ import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
 
-/**
- * Text formatting of schema.
- *
- * @author Sualeh Fatehi
- */
+/** Text formatting of schema. */
 public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOptions>
     implements SchemaTraversalHandler {
 
@@ -112,14 +107,12 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
    * @param options Options for text formatting of schema
    * @param outputOptions Options for text formatting of schema
    * @param identifierQuoteString Quote character for identifier
-   * @throws SchemaCrawlerException On an exception
    */
   public SchemaTextFormatter(
       final SchemaTextDetailType schemaTextDetailType,
       final SchemaTextOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     super(
         options,
         schemaTextDetailType == SchemaTextDetailType.details,
@@ -131,7 +124,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   /** {@inheritDoc} */
   @Override
-  public void handle(final ColumnDataType columnDataType) throws SchemaCrawlerException {
+  public void handle(final ColumnDataType columnDataType) {
     if (printVerboseDatabaseInfo && isVerbose) {
       formattingHelper.writeObjectStart();
       printColumnDataType(columnDataType);
@@ -282,49 +275,49 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   /** {@inheritDoc} */
   @Override
-  public void handleRoutinesEnd() throws SchemaCrawlerException {
+  public void handleRoutinesEnd() {
     // No output required
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleRoutinesStart() throws SchemaCrawlerException {
+  public void handleRoutinesStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Routines");
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleSequencesEnd() throws SchemaCrawlerException {
+  public void handleSequencesEnd() {
     // No output required
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleSequencesStart() throws SchemaCrawlerException {
+  public void handleSequencesStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Sequences");
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleSynonymsEnd() throws SchemaCrawlerException {
+  public void handleSynonymsEnd() {
     // No output required
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleSynonymsStart() throws SchemaCrawlerException {
+  public void handleSynonymsStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Synonyms");
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleTablesEnd() throws SchemaCrawlerException {
+  public void handleTablesEnd() {
     // No output required
   }
 
   /** {@inheritDoc} */
   @Override
-  public void handleTablesStart() throws SchemaCrawlerException {
+  public void handleTablesStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Tables");
   }
 

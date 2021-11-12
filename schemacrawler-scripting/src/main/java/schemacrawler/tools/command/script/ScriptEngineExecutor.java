@@ -33,7 +33,6 @@ import java.util.logging.Logger;
 
 import javax.script.ScriptEngineManager;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
@@ -61,7 +60,7 @@ public final class ScriptEngineExecutor extends AbstractScriptEngineExecutor {
   }
 
   @Override
-  protected void obtainScriptEngine() throws SchemaCrawlerException {
+  protected void obtainScriptEngine() {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
     try {

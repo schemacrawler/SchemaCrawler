@@ -36,15 +36,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import us.fatehi.utility.StopWatch;
 
-/**
- * SchemaCrawler uses database meta-data to get the details about the schema.
- *
- * @author Sualeh Fatehi
- */
+/** SchemaCrawler uses database meta-data to get the details about the schema. */
 public final class ResultsCrawler {
 
   private static final Logger LOGGER = Logger.getLogger(ResultsCrawler.class.getName());
@@ -55,7 +50,6 @@ public final class ResultsCrawler {
    * Constructs a SchemaCrawler object, from a result-set.
    *
    * @param results Result-set of data.
-   * @throws SchemaCrawlerException On a SchemaCrawler exception
    */
   public ResultsCrawler(final ResultSet results) {
     // NOTE: Do not check if the result set is closed, since some JDBC
@@ -67,7 +61,6 @@ public final class ResultsCrawler {
    * Crawls the database, to obtain result set metadata.
    *
    * @return Result set metadata
-   * @throws SchemaCrawlerException On an exception
    */
   public ResultsColumns crawl() throws SQLException {
 

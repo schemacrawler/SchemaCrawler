@@ -30,8 +30,6 @@ package schemacrawler.tools.command.script;
 
 import static us.fatehi.utility.Utility.isClassAvailable;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
 /** Main executor for the GraalVM JavaScript integration. */
 public final class GraalJSScriptExecutor extends AbstractScriptEngineExecutor {
 
@@ -49,7 +47,7 @@ public final class GraalJSScriptExecutor extends AbstractScriptEngineExecutor {
   }
 
   @Override
-  protected void obtainScriptEngine() throws SchemaCrawlerException {
+  protected void obtainScriptEngine() {
     scriptEngine = GraalJSScriptUtility.createGraalJSScriptEngine();
   }
 }

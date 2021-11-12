@@ -64,9 +64,8 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
    * Copy configuration settings from another command.
    *
    * @param scCommand Other command
-   * @throws SchemaCrawlerException On an exception
    */
-  public CommandChain(final ScriptCommand scCommand) throws SchemaCrawlerException {
+  public CommandChain(final ScriptCommand scCommand) {
     super(COMMAND);
 
     requireNonNull(scCommand, "No command provided, for settings");

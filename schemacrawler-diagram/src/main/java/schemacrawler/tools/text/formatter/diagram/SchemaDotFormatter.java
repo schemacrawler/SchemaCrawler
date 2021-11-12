@@ -58,7 +58,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.WeakAssociation;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
@@ -87,14 +86,12 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
    * @param options Options for text formatting of schema
    * @param outputOptions Options for text formatting of schema
    * @param identifierQuoteString Quote character for database objects
-   * @throws SchemaCrawlerException On an exception
    */
   public SchemaDotFormatter(
       final SchemaTextDetailType schemaTextDetailType,
       final DiagramOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     super(
         options,
         schemaTextDetailType == SchemaTextDetailType.details,
@@ -106,7 +103,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   @Override
-  public void handle(final ColumnDataType columnDataType) throws SchemaCrawlerException {
+  public void handle(final ColumnDataType columnDataType) {
     // No output required
   }
 
@@ -213,42 +210,42 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   @Override
-  public void handleRoutinesEnd() throws SchemaCrawlerException {
+  public void handleRoutinesEnd() {
     // No output required
   }
 
   @Override
-  public void handleRoutinesStart() throws SchemaCrawlerException {
+  public void handleRoutinesStart() {
     // No output required
   }
 
   @Override
-  public void handleSequencesEnd() throws SchemaCrawlerException {
+  public void handleSequencesEnd() {
     // No output required
   }
 
   @Override
-  public void handleSequencesStart() throws SchemaCrawlerException {
+  public void handleSequencesStart() {
     // No output required
   }
 
   @Override
-  public void handleSynonymsEnd() throws SchemaCrawlerException {
+  public void handleSynonymsEnd() {
     // No output required
   }
 
   @Override
-  public void handleSynonymsStart() throws SchemaCrawlerException {
+  public void handleSynonymsStart() {
     // No output required
   }
 
   @Override
-  public void handleTablesEnd() throws SchemaCrawlerException {
+  public void handleTablesEnd() {
     // No output required
   }
 
   @Override
-  public void handleTablesStart() throws SchemaCrawlerException {
+  public void handleTablesStart() {
     // No output required
   }
 

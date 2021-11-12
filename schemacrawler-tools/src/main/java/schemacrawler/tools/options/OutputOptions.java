@@ -40,7 +40,6 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.FileOutputResource;
 import us.fatehi.utility.ioresource.OutputResource;
@@ -88,7 +87,9 @@ public final class OutputOptions implements Options {
       outputFile = ((FileOutputResource) outputResource).getOutputFile();
     } else {
       outputFile =
-          Paths.get(".", String.format("schemacrawler-%s.%s", UUID.randomUUID(), trimToEmpty(extension)))
+          Paths.get(
+                  ".",
+                  String.format("schemacrawler-%s.%s", UUID.randomUUID(), trimToEmpty(extension)))
               .normalize()
               .toAbsolutePath();
     }
@@ -132,11 +133,7 @@ public final class OutputOptions implements Options {
     return openNewOutputWriter(false);
   }
 
-  /**
-   * Gets the output reader. If the output resource is null, first set it to console output.
-   *
-   * @throws SchemaCrawlerException
-   */
+  /** Gets the output reader. If the output resource is null, first set it to console output. */
   public Writer openNewOutputWriter(final boolean appendOutput) throws IOException {
     return outputResource.openNewOutputWriter(getOutputCharset(), appendOutput);
   }

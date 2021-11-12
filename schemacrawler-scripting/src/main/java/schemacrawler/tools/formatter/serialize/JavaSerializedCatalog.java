@@ -37,13 +37,12 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public final class JavaSerializedCatalog implements CatalogSerializer {
 
-  private static Catalog readCatalog(final InputStream in) throws SchemaCrawlerException {
+  private static Catalog readCatalog(final InputStream in) {
     requireNonNull(in, "No input stream provided");
     try (final ObjectInputStream objIn = new ObjectInputStream(in)) {
       return (Catalog) objIn.readObject();
@@ -58,7 +57,7 @@ public final class JavaSerializedCatalog implements CatalogSerializer {
     this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
-  public JavaSerializedCatalog(final InputStream in) throws SchemaCrawlerException {
+  public JavaSerializedCatalog(final InputStream in) {
     this(readCatalog(in));
   }
 
@@ -69,7 +68,7 @@ public final class JavaSerializedCatalog implements CatalogSerializer {
 
   /** {@inheritDoc} */
   @Override
-  public void save(final OutputStream out) throws SchemaCrawlerException {
+  public void save(final OutputStream out) {
     requireNonNull(out, "No output stream provided");
     try (final ObjectOutputStream objOut = new ObjectOutputStream(out)) {
       objOut.writeObject(catalog);

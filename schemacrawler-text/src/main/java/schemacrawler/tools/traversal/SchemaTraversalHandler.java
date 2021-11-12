@@ -32,57 +32,56 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface SchemaTraversalHandler extends TraversalHandler {
 
-  void handle(final ColumnDataType columnDataType) throws SchemaCrawlerException;
+  void handle(final ColumnDataType columnDataType);
 
   /**
    * Provides information on the database schema.
    *
    * @param routine Routine metadata.
    */
-  void handle(final Routine routine) throws SchemaCrawlerException;
+  void handle(final Routine routine);
 
   /**
    * Provides information on the database schema.
    *
    * @param sequence Sequence metadata.
    */
-  void handle(final Sequence sequence) throws SchemaCrawlerException;
+  void handle(final Sequence sequence);
 
   /**
    * Provides information on the database schema.
    *
    * @param synonym Synonym metadata.
    */
-  void handle(final Synonym synonym) throws SchemaCrawlerException;
+  void handle(final Synonym synonym);
 
   /**
    * Provides information on the database schema.
    *
    * @param table Table metadata.
    */
-  void handle(final Table table) throws SchemaCrawlerException;
+  void handle(final Table table);
 
-  void handleColumnDataTypesEnd() throws SchemaCrawlerException;
+  void handleColumnDataTypesEnd();
 
-  void handleColumnDataTypesStart() throws SchemaCrawlerException;
+  void handleColumnDataTypesStart();
 
-  void handleRoutinesEnd() throws SchemaCrawlerException;
+  void handleRoutinesEnd();
 
-  void handleRoutinesStart() throws SchemaCrawlerException;
+  void handleRoutinesStart();
 
-  void handleSequencesEnd() throws SchemaCrawlerException;
+  void handleSequencesEnd();
 
-  void handleSequencesStart() throws SchemaCrawlerException;
+  void handleSequencesStart();
 
-  void handleSynonymsEnd() throws SchemaCrawlerException;
+  void handleSynonymsEnd();
 
-  void handleSynonymsStart() throws SchemaCrawlerException;
+  void handleSynonymsStart();
 
-  void handleTablesEnd() throws SchemaCrawlerException;
+  void handleTablesEnd();
 
-  void handleTablesStart() throws SchemaCrawlerException;
+  void handleTablesStart();
 }
