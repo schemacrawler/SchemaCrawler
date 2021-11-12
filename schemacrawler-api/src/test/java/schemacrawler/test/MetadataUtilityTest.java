@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
@@ -54,7 +55,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.utility.MetaDataUtility;
@@ -169,11 +169,14 @@ public class MetadataUtilityTest {
   }
 
   @BeforeAll
-  public void loadCatalog(final Connection connection) throws SchemaCrawlerException {
+  public void loadCatalog(final Connection connection) {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-
-    catalog = getCatalog(connection, schemaCrawlerOptions);
+    try {
+      catalog = getCatalog(connection, schemaCrawlerOptions);
+    } catch (final Exception e) {
+      fail("Catalog not loaded", e);
+    }
   }
 
   @Test
@@ -186,15 +189,13 @@ public class MetadataUtilityTest {
     assertThat("BOOKS Table not found", table, notNullValue());
 
     assertThat(
-        MetaDataUtility.allIndexCoumnNames(table)
-            .stream()
+        MetaDataUtility.allIndexCoumnNames(table).stream()
             .flatMap(List::stream)
             .collect(Collectors.toSet()),
         containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID", "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
 
     assertThat(
-        MetaDataUtility.uniqueIndexCoumnNames(table)
-            .stream()
+        MetaDataUtility.uniqueIndexCoumnNames(table).stream()
             .flatMap(List::stream)
             .collect(Collectors.toSet()),
         containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID", "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));

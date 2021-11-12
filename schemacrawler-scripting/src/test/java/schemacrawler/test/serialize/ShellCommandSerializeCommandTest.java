@@ -31,6 +31,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.oneOf;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -52,7 +53,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
@@ -82,8 +82,7 @@ public class ShellCommandSerializeCommandTest {
   }
 
   @Test
-  public void shellSerializeJson(final Connection connection)
-      throws SchemaCrawlerException, IOException {
+  public void shellSerializeJson(final Connection connection) throws IOException {
 
     final SerializationFormat serializationFormat = SerializationFormat.json;
 
@@ -107,10 +106,14 @@ public class ShellCommandSerializeCommandTest {
   }
 
   private void assertThatOutputIsCorrect(
-      final Path testOutputFile, final Matcher<String> fileHeaderMatcher) throws IOException {
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
-    assertThat(Files.size(testOutputFile), greaterThan(0L));
-    assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
+      final Path testOutputFile, final Matcher<String> fileHeaderMatcher) {
+    try {
+      assertThat(outputOf(err), hasNoContent());
+      assertThat(outputOf(out), hasNoContent());
+      assertThat(Files.size(testOutputFile), greaterThan(0L));
+      assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
+    } catch (final IOException e) {
+      fail("Failed asserts", e);
+    }
   }
 }

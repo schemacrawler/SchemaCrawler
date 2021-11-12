@@ -27,23 +27,26 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
-import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.SqlScript;
 import us.fatehi.utility.IOUtility;
 
-public abstract class BaseSqliteTest
-{
+public abstract class BaseSqliteTest {
 
-  protected DataSource createDataSource(final Path sqliteDbFile)
-    throws SchemaCrawlerException
-  {
+  protected Connection createConnection(final Path sqliteDbFile)
+      throws SQLException, SchemaCrawlerException {
+    return createDataSource(sqliteDbFile).getConnection();
+  }
+
+  protected DataSource createDataSource(final Path sqliteDbFile) {
     final BasicDataSource dataSource = new BasicDataSource();
     dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
     dataSource.setUsername(null);
@@ -53,32 +56,19 @@ public abstract class BaseSqliteTest
     return dataSource;
   }
 
-  protected Path createTestDatabase(final String databaseSqlResource)
-    throws Exception
-  {
-    final Path sqliteDbFile = IOUtility
-      .createTempFilePath("resource", "db")
-      .normalize()
-      .toAbsolutePath();
+  protected Path createTestDatabase(final String databaseSqlResource) throws Exception {
+    final Path sqliteDbFile =
+        IOUtility.createTempFilePath("resource", "db").normalize().toAbsolutePath();
 
     final DataSource dataSource = createDataSource(sqliteDbFile);
 
-    try (final Connection connection = dataSource.getConnection())
-    {
+    try (final Connection connection = dataSource.getConnection()) {
       connection.setAutoCommit(false);
 
-      final SqlScript sqlScript =
-        new SqlScript(databaseSqlResource, connection);
+      final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
       sqlScript.run();
     }
 
     return sqliteDbFile;
   }
-
-  protected Connection createConnection(final Path sqliteDbFile)
-    throws SQLException, SchemaCrawlerException
-  {
-    return createDataSource(sqliteDbFile).getConnection();
-  }
-
 }

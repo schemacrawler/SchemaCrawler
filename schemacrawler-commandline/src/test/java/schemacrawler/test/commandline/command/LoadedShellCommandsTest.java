@@ -48,7 +48,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shell.SweepCommand;
@@ -68,7 +67,7 @@ public class LoadedShellCommandsTest {
   }
 
   @Test
-  public void isLoaded(final Connection connection) throws SchemaCrawlerException {
+  public void isLoaded(final Connection connection) {
     final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final String[] args = new String[] {"--is-loaded"};
@@ -106,7 +105,7 @@ public class LoadedShellCommandsTest {
   }
 
   @Test
-  public void sweepCatalog(final Connection connection) throws SchemaCrawlerException {
+  public void sweepCatalog(final Connection connection) {
     final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final String[] args = new String[0];

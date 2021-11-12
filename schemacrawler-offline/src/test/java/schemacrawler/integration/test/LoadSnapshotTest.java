@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static java.nio.file.Files.size;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -46,6 +45,7 @@ import java.sql.Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -56,62 +56,44 @@ import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class LoadSnapshotTest
-{
+public class LoadSnapshotTest {
 
   private Path serializedCatalogFile;
 
   @Test
-  public void loadSnapshot()
-    throws Exception
-  {
-    final FileInputStream inputFileStream =
-      new FileInputStream(serializedCatalogFile.toFile());
-    final JavaSerializedCatalog serializedCatalog =
-      new JavaSerializedCatalog(inputFileStream);
+  public void loadSnapshot() throws Exception {
+    final FileInputStream inputFileStream = new FileInputStream(serializedCatalogFile.toFile());
+    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(inputFileStream);
     final Catalog catalog = serializedCatalog.getCatalog();
 
-    final Schema schema = catalog
-      .lookupSchema("PUBLIC.BOOKS")
-      .orElse(null);
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema",
-               catalog.getTables(schema),
-               hasSize(10));
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
   }
 
   @BeforeEach
-  public void serializeCatalog(final Connection connection)
-    throws SchemaCrawlerException, IOException
-  {
+  public void serializeCatalog(final Connection connection) {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    try {
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-    assertThat("Could not obtain catalog", catalog, notNullValue());
-    assertThat("Could not find any schemas",
-               catalog.getSchemas(),
-               not(empty()));
+      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+      assertThat("Could not obtain catalog", catalog, notNullValue());
+      assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 
-    final Schema schema = catalog
-      .lookupSchema("PUBLIC.BOOKS")
-      .orElse(null);
-    assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema",
-               catalog.getTables(schema),
-               hasSize(10));
+      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+      assertThat("Could not obtain schema", schema, notNullValue());
+      assertThat(
+          "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
 
-    serializedCatalogFile =
-      IOUtility.createTempFilePath("schemacrawler", "ser");
+      serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
 
-    final JavaSerializedCatalog serializedCatalog =
-      new JavaSerializedCatalog(catalog);
-    serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
-    assertThat("Database was not serialized",
-               size(serializedCatalogFile),
-               greaterThan(0L));
-
+      final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
+      serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
+      assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
+    } catch (final SchemaCrawlerException | IOException e) {
+      throw new RuntimeException("Could not serialize catalog", e);
+    }
   }
-
 }

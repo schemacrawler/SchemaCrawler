@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestCatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoader;
@@ -61,7 +60,7 @@ public class CatalogLoaderRegistryTest {
   }
 
   @Test
-  public void loadCatalogLoaders() throws SchemaCrawlerException {
+  public void loadCatalogLoaders() {
     final ChainedCatalogLoader chainedCatalogLoaders =
         new CatalogLoaderRegistry().newChainedCatalogLoader();
 

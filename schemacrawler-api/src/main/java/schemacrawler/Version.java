@@ -36,6 +36,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+
 /**
  * Version information for this product. Has methods to obtain information about the product, as
  * well as a main method, so it can be called from the command-line.
@@ -61,7 +63,7 @@ public final class Version extends BaseProductVersion {
       ABOUT = String.join(lineSeparator(), lines);
 
     } catch (final Exception e) {
-      throw new RuntimeException("Could not read internal information");
+      throw new SchemaCrawlerRuntimeException("Could not read internal information");
     }
   }
 

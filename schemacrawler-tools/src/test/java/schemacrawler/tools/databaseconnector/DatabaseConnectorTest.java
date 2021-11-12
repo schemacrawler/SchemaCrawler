@@ -36,7 +36,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -81,7 +80,7 @@ public class DatabaseConnectorTest {
   }
 
   @Test
-  public void newConnectionWithUnknownConnector() throws SchemaCrawlerException {
+  public void newConnectionWithUnknownConnector() {
     final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
 
     final DatabaseConnectionSource expectedDatabaseConnectionSource =
@@ -108,8 +107,7 @@ public class DatabaseConnectorTest {
 
   @Test
   @WithSystemProperty(key = "SC_IGNORE_MISSING_DATABASE_PLUGIN", value = "true")
-  public void newMajorDatabaseConnectionWithUnknownConnectorWithOverride()
-      throws SchemaCrawlerException {
+  public void newMajorDatabaseConnectionWithUnknownConnectorWithOverride() {
     final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
 
     final DatabaseConnectionSource expectedDatabaseConnectionSource =

@@ -48,7 +48,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -109,7 +108,7 @@ public class DiffTest {
     printSchema(testContext, "/test2.db");
   }
 
-  private DataSource createDataSource(final Path sqliteDbFile) throws SchemaCrawlerException {
+  private DataSource createDataSource(final Path sqliteDbFile) {
     final BasicDataSource dataSource = new BasicDataSource();
     dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
     dataSource.setUsername(null);

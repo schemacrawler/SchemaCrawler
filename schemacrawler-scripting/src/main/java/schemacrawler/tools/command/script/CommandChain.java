@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -84,8 +83,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
   }
 
   public SchemaCrawlerCommand<?> addNext(
-      final String command, final String outputFormat, final String outputFileName)
-      throws SchemaCrawlerException {
+      final String command, final String outputFormat, final String outputFileName) {
     requireNonNull(command, "No command provided");
     requireNonNull(outputFormat, "No output format provided");
     requireNonNull(outputFileName, "No output file name provided");

@@ -131,27 +131,30 @@ public class DiagramOutputTest {
   }
 
   private static Catalog getCatalog(
-      final Connection connection, final EnumDataTypeHelper enumHelper)
-      throws SchemaCrawlerException {
-    SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .fromOptions(schemaCrawlerOptions.getLimitOptions())
-            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
-    schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
+      final Connection connection, final EnumDataTypeHelper enumHelper) {
+    try {
+      SchemaCrawlerOptions schemaCrawlerOptions =
+          DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+      final LimitOptionsBuilder limitOptionsBuilder =
+          LimitOptionsBuilder.builder()
+              .fromOptions(schemaCrawlerOptions.getLimitOptions())
+              .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+      schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
-    SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
-    schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions)
-            .withEnumDataTypeHelper(enumHelper)
-            .toOptions();
+      SchemaRetrievalOptions schemaRetrievalOptions =
+          SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
+      schemaRetrievalOptions =
+          SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions)
+              .withEnumDataTypeHelper(enumHelper)
+              .toOptions();
 
-    final Catalog catalog =
-        SchemaCrawlerUtility.getCatalog(
-            connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
-    return catalog;
+      final Catalog catalog =
+          SchemaCrawlerUtility.getCatalog(
+              connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+      return catalog;
+    } catch (final SchemaCrawlerException e) {
+      throw new RuntimeException("Could not get catalog", e);
+    }
   }
 
   private static void saveDiagram(

@@ -137,8 +137,7 @@ public final class CommandlineTestUtility {
     return commandlineExecution(connectionInfo, command, argsMap, (Path) null, outputFormatValue);
   }
 
-  public static ShellState createConnectedSchemaCrawlerShellState(final Connection connection)
-      throws SchemaCrawlerException {
+  public static ShellState createConnectedSchemaCrawlerShellState(final Connection connection) {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -147,13 +146,16 @@ public final class CommandlineTestUtility {
     return state;
   }
 
-  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection)
-      throws SchemaCrawlerException {
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection) {
+    try {
+      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
-    state.setCatalog(catalog); // is-loaded
-    return state;
+      final ShellState state = createConnectedSchemaCrawlerShellState(connection);
+      state.setCatalog(catalog); // is-loaded
+      return state;
+    } catch (final SchemaCrawlerException e) {
+      throw new RuntimeException("Could not create loaded shell state", e);
+    }
   }
 
   public static void runCommandInTest(final Object object, final String[] args) {

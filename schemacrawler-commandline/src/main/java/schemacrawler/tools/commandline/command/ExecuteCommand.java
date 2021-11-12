@@ -42,7 +42,6 @@ import picocli.CommandLine.Model;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -156,7 +155,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     return executable;
   }
 
-  private void saveCommandOptions() throws SchemaCrawlerException {
+  private void saveCommandOptions() {
     final ParseResult parseResult = spec.commandLine().getParseResult();
     final Map<String, Object> commandConfig = matchedOptionValues(parseResult);
     LOGGER.log(Level.INFO, "Loaded command config");

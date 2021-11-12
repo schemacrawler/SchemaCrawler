@@ -114,7 +114,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
         try {
           final Path fileResource = ((TestResource) item).getFileResource().orElse(null);
           value = Files.lines(fileResource).limit(5).collect(Collectors.joining("\n"));
-        } catch (IOException e) {
+        } catch (final IOException e) {
           value = "<some output>";
         }
       } else {

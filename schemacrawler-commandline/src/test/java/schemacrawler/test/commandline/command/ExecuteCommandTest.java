@@ -46,7 +46,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import picocli.CommandLine;
 import picocli.CommandLine.IExecutionExceptionHandler;
 import picocli.CommandLine.ParseResult;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -168,8 +167,7 @@ public class ExecuteCommandTest {
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".4.txt")));
   }
 
-  private CommandLine createShellCommandLine(final Connection connection)
-      throws SchemaCrawlerException {
+  private CommandLine createShellCommandLine(final Connection connection) {
     final ShellState state = createLoadedSchemaCrawlerShellState(connection);
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));

@@ -133,8 +133,6 @@ public class DatabaseScriptsTest {
             }
           }
         }
-      } catch (final IOException e) {
-        throw new RuntimeException(e.getMessage(), e);
       }
 
       for (final Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry :

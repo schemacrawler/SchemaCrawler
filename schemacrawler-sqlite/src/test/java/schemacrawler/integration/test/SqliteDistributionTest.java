@@ -46,7 +46,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.testdb.TestSchemaCreatorMain;
@@ -62,7 +61,7 @@ public class SqliteDistributionTest {
   private DatabaseConnector dbConnector;
 
   @BeforeEach
-  public void setup() throws SchemaCrawlerException {
+  public void setup() {
     final DatabaseConnectorRegistry registry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
