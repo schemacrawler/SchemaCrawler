@@ -15,7 +15,6 @@ import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
 import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
@@ -30,7 +29,6 @@ public final class GraphvizJavaExecutorUtility {
    * @param dotFile Path to DOT file
    * @param outputFile Path to output file
    * @param diagramOutputFormat Output format
-   * @throws SchemaCrawlerException Thrown on an exception
    */
   public static void generateGraph(
       final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat) {

@@ -35,7 +35,6 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.nio.file.Path;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -142,8 +141,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
     return schemaTextDetailType;
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions)
-      throws SchemaCrawlerException {
+  private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions) {
     final SchemaTraversalHandler formatter;
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
