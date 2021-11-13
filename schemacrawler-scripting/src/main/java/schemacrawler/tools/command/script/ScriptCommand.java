@@ -114,7 +114,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     context.put("chain", new CommandChain(this));
 
     scriptExecutor.initialize(context, reader, writer);
-    scriptExecutor.call();
+    scriptExecutor.run();
   }
 
   @Override
