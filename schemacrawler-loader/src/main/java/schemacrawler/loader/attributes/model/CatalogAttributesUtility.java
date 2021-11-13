@@ -46,8 +46,6 @@ public class CatalogAttributesUtility {
    * Pass in a reader at this point, since
    *
    * @param catalogAttributesFile
-   * @return
-   * @throws Exception
    */
   public static CatalogAttributes readCatalogAttributes(final InputResource inputResource) {
     requireNonNull(inputResource, "No input resource provided");

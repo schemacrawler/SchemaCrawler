@@ -32,7 +32,7 @@ import java.nio.file.Path;
 public class SchemaCrawlerSQLiteUtility {
 
   public static Path createSchemaCrawlerDiagram(
-      final Path dbFile, final String title, final String extension) throws Exception {
+      final Path dbFile, final String title, final String extension) {
     final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
     sqLiteDatabaseLoader.loadDatabaseFile(dbFile);
     return sqLiteDatabaseLoader.createDiagram(title, extension);

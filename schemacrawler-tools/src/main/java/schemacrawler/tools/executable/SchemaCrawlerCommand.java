@@ -35,11 +35,7 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
-/**
- * A SchemaCrawler tools executable unit.
- *
- * @author Sualeh Fatehi
- */
+/** A SchemaCrawler tools executable unit. */
 public interface SchemaCrawlerCommand<C extends CommandOptions> {
 
   /**
