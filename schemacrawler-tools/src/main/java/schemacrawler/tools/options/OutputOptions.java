@@ -33,13 +33,14 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.FileOutputResource;
 import us.fatehi.utility.ioresource.OutputResource;
@@ -129,13 +130,19 @@ public final class OutputOptions implements Options {
    * @return Output writer
    * @throws IOException On an exception
    */
-  public Writer openNewOutputWriter() throws IOException {
+  public PrintWriter openNewOutputWriter() {
     return openNewOutputWriter(false);
   }
 
   /** Gets the output reader. If the output resource is null, first set it to console output. */
-  public Writer openNewOutputWriter(final boolean appendOutput) throws IOException {
-    return outputResource.openNewOutputWriter(getOutputCharset(), appendOutput);
+  public PrintWriter openNewOutputWriter(final boolean appendOutput) {
+    try {
+      return new PrintWriter(
+          outputResource.openNewOutputWriter(getOutputCharset(), appendOutput), true);
+    } catch (final IOException e) {
+      throw new SchemaCrawlerRuntimeException(
+          String.format("Could not open output writer <%s>"), e);
+    }
   }
 
   @Override

@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +40,6 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.HtmlFormattingHelper;
@@ -82,11 +80,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
             .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy())
             .build();
 
-    try {
-      out = new PrintWriter(outputOptions.openNewOutputWriter(false), true);
-    } catch (final IOException e) {
-      throw new SchemaCrawlerRuntimeException("Cannot open output writer", e);
-    }
+    out = outputOptions.openNewOutputWriter(false);
 
     final TextOutputFormat outputFormat =
         TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());

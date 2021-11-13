@@ -6,7 +6,6 @@ import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_F
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING;
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,11 +29,7 @@ abstract class BaseLintReportJacksonBuilder implements LintReportBuilder {
   private final PrintWriter out;
 
   BaseLintReportJacksonBuilder(final OutputOptions outputOptions) {
-    try {
-      out = new PrintWriter(outputOptions.openNewOutputWriter(), true);
-    } catch (final IOException e) {
-      throw new SchemaCrawlerRuntimeException("Cannot open output writer", e);
-    }
+    out = outputOptions.openNewOutputWriter();
   }
 
   @Override
