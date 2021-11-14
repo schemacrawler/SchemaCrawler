@@ -37,7 +37,7 @@ import java.sql.SQLException;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.options.Config;
 
@@ -89,7 +89,7 @@ public class LinterCatalogSql extends BaseLinter {
         addCatalogLint(getSummary() + " " + queryResult, true);
       }
     } catch (final SQLException e) {
-      throw new SchemaAccessException(
+      throw new DatabaseAccessException(
           String.format("Could not execute SQL for catalog lints%n%s", sql), e);
     }
   }

@@ -32,7 +32,7 @@ import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
 import java.io.IOException;
 
-public class IORuntimeException extends SchemaCrawlerRuntimeException {
+public class IORuntimeException extends SchemaCrawlerException {
 
   private static final long serialVersionUID = 8143604098031489051L;
 

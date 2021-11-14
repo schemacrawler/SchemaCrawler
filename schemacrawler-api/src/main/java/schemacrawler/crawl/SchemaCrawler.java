@@ -91,7 +91,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
@@ -124,7 +124,7 @@ public final class SchemaCrawler {
       infoLevel = options.getLoadOptions().getSchemaInfoLevel();
       stopWatch = new RetrievalStopWatch(infoLevel);
     } catch (final SQLException e) {
-      throw new SchemaAccessException(e.getMessage(), e);
+      throw new DatabaseAccessException(e.getMessage(), e);
     }
   }
 

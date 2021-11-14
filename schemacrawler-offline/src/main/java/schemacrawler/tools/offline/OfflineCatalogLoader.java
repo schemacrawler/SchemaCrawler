@@ -20,7 +20,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
@@ -70,7 +70,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
     } catch (final IOException e) {
       throw new IORuntimeException("Could not load offline database", e);
     } catch (final SQLException e) {
-      throw new SchemaAccessException("Could not load offline database", e);
+      throw new DatabaseAccessException("Could not load offline database", e);
     }
 
     setCatalog(catalog);

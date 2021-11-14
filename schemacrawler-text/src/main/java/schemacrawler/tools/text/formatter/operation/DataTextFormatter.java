@@ -38,7 +38,7 @@ import java.util.List;
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationType;
@@ -138,7 +138,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
         aggregate = results.getLong(1);
       }
     } catch (final SQLException e) {
-      throw new SchemaAccessException("Could not obtain aggregate data", e);
+      throw new DatabaseAccessException("Could not obtain aggregate data", e);
     }
     final String message = getMessage(aggregate);
     //
@@ -168,7 +168,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
         iterateRows(dataRows);
       } catch (final SQLException e) {
-        throw new SchemaAccessException(e.getMessage(), e);
+        throw new DatabaseAccessException(e.getMessage(), e);
       }
       formattingHelper.writeObjectEnd();
     }

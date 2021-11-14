@@ -30,7 +30,7 @@ package schemacrawler.schemacrawler.exceptions;
 
 import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
-public class SchemaCrawlerRuntimeException extends RuntimeException {
+public class SchemaCrawlerRuntimeException extends SchemaCrawlerException {
 
   private static final long serialVersionUID = 3257848770627713076L;
 

@@ -37,7 +37,7 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableWithQuotedNames extends BaseLinter {
@@ -55,7 +55,7 @@ public class LinterTableWithQuotedNames extends BaseLinter {
     try {
       identifiers = Identifiers.identifiers().withConnection(connection).build();
     } catch (final SQLException e) {
-      throw new SchemaAccessException(e.getMessage(), e);
+      throw new DatabaseAccessException(e.getMessage(), e);
     }
 
     final String tableName = table.getName();

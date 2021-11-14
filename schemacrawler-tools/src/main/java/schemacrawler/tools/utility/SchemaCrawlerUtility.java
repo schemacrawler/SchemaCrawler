@@ -45,7 +45,7 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -118,7 +118,7 @@ public final class SchemaCrawlerUtility {
       final ResultsColumns resultsColumns = resultSetCrawler.crawl();
       return resultsColumns;
     } catch (final SQLException e) {
-      throw new SchemaAccessException("Could not retrieve result-set metadata", e);
+      throw new DatabaseAccessException("Could not retrieve result-set metadata", e);
     }
   }
 
@@ -178,7 +178,7 @@ public final class SchemaCrawlerUtility {
     try {
       DatabaseUtility.checkResultSet(resultSet);
     } catch (final SQLException e) {
-      throw new SchemaAccessException("Bad result-set", e);
+      throw new DatabaseAccessException("Bad result-set", e);
     }
   }
 

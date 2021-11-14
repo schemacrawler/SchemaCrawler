@@ -38,7 +38,7 @@ import java.sql.SQLException;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
@@ -65,7 +65,7 @@ public class EmbeddedSQLiteWrapper {
     try (final Connection connection = createDatabaseConnectionSource().get()) {
       return createDiagram(connection, title, extension);
     } catch (final SQLException e) {
-      throw new SchemaAccessException("Could not create database connection", e);
+      throw new DatabaseAccessException("Could not create database connection", e);
     }
   }
 
