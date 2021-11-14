@@ -67,7 +67,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -211,7 +210,7 @@ public class OfflineSnapshotTest {
       final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
       serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
       assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
-    } catch (final SchemaCrawlerException | IOException e) {
+    } catch (final IOException e) {
       failTestSetup("Could not serialize catalog", e);
     }
   }

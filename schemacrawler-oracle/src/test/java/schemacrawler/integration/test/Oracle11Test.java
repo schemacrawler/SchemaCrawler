@@ -30,7 +30,6 @@ package schemacrawler.integration.test;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,8 +40,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
-
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class Oracle11Test extends BaseOracleWithConnectionTest {
@@ -52,7 +49,7 @@ public class Oracle11Test extends BaseOracleWithConnectionTest {
       new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11")).usingSid();
 
   @BeforeEach
-  public void createDatabase() throws SQLException, SchemaCrawlerException {
+  public void createDatabase() {
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 

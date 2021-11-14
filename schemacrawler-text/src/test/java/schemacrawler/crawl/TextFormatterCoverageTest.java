@@ -34,7 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
@@ -47,7 +46,6 @@ import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestWriter;
@@ -142,8 +140,7 @@ public class TextFormatterCoverageTest {
   }
 
   private void checkTextOutput(
-      final Consumer<SchemaTextFormatter> formatterMethod, final String referenceFileName)
-      throws IOException, SchemaCrawlerException {
+      final Consumer<SchemaTextFormatter> formatterMethod, final String referenceFileName) {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final SchemaTextOptions textOptions =
@@ -165,8 +162,7 @@ public class TextFormatterCoverageTest {
             classpathResource(FORMATTER_COVERAGE_OUTPUT + referenceFileName + ".txt")));
   }
 
-  private void checkTextOutputForTable(final Table table, final String referenceFileName)
-      throws IOException, SchemaCrawlerException {
+  private void checkTextOutputForTable(final Table table, final String referenceFileName) {
     checkTextOutput(formatter -> formatter.handle(table), referenceFileName);
   }
 }

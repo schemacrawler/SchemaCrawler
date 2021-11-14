@@ -48,7 +48,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -84,7 +83,7 @@ public class AttributesCatalogLoaderTest {
 
   private void showRemarks(
       final TestContext testContext, final Connection connection, final String attributesFile)
-      throws IOException, SchemaCrawlerException {
+      throws IOException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
 

@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
+
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -35,15 +37,19 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.testdb.SqlScript;
 import us.fatehi.utility.IOUtility;
 
 public abstract class BaseSqliteTest {
 
-  protected Connection createConnection(final Path sqliteDbFile)
-      throws SQLException, SchemaCrawlerException {
-    return createDataSource(sqliteDbFile).getConnection();
+  protected Connection createConnection(final Path sqliteDbFile) {
+    try {
+      return createDataSource(sqliteDbFile).getConnection();
+    } catch (final SQLException e) {
+      failTestSetup(
+          String.format("Could not create a database connection for SQLite fle", sqliteDbFile), e);
+      return null; // Appease compiler
+    }
   }
 
   protected DataSource createDataSource(final Path sqliteDbFile) {

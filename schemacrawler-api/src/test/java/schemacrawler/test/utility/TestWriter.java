@@ -40,13 +40,17 @@ public final class TestWriter extends Writer implements TestOutputCapture {
 
   private final TestOutputStream out;
 
-  public TestWriter() throws IOException {
+  public TestWriter() {
     out = new TestOutputStream();
   }
 
   @Override
-  public void close() throws IOException {
-    out.close();
+  public void close() {
+    try {
+      out.close();
+    } catch (final IOException e) {
+      throw new RuntimeException("Could not close test writer", e);
+    }
   }
 
   @Override

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
@@ -47,7 +46,6 @@ import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.OutputFormat;
 
@@ -148,15 +146,11 @@ public final class CommandlineTestUtility {
   }
 
   public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection) {
-    try {
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-      final ShellState state = createConnectedSchemaCrawlerShellState(connection);
-      state.setCatalog(catalog); // is-loaded
-      return state;
-    } catch (final SchemaCrawlerException e) {
-      return failTestSetup("Could not create loaded shell state", e);
-    }
+    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
+    state.setCatalog(catalog); // is-loaded
+    return state;
   }
 
   public static void runCommandInTest(final Object object, final String[] args) {

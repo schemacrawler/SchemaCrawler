@@ -52,7 +52,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 
 @TestInstance(PER_CLASS)
 @Testcontainers(disabledWithoutDocker = true)
@@ -68,7 +67,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   private DataSource noAccessUserDataSource;
 
   @BeforeAll
-  public void createDatabase() throws SQLException, SchemaCrawlerException {
+  public void createDatabase() {
 
     dbContainer.start();
 

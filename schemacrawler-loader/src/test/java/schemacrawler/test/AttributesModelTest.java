@@ -34,7 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.DisplayName;
@@ -47,7 +46,6 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.CatalogAttributesUtility;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestUtility;
 import us.fatehi.utility.ioresource.InputResource;
@@ -57,7 +55,7 @@ public class AttributesModelTest {
 
   @Test
   @DisplayName("Invalid attributes file format")
-  public void testParseBad2() throws SchemaCrawlerException, IOException {
+  public void testParseBad2() {
     final SchemaCrawlerRuntimeException exception =
         assertThrows(
             SchemaCrawlerRuntimeException.class,
@@ -72,7 +70,7 @@ public class AttributesModelTest {
 
   @Test
   @DisplayName("Valid attributes file format, but incorrect data")
-  public void testParseBad3() throws SchemaCrawlerException, IOException {
+  public void testParseBad3() {
     final SchemaCrawlerRuntimeException exception =
         assertThrows(
             SchemaCrawlerRuntimeException.class,

@@ -45,9 +45,13 @@ public final class TestOutputStream extends OutputStream implements TestOutputCa
   private final Path tempFile;
   private final OutputStream out;
 
-  public TestOutputStream() throws IOException {
-    tempFile = IOUtility.createTempFilePath("test", "");
-    out = newOutputStream(tempFile, WRITE, CREATE, TRUNCATE_EXISTING);
+  public TestOutputStream() {
+    try {
+      tempFile = IOUtility.createTempFilePath("test", "");
+      out = newOutputStream(tempFile, WRITE, CREATE, TRUNCATE_EXISTING);
+    } catch (final IOException e) {
+      throw new RuntimeException("Could not open output stream to a temporary file", e);
+    }
   }
 
   @Override

@@ -50,7 +50,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
@@ -93,7 +92,7 @@ public class LoadSnapshotTest {
       final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
       serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
       assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
-    } catch (final SchemaCrawlerException | IOException e) {
+    } catch (final IOException e) {
       failTestSetup("Could not serialize catalog", e);
     }
   }
