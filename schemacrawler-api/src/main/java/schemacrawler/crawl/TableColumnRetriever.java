@@ -273,7 +273,8 @@ final class TableColumnRetriever extends AbstractRetriever {
                       table.getSchema().getCatalogName(),
                       table.getSchema().getName(),
                       table.getName(),
-                      null))) {
+                      null),
+              "DatabaseMetaData::getColumns")) {
         while (results.next()) {
           createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
         }

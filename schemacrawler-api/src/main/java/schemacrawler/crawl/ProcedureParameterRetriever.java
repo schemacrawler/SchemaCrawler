@@ -230,7 +230,8 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
                       procedure.getSchema().getCatalogName(),
                       procedure.getSchema().getName(),
                       procedure.getName(),
-                      null))) {
+                      null),
+              "DatabaseMetaData::getProcedureColumns")) {
         while (results.next()) {
           createProcedureParameter(results, allRoutines, parameterFilter);
         }

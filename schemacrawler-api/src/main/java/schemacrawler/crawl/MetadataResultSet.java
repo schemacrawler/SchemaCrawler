@@ -42,7 +42,7 @@ import static us.fatehi.utility.DatabaseUtility.logSQLWarnings;
 import static us.fatehi.utility.IOUtility.readFully;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isIntegral;
-import static us.fatehi.utility.Utility.trimToEmpty;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Reader;
 import java.math.BigInteger;
@@ -72,8 +72,6 @@ import us.fatehi.utility.string.StringFormat;
  * A wrapper around a JDBC resultset obtained from a database metadata call. This allows type-safe
  * methods to obtain boolean, integer and string data, while abstracting away the quirks of the JDBC
  * metadata API.
- *
- * @author Sualeh Fatehi
  */
 public final class MetadataResultSet implements AutoCloseable {
 
@@ -94,10 +92,6 @@ public final class MetadataResultSet implements AutoCloseable {
     this(executeAgainstSchema(query, statement, schemaInclusionRule), query.getName());
   }
 
-  public MetadataResultSet(final ResultSet resultSet) throws SQLException {
-    this(resultSet, null);
-  }
-
   public MetadataResultSet(final ResultSet resultSet, final String description)
       throws SQLException {
     results = requireNonNull(resultSet, "Cannot use null results");
@@ -106,7 +100,7 @@ public final class MetadataResultSet implements AutoCloseable {
     } catch (final NullPointerException | SQLException e) {
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
-    this.description = trimToEmpty(description);
+    this.description = requireNotBlank(description, "No result-set description provided");
 
     resultsColumns = new ResultsCrawler(results).crawl();
     readColumns = new HashSet<>();
@@ -122,15 +116,12 @@ public final class MetadataResultSet implements AutoCloseable {
   @Override
   public void close() throws SQLException {
     results.close();
-
-    if (LOGGER.isLoggable(Level.INFO) && !isBlank(description)) {
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d rows for <%s>", rowCount, description));
-    }
+    LOGGER.log(Level.FINE, new StringFormat("Processed %d rows for <%s>", rowCount, description));
   }
 
   /**
-   * Gets unread (and therefore unmapped) columns from the database metadata resultset, and makes
-   * them available as addiiotnal attributes.
+   * Gets unread (and therefore unmapped) columns from the database metadata result-set, and makes
+   * them available as additional attributes.
    *
    * @return Map of additional attributes to the database object
    */

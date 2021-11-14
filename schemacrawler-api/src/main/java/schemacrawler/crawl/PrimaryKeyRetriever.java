@@ -153,7 +153,8 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
           new MetadataResultSet(
               getMetaData()
                   .getPrimaryKeys(
-                      tableSchema.getCatalogName(), tableSchema.getName(), table.getName()))) {
+                      tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
+              "DatabaseMetaData::getPrimaryKeys")) {
         while (results.next()) {
           createPrimaryKeyForTable(table, results);
         }

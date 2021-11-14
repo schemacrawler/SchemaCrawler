@@ -207,7 +207,9 @@ final class DataTypeRetriever extends AbstractRetriever {
     final String schemaName = schema.getName();
 
     try (final MetadataResultSet results =
-        new MetadataResultSet(getMetaData().getUDTs(catalogName, schemaName, null, null))) {
+        new MetadataResultSet(
+            getMetaData().getUDTs(catalogName, schemaName, null, null),
+            "DatabaseMetaData::getUDTs")) {
       while (results.next()) {
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");

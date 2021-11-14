@@ -77,7 +77,8 @@ public class MetadataResultSetTest {
       statement.execute("INSERT INTO TABLE1(COLUMN1) VALUES('A')");
 
       try (final MetadataResultSet results =
-          new MetadataResultSet(DatabaseUtility.executeSql(statement, "SELECT * FROM TABLE1"))) {
+          new MetadataResultSet(
+              DatabaseUtility.executeSql(statement, "SELECT * FROM TABLE1"), "badValues")) {
         while (results.next()) {
           final int value1 = results.getInt(columnName, 0);
           assertThat(value1, is(0));
@@ -120,7 +121,8 @@ public class MetadataResultSetTest {
         final String sql =
             String.format("SELECT '%s' AS " + column1Name + " FROM (VALUES(0))", value);
         try (final MetadataResultSet results =
-            new MetadataResultSet(DatabaseUtility.executeSql(statement, sql))) {
+            new MetadataResultSet(
+                DatabaseUtility.executeSql(statement, sql), "booleanValues-true")) {
           while (results.next()) {
             final boolean booleanValue = results.getBoolean(column1Name);
             assertThat(
@@ -134,7 +136,8 @@ public class MetadataResultSetTest {
         final String sql =
             String.format("SELECT '%s' AS " + column1Name + " FROM (VALUES(0))", value);
         try (final MetadataResultSet results =
-            new MetadataResultSet(DatabaseUtility.executeSql(statement, sql))) {
+            new MetadataResultSet(
+                DatabaseUtility.executeSql(statement, sql), "booleanValues-false")) {
           while (results.next()) {
             final boolean booleanValue = results.getBoolean(column1Name);
             assertThat(
@@ -154,7 +157,7 @@ public class MetadataResultSetTest {
     final BiConsumer<String, ResultSet> assertAll =
         (dataType, resultSet) -> {
           try {
-            final MetadataResultSet results = new MetadataResultSet(resultSet);
+            final MetadataResultSet results = new MetadataResultSet(resultSet, "largeObjectValues");
 
             final String stringValue = results.getString(columnName);
             if (dataType.equals("BLOB")) {
@@ -250,7 +253,7 @@ public class MetadataResultSetTest {
         (dataType, resultSet) -> {
           try {
 
-            final MetadataResultSet results = new MetadataResultSet(resultSet);
+            final MetadataResultSet results = new MetadataResultSet(resultSet, "nullValues");
 
             asserts.accept(column1Name, results);
             asserts.accept(column2Name, results);

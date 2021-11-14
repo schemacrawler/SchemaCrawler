@@ -225,7 +225,8 @@ final class FunctionParameterRetriever extends AbstractRetriever {
                       function.getSchema().getCatalogName(),
                       function.getSchema().getName(),
                       function.getName(),
-                      null))) {
+                      null),
+              "DatabaseMetaData::getFunctionColumns")) {
         while (results.next()) {
           createFunctionParameter(results, allRoutines, parameterFilter);
         }

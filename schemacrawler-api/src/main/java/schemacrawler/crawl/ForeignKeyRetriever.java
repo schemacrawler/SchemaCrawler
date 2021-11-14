@@ -212,9 +212,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       try (final MetadataResultSet results =
           new MetadataResultSet(
               metaData.getImportedKeys(
-                  table.getSchema().getCatalogName(),
-                  table.getSchema().getName(),
-                  table.getName()))) {
+                  table.getSchema().getCatalogName(), table.getSchema().getName(), table.getName()),
+              "DatabaseMetaData::getImportedKeys")) {
         createForeignKeys(results, foreignKeys);
       } catch (final SQLException e) {
         throw new SchemaCrawlerSQLException(
@@ -227,9 +226,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       try (final MetadataResultSet results =
           new MetadataResultSet(
               metaData.getExportedKeys(
-                  table.getSchema().getCatalogName(),
-                  table.getSchema().getName(),
-                  table.getName()))) {
+                  table.getSchema().getCatalogName(), table.getSchema().getName(), table.getName()),
+              "DatabaseMetaData::getExportedKeys")) {
         createForeignKeys(results, foreignKeys);
       } catch (final SQLException e) {
         // Since not all database drivers may support exported keys, log a warning instead of

@@ -211,7 +211,8 @@ final class IndexRetriever extends AbstractRetriever {
                     tableSchema.getName(),
                     table.getName(),
                     unique,
-                    true /* approximate */))) {
+                    true /* approximate */),
+            "DatabaseMetaData::getIndexInfo")) {
       createIndexes(table, results);
     } catch (final SQLException e) {
       throw new SchemaCrawlerSQLException(
