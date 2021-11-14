@@ -34,6 +34,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_US
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -65,7 +66,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.SchemaCrawlerIORuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer {
@@ -141,8 +142,8 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
     try {
       final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, this);
-    } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException("Could not serialize catalog", e);
+    } catch (final IOException e) {
+      throw new SchemaCrawlerIORuntimeException("Could not serialize catalog", e);
     }
   }
 

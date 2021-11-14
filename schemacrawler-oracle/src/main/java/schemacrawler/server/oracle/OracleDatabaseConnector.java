@@ -39,8 +39,6 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
-import java.io.IOException;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -51,7 +49,7 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
   public static final DatabaseServerType DB_SERVER_TYPE =
       new DatabaseServerType("oracle", "Oracle");
 
-  public OracleDatabaseConnector() throws IOException {
+  public OracleDatabaseConnector() {
     super(
         new DatabaseServerType("oracle", "Oracle"),
         url -> url != null && url.startsWith("jdbc:oracle:"),

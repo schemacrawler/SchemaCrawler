@@ -27,50 +27,40 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.db2;
 
-
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import java.io.IOException;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public final class DB2DatabaseConnector
-  extends DatabaseConnector
-{
+public final class DB2DatabaseConnector extends DatabaseConnector {
 
-  public DB2DatabaseConnector() throws IOException
-  {
-    super(new DatabaseServerType("db2", "IBM DB2"),
+  public DB2DatabaseConnector() {
+    super(
+        new DatabaseServerType("db2", "IBM DB2"),
         url -> url != null && url.startsWith("jdbc:db2:"),
-        (informationSchemaViewsBuilder,
-            connection) -> informationSchemaViewsBuilder
-                .fromResourceFolder("/db2.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) -> schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy,
-            data_dictionary_all),
-        (limitOptionsBuilder) -> {}, 
-        () -> DatabaseConnectionUrlBuilder.builder(
-            "jdbc:db2://${host}:${port}/${database}:retrieveMessagesFromServerOnGetMessage=true;")
-            .withDefaultPort(50000));
+        (informationSchemaViewsBuilder, connection) ->
+            informationSchemaViewsBuilder.fromResourceFolder("/db2.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) ->
+            schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy, data_dictionary_all),
+        limitOptionsBuilder -> {},
+        () ->
+            DatabaseConnectionUrlBuilder.builder(
+                    "jdbc:db2://${host}:${port}/${database}:retrieveMessagesFromServerOnGetMessage=true;")
+                .withDefaultPort(50000));
   }
 
   @Override
-  public PluginCommand getHelpCommand()
-  {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
-      .addOption("server",
-                 String.class,
-                 "--server=db2%n" + "Loads SchemaCrawler plug-in for IBM DB2")
-      .addOption("host",
-                 String.class,
-                 "Host name%n" + "Optional, defaults to localhost")
-      .addOption("port",
-                 Integer.class,
-                 "Port number%n" + "Optional, defaults to 50000")
-      .addOption("database", String.class, "Database name");
+        .addOption(
+            "server", String.class, "--server=db2%n" + "Loads SchemaCrawler plug-in for IBM DB2")
+        .addOption("host", String.class, "Host name%n" + "Optional, defaults to localhost")
+        .addOption("port", Integer.class, "Port number%n" + "Optional, defaults to 50000")
+        .addOption("database", String.class, "Database name");
     return pluginCommand;
   }
-  
 }

@@ -32,11 +32,12 @@ import static us.fatehi.utility.DatabaseUtility.checkConnection;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import schemacrawler.schemacrawler.SchemaCrawlerDatabaseRuntimeException;
+import schemacrawler.schemacrawler.SchemaCrawlerIORuntimeException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -53,23 +54,18 @@ public class EmbeddedSQLiteWrapper {
   public DatabaseConnectionSource createDatabaseConnectionSource() {
     requireNonNull(databaseFile, "Database file not loaded");
 
-    try {
-      final DatabaseUrlConnectionOptions urlConnectionOptions =
-          new DatabaseUrlConnectionOptions(getConnectionUrl());
-      final DatabaseConnectionSource connectionOptions =
-          new SQLiteDatabaseConnector().newDatabaseConnectionSource(urlConnectionOptions);
-      return connectionOptions;
-    } catch (final IOException e) {
-      throw new SchemaCrawlerRuntimeException(
-          String.format("Cannot read SQLite database file <%s>", databaseFile), e);
-    }
+    final DatabaseUrlConnectionOptions urlConnectionOptions =
+        new DatabaseUrlConnectionOptions(getConnectionUrl());
+    final DatabaseConnectionSource connectionOptions =
+        new SQLiteDatabaseConnector().newDatabaseConnectionSource(urlConnectionOptions);
+    return connectionOptions;
   }
 
   public Path createDiagram(final String title, final String extension) {
     try (final Connection connection = createDatabaseConnectionSource().get()) {
       return createDiagram(connection, title, extension);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException("Could not create database connection", e);
+      throw new SchemaCrawlerDatabaseRuntimeException("Could not create database connection", e);
     }
   }
 
@@ -94,7 +90,7 @@ public class EmbeddedSQLiteWrapper {
     final Path databaseFile =
         requireNonNull(dbFile, "No database file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(databaseFile)) {
-      throw new SchemaCrawlerRuntimeException(
+      throw new SchemaCrawlerIORuntimeException(
           String.format("Could not read database file <%s>", dbFile));
     }
     return databaseFile;

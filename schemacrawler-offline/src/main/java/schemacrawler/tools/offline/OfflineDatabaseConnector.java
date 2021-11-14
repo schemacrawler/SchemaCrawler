@@ -27,8 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.offline;
 
-import java.io.IOException;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -39,7 +37,7 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
   public static final DatabaseServerType DB_SERVER_TYPE =
       new DatabaseServerType("offline", "SchemaCrawler Offline Catalog Snapshot");
 
-  public OfflineDatabaseConnector() throws IOException {
+  public OfflineDatabaseConnector() {
     super(
         DB_SERVER_TYPE,
         url -> url != null && url.startsWith("jdbc:offline:"),

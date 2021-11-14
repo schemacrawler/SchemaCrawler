@@ -27,48 +27,38 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.hsqldb;
 
-
-import java.io.IOException;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public final class HyperSQLDatabaseConnector
-  extends DatabaseConnector
-{
+public final class HyperSQLDatabaseConnector extends DatabaseConnector {
 
-  public HyperSQLDatabaseConnector() throws IOException
-  {
-    super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
+  public HyperSQLDatabaseConnector() {
+    super(
+        new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
         url -> url != null && url.startsWith("jdbc:hsqldb:"),
-        (informationSchemaViewsBuilder,
-            connection) -> informationSchemaViewsBuilder
-                .fromResourceFolder("/hsqldb.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) -> {}, 
-        (limitOptionsBuilder) -> {},
-        () -> DatabaseConnectionUrlBuilder.builder(
-            "jdbc:hsqldb:hsql://${host}:${port}/${database};readonly=true;hsqldb.lock_file=false")
-            .withDefaultPort(9001));
+        (informationSchemaViewsBuilder, connection) ->
+            informationSchemaViewsBuilder.fromResourceFolder("/hsqldb.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) -> {},
+        limitOptionsBuilder -> {},
+        () ->
+            DatabaseConnectionUrlBuilder.builder(
+                    "jdbc:hsqldb:hsql://${host}:${port}/${database};readonly=true;hsqldb.lock_file=false")
+                .withDefaultPort(9001));
   }
 
   @Override
-  public PluginCommand getHelpCommand()
-  {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
-      .addOption("server",
-                 String.class,
-                 "--server=hsqldb%n"
-         + "Loads SchemaCrawler plug-in for HyperSQL")
-      .addOption("host",
-                 String.class,
-                 "Host name%n" + "Optional, defaults to localhost")
-      .addOption("port",
-                 Integer.class,
-                 "Port number%n" + "Optional, defaults to 9001")
-      .addOption("database", String.class, "Database name");
+        .addOption(
+            "server",
+            String.class,
+            "--server=hsqldb%n" + "Loads SchemaCrawler plug-in for HyperSQL")
+        .addOption("host", String.class, "Host name%n" + "Optional, defaults to localhost")
+        .addOption("port", Integer.class, "Port number%n" + "Optional, defaults to 9001")
+        .addOption("database", String.class, "Database name");
     return pluginCommand;
   }
-
 }
