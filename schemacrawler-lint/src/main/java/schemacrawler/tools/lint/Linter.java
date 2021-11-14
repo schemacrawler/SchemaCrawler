@@ -32,12 +32,11 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
@@ -50,8 +49,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 public abstract class Linter {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(Linter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
 
   private LintCollector collector;
   private LintSeverity severity;
@@ -180,7 +178,7 @@ public abstract class Linter {
     }
   }
 
-  abstract void lint(Catalog catalog, Connection connection) throws SchemaCrawlerException;
+  abstract void lint(Catalog catalog, Connection connection);
 
   final void setLintCollector(final LintCollector lintCollector) {
     collector = lintCollector;

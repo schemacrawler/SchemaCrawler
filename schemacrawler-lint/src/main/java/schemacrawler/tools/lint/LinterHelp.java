@@ -29,8 +29,6 @@ package schemacrawler.tools.lint;
 
 import java.util.function.Supplier;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
-
 public final class LinterHelp implements Supplier<String[]> {
 
   private final boolean generateMarkdown;
@@ -45,33 +43,29 @@ public final class LinterHelp implements Supplier<String[]> {
 
   @Override
   public String[] get() {
-    try {
-      final StringBuilder buffer = new StringBuilder(1024);
+    final StringBuilder buffer = new StringBuilder(1024);
 
-      if (generateMarkdown) {
-        printMarkdownHeader(buffer);
-      } else {
-        printHelpHeader(buffer);
-      }
-
-      final LinterRegistry registry = new LinterRegistry();
-      for (final String linterId : registry) {
-        final Linter linter = registry.newLinter(linterId);
-        if (generateMarkdown) {
-          printMarkdownLinterHeader(buffer, linter);
-        } else {
-          printLinterHeader(buffer, linter);
-        }
-        buffer
-            .append(linter.getDescription())
-            .append(System.lineSeparator())
-            .append(System.lineSeparator());
-      }
-
-      return new String[] {buffer.toString()};
-    } catch (final SchemaCrawlerException e) {
-      return new String[0];
+    if (generateMarkdown) {
+      printMarkdownHeader(buffer);
+    } else {
+      printHelpHeader(buffer);
     }
+
+    final LinterRegistry registry = new LinterRegistry();
+    for (final String linterId : registry) {
+      final Linter linter = registry.newLinter(linterId);
+      if (generateMarkdown) {
+        printMarkdownLinterHeader(buffer, linter);
+      } else {
+        printLinterHeader(buffer, linter);
+      }
+      buffer
+          .append(linter.getDescription())
+          .append(System.lineSeparator())
+          .append(System.lineSeparator());
+    }
+
+    return new String[] {buffer.toString()};
   }
 
   private void printHelpHeader(final StringBuilder buffer) {

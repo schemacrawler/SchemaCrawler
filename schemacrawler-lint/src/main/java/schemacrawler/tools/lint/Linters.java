@@ -36,25 +36,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import us.fatehi.utility.string.StringFormat;
 
 public final class Linters implements Iterable<Linter> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(Linters.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(Linters.class.getName());
 
   private final List<Linter> linters;
   private final LintCollector collector;
   private final LinterRegistry registry;
 
-  public Linters(final LinterConfigs linterConfigs, final boolean runAllLinters)
-      throws SchemaCrawlerException {
+  public Linters(final LinterConfigs linterConfigs, final boolean runAllLinters) {
     requireNonNull(linterConfigs, "No linter configs provided");
 
     linters = new ArrayList<>();
@@ -170,11 +167,17 @@ public final class Linters implements Iterable<Linter> {
     return linters.iterator();
   }
 
-  public void lint(final Catalog catalog, final Connection connection)
-      throws SchemaCrawlerException {
+  public void lint(final Catalog catalog, final Connection connection) {
     for (final Linter linter : linters) {
-      LOGGER.log(Level.FINE, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
-      linter.lint(catalog, connection);
+      LOGGER.log(Level.CONFIG, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
+      try {
+        linter.lint(catalog, connection);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not run linter <%s>", linter.getLinterInstanceId()));
+      }
     }
   }
 

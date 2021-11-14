@@ -39,15 +39,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Linter registry for mapping linters by id.
- *
- * @author Sualeh Fatehi
- */
+/** Linter registry for mapping linters by id. */
 public final class LinterRegistry implements Iterable<String> {
 
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
@@ -66,8 +61,7 @@ public final class LinterRegistry implements Iterable<String> {
         }
 
         @Override
-        protected void lint(final Table table, final Connection connection)
-            throws SchemaCrawlerException {
+        protected void lint(final Table table, final Connection connection) {
           // No-op
         }
       };
@@ -94,7 +88,7 @@ public final class LinterRegistry implements Iterable<String> {
 
   private final Map<String, Class<Linter>> linterRegistry;
 
-  public LinterRegistry() throws SchemaCrawlerException {
+  public LinterRegistry() {
     linterRegistry = loadLinterRegistry();
   }
 

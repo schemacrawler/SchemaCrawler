@@ -38,7 +38,6 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.options.Config;
 
@@ -61,8 +60,7 @@ public class LinterTableWithBadlyNamedColumns extends BaseLinter {
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-      throws SchemaCrawlerException {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
     final List<Column> badlyNamedColumns = findBadlyNamedColumns(getColumns(table));

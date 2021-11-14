@@ -36,8 +36,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -45,7 +45,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.lint.config.LinterConfig;
 import us.fatehi.utility.string.StringFormat;
 
@@ -53,13 +52,10 @@ import us.fatehi.utility.string.StringFormat;
  * Evaluates a catalog and creates lints. This base class has core for visiting a catalog, and
  * creating states.Also contains utility methods for subclasses. Needs to be overridden by custom
  * linters.
- *
- * @author Sualeh Fatehi
  */
 public abstract class BaseLinter extends Linter {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(BaseLinter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(BaseLinter.class.getName());
 
   private Catalog catalog;
   private InclusionRule tableInclusionRule;
@@ -90,7 +86,7 @@ public abstract class BaseLinter extends Linter {
     addLint(LintObjectType.table, table, message, value);
   }
 
-  protected void end(final Connection connection) throws SchemaCrawlerException {}
+  protected void end(final Connection connection) {}
 
   protected final List<Column> getColumns(final Table table) {
     if (table == null) {
@@ -123,7 +119,7 @@ public abstract class BaseLinter extends Linter {
     return table != null && tableInclusionRule.test(table.getFullName());
   }
 
-  protected abstract void lint(Table table, Connection connection) throws SchemaCrawlerException;
+  protected abstract void lint(Table table, Connection connection);
 
   protected final void setTableTypesFilter(final TableTypesFilter tableTypesFilter) {
     if (tableTypesFilter == null) {
@@ -133,7 +129,7 @@ public abstract class BaseLinter extends Linter {
     }
   }
 
-  protected void start(final Connection connection) throws SchemaCrawlerException {}
+  protected void start(final Connection connection) {}
 
   @Override
   final void configure(final LinterConfig linterConfig) {
@@ -145,8 +141,7 @@ public abstract class BaseLinter extends Linter {
   }
 
   @Override
-  final void lint(final Catalog catalog, final Connection connection)
-      throws SchemaCrawlerException {
+  final void lint(final Catalog catalog, final Connection connection) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
 
     start(connection);

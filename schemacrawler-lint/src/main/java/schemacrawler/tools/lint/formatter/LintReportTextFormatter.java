@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.formatter;
 
 import static java.util.Comparator.naturalOrder;
+import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,7 +40,6 @@ import java.util.List;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintReport;
@@ -74,15 +74,14 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
       final Catalog catalog,
       final LintOptions lintOptions,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     super(lintOptions, false, outputOptions, identifierQuoteString);
-    this.catalog = catalog;
-    this.lintOptions = lintOptions;
+    this.catalog = requireNonNull(catalog, "No catalog provided");
+    this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }
 
   @Override
-  public void generateLintReport(final LintReport report) throws SchemaCrawlerException {
+  public void generateLintReport(final LintReport report) {
 
     this.begin();
 

@@ -32,7 +32,6 @@ import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConf
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -109,7 +108,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
     lintDispatch.dispatch();
   }
 
-  private LintReportBuilder getLintReportBuilder() throws SchemaCrawlerException {
+  private LintReportBuilder getLintReportBuilder() {
     final LintReportOutputFormat outputFormat =
         LintReportOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
 

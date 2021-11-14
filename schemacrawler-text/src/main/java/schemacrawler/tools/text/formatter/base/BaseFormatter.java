@@ -66,12 +66,10 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
       final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
+
     this.options = requireNonNull(options, "Options not provided");
-
     this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
-
     colorMap = options.getColorMap();
-
     this.printVerboseDatabaseInfo = !options.isNoInfo() && printVerboseDatabaseInfo;
 
     identifiers =

@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -62,7 +60,7 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("No linter config file")
-  public void testParseBad0() throws SchemaCrawlerException {
+  public void testParseBad0() {
     final LintOptions lintOptions = LintOptionsBuilder.builder().toOptions();
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
@@ -72,7 +70,7 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("Missing linter config file")
-  public void testParseBad1() throws SchemaCrawlerException, IOException {
+  public void testParseBad1() {
     final SchemaCrawlerRuntimeException exception =
         assertThrows(
             SchemaCrawlerRuntimeException.class,
@@ -88,7 +86,7 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("Invalid linter config file")
-  public void testParseBad2() throws SchemaCrawlerException, IOException {
+  public void testParseBad2() {
     final SchemaCrawlerRuntimeException exception =
         assertThrows(
             SchemaCrawlerRuntimeException.class,
@@ -105,7 +103,7 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("Valid but incorrect linter config file")
-  public void testParseBad3() throws SchemaCrawlerException, IOException {
+  public void testParseBad3() {
     final SchemaCrawlerRuntimeException exception =
         assertThrows(
             SchemaCrawlerRuntimeException.class,
