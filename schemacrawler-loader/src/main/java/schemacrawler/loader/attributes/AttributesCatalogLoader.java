@@ -34,8 +34,8 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
@@ -50,7 +50,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.WeakAssociation;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -62,8 +63,7 @@ import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(AttributesCatalogLoader.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AttributesCatalogLoader.class.getName());
 
   private static final String OPTION_ATTRIBUTES_FILE = "attributes-file";
 
@@ -88,7 +88,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws SchemaCrawlerException {
+  public void loadCatalog() {
     if (!isLoaded()) {
       return;
     }
@@ -109,7 +109,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                 InputResourceUtility.createInputResource(catalogAttributesFile)
                     .orElseThrow(
                         () ->
-                            new SchemaCrawlerException(
+                            new IORuntimeException(
                                 "Cannot locate catalog attributes file, " + catalogAttributesFile));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
             loadRemarks(catalog, catalogAttributes);
@@ -121,7 +121,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception loading catalog attributes", e);
+      throw new ExecutionRuntimeException("Exception loading catalog attributes", e);
     }
   }
 

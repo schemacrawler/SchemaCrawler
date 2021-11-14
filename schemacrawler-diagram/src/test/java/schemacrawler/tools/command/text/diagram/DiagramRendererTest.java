@@ -34,7 +34,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 
@@ -53,7 +52,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -167,27 +165,23 @@ public class DiagramRendererTest {
   }
 
   private static Catalog getCatalog(final Connection connection) {
-    try {
-      SchemaCrawlerOptions schemaCrawlerOptions =
-          DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-      final LimitOptionsBuilder limitOptionsBuilder =
-          LimitOptionsBuilder.builder()
-              .fromOptions(schemaCrawlerOptions.getLimitOptions())
-              .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
-      schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
+    SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .fromOptions(schemaCrawlerOptions.getLimitOptions())
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+    schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
-      SchemaRetrievalOptions schemaRetrievalOptions =
-          SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
-      schemaRetrievalOptions =
-          SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions).toOptions();
+    SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
+    schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions).toOptions();
 
-      final Catalog catalog =
-          SchemaCrawlerUtility.getCatalog(
-              connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
-      return catalog;
-    } catch (final SchemaCrawlerException e) {
-      return failTestSetup("Could not get catalog", e);
-    }
+    final Catalog catalog =
+        SchemaCrawlerUtility.getCatalog(
+            connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+    return catalog;
   }
 
   @Test

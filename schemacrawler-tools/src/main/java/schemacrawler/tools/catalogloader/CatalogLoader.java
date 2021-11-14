@@ -33,7 +33,6 @@ import java.sql.Connection;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
@@ -46,11 +45,11 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   PluginCommand getCommandLineCommand();
 
+  Connection getConnection();
+
   default PluginCommand getHelpCommand() {
     return getCommandLineCommand();
   }
-
-  Connection getConnection();
 
   int getPriority();
 
@@ -58,7 +57,7 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   SchemaRetrievalOptions getSchemaRetrievalOptions();
 
-  void loadCatalog() throws SchemaCrawlerException;
+  void loadCatalog();
 
   void setAdditionalConfiguration(Config additionalConfig);
 

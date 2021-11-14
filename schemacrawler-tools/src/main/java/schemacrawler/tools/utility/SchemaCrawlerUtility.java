@@ -91,8 +91,7 @@ public final class SchemaCrawlerUtility {
       final Connection connection,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfig)
-      throws SchemaCrawlerException {
+      final Config additionalConfig) {
 
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();

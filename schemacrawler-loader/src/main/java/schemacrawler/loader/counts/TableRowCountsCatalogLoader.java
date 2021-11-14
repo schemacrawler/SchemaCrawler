@@ -31,11 +31,11 @@ package schemacrawler.loader.counts;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -77,7 +77,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws SchemaCrawlerException {
+  public void loadCatalog() {
     if (!isLoaded()) {
       return;
     }
@@ -112,7 +112,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving table row counts", e);
+      throw new ExecutionRuntimeException("Exception retrieving table row counts", e);
     }
   }
 }

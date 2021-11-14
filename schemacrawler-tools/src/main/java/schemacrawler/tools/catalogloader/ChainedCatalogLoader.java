@@ -38,7 +38,6 @@ import java.util.List;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.options.Config;
 
@@ -61,7 +60,7 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
   }
 
   @Override
-  public void loadCatalog() throws SchemaCrawlerException {
+  public void loadCatalog() {
     Catalog catalog = null;
     final Connection connection = getConnection();
     final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
