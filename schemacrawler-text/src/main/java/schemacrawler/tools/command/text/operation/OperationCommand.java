@@ -44,7 +44,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -133,7 +132,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
     return true;
   }
 
-  private DataTraversalHandler getDataTraversalHandler() throws SchemaCrawlerException {
+  private DataTraversalHandler getDataTraversalHandler() {
     final Operation operation = commandOptions.getOperation();
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 

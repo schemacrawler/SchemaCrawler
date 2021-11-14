@@ -38,7 +38,7 @@ import java.util.List;
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationType;
@@ -49,11 +49,7 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 
-/**
- * Text formatting of data.
- *
- * @author Sualeh Fatehi
- */
+/** Text formatting of data. */
 public final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
     implements DataTraversalHandler {
 
@@ -83,8 +79,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       final Operation operation,
       final OperationOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     super(
         options,
         /* printVerboseDatabaseInfo */
@@ -106,7 +101,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
   /** {@inheritDoc} */
   @Override
-  public void handleData(final Query query, final ResultSet rows) throws SchemaCrawlerException {
+  public void handleData(final Query query, final ResultSet rows) {
     final String title;
     if (query != null) {
       title = query.getName();
@@ -119,7 +114,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
   /** {@inheritDoc} */
   @Override
-  public void handleData(final Table table, final ResultSet rows) throws SchemaCrawlerException {
+  public void handleData(final Table table, final ResultSet rows) {
     final String tableName;
     if (table != null) {
       tableName = quoteName(table);
@@ -136,22 +131,21 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
    * @param title Title
    * @param results Results
    */
-  private void handleAggregateOperationForTable(final String title, final ResultSet results)
-      throws SchemaCrawlerException {
+  private void handleAggregateOperationForTable(final String title, final ResultSet results) {
     long aggregate = 0;
     try {
       if (results.next()) {
         aggregate = results.getLong(1);
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerException("Could not obtain aggregate data", e);
+      throw new SchemaAccessException("Could not obtain aggregate data", e);
     }
     final String message = getMessage(aggregate);
     //
     formattingHelper.writeNameValueRow(title, message, Alignment.right);
   }
 
-  private void handleData(final String title, final ResultSet rows) throws SchemaCrawlerException {
+  private void handleData(final String title, final ResultSet rows) {
     if (rows == null) {
       return;
     }
@@ -174,7 +168,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
         iterateRows(dataRows);
       } catch (final SQLException e) {
-        throw new SchemaCrawlerException(e.getMessage(), e);
+        throw new SchemaAccessException(e.getMessage(), e);
       }
       formattingHelper.writeObjectEnd();
     }
