@@ -53,14 +53,11 @@ import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database table columns.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database table columns. */
 final class TableColumnRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableColumnRetriever.class.getName());
@@ -251,7 +248,7 @@ final class TableColumnRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TABLE_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No table columns SQL provided");
+      throw new ExecutionRuntimeException("No table columns SQL provided");
     }
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
     try (final Statement statement = createStatement();

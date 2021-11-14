@@ -49,11 +49,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database tables.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database tables. */
 final class IndexRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(IndexRetriever.class.getName());

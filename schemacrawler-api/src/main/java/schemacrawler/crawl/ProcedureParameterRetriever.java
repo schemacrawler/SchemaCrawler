@@ -50,13 +50,12 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the database procedure parameters.
- *
- * @author Sualeh Fatehi
  */
 final class ProcedureParameterRetriever extends AbstractRetriever {
 
@@ -201,7 +200,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(PROCEDURE_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No procedure parameters SQL provided");
+      throw new ExecutionRuntimeException("No procedure parameters SQL provided");
     }
     final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
     try (final Statement statement = createStatement();

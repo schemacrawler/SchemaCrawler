@@ -90,7 +90,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaAccessException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
@@ -123,7 +124,7 @@ public final class SchemaCrawler {
       infoLevel = options.getLoadOptions().getSchemaInfoLevel();
       stopWatch = new RetrievalStopWatch(infoLevel);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
+      throw new SchemaAccessException(e.getMessage(), e);
     }
   }
 
@@ -147,7 +148,7 @@ public final class SchemaCrawler {
       crawlSequences();
 
       return catalog;
-    } catch (final SchemaCrawlerRuntimeException e) {
+    } catch (final RuntimeException e) {
       throw e;
     } catch (final Exception e) {
       throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
@@ -304,7 +305,7 @@ public final class SchemaCrawler {
 
     final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
     if (schemas.isEmpty()) {
-      throw new SchemaCrawlerException("No matching schemas found");
+      throw new ExecutionRuntimeException("No matching schemas found");
     }
     LOGGER.log(Level.INFO, new StringFormat("Retrieved %d schemas", schemas.size()));
   }

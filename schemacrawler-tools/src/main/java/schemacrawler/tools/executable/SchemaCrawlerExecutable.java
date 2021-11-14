@@ -39,7 +39,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -172,7 +171,7 @@ public final class SchemaCrawlerExecutable {
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 
-  private SchemaCrawlerCommand<?> loadCommand() throws SchemaCrawlerException {
+  private SchemaCrawlerCommand<?> loadCommand() {
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
     final SchemaCrawlerCommand<?> scCommand =
         commandRegistry.configureNewCommand(

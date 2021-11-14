@@ -48,7 +48,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 final class DataTypeRetriever extends AbstractRetriever {
@@ -156,7 +156,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TYPE_INFO)) {
-      throw new SchemaCrawlerSQLException("No system column data types SQL provided");
+      throw new ExecutionRuntimeException("No system column data types SQL provided");
     }
     final Query typeInfoSql = informationSchemaViews.getQuery(TYPE_INFO);
     try (final Statement statement = createStatement();

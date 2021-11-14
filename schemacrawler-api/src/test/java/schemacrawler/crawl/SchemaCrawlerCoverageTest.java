@@ -303,7 +303,9 @@ public class SchemaCrawlerCoverageTest {
 
     final SchemaCrawler schemaCrawler =
         new SchemaCrawler(connection2, schemaRetrievalOptions, schemaCrawlerOptions);
-    assertThrows(SchemaCrawlerRuntimeException.class, () -> schemaCrawler.crawl());
+    final NullPointerException npe =
+        assertThrows(NullPointerException.class, () -> schemaCrawler.crawl());
+    assertThat(npe.getMessage(), is("Cannot use null results"));
   }
 
   @Test

@@ -41,7 +41,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
@@ -94,8 +93,7 @@ public final class CommandRegistry {
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
       final Config additionalConfig,
-      final OutputOptions outputOptions)
-      throws SchemaCrawlerException {
+      final OutputOptions outputOptions) {
     final List<CommandProvider> executableCommandProviders = new ArrayList<>();
     findSupportedCommands(
         command, schemaCrawlerOptions, additionalConfig, outputOptions, executableCommandProviders);

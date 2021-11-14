@@ -53,11 +53,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database forign keys.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database forign keys. */
 final class ForeignKeyRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(ForeignKeyRetriever.class.getName());

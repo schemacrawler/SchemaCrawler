@@ -56,14 +56,10 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database procedures.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database procedures. */
 final class RoutineRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(RoutineRetriever.class.getName());
@@ -200,7 +196,7 @@ final class RoutineRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(FUNCTIONS)) {
-      throw new SchemaCrawlerSQLException("No functions SQL provided");
+      throw new ExecutionRuntimeException("No functions SQL provided");
     }
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
     try (final Statement statement = createStatement();
@@ -276,7 +272,7 @@ final class RoutineRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(PROCEDURES)) {
-      throw new SchemaCrawlerSQLException("No procedures SQL provided");
+      throw new ExecutionRuntimeException("No procedures SQL provided");
     }
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
     try (final Statement statement = createStatement();

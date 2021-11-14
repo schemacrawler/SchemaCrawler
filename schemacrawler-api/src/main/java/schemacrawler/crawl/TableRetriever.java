@@ -49,14 +49,10 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database tables.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database tables. */
 final class TableRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class.getName());
@@ -158,7 +154,7 @@ final class TableRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TABLES)) {
-      throw new SchemaCrawlerSQLException("No tables SQL provided");
+      throw new ExecutionRuntimeException("No tables SQL provided");
     }
     final Query tablesSql = informationSchemaViews.getQuery(TABLES);
     final TableTypes supportedTableTypes = getRetrieverConnection().getTableTypes();
