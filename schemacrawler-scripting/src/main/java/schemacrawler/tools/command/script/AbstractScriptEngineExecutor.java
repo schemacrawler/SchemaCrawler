@@ -43,8 +43,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.string.StringFormat;
 
@@ -108,9 +108,9 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
         scriptEngine.eval(reader);
       }
     } catch (final ScriptException e) {
-      throw new SchemaCrawlerExecutionRuntimeException("Could not execute script", e);
+      throw new ExecutionRuntimeException("Could not execute script", e);
     } catch (final IOException e) {
-      throw new SchemaCrawlerIORuntimeException("Could not read script", e);
+      throw new IORuntimeException("Could not read script", e);
     }
   }
 

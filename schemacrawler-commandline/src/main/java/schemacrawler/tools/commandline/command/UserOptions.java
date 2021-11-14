@@ -36,7 +36,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 
 public final class UserOptions {
 
@@ -116,7 +116,7 @@ public final class UserOptions {
         user = lines.get(0);
       }
     } catch (final IOException e) {
-      throw new SchemaCrawlerIORuntimeException(
+      throw new IORuntimeException(
           String.format("User could not be read from file <%s>", userFile), e);
     }
 

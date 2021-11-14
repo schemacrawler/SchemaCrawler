@@ -36,7 +36,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 
 public final class PasswordOptions {
 
@@ -117,7 +117,7 @@ public final class PasswordOptions {
         password = lines.get(0);
       }
     } catch (final IOException e) {
-      throw new SchemaCrawlerIORuntimeException(
+      throw new IORuntimeException(
           String.format("Password could not be read from file <%s>", passwordFile), e);
     }
 

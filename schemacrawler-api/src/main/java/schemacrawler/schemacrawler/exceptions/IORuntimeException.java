@@ -32,15 +32,15 @@ import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
 import java.io.IOException;
 
-public class SchemaCrawlerIORuntimeException extends SchemaCrawlerRuntimeException {
+public class IORuntimeException extends SchemaCrawlerRuntimeException {
 
   private static final long serialVersionUID = 8143604098031489051L;
 
-  public SchemaCrawlerIORuntimeException(final String message) {
+  public IORuntimeException(final String message) {
     super(message);
   }
 
-  public SchemaCrawlerIORuntimeException(final String message, final IOException cause) {
+  public IORuntimeException(final String message, final IOException cause) {
     super(makeExceptionMessage(message, cause), cause);
   }
 }

@@ -37,7 +37,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
@@ -74,7 +74,7 @@ public final class JavaSerializedCatalog implements CatalogSerializer {
     try (final ObjectOutputStream objOut = new ObjectOutputStream(out)) {
       objOut.writeObject(catalog);
     } catch (final IOException e) {
-      throw new SchemaCrawlerIORuntimeException("Could not serialize catalog", e);
+      throw new IORuntimeException("Could not serialize catalog", e);
     }
   }
 

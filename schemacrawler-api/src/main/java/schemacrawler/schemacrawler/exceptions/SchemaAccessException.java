@@ -32,11 +32,11 @@ import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
 import java.sql.SQLException;
 
-public class SchemaCrawlerDatabaseRuntimeException extends SchemaCrawlerRuntimeException {
+public class SchemaAccessException extends SchemaCrawlerRuntimeException {
 
   private static final long serialVersionUID = 7542373719708607330L;
 
-  public SchemaCrawlerDatabaseRuntimeException(final String message, final SQLException cause) {
+  public SchemaAccessException(final String message, final SQLException cause) {
     super(makeExceptionMessage(message, cause), cause);
   }
 }
