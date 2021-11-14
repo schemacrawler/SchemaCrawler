@@ -123,7 +123,6 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(pkSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrievePrimaryKeysFromDataDictionary");
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));

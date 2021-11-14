@@ -202,7 +202,6 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveFunctionColumnsFromDataDictionary");
       while (results.next()) {
         createFunctionParameter(results, allRoutines, parameterFilter);
       }

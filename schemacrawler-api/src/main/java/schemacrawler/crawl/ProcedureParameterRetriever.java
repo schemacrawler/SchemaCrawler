@@ -206,7 +206,6 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(procedureColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveProcedureParametersFromDataDictionary");
       while (results.next()) {
         createProcedureParameter(results, allRoutines, parameterFilter);
       }

@@ -216,7 +216,6 @@ final class TableColumnRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveHiddenColumns");
       while (results.next()) {
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
@@ -254,7 +253,6 @@ final class TableColumnRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveTableColumnsFromDataDictionary");
       while (results.next()) {
         createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
       }

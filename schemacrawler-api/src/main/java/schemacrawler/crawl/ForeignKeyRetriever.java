@@ -191,7 +191,6 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(fkSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);
     } catch (final SQLException e) {
       throw new SchemaCrawlerSQLException(

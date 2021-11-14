@@ -172,7 +172,6 @@ final class IndexRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(indexesSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveIndexesFromDataDictionary");
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));

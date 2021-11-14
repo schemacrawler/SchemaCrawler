@@ -240,7 +240,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(databaseUsersSql, statement, new IncludeAll())) {
-      results.setDescription("retrieveDatabaseUsers");
       while (results.next()) {
         final String username = results.getString("USERNAME");
         if (isBlank(username)) {
@@ -275,7 +274,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(serverInfoSql, statement, new IncludeAll())) {
-      results.setDescription("retrieveServerInfo");
       while (results.next()) {
         final String propertyName = results.getString("NAME");
         if (isBlank(propertyName)) {

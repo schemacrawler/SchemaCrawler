@@ -39,8 +39,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
@@ -52,8 +52,7 @@ import us.fatehi.utility.string.StringFormat;
 
 final class SchemaRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SchemaRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaRetriever.class.getName());
 
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
@@ -149,8 +148,8 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas) {
       int numSchemas = 0;
-      try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getSchemas())) {
-        results.setDescription("retrieveAllSchemas");
+      try (final MetadataResultSet results =
+          new MetadataResultSet(getMetaData().getSchemas(), "DatabaseMetaData::getSchemas")) {
         while (results.next()) {
           numSchemas = numSchemas + 1;
           final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -196,7 +195,6 @@ final class SchemaRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveAllSchemasFromInformationSchemaViews");
       int numSchemas = 0;
       while (results.next()) {
         numSchemas = numSchemas + 1;

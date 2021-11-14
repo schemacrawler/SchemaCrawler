@@ -42,6 +42,7 @@ import static us.fatehi.utility.DatabaseUtility.logSQLWarnings;
 import static us.fatehi.utility.IOUtility.readFully;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isIntegral;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.Reader;
 import java.math.BigInteger;
@@ -57,8 +58,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.schema.ResultsColumn;
@@ -76,14 +77,13 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class MetadataResultSet implements AutoCloseable {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(MetadataResultSet.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class.getName());
 
   private static final int FETCHSIZE = 20;
 
   private final ResultsColumns resultsColumns;
   private final ResultSet results;
-  private String description;
+  private final String description;
   private Set<ResultsColumn> readColumns;
   private int rowCount;
   private boolean showLobs;
@@ -91,17 +91,22 @@ public final class MetadataResultSet implements AutoCloseable {
   public MetadataResultSet(
       final Query query, final Statement statement, final InclusionRule schemaInclusionRule)
       throws SQLException {
-    this(executeAgainstSchema(query, statement, schemaInclusionRule));
-    description = query.getName();
+    this(executeAgainstSchema(query, statement, schemaInclusionRule), query.getName());
   }
 
   public MetadataResultSet(final ResultSet resultSet) throws SQLException {
+    this(resultSet, null);
+  }
+
+  public MetadataResultSet(final ResultSet resultSet, final String description)
+      throws SQLException {
     results = requireNonNull(resultSet, "Cannot use null results");
     try {
       results.setFetchSize(FETCHSIZE);
     } catch (final NullPointerException | SQLException e) {
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
+    this.description = trimToEmpty(description);
 
     resultsColumns = new ResultsCrawler(results).crawl();
     readColumns = new HashSet<>();
@@ -403,10 +408,6 @@ public final class MetadataResultSet implements AutoCloseable {
     }
 
     return currentRow;
-  }
-
-  public void setDescription(final String description) {
-    this.description = description;
   }
 
   public void setShowLobs(final boolean showLobs) {

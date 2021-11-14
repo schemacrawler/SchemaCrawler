@@ -167,7 +167,6 @@ final class TableRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveTablesFromDataDictionary");
       int numTables = 0;
       while (results.next()) {
         numTables = numTables + 1;
@@ -197,8 +196,8 @@ final class TableRetriever extends AbstractRetriever {
           new MetadataResultSet(
               getMetaData()
                   .getTables(
-                      catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()))) {
-        results.setDescription("retrieveTablesFromMetadata");
+                      catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()),
+              "DatabaseMetaData::getTables")) {
         int numTables = 0;
         while (results.next()) {
           numTables = numTables + 1;

@@ -202,7 +202,6 @@ final class RoutineRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveFunctionsFromDataDictionary");
       int numFunctions = 0;
       while (results.next()) {
         numFunctions = numFunctions + 1;
@@ -222,8 +221,9 @@ final class RoutineRetriever extends AbstractRetriever {
       final String schemaName = schema.getName();
 
       try (final MetadataResultSet results =
-          new MetadataResultSet(getMetaData().getFunctions(catalogName, schemaName, null))) {
-        results.setDescription("retrieveFunctionsFromMetadata");
+          new MetadataResultSet(
+              getMetaData().getFunctions(catalogName, schemaName, null),
+              "DatabaseMetaData::getFunctions")) {
         int numFunctions = 0;
         while (results.next()) {
           numFunctions = numFunctions + 1;
@@ -278,7 +278,6 @@ final class RoutineRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveProceduresFromDataDictionary");
       int numProcedures = 0;
       while (results.next()) {
         numProcedures = numProcedures + 1;
@@ -299,8 +298,9 @@ final class RoutineRetriever extends AbstractRetriever {
       final String schemaName = schema.getName();
 
       try (final MetadataResultSet results =
-          new MetadataResultSet(getMetaData().getProcedures(catalogName, schemaName, null))) {
-        results.setDescription("retrieveProceduresFromMetadata");
+          new MetadataResultSet(
+              getMetaData().getProcedures(catalogName, schemaName, null),
+              "DatabaseMetaData::getProcedures")) {
         int numProcedures = 0;
         while (results.next()) {
           numProcedures = numProcedures + 1;

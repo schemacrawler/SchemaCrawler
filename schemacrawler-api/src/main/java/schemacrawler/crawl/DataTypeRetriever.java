@@ -162,7 +162,6 @@ final class DataTypeRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveSystemColumnDataTypesFromDataDictionary");
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
@@ -176,8 +175,8 @@ final class DataTypeRetriever extends AbstractRetriever {
 
   private void retrieveSystemColumnDataTypesFromMetadata(final Schema systemSchema)
       throws SQLException {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getTypeInfo())) {
-      results.setDescription("retrieveSystemColumnDataTypesFromDataDictionary");
+    try (final MetadataResultSet results =
+        new MetadataResultSet(getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo")) {
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
