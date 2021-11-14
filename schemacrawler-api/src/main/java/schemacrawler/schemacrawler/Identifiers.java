@@ -48,7 +48,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 
 /**
  * Allows working with database object identifiers. All SQL 2003 keywords are considered
@@ -77,7 +77,7 @@ public final class Identifiers {
         LOGGER.log(Level.WARNING, "Could not read list of SQL 2003 reserved words", e);
       }
       if (reservedWords.isEmpty()) {
-        throw new SchemaCrawlerRuntimeException("No SQL 2003 reserved words found");
+        throw new InternalRuntimeException("No SQL 2003 reserved words found");
       }
 
       return toUpperCase(reservedWords);

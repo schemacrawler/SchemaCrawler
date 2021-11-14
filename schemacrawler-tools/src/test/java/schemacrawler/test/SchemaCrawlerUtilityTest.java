@@ -46,7 +46,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
@@ -65,7 +65,7 @@ public class SchemaCrawlerUtilityTest {
   public void getCatalogClosedConnection(final Connection connection) throws Exception {
     connection.close();
     assertThrows(
-        SchemaCrawlerRuntimeException.class,
+        InternalRuntimeException.class,
         () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
   }
 

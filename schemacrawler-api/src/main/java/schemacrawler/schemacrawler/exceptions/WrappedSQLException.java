@@ -31,19 +31,19 @@ import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
 import java.sql.SQLException;
 
-public class SchemaCrawlerSQLException extends SQLException {
+public class WrappedSQLException extends SQLException {
 
   private static final long serialVersionUID = 3424948223257267142L;
 
-  public SchemaCrawlerSQLException(final String message) {
+  public WrappedSQLException(final String message) {
     super(message);
   }
 
-  public SchemaCrawlerSQLException(final String message, final Exception cause) {
+  public WrappedSQLException(final String message, final Exception cause) {
     super(makeExceptionMessage(message, cause), cause);
   }
 
-  public SchemaCrawlerSQLException(final String message, final SQLException cause) {
+  public WrappedSQLException(final String message, final SQLException cause) {
     super(
         makeExceptionMessage(message, cause),
         cause == null ? "" : cause.getSQLState(),

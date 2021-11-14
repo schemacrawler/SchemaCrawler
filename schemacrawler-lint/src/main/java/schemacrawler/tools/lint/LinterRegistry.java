@@ -39,7 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 /** Linter registry for mapping linters by id. */
@@ -80,7 +80,7 @@ public final class LinterRegistry implements Iterable<String> {
         linterRegistry.put(linterId, linterClass);
       }
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException("Could not load linter registry", e);
+      throw new InternalRuntimeException("Could not load linter registry", e);
     }
 
     return linterRegistry;

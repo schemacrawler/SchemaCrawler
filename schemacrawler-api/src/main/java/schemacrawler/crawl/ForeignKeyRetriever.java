@@ -50,7 +50,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database forign keys. */
@@ -177,7 +177,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         catalog, catalogName, schemaName, tableName, columnName);
   }
 
-  private void retrieveForeignKeysFromDataDictionary() throws SchemaCrawlerSQLException {
+  private void retrieveForeignKeysFromDataDictionary() throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
@@ -193,13 +193,13 @@ final class ForeignKeyRetriever extends AbstractRetriever {
             new MetadataResultSet(fkSql, statement, getSchemaInclusionRule())) {
       createForeignKeys(results, foreignKeys);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve foreign keys from SQL:%n%s", fkSql), e);
     }
   }
 
   private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     for (final MutableTable table : allTables) {
       if (table instanceof View) {
@@ -216,7 +216,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
               "DatabaseMetaData::getImportedKeys")) {
         createForeignKeys(results, foreignKeys);
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format("Could not retrieve foreign keys for table <%s>", table), e);
       }
 

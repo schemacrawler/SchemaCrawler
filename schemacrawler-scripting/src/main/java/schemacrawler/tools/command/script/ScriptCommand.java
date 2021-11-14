@@ -39,7 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import us.fatehi.utility.ioresource.InputResource;
@@ -87,7 +87,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     }
 
     // No suitable engine found
-    throw new SchemaCrawlerRuntimeException(
+    throw new InternalRuntimeException(
         "Scripting engine not found for language, " + scriptingLanguage);
   }
 
@@ -98,7 +98,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     checkCatalog();
 
     if (scriptExecutor == null) {
-      throw new SchemaCrawlerRuntimeException("Scripting engine not found");
+      throw new InternalRuntimeException("Scripting engine not found");
     }
 
     final Charset inputCharset = outputOptions.getInputCharset();

@@ -37,7 +37,7 @@ import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.string.StringFormat;
@@ -93,7 +93,7 @@ public final class CatalogLoaderRegistry {
         catalogLoaderRegistry.add(catalogLoader);
       }
     } catch (final Throwable e) {
-      throw new SchemaCrawlerRuntimeException("Could not load catalog loader registry", e);
+      throw new InternalRuntimeException("Could not load catalog loader registry", e);
     }
 
     Collections.sort(catalogLoaderRegistry);

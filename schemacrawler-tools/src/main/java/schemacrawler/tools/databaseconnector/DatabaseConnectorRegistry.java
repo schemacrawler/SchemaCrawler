@@ -46,7 +46,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.string.StringFormat;
 
@@ -96,7 +96,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
         }
       }
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException("Could not load database connector registry", e);
+      throw new InternalRuntimeException("Could not load database connector registry", e);
     }
 
     return databaseConnectorRegistry;
@@ -127,7 +127,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
         }
       }
     } catch (final Throwable e) {
-      throw new SchemaCrawlerRuntimeException("Could not load database drivers", e);
+      throw new InternalRuntimeException("Could not load database drivers", e);
     }
     if (log) {
       LOGGER.log(Level.CONFIG, buffer.toString());

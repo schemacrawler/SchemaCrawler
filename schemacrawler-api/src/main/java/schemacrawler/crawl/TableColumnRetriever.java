@@ -54,7 +54,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database table columns. */
@@ -263,7 +263,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
       final Set<List<String>> hiddenTableColumnsLookupKeys)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     for (final MutableTable table : allTables) {
       LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
       try (final MetadataResultSet results =
@@ -279,7 +279,7 @@ final class TableColumnRetriever extends AbstractRetriever {
           createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
         }
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format(
                 "Could not retrieve table columns for %s <%s>", table.getTableType(), table),
             e);

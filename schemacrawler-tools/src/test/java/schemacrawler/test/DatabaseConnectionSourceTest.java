@@ -41,7 +41,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestDatabaseDriver;
@@ -116,7 +116,7 @@ public class DatabaseConnectionSourceTest {
                 + System.lineSeparator()));
 
     final Exception connectionException =
-        assertThrows(SchemaCrawlerRuntimeException.class, () -> connectionSource.get());
+        assertThrows(InternalRuntimeException.class, () -> connectionSource.get());
     connectionException.printStackTrace();
   }
 }

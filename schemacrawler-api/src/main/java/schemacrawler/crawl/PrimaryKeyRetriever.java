@@ -43,7 +43,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database tables. */
@@ -110,7 +110,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
   }
 
   private void retrievePrimaryKeysFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
@@ -137,7 +137,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         createPrimaryKeyForTable(table, results);
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve primary keys from SQL:%n%s", pkSql), e);
     }
   }
@@ -159,7 +159,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
           createPrimaryKeyForTable(table, results);
         }
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format("Could not retrieve primary keys for table <%s>", table), e);
       }
     }

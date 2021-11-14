@@ -37,7 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -153,7 +153,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
       try {
         scCommand.checkAvailability();
       } catch (final Exception e) {
-        throw new SchemaCrawlerRuntimeException(
+        throw new InternalRuntimeException(
             String.format("Command <%s> is not available", scCommand));
       }
     }

@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.TestCatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -37,7 +37,7 @@ public class CatalogLoaderRegistryTest {
           System.setProperty(
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
-              SchemaCrawlerRuntimeException.class,
+              InternalRuntimeException.class,
               () -> new CatalogLoaderRegistry().getCommandLineCommands());
         });
   }
@@ -54,7 +54,7 @@ public class CatalogLoaderRegistryTest {
           System.setProperty(
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
-              SchemaCrawlerRuntimeException.class,
+              InternalRuntimeException.class,
               () -> new CatalogLoaderRegistry().getHelpCommands());
         });
   }
@@ -84,7 +84,7 @@ public class CatalogLoaderRegistryTest {
           System.setProperty(
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
-              SchemaCrawlerRuntimeException.class,
+              InternalRuntimeException.class,
               () -> new CatalogLoaderRegistry().getSupportedCatalogLoaders());
         });
   }

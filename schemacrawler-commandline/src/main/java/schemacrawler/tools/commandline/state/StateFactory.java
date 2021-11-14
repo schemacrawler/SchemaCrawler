@@ -30,7 +30,7 @@ package schemacrawler.tools.commandline.state;
 import static picocli.CommandLine.defaultFactory;
 
 import picocli.CommandLine.IFactory;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 
 public class StateFactory extends BaseStateHolder implements IFactory {
 
@@ -51,7 +51,7 @@ public class StateFactory extends BaseStateHolder implements IFactory {
         return defaultPicocliFactory.create(cls);
       }
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException(
+      throw new InternalRuntimeException(
           String.format("Could not instantiate class <%s>", cls), e);
     }
   }

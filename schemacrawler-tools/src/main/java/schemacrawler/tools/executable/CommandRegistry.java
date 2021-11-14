@@ -42,7 +42,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
@@ -78,7 +78,7 @@ public final class CommandRegistry {
         commandProviders.add(commandProvider);
       }
     } catch (final Throwable e) {
-      throw new SchemaCrawlerRuntimeException("Could not load extended command registry", e);
+      throw new InternalRuntimeException("Could not load extended command registry", e);
     }
 
     return commandProviders;
@@ -134,7 +134,7 @@ public final class CommandRegistry {
       // Mainly catch NoClassDefFoundError, which is a Throwable, for
       // missing third-party jars
       LOGGER.log(Level.CONFIG, e.getMessage(), e);
-      throw new SchemaCrawlerRuntimeException(String.format("Cannot run command <%s>", command));
+      throw new InternalRuntimeException(String.format("Cannot run command <%s>", command));
     }
 
     return scCommand;
@@ -182,7 +182,7 @@ public final class CommandRegistry {
       }
     }
     if (executableCommandProviders.isEmpty()) {
-      throw new SchemaCrawlerRuntimeException(String.format("Unknown command <%s>", command));
+      throw new InternalRuntimeException(String.format("Unknown command <%s>", command));
     }
   }
 

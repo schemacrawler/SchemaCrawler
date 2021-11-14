@@ -51,7 +51,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -215,7 +215,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
   private void retrieveProcedureParametersFromMetadata(
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     for (final MutableRoutine routine : allRoutines) {
       if (routine.getRoutineType() != RoutineType.procedure) {
         continue;
@@ -236,7 +236,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
           createProcedureParameter(results, allRoutines, parameterFilter);
         }
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format("Could not retrieve procedure parameters for procedure <%s>", procedure),
             e);
       }

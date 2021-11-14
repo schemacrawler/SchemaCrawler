@@ -53,7 +53,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -104,8 +104,8 @@ public class SchemaCrawlerExecutableTest {
     final String command1 = "bad-command";
     final SchemaCrawlerExecutable executable1 = new SchemaCrawlerExecutable(command1);
     executable1.setConnection(connection);
-    final SchemaCrawlerRuntimeException ex1 =
-        assertThrows(SchemaCrawlerRuntimeException.class, () -> executable1.execute());
+    final InternalRuntimeException ex1 =
+        assertThrows(InternalRuntimeException.class, () -> executable1.execute());
     assertThat(ex1.getMessage(), is("Unknown command <" + command1 + ">"));
 
     final String command2 = "test-command";
@@ -114,8 +114,8 @@ public class SchemaCrawlerExecutableTest {
     final Config config = new Config();
     config.put("return-null", "true");
     executable2.setAdditionalConfiguration(config);
-    final SchemaCrawlerRuntimeException ex2 =
-        assertThrows(SchemaCrawlerRuntimeException.class, () -> executable2.execute());
+    final InternalRuntimeException ex2 =
+        assertThrows(InternalRuntimeException.class, () -> executable2.execute());
     assertThat(ex2.getMessage(), is("Cannot run command <" + command2 + ">"));
   }
 

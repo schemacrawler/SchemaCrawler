@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -170,7 +170,7 @@ public final class SchemaCrawlerUtility {
     try {
       DatabaseUtility.checkConnection(connection);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException("Bad database connection", e);
+      throw new InternalRuntimeException("Bad database connection", e);
     }
   }
 

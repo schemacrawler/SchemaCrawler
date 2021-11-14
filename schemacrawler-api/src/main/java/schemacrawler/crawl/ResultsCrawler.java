@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.StopWatch;
 
 /** SchemaCrawler uses database meta-data to get the details about the schema. */
@@ -79,7 +79,7 @@ public final class ResultsCrawler {
     } catch (final SQLException e) {
       throw e;
     } catch (final Exception e) {
-      throw new SchemaCrawlerSQLException("Could not retrieve result-set metadata", e);
+      throw new WrappedSQLException("Could not retrieve result-set metadata", e);
     }
   }
 }

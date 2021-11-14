@@ -46,7 +46,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database tables. */
@@ -159,7 +159,7 @@ final class IndexRetriever extends AbstractRetriever {
   }
 
   private void retrieveIndexesFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
@@ -186,7 +186,7 @@ final class IndexRetriever extends AbstractRetriever {
         createIndexForTable(table, results);
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve indexes from SQL:%n%s", indexesSql), e);
     }
   }
@@ -215,7 +215,7 @@ final class IndexRetriever extends AbstractRetriever {
             "DatabaseMetaData::getIndexInfo")) {
       createIndexes(table, results);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve indexes for table <%s>", table), e);
     }
   }

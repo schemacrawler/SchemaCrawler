@@ -47,8 +47,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DatabaseConnectionSource implements Supplier<Connection> {
@@ -152,7 +152,7 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
         }
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException("Could not get connection properties", e);
+      throw new InternalRuntimeException("Could not get connection properties", e);
     }
 
     return jdbcConnectionProperties;
@@ -208,7 +208,7 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
     try {
       return DriverManager.getDriver(connectionUrl);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format(
               "Could not find a suitable JDBC driver for database connection URL <%s>",
               this.connectionUrl),
