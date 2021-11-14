@@ -55,8 +55,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /**

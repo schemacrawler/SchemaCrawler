@@ -30,7 +30,7 @@ package schemacrawler.tools.commandline.state;
 import static picocli.CommandLine.defaultFactory;
 
 import picocli.CommandLine.IFactory;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 
 public class StateFactory extends BaseStateHolder implements IFactory {
 

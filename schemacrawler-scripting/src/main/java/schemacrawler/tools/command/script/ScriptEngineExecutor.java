@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 
 import javax.script.ScriptEngineManager;
 
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 /** Main executor for the script engine integration. */

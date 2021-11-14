@@ -37,7 +37,7 @@ import java.util.List;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.TarjanStronglyConnectedComponentFinder;

@@ -29,7 +29,7 @@ package schemacrawler.tools.lint;
 
 import java.util.function.Supplier;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 
 public final class LinterHelp implements Supplier<String[]> {
 

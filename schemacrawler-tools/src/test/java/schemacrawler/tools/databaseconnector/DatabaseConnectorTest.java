@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.executable.commandline.PluginCommand;

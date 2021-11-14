@@ -66,7 +66,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer {

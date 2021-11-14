@@ -30,7 +30,7 @@ package schemacrawler.tools.lint;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 
 public enum LintDispatch {
   none {

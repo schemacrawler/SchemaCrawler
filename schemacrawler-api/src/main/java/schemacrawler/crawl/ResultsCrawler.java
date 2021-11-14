@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
 import us.fatehi.utility.StopWatch;
 
 /** SchemaCrawler uses database meta-data to get the details about the schema. */

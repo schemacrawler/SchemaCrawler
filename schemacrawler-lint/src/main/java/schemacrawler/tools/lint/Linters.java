@@ -39,7 +39,7 @@ import java.util.logging.Level;
 
 import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import us.fatehi.utility.string.StringFormat;

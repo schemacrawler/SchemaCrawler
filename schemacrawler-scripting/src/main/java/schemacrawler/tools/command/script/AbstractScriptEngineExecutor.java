@@ -43,8 +43,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 
-import schemacrawler.schemacrawler.SchemaCrawlerExecutionRuntimeException;
-import schemacrawler.schemacrawler.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.string.StringFormat;
 

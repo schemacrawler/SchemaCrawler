@@ -30,7 +30,7 @@ package schemacrawler.tools.databaseconnector;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.PropertiesUtility;
 
 final class UnknownDatabaseConnector extends DatabaseConnector {

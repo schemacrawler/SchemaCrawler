@@ -29,7 +29,7 @@ package schemacrawler.tools.command.text.diagram;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 final class GraphNoOpExecutor implements GraphExecutor {

@@ -25,29 +25,20 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+
+package schemacrawler.schemacrawler.exceptions;
 
 import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
-import java.sql.SQLException;
+public class SchemaCrawlerExecutionRuntimeException extends SchemaCrawlerRuntimeException {
 
-public class SchemaCrawlerSQLException extends SQLException {
+  private static final long serialVersionUID = 8143604098031489051L;
 
-  private static final long serialVersionUID = 3424948223257267142L;
-
-  public SchemaCrawlerSQLException(final String message) {
+  public SchemaCrawlerExecutionRuntimeException(final String message) {
     super(message);
   }
 
-  public SchemaCrawlerSQLException(final String message, final Exception cause) {
+  public SchemaCrawlerExecutionRuntimeException(final String message, final Exception cause) {
     super(makeExceptionMessage(message, cause), cause);
-  }
-
-  public SchemaCrawlerSQLException(final String message, final SQLException cause) {
-    super(
-        makeExceptionMessage(message, cause),
-        cause == null ? "" : cause.getSQLState(),
-        cause == null ? 0 : cause.getErrorCode(),
-        cause);
   }
 }

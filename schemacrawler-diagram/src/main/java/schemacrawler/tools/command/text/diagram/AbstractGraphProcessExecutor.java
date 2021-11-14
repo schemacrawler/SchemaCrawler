@@ -33,7 +33,7 @@ import static us.fatehi.utility.IOUtility.isFileWritable;
 
 import java.nio.file.Path;
 
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 abstract class AbstractGraphProcessExecutor implements GraphExecutor {

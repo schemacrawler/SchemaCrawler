@@ -45,9 +45,9 @@ import com.typesafe.config.ConfigFactory;
 import picocli.CommandLine;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.OutputFormat;
 

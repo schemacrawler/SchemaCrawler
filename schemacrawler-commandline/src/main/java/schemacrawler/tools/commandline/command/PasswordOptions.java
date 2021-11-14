@@ -36,7 +36,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
 
 public final class PasswordOptions {
 

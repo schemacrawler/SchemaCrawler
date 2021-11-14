@@ -36,11 +36,11 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import schemacrawler.schemacrawler.SchemaCrawlerDatabaseRuntimeException;
-import schemacrawler.schemacrawler.SchemaCrawlerIORuntimeException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerDatabaseRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerIORuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;

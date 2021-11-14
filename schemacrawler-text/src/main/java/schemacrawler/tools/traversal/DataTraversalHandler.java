@@ -31,7 +31,7 @@ import java.sql.ResultSet;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 
 public interface DataTraversalHandler extends TraversalHandler {
 

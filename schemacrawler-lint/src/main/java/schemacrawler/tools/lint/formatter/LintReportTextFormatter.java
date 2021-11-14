@@ -39,7 +39,7 @@ import java.util.List;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintReport;
