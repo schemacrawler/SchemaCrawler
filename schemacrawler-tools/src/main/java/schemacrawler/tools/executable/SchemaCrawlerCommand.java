@@ -38,12 +38,8 @@ import schemacrawler.tools.options.OutputOptions;
 /** A SchemaCrawler tools executable unit. */
 public interface SchemaCrawlerCommand<C extends CommandOptions> {
 
-  /**
-   * Checks whether a command is available, and throws an exception if it is not available.
-   *
-   * @throws Exception On an exception
-   */
-  void checkAvailability() throws Exception;
+  /** Checks whether a command is available, and throws an exception if it is not available. */
+  void checkAvailability();
 
   /**
    * Executes functionality for SchemaCrawler, after database metadata has been obtained.
@@ -66,12 +62,8 @@ public interface SchemaCrawlerCommand<C extends CommandOptions> {
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
-  /**
-   * Initializes the command for execution.
-   *
-   * @throws Exception On an exception
-   */
-  void initialize() throws Exception;
+  /** Initializes the command for execution. */
+  void initialize();
 
   void setCatalog(Catalog catalog);
 

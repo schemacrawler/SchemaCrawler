@@ -164,7 +164,7 @@ public final class SchemaCrawlerExecutable {
     return command;
   }
 
-  private void loadCatalog() throws Exception {
+  private void loadCatalog() {
     catalog =
         SchemaCrawlerUtility.getCatalog(
             connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);

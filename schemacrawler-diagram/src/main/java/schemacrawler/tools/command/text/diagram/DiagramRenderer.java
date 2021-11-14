@@ -121,7 +121,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
   }
 
   @Override
-  public void initialize() throws Exception {
+  public void initialize() {
     super.initialize();
     diagramOutputFormat = DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
   }
