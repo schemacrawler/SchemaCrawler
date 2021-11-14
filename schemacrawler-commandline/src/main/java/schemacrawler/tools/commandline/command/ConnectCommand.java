@@ -44,7 +44,7 @@ import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
@@ -124,7 +124,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException("Cannot connect to database", e);
+      throw new DatabaseAccessException("Cannot connect to database", e);
     }
   }
 

@@ -40,7 +40,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.FileOutputResource;
 import us.fatehi.utility.ioresource.OutputResource;
@@ -140,8 +140,7 @@ public final class OutputOptions implements Options {
       return new PrintWriter(
           outputResource.openNewOutputWriter(getOutputCharset(), appendOutput), true);
     } catch (final IOException e) {
-      throw new SchemaCrawlerRuntimeException(
-          String.format("Could not open output writer <%s>"), e);
+      throw new IORuntimeException(String.format("Could not open output writer <%s>"), e);
     }
   }
 

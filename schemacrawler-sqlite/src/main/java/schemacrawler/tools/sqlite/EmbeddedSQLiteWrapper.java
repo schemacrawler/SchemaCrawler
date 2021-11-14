@@ -39,8 +39,8 @@ import java.sql.SQLException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -90,8 +90,7 @@ public class EmbeddedSQLiteWrapper {
     final Path databaseFile =
         requireNonNull(dbFile, "No database file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(databaseFile)) {
-      throw new IORuntimeException(
-          String.format("Could not read database file <%s>", dbFile));
+      throw new IORuntimeException(String.format("Could not read database file <%s>", dbFile));
     }
     return databaseFile;
   }
@@ -120,7 +119,7 @@ public class EmbeddedSQLiteWrapper {
 
       return diagramFile;
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException(
+      throw new ExecutionRuntimeException(
           String.format("Could not create database schema diagram <%s>", title), e);
     }
   }

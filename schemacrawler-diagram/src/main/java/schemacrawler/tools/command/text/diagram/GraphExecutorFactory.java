@@ -38,7 +38,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
@@ -48,7 +49,7 @@ public class GraphExecutorFactory {
 
   public void canGenerate(final DiagramOutputFormat diagramOutputFormat) {
     if (diagramOutputFormat == null) {
-      throw new SchemaCrawlerRuntimeException("No diagram output format specified");
+      throw new ConfigurationException("No diagram output format specified");
     } else if (diagramOutputFormat == scdot) {
       return;
     } else if (isGraphvizAvailable()) {
@@ -56,7 +57,7 @@ public class GraphExecutorFactory {
     } else if (isGraphvizJavaAvailable(diagramOutputFormat)) {
       return;
     } else {
-      throw new SchemaCrawlerRuntimeException(
+      throw new ExecutionRuntimeException(
           String.format("Cannot generate diagram in <%s> output format", diagramOutputFormat));
     }
   }
@@ -85,7 +86,7 @@ public class GraphExecutorFactory {
 
       if (!graphExecutorAvailable) {
         final String message = readResourceFully("/dot.error.txt");
-        throw new SchemaCrawlerRuntimeException(message);
+        throw new ExecutionRuntimeException(message);
       }
 
     } else {

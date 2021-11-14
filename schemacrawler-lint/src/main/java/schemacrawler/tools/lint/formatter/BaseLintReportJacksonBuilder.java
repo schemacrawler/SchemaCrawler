@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.options.OutputOptions;
@@ -39,7 +39,7 @@ abstract class BaseLintReportJacksonBuilder implements LintReportBuilder {
       final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, report);
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException("Could not generate lint report", e);
+      throw new ExecutionRuntimeException("Could not generate lint report", e);
     }
   }
 

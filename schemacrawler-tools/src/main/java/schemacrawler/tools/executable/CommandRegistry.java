@@ -41,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
@@ -202,7 +203,7 @@ public final class CommandRegistry {
       }
     }
     if (executableCommandProviders.isEmpty()) {
-      throw new SchemaCrawlerRuntimeException(
+      throw new ConfigurationException(
           String.format(
               "Output format <%s> not supported for command <%s>",
               outputOptions.getOutputFormatValue(), command));

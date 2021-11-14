@@ -41,7 +41,7 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.options.OutputOptions;
 
 /**
@@ -106,7 +106,7 @@ public final class VelocityRenderer extends BaseTemplateRenderer {
       final Template template = ve.getTemplate(templateLocation, templateEncoding);
       template.merge(context, writer);
     } catch (final ResourceNotFoundException e) {
-      throw new SchemaCrawlerRuntimeException("Please specify an Apache Velocity template", e);
+      throw new ConfigurationException("Apache Velocity template not found", e);
     }
   }
 }

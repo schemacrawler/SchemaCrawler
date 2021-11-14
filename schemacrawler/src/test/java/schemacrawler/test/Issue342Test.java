@@ -17,7 +17,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -51,8 +51,8 @@ public class Issue342Test {
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);
 
-    final SchemaCrawlerRuntimeException exception =
-        assertThrows(SchemaCrawlerRuntimeException.class, () -> executable.execute());
+    final ConfigurationException exception =
+        assertThrows(ConfigurationException.class, () -> executable.execute());
     assertThat(
         exception.getMessage(), is("Output format <json> not supported for command <schema>"));
   }

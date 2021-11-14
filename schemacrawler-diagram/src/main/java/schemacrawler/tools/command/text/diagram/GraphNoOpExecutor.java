@@ -29,7 +29,7 @@ package schemacrawler.tools.command.text.diagram;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 final class GraphNoOpExecutor implements GraphExecutor {
@@ -37,7 +37,7 @@ final class GraphNoOpExecutor implements GraphExecutor {
   GraphNoOpExecutor(final DiagramOutputFormat diagramOutputFormat) {
     requireNonNull(diagramOutputFormat, "No diagram output format provided");
     if (diagramOutputFormat != DiagramOutputFormat.scdot) {
-      throw new SchemaCrawlerRuntimeException(
+      throw new ExecutionRuntimeException(
           String.format("Format should be <%s>", DiagramOutputFormat.scdot));
     }
   }

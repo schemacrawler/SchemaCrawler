@@ -44,7 +44,7 @@ import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
@@ -139,8 +139,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     // (Check after output options have been built)
     if (DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
         && !commandOutputOptions.getOutputFile().isPresent()) {
-      throw new SchemaCrawlerRuntimeException(
-          "Output file has to be specified for schema diagrams");
+      throw new ConfigurationException("Output file has to be specified for schema diagrams");
     }
 
     final String command = commandOptions.getCommand();

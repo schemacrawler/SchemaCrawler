@@ -41,7 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.ioresource.InputResource;
@@ -66,7 +66,7 @@ public final class LinterConfigUtility {
           InputResourceUtility.createInputResource(linterConfigsFile)
               .orElseThrow(
                   () ->
-                      new SchemaCrawlerRuntimeException(
+                      new ConfigurationException(
                           String.format(
                               "Could not load linter configs from file <%s>", linterConfigsFile)));
       try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
@@ -75,7 +75,7 @@ public final class LinterConfigUtility {
           linterConfigs.add(linterConfig);
         }
       } catch (final Exception e) {
-        throw new SchemaCrawlerRuntimeException(
+        throw new ConfigurationException(
             String.format("Could not load linter configs from file <%s>", linterConfigsFile), e);
       }
     }
@@ -96,7 +96,7 @@ public final class LinterConfigUtility {
 
       return linterConfigs;
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException("Could not read linter configs", e);
+      throw new ConfigurationException("Could not read linter configs", e);
     }
   }
 

@@ -110,7 +110,9 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                     .orElseThrow(
                         () ->
                             new IORuntimeException(
-                                "Cannot locate catalog attributes file, " + catalogAttributesFile));
+                                String.format(
+                                    "Cannot locate catalog attributes file <%s>",
+                                    catalogAttributesFile)));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
             loadRemarks(catalog, catalogAttributes);
             loadAlternateKeys(catalog, catalogAttributes);

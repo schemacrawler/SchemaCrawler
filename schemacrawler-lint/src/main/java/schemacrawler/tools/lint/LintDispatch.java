@@ -30,7 +30,7 @@ package schemacrawler.tools.lint;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 
 public enum LintDispatch {
   none {
@@ -50,7 +50,7 @@ public enum LintDispatch {
     @Override
     public void dispatch() {
       LOGGER.log(Level.WARNING, dispatchMessage);
-      throw new SchemaCrawlerRuntimeException(dispatchMessage);
+      throw new ExecutionRuntimeException(dispatchMessage);
     }
   },
   terminate_system {

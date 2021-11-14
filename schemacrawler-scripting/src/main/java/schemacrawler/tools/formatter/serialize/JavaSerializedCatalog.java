@@ -37,8 +37,8 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public final class JavaSerializedCatalog implements CatalogSerializer {
@@ -48,7 +48,7 @@ public final class JavaSerializedCatalog implements CatalogSerializer {
     try (final ObjectInputStream objIn = new ObjectInputStream(in)) {
       return (Catalog) objIn.readObject();
     } catch (ClassNotFoundException | IOException e) {
-      throw new SchemaCrawlerRuntimeException("Cannot deserialize catalog", e);
+      throw new ExecutionRuntimeException("Cannot deserialize catalog", e);
     }
   }
 

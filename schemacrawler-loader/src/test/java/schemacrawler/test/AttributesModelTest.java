@@ -46,7 +46,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.CatalogAttributesUtility;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.test.utility.TestUtility;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
@@ -56,9 +56,9 @@ public class AttributesModelTest {
   @Test
   @DisplayName("Invalid attributes file format")
   public void testParseBad2() {
-    final SchemaCrawlerRuntimeException exception =
+    final ConfigurationException exception =
         assertThrows(
-            SchemaCrawlerRuntimeException.class,
+            ConfigurationException.class,
             () -> {
               final InputResource inputResource =
                   InputResourceUtility.createInputResource("/attributes-bad-2.yaml.bad").get();
@@ -71,9 +71,9 @@ public class AttributesModelTest {
   @Test
   @DisplayName("Valid attributes file format, but incorrect data")
   public void testParseBad3() {
-    final SchemaCrawlerRuntimeException exception =
+    final ConfigurationException exception =
         assertThrows(
-            SchemaCrawlerRuntimeException.class,
+            ConfigurationException.class,
             () -> {
               final InputResource inputResource =
                   InputResourceUtility.createInputResource("/attributes-bad-3.yaml").get();

@@ -90,9 +90,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 /** SchemaCrawler uses database meta-data to get the details about the schema. */
@@ -151,7 +150,7 @@ public final class SchemaCrawler {
     } catch (final RuntimeException e) {
       throw e;
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
+      throw new ExecutionRuntimeException(e.getMessage(), e);
     }
   }
 

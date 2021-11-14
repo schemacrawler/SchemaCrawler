@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -64,7 +65,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
         .getResource()
         .orElseThrow(
             () ->
-                new SchemaCrawlerRuntimeException(
+                new ConfigurationException(
                     String.format("Script not found <%s>", commandOptions.getScript())));
 
     final String scriptingLanguage = commandOptions.getLanguage();

@@ -35,7 +35,7 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.nio.file.Path;
 
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -116,7 +116,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
       graphExecutor.run();
     } catch (final Exception e) {
       final String message = readResourceFully("/dot.error.txt");
-      throw new SchemaCrawlerRuntimeException(message);
+      throw new ExecutionRuntimeException(message);
     }
   }
 

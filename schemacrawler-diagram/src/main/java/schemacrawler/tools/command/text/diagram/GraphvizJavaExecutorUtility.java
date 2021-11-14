@@ -15,7 +15,8 @@ import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
 import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public final class GraphvizJavaExecutorUtility {
@@ -46,13 +47,13 @@ public final class GraphvizJavaExecutorUtility {
 
       final Format format = map(diagramOutputFormat);
       if (format == null) {
-        throw new SchemaCrawlerRuntimeException(
+        throw new ConfigurationException(
             String.format("Unsupported output format <%s>", diagramOutputFormat));
       }
 
       Graphviz.fromString(dotSource).render(format).toFile(outputFile.toFile());
     } catch (final Throwable e) {
-      throw new SchemaCrawlerRuntimeException(
+      throw new ExecutionRuntimeException(
           String.format("Cannot generate diagram from <%s>", dotFile), e);
     }
   }

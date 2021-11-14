@@ -46,6 +46,7 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
@@ -195,7 +196,7 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
       } else {
         username = "unspecified user";
       }
-      throw new SchemaCrawlerRuntimeException(
+      throw new DatabaseAccessException(
           String.format(
               "Could not connect to <%s>, for <%s>, with properties <%s>",
               connectionUrl, username, safeProperties(jdbcConnectionProperties)),
