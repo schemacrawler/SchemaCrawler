@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -100,7 +100,8 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         assertThrows(
             DatabaseAccessException.class,
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
-    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+    assertThat(
+        sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
 
     assertCatalogScope(connection, true, true);
   }
@@ -129,7 +130,8 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         assertThrows(
             DatabaseAccessException.class,
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
-    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+    assertThat(
+        sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
 
     assertCatalogScope(connection, false, true);
   }

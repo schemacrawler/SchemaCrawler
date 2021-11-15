@@ -117,7 +117,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
           }
         }
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(String.format("Could not run query %n%s", query), e);
+        throw new DatabaseAccessException(String.format("Could not run query %n%s%n", query), e);
       }
     } else {
       final String sql = query.getQuery();
@@ -125,7 +125,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
           final ResultSet results = executeSql(statement, sql)) {
         handler.handleData(query, results);
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(String.format("Could not run query %n%s", query), e);
+        throw new DatabaseAccessException(String.format("Could not run query %n%s%n", query), e);
       }
     }
 
