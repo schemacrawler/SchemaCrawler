@@ -35,14 +35,6 @@ public class WrappedSQLException extends SQLException {
 
   private static final long serialVersionUID = 3424948223257267142L;
 
-  public WrappedSQLException(final String message) {
-    super(message);
-  }
-
-  public WrappedSQLException(final String message, final Exception cause) {
-    super(makeExceptionMessage(message, cause), cause);
-  }
-
   public WrappedSQLException(final String message, final SQLException cause) {
     super(
         makeExceptionMessage(message, cause),

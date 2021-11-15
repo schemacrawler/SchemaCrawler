@@ -29,13 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public class ExceptionUtility {
 
   public static String makeExceptionMessage(final String message, final Throwable cause) {
-    if (cause == null || cause instanceof SchemaCrawlerException) {
+    if (cause == null
+        || cause instanceof SchemaCrawlerException
+        || cause instanceof WrappedSQLException) {
       return message;
     }
     return message + ": " + cause.getMessage();

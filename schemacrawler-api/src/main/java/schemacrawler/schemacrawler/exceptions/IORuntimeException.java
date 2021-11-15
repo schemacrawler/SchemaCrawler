@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler.exceptions;
 
-import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
-
 import java.io.IOException;
 
 public class IORuntimeException extends SchemaCrawlerException {
@@ -41,6 +39,6 @@ public class IORuntimeException extends SchemaCrawlerException {
   }
 
   public IORuntimeException(final String message, final IOException cause) {
-    super(makeExceptionMessage(message, cause), cause);
+    super(message, cause);
   }
 }

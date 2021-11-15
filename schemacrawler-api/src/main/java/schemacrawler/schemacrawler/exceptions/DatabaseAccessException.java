@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler.exceptions;
 
-import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
-
 import java.sql.SQLException;
 
 public class DatabaseAccessException extends SchemaCrawlerException {
@@ -37,6 +35,6 @@ public class DatabaseAccessException extends SchemaCrawlerException {
   private static final long serialVersionUID = 7542373719708607330L;
 
   public DatabaseAccessException(final String message, final SQLException cause) {
-    super(makeExceptionMessage(message, cause), cause);
+    super(message, cause);
   }
 }
