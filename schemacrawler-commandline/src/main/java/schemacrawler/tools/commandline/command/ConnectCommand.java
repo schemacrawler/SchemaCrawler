@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
@@ -40,12 +41,10 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
-import java.util.logging.Logger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
@@ -79,8 +78,7 @@ import us.fatehi.utility.string.StringFormat;
     })
 public class ConnectCommand extends BaseStateHolder implements Runnable {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(ConnectCommand.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ConnectCommand.class.getName());
 
   @ArgGroup(exclusive = true)
   private DatabaseConnectionGroupOptions databaseConnectionGroupOptions;
@@ -125,18 +123,15 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       createDataSource(databaseConnector, databaseConnectionOptions, getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException("Cannot connect to database", e);
+      throw new DatabaseAccessException("Cannot connect to database", e);
     }
   }
 
   private void createDataSource(
       final DatabaseConnector databaseConnector,
       final DatabaseConnectionOptions connectionOptions,
-      final UserCredentials userCredentials)
-      throws SchemaCrawlerException {
+      final UserCredentials userCredentials) {
     requireNonNull(databaseConnector, "No database plugin provided");
     requireNonNull(connectionOptions, "No database connection options provided");
     requireNonNull(userCredentials, "No database connection user credentials provided");

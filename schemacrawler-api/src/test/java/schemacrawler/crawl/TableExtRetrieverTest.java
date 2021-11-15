@@ -64,7 +64,6 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -210,7 +209,7 @@ public class TableExtRetrieverTest {
   }
 
   @BeforeAll
-  public void loadBaseCatalog(final Connection connection) throws SchemaCrawlerException {
+  public void loadBaseCatalog(final Connection connection) {
     catalog =
         (MutableCatalog)
             getCatalog(

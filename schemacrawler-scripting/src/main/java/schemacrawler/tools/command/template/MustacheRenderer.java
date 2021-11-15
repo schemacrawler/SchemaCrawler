@@ -38,19 +38,16 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.utility.ioresource.InputResource;
 
-/**
- * Main executor for the Mustache integration.
- *
- * @author Sualeh Fatehi
- */
+/** Main executor for the Mustache integration. */
 public final class MustacheRenderer extends BaseTemplateRenderer {
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     final OutputOptions outputOptions = getOutputOptions();
 
     final String templateLocation = getResourceFilename();
@@ -58,18 +55,22 @@ public final class MustacheRenderer extends BaseTemplateRenderer {
         createInputResource(templateLocation)
             .orElseThrow(
                 () ->
-                    new SchemaCrawlerRuntimeException(
-                        String.format("No template found <%s>", templateLocation)));
+                    new ConfigurationException(
+                        String.format("Mustache template not found <%s>", templateLocation)));
 
-    final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
-    final Mustache mustache =
-        mustacheFactory.compile(
-            inputResource.openNewInputReader(StandardCharsets.UTF_8), templateLocation);
+    try {
+      final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
+      final Mustache mustache =
+          mustacheFactory.compile(
+              inputResource.openNewInputReader(StandardCharsets.UTF_8), templateLocation);
 
-    try (final Writer writer = outputOptions.openNewOutputWriter()) {
-      // Evaluate the template
-      final Map<String, Object> context = getContext();
-      mustache.execute(writer, context).flush();
+      try (final Writer writer = outputOptions.openNewOutputWriter()) {
+        // Evaluate the template
+        final Map<String, Object> context = getContext();
+        mustache.execute(writer, context).flush();
+      }
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException("Exception rendering FreeMarker template", e);
     }
   }
 }

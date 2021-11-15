@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +49,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
@@ -62,7 +60,7 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("No linter config file")
-  public void testParseBad0() throws SchemaCrawlerException {
+  public void testParseBad0() {
     final LintOptions lintOptions = LintOptionsBuilder.builder().toOptions();
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
@@ -72,10 +70,10 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("Missing linter config file")
-  public void testParseBad1() throws SchemaCrawlerException, IOException {
-    final SchemaCrawlerRuntimeException exception =
+  public void testParseBad1() {
+    final ConfigurationException exception =
         assertThrows(
-            SchemaCrawlerRuntimeException.class,
+            ConfigurationException.class,
             () -> {
               final LintOptions lintOptions =
                   LintOptionsBuilder.builder().withLinterConfigs("/missing.yaml").toOptions();
@@ -88,10 +86,10 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("Invalid linter config file")
-  public void testParseBad2() throws SchemaCrawlerException, IOException {
-    final SchemaCrawlerRuntimeException exception =
+  public void testParseBad2() {
+    final ConfigurationException exception =
         assertThrows(
-            SchemaCrawlerRuntimeException.class,
+            ConfigurationException.class,
             () -> {
               final LintOptions lintOptions =
                   LintOptionsBuilder.builder()
@@ -105,10 +103,10 @@ public class LinterConfigsTest {
 
   @Test
   @DisplayName("Valid but incorrect linter config file")
-  public void testParseBad3() throws SchemaCrawlerException, IOException {
-    final SchemaCrawlerRuntimeException exception =
+  public void testParseBad3() {
+    final ConfigurationException exception =
         assertThrows(
-            SchemaCrawlerRuntimeException.class,
+            ConfigurationException.class,
             () -> {
               final LintOptions lintOptions =
                   LintOptionsBuilder.builder()

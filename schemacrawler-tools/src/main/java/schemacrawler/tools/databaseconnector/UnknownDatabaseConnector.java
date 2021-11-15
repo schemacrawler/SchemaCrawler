@@ -30,7 +30,7 @@ package schemacrawler.tools.databaseconnector;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import us.fatehi.utility.PropertiesUtility;
 
 final class UnknownDatabaseConnector extends DatabaseConnector {
@@ -76,7 +76,7 @@ final class UnknownDatabaseConnector extends DatabaseConnector {
       // Check if SchemaCrawler database plugin is in use
       for (final Pattern pattern : patterns) {
         if (pattern.matcher(url).matches()) {
-          throw new SchemaCrawlerRuntimeException(
+          throw new InternalRuntimeException(
               String.format(
                   "SchemaCrawler database plugin should be on the CLASSPATH for <%s>", url));
         }

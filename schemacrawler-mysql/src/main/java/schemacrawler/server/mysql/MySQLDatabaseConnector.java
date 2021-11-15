@@ -27,49 +27,37 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.mysql;
 
-
-import java.io.IOException;
 import java.util.regex.Pattern;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public final class MySQLDatabaseConnector
-  extends DatabaseConnector
-{
+public final class MySQLDatabaseConnector extends DatabaseConnector {
 
-  public MySQLDatabaseConnector() throws IOException
-  {
-    super(new DatabaseServerType("mysql", "MySQL"),
+  public MySQLDatabaseConnector() {
+    super(
+        new DatabaseServerType("mysql", "MySQL"),
         url -> url != null && Pattern.matches("jdbc:(mysql|mariadb):.*", url),
-        (informationSchemaViewsBuilder,
-            connection) -> informationSchemaViewsBuilder
-                .fromResourceFolder("/mysql.information_schema"),
-        (schemaRetrievalOptionsBuilder,
-            connection) -> schemaRetrievalOptionsBuilder
-                .withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()),
-        (limitOptionsBuilder) -> limitOptionsBuilder
-            .includeSchemas(new RegularExpressionExclusionRule("sys|mysql")),
+        (informationSchemaViewsBuilder, connection) ->
+            informationSchemaViewsBuilder.fromResourceFolder("/mysql.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) ->
+            schemaRetrievalOptionsBuilder.withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()),
+        limitOptionsBuilder ->
+            limitOptionsBuilder.includeSchemas(new RegularExpressionExclusionRule("sys|mysql")),
         new MySQLUrlBuilder());
   }
 
   @Override
-  public PluginCommand getHelpCommand()
-  {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
-      .addOption("server",
-                 String.class,
-                 "--server=mysql%n" + "Loads SchemaCrawler plug-in for MySQL")
-      .addOption("host",
-                 String.class,
-                 "Host name%n" + "Optional, defaults to localhost")
-      .addOption("port",
-                 Integer.class,
-                 "Port number%n" + "Optional, defaults to 3306")
-      .addOption("database", String.class, "Database name");
+        .addOption(
+            "server", String.class, "--server=mysql%n" + "Loads SchemaCrawler plug-in for MySQL")
+        .addOption("host", String.class, "Host name%n" + "Optional, defaults to localhost")
+        .addOption("port", Integer.class, "Port number%n" + "Optional, defaults to 3306")
+        .addOption("database", String.class, "Database name");
     return pluginCommand;
   }
-  
 }

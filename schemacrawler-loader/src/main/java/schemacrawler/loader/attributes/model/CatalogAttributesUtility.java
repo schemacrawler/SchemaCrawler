@@ -35,7 +35,7 @@ import java.io.Reader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.ioresource.InputResource;
 
@@ -46,8 +46,6 @@ public class CatalogAttributesUtility {
    * Pass in a reader at this point, since
    *
    * @param catalogAttributesFile
-   * @return
-   * @throws Exception
    */
   public static CatalogAttributes readCatalogAttributes(final InputResource inputResource) {
     requireNonNull(inputResource, "No input resource provided");
@@ -59,7 +57,7 @@ public class CatalogAttributesUtility {
 
       return catalogAttributes;
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException("Cannot read catalog attributes", e);
+      throw new ConfigurationException("Cannot read catalog attributes", e);
     }
   }
 

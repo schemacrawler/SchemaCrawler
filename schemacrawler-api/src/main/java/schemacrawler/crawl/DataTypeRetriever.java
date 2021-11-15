@@ -47,8 +47,8 @@ import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 final class DataTypeRetriever extends AbstractRetriever {
@@ -156,13 +156,12 @@ final class DataTypeRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TYPE_INFO)) {
-      throw new SchemaCrawlerSQLException("No system column data types SQL provided");
+      throw new ExecutionRuntimeException("No system column data types SQL provided");
     }
     final Query typeInfoSql = informationSchemaViews.getQuery(TYPE_INFO);
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveSystemColumnDataTypesFromDataDictionary");
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
@@ -176,8 +175,8 @@ final class DataTypeRetriever extends AbstractRetriever {
 
   private void retrieveSystemColumnDataTypesFromMetadata(final Schema systemSchema)
       throws SQLException {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getTypeInfo())) {
-      results.setDescription("retrieveSystemColumnDataTypesFromDataDictionary");
+    try (final MetadataResultSet results =
+        new MetadataResultSet(getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo")) {
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
@@ -208,7 +207,9 @@ final class DataTypeRetriever extends AbstractRetriever {
     final String schemaName = schema.getName();
 
     try (final MetadataResultSet results =
-        new MetadataResultSet(getMetaData().getUDTs(catalogName, schemaName, null, null))) {
+        new MetadataResultSet(
+            getMetaData().getUDTs(catalogName, schemaName, null, null),
+            "DatabaseMetaData::getUDTs")) {
       while (results.next()) {
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");

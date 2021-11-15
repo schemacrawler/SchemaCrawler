@@ -38,7 +38,6 @@ import java.util.TreeSet;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import us.fatehi.utility.Multimap;
 
@@ -52,7 +51,7 @@ public class LinterColumnTypes extends BaseLinter {
   }
 
   @Override
-  protected void end(final Connection connection) throws SchemaCrawlerException {
+  protected void end(final Connection connection) {
     requireNonNull(columnTypes, "Not initialized");
 
     for (final Entry<String, List<ColumnDataType>> entry : columnTypes.entrySet()) {
@@ -81,7 +80,7 @@ public class LinterColumnTypes extends BaseLinter {
   }
 
   @Override
-  protected void start(final Connection connection) throws SchemaCrawlerException {
+  protected void start(final Connection connection) {
     super.start(connection);
 
     columnTypes = new Multimap<>();

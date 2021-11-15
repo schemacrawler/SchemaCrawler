@@ -30,25 +30,24 @@ package schemacrawler.tools.traversal;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface TraversalHandler {
 
-  void begin() throws SchemaCrawlerException;
+  void begin();
 
-  void end() throws SchemaCrawlerException;
+  void end();
 
-  void handle(CrawlInfo crawlInfo) throws SchemaCrawlerException;
+  void handle(CrawlInfo crawlInfo);
 
-  void handle(DatabaseInfo databaseInfo) throws SchemaCrawlerException;
+  void handle(DatabaseInfo databaseInfo);
 
-  void handle(JdbcDriverInfo jdbcDriverInfo) throws SchemaCrawlerException;
+  void handle(JdbcDriverInfo jdbcDriverInfo);
 
-  void handleHeaderEnd() throws SchemaCrawlerException;
+  void handleHeaderEnd();
 
-  void handleHeaderStart() throws SchemaCrawlerException;
+  void handleHeaderStart();
 
-  void handleInfoEnd() throws SchemaCrawlerException;
+  void handleInfoEnd();
 
-  void handleInfoStart() throws SchemaCrawlerException;
+  void handleInfoStart();
 }

@@ -86,19 +86,15 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * SchemaCrawler uses database meta-data to get the details about the schema.
- *
- * @author Sualeh Fatehi
- */
+/** SchemaCrawler uses database meta-data to get the details about the schema. */
 public final class SchemaCrawler {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class.getName());
@@ -127,7 +123,7 @@ public final class SchemaCrawler {
       infoLevel = options.getLoadOptions().getSchemaInfoLevel();
       stopWatch = new RetrievalStopWatch(infoLevel);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
+      throw new DatabaseAccessException(e.getMessage(), e);
     }
   }
 
@@ -135,7 +131,6 @@ public final class SchemaCrawler {
    * Crawls the database, to obtain database metadata.
    *
    * @return Database metadata
-   * @throws SchemaCrawlerException On an exception
    */
   public Catalog crawl() {
     try {
@@ -152,10 +147,10 @@ public final class SchemaCrawler {
       crawlSequences();
 
       return catalog;
-    } catch (final SchemaCrawlerRuntimeException e) {
+    } catch (final RuntimeException e) {
       throw e;
     } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
+      throw new ExecutionRuntimeException(e.getMessage(), e);
     }
   }
 
@@ -309,7 +304,7 @@ public final class SchemaCrawler {
 
     final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
     if (schemas.isEmpty()) {
-      throw new SchemaCrawlerException("No matching schemas found");
+      throw new ExecutionRuntimeException("No matching schemas found");
     }
     LOGGER.log(Level.INFO, new StringFormat("Retrieved %d schemas", schemas.size()));
   }

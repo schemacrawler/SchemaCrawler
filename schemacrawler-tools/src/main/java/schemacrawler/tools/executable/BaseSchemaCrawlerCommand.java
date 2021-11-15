@@ -106,7 +106,7 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   }
 
   @Override
-  public void initialize() throws Exception {
+  public void initialize() {
     checkOptions();
   }
 

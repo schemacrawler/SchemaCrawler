@@ -25,34 +25,20 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline.state;
 
-import static picocli.CommandLine.defaultFactory;
+package schemacrawler.schemacrawler.exceptions;
 
-import picocli.CommandLine.IFactory;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
-public class StateFactory extends BaseStateHolder implements IFactory {
+public class ConfigurationException extends SchemaCrawlerException {
 
-  private static IFactory defaultPicocliFactory = defaultFactory();
+  private static final long serialVersionUID = 8143604098031489051L;
 
-  public StateFactory(final ShellState state) {
-    super(state);
+  public ConfigurationException(final String message) {
+    super(message);
   }
 
-  @Override
-  public <K> K create(final Class<K> cls) {
-    try {
-      if (cls == null) {
-        return null;
-      } else if (BaseStateHolder.class.isAssignableFrom(cls)) {
-        return cls.getConstructor(ShellState.class).newInstance(state);
-      } else {
-        return defaultPicocliFactory.create(cls);
-      }
-    } catch (final Exception e) {
-      throw new InternalRuntimeException(
-          String.format("Could not instantiate class <%s>", cls), e);
-    }
+  public ConfigurationException(final String message, final Throwable cause) {
+    super(makeExceptionMessage(message, cause), cause);
   }
 }

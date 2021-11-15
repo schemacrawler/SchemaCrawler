@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
 
 import javax.sql.DataSource;
 
@@ -52,7 +51,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 
 @TestInstance(PER_CLASS)
 @Testcontainers(disabledWithoutDocker = true)
@@ -68,7 +67,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   private DataSource noAccessUserDataSource;
 
   @BeforeAll
-  public void createDatabase() throws SQLException, SchemaCrawlerException {
+  public void createDatabase() {
 
     dbContainer.start();
 
@@ -97,11 +96,12 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
     testOracleWithConnection(connection, expectedResource, 14);
 
-    final SQLSyntaxErrorException sqlException =
+    final DatabaseAccessException sqlException =
         assertThrows(
-            SQLSyntaxErrorException.class,
+            DatabaseAccessException.class,
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
-    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+    assertThat(
+        sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
 
     assertCatalogScope(connection, true, true);
   }
@@ -126,11 +126,12 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
     testOracleWithConnection(connection, expectedResource, 14);
 
-    final SQLSyntaxErrorException sqlException =
+    final DatabaseAccessException sqlException =
         assertThrows(
-            SQLSyntaxErrorException.class,
+            DatabaseAccessException.class,
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
-    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+    assertThat(
+        sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
 
     assertCatalogScope(connection, false, true);
   }

@@ -27,8 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.sqlserver;
 
-import java.io.IOException;
-
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
@@ -37,7 +35,7 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 
 public final class SqlServerDatabaseConnector extends DatabaseConnector {
 
-  public SqlServerDatabaseConnector() throws IOException {
+  public SqlServerDatabaseConnector() {
     super(
         new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
         url -> url != null && url.startsWith("jdbc:sqlserver:"),

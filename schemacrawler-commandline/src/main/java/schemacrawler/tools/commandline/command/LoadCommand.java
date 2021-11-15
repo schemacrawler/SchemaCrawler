@@ -44,7 +44,6 @@ import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
@@ -134,7 +133,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
     }
   }
 
-  private void saveCommandOptions() throws SchemaCrawlerException {
+  private void saveCommandOptions() {
     final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final LoadOptionsBuilder loadOptionsBuilder =

@@ -31,8 +31,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-import java.sql.SQLException;
-
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +46,6 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -72,7 +69,7 @@ public class Issue482Test extends BaseAdditionalDatabaseTest {
           .acceptLicense();
 
   @BeforeEach
-  public void createDatabase() throws SQLException, SchemaCrawlerException {
+  public void createDatabase() {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 

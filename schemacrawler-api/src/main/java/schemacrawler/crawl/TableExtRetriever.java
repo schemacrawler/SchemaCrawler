@@ -40,8 +40,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.ActionOrientationType;
@@ -62,8 +62,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class TableExtRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableExtRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TableExtRetriever.class.getName());
 
   TableExtRetriever(
       final RetrieverConnection retrieverConnection,
@@ -273,7 +272,9 @@ final class TableExtRetriever extends AbstractRetriever {
 
   void retrieveTableColumnPrivileges() throws SQLException {
     try (final MetadataResultSet results =
-        new MetadataResultSet(getMetaData().getColumnPrivileges(null, null, null, null))) {
+        new MetadataResultSet(
+            getMetaData().getColumnPrivileges(null, null, null, null),
+            "DatabaseMetaData::getColumnPrivileges")) {
       createPrivileges(results, true);
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:" + e.getMessage());
@@ -333,7 +334,9 @@ final class TableExtRetriever extends AbstractRetriever {
 
   void retrieveTablePrivileges() throws SQLException {
     try (final MetadataResultSet results =
-        new MetadataResultSet(getMetaData().getTablePrivileges(null, null, null))) {
+        new MetadataResultSet(
+            getMetaData().getTablePrivileges(null, null, null),
+            "DatabaseMetaData::getTablePrivileges")) {
       createPrivileges(results, false);
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);

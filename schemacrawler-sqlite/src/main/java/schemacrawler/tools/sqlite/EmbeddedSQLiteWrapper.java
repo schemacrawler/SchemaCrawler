@@ -32,15 +32,15 @@ import static us.fatehi.utility.DatabaseUtility.checkConnection;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLException;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -49,28 +49,23 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class EmbeddedSQLiteWrapper {
 
-  private static final Logger LOGGER = Logger.getLogger(EmbeddedSQLiteWrapper.class.getName());
-
   private Path databaseFile;
 
   public DatabaseConnectionSource createDatabaseConnectionSource() {
     requireNonNull(databaseFile, "Database file not loaded");
 
-    try {
-      final DatabaseUrlConnectionOptions urlConnectionOptions =
-          new DatabaseUrlConnectionOptions(getConnectionUrl());
-      final DatabaseConnectionSource connectionOptions =
-          new SQLiteDatabaseConnector().newDatabaseConnectionSource(urlConnectionOptions);
-      return connectionOptions;
-    } catch (final IOException e) {
-      throw new SchemaCrawlerRuntimeException(
-          String.format("Cannot read SQLite database file <%s>", databaseFile), e);
-    }
+    final DatabaseUrlConnectionOptions urlConnectionOptions =
+        new DatabaseUrlConnectionOptions(getConnectionUrl());
+    final DatabaseConnectionSource connectionOptions =
+        new SQLiteDatabaseConnector().newDatabaseConnectionSource(urlConnectionOptions);
+    return connectionOptions;
   }
 
-  public Path createDiagram(final String title, final String extension) throws Exception {
+  public Path createDiagram(final String title, final String extension) {
     try (final Connection connection = createDatabaseConnectionSource().get()) {
       return createDiagram(connection, title, extension);
+    } catch (final SQLException e) {
+      throw new DatabaseAccessException("Could not create database connection", e);
     }
   }
 
@@ -87,42 +82,45 @@ public class EmbeddedSQLiteWrapper {
     }
   }
 
-  public void loadDatabaseFile(final Path dbFile) throws IOException {
+  public void loadDatabaseFile(final Path dbFile) {
     databaseFile = checkDatabaseFile(dbFile);
   }
 
-  protected final Path checkDatabaseFile(final Path dbFile) throws IOException {
+  protected final Path checkDatabaseFile(final Path dbFile) {
     final Path databaseFile =
         requireNonNull(dbFile, "No database file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(databaseFile)) {
-      final IOException e = new IOException("Cannot read database file, " + databaseFile);
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-      throw e;
+      throw new IORuntimeException(String.format("Could not read database file <%s>", dbFile));
     }
     return databaseFile;
   }
 
   private Path createDiagram(
-      final Connection connection, final String title, final String extension) throws Exception {
-    checkConnection(connection);
+      final Connection connection, final String title, final String extension) {
+    try {
+      checkConnection(connection);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final Path diagramFile = createTempFilePath("schemacrawler", extension);
-    final OutputOptions outputOptions =
-        OutputOptionsBuilder.builder()
-            .title(title)
-            .withOutputFormatValue(extension)
-            .withOutputFile(diagramFile)
-            .toOptions();
+      final Path diagramFile = createTempFilePath("schemacrawler", extension);
+      final OutputOptions outputOptions =
+          OutputOptionsBuilder.builder()
+              .title(title)
+              .withOutputFormatValue(extension)
+              .withOutputFile(diagramFile)
+              .toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(outputOptions);
-    executable.setConnection(connection);
-    executable.execute();
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable.setConnection(connection);
+      executable.execute();
 
-    return diagramFile;
+      return diagramFile;
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException(
+          String.format("Could not create database schema diagram <%s>", title), e);
+    }
   }
 }

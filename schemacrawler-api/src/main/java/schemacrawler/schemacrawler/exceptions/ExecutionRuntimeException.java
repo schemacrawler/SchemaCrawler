@@ -26,19 +26,19 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.schemacrawler.exceptions;
 
 import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
-public class SchemaCrawlerException extends Exception {
+public class ExecutionRuntimeException extends SchemaCrawlerException {
 
-  private static final long serialVersionUID = 3257848770627713076L;
+  private static final long serialVersionUID = 8143604098031489051L;
 
-  public SchemaCrawlerException(final String message) {
+  public ExecutionRuntimeException(final String message) {
     super(message);
   }
 
-  public SchemaCrawlerException(final String message, final Throwable cause) {
+  public ExecutionRuntimeException(final String message, final Throwable cause) {
     super(makeExceptionMessage(message, cause), cause);
   }
 }

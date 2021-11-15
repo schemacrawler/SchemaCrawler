@@ -42,10 +42,9 @@ import picocli.CommandLine.Model;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
@@ -140,8 +139,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     // (Check after output options have been built)
     if (DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
         && !commandOutputOptions.getOutputFile().isPresent()) {
-      throw new SchemaCrawlerRuntimeException(
-          "Output file has to be specified for schema diagrams");
+      throw new ConfigurationException("Output file has to be specified for schema diagrams");
     }
 
     final String command = commandOptions.getCommand();
@@ -156,7 +154,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     return executable;
   }
 
-  private void saveCommandOptions() throws SchemaCrawlerException {
+  private void saveCommandOptions() {
     final ParseResult parseResult = spec.commandLine().getParseResult();
     final Map<String, Object> commandConfig = matchedOptionValues(parseResult);
     LOGGER.log(Level.INFO, "Loaded command config");

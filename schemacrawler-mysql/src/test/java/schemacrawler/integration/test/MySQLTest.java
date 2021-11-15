@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +50,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -69,7 +67,7 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
       newMySQLContainer8().withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
-  public void createDatabase() throws SQLException, SchemaCrawlerException {
+  public void createDatabase() {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 

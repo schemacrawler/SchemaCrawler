@@ -32,9 +32,8 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
-import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,6 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -56,10 +54,14 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class DerbyTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
-  public void createDatabase() throws SchemaCrawlerException, ClassNotFoundException, SQLException {
-    Class.forName("org.apache.derby.impl.jdbc.EmbedConnection");
-    createDataSource("jdbc:derby:memory:schemacrawler;create=true", null, null);
-    createDatabase("/derby.scripts.txt");
+  public void createDatabase() {
+    try {
+      Class.forName("org.apache.derby.impl.jdbc.EmbedConnection");
+      createDataSource("jdbc:derby:memory:schemacrawler;create=true", null, null);
+      createDatabase("/derby.scripts.txt");
+    } catch (final ClassNotFoundException e) {
+      failTestSetup("Could not create database", e);
+    }
   }
 
   @Test

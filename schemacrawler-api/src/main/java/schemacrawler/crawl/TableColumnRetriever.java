@@ -53,14 +53,11 @@ import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database table columns.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database table columns. */
 final class TableColumnRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableColumnRetriever.class.getName());
@@ -219,7 +216,6 @@ final class TableColumnRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveHiddenColumns");
       while (results.next()) {
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
@@ -251,13 +247,12 @@ final class TableColumnRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TABLE_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No table columns SQL provided");
+      throw new ExecutionRuntimeException("No table columns SQL provided");
     }
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveTableColumnsFromDataDictionary");
       while (results.next()) {
         createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
       }
@@ -268,7 +263,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
       final Set<List<String>> hiddenTableColumnsLookupKeys)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     for (final MutableTable table : allTables) {
       LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
       try (final MetadataResultSet results =
@@ -278,12 +273,13 @@ final class TableColumnRetriever extends AbstractRetriever {
                       table.getSchema().getCatalogName(),
                       table.getSchema().getName(),
                       table.getName(),
-                      null))) {
+                      null),
+              "DatabaseMetaData::getColumns")) {
         while (results.next()) {
           createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
         }
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format(
                 "Could not retrieve table columns for %s <%s>", table.getTableType(), table),
             e);

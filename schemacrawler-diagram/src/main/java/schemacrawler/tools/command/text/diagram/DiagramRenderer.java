@@ -33,10 +33,11 @@ import static schemacrawler.tools.command.text.diagram.options.DiagramOutputForm
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -66,7 +67,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
 
   /** {@inheritDoc} */
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     checkCatalog();
 
     // Set the format, in case we are using the default
@@ -77,7 +78,12 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
             .toOptions();
 
     // Create dot file
-    final Path dotFile = createTempFilePath("schemacrawler.", "dot");
+    final Path dotFile;
+    try {
+      dotFile = createTempFilePath("schemacrawler.", "dot");
+    } catch (final IOException e) {
+      throw new IORuntimeException("Could not create temporary DOT file", e);
+    }
     final OutputOptions dotFileOutputOptions;
     if (diagramOutputFormat == scdot) {
       dotFileOutputOptions = outputOptions;
@@ -117,12 +123,12 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
       graphExecutor.run();
     } catch (final Exception e) {
       final String message = readResourceFully("/dot.error.txt");
-      throw new SchemaCrawlerRuntimeException(message);
+      throw new ExecutionRuntimeException(message);
     }
   }
 
   @Override
-  public void initialize() throws Exception {
+  public void initialize() {
     super.initialize();
     diagramOutputFormat = DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
   }
@@ -142,8 +148,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
     return schemaTextDetailType;
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions)
-      throws SchemaCrawlerException {
+  private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions) {
     final SchemaTraversalHandler formatter;
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 

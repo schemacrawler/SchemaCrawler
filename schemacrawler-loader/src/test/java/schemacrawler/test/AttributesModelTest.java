@@ -34,7 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.DisplayName;
@@ -47,8 +46,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.CatalogAttributesUtility;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.test.utility.TestUtility;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
@@ -57,10 +55,10 @@ public class AttributesModelTest {
 
   @Test
   @DisplayName("Invalid attributes file format")
-  public void testParseBad2() throws SchemaCrawlerException, IOException {
-    final SchemaCrawlerRuntimeException exception =
+  public void testParseBad2() {
+    final ConfigurationException exception =
         assertThrows(
-            SchemaCrawlerRuntimeException.class,
+            ConfigurationException.class,
             () -> {
               final InputResource inputResource =
                   InputResourceUtility.createInputResource("/attributes-bad-2.yaml.bad").get();
@@ -72,10 +70,10 @@ public class AttributesModelTest {
 
   @Test
   @DisplayName("Valid attributes file format, but incorrect data")
-  public void testParseBad3() throws SchemaCrawlerException, IOException {
-    final SchemaCrawlerRuntimeException exception =
+  public void testParseBad3() {
+    final ConfigurationException exception =
         assertThrows(
-            SchemaCrawlerRuntimeException.class,
+            ConfigurationException.class,
             () -> {
               final InputResource inputResource =
                   InputResourceUtility.createInputResource("/attributes-bad-3.yaml").get();

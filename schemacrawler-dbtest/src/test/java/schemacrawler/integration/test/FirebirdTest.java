@@ -34,8 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
-import java.sql.SQLException;
-
 import org.firebirdsql.testcontainers.FirebirdContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +45,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -61,11 +58,11 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class FirebirdTest extends BaseAdditionalDatabaseTest {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
+  private final JdbcDatabaseContainer dbContainer =
       new FirebirdContainer().withUsername("schemacrawler").withDatabaseName("BOOKS");
 
   @BeforeEach
-  public void createDatabase() throws SQLException, SchemaCrawlerException {
+  public void createDatabase() {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 

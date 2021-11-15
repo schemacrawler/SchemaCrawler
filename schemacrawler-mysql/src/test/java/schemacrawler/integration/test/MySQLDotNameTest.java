@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOption
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +51,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
@@ -68,7 +66,7 @@ public class MySQLDotNameTest extends BaseAdditionalDatabaseTest {
       newMySQLContainer8().withUsername("schemacrawler");
 
   @BeforeEach
-  public void createDatabase() throws SQLException, SchemaCrawlerException {
+  public void createDatabase() {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
   }

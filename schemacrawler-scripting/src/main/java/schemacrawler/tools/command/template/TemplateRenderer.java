@@ -34,7 +34,7 @@ http://www.gnu.org/licenses/
 
 public interface TemplateRenderer {
 
-  void execute() throws Exception;
+  void execute();
 
   void setContext(Map<String, Object> context);
 

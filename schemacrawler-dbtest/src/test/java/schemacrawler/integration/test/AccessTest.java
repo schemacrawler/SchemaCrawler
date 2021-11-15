@@ -33,8 +33,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -54,11 +56,15 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class AccessTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
-  public void createDatabase() throws Exception {
-    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-    final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
-    createDataSource(
-        "jdbc:ucanaccess://" + databaseFile + ";showSchema=true;sysSchema=true", null, null);
+  public void createDatabase() {
+    try {
+      Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+      final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
+      createDataSource(
+          "jdbc:ucanaccess://" + databaseFile + ";showSchema=true;sysSchema=true", null, null);
+    } catch (final ClassNotFoundException | IOException e) {
+      failTestSetup("Could not create database", e);
+    }
   }
 
   @Test

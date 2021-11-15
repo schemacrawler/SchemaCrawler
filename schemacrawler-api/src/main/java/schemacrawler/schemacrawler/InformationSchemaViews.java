@@ -68,7 +68,7 @@ public final class InformationSchemaViews implements Options {
    */
   public Query getQuery(final InformationSchemaKey key) {
     requireNonNull(key, "No SQL query key provided");
-    return new Query(key.name(), informationSchemaQueries.get(key));
+    return new Query(key.description(), informationSchemaQueries.get(key));
   }
 
   public boolean hasQuery(final InformationSchemaKey key) {

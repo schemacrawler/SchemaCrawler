@@ -50,14 +50,10 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database forign keys.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database forign keys. */
 final class ForeignKeyRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(ForeignKeyRetriever.class.getName());
@@ -181,7 +177,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         catalog, catalogName, schemaName, tableName, columnName);
   }
 
-  private void retrieveForeignKeysFromDataDictionary() throws SchemaCrawlerSQLException {
+  private void retrieveForeignKeysFromDataDictionary() throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
@@ -195,16 +191,15 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(fkSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve foreign keys from SQL:%n%s", fkSql), e);
     }
   }
 
   private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     for (final MutableTable table : allTables) {
       if (table instanceof View) {
@@ -217,12 +212,11 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       try (final MetadataResultSet results =
           new MetadataResultSet(
               metaData.getImportedKeys(
-                  table.getSchema().getCatalogName(),
-                  table.getSchema().getName(),
-                  table.getName()))) {
+                  table.getSchema().getCatalogName(), table.getSchema().getName(), table.getName()),
+              "DatabaseMetaData::getImportedKeys")) {
         createForeignKeys(results, foreignKeys);
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format("Could not retrieve foreign keys for table <%s>", table), e);
       }
 
@@ -232,9 +226,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       try (final MetadataResultSet results =
           new MetadataResultSet(
               metaData.getExportedKeys(
-                  table.getSchema().getCatalogName(),
-                  table.getSchema().getName(),
-                  table.getName()))) {
+                  table.getSchema().getCatalogName(), table.getSchema().getName(), table.getName()),
+              "DatabaseMetaData::getExportedKeys")) {
         createForeignKeys(results, foreignKeys);
       } catch (final SQLException e) {
         // Since not all database drivers may support exported keys, log a warning instead of

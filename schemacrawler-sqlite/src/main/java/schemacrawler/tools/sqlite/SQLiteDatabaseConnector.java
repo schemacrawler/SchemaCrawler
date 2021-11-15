@@ -27,42 +27,34 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.sqlite;
 
-
-import java.io.IOException;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public final class SQLiteDatabaseConnector
-  extends DatabaseConnector
-{
-  
-  public SQLiteDatabaseConnector()
-    throws IOException
-  {
-    super(new DatabaseServerType("sqlite", "SQLite"),
-          url -> url != null && url.startsWith("jdbc:sqlite:"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlite.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""),
-          (limitOptionsBuilder) -> {},
-          () -> DatabaseConnectionUrlBuilder.builder(
-              "jdbc:sqlite:${database}"));
+public final class SQLiteDatabaseConnector extends DatabaseConnector {
+
+  public SQLiteDatabaseConnector() {
+    super(
+        new DatabaseServerType("sqlite", "SQLite"),
+        url -> url != null && url.startsWith("jdbc:sqlite:"),
+        (informationSchemaViewsBuilder, connection) ->
+            informationSchemaViewsBuilder.fromResourceFolder("/sqlite.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) ->
+            schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""),
+        limitOptionsBuilder -> {},
+        () -> DatabaseConnectionUrlBuilder.builder("jdbc:sqlite:${database}"));
   }
 
   @Override
-  public PluginCommand getHelpCommand()
-  {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
-      .addOption("server",
-                 String.class,
-                 "--server=sqlite%n" + "Loads SchemaCrawler plug-in for SQLite")
-      .addOption("host", String.class, "Should be omitted")
-      .addOption("port", Integer.class, "Should be omitted")
-      .addOption("database", String.class, "SQLite database file path");
+        .addOption(
+            "server", String.class, "--server=sqlite%n" + "Loads SchemaCrawler plug-in for SQLite")
+        .addOption("host", String.class, "Should be omitted")
+        .addOption("port", Integer.class, "Should be omitted")
+        .addOption("database", String.class, "SQLite database file path");
     return pluginCommand;
   }
-  
 }

@@ -33,14 +33,11 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -101,8 +98,7 @@ public class DotFormatterCoverageTest {
         () -> checkDotOutputForTable(table, testContext.testMethodFullName()));
   }
 
-  private void checkDotOutputForTable(final Table table, final String referenceFileName)
-      throws IOException, SchemaCrawlerException {
+  private void checkDotOutputForTable(final Table table, final String referenceFileName) {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final DiagramOptions diagramOptions = DiagramOptionsBuilder.builder().toOptions();

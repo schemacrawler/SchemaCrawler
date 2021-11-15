@@ -43,14 +43,10 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database tables.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database tables. */
 final class PrimaryKeyRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(PrimaryKeyRetriever.class.getName());
@@ -114,7 +110,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
   }
 
   private void retrievePrimaryKeysFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
@@ -127,7 +123,6 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(pkSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrievePrimaryKeysFromDataDictionary");
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
@@ -142,7 +137,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         createPrimaryKeyForTable(table, results);
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve primary keys from SQL:%n%s", pkSql), e);
     }
   }
@@ -158,12 +153,13 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
           new MetadataResultSet(
               getMetaData()
                   .getPrimaryKeys(
-                      tableSchema.getCatalogName(), tableSchema.getName(), table.getName()))) {
+                      tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
+              "DatabaseMetaData::getPrimaryKeys")) {
         while (results.next()) {
           createPrimaryKeyForTable(table, results);
         }
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format("Could not retrieve primary keys for table <%s>", table), e);
       }
     }

@@ -69,6 +69,10 @@ public enum InformationSchemaKey {
     this.type = type;
   }
 
+  public String description() {
+    return type + "." + name();
+  }
+
   /** @return the type */
   public InformationSchemaKeyType getType() {
     return type;

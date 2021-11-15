@@ -44,7 +44,6 @@ import com.typesafe.config.ConfigFactory;
 import picocli.CommandLine;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -137,8 +136,7 @@ public final class CommandlineTestUtility {
     return commandlineExecution(connectionInfo, command, argsMap, (Path) null, outputFormatValue);
   }
 
-  public static ShellState createConnectedSchemaCrawlerShellState(final Connection connection)
-      throws SchemaCrawlerException {
+  public static ShellState createConnectedSchemaCrawlerShellState(final Connection connection) {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -147,8 +145,7 @@ public final class CommandlineTestUtility {
     return state;
   }
 
-  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection)
-      throws SchemaCrawlerException {
+  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection) {
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
     final ShellState state = createConnectedSchemaCrawlerShellState(connection);

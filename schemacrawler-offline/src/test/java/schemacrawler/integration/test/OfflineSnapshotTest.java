@@ -39,6 +39,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
@@ -62,7 +63,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -186,29 +186,33 @@ public class OfflineSnapshotTest {
   }
 
   @BeforeEach
-  public void serializeCatalog(final Connection connection)
-      throws SchemaCrawlerException, IOException {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
+  public void serializeCatalog(final Connection connection) {
+    try {
+      final LimitOptionsBuilder limitOptionsBuilder =
+          LimitOptionsBuilder.builder().includeAllRoutines();
+      final LoadOptionsBuilder loadOptionsBuilder =
+          LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withLimitOptions(limitOptionsBuilder.toOptions())
+              .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-    assertThat("Could not obtain catalog", catalog, notNullValue());
-    assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
+      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+      assertThat("Could not obtain catalog", catalog, notNullValue());
+      assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
+      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+      assertThat("Could not obtain schema", schema, notNullValue());
+      assertThat(
+          "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
 
-    serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
-    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
-    serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
-    assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
+      serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
+      final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
+      serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
+      assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
+    } catch (final IOException e) {
+      failTestSetup("Could not serialize catalog", e);
+    }
   }
 
   private void executeExecutable(

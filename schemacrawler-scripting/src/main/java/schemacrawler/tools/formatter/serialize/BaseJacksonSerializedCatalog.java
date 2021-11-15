@@ -34,6 +34,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_US
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -65,8 +66,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer {
@@ -130,20 +130,20 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
 
   /** {@inheritDoc} */
   @Override
-  public void save(final OutputStream out) throws SchemaCrawlerException {
+  public void save(final OutputStream out) {
     requireNonNull(out, "No output stream provided");
     save(new OutputStreamWriter(out, UTF_8));
   }
 
   /** {@inheritDoc} */
   @Override
-  public void save(final Writer out) throws SchemaCrawlerException {
+  public void save(final Writer out) {
     requireNonNull(out, "No writer provided");
     try {
       final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, this);
-    } catch (final Exception e) {
-      throw new SchemaCrawlerRuntimeException("Could not serialize catalog", e);
+    } catch (final IOException e) {
+      throw new IORuntimeException("Could not serialize catalog", e);
     }
   }
 

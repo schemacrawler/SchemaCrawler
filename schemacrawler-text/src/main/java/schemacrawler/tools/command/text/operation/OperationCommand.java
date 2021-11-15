@@ -44,7 +44,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -72,7 +72,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
   }
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     checkCatalog();
 
     if (!isOutputFormatSupported()) {
@@ -116,12 +116,16 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
             LOGGER.log(Level.WARNING, e, new StringFormat("Bad operation for table <%s>", table));
           }
         }
+      } catch (final SQLException e) {
+        throw new DatabaseAccessException(String.format("Could not run query %n%s%n", query), e);
       }
     } else {
       final String sql = query.getQuery();
       try (final Statement statement = createStatement(connection);
           final ResultSet results = executeSql(statement, sql)) {
         handler.handleData(query, results);
+      } catch (final SQLException e) {
+        throw new DatabaseAccessException(String.format("Could not run query %n%s%n", query), e);
       }
     }
 
@@ -133,7 +137,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
     return true;
   }
 
-  private DataTraversalHandler getDataTraversalHandler() throws SchemaCrawlerException {
+  private DataTraversalHandler getDataTraversalHandler() {
     final Operation operation = commandOptions.getOperation();
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 

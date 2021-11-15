@@ -38,7 +38,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import us.fatehi.utility.ioresource.InputResource;
@@ -64,7 +65,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
         .getResource()
         .orElseThrow(
             () ->
-                new SchemaCrawlerRuntimeException(
+                new ConfigurationException(
                     String.format("Script not found <%s>", commandOptions.getScript())));
 
     final String scriptingLanguage = commandOptions.getLanguage();
@@ -86,35 +87,36 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     }
 
     // No suitable engine found
-    throw new SchemaCrawlerRuntimeException(
+    throw new InternalRuntimeException(
         "Scripting engine not found for language, " + scriptingLanguage);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     requireNonNull(commandOptions, "No script language provided");
     checkCatalog();
 
-    if (scriptExecutor == null) {
-      throw new SchemaCrawlerRuntimeException("Scripting engine not found");
+    requireNonNull(scriptExecutor, "Scripting engine not found");
+    try {
+      final Charset inputCharset = outputOptions.getInputCharset();
+      final InputResource inputResource = commandOptions.getResource().get();
+      final Reader reader = inputResource.openNewInputReader(inputCharset);
+      final Writer writer = outputOptions.openNewOutputWriter();
+
+      LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
+
+      // Set up the context
+      final Map<String, Object> context = new HashMap<>();
+      context.put("catalog", catalog);
+      context.put("connection", connection);
+      context.put("chain", new CommandChain(this));
+
+      scriptExecutor.initialize(context, reader, writer);
+      scriptExecutor.run();
+    } catch (final Exception e) {
+      throw new InternalRuntimeException("Could not execute script", e);
     }
-
-    final Charset inputCharset = outputOptions.getInputCharset();
-    final InputResource inputResource = commandOptions.getResource().get();
-    final Reader reader = inputResource.openNewInputReader(inputCharset);
-    final Writer writer = outputOptions.openNewOutputWriter();
-
-    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
-
-    // Set up the context
-    final Map<String, Object> context = new HashMap<>();
-    context.put("catalog", catalog);
-    context.put("connection", connection);
-    context.put("chain", new CommandChain(this));
-
-    scriptExecutor.initialize(context, reader, writer);
-    scriptExecutor.call();
   }
 
   @Override

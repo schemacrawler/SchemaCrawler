@@ -50,13 +50,12 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the database procedure parameters.
- *
- * @author Sualeh Fatehi
  */
 final class ProcedureParameterRetriever extends AbstractRetriever {
 
@@ -201,13 +200,12 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(PROCEDURE_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No procedure parameters SQL provided");
+      throw new ExecutionRuntimeException("No procedure parameters SQL provided");
     }
     final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(procedureColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveProcedureParametersFromDataDictionary");
       while (results.next()) {
         createProcedureParameter(results, allRoutines, parameterFilter);
       }
@@ -217,7 +215,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
   private void retrieveProcedureParametersFromMetadata(
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     for (final MutableRoutine routine : allRoutines) {
       if (routine.getRoutineType() != RoutineType.procedure) {
         continue;
@@ -232,12 +230,13 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
                       procedure.getSchema().getCatalogName(),
                       procedure.getSchema().getName(),
                       procedure.getName(),
-                      null))) {
+                      null),
+              "DatabaseMetaData::getProcedureColumns")) {
         while (results.next()) {
           createProcedureParameter(results, allRoutines, parameterFilter);
         }
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
+        throw new WrappedSQLException(
             String.format("Could not retrieve procedure parameters for procedure <%s>", procedure),
             e);
       }

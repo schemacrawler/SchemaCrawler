@@ -33,14 +33,14 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.FileOutputResource;
 import us.fatehi.utility.ioresource.OutputResource;
@@ -88,7 +88,9 @@ public final class OutputOptions implements Options {
       outputFile = ((FileOutputResource) outputResource).getOutputFile();
     } else {
       outputFile =
-          Paths.get(".", String.format("schemacrawler-%s.%s", UUID.randomUUID(), trimToEmpty(extension)))
+          Paths.get(
+                  ".",
+                  String.format("schemacrawler-%s.%s", UUID.randomUUID(), trimToEmpty(extension)))
               .normalize()
               .toAbsolutePath();
     }
@@ -128,17 +130,18 @@ public final class OutputOptions implements Options {
    * @return Output writer
    * @throws IOException On an exception
    */
-  public Writer openNewOutputWriter() throws IOException {
+  public PrintWriter openNewOutputWriter() {
     return openNewOutputWriter(false);
   }
 
-  /**
-   * Gets the output reader. If the output resource is null, first set it to console output.
-   *
-   * @throws SchemaCrawlerException
-   */
-  public Writer openNewOutputWriter(final boolean appendOutput) throws IOException {
-    return outputResource.openNewOutputWriter(getOutputCharset(), appendOutput);
+  /** Gets the output reader. If the output resource is null, first set it to console output. */
+  public PrintWriter openNewOutputWriter(final boolean appendOutput) {
+    try {
+      return new PrintWriter(
+          outputResource.openNewOutputWriter(getOutputCharset(), appendOutput), true);
+    } catch (final IOException e) {
+      throw new IORuntimeException(String.format("Could not open output writer <%s>"), e);
+    }
   }
 
   @Override

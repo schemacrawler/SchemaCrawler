@@ -53,8 +53,6 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import schemacrawler.Version;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
@@ -85,22 +83,18 @@ public final class CommandLineHelpCommand implements Runnable {
 
   @Override
   public void run() {
-    try {
-      final ShellState state = new ShellState();
-      final CommandLine parent =
-          newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
-      addPluginHelpCommands(parent, catalogLoaderPluginHelpCommands);
-      addPluginHelpCommands(parent, commandPluginHelpCommands);
-      addPluginHelpCommands(parent, serverPluginHelpCommands);
+    final ShellState state = new ShellState();
+    final CommandLine parent =
+        newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
+    addPluginHelpCommands(parent, catalogLoaderPluginHelpCommands);
+    addPluginHelpCommands(parent, commandPluginHelpCommands);
+    addPluginHelpCommands(parent, serverPluginHelpCommands);
 
-      if (!isBlank(command)) {
-        configureHelpForSubcommand(parent);
-        showHelpForSubcommand(parent, command);
-      } else {
-        showCompleteHelp(parent);
-      }
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
+    if (!isBlank(command)) {
+      configureHelpForSubcommand(parent);
+      showHelpForSubcommand(parent, command);
+    } else {
+      showCompleteHelp(parent);
     }
   }
 

@@ -45,16 +45,11 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Retriever;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.JavaSqlTypes;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about a result set.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about a result set. */
 @Retriever
 final class ResultsRetriever {
 
@@ -81,7 +76,6 @@ final class ResultsRetriever {
    * column data types.
    *
    * @return List of columns from the results
-   * @throws SchemaCrawlerException On an exception
    */
   ResultsColumns retrieveResults() throws SQLException {
 

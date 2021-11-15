@@ -45,8 +45,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
@@ -65,7 +65,7 @@ public class SchemaCrawlerUtilityTest {
   public void getCatalogClosedConnection(final Connection connection) throws Exception {
     connection.close();
     assertThrows(
-        SchemaCrawlerRuntimeException.class,
+        InternalRuntimeException.class,
         () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
   }
 
@@ -87,6 +87,6 @@ public class SchemaCrawlerUtilityTest {
     results.close();
 
     assertThrows(
-        SchemaCrawlerException.class, () -> SchemaCrawlerUtility.getResultsColumns(results));
+        DatabaseAccessException.class, () -> SchemaCrawlerUtility.getResultsColumns(results));
   }
 }

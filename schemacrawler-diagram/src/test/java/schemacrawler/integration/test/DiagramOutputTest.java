@@ -53,7 +53,6 @@ import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -131,8 +130,7 @@ public class DiagramOutputTest {
   }
 
   private static Catalog getCatalog(
-      final Connection connection, final EnumDataTypeHelper enumHelper)
-      throws SchemaCrawlerException {
+      final Connection connection, final EnumDataTypeHelper enumHelper) {
     SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final LimitOptionsBuilder limitOptionsBuilder =

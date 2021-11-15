@@ -38,7 +38,6 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Property;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.options.BaseTextOptions;
@@ -56,8 +55,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
       final O options,
       final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     super(options, printVerboseDatabaseInfo, outputOptions, identifierQuoteString);
   }
 
@@ -69,7 +67,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
 
   /** {@inheritDoc} */
   @Override
-  public void end() throws SchemaCrawlerException {
+  public void end() {
     formattingHelper.writeDocumentEnd();
     super.end();
   }
@@ -202,16 +200,16 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   }
 
   @Override
-  public final void handleHeaderEnd() throws SchemaCrawlerException {}
+  public final void handleHeaderEnd() {}
 
   @Override
-  public final void handleHeaderStart() throws SchemaCrawlerException {}
+  public final void handleHeaderStart() {}
 
   @Override
-  public final void handleInfoEnd() throws SchemaCrawlerException {}
+  public final void handleInfoEnd() {}
 
   @Override
-  public final void handleInfoStart() throws SchemaCrawlerException {
+  public final void handleInfoStart() {
     if (!printVerboseDatabaseInfo
         || options.isNoInfo()
         || !options.isShowDatabaseInfo() && !options.isShowJdbcDriverInfo()) {

@@ -47,6 +47,7 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.text.diagram.DiagramRenderer;
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -100,33 +101,37 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
   }
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     checkCatalog();
 
-    final String stem = "schemacrawler";
-    final Path finalHtmlFile = createTempFilePath(stem, htmlx.getFormat());
-    final Path baseHtmlFile = createTempFilePath(stem, html.getFormat());
-    final Path baseSvgFile = createTempFilePath(stem, svg.getFormat());
+    try {
+      final String stem = "schemacrawler";
+      final Path finalHtmlFile = createTempFilePath(stem, htmlx.getFormat());
+      final Path baseHtmlFile = createTempFilePath(stem, html.getFormat());
+      final Path baseSvgFile = createTempFilePath(stem, svg.getFormat());
 
-    executeCommand(new SchemaTextRenderer(command), baseHtmlFile, html);
-    executeCommand(new DiagramRenderer(command, graphExecutorFactory), baseSvgFile, svg);
+      executeCommand(new SchemaTextRenderer(command), baseHtmlFile, html);
+      executeCommand(new DiagramRenderer(command, graphExecutorFactory), baseSvgFile, svg);
 
-    // Interleave HTML and SVG
-    try (final BufferedWriter finalHtmlFileWriter =
-            newBufferedWriter(finalHtmlFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
-        final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile, UTF_8);
-        final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile, UTF_8)) {
-      String line;
-      while ((line = baseHtmlFileReader.readLine()) != null) {
-        if (svgInsertionPoint.matcher(line).matches()) {
-          insertSvg(finalHtmlFileWriter, baseSvgFileReader);
+      // Interleave HTML and SVG
+      try (final BufferedWriter finalHtmlFileWriter =
+              newBufferedWriter(finalHtmlFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
+          final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile, UTF_8);
+          final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile, UTF_8)) {
+        String line;
+        while ((line = baseHtmlFileReader.readLine()) != null) {
+          if (svgInsertionPoint.matcher(line).matches()) {
+            insertSvg(finalHtmlFileWriter, baseSvgFileReader);
+          }
+          finalHtmlFileWriter.append(line).append(System.lineSeparator());
         }
-        finalHtmlFileWriter.append(line).append(System.lineSeparator());
       }
-    }
 
-    try (final Writer writer = outputOptions.openNewOutputWriter()) {
-      copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
+      try (final Writer writer = outputOptions.openNewOutputWriter()) {
+        copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
+      }
+    } catch (final IOException e) {
+      throw new IORuntimeException("Could not create embedded diagram", e);
     }
   }
 
@@ -148,8 +153,7 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
   private void executeCommand(
       final SchemaCrawlerCommand<? super DiagramOptions> scCommand,
       final Path outputFile,
-      final OutputFormat outputFormat)
-      throws Exception {
+      final OutputFormat outputFormat) {
 
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder(getOutputOptions())

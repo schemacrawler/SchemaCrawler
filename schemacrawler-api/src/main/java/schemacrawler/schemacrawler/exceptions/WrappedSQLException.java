@@ -25,34 +25,29 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline.state;
+package schemacrawler.schemacrawler.exceptions;
 
-import static picocli.CommandLine.defaultFactory;
+import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
-import picocli.CommandLine.IFactory;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import java.sql.SQLException;
 
-public class StateFactory extends BaseStateHolder implements IFactory {
+public class WrappedSQLException extends SQLException {
 
-  private static IFactory defaultPicocliFactory = defaultFactory();
+  private static final long serialVersionUID = 3424948223257267142L;
 
-  public StateFactory(final ShellState state) {
-    super(state);
+  public WrappedSQLException(final String message) {
+    super(message);
   }
 
-  @Override
-  public <K> K create(final Class<K> cls) {
-    try {
-      if (cls == null) {
-        return null;
-      } else if (BaseStateHolder.class.isAssignableFrom(cls)) {
-        return cls.getConstructor(ShellState.class).newInstance(state);
-      } else {
-        return defaultPicocliFactory.create(cls);
-      }
-    } catch (final Exception e) {
-      throw new InternalRuntimeException(
-          String.format("Could not instantiate class <%s>", cls), e);
-    }
+  public WrappedSQLException(final String message, final Exception cause) {
+    super(makeExceptionMessage(message, cause), cause);
+  }
+
+  public WrappedSQLException(final String message, final SQLException cause) {
+    super(
+        makeExceptionMessage(message, cause),
+        cause == null ? "" : cause.getSQLState(),
+        cause == null ? 0 : cause.getErrorCode(),
+        cause);
   }
 }

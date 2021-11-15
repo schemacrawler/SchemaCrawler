@@ -41,7 +41,6 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.NamedObjectSort;
 
 public class SchemaTraverser {
@@ -88,7 +87,7 @@ public class SchemaTraverser {
     this.tablesComparator = requireNonNull(tablesComparator, "No tables comparator provided");
   }
 
-  public final void traverse() throws SchemaCrawlerException {
+  public final void traverse() {
 
     final Collection<ColumnDataType> columnDataTypes = catalog.getColumnDataTypes();
     final Collection<Table> tables = catalog.getTables();

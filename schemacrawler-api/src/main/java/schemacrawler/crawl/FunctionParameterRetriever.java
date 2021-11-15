@@ -51,14 +51,10 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database function parameters.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database function parameters. */
 final class FunctionParameterRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(FunctionParameterRetriever.class.getName());
@@ -200,13 +196,12 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No function columns SQL provided");
+      throw new ExecutionRuntimeException("No function columns SQL provided");
     }
     final Query functionColumnsSql = informationSchemaViews.getQuery(FUNCTION_COLUMNS);
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionColumnsSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveFunctionColumnsFromDataDictionary");
       while (results.next()) {
         createFunctionParameter(results, allRoutines, parameterFilter);
       }
@@ -230,7 +225,8 @@ final class FunctionParameterRetriever extends AbstractRetriever {
                       function.getSchema().getCatalogName(),
                       function.getSchema().getName(),
                       function.getName(),
-                      null))) {
+                      null),
+              "DatabaseMetaData::getFunctionColumns")) {
         while (results.next()) {
           createFunctionParameter(results, allRoutines, parameterFilter);
         }

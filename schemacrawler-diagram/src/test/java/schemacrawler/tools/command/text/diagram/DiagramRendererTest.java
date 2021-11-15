@@ -48,7 +48,6 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.integration.test.DiagramOutputTest;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -165,7 +164,7 @@ public class DiagramRendererTest {
             diagramOutputFormat));
   }
 
-  private static Catalog getCatalog(final Connection connection) throws SchemaCrawlerException {
+  private static Catalog getCatalog(final Connection connection) {
     SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final LimitOptionsBuilder limitOptionsBuilder =

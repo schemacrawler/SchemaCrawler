@@ -46,14 +46,10 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database tables.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database tables. */
 final class IndexRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(IndexRetriever.class.getName());
@@ -163,7 +159,7 @@ final class IndexRetriever extends AbstractRetriever {
   }
 
   private void retrieveIndexesFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-      throws SchemaCrawlerSQLException {
+      throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
@@ -176,7 +172,6 @@ final class IndexRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(indexesSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveIndexesFromDataDictionary");
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
@@ -191,7 +186,7 @@ final class IndexRetriever extends AbstractRetriever {
         createIndexForTable(table, results);
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve indexes from SQL:%n%s", indexesSql), e);
     }
   }
@@ -216,10 +211,11 @@ final class IndexRetriever extends AbstractRetriever {
                     tableSchema.getName(),
                     table.getName(),
                     unique,
-                    true /* approximate */))) {
+                    true /* approximate */),
+            "DatabaseMetaData::getIndexInfo")) {
       createIndexes(table, results);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException(
+      throw new WrappedSQLException(
           String.format("Could not retrieve indexes for table <%s>", table), e);
     }
   }

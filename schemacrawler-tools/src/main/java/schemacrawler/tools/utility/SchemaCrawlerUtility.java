@@ -42,11 +42,11 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -58,11 +58,7 @@ import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * SchemaCrawler utility methods.
- *
- * @author sfatehi
- */
+/** SchemaCrawler utility methods. */
 @UtilityMarker
 public final class SchemaCrawlerUtility {
 
@@ -74,11 +70,9 @@ public final class SchemaCrawlerUtility {
    * @param connection Live database connection.
    * @param schemaCrawlerOptions Options.
    * @return Database catalog.
-   * @throws SchemaCrawlerException On an exception.
    */
   public static Catalog getCatalog(
-      final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions)
-      throws SchemaCrawlerException {
+      final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions) {
     checkConnection(connection);
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
 
@@ -91,8 +85,7 @@ public final class SchemaCrawlerUtility {
       final Connection connection,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfig)
-      throws SchemaCrawlerException {
+      final Config additionalConfig) {
 
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();
@@ -115,10 +108,8 @@ public final class SchemaCrawlerUtility {
    *
    * @param resultSet Live result-set.
    * @return Result-set metadata.
-   * @throws SchemaCrawlerException On an exception.
    */
-  public static ResultsColumns getResultsColumns(final ResultSet resultSet)
-      throws SchemaCrawlerException {
+  public static ResultsColumns getResultsColumns(final ResultSet resultSet) {
     try {
       // NOTE: Some JDBC drivers like SQLite may not work with closed
       // result-sets
@@ -127,7 +118,7 @@ public final class SchemaCrawlerUtility {
       final ResultsColumns resultsColumns = resultSetCrawler.crawl();
       return resultsColumns;
     } catch (final SQLException e) {
-      throw new SchemaCrawlerException("Could not retrieve result-set metadata", e);
+      throw new DatabaseAccessException("Could not retrieve result-set metadata", e);
     }
   }
 
@@ -135,7 +126,6 @@ public final class SchemaCrawlerUtility {
    * Returns database specific options using an existing SchemaCrawler database plugin.
    *
    * @return SchemaRetrievalOptions
-   * @throws SchemaCrawlerException On an exception.
    */
   public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection) {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
@@ -151,7 +141,6 @@ public final class SchemaCrawlerUtility {
    * database plugin as a starting point.
    *
    * @return SchemaRetrievalOptionsBuilder
-   * @throws SchemaCrawlerException On an exception.
    */
   private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(
       final Connection connection) {
@@ -181,15 +170,15 @@ public final class SchemaCrawlerUtility {
     try {
       DatabaseUtility.checkConnection(connection);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerRuntimeException("Bad database connection", e);
+      throw new InternalRuntimeException("Bad database connection", e);
     }
   }
 
-  private static void checkResultSet(final ResultSet resultSet) throws SchemaCrawlerException {
+  private static void checkResultSet(final ResultSet resultSet) {
     try {
       DatabaseUtility.checkResultSet(resultSet);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerException("Bad result-set", e);
+      throw new DatabaseAccessException("Bad result-set", e);
     }
   }
 

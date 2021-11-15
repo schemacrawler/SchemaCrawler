@@ -36,7 +36,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -75,7 +74,7 @@ public final class SchemaCrawlerExecutable {
     additionalConfig = new Config();
   }
 
-  public void execute() throws Exception {
+  public void execute() {
 
     if (schemaRetrievalOptions == null) {
       schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
@@ -165,14 +164,14 @@ public final class SchemaCrawlerExecutable {
     return command;
   }
 
-  private void loadCatalog() throws Exception {
+  private void loadCatalog() {
     catalog =
         SchemaCrawlerUtility.getCatalog(
             connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 
-  private SchemaCrawlerCommand<?> loadCommand() throws SchemaCrawlerException {
+  private SchemaCrawlerCommand<?> loadCommand() {
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
     final SchemaCrawlerCommand<?> scCommand =
         commandRegistry.configureNewCommand(

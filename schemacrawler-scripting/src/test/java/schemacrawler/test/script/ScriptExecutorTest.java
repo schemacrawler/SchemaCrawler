@@ -61,7 +61,8 @@ public class ScriptExecutorTest {
         writer);
 
     assertThat(scriptExecutor.canGenerate(), is(true));
-    assertThat(scriptExecutor.call(), is(true));
+
+    scriptExecutor.run();
     assertThat(writer.toString().replaceAll("\\R", ""), is("Hello, World!"));
   }
 
@@ -82,7 +83,8 @@ public class ScriptExecutorTest {
         writer);
 
     assertThat(scriptExecutor.canGenerate(), is(true));
-    assertThat(scriptExecutor.call(), is(true));
+
+    scriptExecutor.run();
     assertThat(writer.toString().replaceAll("\\R", ""), is("Hello, World!"));
   }
 

@@ -28,8 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 
 public enum LintDispatch {
   none {
@@ -49,7 +50,7 @@ public enum LintDispatch {
     @Override
     public void dispatch() {
       LOGGER.log(Level.WARNING, dispatchMessage);
-      throw new RuntimeException(dispatchMessage);
+      throw new ExecutionRuntimeException(dispatchMessage);
     }
   },
   terminate_system {
@@ -61,8 +62,7 @@ public enum LintDispatch {
   },
   ;
 
-  private static final Logger LOGGER =
-      Logger.getLogger(LintDispatch.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(LintDispatch.class.getName());
 
   private static final String dispatchMessage = "Too many schema lints were found";
 

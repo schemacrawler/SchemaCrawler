@@ -37,7 +37,6 @@ import java.util.List;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.TarjanStronglyConnectedComponentFinder;
@@ -52,7 +51,7 @@ public class LinterTableCycles extends BaseLinter {
   }
 
   @Override
-  protected void end(final Connection connection) throws SchemaCrawlerException {
+  protected void end(final Connection connection) {
     requireNonNull(tablesGraph, "Not initialized");
 
     final Collection<List<Table>> sccs =
@@ -87,7 +86,7 @@ public class LinterTableCycles extends BaseLinter {
   }
 
   @Override
-  protected void start(final Connection connection) throws SchemaCrawlerException {
+  protected void start(final Connection connection) {
     super.start(connection);
 
     tablesGraph = new DirectedGraph<>(getLinterId());

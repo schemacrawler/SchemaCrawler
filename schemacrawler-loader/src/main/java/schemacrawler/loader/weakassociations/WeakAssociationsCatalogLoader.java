@@ -31,14 +31,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -95,7 +95,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws SchemaCrawlerException {
+  public void loadCatalog() {
     if (!isLoaded()) {
       return;
     }
@@ -122,7 +122,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving weak association information", e);
+      throw new ExecutionRuntimeException("Exception retrieving weak association information", e);
     }
   }
 }

@@ -31,11 +31,10 @@ import java.sql.ResultSet;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface DataTraversalHandler extends TraversalHandler {
 
-  void handleData(final Query query, final ResultSet rows) throws SchemaCrawlerException;
+  void handleData(final Query query, final ResultSet rows);
 
-  void handleData(final Table table, final ResultSet rows) throws SchemaCrawlerException;
+  void handleData(final Table table, final ResultSet rows);
 }

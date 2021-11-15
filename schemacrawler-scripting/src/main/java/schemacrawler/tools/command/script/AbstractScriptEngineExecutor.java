@@ -30,6 +30,7 @@ package schemacrawler.tools.command.script;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Map.Entry;
@@ -40,8 +41,10 @@ import javax.script.Compilable;
 import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
+import javax.script.ScriptException;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.string.StringFormat;
 
@@ -77,12 +80,10 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
 
   /** {@inheritDoc} */
   @Override
-  public Boolean call() throws Exception {
+  public void run() {
 
     obtainScriptEngine();
-    if (scriptEngine == null) {
-      return false;
-    }
+    requireNonNull(scriptEngine, "Script engine not found");
     logScriptEngineDetails(Level.CONFIG, scriptEngine.getFactory());
 
     requireNonNull(reader, "No reader provided");
@@ -106,10 +107,12 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
       } else {
         scriptEngine.eval(reader);
       }
+    } catch (final ScriptException e) {
+      throw new ExecutionRuntimeException("Could not execute script", e);
+    } catch (final IOException e) {
+      throw new IORuntimeException("Could not read script", e);
     }
-
-    return true;
   }
 
-  protected abstract void obtainScriptEngine() throws SchemaCrawlerException;
+  protected abstract void obtainScriptEngine();
 }

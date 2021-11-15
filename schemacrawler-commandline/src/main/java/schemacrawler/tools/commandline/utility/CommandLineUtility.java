@@ -46,7 +46,6 @@ import picocli.CommandLine.ParseResult;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -71,14 +70,12 @@ public class CommandLineUtility {
       () -> DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getHelpCommands();
 
   public static void addPluginCommands(
-      final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands)
-      throws SchemaCrawlerException {
+      final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands) {
     addPluginCommands(commandLine, pluginCommands, true);
   }
 
   public static void addPluginHelpCommands(
-      final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands)
-      throws SchemaCrawlerException {
+      final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands) {
     addPluginCommands(commandLine, pluginCommands, false);
   }
 
@@ -106,10 +103,8 @@ public class CommandLineUtility {
    *
    * @param parseResult Result of parsing the command-line
    * @return Config with additional plugin-specific command-line options
-   * @throws SchemaCrawlerException On an exception
    */
-  public static Map<String, Object> matchedOptionValues(final ParseResult parseResult)
-      throws SchemaCrawlerException {
+  public static Map<String, Object> matchedOptionValues(final ParseResult parseResult) {
     requireNonNull(parseResult, "No parse result provided");
 
     final Map<String, Object> options = new HashMap<>();
@@ -204,8 +199,7 @@ public class CommandLineUtility {
   private static void addPluginCommands(
       final CommandLine commandLine,
       final Supplier<Collection<PluginCommand>> pluginCommands,
-      final boolean addAsMixins)
-      throws SchemaCrawlerException {
+      final boolean addAsMixins) {
     requireNonNull(commandLine, "No command-line provided");
     requireNonNull(pluginCommands, "No plugin commands supplier provided");
     for (final PluginCommand pluginCommand : pluginCommands.get()) {

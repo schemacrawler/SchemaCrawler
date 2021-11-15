@@ -2,10 +2,11 @@
 
 
 <a name="a16.16.01"></a>
-## Release 16.16.01 - 2021-11-12
+## Release 16.16.01 - 2021-11-15
 
-- Prefer runtime exceptions than checked exceptions
+- Prefer runtime exceptions to checked exceptions in the API, and create more specific exception classes for SchemaCrawler exceptions
 - Fix #535 - issue when logging offline connections
+- Remove tests for MonetDB
 
 
 <a name="a16.15.11"></a>

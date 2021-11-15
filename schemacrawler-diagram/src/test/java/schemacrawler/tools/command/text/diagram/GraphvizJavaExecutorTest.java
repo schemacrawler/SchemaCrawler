@@ -40,13 +40,12 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public class GraphvizJavaExecutorTest {
 
   @Test
-  public void canGenerate() throws IOException, SchemaCrawlerException {
+  public void canGenerate() throws IOException {
     final Path dotFile = copyResourceToTempFile("/javaexecutor/input.dot");
     final Path outputFile = createTempFile("sc", ".dot");
 
@@ -74,7 +73,7 @@ public class GraphvizJavaExecutorTest {
   }
 
   @Test
-  public void generate() throws IOException, SchemaCrawlerException {
+  public void generate() throws IOException {
     final Path dotFile = copyResourceToTempFile("/javaexecutor/input.dot");
     final Path outputFile = createTempFile("sc", ".dot");
 

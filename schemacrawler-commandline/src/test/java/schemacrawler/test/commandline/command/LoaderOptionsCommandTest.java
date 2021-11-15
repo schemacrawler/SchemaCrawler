@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -56,8 +55,7 @@ public class LoaderOptionsCommandTest {
             classpathResource(COMMAND_HELP + testContext.testMethodFullName() + ".txt")));
   }
 
-  private CommandLine createShellCommandLine(final Connection connection, final ShellState state)
-      throws SchemaCrawlerException {
+  private CommandLine createShellCommandLine(final Connection connection, final ShellState state) {
 
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));

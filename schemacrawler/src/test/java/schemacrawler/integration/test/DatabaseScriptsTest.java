@@ -114,7 +114,7 @@ public class DatabaseScriptsTest {
   @Test
   public void booksDatabaseScripts() throws Exception {
     final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");
-    assertThat(scripts, hasSize(15));
+    assertThat(scripts, hasSize(14));
     final List<String> failedScripts = new ArrayList<>();
     for (final String scriptName : scripts) {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
@@ -133,8 +133,6 @@ public class DatabaseScriptsTest {
             }
           }
         }
-      } catch (final IOException e) {
-        throw new RuntimeException(e.getMessage(), e);
       }
 
       for (final Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry :

@@ -48,15 +48,11 @@ import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the details about the database tables.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the details about the database tables. */
 final class TableRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class.getName());
@@ -158,7 +154,7 @@ final class TableRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TABLES)) {
-      throw new SchemaCrawlerSQLException("No tables SQL provided");
+      throw new ExecutionRuntimeException("No tables SQL provided");
     }
     final Query tablesSql = informationSchemaViews.getQuery(TABLES);
     final TableTypes supportedTableTypes = getRetrieverConnection().getTableTypes();
@@ -171,7 +167,6 @@ final class TableRetriever extends AbstractRetriever {
     try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getSchemaInclusionRule())) {
-      results.setDescription("retrieveTablesFromDataDictionary");
       int numTables = 0;
       while (results.next()) {
         numTables = numTables + 1;
@@ -201,8 +196,8 @@ final class TableRetriever extends AbstractRetriever {
           new MetadataResultSet(
               getMetaData()
                   .getTables(
-                      catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()))) {
-        results.setDescription("retrieveTablesFromMetadata");
+                      catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()),
+              "DatabaseMetaData::getTables")) {
         int numTables = 0;
         while (results.next()) {
           numTables = numTables + 1;

@@ -52,7 +52,7 @@ public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
 
   /** {@inheritDoc} */
   @Override
-  public void execute() throws Exception {
+  public void execute() {
 
     final boolean usesConnection = usesConnection();
     final boolean hasConnection = connection != null;
@@ -60,7 +60,7 @@ public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
       throw new RuntimeException("Uses connection not honored");
     }
 
-    try (final PrintWriter writer = new PrintWriter(outputOptions.openNewOutputWriter()); ) {
+    try (final PrintWriter writer = outputOptions.openNewOutputWriter()) {
       writer.println("Output generated from " + this.getClass().getName());
       writer.println(commandOptions);
       writer.flush();

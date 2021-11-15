@@ -31,6 +31,7 @@ package schemacrawler.test.utility;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.size;
 import static java.util.Objects.requireNonNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -88,10 +89,10 @@ public class FileHasContent extends BaseMatcher<TestResource> {
       final String outputFormatValue,
       final boolean validateOutputFormat) {
     if (classpathTestResource == null) {
-      throw new RuntimeException("No classpath resource to match with");
+      fail("No classpath resource to match with");
     }
     if (validateOutputFormat && isBlank(outputFormatValue)) {
-      throw new RuntimeException("No output format provided");
+      fail("No output format provided");
     }
     return new FileHasContent(classpathTestResource, outputFormatValue);
   }
@@ -114,7 +115,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
         try {
           final Path fileResource = ((TestResource) item).getFileResource().orElse(null);
           value = Files.lines(fileResource).limit(5).collect(Collectors.joining("\n"));
-        } catch (IOException e) {
+        } catch (final IOException e) {
           value = "<some output>";
         }
       } else {
@@ -154,7 +155,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
         return failures != null && failures.isEmpty();
       }
     } catch (final Exception e) {
-      throw new RuntimeException(e);
+      return fail(e);
     }
   }
 
