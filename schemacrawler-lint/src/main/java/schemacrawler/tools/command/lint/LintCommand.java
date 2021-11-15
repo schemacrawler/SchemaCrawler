@@ -62,7 +62,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
   }
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     checkCatalog();
 
     // Lint the catalog

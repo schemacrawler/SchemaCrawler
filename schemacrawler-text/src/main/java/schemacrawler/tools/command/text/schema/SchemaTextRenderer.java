@@ -54,7 +54,7 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
   }
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     checkCatalog();
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();

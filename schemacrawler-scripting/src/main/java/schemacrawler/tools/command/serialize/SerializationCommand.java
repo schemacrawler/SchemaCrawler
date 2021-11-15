@@ -30,22 +30,21 @@ package schemacrawler.tools.command.serialize;
 
 import static java.nio.file.Files.newOutputStream;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.file.Path;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.formatter.serialize.CatalogSerializer;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
-/**
- * Main executor for the serialization integration.
- *
- * @author Sualeh Fatehi
- */
+/** Main executor for the serialization integration. */
 public final class SerializationCommand extends BaseSchemaCrawlerCommand<SerializationOptions> {
 
   static final String COMMAND = "serialize";
@@ -62,17 +61,23 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand<Seriali
 
   /** {@inheritDoc} */
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     checkCatalog();
 
     final SerializationFormat serializationFormat =
         SerializationFormat.fromFormat(outputOptions.getOutputFormatValue());
 
     final String serializerClassName = serializationFormat.getSerializerClassName();
-    final Class<CatalogSerializer> serializableCatalogClass =
-        (Class<CatalogSerializer>) Class.forName(serializerClassName);
-    final CatalogSerializer serializableCatalog =
-        serializableCatalogClass.getDeclaredConstructor(Catalog.class).newInstance(catalog);
+    final CatalogSerializer catalogSerializer;
+    try {
+      final Class<CatalogSerializer> serializableCatalogClass =
+          (Class<CatalogSerializer>) Class.forName(serializerClassName);
+      catalogSerializer =
+          serializableCatalogClass.getDeclaredConstructor(Catalog.class).newInstance(catalog);
+    } catch (final Exception e) {
+      throw new InternalRuntimeException(
+          String.format("Could not instantiate catalog serializer<%s>", serializerClassName), e);
+    }
 
     if (serializationFormat.isBinaryFormat()) {
       // Force a file to be created for binary formats such as Java serialization
@@ -82,17 +87,14 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand<Seriali
           OutputOptionsBuilder.builder(outputOptions).withOutputFile(outputFile).toOptions();
 
       try (final OutputStream out = newOutputStream(outputFile)) {
-        serializableCatalog.save(out);
+        catalogSerializer.save(out);
+      } catch (final IOException e) {
+        throw new IORuntimeException("Could not save catalog", e);
       }
     } else {
       final Writer out = outputOptions.openNewOutputWriter();
-      serializableCatalog.save(out);
+      catalogSerializer.save(out);
       // NOTE: Jackson closes the output writer, so no need for a try-with-resources block
     }
-  }
-
-  @Override
-  public boolean usesConnection() {
-    return false;
   }
 }

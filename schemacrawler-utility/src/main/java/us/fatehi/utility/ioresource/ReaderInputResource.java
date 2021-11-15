@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
@@ -48,7 +47,7 @@ public class ReaderInputResource implements InputResource {
   }
 
   @Override
-  public Reader openNewInputReader(final Charset charset) throws IOException {
+  public Reader openNewInputReader(final Charset charset) {
     LOGGER.log(Level.INFO, "Input to provided reader");
     return wrapReader(getDescription(), new BufferedReader(reader), false);
   }

@@ -65,7 +65,7 @@ public class ClasspathInputResource implements InputResource {
   }
 
   @Override
-  public Reader openNewInputReader(final Charset charset) throws IOException {
+  public Reader openNewInputReader(final Charset charset) {
     requireNonNull(charset, "No input charset provided");
     final InputStream inputStream =
         ClasspathInputResource.class.getResourceAsStream(classpathResource);

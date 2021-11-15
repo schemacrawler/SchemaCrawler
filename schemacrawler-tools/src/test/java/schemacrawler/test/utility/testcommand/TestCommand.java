@@ -52,7 +52,7 @@ public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
 
   /** {@inheritDoc} */
   @Override
-  public void execute() throws Exception {
+  public void execute() {
 
     final boolean usesConnection = usesConnection();
     final boolean hasConnection = connection != null;

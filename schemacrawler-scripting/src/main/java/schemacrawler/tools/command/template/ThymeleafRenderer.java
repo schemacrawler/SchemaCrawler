@@ -39,13 +39,10 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 
-/**
- * Main executor for the Thymeleaf integration.
- *
- * @author Sualeh Fatehi
- */
+/** Main executor for the Thymeleaf integration. */
 public final class ThymeleafRenderer extends BaseTemplateRenderer {
 
   private static ITemplateResolver configure(
@@ -56,30 +53,34 @@ public final class ThymeleafRenderer extends BaseTemplateRenderer {
   }
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     final OutputOptions outputOptions = getOutputOptions();
 
-    final Context context = new Context();
-    context.setVariables(getContext());
+    try {
+      final Context context = new Context();
+      context.setVariables(getContext());
 
-    final TemplateEngine templateEngine = new TemplateEngine();
-    final Charset inputCharset = outputOptions.getInputCharset();
+      final TemplateEngine templateEngine = new TemplateEngine();
+      final Charset inputCharset = outputOptions.getInputCharset();
 
-    final FileTemplateResolver fileResolver = new FileTemplateResolver();
-    fileResolver.setCheckExistence(true);
-    templateEngine.addTemplateResolver(configure(fileResolver, inputCharset));
+      final FileTemplateResolver fileResolver = new FileTemplateResolver();
+      fileResolver.setCheckExistence(true);
+      templateEngine.addTemplateResolver(configure(fileResolver, inputCharset));
 
-    final ClassLoaderTemplateResolver classpathResolver = new ClassLoaderTemplateResolver();
-    classpathResolver.setCheckExistence(true);
-    templateEngine.addTemplateResolver(configure(classpathResolver, inputCharset));
+      final ClassLoaderTemplateResolver classpathResolver = new ClassLoaderTemplateResolver();
+      classpathResolver.setCheckExistence(true);
+      templateEngine.addTemplateResolver(configure(classpathResolver, inputCharset));
 
-    final UrlTemplateResolver urlResolver = new UrlTemplateResolver();
-    urlResolver.setCheckExistence(true);
-    templateEngine.addTemplateResolver(configure(urlResolver, inputCharset));
+      final UrlTemplateResolver urlResolver = new UrlTemplateResolver();
+      urlResolver.setCheckExistence(true);
+      templateEngine.addTemplateResolver(configure(urlResolver, inputCharset));
 
-    final String templateLocation = getResourceFilename();
-    try (final Writer writer = outputOptions.openNewOutputWriter()) {
-      templateEngine.process(templateLocation, context, writer);
+      final String templateLocation = getResourceFilename();
+      try (final Writer writer = outputOptions.openNewOutputWriter()) {
+        templateEngine.process(templateLocation, context, writer);
+      }
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException("Exception rendering Thymeleaf template", e);
     }
   }
 }

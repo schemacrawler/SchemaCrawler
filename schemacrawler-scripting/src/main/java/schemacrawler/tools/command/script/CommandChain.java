@@ -107,7 +107,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
   }
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     checkCatalog();
 
     initializeChain();
@@ -159,7 +159,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     }
   }
 
-  private void executeChain() throws Exception {
+  private void executeChain() {
     if (scCommands.isEmpty()) {
       LOGGER.log(Level.INFO, "No command to execute");
       return;
@@ -170,7 +170,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     }
   }
 
-  private void initializeChain() throws Exception {
+  private void initializeChain() {
     if (scCommands.isEmpty()) {
       LOGGER.log(Level.INFO, "No command to initialize");
       return;

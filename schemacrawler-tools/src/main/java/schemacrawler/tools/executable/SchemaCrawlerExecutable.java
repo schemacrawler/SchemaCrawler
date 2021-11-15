@@ -74,7 +74,7 @@ public final class SchemaCrawlerExecutable {
     additionalConfig = new Config();
   }
 
-  public void execute() throws Exception {
+  public void execute() {
 
     if (schemaRetrievalOptions == null) {
       schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);

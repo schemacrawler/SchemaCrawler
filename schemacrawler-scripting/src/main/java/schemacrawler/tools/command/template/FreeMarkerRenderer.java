@@ -39,17 +39,14 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 
-/**
- * Main executor for the FreeMarker integration.
- *
- * @author Sualeh Fatehi
- */
+/** Main executor for the FreeMarker integration. */
 public final class FreeMarkerRenderer extends BaseTemplateRenderer {
 
   @Override
-  public void execute() throws Exception {
+  public void execute() {
 
     final OutputOptions outputOptions = getOutputOptions();
 
@@ -61,25 +58,29 @@ public final class FreeMarkerRenderer extends BaseTemplateRenderer {
       templateLocation = templateFilePath.getName();
     }
 
-    System.setProperty(
-        freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
-        freemarker.log.Logger.LIBRARY_NAME_JUL);
+    try {
+      System.setProperty(
+          freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
+          freemarker.log.Logger.LIBRARY_NAME_JUL);
 
-    // Create a new instance of the configuration
-    final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
+      // Create a new instance of the configuration
+      final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
 
-    final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class, "/");
-    final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
-    final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {ctl, ftl});
-    cfg.setTemplateLoader(mtl);
-    cfg.setEncoding(Locale.getDefault(), outputOptions.getInputCharset().name());
-    cfg.setWhitespaceStripping(true);
+      final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class, "/");
+      final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
+      final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {ctl, ftl});
+      cfg.setTemplateLoader(mtl);
+      cfg.setEncoding(Locale.getDefault(), outputOptions.getInputCharset().name());
+      cfg.setWhitespaceStripping(true);
 
-    try (final Writer writer = outputOptions.openNewOutputWriter()) {
-      // Evaluate the template
-      final Template template = cfg.getTemplate(templateLocation);
-      final Map<String, Object> context = getContext();
-      template.process(context, writer);
+      try (final Writer writer = outputOptions.openNewOutputWriter()) {
+        // Evaluate the template
+        final Template template = cfg.getTemplate(templateLocation);
+        final Map<String, Object> context = getContext();
+        template.process(context, writer);
+      }
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException("Exception rendering FreeMarker template", e);
     }
   }
 }

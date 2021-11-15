@@ -93,29 +93,30 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
   /** {@inheritDoc} */
   @Override
-  public void execute() throws Exception {
+  public void execute() {
     requireNonNull(commandOptions, "No script language provided");
     checkCatalog();
 
-    if (scriptExecutor == null) {
-      throw new InternalRuntimeException("Scripting engine not found");
+    requireNonNull(scriptExecutor, "Scripting engine not found");
+    try {
+      final Charset inputCharset = outputOptions.getInputCharset();
+      final InputResource inputResource = commandOptions.getResource().get();
+      final Reader reader = inputResource.openNewInputReader(inputCharset);
+      final Writer writer = outputOptions.openNewOutputWriter();
+
+      LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
+
+      // Set up the context
+      final Map<String, Object> context = new HashMap<>();
+      context.put("catalog", catalog);
+      context.put("connection", connection);
+      context.put("chain", new CommandChain(this));
+
+      scriptExecutor.initialize(context, reader, writer);
+      scriptExecutor.run();
+    } catch (final Exception e) {
+      throw new InternalRuntimeException("Could not execute script", e);
     }
-
-    final Charset inputCharset = outputOptions.getInputCharset();
-    final InputResource inputResource = commandOptions.getResource().get();
-    final Reader reader = inputResource.openNewInputReader(inputCharset);
-    final Writer writer = outputOptions.openNewOutputWriter();
-
-    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
-
-    // Set up the context
-    final Map<String, Object> context = new HashMap<>();
-    context.put("catalog", catalog);
-    context.put("connection", connection);
-    context.put("chain", new CommandChain(this));
-
-    scriptExecutor.initialize(context, reader, writer);
-    scriptExecutor.run();
   }
 
   @Override
