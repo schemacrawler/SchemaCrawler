@@ -111,7 +111,7 @@ public final class StopWatch {
    *
    * @return String supplier.
    */
-  public Supplier<String> stringify() {
+  public Supplier<String> report() {
     return () -> {
       final StringBuilder buffer = new StringBuilder(1024);
 

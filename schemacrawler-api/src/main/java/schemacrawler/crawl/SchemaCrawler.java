@@ -151,6 +151,8 @@ public final class SchemaCrawler {
       throw e;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e.getMessage(), e);
+    } finally {
+      stopWatch.stopAndLogTime();
     }
   }
 
@@ -193,8 +195,6 @@ public final class SchemaCrawler {
 
   private void crawlColumnDataTypes() throws Exception {
 
-    stopWatch.reset("crawlColumnDataTypes");
-
     final DataTypeRetriever retriever =
         new DataTypeRetriever(retrieverConnection, catalog, options);
 
@@ -202,8 +202,6 @@ public final class SchemaCrawler {
 
     stopWatch.time(
         retrieveUserDefinedColumnDataTypes, retriever::retrieveUserDefinedColumnDataTypes);
-
-    stopWatch.stopAndLogTime();
   }
 
   private void crawlDatabaseInfo() throws Exception {
@@ -212,8 +210,6 @@ public final class SchemaCrawler {
       LOGGER.log(Level.INFO, "Not retrieving database information, since this was not requested");
       return;
     }
-
-    stopWatch.reset("crawlDatabaseInfo");
 
     final DatabaseInfoRetriever retriever =
         new DatabaseInfoRetriever(retrieverConnection, catalog, options);
@@ -224,8 +220,6 @@ public final class SchemaCrawler {
     stopWatch.time(retrieveDatabaseUsers, retriever::retrieveDatabaseUsers);
 
     stopWatch.time(retrieveAdditionalJdbcDriverInfo, retriever::retrieveAdditionalJdbcDriverInfo);
-
-    stopWatch.stopAndLogTime();
   }
 
   private void crawlRoutines() throws Exception {
@@ -235,8 +229,6 @@ public final class SchemaCrawler {
       LOGGER.log(Level.INFO, "Not retrieving routines, since this was not requested");
       return;
     }
-
-    stopWatch.reset("crawlRoutines");
 
     final RoutineRetriever retriever = new RoutineRetriever(retrieverConnection, catalog, options);
     final RoutineExtRetriever retrieverExtra =
@@ -283,13 +275,9 @@ public final class SchemaCrawler {
         });
 
     stopWatch.time(retrieveRoutineInformation, retrieverExtra::retrieveRoutineInformation);
-
-    stopWatch.stopAndLogTime();
   }
 
   private void crawlSchemas() throws Exception {
-
-    stopWatch.reset("crawlSchemas");
 
     final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection, catalog, options);
 
@@ -299,8 +287,6 @@ public final class SchemaCrawler {
 
     stopWatch.time(
         "filterAndSortSchemas", () -> catalog.reduce(Schema.class, getSchemaReducer(options)));
-
-    stopWatch.stopAndLogTime();
 
     final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
     if (schemas.isEmpty()) {
@@ -318,8 +304,6 @@ public final class SchemaCrawler {
       return;
     }
 
-    stopWatch.reset("crawlSequences");
-
     final SequenceRetriever retrieverExtra =
         new SequenceRetriever(retrieverConnection, catalog, options);
 
@@ -331,8 +315,6 @@ public final class SchemaCrawler {
     stopWatch.time(
         "filterAndSortSequences",
         () -> catalog.reduce(Sequence.class, getSequenceReducer(options)));
-
-    stopWatch.stopAndLogTime();
   }
 
   private void crawlSynonyms() throws Exception {
@@ -344,8 +326,6 @@ public final class SchemaCrawler {
       return;
     }
 
-    stopWatch.reset("crawlSynonyms");
-
     final SynonymRetriever retrieverExtra =
         new SynonymRetriever(retrieverConnection, catalog, options);
 
@@ -355,8 +335,6 @@ public final class SchemaCrawler {
 
     stopWatch.time(
         "filterAndSortSynonms", () -> catalog.reduce(Synonym.class, getSynonymReducer(options)));
-
-    stopWatch.stopAndLogTime();
   }
 
   private void crawlTables() throws Exception {
@@ -366,8 +344,6 @@ public final class SchemaCrawler {
       LOGGER.log(Level.INFO, "Not retrieving tables, since this was not requested");
       return;
     }
-
-    stopWatch.reset("crawlTables");
 
     final TableRetriever retriever = new TableRetriever(retrieverConnection, catalog, options);
     final TableColumnRetriever columnRetriever =
@@ -448,7 +424,5 @@ public final class SchemaCrawler {
 
     crawlAdditionalTableInformation(constraintRetriever, retrieverExtra);
     crawlAdditionalTableColumnInformation(retrieverExtra);
-
-    stopWatch.stopAndLogTime();
   }
 }

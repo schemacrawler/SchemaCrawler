@@ -31,8 +31,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.function.Supplier;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 import us.fatehi.utility.StopWatch;
@@ -40,20 +40,14 @@ import us.fatehi.utility.StopWatch.Function;
 
 public final class RetrievalStopWatch {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(RetrievalStopWatch.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(RetrievalStopWatch.class.getName());
 
   private StopWatch stopWatch;
   private final SchemaInfoLevel infoLevel;
 
   public RetrievalStopWatch(final SchemaInfoLevel infoLevel) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
-    reset("none");
-  }
-
-  public void reset(final String crawl) {
-    stopWatch = new StopWatch(crawl);
-    LOGGER.log(Level.INFO, "Running " + crawl);
+    newStopWatch(infoLevel);
   }
 
   /**
@@ -62,10 +56,10 @@ public final class RetrievalStopWatch {
    * @return String supplier.
    */
   public Supplier<String> stopAndLogTime() {
-    final Supplier<String> stringify = stopWatch.stringify();
-    reset("none");
+    final Supplier<String> stringify = stopWatch.report();
+    LOGGER.log(Level.INFO, stopWatch.report());
+    newStopWatch(infoLevel);
 
-    LOGGER.log(Level.INFO, stopWatch.stringify());
     return stringify;
   }
 
@@ -85,6 +79,10 @@ public final class RetrievalStopWatch {
       throws Exception {
     final boolean run = run(additionalRetrievals);
     time(retrievalName, run, function);
+  }
+
+  private void newStopWatch(SchemaInfoLevel infoLevel) {
+    stopWatch = new StopWatch(infoLevel.getTag());
   }
 
   private boolean run(final SchemaInfoRetrieval... additionalRetrievals) {

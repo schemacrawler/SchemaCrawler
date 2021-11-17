@@ -32,17 +32,11 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import us.fatehi.utility.StopWatch;
 
-/** SchemaCrawler uses database meta-data to get the details about the schema. */
 public final class ResultsCrawler {
-
-  private static final Logger LOGGER = Logger.getLogger(ResultsCrawler.class.getName());
 
   private final ResultSet results;
 
@@ -64,16 +58,9 @@ public final class ResultsCrawler {
    */
   public ResultsColumns crawl() throws SQLException {
 
-    final StopWatch stopWatch = new StopWatch("crawlResultSet");
-
-    LOGGER.log(Level.FINE, "Crawling result set");
-
     try {
       final ResultsRetriever resultsRetriever = new ResultsRetriever(results);
-      final ResultsColumns resultsColumns =
-          stopWatch.time("retrieveResults", resultsRetriever::retrieveResults);
-
-      LOGGER.log(Level.FINE, stopWatch.stringify());
+      final ResultsColumns resultsColumns = resultsRetriever.retrieveResults();
 
       return resultsColumns;
     } catch (final SQLException e) {

@@ -100,7 +100,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final StopWatch stopWatch = new StopWatch("crawlAnalysis");
+    final StopWatch stopWatch = new StopWatch("loadWeakAssociations");
 
     LOGGER.log(Level.INFO, "Finding weak associations");
     try {
@@ -120,7 +120,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
             }
           });
 
-      LOGGER.log(Level.INFO, stopWatch.stringify());
+      LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving weak association information", e);
     }

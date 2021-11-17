@@ -94,7 +94,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving catalog attributes");
-    final StopWatch stopWatch = new StopWatch("loadTableRowCounts");
+    final StopWatch stopWatch = new StopWatch("loadAttributes");
     try {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();
@@ -121,7 +121,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             return null;
           });
 
-      LOGGER.log(Level.INFO, stopWatch.stringify());
+      LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception loading catalog attributes", e);
     }
