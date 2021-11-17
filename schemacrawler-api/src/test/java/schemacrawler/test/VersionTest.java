@@ -66,7 +66,7 @@ public class VersionTest {
   public void version() throws Exception {
     Version.main(new String[0]);
 
-    assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.16.01"));
+    assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.16.02"));
     assertThat(outputOf(err), hasNoContent());
   }
 }
