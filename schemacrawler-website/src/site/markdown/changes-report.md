@@ -1,6 +1,12 @@
 # SchemaCrawler Change History
 
 
+<a name="a16.16.02"></a>
+## Release 16.16.02 - 2021-11-16
+
+- Fix stopwatch logging
+
+
 <a name="a16.16.01"></a>
 ## Release 16.16.01 - 2021-11-15
 
