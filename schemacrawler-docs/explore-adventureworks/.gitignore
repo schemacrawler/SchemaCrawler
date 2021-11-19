@@ -2,3 +2,6 @@
 *.pdf
 *.ser
 *.dot
+*.dbml
+*.mermaid
+*.py

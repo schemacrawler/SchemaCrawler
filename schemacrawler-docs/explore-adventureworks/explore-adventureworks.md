@@ -41,6 +41,14 @@
   `schemacrawler --server offline --database adventureworks-schema.ser --schemas AdventureWorks\.[A-Z].* --info-level maximum --command list`
 
 
+## Model Your Existing Database
+
+- Generate and edit a dbdiagram.io diagram
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command script --grep-tables ".*\.Employee" --children 1 --scripting-language python --script share/dbml.py --output-file share/adventureworks.dbml`
+- Generate and edit a mermaid diagram
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command script --grep-tables ".*\.Employee" --children 1 --scripting-language python --script share/mermaid.py --output-file share/adventureworks.mermaid`
+
+
 ## Other Commands
 
 - Guess at weak associations in a diagram
