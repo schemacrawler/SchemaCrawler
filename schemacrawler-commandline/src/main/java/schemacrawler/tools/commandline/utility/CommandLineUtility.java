@@ -43,10 +43,15 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
+import schemacrawler.BaseProductVersion;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
+import schemacrawler.ProductVersion;
 import schemacrawler.Version;
+import schemacrawler.crawl.ConnectionInfoBuilder;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -88,12 +93,33 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static String getEnvironment() {
-    return String.format(
-        "Environment:%n  %s%n  %s%n  %s%n",
-        Version.version(),
-        OperatingSystemInfo.operatingSystemInfo(),
-        JvmSystemInfo.jvmSystemInfo());
+  public static String getEnvironment(final ShellState state) {
+    String environment =
+        String.format(
+            "Environment:%n  %s%n  %s%n  %s%n",
+            Version.version(),
+            OperatingSystemInfo.operatingSystemInfo(),
+            JvmSystemInfo.jvmSystemInfo());
+
+    if (state != null && state.isConnected()) {
+      try {
+        final ConnectionInfo connectionInfo =
+            ConnectionInfoBuilder.builder(state.getDataSource().get()).build();
+        final ProductVersion databaseInfo =
+            new BaseProductVersion(
+                connectionInfo.getDatabaseProductName(),
+                connectionInfo.getDatabaseProductVersion());
+        final ProductVersion jdbcDriverInfo =
+            new BaseProductVersion(
+                connectionInfo.getDriverName(), connectionInfo.getDriverVersion());
+        final String connection = String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
+        environment = environment + connection;
+      } catch (final Exception e) {
+        // Ignore - do not log
+      }
+    }
+
+    return environment;
   }
 
   /**
@@ -136,7 +162,8 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static void printCommandLineErrorMessage(final String errorMessage) {
+  public static void printCommandLineErrorMessage(
+      final String errorMessage, final ShellState state) {
     System.err.printf("%s%n%n", Version.version());
     if (!isBlank(errorMessage)) {
       System.err.printf("Error: %s%n%n", errorMessage);
@@ -147,7 +174,7 @@ public class CommandLineUtility {
     System.err.println(readResourceFully("/command-line-error.footer.txt"));
 
     System.err.println();
-    System.err.println(CommandLineUtility.getEnvironment());
+    System.err.println(CommandLineUtility.getEnvironment(state));
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {

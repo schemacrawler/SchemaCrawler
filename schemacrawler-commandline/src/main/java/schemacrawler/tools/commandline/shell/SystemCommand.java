@@ -141,7 +141,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
 
   private void showEnvironment() {
 
-    System.out.println(CommandLineUtility.getEnvironment());
+    System.out.println(CommandLineUtility.getEnvironment(state));
 
     new AvailableJDBCDrivers().print(System.out);
     new AvailableServersCommand().run();

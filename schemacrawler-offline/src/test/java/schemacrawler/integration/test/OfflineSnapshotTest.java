@@ -45,14 +45,16 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPOutputStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -208,7 +210,9 @@ public class OfflineSnapshotTest {
 
       serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
       final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
-      serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
+      final OutputStream outputStream =
+          new GZIPOutputStream(Files.newOutputStream(serializedCatalogFile));
+      serializedCatalog.save(outputStream);
       assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
     } catch (final IOException e) {
       failTestSetup("Could not serialize catalog", e);

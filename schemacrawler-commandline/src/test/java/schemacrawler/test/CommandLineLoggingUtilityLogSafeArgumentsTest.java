@@ -32,7 +32,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_empty() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[0]);
+    CommandLineLoggingUtility.logSafeArguments(new String[0], null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -43,7 +43,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_null() {
 
-    CommandLineLoggingUtility.logSafeArguments(null);
+    CommandLineLoggingUtility.logSafeArguments(null, null);
 
     assertThat(logCaptor.getLogs(), hasSize(1));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -52,7 +52,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_password1() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password=pwd"});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password=pwd"}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -64,7 +64,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_password2a() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password", "hello"});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password", "hello"}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -76,7 +76,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_password2b() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password"});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password"}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -88,7 +88,8 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_password3a() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password:env", "hello"});
+    CommandLineLoggingUtility.logSafeArguments(
+        new String[] {"arg1", "--password:env", "hello"}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -100,7 +101,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_password3b() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password:env"});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password:env"}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -112,7 +113,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_password4() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password="});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password="}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -124,7 +125,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_password5() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password:env="});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "--password:env="}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(logCaptor.getInfoLogs().get(0), startsWith("Environment:"));
@@ -136,7 +137,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @Test
   public void logSafeArguments_simple() {
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "arg2"});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "arg2"}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(2));
     assertThat(
@@ -149,7 +150,7 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
 
     logCaptor.disableLogs();
 
-    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "arg2"});
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "arg2"}, null);
 
     assertThat(logCaptor.getLogs(), hasSize(0));
   }

@@ -1,16 +1,18 @@
 package schemacrawler.tools.offline;
 
+import static java.nio.file.Files.newInputStream;
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
 import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
 import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.zip.GZIPInputStream;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -60,8 +62,8 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       }
 
       final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
-      try (final FileInputStream inputFileStream =
-          new FileInputStream(offlineDatabasePath.toFile())) {
+      try (final InputStream inputFileStream =
+          new GZIPInputStream(newInputStream(offlineDatabasePath)); ) {
         final JavaSerializedCatalog deserializedCatalog =
             new JavaSerializedCatalog(inputFileStream);
         catalog = deserializedCatalog.getCatalog();

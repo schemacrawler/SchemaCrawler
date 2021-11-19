@@ -51,10 +51,10 @@ public final class SchemaCrawlerCommandLine {
 
   public static void execute(final String[] args) {
 
+    final ShellState state = new ShellState();
     try {
       requireNonNull(args, "No arguments provided");
 
-      final ShellState state = new ShellState();
       state.setDeferCatalogLoad(true);
       final StateFactory stateFactory = new StateFactory(state);
 
@@ -66,7 +66,7 @@ public final class SchemaCrawlerCommandLine {
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {
-      logSafeArguments(args);
+      logSafeArguments(args, state);
       logFatalStackTrace(throwable);
 
       final String errorMessage;
@@ -81,7 +81,7 @@ public final class SchemaCrawlerCommandLine {
         errorMessage = throwable.getMessage();
       }
 
-      printCommandLineErrorMessage(errorMessage);
+      printCommandLineErrorMessage(errorMessage, state);
 
       System.exit(1);
     }
