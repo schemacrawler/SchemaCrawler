@@ -33,13 +33,10 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.ConnectionInfo;
 
 public final class ConnectionInfoBuilder {
-
-  private static final Logger LOGGER = Logger.getLogger(ConnectionInfoBuilder.class.getName());
 
   public static ConnectionInfoBuilder builder(final Connection connection) {
     return new ConnectionInfoBuilder(connection);

@@ -41,6 +41,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Supplier;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jline.console.SystemRegistry;
 import org.jline.console.impl.SystemRegistryImpl;
@@ -59,22 +60,20 @@ import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
 import picocli.shell.jline3.PicocliCommands;
 import picocli.shell.jline3.PicocliCommands.PicocliCommandsFactory;
-import java.util.logging.Logger;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
 public final class SchemaCrawlerShell {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SchemaCrawlerShell.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerShell.class.getName());
 
   public static void execute(final String[] args) {
 
+    final ShellState state = new ShellState();
     try (final Terminal terminal = TerminalBuilder.builder().build()) {
 
       requireNonNull(args, "No arguments provided");
 
-      final ShellState state = new ShellState();
       final StateFactory stateFactory = new StateFactory(state);
       final PicocliCommandsFactory factory = new PicocliCommandsFactory(stateFactory);
 
@@ -143,12 +142,13 @@ public final class SchemaCrawlerShell {
         }
       }
     } catch (final Throwable throwable) {
-      handleFatalError(args, throwable);
+      handleFatalError(args, throwable, state);
     }
   }
 
-  private static void handleFatalError(final String[] args, final Throwable throwable) {
-    logSafeArguments(args);
+  private static void handleFatalError(
+      final String[] args, final Throwable throwable, final ShellState state) {
+    logSafeArguments(args, state);
     logFatalStackTrace(throwable);
 
     final String errorMessage;
@@ -163,7 +163,7 @@ public final class SchemaCrawlerShell {
       errorMessage = throwable.getMessage();
     }
 
-    printCommandLineErrorMessage(errorMessage);
+    printCommandLineErrorMessage(errorMessage, state);
 
     System.exit(1);
   }

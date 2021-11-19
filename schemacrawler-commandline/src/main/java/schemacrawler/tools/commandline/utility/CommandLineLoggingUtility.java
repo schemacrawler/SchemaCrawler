@@ -39,6 +39,7 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.tools.commandline.state.ShellState;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
 
@@ -55,12 +56,12 @@ public final class CommandLineLoggingUtility {
     LOGGER.log(Level.SEVERE, t.getMessage(), t);
   }
 
-  public static void logSafeArguments(final String[] args) {
+  public static void logSafeArguments(final String[] args, final ShellState state) {
     if (!LOGGER.isLoggable(Level.INFO)) {
       return;
     }
 
-    LOGGER.log(Level.INFO, CommandLineUtility.getEnvironment());
+    LOGGER.log(Level.INFO, CommandLineUtility.getEnvironment(state));
 
     if (args == null) {
       return;

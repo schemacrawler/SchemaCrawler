@@ -53,7 +53,7 @@ public final class Main {
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.execute(args);
 
-    logSafeArguments(args);
+    logSafeArguments(args, null);
     logSystemClasspath();
     logSystemProperties();
 
