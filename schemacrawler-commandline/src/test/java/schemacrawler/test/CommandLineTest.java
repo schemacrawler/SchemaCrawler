@@ -120,6 +120,18 @@ public class CommandLineTest {
   }
 
   @Test
+  public void commandLineColumnExcludesWithConfig(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> argsMap = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.column.pattern.include", ".*");
+    config.put("schemacrawler.column.pattern.exclude", ".*\\.ID");
+
+    run(testContext, connectionInfo, argsMap, config, "schema");
+  }
+
+  @Test
   public void commandLineOverridesWithConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();

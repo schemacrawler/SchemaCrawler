@@ -1,0 +1,381 @@
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
+  STATE                             CHARACTER(2)                
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+Primary Key
+
+PK_AUTHORS                                                 [primary key]
+
+Indexes
+
+SYS_IDX_PK_AUTHORS_10109                                  [unique index]
+  ID                                ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+IDX_A_AUTHORS                                         [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Triggers
+
+TRG_AUTHORS                             [trigger, after delete, per row]
+UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+Table Constraints
+
+CHECK_UPPERCASE_STATE                                 [check constraint]
+  STATE                                                         
+
+SYS_CT_10106                                          [check constraint]
+
+SYS_CT_10107                                          [check constraint]
+  FIRSTNAME                                                     
+
+SYS_CT_10108                                          [check constraint]
+  LASTNAME                                                      
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
+  SOMEDATA                          VARCHAR(30)                 
+
+Foreign Keys
+
+Z_FK_AUTHOR                                [foreign key, with no action]
+  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+
+SYS_FK_10126                               [foreign key, with no action]
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+
+Indexes
+
+SYS_IDX_Z_FK_AUTHOR_10132                             [non-unique index]
+  AUTHORID                          ascending                   
+
+SYS_IDX_SYS_FK_10126_10130                            [non-unique index]
+  BOOKID                            ascending                   
+
+UIDX_BOOKAUTHORS                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+
+Table Constraints
+
+SYS_CT_10124                                          [check constraint]
+  BOOKID                                                        
+
+SYS_CT_10125                                          [check constraint]
+  AUTHORID                                                      
+
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+Details for published books
+  TITLE                             VARCHAR(255) NOT NULL       
+                                    Book title                  
+  DESCRIPTION                       VARCHAR(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  PUBLISHERID                       INTEGER NOT NULL            
+                                    Foreign key to the book publisher
+  PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
+  PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
+  PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+PK_BOOKS                                                   [primary key]
+
+Foreign Keys
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indexes
+
+SYS_IDX_PK_BOOKS_10117                                    [unique index]
+  ID                                ascending                   
+
+SYS_IDX_U_PREVIOUSEDITION_10123                           [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+SYS_IDX_FK_PREVIOUSEDITION_10121                      [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+Table Constraints
+
+U_PREVIOUSEDITION                                    [unique constraint]
+  PREVIOUSEDITIONID                                             
+
+SYS_CT_10114                                          [check constraint]
+
+SYS_CT_10115                                          [check constraint]
+  TITLE                                                         
+
+SYS_CT_10116                                          [check constraint]
+  PUBLISHERID                                                   
+
+
+
+PUBLIC.BOOKS.COUPONS                                             [table]
+------------------------------------------------------------------------
+  DATA                              CLOB                        
+  COUPONS                           INTEGER ARRAY               
+  BOOKS                             VARCHAR(20) ARRAY[10]       
+
+Primary Key
+
+PK_COUPONS                                                 [primary key]
+
+Indexes
+
+SYS_IDX_PK_COUPONS_10093                                  [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+SYS_CT_10092                                          [check constraint]
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
+------------------------------------------------------------------------
+  DATA                              VALID_STRING(20)            
+
+Primary Key
+
+PK_CUSTOMERDATA                                            [primary key]
+
+Indexes
+
+SYS_IDX_PK_CUSTOMERDATA_10104                             [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+SYS_CT_10103                                          [check constraint]
+
+
+
+PUBLIC.BOOKS.CUSTOMERS                                           [table]
+------------------------------------------------------------------------
+  FIRSTNAME                         NAME_TYPE NOT NULL          
+  LASTNAME                          NAME_TYPE NOT NULL          
+  AGE                               AGE_TYPE                    
+
+Primary Key
+
+PK_CUSTOMERS                                               [primary key]
+
+Indexes
+
+SYS_IDX_PK_CUSTOMERS_10098                                [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+SYS_CT_10095                                          [check constraint]
+
+SYS_CT_10096                                          [check constraint]
+  FIRSTNAME                                                     
+
+SYS_CT_10097                                          [check constraint]
+  LASTNAME                                                      
+
+
+
+PUBLIC.BOOKS."Global Counts"                                     [table]
+------------------------------------------------------------------------
+  "Global Count"                    INTEGER                     
+  "UPDATE"                          VARCHAR(20)                 
+
+
+
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+------------------------------------------------------------------------
+List of book publishers
+  PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
+
+Primary Key
+
+SYS_PK_10134                                               [primary key]
+
+Indexes
+
+SYS_IDX_SYS_PK_10134_10135                                [unique index]
+  ID                                ascending                   
+
+
+
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
+------------------------------------------------------------------------
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
+  ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
+
+Primary Key
+
+PK_ΒΙΒΛΊΑ                                                  [primary key]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+Foreign Keys
+
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
+
+Indexes
+
+SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144                    [non-unique index]
+  ΕΚΔΌΤΗΣ                           ascending                   
+
+SYS_IDX_PK_ΒΙΒΛΊΑ_10140                                   [unique index]
+  ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+Table Constraints
+
+SYS_CT_10137                                          [check constraint]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+SYS_CT_10138                                          [check constraint]
+  ΤΊΤΛΟΣ                                                        
+
+SYS_CT_10139                                          [check constraint]
+  ΕΚΔΌΤΗΣ                                                       
+
+
+
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+------------------------------------------------------------------------
+  CITY                              VARCHAR(50) NOT NULL        
+  STATE                             VARCHAR(2) NOT NULL         
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+
+Primary Key
+
+PK_CUSTOMERS                                               [primary key]
+  POSTALCODE                                                    
+  COUNTRY                                                       
+
+Foreign Keys
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+
+Indexes
+
+SYS_IDX_PK_CUSTOMERS_10227                                [unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Table Constraints
+
+SYS_CT_10223                                          [check constraint]
+  CITY                                                          
+
+SYS_CT_10224                                          [check constraint]
+  STATE                                                         
+
+SYS_CT_10225                                          [check constraint]
+  POSTALCODE                                                    
+
+SYS_CT_10226                                          [check constraint]
+  COUNTRY                                                       
+
+
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+------------------------------------------------------------------------
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+  BOOKID                            INTEGER                     
+  PERIODENDDATE                     DATE                        
+  TOTALAMOUNT                       DOUBLE(64, 0)               
+  SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+Indexes
+
+SYS_IDX_FK_SALES_SALESDATA_10241                      [non-unique index]
+  SALESDATAID                       ascending                   
+
+SYS_IDX_FK_SALES_REGIONS_10239                        [non-unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Table Constraints
+
+SYS_CT_10234                                          [check constraint]
+  POSTALCODE                                                    
+
+SYS_CT_10235                                          [check constraint]
+  COUNTRY                                                       
+
+
+
+PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
+------------------------------------------------------------------------
+  SALESDATAID                       INTEGER                     
+  YEARLYAMOUNT                      DOUBLE(64, 0)               
+
+Foreign Keys
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+  SALESDATAID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.SALESDATAID                              
+
+Indexes
+
+SYS_IDX_UQ_CUSTOMERS_10233                                [unique index]
+  SALESDATAID                       ascending                   
+
+Table Constraints
+
+UQ_CUSTOMERS                                         [unique constraint]
+  SALESDATAID                                                   
+
