@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.file.Path;
+import java.util.zip.GZIPOutputStream;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
@@ -86,7 +87,7 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand<Seriali
       outputOptions =
           OutputOptionsBuilder.builder(outputOptions).withOutputFile(outputFile).toOptions();
 
-      try (final OutputStream out = newOutputStream(outputFile)) {
+      try (final OutputStream out = new GZIPOutputStream(newOutputStream(outputFile))) {
         catalogSerializer.save(out);
       } catch (final IOException e) {
         throw new IORuntimeException("Could not save catalog", e);
