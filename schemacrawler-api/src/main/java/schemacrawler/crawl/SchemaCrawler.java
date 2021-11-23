@@ -123,7 +123,7 @@ public final class SchemaCrawler {
       infoLevel = options.getLoadOptions().getSchemaInfoLevel();
       stopWatch = new RetrievalStopWatch(infoLevel);
     } catch (final SQLException e) {
-      throw new DatabaseAccessException(e.getMessage(), e);
+      throw new DatabaseAccessException(e);
     }
   }
 
@@ -150,7 +150,7 @@ public final class SchemaCrawler {
     } catch (final RuntimeException e) {
       throw e;
     } catch (final Exception e) {
-      throw new ExecutionRuntimeException(e.getMessage(), e);
+      throw new ExecutionRuntimeException(e);
     } finally {
       stopWatch.stopAndLogTime();
     }

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -74,13 +75,13 @@ public class DatabaseUtilityTest {
         assertThrows(
             SQLException.class,
             () -> assertThat(DatabaseUtility.checkConnection(null), is(nullValue())));
-    assertThat(exception1.getMessage(), is("No database connection provided"));
+    assertThat(exception1.getMessage(), endsWith("No database connection provided"));
 
     final SQLException exception2 =
         assertThrows(
             SQLException.class,
             () -> assertThat(DatabaseUtility.checkConnection(mockConnection), is(nullValue())));
-    assertThat(exception2.getMessage(), is("Connection is closed"));
+    assertThat(exception2.getMessage(), endsWith("Connection is closed"));
   }
 
   @Test
@@ -96,13 +97,13 @@ public class DatabaseUtilityTest {
         assertThrows(
             SQLException.class,
             () -> assertThat(DatabaseUtility.checkResultSet(null), is(nullValue())));
-    assertThat(exception1.getMessage(), is("No result-set provided"));
+    assertThat(exception1.getMessage(), endsWith("No result-set provided"));
 
     final SQLException exception2 =
         assertThrows(
             SQLException.class,
             () -> assertThat(DatabaseUtility.checkResultSet(results), is(nullValue())));
-    assertThat(exception2.getMessage(), is("Result-set is closed"));
+    assertThat(exception2.getMessage(), endsWith("Result-set is closed"));
   }
 
   @BeforeAll

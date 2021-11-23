@@ -41,4 +41,8 @@ public class SchemaCrawlerException extends RuntimeException {
   public SchemaCrawlerException(final String message, final Throwable cause) {
     super(makeExceptionMessage(message, cause), cause);
   }
+
+  public SchemaCrawlerException(final Throwable cause) {
+    super(makeExceptionMessage(null, cause), cause);
+  }
 }

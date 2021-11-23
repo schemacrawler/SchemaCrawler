@@ -55,7 +55,7 @@ public class LinterTableWithQuotedNames extends BaseLinter {
     try {
       identifiers = Identifiers.identifiers().withConnection(connection).build();
     } catch (final SQLException e) {
-      throw new DatabaseAccessException(e.getMessage(), e);
+      throw new DatabaseAccessException(e);
     }
 
     final String tableName = table.getName();

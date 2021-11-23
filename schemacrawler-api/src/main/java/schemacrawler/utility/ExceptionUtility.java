@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.utility;
 
+import static us.fatehi.utility.Utility.isBlank;
+
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.UtilityMarker;
@@ -40,6 +42,9 @@ public class ExceptionUtility {
         || cause instanceof SchemaCrawlerException
         || cause instanceof WrappedSQLException) {
       return message;
+    }
+    if (isBlank(message)) {
+      return cause.getMessage();
     }
     return message + ": " + cause.getMessage();
   }

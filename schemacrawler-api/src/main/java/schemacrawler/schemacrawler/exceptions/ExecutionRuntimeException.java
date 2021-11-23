@@ -39,4 +39,8 @@ public class ExecutionRuntimeException extends SchemaCrawlerException {
   public ExecutionRuntimeException(final String message, final Throwable cause) {
     super(message, cause);
   }
+
+  public ExecutionRuntimeException(final Throwable cause) {
+    super(cause);
+  }
 }

@@ -54,7 +54,7 @@ public final class DatabaseUtility {
         throw new SQLException("Connection is closed");
       }
     } catch (final NullPointerException e) {
-      throw new SQLException(e.getMessage(), e);
+      throw new SQLException(e);
     }
 
     return connection;
@@ -67,7 +67,7 @@ public final class DatabaseUtility {
         throw new SQLException("Result-set is closed");
       }
     } catch (final NullPointerException e) {
-      throw new SQLException(e.getMessage(), e);
+      throw new SQLException(e);
     }
 
     return resultSet;

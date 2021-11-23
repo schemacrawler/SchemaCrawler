@@ -168,7 +168,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
         iterateRows(dataRows);
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(e.getMessage(), e);
+        throw new DatabaseAccessException(e);
       }
       formattingHelper.writeObjectEnd();
     }

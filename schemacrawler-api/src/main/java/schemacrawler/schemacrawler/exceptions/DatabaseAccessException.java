@@ -37,4 +37,8 @@ public class DatabaseAccessException extends SchemaCrawlerException {
   public DatabaseAccessException(final String message, final SQLException cause) {
     super(message, cause);
   }
+
+  public DatabaseAccessException(final Throwable cause) {
+    super(cause);
+  }
 }
