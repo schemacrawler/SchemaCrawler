@@ -83,6 +83,10 @@ public final class LoggingConfig {
     applyPicocliLogLevel(logLevel);
 
     System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
+
+    // Prevent log4j JNDI lookups
+    // https://nvd.nist.gov/vuln/detail/CVE-2021-44228
+    System.setProperty("log4j2.formatMsgNoLookups", "true");
   }
 
   /**
