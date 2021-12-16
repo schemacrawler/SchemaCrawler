@@ -1,8 +1,8 @@
 # SchemaCrawler Change History
 
 
-<a name="a16.16.3"></a>
-## Release 16.16.3 - 2021-11-16
+<a name="a16.16.4"></a>
+## Release 16.16.4 - 2021-11-16
 
 - Use Semantic Versioning for releases
 - GZIP serialized database schema offline snapshots
