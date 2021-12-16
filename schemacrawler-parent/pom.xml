@@ -106,7 +106,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
-      <version>4.1.0</version>
+      <version>4.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -118,7 +118,7 @@
     <dependency>
       <groupId>com.ginsberg</groupId>
       <artifactId>junit5-system-exit</artifactId>
-      <version>1.1.1</version>
+      <version>1.1.2</version>
       <exclusions>
         <exclusion>
           <groupId>org.junit.platform</groupId>
@@ -130,7 +130,7 @@
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier</artifactId>
-      <version>3.7.2</version>
+      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -196,13 +196,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.13</version>
+      <version>5.3.14</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>5.3.13</version>
+      <version>5.3.14</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

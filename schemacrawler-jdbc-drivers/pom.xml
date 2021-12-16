@@ -46,7 +46,7 @@
     <dependency>
       <groupId>com.ibm.db2</groupId>
       <artifactId>jcc</artifactId>
-      <version>11.5.6.0</version>
+      <version>11.5.7.0</version>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -71,12 +71,12 @@
     <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
-      <version>3.13.11</version>
+      <version>3.13.12</version>
     </dependency>
     <dependency>
       <groupId>com.amazon.redshift</groupId>
       <artifactId>redshift-jdbc42</artifactId>
-      <version>2.1.0.2</version>
+      <version>2.1.0.3</version>
     </dependency>
     <dependency>
       <groupId>net.sf.ucanaccess</groupId>
