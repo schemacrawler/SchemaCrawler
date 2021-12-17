@@ -30,6 +30,7 @@ package schemacrawler.tools.command.text.diagram;
 
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -58,6 +59,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestDisabledWithoutGraphvizExtension;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -182,6 +184,21 @@ public class DiagramRendererTest {
         SchemaCrawlerUtility.getCatalog(
             connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
     return catalog;
+  }
+
+  @Test
+  @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  @WithSystemProperty(key = "SC_GRAPHVIZ_PROC_DISABLE", value = "true")
+  public void checkGraphvizAvailabilityDisabled() throws Exception {
+
+    assertThat(GraphvizUtility.isGraphvizAvailable(), is(false));
+  }
+
+  @Test
+  @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  public void checkGraphvizAvailabilityEnabled() throws Exception {
+
+    assertThat(GraphvizUtility.isGraphvizAvailable(), is(true));
   }
 
   @Test
