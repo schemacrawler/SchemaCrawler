@@ -1,8 +1,17 @@
 # SchemaCrawler Change History
 
-
 <a name="a16.16.4"></a>
-## Release 16.16.4 - 2021-11-16
+## Release 16.16.4 - 2021-12-16
+
+- Update copyright notices
+- Update dependencies
+- Put in preventive measures for [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)
+- Add link to SchemaCrawler API on RapidAPI
+- Add note warning to remove scripting jar if not needed
+
+
+<a name="a16.16.3"></a>
+## Release 16.16.3 - 2021-11-16
 
 - Use Semantic Versioning for releases
 - GZIP serialized database schema offline snapshots
