@@ -3,6 +3,7 @@
 <a name="a16.16.4"></a>
 ## Release 16.16.4 - 2021-12-16
 
+- Read SC_GRAPHVIZ_PROC_DISABLE boolean environmental variable or system property to disable creating native process for Graphviz
 - Update copyright notices
 - Update dependencies
 - Put in preventive measures for [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)
