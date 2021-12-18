@@ -30,18 +30,18 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>9.4.0.jre8</version>
+      <version>9.4.1.jre8</version>
     </dependency>
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc_auth</artifactId>
-      <version>9.4.0.x86</version>
+      <version>9.4.1.x86</version>
       <type>dll</type>
     </dependency>
     <dependency>
       <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
-      <version>21.3.0.0</version>
+      <version>21.4.0.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.db2</groupId>
