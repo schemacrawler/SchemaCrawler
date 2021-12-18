@@ -5,6 +5,7 @@ import static schemacrawler.tools.command.text.diagram.options.DiagramOutputForm
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.ps;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.svg;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.xdot;
+import static us.fatehi.utility.PropertiesUtility.getSystemConfigurationProperty;
 import static us.fatehi.utility.Utility.isClassAvailable;
 
 import java.util.ArrayList;
@@ -22,7 +23,17 @@ public final class GraphvizUtility {
 
   private static final Logger LOGGER = Logger.getLogger(GraphvizUtility.class.getName());
 
+  private static final String SC_GRAPHVIZ_PROC_DISABLE = "SC_GRAPHVIZ_PROC_DISABLE";
+
   public static boolean isGraphvizAvailable() {
+
+    final boolean disableGraphviz =
+        Boolean.valueOf(getSystemConfigurationProperty(SC_GRAPHVIZ_PROC_DISABLE, "false"));
+    if (disableGraphviz) {
+      LOGGER.log(Level.CONFIG, "Not creating a native process for Grahviz, since this is disabled");
+      return false;
+    }
+
     final List<String> command = new ArrayList<>();
     command.add("dot");
     command.add("-V");

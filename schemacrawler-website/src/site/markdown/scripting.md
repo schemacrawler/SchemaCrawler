@@ -45,3 +45,7 @@ var dropTables = function()
 
 dropTables();      
 ```
+
+**Note:** SchemaCrawler's scripting and templating functionality allows the execution of arbitrary scripts or templates.
+It is recommended not to distribute the SchemaCrawler scripting jar file in production, unless you have an explicit need
+for this functionality. Do not include this dependency in your SchemaCrawler project unless you need it.
