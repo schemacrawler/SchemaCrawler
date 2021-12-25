@@ -1,5 +1,13 @@
 # SchemaCrawler Change History
 
+
+
+<a name="a16.16.5"></a>
+## Release 16.16.5 - 2021-12-26
+
+- Update dependencies, especially the H2 Database version
+
+
 <a name="a16.16.4"></a>
 ## Release 16.16.4 - 2021-12-16
 
