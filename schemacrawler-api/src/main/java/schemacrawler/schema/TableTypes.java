@@ -43,8 +43,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Represents a collection of tables types for a database system, as returned by the database server
@@ -53,8 +54,7 @@ import java.util.logging.Logger;
  */
 public final class TableTypes implements Iterable<TableType> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableTypes.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TableTypes.class.getName());
 
   /** Obtain a collection of tables types from provided list. */
   public static TableTypes from(final Collection<String> tableTypeStrings) {
@@ -82,6 +82,9 @@ public final class TableTypes implements Iterable<TableType> {
     final Collection<TableType> tableTypes = new HashSet<>();
     try (final ResultSet tableTypesResults = connection.getMetaData().getTableTypes()) {
       final List<String> tableTypeStrings = readResultsVector(tableTypesResults);
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat("Supported table types from database driver: %s", tableTypeStrings));
       for (final String tableTypeString : tableTypeStrings) {
         if (!isBlank(tableTypeString)) {
           tableTypes.add(new TableType(tableTypeString));

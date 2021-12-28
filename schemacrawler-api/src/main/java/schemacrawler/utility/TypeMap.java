@@ -107,21 +107,27 @@ public final class TypeMap implements Map<String, Class<?>> {
   }
 
   public TypeMap(final Connection connection) {
+
     this();
 
-    if (connection != null) {
-      // Override and add mappings from the connection
-      try {
-        final Map<String, Class<?>> typeMap = connection.getTypeMap();
-        if (typeMap != null && !typeMap.isEmpty()) {
-          sqlTypeMap.putAll(typeMap);
-        }
-      } catch (final Exception e) {
-        // Catch all exceptions, since even though most JDBC drivers
-        // would throw SQLException, but the Sybase Adaptive
-        // Server driver throws UnimplementedOperationException
-        LOGGER.log(Level.WARNING, "Could not obtain data type map from connection", e);
+    if (connection == null) {
+      LOGGER.log(
+          Level.WARNING, "No connection provided, so not getting connection specific type map");
+      return;
+    }
+
+    // Override and add mappings from the connection
+    try {
+      final Map<String, Class<?>> typeMap = connection.getTypeMap();
+      if (typeMap != null && !typeMap.isEmpty()) {
+        sqlTypeMap.putAll(typeMap);
+      } else {
+        LOGGER.log(Level.CONFIG, "No type map available from database connection");
       }
+    } catch (final Exception e) {
+      // Catch all exceptions, since even though most JDBC drivers would throw SQLException, but
+      // the Sybase Adaptive Server driver throws UnimplementedOperationException
+      LOGGER.log(Level.WARNING, "Could not obtain data type map from connection", e);
     }
   }
 
@@ -205,9 +211,7 @@ public final class TypeMap implements Map<String, Class<?>> {
   @Override
   public String toString() {
     final Map<String, String> typeClassNameMap =
-        sqlTypeMap
-            .entrySet()
-            .stream()
+        sqlTypeMap.entrySet().stream()
             .collect(toMap(Entry::getKey, e -> e.getValue().getCanonicalName()));
     return typeClassNameMap.toString();
   }
