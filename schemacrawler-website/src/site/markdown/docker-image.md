@@ -49,7 +49,7 @@ The easiest way to learn how to use the SchemaCrawler command-line is by doing t
 
 ## How to Run SchemaCrawler With a Modified Configuration
 
-Run the SchemaCrawler Docker image using the command above, to get a new container, with a command shell. 
+Run the SchemaCrawler Docker image using the command above, to get a new container, with a command shell.
 
 Edit the SchemaCrawler configuration properties file within the container, using:
 
