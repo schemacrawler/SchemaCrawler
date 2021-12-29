@@ -137,3 +137,7 @@ Typical command-line arguments will look like:
 ```
 --url=jdbc:mariadb://scmariadb.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler --schemas=schemacrawler --user=schemacrawler --password=schemacrawler --table-types=UNKNOWN,VIEW --info-level=standard --command=schema
 ```
+
+## Unconventional Data Sources
+
+Since SchemaCrawler simply uses a conformant JDBC database driver, it can access the schemas of unconventional data sources such as Airtable, Salesforce, or even say Google Calendar.  Take a look at the rich variety of JDBC drivers from [cdata](https://www.cdata.com/drivers/).

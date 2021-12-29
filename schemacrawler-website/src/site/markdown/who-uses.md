@@ -16,7 +16,7 @@ SchemaCrawler questions from users.
 - Recommendation from the Google Cloud Architecture Center
 on how to [Manage a monolithic database](https://cloud.google.com/architecture/microservices-architecture-refactoring-monoliths#manage_a_monolithic_database)
 - [Dang, T.K., Huy, T.M., Dang, L.H. *et al.* An Elastic Data Conversion Framework: A Case Study for MySQL and MongoDB. *SN COMPUT. SCI.* **2,** 325 (2021).](https://link.springer.com/10.1007/s42979-021-00716-3)
-- [schemacrawler-additionnallints](https://github.com/mbarre/schemacrawler-additional-lints) is maintained by
+- [mbarre/schemacrawler-additional-lints](https://github.com/mbarre/schemacrawler-additional-lints) is maintained by
 Michèle Barré <Michele.Barre at GMail> and [Adrien Sales]
 - [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://community.chocolatey.org/packages/schemacrawler)
 The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-schemacrawler) is maintained by
@@ -29,7 +29,6 @@ The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-sch
 - [Atlassian JIRA database schema](https://developer.atlassian.com/server/jira/platform/database-schema/)
 - [RedG test data generation library](https://btc-ag.github.io/redg/)
 - [Data Platform at Zoomcar](https://medium.com/@shanker.sneh/https-medium-com-shanker-sneh-data-platform-at-zoomcar-a-narrative-part-i-f2455e3e2ae5)
-- [Relational to Neo4j Importer](https://github.com/jexp/neo4j-rdbms-import)
 - [Continuous integration gates for schema design issues](https://github.com/HakumenNC/docker-schemacrawler-reporting)
 - [avro-schema-generator](https://github.com/artur-tamazian/avro-schema-generator) uses SchemaCrawler internally
 - [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh+-user%3Aschemacrawler&type=Code)
