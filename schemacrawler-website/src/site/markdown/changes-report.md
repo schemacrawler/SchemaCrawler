@@ -4,6 +4,7 @@
 <a name="a16.16.6"></a>
 ## Release 16.16.6 - 2021-12-26
 
+- Show routine definitions for Microsoft SQL Server
 - Update instructions to install SchemaCrawler from the Scoop Main bucket
 - Add a check for no command-line arguments, and exit early
 - Add additional logging for table types and data type mappings reported by the JDBC driver
