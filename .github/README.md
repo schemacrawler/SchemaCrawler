@@ -22,7 +22,7 @@ SchemaCrawler is a free database schema discovery and comprehension tool. Schema
 
 SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is [bundled with drivers](https://www.schemacrawler.com/database-support.html) for some commonly used RDBMS systems. SchemaCrawler works with any operating system that supports Java SE 8 or better.
 
-SchemaCrawler is also a Java API that makes working with database metadata as easy as working with plain old Java objects.
+[SchemaCrawler is also a Java API](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li) that makes working with database metadata as easy as working with plain old Java objects.
 
 
 ## Licensing
