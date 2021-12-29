@@ -2,7 +2,7 @@
 
 
 <a name="a16.16.6"></a>
-## Release 16.16.6 - 2021-12-26
+## Release 16.16.6 - 2021-12-29
 
 - Show routine definitions for Microsoft SQL Server
 - Update instructions to install SchemaCrawler from the Scoop Main bucket
