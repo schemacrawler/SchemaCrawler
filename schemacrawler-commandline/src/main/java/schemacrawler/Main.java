@@ -48,9 +48,6 @@ public final class Main {
 
   public static void main(final String... args) throws Exception {
     requireNonNull(args, "No command-line arguments provided");
-    if (args.length == 0) {
-      throw new IllegalArgumentException("No command-line arguments provided");
-    }
 
     final CommandLine commandLine = new CommandLine(new LogCommand());
     commandLine.setUnmatchedArgumentsAllowed(true);
