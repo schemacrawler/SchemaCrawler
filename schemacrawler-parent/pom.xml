@@ -131,7 +131,7 @@
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier</artifactId>
-      <version>3.8.1</version>
+      <version>3.8.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -143,7 +143,7 @@
     <dependency>
       <groupId>com.github.stefanbirkner</groupId>
       <artifactId>system-lambda</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
