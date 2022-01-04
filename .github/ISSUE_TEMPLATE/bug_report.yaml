@@ -1,8 +1,5 @@
 name: Issue Report
-description: |
-  Report an issue with SchemaCrawler.
-  Only the latest version of SchemaCrawler is supported. If you need support
-  on an older version, please request [consulting](https://www.schemacrawler.com/consulting.html).
+description: Report an issue with SchemaCrawler
 title: "[Issue]: "
 labels: ["issue"]
 assignees:
