@@ -9,9 +9,14 @@ body:
     attributes:
       value: |
         ## Issue
+  - type: markdown
+    attributes:
+      value: >
         Please note that only the latest version of SchemaCrawler is supported.
         If you would like support on an older version of SchemaCrawler, please
-        [request a Professional Support Package](https://www.schemacrawler.com/consulting.html).
+        [request a Professional Support Package]
+        (https://www.schemacrawler.com/consulting.html).
+
   - type: textarea
     id: description
     attributes:
@@ -40,8 +45,10 @@ body:
       required: false
   - type: markdown
     attributes:
-      value: |
-        Zip and attach the complete SchemaCrawler debug logs, which can be obtained by running SchemaCrawler with an additional `-loglevel=ALL` on the command-line argument
+      value: >
+        Zip and attach the complete SchemaCrawler debug logs, which can be obtained
+        by running SchemaCrawler with an additional `-loglevel=ALL` on the
+        command-line argument
 
 
   - type: markdown
