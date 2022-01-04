@@ -9,6 +9,9 @@ body:
     attributes:
       value: |
         ## Issue
+        Please note that only the latest version of SchemaCrawler is supported.
+        If you would like support on an older version of SchemaCrawler, please
+        [request a Professional Support Package](https://www.schemacrawler.com/consulting.html).
   - type: textarea
     id: description
     attributes:
