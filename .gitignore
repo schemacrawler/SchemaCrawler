@@ -21,6 +21,7 @@ bin/
 .svn
 *.png
 
+.cache/
 target/
 workspace/
 **/gpl-3.0.txt
