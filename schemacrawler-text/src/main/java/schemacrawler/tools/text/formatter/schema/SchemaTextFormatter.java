@@ -622,8 +622,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     for (final Privilege<Table> privilege : privileges) {
       if (privilege != null) {
+        String privilegeName = privilege.getName();
+        if (isBlank(privilegeName)) {
+          // Privilege names can be null or blank
+          privilegeName = "";
+        }
         formattingHelper.writeEmptyRow();
-        formattingHelper.writeNameRow(privilege.getName(), "[privilege]");
+        formattingHelper.writeNameRow(privilegeName, "[privilege]");
         for (final Grant<?> grant : privilege.getGrants()) {
           final String grantor = isBlank(grant.getGrantor()) ? "" : grant.getGrantor();
           final String grantee = isBlank(grant.getGrantee()) ? "" : grant.getGrantee();
