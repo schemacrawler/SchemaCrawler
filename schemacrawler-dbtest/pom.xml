@@ -47,7 +47,7 @@
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency> 
+    </dependency>
 
     <dependency>
       <groupId>us.fatehi</groupId>
@@ -55,7 +55,7 @@
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
-    
+
     <!-- JDBC drivers -->
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>

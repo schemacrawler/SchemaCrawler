@@ -70,9 +70,11 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
+  private static final DockerImageName imageName =
+      DockerImageName.parse("ibmcom/db2").withTag("11.5.5.1");
+
   @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new Db2Container(DockerImageName.parse("ibmcom/db2").withTag("11.5.5.1")).acceptLicense();
+  private final JdbcDatabaseContainer<?> dbContainer = new Db2Container(imageName).acceptLicense();
 
   @BeforeEach
   public void createDatabase() {

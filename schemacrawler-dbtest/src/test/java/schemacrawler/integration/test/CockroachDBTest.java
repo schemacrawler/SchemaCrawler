@@ -58,7 +58,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class CockroachDBTest extends BaseAdditionalDatabaseTest {
 
-  final DockerImageName imageName =
+  private static final DockerImageName imageName =
       DockerImageName.parse("cockroachdb/cockroach").withTag("v19.2.12");
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = new CockroachContainer(imageName);

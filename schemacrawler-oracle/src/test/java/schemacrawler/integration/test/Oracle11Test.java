@@ -44,9 +44,11 @@ import org.testcontainers.utility.DockerImageName;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class Oracle11Test extends BaseOracleWithConnectionTest {
 
+  private static final DockerImageName imageName =
+      DockerImageName.parse("gvenzl/oracle-xe").withTag("11");
+
   @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11")).usingSid();
+  private final JdbcDatabaseContainer<?> dbContainer = new OracleContainer(imageName).usingSid();
 
   @BeforeEach
   public void createDatabase() {
