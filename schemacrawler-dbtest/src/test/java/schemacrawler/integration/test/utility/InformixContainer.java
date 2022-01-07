@@ -45,8 +45,7 @@ public class InformixContainer extends JdbcDatabaseContainer<InformixContainer> 
   @Override
   public String getJdbcUrl() {
     return String.format(
-        "jdbc:informix-sqli://%s:%d/%s:INFORMIXSERVER=informix",
-        getContainerIpAddress(), getJdbcPort(), databaseName);
+        "jdbc:informix-sqli://%s:%d/%s", getContainerIpAddress(), getJdbcPort(), databaseName);
   }
 
   @Override
@@ -110,7 +109,7 @@ public class InformixContainer extends JdbcDatabaseContainer<InformixContainer> 
 
   @Override
   protected String getTestQueryString() {
-    return "select count(*) from systables";
+    return "select today from systables where tabid = 1";
   }
 
   @Override
