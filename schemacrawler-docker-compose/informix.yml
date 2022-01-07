@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+
+  informix:
+    image: ibmcom/informix-developer-database:14.10.FC5DE
+    container_name: informix
+    ports:
+      - target: 9088
+        published: 9088
+        protocol: tcp
+        mode: host
+    privileged: true
+    environment:
+      LICENSE: accept

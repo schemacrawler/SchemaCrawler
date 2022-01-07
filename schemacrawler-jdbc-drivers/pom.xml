@@ -70,6 +70,11 @@
       <version>3.36.0.3</version>
     </dependency>
     <dependency>
+      <groupId>com.ibm.informix</groupId>
+      <artifactId>jdbc</artifactId>
+      <version>4.50.7.1</version>
+    </dependency>
+    <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
       <version>3.13.12</version>
