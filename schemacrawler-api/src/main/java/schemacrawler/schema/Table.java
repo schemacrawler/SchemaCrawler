@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+import static schemacrawler.schema.TableRelationshipType.child;
+import static schemacrawler.schema.TableRelationshipType.parent;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -99,6 +102,24 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
    * @return Privileges for the table.
    */
   Collection<Privilege<Table>> getPrivileges();
+
+  /**
+   * Gets parent tables to which this table has a foreign key.
+   *
+   * @return Referenced or parent tables.
+   */
+  default Collection<Table> getReferencedTables() {
+    return getRelatedTables(parent);
+  }
+
+  /**
+   * Gets child tables which have a foreign key from this table.
+   *
+   * @return Referencing or child tables.
+   */
+  default Collection<Table> getReferencingTables() {
+    return getRelatedTables(child);
+  }
 
   /**
    * Gets the tables related to this one, based on the specified relationship type. Child tables are
@@ -199,7 +220,6 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
    * @return Table constraint.
    */
   <C extends TableConstraint> Optional<C> lookupTableConstraint(String name);
-
   /**
    * Gets a trigger by unqualified name.
    *

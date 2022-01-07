@@ -1,5 +1,13 @@
 # SchemaCrawler Change History
 
+<a name="a16.16.7"></a>
+## Release 16.16.7 - 2022-01-07
+
+- Show better error message with no command-line arguments
+- Update vulnerable version of H2
+- Add convenience methods to get parent and children tables
+- Allow for null or blank privilege names in output
+
 
 <a name="a16.16.6"></a>
 ## Release 16.16.6 - 2021-12-29
