@@ -72,7 +72,7 @@ public class EqualsTest {
 
     EqualsVerifier.forClass(TestDatabaseObject.class)
         .suppress(Warning.STRICT_INHERITANCE)
-        .withIgnoredFields("key", "attributeMap", "remarks")
+        .withIgnoredFields("key", "attributeMap")
         .verify();
   }
 
@@ -118,7 +118,7 @@ public class EqualsTest {
   @Test
   public void namedObjectWithAttributes() {
     EqualsVerifier.forClass(AbstractNamedObjectWithAttributes.class)
-        .withIgnoredFields("key", "attributeMap", "remarks")
+        .withIgnoredFields("key", "attributeMap")
         .suppress(Warning.STRICT_INHERITANCE)
         .verify();
   }
@@ -129,7 +129,7 @@ public class EqualsTest {
     final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
 
     EqualsVerifier.forClass(MutablePrivilege.class)
-        .withIgnoredFields("key", "grants", "parent", "attributeMap", "remarks")
+        .withIgnoredFields("key", "grants", "parent", "attributeMap")
         .withPrefabValues(
             DatabaseObjectReference.class, new TablePointer(table1), new TablePointer(table2))
         .suppress(Warning.STRICT_INHERITANCE)

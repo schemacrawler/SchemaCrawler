@@ -1,30 +1,44 @@
 PUBLIC.BOOKS.AUTHORS [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=Contact details for book authors
 PUBLIC.BOOKS.AUTHORSLIST [view]
   ~ COMMIT_ACTION=null
   ~ INSERTABLE_INTO=YES
   ~ IS_TRIGGER_DELETABLE=NO
   ~ IS_TRIGGER_INSERTABLE_INTO=NO
   ~ IS_TRIGGER_UPDATABLE=NO
+  ~ REMARKS=
 PUBLIC.BOOKS.BOOKAUTHORS [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=Relationship between books and their authors, 
+along with the latest updated information
 PUBLIC.BOOKS.BOOKS [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=Details for published books
 PUBLIC.BOOKS.COUPONS [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=
 PUBLIC.BOOKS.CUSTOMERDATA [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=
 PUBLIC.BOOKS.CUSTOMERS [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=
 PUBLIC.BOOKS."Global Counts" [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=
 PUBLIC.BOOKS.PUBLISHERS [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=List of book publishers
 PUBLIC.BOOKS.ΒΙΒΛΊΑ [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=
 PUBLIC."PUBLISHER SALES".REGIONS [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=
 PUBLIC."PUBLISHER SALES".SALES [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=
 PUBLIC."PUBLISHER SALES".SALESDATA [table]
   ~ COMMIT_ACTION=null
+  ~ REMARKS=

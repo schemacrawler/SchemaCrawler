@@ -39,18 +39,14 @@ import java.util.Optional;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.DescribedObject;
 
-/**
- * Represents a named object.
- *
- * @author Sualeh Fatehi
- */
 abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
     implements AttributedObject, DescribedObject {
+
+  private static final String REMARKS_ATTRIBUTE = "REMARKS";
 
   private static final long serialVersionUID = -1486322887991472729L;
 
   private final Map<String, Object> attributeMap;
-  private String remarks;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -61,7 +57,6 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   AbstractNamedObjectWithAttributes(final String name) {
     super(name);
     attributeMap = new HashMap<>();
-    remarks = "";
   }
 
   /** {@inheritDoc} */
@@ -86,7 +81,11 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final String getRemarks() {
-    return remarks;
+    final Object remarks = attributeMap.get(REMARKS_ATTRIBUTE);
+    if (remarks == null) {
+      return "";
+    }
+    return String.valueOf(remarks);
   }
 
   /** {@inheritDoc} */
@@ -98,7 +97,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final boolean hasRemarks() {
-    return remarks != null && !remarks.isEmpty();
+    return hasAttribute(REMARKS_ATTRIBUTE) && !isBlank(getRemarks());
   }
 
   /** {@inheritDoc} */
@@ -129,7 +128,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
 
   @Override
   public final void setRemarks(final String remarks) {
-    this.remarks = trimToEmpty(remarks);
+    setAttribute(REMARKS_ATTRIBUTE, trimToEmpty(remarks));
   }
 
   protected final void addAttributes(final Map<String, Object> values) {
