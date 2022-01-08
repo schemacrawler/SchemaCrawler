@@ -30,15 +30,18 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,10 +51,8 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.testdb.TestSchemaCreatorMain;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
@@ -80,7 +81,6 @@ public class SqliteCommandlineTest {
 
   @Test
   public void testSqliteMain() throws Exception {
-    final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Path sqliteDbFile =
@@ -98,8 +98,30 @@ public class SqliteCommandlineTest {
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(
-        outputOf(testout),
-        hasSameContentAs(classpathResource("sqlite.main.list." + outputFormat.getFormat())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource("sqlite.main.list.txt")));
+  }
+
+  @Test
+  public void testSqliteMainMissingDatabase() throws Exception {
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Path sqliteDbFile =
+          Paths.get(
+              System.getProperty("java.io.tmpdir"),
+              RandomStringUtils.randomAlphanumeric(12).toLowerCase() + ".db");
+
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("--server", "sqlite");
+      argsMap.put("--database", sqliteDbFile.toString());
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--command", "list");
+      argsMap.put("--info-level", InfoLevel.minimum.name());
+      argsMap.put("--output-file", out.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+    }
+
+    assertThat(outputOf(testout), hasNoContent());
   }
 }
