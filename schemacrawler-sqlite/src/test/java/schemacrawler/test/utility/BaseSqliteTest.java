@@ -46,7 +46,7 @@ public abstract class BaseSqliteTest {
       return createDataSource(sqliteDbFile).getConnection();
     } catch (final SQLException e) {
       failTestSetup(
-          String.format("Could not create a database connection for SQLite fle", sqliteDbFile), e);
+          String.format("Could not create a database connection for SQLite file", sqliteDbFile), e);
       return null; // Appease compiler
     }
   }
@@ -55,7 +55,7 @@ public abstract class BaseSqliteTest {
     return createDataSource("jdbc:sqlite:" + sqliteDbFile);
   }
 
-  protected DataSource createTestDatabaseInMemory(final String databaseSqlResource)
+  protected DataSource createDatabaseInMemoryFromScript(final String databaseSqlResource)
       throws Exception {
 
     final DataSource dataSource = createDataSource("jdbc:sqlite::memory:");
@@ -65,6 +65,13 @@ public abstract class BaseSqliteTest {
 
       final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
       sqlScript.run();
+
+    } catch (final SQLException e) {
+      failTestSetup(
+          String.format(
+              "Could not create a database connection for SQL script", databaseSqlResource),
+          e);
+      return null; // Appease compiler
     }
 
     return dataSource;

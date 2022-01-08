@@ -73,7 +73,7 @@ public class AdditionalCasesTest extends BaseSqliteTest {
       final String currentMethodFullName, final String databaseSqlResource, final String command)
       throws Exception {
 
-    final DataSource dataSource = createTestDatabaseInMemory(databaseSqlResource);
+    final DataSource dataSource = createDatabaseInMemoryFromScript(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;

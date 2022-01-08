@@ -92,7 +92,7 @@ public class PrimaryKeyWeakAssociationsTest extends BaseSqliteTest {
       final SchemaCrawlerOptions schemaCrawlerOptions =
           DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-      final DataSource dataSource = createTestDatabaseInMemory(databaseSqlResource);
+      final DataSource dataSource = createDatabaseInMemoryFromScript(databaseSqlResource);
       final Connection connection = dataSource.getConnection();
 
       final SchemaRetrievalOptions schemaRetrievalOptions =
