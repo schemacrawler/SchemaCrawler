@@ -8,6 +8,7 @@
 - Add convenience methods to get parent and children tables
 - Allow for null or blank privilege names in output
 - Add tests for Informix, and distribute Informix JDBC driver
+- Reorganize how remarks are handled, and show Microsoft SQL Server remarks for tables and columns
 
 
 <a name="a16.16.6"></a>
