@@ -29,8 +29,9 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.io.FileMatchers.anExistingFile;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -45,6 +46,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
+import com.ginsberg.junit.exit.SystemExitPreventedException;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -102,26 +106,36 @@ public class SqliteCommandlineTest {
   }
 
   @Test
+  @ExpectSystemExitWithStatus(1)
   public void testSqliteMainMissingDatabase() throws Exception {
 
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final Path sqliteDbFile =
-          Paths.get(
-              System.getProperty("java.io.tmpdir"),
-              RandomStringUtils.randomAlphanumeric(12).toLowerCase() + ".db");
+    final Path sqliteDbFile =
+        Paths.get(
+            System.getProperty("java.io.tmpdir"),
+            RandomStringUtils.randomAlphanumeric(12).toLowerCase() + ".db");
+    assertThat(
+        "SQLite database should exist before the test",
+        sqliteDbFile.toFile(),
+        not(anExistingFile()));
 
-      final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("--server", "sqlite");
-      argsMap.put("--database", sqliteDbFile.toString());
-      argsMap.put("--no-info", Boolean.TRUE.toString());
-      argsMap.put("--command", "list");
-      argsMap.put("--info-level", InfoLevel.minimum.name());
-      argsMap.put("--output-file", out.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--server", "sqlite");
+    argsMap.put("--database", sqliteDbFile.toString());
+    argsMap.put("--no-info", Boolean.TRUE.toString());
+    argsMap.put("--command", "list");
+    argsMap.put("--info-level", InfoLevel.minimum.name());
 
+    try {
       Main.main(flattenCommandlineArgs(argsMap));
-    }
+    } catch (final SystemExitPreventedException e) {
 
-    assertThat(outputOf(testout), hasNoContent());
+      assertThat(
+          "An empty SQLite database should not be created when SchemaCrawler connects",
+          sqliteDbFile.toFile(),
+          not(anExistingFile()));
+
+      final int exitCode = e.getStatusCode();
+      assertThat(exitCode, is(1));
+    }
   }
 }

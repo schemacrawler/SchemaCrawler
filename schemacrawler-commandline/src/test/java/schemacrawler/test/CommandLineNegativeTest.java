@@ -87,6 +87,13 @@ public class CommandLineNegativeTest {
         });
   }
 
+  @Test
+  @ExpectSystemExitWithStatus(1)
+  public void mainNoArgs() throws Exception {
+
+    Main.main();
+  }
+
   @BeforeEach
   public void setUpStreams() throws Exception {
     out = new TestOutputStream();
