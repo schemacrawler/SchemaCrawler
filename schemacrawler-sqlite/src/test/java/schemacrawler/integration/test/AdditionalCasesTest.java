@@ -34,7 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.nio.file.Path;
+import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -72,7 +72,8 @@ public class AdditionalCasesTest extends BaseSqliteTest {
   private void run(
       final String currentMethodFullName, final String databaseSqlResource, final String command)
       throws Exception {
-    final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
+
+    final DataSource dataSource = createTestDatabaseInMemory(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -84,7 +85,7 @@ public class AdditionalCasesTest extends BaseSqliteTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(createConnection(sqliteDbFile), executable)),
+        outputOf(executableExecution(dataSource.getConnection(), executable)),
         hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

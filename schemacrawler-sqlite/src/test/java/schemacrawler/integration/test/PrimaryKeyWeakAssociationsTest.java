@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -85,15 +84,15 @@ public class PrimaryKeyWeakAssociationsTest extends BaseSqliteTest {
 
   private void weakAssociations(final TestContext testContext, final String databaseSqlResource)
       throws Exception {
+
     final String currentMethodFullName = testContext.testMethodFullName();
-    final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final SchemaCrawlerOptions schemaCrawlerOptions =
           DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-      final DataSource dataSource = createDataSource(sqliteDbFile);
+      final DataSource dataSource = createTestDatabaseInMemory(databaseSqlResource);
       final Connection connection = dataSource.getConnection();
 
       final SchemaRetrievalOptions schemaRetrievalOptions =

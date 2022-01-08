@@ -38,7 +38,6 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.testdb.SqlScript;
-import us.fatehi.utility.IOUtility;
 
 public abstract class BaseSqliteTest {
 
@@ -53,20 +52,13 @@ public abstract class BaseSqliteTest {
   }
 
   protected DataSource createDataSource(final Path sqliteDbFile) {
-    final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
-    dataSource.setUsername(null);
-    dataSource.setPassword(null);
-    dataSource.setDefaultAutoCommit(false);
-
-    return dataSource;
+    return createDataSource("jdbc:sqlite:" + sqliteDbFile);
   }
 
-  protected Path createTestDatabase(final String databaseSqlResource) throws Exception {
-    final Path sqliteDbFile =
-        IOUtility.createTempFilePath("resource", "db").normalize().toAbsolutePath();
+  protected DataSource createTestDatabaseInMemory(final String databaseSqlResource)
+      throws Exception {
 
-    final DataSource dataSource = createDataSource(sqliteDbFile);
+    final DataSource dataSource = createDataSource("jdbc:sqlite::memory:");
 
     try (final Connection connection = dataSource.getConnection()) {
       connection.setAutoCommit(false);
@@ -75,6 +67,16 @@ public abstract class BaseSqliteTest {
       sqlScript.run();
     }
 
-    return sqliteDbFile;
+    return dataSource;
+  }
+
+  private DataSource createDataSource(final String connectionUrl) {
+    final BasicDataSource dataSource = new BasicDataSource();
+    dataSource.setUrl(connectionUrl);
+    dataSource.setUsername(null);
+    dataSource.setPassword(null);
+    dataSource.setDefaultAutoCommit(false);
+
+    return dataSource;
   }
 }
