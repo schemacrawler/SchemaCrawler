@@ -7,7 +7,7 @@
 - Update vulnerable version of H2
 - Add convenience methods to get parent and children tables
 - Allow for null or blank privilege names in output
-- Add tests for Informix
+- Add tests for Informix, and distribute Informix JDBC driver
 
 
 <a name="a16.16.6"></a>
