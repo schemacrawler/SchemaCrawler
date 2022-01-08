@@ -43,7 +43,6 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility;
 import us.fatehi.utility.IOUtility;
 
@@ -53,12 +52,9 @@ public class SQLiteDiagramTest extends BaseSqliteTest {
 
   @Test
   public void utility(final TestContext testContext) throws Exception {
-    final Path sqliteDbFile =
-        IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
+    final Path sqliteDbFile = createTestDatabase();
     final Path sqliteDiagramTempFile =
         IOUtility.createTempFilePath("sc", ".scdot").normalize().toAbsolutePath();
-
-    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
 
     final Path schemaCrawlerDiagramFile =
         SchemaCrawlerSQLiteUtility.createSchemaCrawlerDiagram(

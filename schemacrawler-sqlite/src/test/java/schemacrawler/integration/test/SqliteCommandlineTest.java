@@ -52,15 +52,14 @@ import com.ginsberg.junit.exit.SystemExitPreventedException;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
-public class SqliteCommandlineTest {
+public class SqliteCommandlineTest extends BaseSqliteTest {
 
   private DatabaseConnector dbConnector;
 
@@ -87,10 +86,7 @@ public class SqliteCommandlineTest {
   public void testSqliteMain() throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final Path sqliteDbFile =
-          IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
-
-      TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
+      final Path sqliteDbFile = createTestDatabase();
 
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("--server", "sqlite");

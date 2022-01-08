@@ -38,21 +38,19 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.testdb.SqlScript;
+import schemacrawler.testdb.TestSchemaCreatorMain;
+import us.fatehi.utility.IOUtility;
 
 public abstract class BaseSqliteTest {
 
   protected Connection createConnection(final Path sqliteDbFile) {
     try {
-      return createDataSource(sqliteDbFile).getConnection();
+      return createDataSource("jdbc:sqlite:" + sqliteDbFile).getConnection();
     } catch (final SQLException e) {
       failTestSetup(
           String.format("Could not create a database connection for SQLite file", sqliteDbFile), e);
       return null; // Appease compiler
     }
-  }
-
-  protected DataSource createDataSource(final Path sqliteDbFile) {
-    return createDataSource("jdbc:sqlite:" + sqliteDbFile);
   }
 
   protected DataSource createDatabaseInMemoryFromScript(final String databaseSqlResource)
@@ -75,6 +73,13 @@ public abstract class BaseSqliteTest {
     }
 
     return dataSource;
+  }
+
+  protected Path createTestDatabase() throws Exception {
+    final Path sqliteDbFile =
+        IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
+    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
+    return sqliteDbFile;
   }
 
   private DataSource createDataSource(final String connectionUrl) {
