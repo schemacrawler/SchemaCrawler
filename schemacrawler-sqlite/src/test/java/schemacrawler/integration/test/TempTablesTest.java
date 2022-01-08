@@ -48,22 +48,17 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.testdb.SqlScript;
-import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
-import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.DatabaseUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 public class TempTablesTest extends BaseSqliteTest {
 
   @Test
   public void tempTables() throws Exception {
-    final Path sqliteDbFile =
-        IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
-
-    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
-    final Connection connection =
-        executeSqlInTestDatabase(sqliteDbFile, "/db/books/33_temp_tables_01_B.sql");
+    final Path sqliteDbFile = createTestDatabase();
+    final Connection connection = createConnection(sqliteDbFile);
+    DatabaseUtility.executeScriptFromResource(connection, "/db/books/33_temp_tables_01_B.sql");
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().tableTypes("GLOBAL TEMPORARY");
@@ -81,16 +76,5 @@ public class TempTablesTest extends BaseSqliteTest {
     assertThat("Table count does not match", tables, is(arrayWithSize(1)));
     final Table table = tables[0];
     assertThat("Table name does not match", table.getFullName(), is("TEMP_AUTHOR_LIST"));
-  }
-
-  protected Connection executeSqlInTestDatabase(
-      final Path sqliteDbFile, final String databaseSqlResource) throws Exception {
-    final Connection connection = createConnection(sqliteDbFile);
-    connection.setAutoCommit(false);
-
-    final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
-    sqlScript.run();
-
-    return connection;
   }
 }
