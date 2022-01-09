@@ -1,0 +1,140 @@
+
+
+Tables
+========================================================================
+
+
+
+DATABASE_A.dbo.A_DBO_TABLE1                                      [table]
+------------------------------------------------------------------------
+  Id                                int identity not null       
+                                    auto-incremented            
+  Name                              nvarchar(40) not null       
+
+Primary Key
+
+PK__A_DBO_TA__3214EC072B60D2E0                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_A_A_TO_DBO                              [foreign key, with no action]
+  Id <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_DBO                              
+
+FK_A_B_TO_DBO                              [foreign key, with no action]
+  Id <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_DBO                              
+
+FK_DBO_TO_DBO                              [foreign key, with no action]
+  Id <--(0..many) DATABASE_A.dbo.A_DBO_TABLE2.FK_COL_TO_DBO                              
+
+Indexes
+
+PK__A_DBO_TA__3214EC072B60D2E0                  [unique clustered index]
+  Id                                ascending                   
+
+
+
+DATABASE_A.dbo.A_DBO_TABLE2                                      [table]
+------------------------------------------------------------------------
+  Id                                int identity not null       
+                                    auto-incremented            
+  Name                              nvarchar(40) not null       
+  FK_COL_TO_DBO                     int not null                
+
+Primary Key
+
+PK__A_DBO_TA__3214EC07CA0426A6                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_DBO_TO_DBO                              [foreign key, with no action]
+  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+
+Indexes
+
+PK__A_DBO_TA__3214EC07CA0426A6                  [unique clustered index]
+  Id                                ascending                   
+
+
+
+DATABASE_A.SCHEMA_A_A.A_A_TABLE1                                 [table]
+------------------------------------------------------------------------
+  Id                                int identity not null       
+                                    auto-incremented            
+  Name                              nvarchar(40) not null       
+
+Primary Key
+
+PK__A_A_TABL__3214EC0760A3B7FA                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_A_A_TO_A_A                              [foreign key, with no action]
+  Id <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_A_A                              
+
+FK_A_B_TO_A_A                              [foreign key, with no action]
+  Id <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_A_A                              
+
+Indexes
+
+PK__A_A_TABL__3214EC0760A3B7FA                  [unique clustered index]
+  Id                                ascending                   
+
+
+
+DATABASE_A.SCHEMA_A_A.A_A_TABLE2                                 [table]
+------------------------------------------------------------------------
+  Id                                int identity not null       
+                                    auto-incremented            
+  Name                              nvarchar(40) not null       
+  FK_COL_TO_DBO                     int not null                
+  FK_COL_TO_A_A                     int not null                
+
+Primary Key
+
+PK__A_A_TABL__3214EC079A8567EB                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_A_A_TO_A_A                              [foreign key, with no action]
+  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
+
+FK_A_A_TO_DBO                              [foreign key, with no action]
+  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+
+Indexes
+
+PK__A_A_TABL__3214EC079A8567EB                  [unique clustered index]
+  Id                                ascending                   
+
+
+
+DATABASE_A.SCHEMA_A_B.A_B_TABLE2                                 [table]
+------------------------------------------------------------------------
+  Id                                int identity not null       
+                                    auto-incremented            
+  Name                              nvarchar(40) not null       
+  FK_COL_TO_DBO                     int not null                
+  FK_COL_TO_A_A                     int not null                
+
+Primary Key
+
+PK__A_B_TABL__3214EC07811C5D65                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_A_B_TO_A_A                              [foreign key, with no action]
+  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
+
+FK_A_B_TO_DBO                              [foreign key, with no action]
+  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+
+Indexes
+
+PK__A_B_TABL__3214EC07811C5D65                  [unique clustered index]
+  Id                                ascending                   
+
