@@ -48,9 +48,10 @@ public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
             limitOptionsBuilder.includeSchemas(
                 new RegularExpressionExclusionRule("pg_catalog|information_schema")),
         () ->
-            DatabaseConnectionUrlBuilder.builder(
-                    "jdbc:postgresql://${host}:${port}/${database}?ApplicationName=SchemaCrawler;loggerLevel=DEBUG")
-                .withDefaultPort(5432));
+            DatabaseConnectionUrlBuilder.builder("jdbc:postgresql://${host}:${port}/${database}")
+                .withDefaultPort(5432)
+                .withDefaultUrlx("ApplicationName", "SchemaCrawler")
+                .withDefaultUrlx("loggerLevel", "DEBUG"));
   }
 
   @Override

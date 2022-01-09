@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
@@ -46,7 +47,17 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
             schemaRetrievalOptionsBuilder.withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()),
         limitOptionsBuilder ->
             limitOptionsBuilder.includeSchemas(new RegularExpressionExclusionRule("sys|mysql")),
-        new MySQLUrlBuilder());
+        () ->
+            DatabaseConnectionUrlBuilder.builder("jdbc:mysql://${host}:${port}/${database}")
+                .withDefaultPort(3306)
+                .withDefaultUrlx("nullNamePatternMatchesAll", true)
+                .withDefaultUrlx("noAccessToProcedureBodies", true)
+                .withDefaultUrlx("logger", "Jdk14Logger")
+                .withDefaultUrlx("dumpQueriesOnException", true)
+                .withDefaultUrlx("dumpMetadataOnColumnNotFound", true)
+                .withDefaultUrlx("maxQuerySizeToLog", "4096")
+                .withDefaultUrlx("disableMariaDbDriver", true)
+                .withDefaultUrlx("useInformationSchema", true));
   }
 
   @Override
