@@ -78,28 +78,6 @@ public final class DatabaseUtility {
     return connection.createStatement();
   }
 
-  public static void executeScriptFromResource(
-      final String scriptResource, final Connection connection) {
-    try (final Statement statement = createStatement(connection)) {
-      final String sqlScript = IOUtility.readResourceFully(scriptResource);
-      if (!isBlank(sqlScript)) {
-        for (final String sql : sqlScript.split(";")) {
-          if (isBlank(sql)) {
-            continue;
-          }
-
-          final ResultSet resultSet = executeSql(statement, sql);
-          if (resultSet != null) {
-            LOGGER.log(Level.WARNING, new StringFormat("Ignoring results from query <%s>", sql));
-            resultSet.close();
-          }
-        }
-      }
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-  }
-
   public static ResultSet executeSql(final Statement statement, final String sql)
       throws SQLException {
     if (statement == null) {

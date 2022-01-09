@@ -50,8 +50,14 @@ public class SqlScript implements Runnable {
   private static final boolean debug =
       Boolean.valueOf(System.getProperty("schemacrawler.testdb.SqlScript.debug", "false"));
 
+  public static void executeScriptFromResource(
+      final String scriptResource, final Connection connection) {
+    new SqlScript(scriptResource, connection).run();
+  }
+
   private final String scriptResource;
   private final String delimiter;
+
   private final Connection connection;
 
   public SqlScript(final String scriptResourceLine, final Connection connection) {
