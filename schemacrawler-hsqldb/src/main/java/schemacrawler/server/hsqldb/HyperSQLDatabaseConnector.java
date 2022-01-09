@@ -43,9 +43,10 @@ public final class HyperSQLDatabaseConnector extends DatabaseConnector {
         (schemaRetrievalOptionsBuilder, connection) -> {},
         limitOptionsBuilder -> {},
         () ->
-            DatabaseConnectionUrlBuilder.builder(
-                    "jdbc:hsqldb:hsql://${host}:${port}/${database};readonly=true;hsqldb.lock_file=false")
-                .withDefaultPort(9001));
+            DatabaseConnectionUrlBuilder.builder("jdbc:hsqldb:hsql://${host}:${port}/${database}")
+                .withDefaultPort(9001)
+                .withDefaultUrlx("readonly", true)
+                .withDefaultUrlx("hsqldb.lock_file", false));
   }
 
   @Override

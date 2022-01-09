@@ -129,6 +129,18 @@ public class DatabaseConnectionUrlBuilder {
     return this;
   }
 
+  public DatabaseConnectionUrlBuilder withDefaultUrlx(final String property, final boolean value) {
+    return withDefaultUrlx(property, String.valueOf(value));
+  }
+
+  public DatabaseConnectionUrlBuilder withDefaultUrlx(final String property, final String value) {
+    if (defaultUrlx == null) {
+      defaultUrlx = new HashMap<>();
+    }
+    defaultUrlx.put(property, value);
+    return this;
+  }
+
   public DatabaseConnectionUrlBuilder withHost(final String host) {
     this.providedHost = host;
     return this;

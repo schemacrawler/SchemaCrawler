@@ -1,0 +1,128 @@
+
+
+Tables
+========================================================================
+
+
+
+schema_a_a.a_a_table1                                            [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  name                              varchar(40) not null        
+
+Primary Key
+
+a_a_table1_pkey                                            [primary key]
+  id                                                            
+
+Foreign Keys
+
+fk_a_a_to_a_a                              [foreign key, with no action]
+  id <--(0..many) schema_a_a.a_a_table2.fk_col_to_a_a                              
+
+fk_a_b_to_a_a                              [foreign key, with no action]
+  id <--(0..many) schema_a_b.a_b_table2.fk_col_to_a_a                              
+
+Indexes
+
+a_a_table1_pkey                                           [unique index]
+  id                                ascending                   
+CREATE UNIQUE INDEX a_a_table1_pkey ON schema_a_a.a_a_table1 USING btree (id)
+
+Table Constraints
+
+16385_16387_1_not_null                                [check constraint]
+id IS NOT NULL
+
+16385_16387_2_not_null                                [check constraint]
+name IS NOT NULL
+
+
+
+schema_a_a.a_a_table2                                            [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  name                              varchar(40) not null        
+  fk_col_to_a_a                     int4 not null               
+
+Primary Key
+
+a_a_table2_pkey                                            [primary key]
+  id                                                            
+
+Foreign Keys
+
+fk_a_a_to_a_a                              [foreign key, with no action]
+  fk_col_to_a_a (0..many)--> schema_a_a.a_a_table1.id                              
+
+Indexes
+
+a_a_table2_pkey                                           [unique index]
+  id                                ascending                   
+CREATE UNIQUE INDEX a_a_table2_pkey ON schema_a_a.a_a_table2 USING btree (id)
+
+Table Constraints
+
+16385_16392_1_not_null                                [check constraint]
+id IS NOT NULL
+
+16385_16392_2_not_null                                [check constraint]
+name IS NOT NULL
+
+16385_16392_3_not_null                                [check constraint]
+fk_col_to_a_a IS NOT NULL
+
+
+
+schema_a_b.a_b_table2                                            [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  name                              varchar(40) not null        
+  fk_col_to_a_a                     int4 not null               
+
+Primary Key
+
+a_b_table2_pkey                                            [primary key]
+  id                                                            
+
+Foreign Keys
+
+fk_a_b_to_a_a                              [foreign key, with no action]
+  fk_col_to_a_a (0..many)--> schema_a_a.a_a_table1.id                              
+
+Indexes
+
+a_b_table2_pkey                                           [unique index]
+  id                                ascending                   
+CREATE UNIQUE INDEX a_b_table2_pkey ON schema_a_b.a_b_table2 USING btree (id)
+
+Table Constraints
+
+16386_16402_1_not_null                                [check constraint]
+id IS NOT NULL
+
+16386_16402_2_not_null                                [check constraint]
+name IS NOT NULL
+
+16386_16402_3_not_null                                [check constraint]
+fk_col_to_a_a IS NOT NULL
+
+
+
+schema_a_b.a_b_view1                                              [view]
+------------------------------------------------------------------------
+  id                                int4                        
+  name                              varchar(40)                 
+  fk_col_to_a_a                     int4                        
+
+Definition
+                                                            [definition]
+SELECT a_a_table2.id,
+    a_a_table2.name,
+    a_a_table2.fk_col_to_a_a
+   FROM schema_a_a.a_a_table2;
+
+Table Usage
+
+schema_a_a.a_a_table2                                            [table]
+

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer8;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -42,10 +43,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -68,23 +67,14 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new MSSQLServerContainer<>(
-              DockerImageName.parse("mcr.microsoft.com/mssql/server")
-                  .withTag("2017-CU26-ubuntu-16.04"))
-          .acceptLicense();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newMySQLContainer8();
 
   @Test
   public void acrossDatabase(final TestContext testContext) throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(
-                schema ->
-                    Arrays.asList(
-                            "DATABASE_A.dbo", "DATABASE_A.SCHEMA_A_A", "DATABASE_A.SCHEMA_A_B")
-                        .contains(schema));
+            .includeSchemas(schema -> Arrays.asList("schema_a_a", "schema_a_b").contains(schema));
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
         SchemaInfoLevelBuilder.builder()
             .withTag("maximum-without-grants")
@@ -114,8 +104,13 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws SQLException {
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    // IMPORTANT: Use root user, since permissions are not granted to the new databases created by
+    // the script. Also do not verify the server, and allow public key retrieval
+    final String connectionUrl =
+        dbContainer.getJdbcUrl()
+            + "?verifyServerCertificate=false"
+            + "&allowPublicKeyRetrieval=true";
+    createDataSource(connectionUrl, "root", dbContainer.getPassword());
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
     try (Connection connection = getConnection()) {

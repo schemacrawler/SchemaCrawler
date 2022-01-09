@@ -41,6 +41,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ty
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
@@ -70,7 +71,12 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
             limitOptionsBuilder.includeSchemas(
                 new RegularExpressionExclusionRule(
                     "ANONYMOUS|APEX_PUBLIC_USER|APPQOSSYS|BI|CTXSYS|DBSNMP|DIP|EXFSYS|FLOWS_30000|FLOWS_FILES|GSMADMIN_INTERNAL|HR|IX|LBACSYS|MDDATA|MDSYS|MGMT_VIEW|OE|OLAPSYS|ORACLE_OCM|ORDPLUGINS|ORDSYS|OUTLN|OWBSYS|PM|RDSADMIN|SCOTT|SH|SI_INFORMTN_SCHEMA|SPATIAL_CSW_ADMIN_USR|SPATIAL_WFS_ADMIN_USR|SYS|SYSMAN|\\\"SYSTEM\\\"|TSMSYS|WKPROXY|WKSYS|WK_TEST|WMSYS|XDB|APEX_[0-9]{6}|FLOWS_[0-9]{5,6}|XS\\$NULL")),
-        new OracleUrlBuilder());
+        () ->
+            DatabaseConnectionUrlBuilder.builder("jdbc:oracle:thin:@//${host}:${port}/${database}")
+                .withDefaultPort(1521)
+                .withDefaultUrlx("remarksReporting", true)
+                .withDefaultUrlx("restrictGetTables", true)
+                .withDefaultUrlx("useFetchSizeWithLongColumn", true));
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }

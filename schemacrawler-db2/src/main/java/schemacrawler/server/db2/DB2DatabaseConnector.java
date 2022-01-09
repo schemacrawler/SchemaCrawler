@@ -47,9 +47,9 @@ public final class DB2DatabaseConnector extends DatabaseConnector {
             schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder -> {},
         () ->
-            DatabaseConnectionUrlBuilder.builder(
-                    "jdbc:db2://${host}:${port}/${database}:retrieveMessagesFromServerOnGetMessage=true;")
-                .withDefaultPort(50000));
+            DatabaseConnectionUrlBuilder.builder("jdbc:db2://${host}:${port}/${database}")
+                .withDefaultPort(50000)
+                .withDefaultUrlx("retrieveMessagesFromServerOnGetMessage", true));
   }
 
   @Override
