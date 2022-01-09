@@ -47,6 +47,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -84,8 +85,14 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
                     Arrays.asList(
                             "DATABASE_A.dbo", "DATABASE_A.SCHEMA_A_A", "DATABASE_A.SCHEMA_A_B")
                         .contains(schema));
+    final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
+        SchemaInfoLevelBuilder.builder()
+            .withTag("maximum-without-grants")
+            .withInfoLevel(InfoLevel.maximum)
+            .setRetrieveTablePrivileges(false)
+            .setRetrieveTableColumnPrivileges(false);
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
@@ -95,7 +102,7 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
     textOptionsBuilder.noInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 

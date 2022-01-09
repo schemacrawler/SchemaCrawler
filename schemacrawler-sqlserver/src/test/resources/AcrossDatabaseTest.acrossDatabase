@@ -13,7 +13,7 @@ DATABASE_A.dbo.A_DBO_TABLE1                                      [table]
 
 Primary Key
 
-PK__A_DBO_TA__3214EC07A3E70691                             [primary key]
+PK__A_DBO_TA__3214EC078C526761                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -29,7 +29,7 @@ FK_DBO_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__A_DBO_TA__3214EC07A3E70691                  [unique clustered index]
+PK__A_DBO_TA__3214EC078C526761                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -43,7 +43,7 @@ DATABASE_A.dbo.A_DBO_TABLE2                                      [table]
 
 Primary Key
 
-PK__A_DBO_TA__3214EC0709E0B78D                             [primary key]
+PK__A_DBO_TA__3214EC07444DEF87                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -53,7 +53,7 @@ FK_DBO_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__A_DBO_TA__3214EC0709E0B78D                  [unique clustered index]
+PK__A_DBO_TA__3214EC07444DEF87                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -66,7 +66,7 @@ DATABASE_A.SCHEMA_A_A.A_A_TABLE1                                 [table]
 
 Primary Key
 
-PK__A_A_TABL__3214EC076D2FDFC4                             [primary key]
+PK__A_A_TABL__3214EC07471A7930                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -79,7 +79,7 @@ FK_A_B_TO_A_A                              [foreign key, with no action]
 
 Indexes
 
-PK__A_A_TABL__3214EC076D2FDFC4                  [unique clustered index]
+PK__A_A_TABL__3214EC07471A7930                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -94,7 +94,7 @@ DATABASE_A.SCHEMA_A_A.A_A_TABLE2                                 [table]
 
 Primary Key
 
-PK__A_A_TABL__3214EC078C648652                             [primary key]
+PK__A_A_TABL__3214EC07E000FC86                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -107,7 +107,7 @@ FK_A_A_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__A_A_TABL__3214EC078C648652                  [unique clustered index]
+PK__A_A_TABL__3214EC07E000FC86                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -122,7 +122,7 @@ DATABASE_A.SCHEMA_A_B.A_B_TABLE2                                 [table]
 
 Primary Key
 
-PK__A_B_TABL__3214EC07D1628242                             [primary key]
+PK__A_B_TABL__3214EC076995388F                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -135,7 +135,7 @@ FK_A_B_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__A_B_TABL__3214EC07D1628242                  [unique clustered index]
+PK__A_B_TABL__3214EC076995388F                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -147,4 +147,14 @@ DATABASE_A.SCHEMA_A_B.A_B_VIEW1                                   [view]
   Name                              nvarchar(40) not null       
   FK_COL_TO_DBO                     int not null                
   FK_COL_TO_A_A                     int not null                
+
+Definition
+                                                            [definition]
+CREATE VIEW SCHEMA_A_B.A_B_VIEW1
+AS
+  SELECT * FROM SCHEMA_A_A.A_A_TABLE2
+
+Table Usage
+
+DATABASE_A.SCHEMA_A_A.A_A_TABLE2                                 [table]
 
