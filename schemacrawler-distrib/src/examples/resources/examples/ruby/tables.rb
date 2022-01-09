@@ -4,14 +4,12 @@ def schemacrawler
   Java::Schemacrawler
 end
 
-java_import schemacrawler.schema.TableRelationshipType
-
 puts catalog.crawlInfo
 
 for table in catalog.tables
   puts ''
   puts table.fullName
-  for childTable in table.getRelatedTables(TableRelationshipType.child)
+  for childTable in table.referencingTables
     puts "  [child] " + childTable.fullName
   end
 end

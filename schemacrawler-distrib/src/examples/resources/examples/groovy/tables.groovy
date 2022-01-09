@@ -1,12 +1,10 @@
-import schemacrawler.schema.TableRelationshipType
-
 println catalog.crawlInfo
 
 for (table in catalog.tables)
 {
   println ''
   println table.fullName
-  for (childTable in table.getRelatedTables(TableRelationshipType.child))
+  for (childTable in table.referencingTables)
   {
     println "  [child] " + childTable.fullName
   }

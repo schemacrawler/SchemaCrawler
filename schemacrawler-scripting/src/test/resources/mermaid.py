@@ -1,4 +1,3 @@
-from schemacrawler.schema import TableRelationshipType # pylint: disable=import-error
 import re
 
 print('erDiagram')
@@ -11,5 +10,5 @@ for table in catalog.tables:
   print('')
   
 for table in catalog.tables:  
-  for childTable in table.getRelatedTables(TableRelationshipType.child):
+  for childTable in table.referencingTables:
     print('  ' + re.sub(r'\.', '-', table.fullName) + ' ||--o{ ' + re.sub(r'\.', '-', childTable.fullName) + ' : "foreign key"')

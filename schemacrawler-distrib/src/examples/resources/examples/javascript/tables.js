@@ -1,5 +1,3 @@
-var TableRelationshipType = Java.type('schemacrawler.schema.TableRelationshipType');
-
 var printChildren = function()
 {
   var forEach = Array.prototype.forEach;
@@ -10,7 +8,7 @@ var printChildren = function()
   {
     print('');
     print(table.getFullName());
-    var children = table.getRelatedTables(TableRelationshipType.child);
+    var children = table.getReferencingTables();
     forEach.call(children, function(childTable)
     {
       print("  [child] " + childTable.getFullName());
