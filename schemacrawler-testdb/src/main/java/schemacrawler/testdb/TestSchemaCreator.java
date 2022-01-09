@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.testdb;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
@@ -36,39 +35,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 
-public class TestSchemaCreator
-  implements Runnable
-{
+public class TestSchemaCreator implements Runnable {
 
   private final Connection connection;
   private final String scriptsResource;
 
-  public TestSchemaCreator(final Connection connection,
-                           final String scriptsResource)
-  {
-    this.connection =
-      requireNonNull(connection, "No database connection provided");
-    this.scriptsResource =
-      requireNonNull(scriptsResource, "No script resource provided");
+  public TestSchemaCreator(final Connection connection, final String scriptsResource) {
+    this.connection = requireNonNull(connection, "No database connection provided");
+    this.scriptsResource = requireNonNull(scriptsResource, "No script resource provided");
   }
 
   @Override
-  public void run()
-  {
-    try (
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(
-        TestSchemaCreator.class.getResourceAsStream(scriptsResource),
-        UTF_8))
-    )
-    {
-      reader
-        .lines()
-        .forEach(line -> new SqlScript(line, connection).run());
-    }
-    catch (final IOException e)
-    {
+  public void run() {
+    try (final BufferedReader reader =
+        new BufferedReader(
+            new InputStreamReader(
+                TestSchemaCreator.class.getResourceAsStream(scriptsResource), UTF_8))) {
+      reader.lines().forEach(line -> SqlScript.executeScriptFromResource(line, connection));
+    } catch (final IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
   }
-
 }

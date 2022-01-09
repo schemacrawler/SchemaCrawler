@@ -60,7 +60,7 @@ public class SqlScript implements Runnable {
 
   private final Connection connection;
 
-  public SqlScript(final String scriptResourceLine, final Connection connection) {
+  private SqlScript(final String scriptResourceLine, final Connection connection) {
     requireNonNull(scriptResourceLine, "No script resource line provided");
     final String[] split = scriptResourceLine.split(",");
     if (split.length == 1) {

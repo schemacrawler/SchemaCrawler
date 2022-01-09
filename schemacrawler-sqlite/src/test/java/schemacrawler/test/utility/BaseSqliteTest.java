@@ -61,8 +61,7 @@ public abstract class BaseSqliteTest {
     try (final Connection connection = dataSource.getConnection()) {
       connection.setAutoCommit(false);
 
-      final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
-      sqlScript.run();
+      SqlScript.executeScriptFromResource(databaseSqlResource, connection);
 
     } catch (final SQLException e) {
       failTestSetup(

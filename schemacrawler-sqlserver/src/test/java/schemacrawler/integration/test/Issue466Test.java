@@ -76,7 +76,7 @@ public class Issue466Test extends BaseAdditionalDatabaseTest {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
-    new SqlScript("/issue466.sql", getConnection()).run();
+    SqlScript.executeScriptFromResource("/issue466.sql", getConnection());
   }
 
   @Test

@@ -52,6 +52,6 @@ public final class OracleCatalogLoader extends BaseCatalogLoader {
     final Connection connection = getConnection();
     requireNonNull(connection, "No connection provided");
 
-    new SqlScript("/schemacrawler-oracle.before.sql", connection).run();
+    SqlScript.executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
   }
 }
