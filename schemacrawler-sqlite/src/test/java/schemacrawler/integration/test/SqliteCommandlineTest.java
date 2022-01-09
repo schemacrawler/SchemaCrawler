@@ -29,33 +29,37 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.io.FileMatchers.anExistingFile;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
+import com.ginsberg.junit.exit.SystemExitPreventedException;
+
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.testdb.TestSchemaCreatorMain;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.options.OutputFormat;
-import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
-public class SqliteCommandlineTest {
+public class SqliteCommandlineTest extends BaseSqliteTest {
 
   private DatabaseConnector dbConnector;
 
@@ -80,13 +84,9 @@ public class SqliteCommandlineTest {
 
   @Test
   public void testSqliteMain() throws Exception {
-    final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final Path sqliteDbFile =
-          IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
-
-      TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
+      final Path sqliteDbFile = createTestDatabase();
 
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("--server", "sqlite");
@@ -98,8 +98,40 @@ public class SqliteCommandlineTest {
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource("sqlite.main.list.txt")));
+  }
+
+  @Test
+  @ExpectSystemExitWithStatus(1)
+  public void testSqliteMainMissingDatabase() throws Exception {
+
+    final Path sqliteDbFile =
+        Paths.get(
+            System.getProperty("java.io.tmpdir"),
+            RandomStringUtils.randomAlphanumeric(12).toLowerCase() + ".db");
     assertThat(
-        outputOf(testout),
-        hasSameContentAs(classpathResource("sqlite.main.list." + outputFormat.getFormat())));
+        "SQLite database should exist before the test",
+        sqliteDbFile.toFile(),
+        not(anExistingFile()));
+
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--server", "sqlite");
+    argsMap.put("--database", sqliteDbFile.toString());
+    argsMap.put("--no-info", Boolean.TRUE.toString());
+    argsMap.put("--command", "list");
+    argsMap.put("--info-level", InfoLevel.minimum.name());
+
+    try {
+      Main.main(flattenCommandlineArgs(argsMap));
+    } catch (final SystemExitPreventedException e) {
+
+      assertThat(
+          "An empty SQLite database should not be created when SchemaCrawler connects",
+          sqliteDbFile.toFile(),
+          not(anExistingFile()));
+
+      final int exitCode = e.getStatusCode();
+      assertThat(exitCode, is(1));
+    }
   }
 }

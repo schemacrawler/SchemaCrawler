@@ -28,10 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.DatabaseUtility.executeScriptFromResource;
 
 import java.sql.Connection;
 
+import schemacrawler.testdb.SqlScript;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 
@@ -52,6 +52,6 @@ public final class OracleCatalogLoader extends BaseCatalogLoader {
     final Connection connection = getConnection();
     requireNonNull(connection, "No connection provided");
 
-    executeScriptFromResource(connection, "/schemacrawler-oracle.before.sql");
+    SqlScript.executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
   }
 }

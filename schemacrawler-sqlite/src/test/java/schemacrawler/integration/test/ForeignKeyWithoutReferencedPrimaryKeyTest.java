@@ -28,15 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import java.nio.file.Path;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -49,42 +51,31 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class ForeignKeyWithoutReferencedPrimaryKeyTest
-  extends BaseSqliteTest
-{
+public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
 
   @Test
   public void foreignKeyWithoutReferencedPrimaryKey(final TestContext testContext)
-    throws Exception
-  {
-    run(testContext.testMethodName(),
-        "/foreignKeyWithoutReferencedPrimaryKey.sql",
-        "schema");
+      throws Exception {
+    run(testContext.testMethodName(), "/foreignKeyWithoutReferencedPrimaryKey.sql", "schema");
   }
 
-  private void run(final String currentMethodName,
-                   final String databaseSqlResource,
-                   final String command)
-    throws Exception
-  {
-    final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
+  private void run(
+      final String currentMethodName, final String databaseSqlResource, final String command)
+      throws Exception {
+
+    final DataSource dataSource = createDatabaseInMemoryFromScript(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final SchemaTextOptions textOptions =
-      SchemaTextOptionsBuilder.newSchemaTextOptions();
+    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.newSchemaTextOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    assertThat(outputOf(executableExecution(createConnection(sqliteDbFile),
-                                            executable)),
-               hasSameContentAs(classpathResource(currentMethodName)));
+    assertThat(
+        outputOf(executableExecution(dataSource.getConnection(), executable)),
+        hasSameContentAs(classpathResource(currentMethodName)));
   }
-
 }

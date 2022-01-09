@@ -47,20 +47,13 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class SQLiteExecutableTest extends BaseSqliteTest {
-
-  @Test
-  public void list(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.minimum, "list");
-  }
 
   @Test
   public void count(final TestContext testContext) throws Exception {
@@ -72,13 +65,15 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
     run(testContext.testMethodFullName(), InfoLevel.standard, "dump");
   }
 
+  @Test
+  public void list(final TestContext testContext) throws Exception {
+    run(testContext.testMethodFullName(), InfoLevel.minimum, "list");
+  }
+
   private void run(
       final String currentMethodFullName, final InfoLevel infoLevel, final String command)
       throws Exception {
-    final Path sqliteDbFile =
-        IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
-
-    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
+    final Path sqliteDbFile = createTestDatabase();
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());

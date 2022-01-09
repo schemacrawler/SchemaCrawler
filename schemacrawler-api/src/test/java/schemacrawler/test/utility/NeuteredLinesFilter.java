@@ -81,9 +81,6 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile("server_uuid\\s+.*"),
     Pattern.compile("hostname\\s+.*"),
     Pattern.compile("  value\\s+\\d+\\s+"),
-    // SQL Server
-    // -- unnamed objects
-    Pattern.compile("PK__Publishe__.*"),
     // Oracle
     // -- server-specific values
     Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),

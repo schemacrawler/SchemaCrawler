@@ -41,7 +41,10 @@ final class NeuteredExpressionsFilter implements Function<String, String> {
     Pattern.compile("_\\d{5}"),
     // Oracle
     // -- constraint names
-    Pattern.compile("SYS_C00\\d{4}")
+    Pattern.compile("SYS_C00\\d{4}"),
+    // SQL Server
+    // -- primary key names
+    Pattern.compile("PK__.{8}__[0-9A-F]{16}")
   };
 
   @Override

@@ -33,6 +33,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
@@ -43,7 +47,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -62,7 +65,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @ExtendWith(TestContextParameterResolver.class)
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class Issue466Test extends BaseAdditionalDatabaseTest {
+public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
@@ -71,30 +74,25 @@ public class Issue466Test extends BaseAdditionalDatabaseTest {
                   .withTag("2017-CU26-ubuntu-16.04"))
           .acceptLicense();
 
-  @BeforeEach
-  public void createDatabase() {
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
-
-    SqlScript.executeScriptFromResource("/issue466.sql", getConnection());
-  }
-
   @Test
-  public void fkSort(final TestContext testContext) throws Exception {
+  public void acrossDatabase(final TestContext testContext) throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("master\\.dbo"))
-            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+            .includeSchemas(
+                schema ->
+                    Arrays.asList(
+                            "DATABASE_A.dbo", "DATABASE_A.SCHEMA_A_A", "DATABASE_A.SCHEMA_A_B")
+                        .contains(schema));
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+    textOptionsBuilder.noInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
@@ -105,5 +103,16 @@ public class Issue466Test extends BaseAdditionalDatabaseTest {
     assertThat(
         outputOf(executableExecution(getConnection(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @BeforeEach
+  public void createDatabase() throws SQLException {
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+
+    // Note: The database connection needs to be closed for the new schemas to be recognized
+    try (Connection connection = getConnection()) {
+      SqlScript.executeScriptFromResource("/across-database.sql", connection);
+    }
   }
 }

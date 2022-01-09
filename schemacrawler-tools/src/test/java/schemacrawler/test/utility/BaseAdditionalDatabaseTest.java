@@ -100,8 +100,7 @@ public abstract class BaseAdditionalDatabaseTest {
     try (final Connection connection = getConnection()) {
       connection.setAutoCommit(false);
 
-      final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
-      sqlScript.run();
+      SqlScript.executeScriptFromResource(databaseSqlResource, connection);
     }
   }
 }

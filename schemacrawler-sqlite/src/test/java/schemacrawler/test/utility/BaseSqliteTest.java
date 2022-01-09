@@ -38,43 +38,56 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.testdb.SqlScript;
+import schemacrawler.testdb.TestSchemaCreatorMain;
 import us.fatehi.utility.IOUtility;
 
 public abstract class BaseSqliteTest {
 
   protected Connection createConnection(final Path sqliteDbFile) {
     try {
-      return createDataSource(sqliteDbFile).getConnection();
+      return createDataSource("jdbc:sqlite:" + sqliteDbFile).getConnection();
     } catch (final SQLException e) {
       failTestSetup(
-          String.format("Could not create a database connection for SQLite fle", sqliteDbFile), e);
+          String.format("Could not create a database connection for SQLite file", sqliteDbFile), e);
       return null; // Appease compiler
     }
   }
 
-  protected DataSource createDataSource(final Path sqliteDbFile) {
+  protected DataSource createDatabaseInMemoryFromScript(final String databaseSqlResource)
+      throws Exception {
+
+    final DataSource dataSource = createDataSource("jdbc:sqlite::memory:");
+
+    try (final Connection connection = dataSource.getConnection()) {
+      connection.setAutoCommit(false);
+
+      SqlScript.executeScriptFromResource(databaseSqlResource, connection);
+
+    } catch (final SQLException e) {
+      failTestSetup(
+          String.format(
+              "Could not create a database connection for SQL script", databaseSqlResource),
+          e);
+      return null; // Appease compiler
+    }
+
+    return dataSource;
+  }
+
+  protected Path createTestDatabase() throws Exception {
+    final Path sqliteDbFile =
+        IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
+    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
+    return sqliteDbFile;
+  }
+
+  private DataSource createDataSource(final String connectionUrl) {
     final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
+    dataSource.setUrl(connectionUrl);
     dataSource.setUsername(null);
     dataSource.setPassword(null);
     dataSource.setDefaultAutoCommit(false);
 
     return dataSource;
-  }
-
-  protected Path createTestDatabase(final String databaseSqlResource) throws Exception {
-    final Path sqliteDbFile =
-        IOUtility.createTempFilePath("resource", "db").normalize().toAbsolutePath();
-
-    final DataSource dataSource = createDataSource(sqliteDbFile);
-
-    try (final Connection connection = dataSource.getConnection()) {
-      connection.setAutoCommit(false);
-
-      final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
-      sqlScript.run();
-    }
-
-    return sqliteDbFile;
   }
 }

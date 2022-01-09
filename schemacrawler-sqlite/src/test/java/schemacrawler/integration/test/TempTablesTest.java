@@ -35,8 +35,6 @@ import static org.hamcrest.Matchers.is;
 import java.nio.file.Path;
 import java.sql.Connection;
 
-import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -51,21 +49,16 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.SqlScript;
-import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
-import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 public class TempTablesTest extends BaseSqliteTest {
 
   @Test
   public void tempTables() throws Exception {
-    final Path sqliteDbFile =
-        IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
-
-    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
-    final Connection connection =
-        executeSqlInTestDatabase(sqliteDbFile, "/db/books/33_temp_tables_01_B.sql");
+    final Path sqliteDbFile = createTestDatabase();
+    final Connection connection = createConnection(sqliteDbFile);
+    SqlScript.executeScriptFromResource("/db/books/33_temp_tables_01_B.sql", connection);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().tableTypes("GLOBAL TEMPORARY");
@@ -83,18 +76,5 @@ public class TempTablesTest extends BaseSqliteTest {
     assertThat("Table count does not match", tables, is(arrayWithSize(1)));
     final Table table = tables[0];
     assertThat("Table name does not match", table.getFullName(), is("TEMP_AUTHOR_LIST"));
-  }
-
-  protected Connection executeSqlInTestDatabase(
-      final Path sqliteDbFile, final String databaseSqlResource) throws Exception {
-    final DataSource dataSource = createDataSource(sqliteDbFile);
-
-    final Connection connection = dataSource.getConnection();
-    connection.setAutoCommit(false);
-
-    final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
-    sqlScript.run();
-
-    return connection;
   }
 }

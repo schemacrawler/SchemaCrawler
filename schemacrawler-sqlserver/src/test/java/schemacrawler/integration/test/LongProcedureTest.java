@@ -75,7 +75,7 @@ public class LongProcedureTest extends BaseAdditionalDatabaseTest {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
-    new SqlScript("/longProcedure.sql", getConnection()).run();
+    SqlScript.executeScriptFromResource("/longProcedure.sql", getConnection());
   }
 
   @Test
