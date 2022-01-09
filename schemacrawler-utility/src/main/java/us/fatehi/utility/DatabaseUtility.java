@@ -79,7 +79,7 @@ public final class DatabaseUtility {
   }
 
   public static void executeScriptFromResource(
-      final Connection connection, final String scriptResource) {
+      final String scriptResource, final Connection connection) {
     try (final Statement statement = createStatement(connection)) {
       final String sqlScript = IOUtility.readResourceFully(scriptResource);
       if (!isBlank(sqlScript)) {

@@ -129,7 +129,7 @@ public class DatabaseUtilityTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    DatabaseUtility.executeScriptFromResource(connection, "no-resource.sql");
+    DatabaseUtility.executeScriptFromResource("no-resource.sql", connection);
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
 
@@ -137,7 +137,7 @@ public class DatabaseUtilityTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    DatabaseUtility.executeScriptFromResource(connection, "/bad-resource-1.sql");
+    DatabaseUtility.executeScriptFromResource("/bad-resource-1.sql", connection);
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
 
@@ -145,7 +145,7 @@ public class DatabaseUtilityTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    DatabaseUtility.executeScriptFromResource(connection, "/sql-resource-1.sql");
+    DatabaseUtility.executeScriptFromResource("/sql-resource-1.sql", connection);
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(true));
   }

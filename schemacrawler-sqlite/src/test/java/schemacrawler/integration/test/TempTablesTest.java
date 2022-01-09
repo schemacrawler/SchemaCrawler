@@ -48,8 +48,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.testdb.SqlScript;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
-import us.fatehi.utility.DatabaseUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 public class TempTablesTest extends BaseSqliteTest {
@@ -58,7 +58,7 @@ public class TempTablesTest extends BaseSqliteTest {
   public void tempTables() throws Exception {
     final Path sqliteDbFile = createTestDatabase();
     final Connection connection = createConnection(sqliteDbFile);
-    DatabaseUtility.executeScriptFromResource(connection, "/db/books/33_temp_tables_01_B.sql");
+    new SqlScript("/db/books/33_temp_tables_01_B.sql", connection).run();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().tableTypes("GLOBAL TEMPORARY");
