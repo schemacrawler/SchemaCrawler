@@ -86,13 +86,11 @@ public class SqlScript implements Runnable {
     final boolean skip = delimiter.equals("#");
 
     if (debug) {
-      final String message =
+      final String lineLogMessage =
           String.format(
-              "%s -- delimiter %s -- %s", scriptResource, delimiter, skip ? "skip" : "execute");
-      LOGGER.log(Level.INFO, message);
-      if (skip) {
-        System.out.println(message);
-      }
+              "%s %s", scriptResource, skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
+      LOGGER.log(Level.INFO, lineLogMessage);
+      System.out.println(lineLogMessage);
     }
 
     if (skip) {
