@@ -31,9 +31,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 
-import schemacrawler.testdb.SqlScript;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
+import us.fatehi.utility.database.SqlScript;
 
 public final class OracleCatalogLoader extends BaseCatalogLoader {
 
