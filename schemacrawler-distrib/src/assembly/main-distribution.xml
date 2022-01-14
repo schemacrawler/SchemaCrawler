@@ -67,7 +67,7 @@
       <fileset
         dir="${SchemaCrawler.home}/schemacrawler-scripting/src/test/resources">
         <include name="dbml.py" />
-      	<include name="mermaid.py" />
+        <include name="mermaid.py" />
       </fileset>
     </copy>
 
@@ -92,7 +92,7 @@
       todir="${main-distribution.staging.dir}/_testdb/lib" />
     <copy
       file="${SchemaCrawler.home}/schemacrawler-utility/target/schemacrawler-utility-${SchemaCrawler.version}.jar"
-      todir="${main-distribution.staging.dir}/_testdb/lib" />  	
+      todir="${main-distribution.staging.dir}/_testdb/lib" />
     <copy todir="${main-distribution.staging.dir}/_testdb/lib">
       <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
         <include name="**/*.jar" />
