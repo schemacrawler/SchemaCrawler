@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.text.operation;
 
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
-import static us.fatehi.utility.DatabaseUtility.createStatement;
-import static us.fatehi.utility.DatabaseUtility.executeSql;
+import static us.fatehi.utility.database.DatabaseUtility.createStatement;
+import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

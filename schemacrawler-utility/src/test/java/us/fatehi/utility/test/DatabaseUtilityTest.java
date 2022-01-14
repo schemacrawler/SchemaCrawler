@@ -55,7 +55,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
-import us.fatehi.utility.DatabaseUtility;
+import us.fatehi.utility.database.DatabaseUtility;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class DatabaseUtilityTest {

@@ -28,11 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.DatabaseUtility.executeSql;
-import static us.fatehi.utility.DatabaseUtility.executeSqlForLong;
-import static us.fatehi.utility.DatabaseUtility.executeSqlForScalar;
 import static us.fatehi.utility.TemplatingUtility.expandTemplate;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.database.DatabaseUtility.executeSql;
+import static us.fatehi.utility.database.DatabaseUtility.executeSqlForLong;
+import static us.fatehi.utility.database.DatabaseUtility.executeSqlForScalar;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

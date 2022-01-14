@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

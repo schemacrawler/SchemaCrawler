@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.DatabaseUtility.checkConnection;
-import static us.fatehi.utility.DatabaseUtility.executeSql;
-import static us.fatehi.utility.DatabaseUtility.readResultsVector;
+import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.database.DatabaseUtility.executeSql;
+import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

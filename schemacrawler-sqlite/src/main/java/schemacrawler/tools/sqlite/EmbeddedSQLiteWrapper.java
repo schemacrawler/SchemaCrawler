@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.DatabaseUtility.checkConnection;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.nio.file.Path;
 import java.sql.Connection;

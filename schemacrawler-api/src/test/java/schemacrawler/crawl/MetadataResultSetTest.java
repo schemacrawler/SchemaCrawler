@@ -57,7 +57,7 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.utility.BinaryData;
-import us.fatehi.utility.DatabaseUtility;
+import us.fatehi.utility.database.DatabaseUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)

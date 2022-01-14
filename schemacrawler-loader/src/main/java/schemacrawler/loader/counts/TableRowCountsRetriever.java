@@ -30,7 +30,7 @@ package schemacrawler.loader.counts;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.counts.TableRowCountsUtility.addRowCountToTable;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
-import static us.fatehi.utility.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;

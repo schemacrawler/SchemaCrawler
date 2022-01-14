@@ -38,11 +38,11 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static schemacrawler.utility.EnumUtility.enumValueFromId;
-import static us.fatehi.utility.DatabaseUtility.logSQLWarnings;
 import static us.fatehi.utility.IOUtility.readFully;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isIntegral;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.database.DatabaseUtility.logSQLWarnings;
 
 import java.io.Reader;
 import java.math.BigInteger;

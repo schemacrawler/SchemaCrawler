@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer9;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-import static us.fatehi.utility.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.Statement;
