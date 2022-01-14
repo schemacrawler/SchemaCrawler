@@ -20,7 +20,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.2.0
+      uses: sualeh/prepare-maven-build@v1.2.1
       with:
         java-version: ${{ matrix.java }}
 
@@ -81,7 +81,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.1.1
+      uses: sualeh/prepare-maven-build@v1.2.1
       with:
         java-version: 8
     - id: install-packages
@@ -131,7 +131,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.1.1
+      uses: sualeh/prepare-maven-build@v1.2.1
       with:
         java-version: 8
     - id: install-packages

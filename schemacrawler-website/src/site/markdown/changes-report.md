@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.16.8"></a>
+## Release 16.16.8 - 2022-01-14
+
+- Fix issue #556 - NoClassDefFoundError when crawling an Oracle schema
+
+
 <a name="a16.16.7"></a>
 ## Release 16.16.7 - 2022-01-07
 
