@@ -54,8 +54,8 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.testdb.SqlScript;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.database.SqlScript;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)

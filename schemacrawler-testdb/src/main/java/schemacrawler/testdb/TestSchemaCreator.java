@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 
+import us.fatehi.utility.database.SqlScript;
+
 public class TestSchemaCreator implements Runnable {
 
   private final Connection connection;

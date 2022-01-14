@@ -37,9 +37,9 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreatorMain;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.database.SqlScript;
 
 public abstract class BaseSqliteTest {
 

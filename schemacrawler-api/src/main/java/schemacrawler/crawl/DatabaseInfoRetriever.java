@@ -57,7 +57,7 @@ import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import us.fatehi.utility.DatabaseUtility;
+import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
 final class DatabaseInfoRetriever extends AbstractRetriever {

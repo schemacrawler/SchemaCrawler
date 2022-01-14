@@ -52,9 +52,9 @@ import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.DatabaseUtility;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
+import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 

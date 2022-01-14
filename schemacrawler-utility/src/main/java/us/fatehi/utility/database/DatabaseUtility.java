@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package us.fatehi.utility;
+package us.fatehi.utility.database;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker

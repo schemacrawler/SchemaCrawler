@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
-import static us.fatehi.utility.DatabaseUtility.readResultsVector;
+import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

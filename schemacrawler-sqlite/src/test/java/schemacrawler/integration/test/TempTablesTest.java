@@ -48,8 +48,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.testdb.SqlScript;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.database.SqlScript;
 
 @ExtendWith(TestLoggingExtension.class)
 public class TempTablesTest extends BaseSqliteTest {

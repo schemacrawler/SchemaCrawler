@@ -29,8 +29,8 @@ package schemacrawler.schema;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.DatabaseUtility.readResultsVector;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

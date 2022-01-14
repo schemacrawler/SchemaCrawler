@@ -1,4 +1,4 @@
-package schemacrawler.testdb.test;
+package schemacrawler.test.utility.database;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
-import schemacrawler.testdb.SqlScript;
+import us.fatehi.utility.database.SqlScript;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class SqlScriptTest {
