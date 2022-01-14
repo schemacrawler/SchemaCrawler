@@ -69,6 +69,9 @@
         <fileset dir="${SchemaCrawler.home}/schemacrawler-testdb/target">
           <include name="schemacrawler-testdb-${SchemaCrawler.version}.jar" />
         </fileset>
+        <fileset dir="${SchemaCrawler.home}/schemacrawler-utility/target">
+          <include name="schemacrawler-utility-${SchemaCrawler.version}.jar" />
+        </fileset>
         <fileset dir="${schemacrawler.base-distribution}/lib">
           <include name="**/*.jar" />
         </fileset>
