@@ -79,8 +79,11 @@ public final class VelocityRenderer extends BaseTemplateRenderer {
     String templatePath = ".";
     final Path templateFilePath = Paths.get(templateLocation);
     if (Files.exists(templateFilePath)) {
-      templatePath = templatePath + "," + templateFilePath.getParent().toAbsolutePath();
-      templateLocation = templateFilePath.getFileName().toString();
+      final Path templateFileParentPath = templateFilePath.normalize().getParent();
+      if (templateFileParentPath != null) {
+        templatePath = templatePath + "," + templateFileParentPath.toAbsolutePath();
+        templateLocation = templateFilePath.getFileName().toString();
+      }
     }
 
     try {
