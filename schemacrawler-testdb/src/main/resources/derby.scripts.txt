@@ -4,7 +4,7 @@
 #,/db/books/10_types_02_udt_A.sql
 #,/db/books/10_types_03_enum_A.sql
 #,/db/books/11_domains_A.sql
-;,/db/books/20_sequences_01_A.sql
+;,/db/books/20_sequences_A.sql
 ;,/db/books/30_tables_01_base_A.sql
 ;,/db/books/30_tables_02_pk_autoinc_B.sql
 ;,/db/books/30_tables_03_spaces_A.sql
