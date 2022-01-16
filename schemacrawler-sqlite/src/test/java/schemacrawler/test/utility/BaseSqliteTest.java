@@ -43,14 +43,12 @@ import us.fatehi.utility.database.SqlScript;
 
 public abstract class BaseSqliteTest {
 
-  protected Connection createConnection(final Path sqliteDbFile) {
-    try {
-      return createDataSource("jdbc:sqlite:" + sqliteDbFile).getConnection();
-    } catch (final SQLException e) {
-      failTestSetup(
-          String.format("Could not create a database connection for SQLite file", sqliteDbFile), e);
-      return null; // Appease compiler
-    }
+  protected DataSource createDatabaseFromFile(final Path sqliteDbFile) {
+    return createDataSource("jdbc:sqlite:" + sqliteDbFile);
+  }
+
+  protected DataSource createDatabaseFromResource(final String sqliteDbResource) {
+    return createDataSource(String.format("jdbc:sqlite::resource:%s", sqliteDbResource));
   }
 
   protected DataSource createDatabaseInMemoryFromScript(final String databaseSqlResource)

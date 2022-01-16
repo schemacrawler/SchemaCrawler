@@ -34,8 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.nio.file.Path;
-
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
@@ -55,28 +53,17 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class SQLiteExecutableTest extends BaseSqliteTest {
+public class VirtualTablesTest extends BaseSqliteTest {
 
   @Test
   public void count(final TestContext testContext) throws Exception {
     run(testContext.testMethodFullName(), InfoLevel.minimum, "count");
   }
 
-  @Test
-  public void dump(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.standard, "dump");
-  }
-
-  @Test
-  public void list(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.minimum, "list");
-  }
-
   private void run(
       final String currentMethodFullName, final InfoLevel infoLevel, final String command)
       throws Exception {
-    final Path sqliteDbFile = createTestDatabase();
-    final DataSource dataSource = createDatabaseFromFile(sqliteDbFile);
+    final DataSource dataSource = createDatabaseFromResource("with_spellfix1_tables.db");
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
