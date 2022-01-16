@@ -41,7 +41,11 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -60,12 +64,12 @@ public class VirtualTablesTest extends BaseSqliteTest {
 
   @Test
   public void count(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.minimum, "count");
+    run(testContext.testMethodFullName(), InfoLevel.minimum, "count", new IncludeAll());
   }
 
   @Test
   public void list(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.minimum, "list");
+    run(testContext.testMethodFullName(), InfoLevel.minimum, "list", new IncludeAll());
   }
 
   @Test
@@ -73,23 +77,43 @@ public class VirtualTablesTest extends BaseSqliteTest {
     final ExecutionRuntimeException exception =
         assertThrows(
             ExecutionRuntimeException.class,
-            () -> run(testContext.testMethodFullName(), InfoLevel.standard, "schema"));
+            () ->
+                run(
+                    testContext.testMethodFullName(),
+                    InfoLevel.standard,
+                    "schema",
+                    new IncludeAll()));
     assertThat(
         exception.getMessage(),
         is(
             "Could not retrieve table columns for table <demo>: [SQLITE_ERROR] SQL error or missing database (no such module: spellfix1)"));
   }
 
+  @Test
+  public void schemaNonVirtual(final TestContext testContext) throws Exception {
+    run(
+        testContext.testMethodFullName(),
+        InfoLevel.standard,
+        "schema",
+        new RegularExpressionExclusionRule("demo.*"));
+  }
+
   private void run(
-      final String currentMethodFullName, final InfoLevel infoLevel, final String command)
+      final String currentMethodFullName,
+      final InfoLevel infoLevel,
+      final String command,
+      final InclusionRule tableInclusionRule)
       throws Exception {
     final DataSource dataSource = createDatabaseFromResource("with_spellfix1_tables.db");
 
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeTables(tableInclusionRule);
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
     final SchemaCrawlerOptions options =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLoadOptions(loadOptionsBuilder.toOptions());
+            .withLoadOptions(loadOptionsBuilder.toOptions())
+            .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.newSchemaTextOptions();
 
