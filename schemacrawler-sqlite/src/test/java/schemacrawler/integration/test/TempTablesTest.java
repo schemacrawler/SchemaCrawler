@@ -62,7 +62,7 @@ public class TempTablesTest extends BaseSqliteTest {
     final DataSource dataSource = createDatabaseFromFile(sqliteDbFile);
     final Connection connection = dataSource.getConnection();
 
-    SqlScript.executeScriptFromResource("/db/books/33_temp_tables_01_B.sql", connection);
+    SqlScript.executeScriptFromResource("/db/books/33_temp_tables_B.sql", connection);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().tableTypes("GLOBAL TEMPORARY");
