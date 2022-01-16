@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.is;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 
 import javax.sql.DataSource;
 
@@ -59,8 +60,9 @@ public class TempTablesTest extends BaseSqliteTest {
   public void tempTables() throws Exception {
     final Path sqliteDbFile = createTestDatabase();
     final DataSource dataSource = createDatabaseFromFile(sqliteDbFile);
-    SqlScript.executeScriptFromResource(
-        "/db/books/33_temp_tables_01_B.sql", dataSource.getConnection());
+    final Connection connection = dataSource.getConnection();
+
+    SqlScript.executeScriptFromResource("/db/books/33_temp_tables_01_B.sql", connection);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().tableTypes("GLOBAL TEMPORARY");
@@ -71,8 +73,7 @@ public class TempTablesTest extends BaseSqliteTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Catalog catalog =
-        SchemaCrawlerUtility.getCatalog(dataSource.getConnection(), schemaCrawlerOptions);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, is(arrayWithSize(1)));
     final Table[] tables = catalog.getTables(schemas[0]).toArray(new Table[0]);
