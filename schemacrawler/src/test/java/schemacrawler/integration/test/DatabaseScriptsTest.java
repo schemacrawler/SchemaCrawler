@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -111,6 +112,7 @@ public class DatabaseScriptsTest {
 
   @Autowired private ResourceLoader resourceLoader;
 
+  @Disabled
   @Test
   public void booksDatabaseScripts() throws Exception {
     final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");

@@ -22,9 +22,9 @@
 #,/db/books/70_grants_02_A.sql
 #,/db/books/71_synonyms_01_A.sql
 #,/db/books/71_synonyms_02_A.sql
-;,/db/books/80_remarks_01_A.sql
-;,/db/books/80_remarks_02_E.sql
-#,/db/books/80_remarks_03_A.sql
+;,/db/books/80_remarks_01_base_A.sql
+;,/db/books/80_remarks_02_constraints_E.sql
+#,/db/books/80_remarks_03_routines_A.sql
 #,/db/books/81_additional_users_01_A.sql
 #,/db/books/90_data_01_A.sql
 ;,/db/books/90_data_02_B.sql
