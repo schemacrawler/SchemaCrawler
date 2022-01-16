@@ -60,6 +60,16 @@ public class VirtualTablesTest extends BaseSqliteTest {
     run(testContext.testMethodFullName(), InfoLevel.minimum, "count");
   }
 
+  @Test
+  public void list(final TestContext testContext) throws Exception {
+    run(testContext.testMethodFullName(), InfoLevel.minimum, "list");
+  }
+
+  @Test
+  public void schema(final TestContext testContext) throws Exception {
+    run(testContext.testMethodFullName(), InfoLevel.standard, "schema");
+  }
+
   private void run(
       final String currentMethodFullName, final InfoLevel infoLevel, final String command)
       throws Exception {
