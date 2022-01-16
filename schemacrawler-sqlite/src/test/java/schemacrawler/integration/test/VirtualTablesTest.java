@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -43,6 +45,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -67,7 +70,14 @@ public class VirtualTablesTest extends BaseSqliteTest {
 
   @Test
   public void schema(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.standard, "schema");
+    final ExecutionRuntimeException exception =
+        assertThrows(
+            ExecutionRuntimeException.class,
+            () -> run(testContext.testMethodFullName(), InfoLevel.standard, "schema"));
+    assertThat(
+        exception.getMessage(),
+        is(
+            "Could not retrieve table columns for table <demo>: [SQLITE_ERROR] SQL error or missing database (no such module: spellfix1)"));
   }
 
   private void run(
