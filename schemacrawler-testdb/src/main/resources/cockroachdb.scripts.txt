@@ -26,7 +26,7 @@
 #,/db/books/80_remarks_02_constraints_A.sql
 #,/db/books/80_remarks_03_routines_A.sql
 #,/db/books/81_additional_users_A.sql
-;,/db/books/90_data_01_A.sql
-;,/db/books/90_data_02_A.sql
+;,/db/books/90_data_02_pk_autoinc_A.sql
+;,/db/books/90_data_01_base_A.sql
 ;,/db/books/90_data_03_A.sql
 #,/db/books/90_data_04_A.sql
