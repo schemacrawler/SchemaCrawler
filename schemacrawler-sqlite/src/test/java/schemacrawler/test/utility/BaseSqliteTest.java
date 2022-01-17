@@ -57,7 +57,6 @@ public abstract class BaseSqliteTest {
     final DataSource dataSource = createDataSource("jdbc:sqlite::memory:");
 
     try (final Connection connection = dataSource.getConnection()) {
-      connection.setAutoCommit(false);
 
       SqlScript.executeScriptFromResource(databaseSqlResource, connection);
 
@@ -80,12 +79,11 @@ public abstract class BaseSqliteTest {
   }
 
   private DataSource createDataSource(final String connectionUrl) {
-    final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl(connectionUrl);
-    dataSource.setUsername(null);
-    dataSource.setPassword(null);
-    dataSource.setDefaultAutoCommit(false);
+    final BasicDataSource ds = new BasicDataSource();
+    ds.setUrl(connectionUrl);
+    ds.setUsername(null);
+    ds.setPassword(null);
 
-    return dataSource;
+    return ds;
   }
 }

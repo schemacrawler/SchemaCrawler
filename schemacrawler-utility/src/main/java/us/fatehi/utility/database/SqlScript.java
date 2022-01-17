@@ -99,14 +99,16 @@ public class SqlScript implements Runnable {
 
     String sql = null;
     try (final BufferedReader lineReader =
-        new BufferedReader(
-            new InputStreamReader(this.getClass().getResourceAsStream(scriptResource), UTF_8));
-    // NOTE: Do not close connection, since we did not open it
-    ) {
+            new BufferedReader(
+                new InputStreamReader(this.getClass().getResourceAsStream(scriptResource), UTF_8));
+        final Statement statement = connection.createStatement();
+        // NOTE: Do not close connection, since we did not open it
+        ) {
       final List<String> sqlList = readSql(lineReader);
       for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext(); ) {
         sql = iterator.next();
-        try (final Statement statement = connection.createStatement(); ) {
+        statement.clearWarnings();
+        try {
           if (Pattern.matches("\\s+", sql)) {
             continue;
           }
@@ -114,7 +116,10 @@ public class SqlScript implements Runnable {
             LOGGER.log(Level.INFO, "\n" + sql);
           }
 
-          statement.execute(sql);
+          final boolean hasResults = statement.execute(sql);
+          if (hasResults) {
+            throw new SQLWarning(String.format("Results not expected from SQL%n%s%n", sql));
+          }
 
           final SQLWarning warnings = statement.getWarnings();
           if (warnings != null) {
@@ -123,7 +128,10 @@ public class SqlScript implements Runnable {
             }
           }
 
-          connection.commit();
+          if (!connection.getAutoCommit()) {
+            connection.commit();
+          }
+
         } catch (final SQLWarning e) {
           final int errorCode = e.getErrorCode();
           if (errorCode == 5701 || errorCode == 5703) {

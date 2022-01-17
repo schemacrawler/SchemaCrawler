@@ -175,7 +175,6 @@ public class TestDatabase {
 
   private void createTestDatabase() throws SQLException {
     final Connection connection = getConnection();
-    connection.setAutoCommit(true);
     final TestSchemaCreator schemaCreator =
         new TestSchemaCreator(connection, "/hsqldb.scripts.txt");
     schemaCreator.run();

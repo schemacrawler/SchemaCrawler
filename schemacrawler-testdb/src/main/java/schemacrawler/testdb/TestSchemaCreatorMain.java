@@ -27,106 +27,87 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.testdb;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
 
-@CommandLine.Command(description = "Creates a test database schema for testing SchemaCrawler",
-                     name = "Test Schema Creator",
-                     mixinStandardHelpOptions = true)
-public class TestSchemaCreatorMain
-  implements Callable<Integer>
-{
+@CommandLine.Command(
+    description = "Creates a test database schema for testing SchemaCrawler",
+    name = "Test Schema Creator",
+    mixinStandardHelpOptions = true)
+public class TestSchemaCreatorMain implements Callable<Integer> {
 
-  public static int call(String... args)
-  {
-    final int exitCode =
-      new CommandLine(new TestSchemaCreatorMain()).execute(args);
+  public static int call(final String... args) {
+    final int exitCode = new CommandLine(new TestSchemaCreatorMain()).execute(args);
     return exitCode;
   }
 
-  public static void main(String... args)
-  {
+  public static void main(final String... args) {
     System.exit(call(args));
   }
 
-  @CommandLine.Option(names = {
-    "--url"
-  },
-                      required = true,
-                      description = "JDBC connection URL to the database",
-                      paramLabel = "<url>")
+  @CommandLine.Option(
+      names = {"--url"},
+      required = true,
+      description = "JDBC connection URL to the database",
+      paramLabel = "<url>")
   private String connectionUrl;
-  @CommandLine.Option(names = {
-    "--user"
-  }, description = "Database user name", paramLabel = "<user>")
+
+  @CommandLine.Option(
+      names = {"--user"},
+      description = "Database user name",
+      paramLabel = "<user>")
   private String user;
-  @CommandLine.Option(names = {
-    "--password"
-  }, description = "Database password", paramLabel = "<password>")
+
+  @CommandLine.Option(
+      names = {"--password"},
+      description = "Database password",
+      paramLabel = "<password>")
   private String passwordProvided;
-  @CommandLine.Option(names = {
-    "--scripts-resource"
-  },
-                      description = "Scripts resource on CLASSPATH",
-                      paramLabel = "<scripts-resource>")
+
+  @CommandLine.Option(
+      names = {"--scripts-resource"},
+      description = "Scripts resource on CLASSPATH",
+      paramLabel = "<scripts-resource>")
   private String scriptsresource;
-  @CommandLine.Option(names = {
-    "--debug", "-d"
-  }, description = "Debug trace")
+
+  @CommandLine.Option(
+      names = {"--debug", "-d"},
+      description = "Debug trace")
   private boolean debug;
 
-  private TestSchemaCreatorMain()
-  {
-  }
+  private TestSchemaCreatorMain() {}
 
   @Override
-  public Integer call()
-  {
-    try (
-      final Connection connection = DriverManager.getConnection(connectionUrl,
-                                                                user,
-                                                                passwordProvided)
-    )
-    {
-      connection.setAutoCommit(false);
+  public Integer call() {
+    try (final Connection connection =
+        DriverManager.getConnection(connectionUrl, user, passwordProvided)) {
       findScriptsResource();
-      System.setProperty("schemacrawler.testdb.SqlScript.debug",
-                         String.valueOf(debug));
+      System.setProperty("schemacrawler.testdb.SqlScript.debug", String.valueOf(debug));
       final TestSchemaCreator testSchemaCreator =
-        new TestSchemaCreator(connection, scriptsresource);
+          new TestSchemaCreator(connection, scriptsresource);
       testSchemaCreator.run();
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       e.printStackTrace();
       return 1;
     }
     return 0;
   }
 
-  private void findScriptsResource()
-  {
-    if (scriptsresource != null && !scriptsresource.isEmpty())
-    {
+  private void findScriptsResource() {
+    if (scriptsresource != null && !scriptsresource.isEmpty()) {
       return;
     }
-    if (connectionUrl == null)
-    {
+    if (connectionUrl == null) {
       throw new IllegalArgumentException("No connection URL provided");
     }
     final String[] splitUrl = connectionUrl.split(":");
-    if (splitUrl.length >= 2)
-    {
+    if (splitUrl.length >= 2) {
       scriptsresource = String.format("/%s.scripts.txt", splitUrl[1]);
-    }
-    else
-    {
+    } else {
       throw new IllegalArgumentException("No connection URL provided");
     }
   }
-
 }

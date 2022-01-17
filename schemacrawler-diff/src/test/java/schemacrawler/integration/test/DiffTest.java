@@ -113,7 +113,6 @@ public class DiffTest {
     dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
     dataSource.setUsername(null);
     dataSource.setPassword(null);
-    dataSource.setDefaultAutoCommit(false);
 
     return dataSource;
   }

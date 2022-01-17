@@ -82,7 +82,6 @@ public abstract class BaseAdditionalDatabaseTest {
     if (connectionProperties != null) {
       ds.setConnectionProperties(connectionProperties);
     }
-    ds.setDefaultAutoCommit(false);
 
     return ds;
   }
@@ -98,8 +97,6 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected void runScript(final String databaseSqlResource) throws Exception {
     try (final Connection connection = getConnection()) {
-      connection.setAutoCommit(false);
-
       SqlScript.executeScriptFromResource(databaseSqlResource, connection);
     }
   }

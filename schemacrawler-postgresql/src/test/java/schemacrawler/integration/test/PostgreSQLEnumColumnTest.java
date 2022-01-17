@@ -151,7 +151,7 @@ public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
         final Statement stmt = connection.createStatement(); ) {
       stmt.execute("CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy')");
       stmt.execute("CREATE TABLE person (name text, current_mood mood)");
-      connection.commit();
+      // Auto-commited
     }
   }
 }
