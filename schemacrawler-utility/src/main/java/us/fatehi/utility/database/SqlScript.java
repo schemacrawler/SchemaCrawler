@@ -123,7 +123,10 @@ public class SqlScript implements Runnable {
             }
           }
 
-          connection.commit();
+          if (!connection.getAutoCommit()) {
+            connection.commit();
+          }
+
         } catch (final SQLWarning e) {
           final int errorCode = e.getErrorCode();
           if (errorCode == 5701 || errorCode == 5703) {

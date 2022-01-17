@@ -82,7 +82,6 @@ public abstract class BaseAdditionalDatabaseTest {
     if (connectionProperties != null) {
       ds.setConnectionProperties(connectionProperties);
     }
-    ds.setDefaultAutoCommit(false);
 
     return ds;
   }

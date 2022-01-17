@@ -80,12 +80,11 @@ public abstract class BaseSqliteTest {
   }
 
   private DataSource createDataSource(final String connectionUrl) {
-    final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl(connectionUrl);
-    dataSource.setUsername(null);
-    dataSource.setPassword(null);
-    dataSource.setDefaultAutoCommit(false);
+    final BasicDataSource ds = new BasicDataSource();
+    ds.setUrl(connectionUrl);
+    ds.setUsername(null);
+    ds.setPassword(null);
 
-    return dataSource;
+    return ds;
   }
 }
