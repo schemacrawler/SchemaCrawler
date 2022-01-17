@@ -114,7 +114,10 @@ public class SqlScript implements Runnable {
             LOGGER.log(Level.INFO, "\n" + sql);
           }
 
-          statement.execute(sql);
+          final boolean hasResults = statement.execute(sql);
+          if (hasResults) {
+            throw new SQLWarning(String.format("Results not expected from SQL%n%s%n", sql));
+          }
 
           final SQLWarning warnings = statement.getWarnings();
           if (warnings != null) {
