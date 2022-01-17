@@ -10,5 +10,6 @@ Books                                                            [table]
 Coupons                                                          [table]
 "Global Counts"                                                  [table]
 Publishers                                                       [table]
+X_EMPLOYEES                                                      [table]
 Βιβλία                                                           [table]
 

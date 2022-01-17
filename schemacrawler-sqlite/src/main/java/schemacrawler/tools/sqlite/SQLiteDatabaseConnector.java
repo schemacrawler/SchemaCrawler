@@ -43,7 +43,10 @@ public final class SQLiteDatabaseConnector extends DatabaseConnector {
         (schemaRetrievalOptionsBuilder, connection) ->
             schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""),
         limitOptionsBuilder -> {},
-        () -> DatabaseConnectionUrlBuilder.builder("jdbc:sqlite:${database}?open_mode=2"));
+        () ->
+            DatabaseConnectionUrlBuilder.builder("jdbc:sqlite:${database}")
+                .withDefaultUrlx("application_id", "SchemaCrawler")
+                .withDefaultUrlx("open_mode", "2"));
   }
 
   @Override

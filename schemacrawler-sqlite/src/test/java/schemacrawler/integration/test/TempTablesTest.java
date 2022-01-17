@@ -35,6 +35,8 @@ import static org.hamcrest.Matchers.is;
 import java.nio.file.Path;
 import java.sql.Connection;
 
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -57,8 +59,10 @@ public class TempTablesTest extends BaseSqliteTest {
   @Test
   public void tempTables() throws Exception {
     final Path sqliteDbFile = createTestDatabase();
-    final Connection connection = createConnection(sqliteDbFile);
-    SqlScript.executeScriptFromResource("/db/books/33_temp_tables_01_B.sql", connection);
+    final DataSource dataSource = createDatabaseFromFile(sqliteDbFile);
+    final Connection connection = dataSource.getConnection();
+
+    SqlScript.executeScriptFromResource("/db/books/33_temp_tables_B.sql", connection);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().tableTypes("GLOBAL TEMPORARY");

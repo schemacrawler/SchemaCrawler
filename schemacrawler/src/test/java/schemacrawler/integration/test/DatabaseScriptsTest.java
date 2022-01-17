@@ -35,13 +35,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,37 +58,56 @@ public class DatabaseScriptsTest {
 
   private class DatabaseScriptSection {
 
-    private final Pattern scriptNamePattern = Pattern.compile("(\\d\\d)_(.*)_(\\d\\d)_[A-Z].sql");
+    private final Pattern scriptNamePattern =
+        Pattern.compile("((\\d{2})_([a-z_]+))(_(\\d{2})_([a-z_]+))?_[A-Z].sql");
 
-    private final String name;
-    private final int section;
-    private final int subSection;
+    private final int[] section;
+    private final String[] name;
 
     DatabaseScriptSection(final String script) {
       final Matcher matcher = scriptNamePattern.matcher(script);
       if (!matcher.matches()) {
         throw new IllegalArgumentException(script);
       }
-      section = Integer.valueOf(matcher.group(1));
-      name = matcher.group(2);
-      subSection = Integer.valueOf(matcher.group(3));
+
+      section = new int[2];
+      name = new String[2];
+
+      section[0] = Integer.valueOf(matcher.group(2));
+      name[0] = matcher.group(3);
+
+      if (matcher.group(4) != null) {
+        section[1] = Integer.valueOf(matcher.group(5));
+        name[1] = matcher.group(6);
+      }
     }
 
     @Override
-    public boolean equals(final Object o) {
-      if (this == o) {
+    public boolean equals(final Object obj) {
+      if (this == obj) {
         return true;
       }
-      if (o == null || getClass() != o.getClass()) {
+      if (obj == null) {
         return false;
       }
-      final DatabaseScriptSection that = (DatabaseScriptSection) o;
-      return section == that.section && subSection == that.subSection && name.equals(that.name);
+      if (getClass() != obj.getClass()) {
+        return false;
+      }
+      final DatabaseScriptSection other = (DatabaseScriptSection) obj;
+      if (!getEnclosingInstance().equals(other.getEnclosingInstance())) {
+        return false;
+      }
+      return Arrays.equals(name, other.name) && Arrays.equals(section, other.section);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(name, section, subSection);
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + getEnclosingInstance().hashCode();
+      result = prime * result + Arrays.hashCode(name);
+      result = prime * result + Arrays.hashCode(section);
+      return result;
     }
 
     public boolean matches(final String line) {
@@ -101,7 +120,15 @@ public class DatabaseScriptsTest {
 
     @Override
     public String toString() {
-      return String.format("%02d_%s_%02d", section, name, subSection);
+      if (section[1] == 0) {
+        return String.format("%02d_%s", section[0], name[0]);
+      } else {
+        return String.format("%02d_%s_%02d_%s", section[0], name[0], section[1], name[1]);
+      }
+    }
+
+    private DatabaseScriptsTest getEnclosingInstance() {
+      return DatabaseScriptsTest.this;
     }
   }
 
@@ -193,7 +220,8 @@ public class DatabaseScriptsTest {
       throws IOException {
     final Set<DatabaseScriptSection> scripts = new HashSet<>();
     for (final String scriptName : loadResources(pattern)) {
-      scripts.add(new DatabaseScriptSection(scriptName));
+      final DatabaseScriptSection databaseScriptSection = new DatabaseScriptSection(scriptName);
+      scripts.add(databaseScriptSection);
     }
     return scripts;
   }
