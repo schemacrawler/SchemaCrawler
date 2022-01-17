@@ -20,8 +20,8 @@
 @,/db/books/41_functions_E.sql
 @,/db/books/50_triggers_B.sql
 #,/db/books/70_grants_A.sql
-;,/db/books/71_synonyms_A.sql
-;,/db/books/71_synonyms_02_A.sql
+;,/db/books/71_synonyms_01_base_A.sql
+;,/db/books/71_synonyms_02_dangling_A.sql
 ;,/db/books/80_remarks_01_base_A.sql
 ;,/db/books/80_remarks_02_constraints_A.sql
 #,/db/books/80_remarks_03_routines_A.sql
