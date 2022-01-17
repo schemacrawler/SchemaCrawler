@@ -77,7 +77,7 @@ public class MySQLDotNameTest extends BaseAdditionalDatabaseTest {
     try (final Connection connection = getConnection();
         final Statement stmt = connection.createStatement(); ) {
       stmt.execute("CREATE TABLE `test.abc` (`a.b` INT(11) DEFAULT NULL)");
-      connection.commit();
+      // Auto-commited
     }
 
     final Connection connection = getConnection();

@@ -97,8 +97,6 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected void runScript(final String databaseSqlResource) throws Exception {
     try (final Connection connection = getConnection()) {
-      connection.setAutoCommit(false);
-
       SqlScript.executeScriptFromResource(databaseSqlResource, connection);
     }
   }

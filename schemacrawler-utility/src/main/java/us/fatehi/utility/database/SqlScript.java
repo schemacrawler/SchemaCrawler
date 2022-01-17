@@ -99,14 +99,16 @@ public class SqlScript implements Runnable {
 
     String sql = null;
     try (final BufferedReader lineReader =
-        new BufferedReader(
-            new InputStreamReader(this.getClass().getResourceAsStream(scriptResource), UTF_8));
-    // NOTE: Do not close connection, since we did not open it
-    ) {
+            new BufferedReader(
+                new InputStreamReader(this.getClass().getResourceAsStream(scriptResource), UTF_8));
+        final Statement statement = connection.createStatement();
+        // NOTE: Do not close connection, since we did not open it
+        ) {
       final List<String> sqlList = readSql(lineReader);
       for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext(); ) {
         sql = iterator.next();
-        try (final Statement statement = connection.createStatement(); ) {
+        statement.clearWarnings();
+        try {
           if (Pattern.matches("\\s+", sql)) {
             continue;
           }

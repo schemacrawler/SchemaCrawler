@@ -57,7 +57,6 @@ public abstract class BaseSqliteTest {
     final DataSource dataSource = createDataSource("jdbc:sqlite::memory:");
 
     try (final Connection connection = dataSource.getConnection()) {
-      connection.setAutoCommit(false);
 
       SqlScript.executeScriptFromResource(databaseSqlResource, connection);
 

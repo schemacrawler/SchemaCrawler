@@ -77,7 +77,7 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
               + "  end_date date NOT NULL,"
               + "  CONSTRAINT exclude_dates EXCLUDE using gist (daterange(start_date,end_date,'[]') WITH &&)"
               + ")");
-      connection.commit();
+      // Auto-commited
     }
   }
 

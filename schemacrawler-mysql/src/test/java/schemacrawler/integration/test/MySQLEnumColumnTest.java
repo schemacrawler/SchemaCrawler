@@ -73,7 +73,7 @@ public class MySQLEnumColumnTest extends BaseAdditionalDatabaseTest {
     try (final Connection connection = getConnection();
         final Statement stmt = connection.createStatement(); ) {
       stmt.execute("CREATE TABLE shirts (name VARCHAR(40), size ENUM('small', 'medium', 'large'))");
-      connection.commit();
+      // Auto-commited
     }
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
