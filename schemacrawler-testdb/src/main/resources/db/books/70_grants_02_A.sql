@@ -1,2 +1,0 @@
--- Grants
-GRANT SELECT ON Authors TO OTHERUSER;

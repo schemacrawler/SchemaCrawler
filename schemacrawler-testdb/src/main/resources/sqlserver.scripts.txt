@@ -1,5 +1,6 @@
 ;,/db/books/00_drop_schemas_D.sql
 ;,/db/books/01_schemas_B.sql
+;,/db/books/02_users_B.sql
 #,/db/books/10_types_01_binary_A.sql
 ;,/db/books/10_types_02_udt_B.sql
 #,/db/books/10_types_03_enum_A.sql
@@ -18,8 +19,7 @@
 @,/db/books/40_procedures_C.sql
 #,/db/books/41_functions_A.sql
 #,/db/books/50_triggers_A.sql
-;,/db/books/70_grants_B.sql
-;,/db/books/70_grants_02_A.sql
+;,/db/books/70_grants_A.sql
 ;,/db/books/71_synonyms_A.sql
 ;,/db/books/71_synonyms_02_A.sql
 ;,/db/books/80_remarks_01_base_B.sql
