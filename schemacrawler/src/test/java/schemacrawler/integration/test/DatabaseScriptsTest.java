@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -59,7 +58,8 @@ public class DatabaseScriptsTest {
 
   private class DatabaseScriptSection {
 
-    private final Pattern scriptNamePattern = Pattern.compile("((\\d\\d)_([a-z_])*)+_[A-Z].sql");
+    private final Pattern scriptNamePattern =
+        Pattern.compile("((\\d{2})_([a-z_]+))(_(\\d{2})_([a-z_]+))?_[A-Z].sql");
 
     private final int[] section;
     private final String[] name;
@@ -69,13 +69,16 @@ public class DatabaseScriptsTest {
       if (!matcher.matches()) {
         throw new IllegalArgumentException(script);
       }
+
       section = new int[2];
       name = new String[2];
-      int index = 0;
-      while (matcher.find()) {
-        section[index] = Integer.valueOf(matcher.group(1));
-        name[index] = matcher.group(2);
-        index++;
+
+      section[0] = Integer.valueOf(matcher.group(2));
+      name[0] = matcher.group(3);
+
+      if (matcher.group(4) != null) {
+        section[1] = Integer.valueOf(matcher.group(5));
+        name[1] = matcher.group(6);
       }
     }
 
@@ -117,7 +120,11 @@ public class DatabaseScriptsTest {
 
     @Override
     public String toString() {
-      return String.format("%02d_%s_%02d_%s", section[0], name[0], section[1], name[1]);
+      if (section[1] == 0) {
+        return String.format("%02d_%s", section[0], name[0]);
+      } else {
+        return String.format("%02d_%s_%02d_%s", section[0], name[0], section[1], name[1]);
+      }
     }
 
     private DatabaseScriptsTest getEnclosingInstance() {
@@ -131,7 +138,6 @@ public class DatabaseScriptsTest {
 
   @Autowired private ResourceLoader resourceLoader;
 
-  @Disabled
   @Test
   public void booksDatabaseScripts() throws Exception {
     final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");
@@ -214,7 +220,8 @@ public class DatabaseScriptsTest {
       throws IOException {
     final Set<DatabaseScriptSection> scripts = new HashSet<>();
     for (final String scriptName : loadResources(pattern)) {
-      scripts.add(new DatabaseScriptSection(scriptName));
+      final DatabaseScriptSection databaseScriptSection = new DatabaseScriptSection(scriptName);
+      scripts.add(databaseScriptSection);
     }
     return scripts;
   }
