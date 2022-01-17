@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+
+<a name="a16.16.9"></a>
+## Release 16.16.9 - 2022-01-17
+
+- Fix issue #556, #559 - Could not commit with auto-commit set on error on Oracle
+
+
 <a name="a16.16.8"></a>
 ## Release 16.16.8 - 2022-01-14
 
