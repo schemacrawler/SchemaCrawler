@@ -28,5 +28,5 @@
 #,/db/books/81_additional_users_A.sql
 ;,/db/books/90_data_02_pk_autoinc_A.sql
 ;,/db/books/90_data_01_base_A.sql
-;,/db/books/90_data_03_A.sql
-#,/db/books/90_data_04_A.sql
+;,/db/books/90_data_03_spaces_A.sql
+#,/db/books/90_data_04_binary_types_A.sql
