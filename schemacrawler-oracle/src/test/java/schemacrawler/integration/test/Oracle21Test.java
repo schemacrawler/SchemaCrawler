@@ -42,11 +42,11 @@ import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class Oracle18Test extends BaseOracleWithConnectionTest {
+public class Oracle21Test extends BaseOracleWithConnectionTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("18-slim"));
+      new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("21-slim"));
 
   @BeforeEach
   public void createDatabase() {
@@ -60,7 +60,7 @@ public class Oracle18Test extends BaseOracleWithConnectionTest {
   public void testOracleWithConnection() throws Exception {
     final Connection connection = getConnection();
     final String expectedResource =
-        String.format("testOracle18WithConnection.%s.txt", javaVersion());
+        String.format("testOracle21WithConnection.%s.txt", javaVersion());
     testOracleWithConnection(connection, expectedResource, 33);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
