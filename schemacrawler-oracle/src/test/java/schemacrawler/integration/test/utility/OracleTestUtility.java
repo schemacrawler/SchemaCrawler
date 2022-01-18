@@ -28,33 +28,28 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test.utility;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
 
-public final class MySQLTestUtility {
+public final class OracleTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newMySQL56Container() {
-    return newMySQLContainer("5.6.51");
+  public static JdbcDatabaseContainer<?> newOracle11Container() {
+    return newOracleContainer("11").usingSid();
   }
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newMySQL8Container() {
-    return newMySQLContainer("8.0.27");
+  public static JdbcDatabaseContainer<?> newOracle21Container() {
+    return newOracleContainer("21-slim");
   }
 
   @SuppressWarnings("resource")
-  private static JdbcDatabaseContainer<?> newMySQLContainer(final String version) {
-    final DockerImageName imageName = DockerImageName.parse(MySQLContainer.NAME);
-    return new MySQLContainer<>(imageName.withTag(version))
-        .withCommand(
-            "mysqld",
-            "--skip-ssl",
-            "--lower_case_table_names=1",
-            "--log_bin_trust_function_creators=1");
+  private static OracleContainer newOracleContainer(final String version) {
+    final DockerImageName imageName = DockerImageName.parse("gvenzl/oracle-xe").withTag(version);
+    return new OracleContainer(imageName.withTag(version));
   }
 
-  private MySQLTestUtility() {
+  private OracleTestUtility() {
     // Prevent instantiation
   }
 }

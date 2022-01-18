@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer8;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -66,7 +66,7 @@ public class MySQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      newMySQLContainer8().withUsername("schemacrawler");
+      newMySQL8Container().withUsername("schemacrawler");
 
   @Test
   public void columnWithEnum() throws Exception {

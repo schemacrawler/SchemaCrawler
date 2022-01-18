@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer14;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL14Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -67,7 +67,7 @@ import us.fatehi.utility.database.SqlScript;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer14();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL14Container();
 
   @Test
   public void acrossDatabase(final TestContext testContext) throws Exception {

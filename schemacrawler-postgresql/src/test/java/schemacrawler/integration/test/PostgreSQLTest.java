@@ -31,7 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer9;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL9Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -68,7 +68,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer9();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL9Container();
 
   @BeforeEach
   public void createDatabase() {

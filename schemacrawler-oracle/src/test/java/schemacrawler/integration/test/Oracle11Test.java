@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle11Container;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
@@ -35,20 +36,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class Oracle11Test extends BaseOracleWithConnectionTest {
 
-  private static final DockerImageName imageName =
-      DockerImageName.parse("gvenzl/oracle-xe").withTag("11");
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer = new OracleContainer(imageName).usingSid();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle11Container();
 
   @BeforeEach
   public void createDatabase() {

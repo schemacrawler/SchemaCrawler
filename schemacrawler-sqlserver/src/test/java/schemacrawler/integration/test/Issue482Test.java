@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServer2019Container;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,10 +38,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -61,12 +60,7 @@ import schemacrawler.tools.utility.SchemaCrawlerUtility;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class Issue482Test extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new MSSQLServerContainer<>(
-              DockerImageName.parse("mcr.microsoft.com/mssql/server")
-                  .withTag("2017-CU26-ubuntu-16.04"))
-          .acceptLicense();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
 
   @BeforeEach
   public void createDatabase() {

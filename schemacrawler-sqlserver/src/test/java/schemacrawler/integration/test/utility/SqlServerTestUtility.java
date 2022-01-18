@@ -28,33 +28,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test.utility;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.utility.DockerImageName;
 
-public final class MySQLTestUtility {
+public final class SqlServerTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newMySQL56Container() {
-    return newMySQLContainer("5.6.51");
+  public static JdbcDatabaseContainer<?> newSqlServer2019Container() {
+    return newSqlServerContainer("2019-CU9-ubuntu-18.04");
   }
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newMySQL8Container() {
-    return newMySQLContainer("8.0.27");
+  private static JdbcDatabaseContainer<?> newSqlServerContainer(final String version) {
+    final DockerImageName imageName = DockerImageName.parse("mcr.microsoft.com/mssql/server");
+    return new MSSQLServerContainer<>(imageName.withTag(version)).acceptLicense();
   }
 
-  @SuppressWarnings("resource")
-  private static JdbcDatabaseContainer<?> newMySQLContainer(final String version) {
-    final DockerImageName imageName = DockerImageName.parse(MySQLContainer.NAME);
-    return new MySQLContainer<>(imageName.withTag(version))
-        .withCommand(
-            "mysqld",
-            "--skip-ssl",
-            "--lower_case_table_names=1",
-            "--log_bin_trust_function_creators=1");
-  }
-
-  private MySQLTestUtility() {
+  private SqlServerTestUtility() {
     // Prevent instantiation
   }
 }

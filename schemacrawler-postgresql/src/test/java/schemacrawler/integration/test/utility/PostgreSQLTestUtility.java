@@ -34,19 +34,19 @@ import org.testcontainers.utility.DockerImageName;
 public final class PostgreSQLTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newPostgreSQLContainer14() {
+  public static JdbcDatabaseContainer<?> newPostgreSQL14Container() {
     return newPostgreSQLContainer("14.1");
   }
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newPostgreSQLContainer9() {
+  public static JdbcDatabaseContainer<?> newPostgreSQL9Container() {
     return newPostgreSQLContainer("9.6.24");
   }
 
   @SuppressWarnings("resource")
   private static JdbcDatabaseContainer<?> newPostgreSQLContainer(final String version) {
-    return new PostgreSQLContainer<>(
-        DockerImageName.parse(PostgreSQLContainer.IMAGE).withTag(version));
+    final DockerImageName imageName = DockerImageName.parse(PostgreSQLContainer.IMAGE);
+    return new PostgreSQLContainer<>(imageName.withTag(version));
   }
 
   private PostgreSQLTestUtility() {
