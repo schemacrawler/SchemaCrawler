@@ -31,7 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer12;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer14;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -66,9 +66,9 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class PostgreSQL12Test extends BaseAdditionalDatabaseTest {
+public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer12();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer14();
 
   @BeforeEach
   public void createDatabase() {
@@ -104,7 +104,7 @@ public class PostgreSQL12Test extends BaseAdditionalDatabaseTest {
 
     // -- Schema output tests
     final String expectedResultsResource =
-        String.format("testPostgreSQL12WithConnection.%s.txt", javaVersion());
+        String.format("testPostgreSQL14WithConnection.%s.txt", javaVersion());
     assertThat(
         outputOf(executableExecution(getConnection(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));

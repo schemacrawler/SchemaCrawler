@@ -34,13 +34,13 @@ import org.testcontainers.utility.DockerImageName;
 public final class PostgreSQLTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newPostgreSQLContainer12() {
-    return newPostgreSQLContainer("12.8");
+  public static JdbcDatabaseContainer<?> newPostgreSQLContainer14() {
+    return newPostgreSQLContainer("14.1");
   }
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newPostgreSQLContainer9() {
-    return newPostgreSQLContainer("9.6.23");
+    return newPostgreSQLContainer("9.6.24");
   }
 
   @SuppressWarnings("resource")
