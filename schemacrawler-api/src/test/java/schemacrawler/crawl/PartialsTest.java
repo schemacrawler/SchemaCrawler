@@ -177,7 +177,7 @@ public class PartialsTest {
     assertThat(table.lookupColumn("column"), isPresentAndIs(column));
     assertThat(table.lookupColumn("unknown_column"), isEmpty());
 
-    final ForeignKey foreignKey = new MutableForeignKey("fk", null);
+    final ForeignKey foreignKey = new MutableForeignKey("fk");
     table.addForeignKey(foreignKey);
 
     assertThat(table.lookupForeignKey("fk"), isPresentAndIs(foreignKey));

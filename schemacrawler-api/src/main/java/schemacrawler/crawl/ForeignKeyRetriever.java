@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -121,16 +120,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         continue;
       }
 
-      final String specificName;
-      if (isBlank(foreignKeyName)) {
-        specificName =
-            RetrieverUtility.constructForeignKeyName(pkColumn.getParent(), fkColumn.getParent());
-      } else {
-        specificName = foreignKeyName;
-      }
-
       final NamedObjectKey fkLookupKey =
-          new NamedObjectKey(fkTableCatalogName, fkTableSchemaName, specificName);
+          new NamedObjectKey(fkTableCatalogName, fkTableSchemaName, fkTableName, foreignKeyName);
 
       final Optional<MutableForeignKey> foreignKeyOptional =
           Optional.ofNullable(foreignKeys.get(fkLookupKey));
@@ -138,7 +129,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       if (foreignKeyOptional.isPresent()) {
         foreignKey = foreignKeyOptional.get();
       } else {
-        foreignKey = new MutableForeignKey(foreignKeyName, specificName);
+        foreignKey = new MutableForeignKey(foreignKeyName);
         foreignKeys.put(fkLookupKey, foreignKey);
       }
 

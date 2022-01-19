@@ -67,6 +67,9 @@ schema: PUBLIC.BOOKS
       type: primary_key
       on column: ID
   table: PUBLIC.BOOKS.BOOKAUTHORS
+    constraint: Z_FK_AUTHOR
+      type: foreign_key
+      on column: AUTHORID
     constraint: SYS_FK_10126
       type: foreign_key
       on column: BOOKID
@@ -75,9 +78,6 @@ schema: PUBLIC.BOOKS
       on column: BOOKID
     constraint: SYS_CT_10125
       type: check
-      on column: AUTHORID
-    constraint: Z_FK_AUTHOR
-      type: foreign_key
       on column: AUTHORID
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     constraint: FK_ΒΙΒΛΊΑ_PUBLISHERS
