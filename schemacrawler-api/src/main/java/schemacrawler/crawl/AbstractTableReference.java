@@ -215,15 +215,19 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
   }
 
   void addColumnReference(final ColumnReference columnReference) {
-    if (columnReference != null) {
-      columnReferences.add(columnReference);
-
-      final Column fkColumn = columnReference.getForeignKeyColumn();
-      final MutableTableConstraintColumn tableConstraintColumn =
-          new MutableTableConstraintColumn(AbstractTableReference.this, fkColumn);
-      tableConstraintColumn.setKeyOrdinalPosition(columnReference.getKeySequence());
-      tableConstraintColumns.add(tableConstraintColumn);
+    if (columnReference == null) {
+      return;
     }
+    columnReferences.add(columnReference);
+    addTableConstraintColumn(columnReference);
+  }
+
+  private void addTableConstraintColumn(final ColumnReference columnReference) {
+    final Column fkColumn = columnReference.getForeignKeyColumn();
+    final MutableTableConstraintColumn tableConstraintColumn =
+        new MutableTableConstraintColumn(AbstractTableReference.this, fkColumn);
+    tableConstraintColumn.setKeyOrdinalPosition(columnReference.getKeySequence());
+    tableConstraintColumns.add(tableConstraintColumn);
   }
 
   private void buildState() {
