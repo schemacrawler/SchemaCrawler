@@ -145,7 +145,8 @@ along with the latest updated information</td>
   ];
 
   "books_f4a675c8":"previouseditionid_6cf3995a.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_PREVIOUSEDITION> style="solid" dir="both" arrowhead="none" arrowtail="none"];
-  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10128> style="solid" dir="both" arrowhead="none" arrowtail="none"];
+  "sales_751e68cc":"bookid_a3ccd678.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_SALES_BOOK> style="solid" dir="both" arrowhead="none" arrowtail="none"];
+  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10126> style="solid" dir="both" arrowhead="none" arrowtail="none"];
 
 
   /* PUBLIC.BOOKS.COUPONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -319,6 +320,11 @@ along with the latest updated information</td>
 		<td port='country_9291942a.start' align='left'>COUNTRY</td>
 		<td align='left'> </td>
 		<td port='country_9291942a.end' align='left'>VARCHAR(50) NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='bookid_a3ccd678.start' align='left'>BOOKID</td>
+		<td align='left'> </td>
+		<td port='bookid_a3ccd678.end' align='left'>INTEGER</td>
 	</tr>
 	<tr>
 		<td port='salesdataid_1de64ee5.start' align='left'>SALESDATAID</td>

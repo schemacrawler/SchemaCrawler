@@ -162,7 +162,7 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
                                                              [lint, low]
 	should have remarks	
-	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
+	should have remarks	POSTALCODE, COUNTRY, BOOKID, COUPON_ID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
 
 
 

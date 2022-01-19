@@ -19,7 +19,10 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <-- SALES.BOOKID                                           
+
+SYS_FK_10126                               [foreign key, with no action]
   ID <-- BOOKAUTHORS.BOOKID                                     
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -63,7 +66,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10106                                               [primary key]
+SYS_PK_10134                                               [primary key]
   ID                                                            
 
 Foreign Keys

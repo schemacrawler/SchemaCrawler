@@ -233,20 +233,21 @@ final class TableConstraintRetriever extends AbstractRetriever {
    * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
    * the information schema views, so they can be added in without fear of duplication.
    *
-   * @param mutableTable Table to add constraints to
+   * @param table Table to add constraints to
    */
-  private void addImportedForeignKeys(final MutableTable mutableTable) {
-    final Collection<ForeignKey> importedForeignKeys = mutableTable.getImportedForeignKeys();
+  private void addImportedForeignKeys(final MutableTable table) {
+    final Collection<ForeignKey> importedForeignKeys = table.getImportedForeignKeys();
     for (final ForeignKey foreignKey : importedForeignKeys) {
       final Optional<TableConstraint> lookupTableConstraint =
-          mutableTable.lookupTableConstraint(foreignKey.getName());
+          table.lookupTableConstraint(foreignKey.getName());
       if (lookupTableConstraint.isPresent()) {
         final TableConstraint tableConstraint = lookupTableConstraint.get();
         copyRemarksAndAttributes(tableConstraint, foreignKey);
+        table.removeTableConstraint(tableConstraint);
       }
       // Add or replace the table constraint with the foreign key, which has more information like
       // column mappings
-      mutableTable.addTableConstraint(foreignKey);
+      table.addTableConstraint(foreignKey);
     }
   }
 
@@ -322,24 +323,24 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
   }
 
-  private void matchPrimaryKey(final MutableTable mutableTable) {
-    if (!mutableTable.hasPrimaryKey()) {
+  private void matchPrimaryKey(final MutableTable table) {
+    if (!table.hasPrimaryKey()) {
       return;
     }
-    final MutablePrimaryKey primaryKey = mutableTable.getPrimaryKey();
+    final MutablePrimaryKey primaryKey = table.getPrimaryKey();
     // Remove table constraints that are primary keys, if the columns match
-    for (final TableConstraint tableConstraint : mutableTable.getTableConstraints()) {
+    for (final TableConstraint tableConstraint : table.getTableConstraints()) {
       if (tableConstraint.getType() == TableConstraintType.primary_key
           && (primaryKey.getName().equals(tableConstraint.getName())
               || primaryKey
                   .getConstrainedColumns()
                   .equals(tableConstraint.getConstrainedColumns()))) {
         copyRemarksAndAttributes(tableConstraint, primaryKey);
-        mutableTable.removeTableConstraint(tableConstraint);
+        table.removeTableConstraint(tableConstraint);
       }
     }
     // Add back primary key as table constraints
-    mutableTable.addTableConstraint(primaryKey);
+    table.addTableConstraint(primaryKey);
   }
 
   private void retrieveTableConstraintsColumns(

@@ -174,7 +174,7 @@ public class TableColumnRetrieverTest {
         }
       }
     }
-    assertThat(columnCount, is(52));
+    assertThat(columnCount, is(53));
     assertThat(hiddenColumnCount, is(1));
   }
 

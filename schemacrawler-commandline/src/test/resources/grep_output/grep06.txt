@@ -30,7 +30,7 @@ Z_FK_AUTHOR                                [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_AUTHORS_10111                                  [unique index]
+SYS_IDX_PK_AUTHORS_10109                                  [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -54,15 +54,15 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
-SYS_CT_10108                                          [check constraint]
+SYS_CT_10106                                          [check constraint]
   ID                                                            
 BOOKS.AUTHORS.ID IS NOT NULL
 
-SYS_CT_10109                                          [check constraint]
+SYS_CT_10107                                          [check constraint]
   FIRSTNAME                                                     
 BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10110                                          [check constraint]
+SYS_CT_10108                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
@@ -93,7 +93,10 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+
+SYS_FK_10126                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -101,13 +104,13 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_BOOKS_10119                                    [unique index]
+SYS_IDX_PK_BOOKS_10117                                    [unique index]
   ID                                ascending                   
 
-SYS_IDX_U_PREVIOUSEDITION_10125                           [unique index]
+SYS_IDX_U_PREVIOUSEDITION_10123                           [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-SYS_IDX_FK_PREVIOUSEDITION_10123                      [non-unique index]
+SYS_IDX_FK_PREVIOUSEDITION_10121                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
 Table Constraints
@@ -115,15 +118,15 @@ Table Constraints
 U_PREVIOUSEDITION                                    [unique constraint]
   PREVIOUSEDITIONID                                             
 
-SYS_CT_10116                                          [check constraint]
+SYS_CT_10114                                          [check constraint]
   ID                                                            
 BOOKS.BOOKS.ID IS NOT NULL
 
-SYS_CT_10117                                          [check constraint]
+SYS_CT_10115                                          [check constraint]
   TITLE                                                         
 BOOKS.BOOKS.TITLE IS NOT NULL
 
-SYS_CT_10118                                          [check constraint]
+SYS_CT_10116                                          [check constraint]
   PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 

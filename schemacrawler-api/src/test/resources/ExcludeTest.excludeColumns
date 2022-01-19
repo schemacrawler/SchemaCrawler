@@ -134,6 +134,9 @@ schema: PUBLIC."PUBLISHER SALES"
     column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
       database type: INTEGER
       type: INTEGER
+    column: PUBLIC."PUBLISHER SALES".SALES.COUPON_ID
+      database type: INTEGER
+      type: INTEGER
     column: PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
       database type: DATE
       type: DATE

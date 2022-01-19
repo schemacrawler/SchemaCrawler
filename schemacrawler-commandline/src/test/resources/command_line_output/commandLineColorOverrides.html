@@ -377,7 +377,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_10128</td>
+		<td colspan='2' class='name'>SYS_FK_10126</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -442,7 +442,19 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_10128</td>
+		<td colspan='2' class='name'>FK_SALES_BOOK</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.BOOKID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_FK_10126</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -614,7 +626,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_PK_10106</td>
+		<td colspan='2' class='name'>SYS_PK_10134</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
@@ -787,6 +799,11 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
+		<td class='minwidth'>BOOKID</td>
+		<td class='minwidth'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='minwidth'>SALESDATAID</td>
 		<td class='minwidth'>INTEGER</td>
 	</tr>
@@ -795,6 +812,18 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SALES_BOOK</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>BOOKID (0..many)→ <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>

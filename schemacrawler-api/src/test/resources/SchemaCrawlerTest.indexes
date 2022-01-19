@@ -1,5 +1,5 @@
 PUBLIC.BOOKS.AUTHORS
-  index: SYS_IDX_PK_AUTHORS_10111
+  index: SYS_IDX_PK_AUTHORS_10109
     columns: [PUBLIC.BOOKS.AUTHORS.ID]
     is unique: true
     cardinality: 0
@@ -19,13 +19,13 @@ PUBLIC.BOOKS.AUTHORS
     index type: other
 PUBLIC.BOOKS.AUTHORSLIST
 PUBLIC.BOOKS.BOOKAUTHORS
-  index: SYS_IDX_Z_FK_AUTHOR_10134
+  index: SYS_IDX_Z_FK_AUTHOR_10132
     columns: [PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID]
     is unique: false
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_SYS_FK_10128_10132
+  index: SYS_IDX_SYS_FK_10126_10130
     columns: [PUBLIC.BOOKS.BOOKAUTHORS.BOOKID]
     is unique: false
     cardinality: 0
@@ -38,19 +38,19 @@ PUBLIC.BOOKS.BOOKAUTHORS
     pages: 0
     index type: other
 PUBLIC.BOOKS.BOOKS
-  index: SYS_IDX_PK_BOOKS_10119
+  index: SYS_IDX_PK_BOOKS_10117
     columns: [PUBLIC.BOOKS.BOOKS.ID]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_U_PREVIOUSEDITION_10125
+  index: SYS_IDX_U_PREVIOUSEDITION_10123
     columns: [PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_FK_PREVIOUSEDITION_10123
+  index: SYS_IDX_FK_PREVIOUSEDITION_10121
     columns: [PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID]
     is unique: false
     cardinality: 0
@@ -79,7 +79,7 @@ PUBLIC.BOOKS.CUSTOMERS
     index type: other
 PUBLIC.BOOKS."Global Counts"
 PUBLIC.BOOKS.PUBLISHERS
-  index: SYS_IDX_SYS_PK_10106_10107
+  index: SYS_IDX_SYS_PK_10134_10135
     columns: [PUBLIC.BOOKS.PUBLISHERS.ID]
     is unique: true
     cardinality: 0
@@ -106,6 +106,12 @@ PUBLIC."PUBLISHER SALES".REGIONS
     pages: 0
     index type: other
 PUBLIC."PUBLISHER SALES".SALES
+  index: SYS_IDX_FK_SALES_BOOK_10244
+    columns: [PUBLIC."PUBLISHER SALES".SALES.BOOKID]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
   index: SYS_IDX_FK_SALES_SALESDATA_10241
     columns: [PUBLIC."PUBLISHER SALES".SALES.SALESDATAID]
     is unique: false
