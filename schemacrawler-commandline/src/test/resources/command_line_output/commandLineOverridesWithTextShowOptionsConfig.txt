@@ -45,7 +45,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
  1  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10126                               [foreign key, with no action]
  1  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 
@@ -64,7 +64,10 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+FK_SALES_BOOK                              [foreign key, with no action]
+ 1  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+
+SYS_FK_10126                               [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -119,7 +122,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10106                                               [primary key]
+SYS_PK_10134                                               [primary key]
 1   ID                                                            
 
 Foreign Keys
@@ -169,9 +172,13 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
 1   POSTALCODE                        VARCHAR(10) NOT NULL        
 2   COUNTRY                           VARCHAR(50) NOT NULL        
-6   SALESDATAID                       INTEGER                     
+3   BOOKID                            INTEGER                     
+7   SALESDATAID                       INTEGER                     
 
 Foreign Keys
+
+FK_SALES_BOOK                              [foreign key, with no action]
+ 1  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 FK_SALES_SALESDATA                         [foreign key, with no action]
  1  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              

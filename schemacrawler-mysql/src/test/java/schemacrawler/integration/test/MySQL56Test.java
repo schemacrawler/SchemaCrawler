@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer56;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL56Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -59,7 +59,7 @@ public class MySQL56Test extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      newMySQLContainer56().withUsername("schemacrawler").withDatabaseName("books");
+      newMySQL56Container().withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase() {

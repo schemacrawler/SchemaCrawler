@@ -1,6 +1,12 @@
 # SchemaCrawler Change History
 
 
+<a name="a16.16.10"></a>
+## Release 16.16.10 - 2022-01-25
+
+- Change foreign key "key" to be consistent with a constraint "key"
+
+
 <a name="a16.16.9"></a>
 ## Release 16.16.9 - 2022-01-17
 

@@ -247,7 +247,7 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 	primary key may not be a surrogate	
                                                              [lint, low]
 	should have remarks	
-	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
+	should have remarks	POSTALCODE, COUNTRY, BOOKID, COUPON_ID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
 
 
 

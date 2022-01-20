@@ -48,7 +48,7 @@ public class SqlScript implements Runnable {
   private static final Logger LOGGER = Logger.getLogger(SqlScript.class.getName());
 
   private static final boolean debug =
-      Boolean.valueOf(System.getProperty("schemacrawler.testdb.SqlScript.debug", "false"));
+      Boolean.valueOf(System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
   public static void executeScriptFromResource(
       final String scriptResource, final Connection connection) {

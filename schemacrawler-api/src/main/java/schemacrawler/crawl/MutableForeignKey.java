@@ -33,7 +33,6 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
-import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.TableConstraintType;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
@@ -41,16 +40,13 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final String specificName;
-  private transient NamedObjectKey key;
   private final StringBuilder definition;
   private ForeignKeyDeferrability deferrability;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyUpdateRule updateRule;
 
-  MutableForeignKey(final String name, final String specificName) {
+  MutableForeignKey(final String name) {
     super(name);
-    this.specificName = specificName;
 
     definition = new StringBuilder();
 
@@ -76,11 +72,6 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
   @Override
   public ForeignKeyUpdateRule getDeleteRule() {
     return deleteRule;
-  }
-
-  @Override
-  public String getSpecificName() {
-    return specificName;
   }
 
   @Override
@@ -112,12 +103,6 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
     return deferrability == ForeignKeyDeferrability.initiallyDeferred;
   }
 
-  @Override
-  public NamedObjectKey key() {
-    buildKey();
-    return key;
-  }
-
   void addColumnReference(final int keySequence, final Column pkColumn, final Column fkColumn) {
     final ColumnReference fkColumnReference =
         new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
@@ -140,12 +125,5 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
 
   void setUpdateRule(final ForeignKeyUpdateRule updateRule) {
     this.updateRule = updateRule;
-  }
-
-  private void buildKey() {
-    if (key != null) {
-      return;
-    }
-    this.key = new NamedObjectKey(getName(), specificName);
   }
 }

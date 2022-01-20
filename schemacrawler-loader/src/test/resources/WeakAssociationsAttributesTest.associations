@@ -21,7 +21,11 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
-    association: SYS_FK_10128 MutableForeignKey
+    association: FK_SALES_BOOK MutableForeignKey
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+    association: SYS_FK_10126 MutableForeignKey
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
@@ -41,11 +45,11 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
-    association: SC_AFD2BA21_20BE6F95 MutableWeakAssociation
+  table: PUBLIC.BOOKS.COUPONS
+    association: SC_3B49BEC4_20BE6F95 MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
-  table: PUBLIC.BOOKS.COUPONS
+          PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
   table: PUBLIC.BOOKS."Global Counts"
@@ -63,7 +67,7 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
-    association: SYS_FK_10128 MutableForeignKey
+    association: SYS_FK_10126 MutableForeignKey
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
@@ -89,6 +93,10 @@ schema: PUBLIC."PUBLISHER SALES"
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
   table: PUBLIC."PUBLISHER SALES".SALES
+    association: FK_SALES_BOOK MutableForeignKey
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
     association: FK_SALES_SALESDATA MutableForeignKey
       column references: 
         key sequence: 1
@@ -99,10 +107,10 @@ schema: PUBLIC."PUBLISHER SALES"
           PUBLIC."PUBLISHER SALES".SALES.POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
         key sequence: 2
           PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
-    association: SC_AFD2BA21_20BE6F95 MutableWeakAssociation
+    association: SC_3B49BEC4_20BE6F95 MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
     association: 8_weak_two_references MutableWeakAssociation
       column references: 
         key sequence: 1

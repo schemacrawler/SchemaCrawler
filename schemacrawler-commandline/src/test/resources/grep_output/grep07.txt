@@ -30,7 +30,10 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+
+SYS_FK_10126                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -38,13 +41,13 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_BOOKS_10119                                    [unique index]
+SYS_IDX_PK_BOOKS_10117                                    [unique index]
   ID                                ascending                   
 
-SYS_IDX_U_PREVIOUSEDITION_10125                           [unique index]
+SYS_IDX_U_PREVIOUSEDITION_10123                           [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-SYS_IDX_FK_PREVIOUSEDITION_10123                      [non-unique index]
+SYS_IDX_FK_PREVIOUSEDITION_10121                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
 Table Constraints
@@ -52,15 +55,15 @@ Table Constraints
 U_PREVIOUSEDITION                                    [unique constraint]
   PREVIOUSEDITIONID                                             
 
-SYS_CT_10116                                          [check constraint]
+SYS_CT_10114                                          [check constraint]
   ID                                                            
 BOOKS.BOOKS.ID IS NOT NULL
 
-SYS_CT_10117                                          [check constraint]
+SYS_CT_10115                                          [check constraint]
   TITLE                                                         
 BOOKS.BOOKS.TITLE IS NOT NULL
 
-SYS_CT_10118                                          [check constraint]
+SYS_CT_10116                                          [check constraint]
   PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 

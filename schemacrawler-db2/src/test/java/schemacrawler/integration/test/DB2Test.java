@@ -32,6 +32,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static schemacrawler.integration.test.utility.DB2TestUtility.newDB211Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -46,11 +47,9 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -70,11 +69,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
-  private static final DockerImageName imageName =
-      DockerImageName.parse("ibmcom/db2").withTag("11.5.5.1");
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer = new Db2Container(imageName).acceptLicense();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB211Container();
 
   @BeforeEach
   public void createDatabase() {

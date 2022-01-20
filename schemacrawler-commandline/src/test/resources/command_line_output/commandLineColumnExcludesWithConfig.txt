@@ -327,11 +327,15 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
   BOOKID                            INTEGER                     
+  COUPON_ID                         INTEGER                     
   PERIODENDDATE                     DATE                        
   TOTALAMOUNT                       DOUBLE(64, 0)               
   SALESDATAID                       INTEGER                     
 
 Foreign Keys
+
+FK_SALES_BOOK                              [foreign key, with no action]
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 FK_SALES_SALESDATA                         [foreign key, with no action]
   SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
@@ -341,6 +345,9 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
 Indexes
+
+SYS_IDX_FK_SALES_BOOK_10244                           [non-unique index]
+  BOOKID                            ascending                   
 
 SYS_IDX_FK_SALES_SALESDATA_10241                      [non-unique index]
   SALESDATAID                       ascending                   

@@ -1,172 +1,174 @@
-- column @uuid: 97ee7a2c-55ea-462d-9fd4-b9d068d904ff
+- column @uuid: 22315d04-6110-49e7-a196-8a9ba4b339f9
   PUBLIC.BOOKS.AUTHORS.ID
-- column @uuid: b9a5e5f8-feb8-4d08-9449-4041b8c51c63
+- column @uuid: bdc3dd61-00f2-4bfb-9438-ffbf75f3c10e
   PUBLIC.BOOKS.AUTHORSLIST.ID
-- column @uuid: d429b552-10ae-41a4-88b0-5b1eeee7f440
+- column @uuid: 2dfbeb73-0ff9-478b-b01f-1e32b9283650
   PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
-- column @uuid: a9bb0d0b-aa89-4f2d-bf3f-acd3f65c32d4
+- column @uuid: a2292f87-6d89-4782-9dee-da66ebca0b3f
   PUBLIC.BOOKS.BOOKS.ID
-- column @uuid: 3ddb14f6-5915-4c5c-81e8-bcbf778f0a01
+- column @uuid: c92267a7-8386-4947-b0e6-19177e7b7f54
   PUBLIC.BOOKS.COUPONS.ID
-- column @uuid: 1470e393-9594-4b4f-8e99-bc1dc2a05340
+- column @uuid: e56cc4b2-dc8a-4d28-b302-9205bc1cbaec
   PUBLIC.BOOKS.CUSTOMERDATA.ID
-- column @uuid: cfe137ab-40e4-42bd-95c3-91bf15e55bd6
+- column @uuid: e7669f4c-8cb9-455c-aec9-08c451e3d973
   PUBLIC.BOOKS.CUSTOMERS.ID
-- column @uuid: 6a7f9a48-9772-420b-b9b3-03919a89b6c4
+- column @uuid: f6facb09-e1d9-402c-b3ac-04b0d65d0531
   PUBLIC.BOOKS."Global Counts"."Global Count"
-- column @uuid: 2da1136e-0246-4ff9-a204-b9966212dc9d
+- column @uuid: 8cc3e52b-7112-44fd-b1a4-9a84a41728ba
   PUBLIC.BOOKS.PUBLISHERS.ID
-- column @uuid: 34de4a05-93d2-4122-8c04-1661958dc0ca
+- column @uuid: b46c2d90-71ce-40cd-bfea-4a1c49b349c6
   PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
-- column @uuid: 5a925049-b130-4ef3-8882-6c3755336352
+- column @uuid: fd702e32-2dae-419b-8ddd-b95817aba40c
   PUBLIC.FOR_LINT.EXTRA_PK.WRITERID
-- column @uuid: d4e338ee-cec1-46d7-88f9-5b22976bf7a2
+- column @uuid: a6373eea-3b6c-47f2-a896-164befb3521b
   PUBLIC.FOR_LINT.WRITERS.ID
-- column @uuid: 119491a9-77d9-4de7-8fb3-214d068a67a1
+- column @uuid: 35baa71e-6a2f-4f51-9419-3bdcb91d87f4
   PUBLIC.FOR_LINT."Global Counts"."Global Count"
-- column @uuid: 1fbb67f9-a60e-4db8-825a-a026d176ad4d
+- column @uuid: 2f53315f-f5a7-43dc-83d1-ed54a3dfbcc0
   PUBLIC.FOR_LINT.PUBLICATIONS.ID
-- column @uuid: 99396f40-b106-4222-b3e2-fe72ba79ede7
+- column @uuid: a58c42c9-f2da-409c-8e8b-f9ce75c36de8
   PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID
-- column @uuid: 064bd721-e127-4623-9c5d-22ae29e03b53
+- column @uuid: 6e5945dd-da9f-4efc-8b97-4c3da6491931
   PUBLIC.FOR_LINT.SELFREFERENCE.ID
-- column @uuid: 5e395961-2b7b-4cdb-b26d-4ab7d663020a
+- column @uuid: 7e0bc942-cd9f-4f11-bc80-bceeec313039
   PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
-- column @uuid: 972c0167-0c34-4587-ba22-a10843b5a5ad
+- column @uuid: 5686d3f7-a1e0-4eff-829c-1f59dabe5a9b
   PUBLIC."PUBLISHER SALES".REGIONS.CITY
-- column @uuid: 33d28d1f-3654-4cab-a73a-ee6859fe273b
+- column @uuid: c2d43ec9-b090-4ce4-aefc-7fc6e0c323c2
   PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
-- column @uuid: b6013d0f-f43a-4be0-81f2-0a84ba06abeb
+- column @uuid: 5e40bdd8-8a6f-4132-9acc-9927df9f90c1
   PUBLIC.BOOKS.COUPONS.DATA
-- column @uuid: 9983e807-e288-4711-9545-7669a2936389
+- column @uuid: 8692530b-9116-4af9-90cf-016ce2e4205a
   PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
-- column @uuid: de16387c-b600-473b-9642-e9e805d54d86
+- column @uuid: fdf1b5f9-0269-453a-9641-346efcc1a8a6
   PUBLIC.BOOKS.AUTHORS.FIRSTNAME
-- column @uuid: d96d230c-6a77-4915-abbb-7fe1eac563aa
+- column @uuid: d0ee2697-f622-4df0-8d62-15eee2f1ac90
   PUBLIC.BOOKS.AUTHORSLIST.FIRSTNAME
-- column @uuid: 46704be9-6dfe-42d9-bfb7-417828bfe053
+- column @uuid: 52810cae-dff1-4b22-af9b-c81eef2a498f
   PUBLIC.BOOKS.BOOKS.TITLE
-- column @uuid: 52ff09f0-b8bc-42d7-bf38-08c282d9218b
+- column @uuid: 0fa960de-0f97-40b6-bab1-a71295420015
   PUBLIC.BOOKS."Global Counts"."UPDATE"
-- column @uuid: 17a16ba9-3cc7-4dee-bad8-796c3ef65b04
+- column @uuid: 2485b966-4861-473f-a58e-5d212f0a1bcc
   PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
-- column @uuid: 8f9239f2-b3de-4a27-8273-c0cf079b17ef
+- column @uuid: 448424bf-e506-42b8-9d42-b7e66d9f7267
   PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
-- column @uuid: fb8dd0a4-73d5-4823-a070-8cfd703c5311
+- column @uuid: 5c62d72b-1284-4012-9249-4bd78ba5d92a
   PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
-- column @uuid: 7f220d88-4a69-4646-a024-08bae55d5933
+- column @uuid: bf2f05db-f3ab-4f6d-abab-469ebed5634a
   PUBLIC.BOOKS.CUSTOMERDATA.DATA
-- column @uuid: a3cf58d8-b565-4167-aae8-3a2db0961663
+- column @uuid: 71555528-9ddf-4605-9359-02f02fc11237
   PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID
-- column @uuid: 447ca435-68ba-49e0-8cfe-2c6984c2c192
+- column @uuid: 9c508446-7628-49d9-a58f-903423d4ecd0
   PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID
-- column @uuid: e0c03331-ea6c-4198-bada-6b2653c6fc63
+- column @uuid: 3747617c-6603-4c97-908c-700722698b90
   PUBLIC.FOR_LINT.PUBLICATIONS.TITLE
-- column @uuid: 3a6a223e-e823-4d29-9933-d27e44cd2b13
+- column @uuid: ce1e986c-0b94-437f-be30-62b81e46ba7c
   PUBLIC.FOR_LINT.SELFREFERENCE.TITLE
-- column @uuid: cc313562-3a6b-490f-8516-9b0469364a55
+- column @uuid: 8523eb8b-d306-4422-8eac-258c05b788f9
   PUBLIC.FOR_LINT.WRITERS.FIRSTNAME
-- column @uuid: d4d4c9d2-67f2-4bb4-81fb-628b81dd0439
+- column @uuid: 6e384243-bb7e-4661-a6b3-9a91eeef2175
   PUBLIC."PUBLISHER SALES".SALESDATA.YEARLYAMOUNT
-- column @uuid: 9d55a0e6-edfd-4b10-862f-45e66fad71cb
+- column @uuid: be200784-89db-4830-aec6-46318078a3b6
   PUBLIC."PUBLISHER SALES".REGIONS.STATE
-- column @uuid: b7198631-a386-4b4b-9309-fa0968adc0b0
+- column @uuid: 907b5952-5488-4ef7-9f8c-dce721c12770
   PUBLIC."PUBLISHER SALES".SALES.COUNTRY
-- column @uuid: 1c2fff5f-3e7f-4a74-b36b-308b5ab2892f
+- column @uuid: 6cbd9fb9-7607-419b-868d-2b8713271577
   PUBLIC.BOOKS.AUTHORS.LASTNAME
-- column @uuid: a04883ad-aa84-41ed-b926-35630bf088c7
+- column @uuid: 3178e159-ba35-495a-886e-2cb61e424efd
   PUBLIC.BOOKS.AUTHORSLIST.LASTNAME
-- column @uuid: 5c03dbaf-e9c5-4d5e-a764-adda39c631e2
+- column @uuid: 790ddcf4-b8be-4ce0-b71e-289304bd2ccd
   PUBLIC.BOOKS.BOOKAUTHORS.SOMEDATA
-- column @uuid: 73b4ef03-2e82-4cdd-a0f3-2ede2f923160
+- column @uuid: 0f65914d-481a-4ad6-a15c-37a253c7b1fb
   PUBLIC.BOOKS.BOOKS.DESCRIPTION
-- column @uuid: 64112796-9538-4717-9bf2-98976635dac1
+- column @uuid: 30e16211-1468-4781-b48e-bf63e02236e8
   PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
-- column @uuid: 1bc8b213-4fa1-43f9-a6fa-0383bf502dc2
+- column @uuid: dea99701-fd5e-4366-8899-7ebe1d8c5622
   PUBLIC.BOOKS.COUPONS.COUPONS
-- column @uuid: 6b6824f1-86f1-4c74-8856-fbddfaf7c617
+- column @uuid: 87ea3438-7005-4e8e-9929-4032888283a6
   PUBLIC.BOOKS.CUSTOMERS.LASTNAME
-- column @uuid: 1ff22f13-08df-4fbb-982f-b784113f93ae
+- column @uuid: 46e2e01c-6e0e-401e-bf6c-1638eb9ec961
   PUBLIC.FOR_LINT.EXTRA_PK.ID
-- column @uuid: 266e7cc4-798b-4b15-b7b3-09f8cb60b07c
+- column @uuid: 05647301-d83d-417e-bbfa-96de1ac9852b
   PUBLIC.FOR_LINT.PUBLICATIONS.DESCRIPTION
-- column @uuid: 59e0958f-3eeb-4942-bbe9-56f6cfb53379
+- column @uuid: b42e96e7-654b-4543-a606-0a1ef62d4673
   PUBLIC.FOR_LINT.WRITERS.LASTNAME
-- column @uuid: 3cbd088a-9c41-48ae-adb4-42c858ae240c
+- column @uuid: fe32b983-b474-4555-a4d3-634e7b2ccd45
   PUBLIC."PUBLISHER SALES".SALES.BOOKID
-- column @uuid: bee4f850-5ccf-4b16-bf33-b0141f3666a1
+- column @uuid: 54a7d45c-a52b-47d3-b4ba-16e607a95dd6
   PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
-- column @uuid: 3a19edc5-c103-4d2f-9a12-f9b44e4813d9
+- column @uuid: 834e0d5c-c495-4cb1-b9a5-4aeba7bf85e7
   PUBLIC.BOOKS.BOOKS.PUBLISHERID
-- column @uuid: ab9b14e9-e26c-4b0d-8c67-7802f421250d
+- column @uuid: 43889c4e-27a4-4c90-96a4-d19aece9a327
   PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
-- column @uuid: e7380ea3-1c5e-45bd-91d0-d57a1ad8b873
+- column @uuid: aa3a3ec3-256f-4774-a8cc-a8270c2adfa2
   PUBLIC.BOOKS.AUTHORS.ADDRESS1
-- column @uuid: 4b40865c-14e7-4199-a777-d50061f7f8d7
+- column @uuid: d408d085-59ae-4f3f-af62-ee35c24f0407
   PUBLIC.BOOKS.CUSTOMERS.AGE
-- column @uuid: 0c6e2e5b-86f1-4a56-8b95-2ba03d3c40a6
+- column @uuid: 4312b6c7-7ae3-4dfe-9c51-cbbbf3f8f446
   PUBLIC.BOOKS.COUPONS.BOOKS
-- column @uuid: 192d6140-6560-4d5b-905a-59d5645d4863
+- column @uuid: 1f80c091-cdcb-414b-a97a-4f452d219747
   PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID
-- column @uuid: a1747fe4-5b13-46cb-a774-088b9fdb1200
+- column @uuid: e810d3b7-693d-499e-b0e4-ab271dee5d9f
   PUBLIC.FOR_LINT.WRITERS.ADDRESS1
-- column @uuid: 9c72529d-254d-4d33-9e43-214a2e6fd152
-  PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
-- column @uuid: 4bc70d7d-25ee-4c0b-9f07-a93a697ada87
+- column @uuid: 30b1c58b-d70b-45f3-a02a-a6fbe621a69d
+  PUBLIC."PUBLISHER SALES".SALES.COUPON_ID
+- column @uuid: 8445fce0-0026-48de-ad52-81c3a1a6ba09
   PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
-- column @uuid: a4612b4c-e705-45c8-b1cb-6824c9b7130b
+- column @uuid: 0d883b35-2b42-459d-b9a9-d4345291b53b
   PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
-- column @uuid: 996d615f-41b3-4b79-92fa-5028944ca95b
+- column @uuid: d6a12436-4144-4f67-9818-54fe123e8a9e
   PUBLIC.BOOKS.AUTHORS.ADDRESS2
-- column @uuid: df38620b-ee5f-40f9-b6c8-8e49ccc7d1ed
+- column @uuid: cf94468b-f28e-48ed-91c0-08e7d2ee8d20
   PUBLIC.FOR_LINT.PUBLICATIONS.PUBLICATIONDATE
-- column @uuid: 9a14116f-8719-4d27-a994-3ee223964b8a
+- column @uuid: 0e74f058-4996-465b-b5e8-0bf0644eb3ad
   PUBLIC.FOR_LINT.WRITERS.ADDRESS2
-- column @uuid: aa542ca3-9e8c-4051-bee9-1b053d293adf
-  PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
-- column @uuid: 48011105-7b76-4d0c-b5ec-6ef1e001fa71
+- column @uuid: c200422e-cb3e-4b26-a90e-97d9a31ed4e0
+  PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
+- column @uuid: aa829eb8-6ce2-459d-912b-db045cdb29ce
   PUBLIC.BOOKS.BOOKS.PRICE
-- column @uuid: c4ac07eb-bbe4-4303-ba05-b52bab89c99c
+- column @uuid: 04448c6f-9c0b-4e26-b1d1-90358c886640
   PUBLIC.BOOKS.AUTHORS.CITY
-- column @uuid: 1c7ef69c-bdd4-4940-a324-2be7a6301e1a
+- column @uuid: 2a67c564-3610-4c10-9f54-07bdfbc2db7e
   PUBLIC.FOR_LINT.PUBLICATIONS.PRICE
-- column @uuid: ca85b00f-c429-45d4-b3f5-db8079151c10
+- column @uuid: 48007b3d-6ae2-4bca-b19e-26ff865fbc6d
   PUBLIC.FOR_LINT.WRITERS.CITY
-- column @uuid: bcd6cf77-da5f-4dee-9b33-c06cd548a64d
-  PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
-- column @uuid: 54bc99d9-cd4f-487c-9b4a-141237181688
+- column @uuid: 18f12362-d2dc-487a-9c9a-4acf55816ce4
+  PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
+- column @uuid: 5810c024-3877-4ab1-910c-6626b56bd488
   PUBLIC.BOOKS.AUTHORS.STATE
-- column @uuid: c91612b6-b2e3-409d-b98c-0a2e1ec2201f
+- column @uuid: 66f36513-c0ca-4fb2-8973-fbf95fa8eedf
   PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
-- column @uuid: 978bffae-5ee2-4d7f-a600-eb7a40ff41ab
+- column @uuid: 596f8067-243b-4408-8d5e-ca83c4b3f770
   PUBLIC.FOR_LINT.PUBLICATIONS."UPDATE"
-- column @uuid: 63fa27d6-f4d4-4571-96c1-d3128a374efc
+- column @uuid: 63d9ebe8-aea9-4275-92b7-4cdf0ccdd94b
   PUBLIC.FOR_LINT.WRITERS.STATE
-- column @uuid: 73d65c32-bcad-4f7c-bc2f-05b83354532a
+- column @uuid: 695967cb-4ad2-4d35-9bf9-62e8f8cf7aea
+  PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+- column @uuid: 329e2629-447c-4947-aaa5-eeb6be5e5f0d
   PUBLIC.BOOKS.AUTHORS.POSTALCODE
-- column @uuid: 3dd74e80-1ff8-45b7-ad70-201a60cdc9f1
+- column @uuid: 93ebb08d-433a-4394-ab95-736a35d4ff83
   PUBLIC.FOR_LINT.PUBLICATIONS.PRESS_RELEASE
-- column @uuid: 67ba7c45-c65e-4f5e-90cf-6124e94eb652
+- column @uuid: 72532b1e-3437-4d00-adc9-3c88e2db116d
   PUBLIC.FOR_LINT.WRITERS.POSTALCODE
-- column @uuid: bace0a87-5985-46b7-9aee-8c1cd8dde4af
+- column @uuid: 2349e5bf-e7f2-4c70-871a-99ecdb10cd78
   PUBLIC.BOOKS.AUTHORS.COUNTRY
-- column @uuid: 304f6ac7-dd7f-48f9-b451-84dbbc5ea8cd
+- column @uuid: 5d25ac34-b4de-4540-8eca-c3eb36e054ba
   PUBLIC.FOR_LINT.WRITERS.COUNTRY
-- column @uuid: 09ca09a8-e738-44e2-ab18-3c44c1c8c5d8
+- column @uuid: b7ff8f84-1f15-46a0-abe1-a86bc43cb035
   PUBLIC.FOR_LINT.WRITERS.PHONE1
-- column @uuid: 73a23580-1e4c-4abe-8cb9-652d406270d2
+- column @uuid: a863a0ed-ec91-462f-8b2b-d154efab7b90
   PUBLIC.FOR_LINT.WRITERS.PHONE2
-- column @uuid: c0d2ccc3-af58-44a5-9d3f-f445a6d41ebd
+- column @uuid: 8539e73a-04ed-48a2-8eca-77b790ebbc68
   PUBLIC.FOR_LINT.WRITERS.EMAIL1
-- column @uuid: f7cc32c0-a538-4cfd-95f8-0c0338f25214
+- column @uuid: 99faf71f-2af4-4e00-a355-5618bff70014
   PUBLIC.FOR_LINT.WRITERS.EMAIL2
-- column @uuid: e16f6e77-ba56-49a0-a112-035f91647c02
+- column @uuid: 6fa735e8-b351-4da2-abc6-4299e7bb7153
   PUBLIC.FOR_LINT.WRITERS.FAX
-- column @uuid: 3851d57f-cd0d-41f7-867b-f271e0771838
+- column @uuid: b512f2fb-f0ad-4b81-b8e0-5f4bc3093b14
   PUBLIC.FOR_LINT.WRITERS.FAX3
-- column @uuid: a7ef93aa-bcbe-470f-9d28-aff52b9240fe
+- column @uuid: 3c27f11c-a108-468c-ab33-3b2fa2c213c9
   PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL11
-- column @uuid: c3044ec8-2651-4b77-8d1c-35f871006ac4
+- column @uuid: d44a7c58-c8fc-48bc-8820-5198b82baff2
   PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL12
-- column @uuid: 8c5d04b1-e755-4ecf-8efb-4f7ca285a991
+- column @uuid: dfb833cf-51bf-452b-af58-4ed5bab7032c
   PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID

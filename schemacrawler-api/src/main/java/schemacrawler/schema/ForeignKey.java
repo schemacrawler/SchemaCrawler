@@ -53,8 +53,12 @@ public interface ForeignKey extends TableReference {
    * Gets a generated specific name for databases that support non-unique foreign key names.
    *
    * @return Specific name of a foreign key
+   * @deprecated
    */
-  String getSpecificName();
+  @Deprecated
+  default String getSpecificName() {
+    return getName();
+  }
 
   /**
    * Gets the update rule.

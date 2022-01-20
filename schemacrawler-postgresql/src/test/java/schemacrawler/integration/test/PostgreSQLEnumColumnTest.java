@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.collection.IsEmptyCollection.emptyCollectionOf;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer9;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL9Container;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -75,7 +75,7 @@ import schemacrawler.tools.options.OutputFormat;
 @DisplayName("Test for issue #284 - support enum values")
 public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer9();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL9Container();
 
   @Test
   public void columnWithEnum() throws Exception {

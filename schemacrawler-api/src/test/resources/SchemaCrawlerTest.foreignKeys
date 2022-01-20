@@ -32,9 +32,9 @@ schema: PUBLIC.BOOKS
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
-    foreign key: SYS_FK_10128
+    foreign key: SYS_FK_10126
       definition: 
-      specific name: SYS_FK_10128
+      specific name: SYS_FK_10126
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -63,9 +63,24 @@ schema: PUBLIC.BOOKS
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKS
           constrained column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
-    foreign key: SYS_FK_10128
+    foreign key: FK_SALES_BOOK
       definition: 
-      specific name: SYS_FK_10128
+      specific name: FK_SALES_BOOK
+      deferrability: not deferrable
+      initially deferred: false
+      delete rule: no action
+      update rule: no action
+      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      referenced table: PUBLIC.BOOKS.BOOKS
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+      table constraint: 
+        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+          constrained column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
+    foreign key: SYS_FK_10126
+      definition: 
+      specific name: SYS_FK_10126
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -137,6 +152,21 @@ schema: PUBLIC."PUBLISHER SALES"
           constrained column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
           constrained column: PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALES
+    foreign key: FK_SALES_BOOK
+      definition: 
+      specific name: FK_SALES_BOOK
+      deferrability: not deferrable
+      initially deferred: false
+      delete rule: no action
+      update rule: no action
+      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      referenced table: PUBLIC.BOOKS.BOOKS
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+      table constraint: 
+        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+          constrained column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
     foreign key: FK_SALES_SALESDATA
       definition: 
       specific name: FK_SALES_SALESDATA

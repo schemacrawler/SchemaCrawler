@@ -29,7 +29,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer8;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -64,7 +64,7 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      newMySQLContainer8().withUsername("schemacrawler").withDatabaseName("books");
+      newMySQL8Container().withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase() {
