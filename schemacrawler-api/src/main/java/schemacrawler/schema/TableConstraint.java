@@ -30,13 +30,10 @@ package schemacrawler.schema;
 
 import java.util.List;
 
-/**
- * Represents a table constraint.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a table constraint. */
 public interface TableConstraint
     extends DependantObject<Table>, DefinedObject, TypedObject<TableConstraintType> {
+
   @Deprecated
   default List<TableConstraintColumn> getColumns() {
     return getConstrainedColumns();

@@ -28,11 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-/**
- * Represents a foreign-key mapping to a primary key in another table.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a foreign-key mapping to a primary key in another table. */
 public interface ForeignKey extends TableReference {
 
   /**
