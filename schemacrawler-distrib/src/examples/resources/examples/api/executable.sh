@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-javac -classpath ../../_schemacrawler/lib/*:../../_schemacrawler/config:. com/example/ExecutableExample.java
-java -classpath ../../_schemacrawler/lib/*:../../_schemacrawler/config:. com.example.ExecutableExample
+javac -classpath ../../_schemacrawler/bin/lib/*:../../_schemacrawler/bin/config:. com/example/ExecutableExample.java
+java -classpath ../../_schemacrawler/bin/lib/*:../../_schemacrawler/bin/config:. com.example.ExecutableExample
