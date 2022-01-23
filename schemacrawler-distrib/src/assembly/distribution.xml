@@ -17,7 +17,8 @@
   <target name="make"
     depends="
             make-base-distribution,
-            make-expanded-distribution
+            make-expanded-distribution,
+            make-binary-distribution-zip
           "
     description="Package SchemaCrawler distributable" />
 
@@ -28,13 +29,18 @@
         name="distribution.assembly"
       location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
 
-    <copy todir="${schemacrawler.base-distribution}">
+    <mkdir dir="${schemacrawler.base-distribution}/bin" />
+    <copy todir="${schemacrawler.base-distribution}/bin">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
-        <include name="schemacrawler-shell.cmd" />
         <include name="schemacrawler.sh" />
-        <include name="schemacrawler-shell.sh" />
       </fileset>
+    </copy>
+    <copy todir="${schemacrawler.base-distribution}/bin">
+      <fileset dir="${schemacrawler.base-distribution}/bin">
+        <include name="schemacrawler.cmd"/>
+      </fileset>
+      <globmapper from="schemacrawler.cmd" to="schemacrawler.bat"/>
     </copy>
 
     <copy
@@ -135,6 +141,39 @@
       <ivy:resources resolveId="velocity"
         file="${distribution.downloader}/velocity_ivy.xml"/>
     </copy>
+
+  </target>
+
+
+  <target name="make-binary-distribution-zip">
+
+    <property name="binary-distribution.staging.dir" location="${distribution.target}/_expanded-distribution" />
+    <property name="binary-distribution.stem"
+      value="schemacrawler-${SchemaCrawler.version}-bin" />
+
+    <echo>Create zip file for binary distribution</echo>
+
+    <chmod perm="+x" type="file">
+      <dirset dir="${binary-distribution.staging.dir}">
+        <include name="**/*.sh"/>
+      </dirset>
+    </chmod>
+
+    <delete file="${distribution.target}/${binary-distribution.stem}.zip" />
+    <zip destfile="${distribution.target}/${binary-distribution.stem}.zip">
+      <zipfileset dir="${binary-distribution.staging.dir}"
+        prefix="${binary-distribution.stem}" defaultexcludes="yes">
+        <exclude name="**/*.sh" />
+      </zipfileset>
+      <zipfileset dir="${binary-distribution.staging.dir}"
+        prefix="${binary-distribution.stem}" defaultexcludes="yes"
+        filemode="771">
+        <include name="**/*.sh" />
+      </zipfileset>
+    </zip>
+
+    <checksum algorithm="SHA-512"
+      file="${distribution.target}/${binary-distribution.stem}.zip" todir="${distribution.target}" />
 
   </target>
 
