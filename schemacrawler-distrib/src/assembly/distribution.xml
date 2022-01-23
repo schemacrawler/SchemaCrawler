@@ -28,12 +28,11 @@
         name="distribution.assembly"
       location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
 
-    <copy todir="${schemacrawler.base-distribution}">
+    <mkdir dir="${schemacrawler.base-distribution}/bin" />
+    <copy todir="${schemacrawler.base-distribution}/bin">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
-        <include name="schemacrawler-shell.cmd" />
         <include name="schemacrawler.sh" />
-        <include name="schemacrawler-shell.sh" />
       </fileset>
     </copy>
 
