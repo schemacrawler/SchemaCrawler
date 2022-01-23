@@ -36,6 +36,12 @@
         <include name="schemacrawler.sh" />
       </fileset>
     </copy>
+    <copy todir="${schemacrawler.base-distribution}/bin">
+      <fileset dir="${schemacrawler.base-distribution}/bin">
+        <include name="schemacrawler.cmd"/>
+      </fileset>
+      <globmapper from="schemacrawler.cmd" to="schemacrawler.bat"/>
+    </copy>
 
     <copy
         file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
