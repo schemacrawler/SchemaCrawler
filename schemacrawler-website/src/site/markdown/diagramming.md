@@ -169,7 +169,7 @@ docker run \
 --mount type=bind,source="$(pwd)",target=/home/schcrwlr \
 --rm -it \
 schemacrawler/schemacrawler \
-/opt/schemacrawler/schemacrawler.sh \
+/opt/schemacrawler/bin/schemacrawler.sh \
 --server=sqlite \
 --database=chinook-database-2.1.3.sqlite \
 --info-level=standard \
@@ -189,7 +189,7 @@ docker run \
 --mount type=bind,source="$(pwd)",target=/home/schcrwlr \
 --rm -it \
 schemacrawler/schemacrawler \
-/opt/schemacrawler/schemacrawler.sh \
+/opt/schemacrawler/bin/schemacrawler.sh \
 --server=sqlite \
 --database=chinook-database-2.1.3.sqlite \
 --info-level=standard \

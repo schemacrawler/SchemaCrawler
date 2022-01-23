@@ -50,7 +50,7 @@ COPY \
     . /opt/schemacrawler/
 # Ensure that the SchemaCrawler script is executable
 RUN \
-    chmod +rx /opt/schemacrawler/schemacrawler.sh
+    chmod +rx /opt/schemacrawler/bin/schemacrawler.sh
 
 # Run the image as a non-root user, "schcrwlr"
 RUN \
@@ -68,7 +68,7 @@ COPY \
 
 # Create aliases for SchemaCrawler
 RUN \
-    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
+    echo 'alias schemacrawler="/opt/schemacrawler/bin/schemacrawler.sh"' \
     >> /home/schcrwlr/.profile \
- && echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
+ && echo 'alias schemacrawler="/opt/schemacrawler/bin/schemacrawler.sh"' \
     >> /home/schcrwlr/.bashrc
