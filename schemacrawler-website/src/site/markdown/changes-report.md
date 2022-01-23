@@ -1,10 +1,13 @@
 # SchemaCrawler Change History
 
+SchemaCrawler release notes.
+
 
 <a name="a16.16.10"></a>
 ## Release 16.16.10 - 2022-01-25
 
 - Change foreign key "key" to be consistent with a constraint "key"
+- Create binary distribution, and move shell scripts into a bin/ folder
 
 
 <a name="a16.16.9"></a>
