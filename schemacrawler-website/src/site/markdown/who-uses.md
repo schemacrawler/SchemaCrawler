@@ -15,6 +15,7 @@ SchemaCrawler questions from users.
 
 - Recommendation from the Google Cloud Architecture Center
 on how to [Manage a monolithic database](https://cloud.google.com/architecture/microservices-architecture-refactoring-monoliths#manage_a_monolithic_database)
+- Use by [Google Nomulus](https://github.com/google/nomulus) to generate [E-R diagrams](https://github.com/google/nomulus/blob/d7f27bdad39bbee2d7c91fb8cb3d8442ef523910/core/src/nonprod/java/google/registry/tools/GenerateSqlErDiagramCommand.java)
 - [Dang, T.K., Huy, T.M., Dang, L.H. *et al.* An Elastic Data Conversion Framework: A Case Study for MySQL and MongoDB. *SN COMPUT. SCI.* **2,** 325 (2021).](https://link.springer.com/10.1007/s42979-021-00716-3)
 - [mbarre/schemacrawler-additional-lints](https://github.com/mbarre/schemacrawler-additional-lints) is maintained by
 Michèle Barré <Michele.Barre at GMail> and [Adrien Sales]
