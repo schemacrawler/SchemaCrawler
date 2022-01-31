@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   push:
 
+permissions: read-all
+
 jobs:
   build:
     name: Quick build

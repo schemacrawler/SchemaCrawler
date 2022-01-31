@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+permissions: read-all
+
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build

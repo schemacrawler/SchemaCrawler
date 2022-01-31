@@ -6,6 +6,8 @@ on:
     paths:
       - '**/schemacrawler_logo.svg'
 
+permissions: read-all
+
 jobs:
   build:
     name: Create Icons

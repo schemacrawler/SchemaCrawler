@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+permissions: read-all
+
 # CHECKOUT CODE
     - id: checkout-code
       name: Checkout code
