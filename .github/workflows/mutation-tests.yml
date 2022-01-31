@@ -3,13 +3,13 @@ name: Mutation Tests
 on:
   workflow_dispatch:
 
+permissions: read-all
+
 jobs:
   build:
     name: Build, run mutation tests, and publish results
     runs-on: ubuntu-latest
     steps:
-
-permissions: read-all
 
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build

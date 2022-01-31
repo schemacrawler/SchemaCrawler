@@ -6,13 +6,13 @@ on:
     branches:
       - '**'
 
+permissions: read-all
+
 jobs:
   build:
     name: Lint code base
     runs-on: ubuntu-latest
     steps:
-
-permissions: read-all
 
 # CHECKOUT CODE
     - id: checkout-code
