@@ -14,7 +14,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.2.1
+      uses: sualeh/prepare-maven-build@760475f02126626b9077db49728d81849463c9dc # pin@v1.2.1
       with:
         java-version: 8
     - id: install-packages
@@ -39,7 +39,7 @@ jobs:
 # GET TEST RESULTS
     - id: upload-test-results
       name: Upload mutation test results
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@3446296876d12d4e3a0f3145a3c87e67bf0a16b5 # pin@v1
       with:
         name: mutation-test-results
         path: ./schemacrawler-api/target/pit-reports
