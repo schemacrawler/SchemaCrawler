@@ -6,6 +6,8 @@ on:
     branches:
       - '**'
 
+permissions: read-all
+
 jobs:
   build:
     name: Build, run database integration tests, and publish results
@@ -159,7 +161,7 @@ jobs:
 # CHECK WEBSITE LINKS
     - id: check-links
       name: Check website links
-      uses: lycheeverse/lychee-action@v1.1.0
+      uses: lycheeverse/lychee-action@v1.2.0
       with:
         args: --verbose --accept 200,999 --no-progress ./schemacrawler-website/target/_website/**/*
       env:
