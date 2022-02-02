@@ -17,7 +17,7 @@ jobs:
 # CHECKOUT CODE
     - id: checkout-code
       name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
       with:
         # Full git history is needed to get a proper list
         # of changed files within `super-linter`
@@ -26,7 +26,7 @@ jobs:
 # LINT CODE
     - id: lint-code-base
       name: Lint Code Base
-      uses: github/super-linter/slim@v4
+      uses: github/super-linter/slim@d92f3364de01c46cf8c32774d075d2419cbc7ece # pin@v4
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_ALL_CODEBASE: true

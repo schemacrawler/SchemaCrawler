@@ -20,7 +20,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.2.1
+      uses: sualeh/prepare-maven-build@760475f02126626b9077db49728d81849463c9dc # pin@v1.2.1
       with:
         java-version: 8
     - id: install-packages
@@ -48,7 +48,7 @@ jobs:
 # PUBLISH WEBSITE TO GITHUB PAGES
     - id: pubish-website
       name: Publish website to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305 # pin@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./schemacrawler-website/target/_website
@@ -76,7 +76,7 @@ jobs:
 # CREATE GITHUB RELEASE AND ADD ASSETS
     - id: upload-artifacts
       name: Upload installers
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # pin@v2
       with:
         name: release-artifacts-v16.16.10
         path: |
@@ -87,7 +87,7 @@ jobs:
         retention-days: 1
     - id: create-release
       name: Create GitHub release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5 # pin@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
