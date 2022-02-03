@@ -212,7 +212,6 @@
     <java.version>1.8</java.version>
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <maven.javadoc.skip>true</maven.javadoc.skip>
-    <slf4j.version>1.7.32</slf4j.version>
     <graphviz.java.version>0.18.1</graphviz.java.version>
   </properties>
   <build>
