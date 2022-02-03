@@ -1,7 +1,7 @@
 name: Issue Report
 description: Report an issue with SchemaCrawler
 labels: 
-  - bug
+  - ":bug: bug:
 assignees:
   - sualeh
 body:
