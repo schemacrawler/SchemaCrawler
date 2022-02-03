@@ -97,7 +97,7 @@
     <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
-      <version>1.4.1</version>
+      <version>1.4.2</version>
     </dependency>
 
     <!-- Jackson -->
@@ -153,7 +153,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.2.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
