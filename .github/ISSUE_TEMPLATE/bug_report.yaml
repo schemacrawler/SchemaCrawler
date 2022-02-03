@@ -1,7 +1,7 @@
 name: Issue Report
 description: Report an issue with SchemaCrawler
-title: "[Issue]: "
-labels: ["issue"]
+labels: 
+  - bug
 assignees:
   - sualeh
 body:
