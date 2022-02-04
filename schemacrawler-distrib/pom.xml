@@ -251,7 +251,6 @@
             </goals>
             <configuration>
               <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
-              <excludeScope>test</excludeScope>
               <includeScope>runtime</includeScope>
               <excludeGroupIds>org.checkerframework,com.google.protobuf</excludeGroupIds>
               <overWriteReleases>false</overWriteReleases>

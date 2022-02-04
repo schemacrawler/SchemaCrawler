@@ -66,6 +66,13 @@
       </fileset>
     </copy>
 
+    <copy todir="${schemacrawler.base-distribution}/logos">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-website/src/site/resources/images">
+        <include name="schemacrawler_logo.*" />
+		<include name="schemacrawler_banner.*" />
+      </fileset>
+    </copy>
+
     <!-- Create SQLite test database -->
     <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
       failonerror="true">
