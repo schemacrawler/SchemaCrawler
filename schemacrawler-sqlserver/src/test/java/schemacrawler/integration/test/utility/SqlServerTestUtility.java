@@ -41,7 +41,9 @@ public final class SqlServerTestUtility {
   @SuppressWarnings("resource")
   private static JdbcDatabaseContainer<?> newSqlServerContainer(final String version) {
     final DockerImageName imageName = DockerImageName.parse("mcr.microsoft.com/mssql/server");
-    return new MSSQLServerContainer<>(imageName.withTag(version)).acceptLicense();
+    return new MSSQLServerContainer<>(imageName.withTag(version))
+        .withUrlParam("encrypt", "false")
+        .acceptLicense();
   }
 
   private SqlServerTestUtility() {

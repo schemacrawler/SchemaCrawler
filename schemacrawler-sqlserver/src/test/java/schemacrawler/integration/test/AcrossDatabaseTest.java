@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServer2019Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -42,10 +43,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -68,12 +67,7 @@ import us.fatehi.utility.database.SqlScript;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new MSSQLServerContainer<>(
-              DockerImageName.parse("mcr.microsoft.com/mssql/server")
-                  .withTag("2017-CU26-ubuntu-16.04"))
-          .acceptLicense();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
 
   @Test
   public void acrossDatabase(final TestContext testContext) throws Exception {
