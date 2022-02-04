@@ -1,22 +1,35 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
    <head>
       <meta charset="utf-8">
+      <meta name="Content-Type" content="text/html; charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="copyright" content="&copy; 2000-2022 Sualeh Fatehi." />
-      <!-- Begin SEO -->
+      <meta name="description" content="Free database schema discovery and comprehension tool" />
+
       <title>SchemaCrawler - Free database schema discovery and comprehension tool</title>
+
+      <link rel="canonical" href="https://www.schemacrawler.com/" />
+      <link rel="icon" href="images/schemacrawler_logo.svg" sizes="any" type="image/svg+xml">
+
       <meta property="og:title" content="SchemaCrawler" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:type" content="website" />
       <meta property="og:author" content="Sualeh Fatehi" />
-      <meta name="description" content="Free database schema discovery and comprehension tool" />
       <meta property="og:description" content="Free database schema discovery and comprehension tool" />
-      <link rel="canonical" href="https://www.schemacrawler.com/" />
-      <link rel="icon" href="images/schemacrawler_logo.svg" sizes="any" type="image/svg+xml">
       <meta property="og:url" content="https://www.schemacrawler.com/" />
-      <meta property="og:image" content="https://www.schemacrawler.com/images/schemacrawler_logo.svg" />
-      <meta property="og:image:type" content="image/svg+xml" />
+      <meta property="og:image" content="https://www.schemacrawler.com/images/schemacrawler_logo.png" />
+      <meta property="og:image:secure_url" content="https://www.schemacrawler.com/images/schemacrawler_logo.png" />
+      <meta property="og:image:url" content="https://www.schemacrawler.com/images/schemacrawler_logo.png" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:alt" content="SchemaCrawler" />
+      <meta property="og:image:width" content="150" />
+      <meta property="og:image:height" content="150" />
+
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content="@schemacrawler" />
+      <meta name="twitter:creator" content="@schemacrawler" />
+
       <script type="application/ld+json">
 {
   "@context":"http://schema.org",
@@ -67,11 +80,11 @@
       </script>
       <!-- End Bootstrap -->
       <!-- Lightbox2 -->
-	  <script 
-        src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js" 
-		integrity="sha512-6gudNVbNM/cVsLUMOb8g2b/RBqtQJ3aDfRFgU+5paeaCTtbYY/Dg00MzZq7r6RvJGI2KKtPBhjkHGTL/iOe21A==" 
-		crossorigin="anonymous">
-	  </script>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"
+        integrity="sha512-6gudNVbNM/cVsLUMOb8g2b/RBqtQJ3aDfRFgU+5paeaCTtbYY/Dg00MzZq7r6RvJGI2KKtPBhjkHGTL/iOe21A=="
+        crossorigin="anonymous">
+      </script>
       <!--  SchemaCrawler styles -->
       <link rel="stylesheet" href="css/style.css">
       <!--[if lt IE 9]>
@@ -81,7 +94,7 @@
 
      <header class="header clearfix">
         <nav class="navbar navbar-expand-lg bg-light navbar-light">
-		<div class="container-fluid">
+        <div class="container-fluid">
            <!-- Links -->
            <ul class="nav">
               <li class="nav-item">
@@ -148,7 +161,7 @@
                  </div>
               </li>
            </ul>
-		</div>   
+        </div>
         </nav>
 
         <div class="p-3 mb-4 bg-light rounded-3">
