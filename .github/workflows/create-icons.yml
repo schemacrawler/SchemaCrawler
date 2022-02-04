@@ -25,14 +25,41 @@ jobs:
       run: |
         # Create icons for different platforms
         convert -version
-        convert -background transparent -density 1000 \
-        -resize 150x150 \
-        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
-        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.png
-        convert -background transparent -density 256x256 \
-        -define icon:auto-resize -colors 256 \
-        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
-        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.ico
+        # Create 180 pixel icon
+        convert \
+          -background transparent \
+          -density 1000 \
+          -resize 150x150 \
+          -border 30 \
+          -bordercolor transparent \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.png
+        # Create ico icon
+        convert \
+          -background transparent \
+          -density 256x256 \
+          -define icon:auto-resize \
+          -colors 256 \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.ico
+        # Create left-aligned 16:9 banner in two steps
+        convert \
+          -background transparent \
+          -density 1000 \
+          -resize 450x450 \
+          -border 100 \
+          -bordercolor transparent \
+          /imgs/schemacrawler_logo.svg \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_banner.png
+        convert \
+          -background transparent \
+          -density 1000 \
+          -extent 1200x675 \
+          -gravity west \
+          -bordercolor transparent \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_banner.png \
+          ./schemacrawler-website/src/site/resources/images/schemacrawler_banner.png
 
 # UPLOAD ICONS
     - id: upload-icons
@@ -40,4 +67,4 @@ jobs:
       uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # pin@v2
       with:
         name: icons
-        path: ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.*
+        path: ./schemacrawler-website/src/site/resources/images/schemacrawler_*.*
