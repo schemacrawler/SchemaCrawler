@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink">
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+	 width="150" height="150">
   <path d="m11,32.67c0,8.66 0,78 0,86.66c0,11.96 29.13,21.67 65,21.67c35.87,0 65,-9.71 65,-21.67c0,-5.77 0,-34.66 0,-86.66c-0.02,0 -0.04,0 -0.04,0c0,-11.96 -29.09,-21.67 -64.96,-21.67c-35.87,0 -65,9.71 -65,21.67z"
         fill="#6A1E74"
         stroke="#1C1E29"
