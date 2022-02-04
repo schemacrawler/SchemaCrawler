@@ -13,13 +13,13 @@ permissions:
   actions: read
   checks: read
   contents: read
-  deployments: none
+  deployments: read
   id-token: read
   issues: read
   packages: read
   pages: write
-  pull-requests: none
-  repository-projects: none
+  pull-requests: read
+  repository-projects: read
   security-events: read
   statuses: read
 
