@@ -5,7 +5,7 @@
 
 SchemaCrawler questions from users.
 
-- How [programmers](https://stackoverflow.com/search?q=schemacrawler) use SchemaCrawler.
+- How [programmers](https://stackoverflow.com/search?tab=newest&q=schemacrawler%20is%3aquestion) use SchemaCrawler.
 - How [database administrators](https://dba.stackexchange.com/search?q=schemacrawler) use SchemaCrawler.
 - How [system administrators](https://serverfault.com/search?q=schemacrawler) use SchemaCrawler.
 - How [software testers](https://sqa.stackexchange.com/search?q=schemacrawler) use SchemaCrawler.
