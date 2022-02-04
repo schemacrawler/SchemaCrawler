@@ -49,7 +49,6 @@ jobs:
           -resize 450x450 \
           -border 100 \
           -bordercolor transparent \
-          /imgs/schemacrawler_logo.svg \
           ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
           ./schemacrawler-website/src/site/resources/images/schemacrawler_banner.png
         convert \
