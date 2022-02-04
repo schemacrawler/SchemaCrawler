@@ -3,4 +3,14 @@ updates:
   - package-ecosystem: maven
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - ":children_crossing: dependencies"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - ":children_crossing: dependencies"
