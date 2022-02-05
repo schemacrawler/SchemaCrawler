@@ -3,6 +3,13 @@
 SchemaCrawler release notes.
 
 
+<a name="a16.16.11"></a>
+## Release 16.16.11 - 2022-02-05
+
+- Update dependencies
+- Release to Chocolatey and SDKMan from CI pipelines using JReleaser
+
+
 <a name="a16.16.10"></a>
 ## Release 16.16.10 - 2022-01-25
 
