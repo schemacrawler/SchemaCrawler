@@ -38,9 +38,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
@@ -82,7 +80,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       return;
     }
 
-    final Set<List<String>> hiddenTableColumnsLookupKeys = retrieveHiddenTableColumnsLookupKeys();
+    final Set<NamedObjectKey> hiddenTableColumnsLookupKeys = retrieveHiddenTableColumnsLookupKeys();
 
     switch (getRetrieverConnection().get(tableColumnsRetrievalStrategy)) {
       case data_dictionary_all:
@@ -106,7 +104,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final MetadataResultSet results,
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
-      final Set<List<String>> hiddenTableColumnsLookupKeys) {
+      final Set<NamedObjectKey> hiddenTableColumnsLookupKeys) {
     // Get the "COLUMN_DEF" value first as it the Oracle drivers
     // don't handle it properly otherwise.
     // https://community.oracle.com/message/5940745#5940745
@@ -148,9 +146,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
       final String remarks = results.getString("REMARKS");
 
-      final List<String> lookupKey =
-          Arrays.asList(columnCatalogName, schemaName, tableName, columnName);
-      final boolean isHidden = hiddenTableColumnsLookupKeys.contains(lookupKey);
+      final boolean isHidden = hiddenTableColumnsLookupKeys.contains(column.key());
 
       column.setOrdinalPosition(ordinalPosition);
       column.setColumnDataType(
@@ -202,9 +198,9 @@ final class TableColumnRetriever extends AbstractRetriever {
     return column;
   }
 
-  private Set<List<String>> retrieveHiddenTableColumnsLookupKeys() throws SQLException {
+  private Set<NamedObjectKey> retrieveHiddenTableColumnsLookupKeys() throws SQLException {
 
-    final Set<List<String>> hiddenTableColumnsLookupKeys = new HashSet<>();
+    final Set<NamedObjectKey> hiddenTableColumnsLookupKeys = new HashSet<>();
 
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
@@ -230,8 +226,8 @@ final class TableColumnRetriever extends AbstractRetriever {
                 "Retrieving hidden column <%s.%s.%s.%s>",
                 catalogName, schemaName, tableName, columnName));
 
-        final List<String> lookupKey =
-            Arrays.asList(catalogName, schemaName, tableName, columnName);
+        final NamedObjectKey lookupKey =
+            new NamedObjectKey(catalogName, schemaName, tableName, columnName);
         hiddenTableColumnsLookupKeys.add(lookupKey);
       }
     }
@@ -242,7 +238,7 @@ final class TableColumnRetriever extends AbstractRetriever {
   private void retrieveTableColumnsFromDataDictionary(
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
-      final Set<List<String>> hiddenTableColumnsLookupKeys)
+      final Set<NamedObjectKey> hiddenTableColumnsLookupKeys)
       throws SQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
@@ -262,7 +258,7 @@ final class TableColumnRetriever extends AbstractRetriever {
   private void retrieveTableColumnsFromMetadata(
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
-      final Set<List<String>> hiddenTableColumnsLookupKeys)
+      final Set<NamedObjectKey> hiddenTableColumnsLookupKeys)
       throws WrappedSQLException {
     for (final MutableTable table : allTables) {
       LOGGER.log(Level.FINE, "Retrieving table columns for " + table);

@@ -3,6 +3,12 @@
 SchemaCrawler release notes.
 
 
+<a name="a16.16.12"></a>
+## Release 16.16.12 - 2022-02-20
+
+- Add support for hidden or invisible columns in MySQL
+
+
 <a name="a16.16.11"></a>
 ## Release 16.16.11 - 2022-02-05
 

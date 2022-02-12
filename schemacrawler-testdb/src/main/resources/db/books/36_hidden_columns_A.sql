@@ -1,5 +1,5 @@
 -- Hidden columns
--- Oracle syntax
+-- Oracle and MySQL syntax
 CREATE TABLE X_CUSTOMERS
 (
   CUSTOMERID INTEGER NOT NULL,
