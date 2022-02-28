@@ -4,9 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 
-import org.junit.jupiter.api.Test;
+import java.util.Objects;
 
-import com.tngtech.archunit.thirdparty.com.google.common.base.Objects;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.inclusionrule.RegularExpressionRule;
 
@@ -30,7 +30,7 @@ public class RegularExpressionRuleTest {
     assertThat(regExpRule.hashCode(), is(regExpRule.hashCode()));
 
     assertThat(
-        Objects.equal(regExpRule.hashCode(), new RegularExpressionRule(".*", "exc1").hashCode()),
+        Objects.equals(regExpRule.hashCode(), new RegularExpressionRule(".*", "exc1").hashCode()),
         is(false));
   }
 

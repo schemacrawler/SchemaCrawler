@@ -32,17 +32,16 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.tngtech.archunit.thirdparty.com.google.common.collect.ImmutableMap;
 
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -68,24 +67,33 @@ public class GrepCommandLineTest {
 
     final List<String> failures = new ArrayList<>();
 
-    final List<Map<String, String>> grepArgs =
+    final List<List<Map.Entry<String, String>>> grepArgs =
         Arrays.asList(
-            ImmutableMap.of("--grep-columns", ".*\\.STREET|.*\\.PRICE"),
-            ImmutableMap.of("--grep-columns", ".*\\..*NAME"),
-            ImmutableMap.of("--grep-def", ".*book authors.*"),
-            ImmutableMap.of(
-                "--tables", "", "--routines", ".*", "--grep-parameters", ".*\\.B_COUNT"),
-            ImmutableMap.of(
-                "--tables", "", "--routines", ".*", "--grep-parameters", ".*\\.B_OFFSET"),
-            ImmutableMap.of(
-                "--grep-columns", ".*\\.STREET|.*\\.PRICE", "--grep-def", ".*book authors.*"),
-            ImmutableMap.of("--grep-tables", ".*\\.BOOKS"));
+            Arrays.asList(
+                new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\.STREET|.*\\.PRICE")),
+            Arrays.asList(new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\..*NAME")),
+            Arrays.asList(new AbstractMap.SimpleEntry<>("--grep-def", ".*book authors.*")),
+            Arrays.asList(
+                new AbstractMap.SimpleEntry<>("--tables", ""),
+                new AbstractMap.SimpleEntry<>("--routines", ".*"),
+                new AbstractMap.SimpleEntry<>("--grep-parameters", ".*\\.B_COUNT")),
+            Arrays.asList(
+                new AbstractMap.SimpleEntry<>("--tables", ""),
+                new AbstractMap.SimpleEntry<>("--routines", ".*"),
+                new AbstractMap.SimpleEntry<>("--grep-parameters", ".*\\.B_OFFSET")),
+            Arrays.asList(
+                new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\.STREET|.*\\.PRICE"),
+                new AbstractMap.SimpleEntry<>("--grep-def", ".*book authors.*")),
+            Arrays.asList(new AbstractMap.SimpleEntry<>("--grep-tables", ".*\\.BOOKS")));
     for (int i = 0; i < grepArgs.size(); i++) {
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
       final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
 
-      final Map<String, String> args = new HashMap<>(grepArgs.get(i));
+      final Map<String, String> args =
+          grepArgs.get(i).stream()
+              .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
       args.put("--info-level", InfoLevel.detailed.name());
       args.put("--no-info", Boolean.TRUE.toString());
 
