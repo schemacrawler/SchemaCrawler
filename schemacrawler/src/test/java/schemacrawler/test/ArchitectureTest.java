@@ -11,7 +11,6 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 import static com.tngtech.archunit.library.GeneralCodingRules.ACCESS_STANDARD_STREAMS;
 import static com.tngtech.archunit.library.GeneralCodingRules.THROW_GENERIC_EXCEPTIONS;
-import static com.tngtech.archunit.library.GeneralCodingRules.USE_JAVA_UTIL_LOGGING;
 import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
 import java.util.Optional;
@@ -102,18 +101,6 @@ public class ArchitectureTest {
         .should(THROW_GENERIC_EXCEPTIONS)
         .because(
             "SchemaCrawler defines it own exceptions, and wraps SQL exceptions with additional information")
-        .check(classes);
-  }
-
-  @Test
-  public void notUseJavaLogging() {
-    noClasses()
-        .that(
-            resideOutsideOfPackages("schemacrawler.testdb", "sf.util")
-                .and(are(not(simpleName("Logger"))))
-                .and(are(not(simpleName("LogLevel")))))
-        .should(USE_JAVA_UTIL_LOGGING)
-        .because("SchemaCrawler wraps Java logging in a utility")
         .check(classes);
   }
 }
