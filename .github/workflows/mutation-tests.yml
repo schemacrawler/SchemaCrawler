@@ -39,7 +39,7 @@ jobs:
 # GET TEST RESULTS
     - id: upload-test-results
       name: Upload mutation test results
-      uses: actions/upload-artifact@3446296876d12d4e3a0f3145a3c87e67bf0a16b5 # pin@v1
+      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # pin@v1
       with:
         name: mutation-test-results
         path: ./schemacrawler-api/target/pit-reports
