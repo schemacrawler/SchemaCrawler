@@ -41,6 +41,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -57,9 +58,11 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
+  private final DockerImageName imageName = DockerImageName.parse(MariaDBContainer.NAME);
+
   @Container
-  private final JdbcDatabaseContainer dbContainer =
-      new MariaDBContainer<>()
+  private final JdbcDatabaseContainer<?> dbContainer =
+      new MariaDBContainer<>(imageName.withTag("10.7.3"))
           .withCommand(
               "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
           .withUsername("schemacrawler")

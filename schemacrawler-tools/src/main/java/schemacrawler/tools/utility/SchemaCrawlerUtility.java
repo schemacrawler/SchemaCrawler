@@ -182,6 +182,46 @@ public final class SchemaCrawlerUtility {
     }
   }
 
+  private static String extractDatabaseServerTypeFromUrl(final String url) {
+    final Pattern urlPattern = Pattern.compile("jdbc:(.*?):.*");
+    final Matcher matcher = urlPattern.matcher(url);
+    if (!matcher.matches()) {
+      return "";
+    }
+    final String urlDBServerType;
+    if (matcher.groupCount() == 1) {
+      final String matchedDBServerType = matcher.group(1);
+      if (Arrays.asList(
+              "db2", "hsqldb", "mariadb", "mysql", "oracle", "postgresql", "sqlite", "sqlserver")
+          .contains(matchedDBServerType)) {
+        urlDBServerType = matchedDBServerType;
+      } else {
+        urlDBServerType = null;
+      }
+    } else {
+      urlDBServerType = null;
+    }
+    if (isBlank(urlDBServerType)) {
+      return "";
+    } else if ("mariadb".equals(urlDBServerType)) {
+      // Special case: MariaDB is served by the MySQL plugin
+      return "mysql";
+    }
+    return urlDBServerType;
+  }
+
+  private static String getConnectionUrl(final Connection connection) {
+    requireNonNull(connection, "No connection provided");
+    final String url;
+    try {
+      url = connection.getMetaData().getURL();
+    } catch (final SQLException e) {
+      LOGGER.log(Level.CONFIG, "Cannot get connection URL");
+      return "";
+    }
+    return url;
+  }
+
   private static void logConnection(final Connection connection) {
     if (connection == null || !LOGGER.isLoggable(Level.INFO)) {
       return;
@@ -199,36 +239,13 @@ public final class SchemaCrawlerUtility {
       final Connection connection, final DatabaseServerType dbServerType) {
 
     // Get database connection URL
-    final String url;
-    try {
-      url = connection.getMetaData().getURL();
-    } catch (final SQLException e) {
-      LOGGER.log(Level.CONFIG, "Cannot get connection URL");
-      return true;
-    }
+    final String url = getConnectionUrl(connection);
     if (isBlank(url)) {
       return true;
     }
 
     // Extract database server type
-    final Pattern urlPattern = Pattern.compile("jdbc:(.*?):.*");
-    final Matcher matcher = urlPattern.matcher(url);
-    if (!matcher.matches()) {
-      return true;
-    }
-    final String urlDBServerType;
-    if (matcher.groupCount() == 1) {
-      final String matchedDBServerType = matcher.group(1);
-      if (Arrays.asList(
-              "db2", "hsqldb", "mariadb", "mysql", "oracle", "postgresql", "sqlite", "sqlserver")
-          .contains(matchedDBServerType)) {
-        urlDBServerType = matchedDBServerType;
-      } else {
-        urlDBServerType = null;
-      }
-    } else {
-      urlDBServerType = null;
-    }
+    final String urlDBServerType = extractDatabaseServerTypeFromUrl(url);
     if (isBlank(urlDBServerType)) {
       return true;
     }
