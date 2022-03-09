@@ -42,6 +42,25 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Triggers
+
+TRG_AUTHORS                             [trigger, after delete, per row]
+UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+Table Constraints
+
+CHECK_UPPERCASE_STATE                                 [check constraint]
+  STATE                                                         
+
+SYS_CT_10106                                          [check constraint]
+  ID                                                            
+
+SYS_CT_10107                                          [check constraint]
+  FIRSTNAME                                                     
+
+SYS_CT_10108                                          [check constraint]
+  LASTNAME                                                      
+
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -77,6 +96,14 @@ SYS_IDX_SYS_FK_10126_10130                            [non-unique index]
 UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
+
+Table Constraints
+
+SYS_CT_10124                                          [check constraint]
+  BOOKID                                                        
+
+SYS_CT_10125                                          [check constraint]
+  AUTHORID                                                      
 
 
 
@@ -117,6 +144,20 @@ SYS_IDX_U_PREVIOUSEDITION_10123                           [unique index]
 SYS_IDX_FK_PREVIOUSEDITION_10121                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
+Table Constraints
+
+U_PREVIOUSEDITION                                    [unique constraint]
+  PREVIOUSEDITIONID                                             
+
+SYS_CT_10114                                          [check constraint]
+  ID                                                            
+
+SYS_CT_10115                                          [check constraint]
+  TITLE                                                         
+
+SYS_CT_10116                                          [check constraint]
+  PUBLISHERID                                                   
+
 
 
 PUBLIC.BOOKS.COUPONS                                             [table]
@@ -136,6 +177,11 @@ Indexes
 SYS_IDX_PK_COUPONS_10093                                  [unique index]
   ID                                ascending                   
 
+Table Constraints
+
+SYS_CT_10092                                          [check constraint]
+  ID                                                            
+
 
 
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
@@ -152,6 +198,11 @@ Indexes
 
 SYS_IDX_PK_CUSTOMERDATA_10104                             [unique index]
   ID                                ascending                   
+
+Table Constraints
+
+SYS_CT_10103                                          [check constraint]
+  ID                                                            
 
 
 
@@ -171,6 +222,17 @@ Indexes
 
 SYS_IDX_PK_CUSTOMERS_10098                                [unique index]
   ID                                ascending                   
+
+Table Constraints
+
+SYS_CT_10095                                          [check constraint]
+  ID                                                            
+
+SYS_CT_10096                                          [check constraint]
+  FIRSTNAME                                                     
+
+SYS_CT_10097                                          [check constraint]
+  LASTNAME                                                      
 
 
 
@@ -228,6 +290,17 @@ SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144                    [non-unique index]
 
 SYS_IDX_PK_ΒΙΒΛΊΑ_10140                                   [unique index]
   ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+Table Constraints
+
+SYS_CT_10137                                          [check constraint]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+SYS_CT_10138                                          [check constraint]
+  ΤΊΤΛΟΣ                                                        
+
+SYS_CT_10139                                          [check constraint]
+  ΕΚΔΌΤΗΣ                                                       
 
 
 

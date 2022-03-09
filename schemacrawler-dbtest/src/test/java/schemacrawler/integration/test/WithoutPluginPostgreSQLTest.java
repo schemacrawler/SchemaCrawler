@@ -50,6 +50,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -73,6 +74,7 @@ public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "postgresql")
   public void testPostgreSQLWithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()

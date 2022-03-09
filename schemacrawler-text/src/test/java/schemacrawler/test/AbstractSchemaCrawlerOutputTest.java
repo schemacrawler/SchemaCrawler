@@ -184,6 +184,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                       executable.setAdditionalConfiguration(
                           SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),
@@ -229,6 +230,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                       executable.setAdditionalConfiguration(
                           SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),
@@ -270,6 +272,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                       executable.setAdditionalConfiguration(
                           SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),
@@ -423,6 +426,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                       executable.setAdditionalConfiguration(config);
+                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),
@@ -473,6 +477,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                       executable.setAdditionalConfiguration(additionalConfig);
+                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),
@@ -541,7 +546,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   }
 
   @Test
-  public void titleOutput(final Connection connection) throws Exception {
+  public void compareTitleOutput(final Connection connection) throws Exception {
     clean(WITH_TITLE_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -553,8 +558,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     assertAll(
-        Arrays.asList("list", "schema")
-            .stream()
+        Arrays.asList("list", "schema").stream()
             .flatMap(
                 command ->
                     outputFormats()
@@ -585,6 +589,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                                   executable.setAdditionalConfiguration(
                                       SchemaTextOptionsBuilder.builder(textOptions).toConfig());
                                   executable.setOutputOptions(outputOptions);
+                                  executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
                                   assertThat(
                                       outputOf(

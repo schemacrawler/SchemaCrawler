@@ -42,6 +42,8 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -53,11 +55,17 @@ public class ScriptingLanguageTest {
 
   private static Path executableScriptFromFile(
       final Connection connection, final String language, final Path scriptFile) throws Exception {
-    final SchemaCrawlerExecutable executable = executableOf("script");
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
     final Config additionalConfig = new Config();
     additionalConfig.put("script", scriptFile.toString());
     additionalConfig.put("script-language", language);
+
+    final SchemaCrawlerExecutable executable = executableOf("script");
     executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     return executableExecution(connection, executable, "text");
   }

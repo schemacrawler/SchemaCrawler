@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -40,33 +39,30 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class SpringIntegrationTest
-{
+public class SpringIntegrationTest {
 
-  private final ApplicationContext appContext =
-    new ClassPathXmlApplicationContext("context.xml");
+  private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
   @Test
-  public void springFrameworkTest(final TestContext testContext,
-                                  final Connection connection)
-    throws Exception
-  {
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  public void springFrameworkTest(final TestContext testContext, final Connection connection)
+      throws Exception {
     final String beanDefinitionName = "executableForSchema";
     final SchemaCrawlerExecutable executable =
-      appContext.getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
+        appContext.getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
 
-    assertThat(outputOf(executableExecution(connection,
-                                            executable,
-                                            TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(
+        outputOf(executableExecution(connection, executable, TextOutputFormat.text)),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
-
 }

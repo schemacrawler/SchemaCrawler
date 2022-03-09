@@ -17,6 +17,8 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -46,10 +48,14 @@ public class Issue342Test {
     final OutputOptions outputOptions = ExecutableTestUtility.newOutputOptions("json", outputFile);
     final String command = "schema";
 
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     final ConfigurationException exception =
         assertThrows(ConfigurationException.class, () -> executable.execute());

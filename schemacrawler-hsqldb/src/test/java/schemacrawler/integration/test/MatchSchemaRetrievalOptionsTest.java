@@ -39,7 +39,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,7 +80,6 @@ public class MatchSchemaRetrievalOptionsTest {
 
   @DisplayName("Exception does not match URL + plugin not found = throw an exception")
   @Test
-  @Disabled
   public void matchSchemaRetrievalOptions2() throws Exception {
 
     // Mock an Oracle connection - plugin is not found

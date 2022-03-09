@@ -40,6 +40,7 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -48,12 +49,14 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 public class LintCommandTest {
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void commandlineLintReport(final DatabaseConnectionInfo connectionInfo) throws Exception {
     executeLintCommandLine(
         connectionInfo, TextOutputFormat.text, null, null, "executableForLint.txt");
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void commandlineLintReportWithConfig(final DatabaseConnectionInfo connectionInfo)
       throws Exception {
     executeLintCommandLine(

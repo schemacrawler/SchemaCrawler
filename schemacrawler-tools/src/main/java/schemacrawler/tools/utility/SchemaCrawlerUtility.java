@@ -261,13 +261,11 @@ public final class SchemaCrawlerUtility {
 
     // Throw exception is plugin is needed, but not found
     if (!dbConnectorPresent && !useWithoutDatabasePlugin) {
-      /*
       throw new InternalRuntimeException(
           String.format(
               "SchemaCrawler database plugin should be on the CLASSPATH for <%s>, "
                   + "or the SC_WITHOUT_DATABASE_PLUGIN environmental variable should be set",
               url));
-              */
     }
 
     final boolean useMatchedDatabasePlugin = dbConnectorPresent && !useWithoutDatabasePlugin;

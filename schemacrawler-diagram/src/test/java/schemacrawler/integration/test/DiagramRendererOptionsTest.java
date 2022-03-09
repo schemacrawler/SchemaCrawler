@@ -56,6 +56,8 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -118,10 +120,14 @@ public class DiagramRendererOptionsTest {
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
     additionalConfig.put("schemacrawler.format.hide_weakassociation_names", "true");
 
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setConnection(connection);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails

@@ -47,6 +47,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
@@ -54,9 +56,14 @@ import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class Issue496LintTest {
+
+  private static final SchemaRetrievalOptions schemaRetrievalOptions =
+      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+  private static final Config config = new Config();
 
   @Test
   public void issue496(final Connection connection) throws Exception {
@@ -68,7 +75,8 @@ public class Issue496LintTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -94,7 +102,8 @@ public class Issue496LintTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);

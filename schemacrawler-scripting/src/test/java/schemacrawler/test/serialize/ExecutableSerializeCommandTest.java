@@ -45,6 +45,8 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -65,8 +67,12 @@ public class ExecutableSerializeCommandTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("serialize");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     return executableExecution(connection, executable, serializationFormat);
   }

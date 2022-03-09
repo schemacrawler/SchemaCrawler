@@ -49,6 +49,7 @@ import picocli.CommandLine.ParseResult;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
@@ -59,6 +60,7 @@ import us.fatehi.utility.IOUtility;
 public class ExecuteCommandTest {
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executeBadCommand(final Connection connection, final TestContext testContext)
       throws Exception {
 
@@ -101,6 +103,7 @@ public class ExecuteCommandTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executeSchemaCommand(final Connection connection, final TestContext testContext)
       throws Exception {
 
@@ -118,6 +121,7 @@ public class ExecuteCommandTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executeTestCommand(final Connection connection, final TestContext testContext)
       throws Exception {
 

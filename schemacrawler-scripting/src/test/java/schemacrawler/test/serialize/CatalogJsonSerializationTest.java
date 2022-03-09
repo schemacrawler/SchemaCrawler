@@ -61,12 +61,15 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.formatter.serialize.JsonSerializedCatalog;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -91,7 +94,11 @@ public class CatalogJsonSerializationTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");
     try (final OutputStream out = new FileOutputStream(testOutputFile.toFile())) {

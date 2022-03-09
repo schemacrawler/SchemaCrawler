@@ -43,6 +43,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
@@ -56,7 +58,12 @@ public final class LintTestUtility {
       final Config additionalConfig,
       final String referenceFileName)
       throws Exception {
-    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
     if (!isBlank(linterConfigsResource)) {
       final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
       final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
@@ -64,11 +71,11 @@ public final class LintTestUtility {
 
       final Config config = optionsBuilder.toConfig();
       config.merge(additionalConfig);
-      lintExecutable.setAdditionalConfiguration(config);
+      executable.setAdditionalConfiguration(config);
     }
 
     assertThat(
-        outputOf(executableExecution(connection, lintExecutable)),
+        outputOf(executableExecution(connection, executable)),
         hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 

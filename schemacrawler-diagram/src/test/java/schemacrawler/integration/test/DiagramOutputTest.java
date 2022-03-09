@@ -62,6 +62,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -171,6 +172,7 @@ public class DiagramOutputTest {
 
   @Test
   @DisplayName("Diagram with maximum output, including columns enum values")
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_enum(final TestContext testContext, final Connection connection)
       throws Exception {
 
@@ -199,6 +201,7 @@ public class DiagramOutputTest {
 
   @Test
   @DisplayName("Diagram with maximum output, including indexes with remarks")
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_indexRemarks(
       final TestContext testContext, final Connection connection) throws Exception {
 

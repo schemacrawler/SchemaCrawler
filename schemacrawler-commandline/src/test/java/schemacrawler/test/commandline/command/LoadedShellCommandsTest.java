@@ -50,6 +50,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import picocli.CommandLine;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -67,6 +68,7 @@ public class LoadedShellCommandsTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void isLoaded(final Connection connection) {
     final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 
@@ -105,6 +107,7 @@ public class LoadedShellCommandsTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void sweepCatalog(final Connection connection) {
     final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 

@@ -45,8 +45,10 @@ import picocli.CommandLine;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 
 public final class CommandlineTestUtility {
@@ -140,13 +142,18 @@ public final class CommandlineTestUtility {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    state.setSchemaRetrievalOptions(SchemaRetrievalOptionsBuilder.builder().toOptions());
+    state.setSchemaRetrievalOptions(SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions());
     state.setDataSource(() -> connection); // is-connected
     return state;
   }
 
   public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection) {
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
 
     final ShellState state = createConnectedSchemaCrawlerShellState(connection);
     state.setCatalog(catalog); // is-loaded

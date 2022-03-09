@@ -37,6 +37,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
@@ -64,10 +66,16 @@ public class ScriptTestUtility {
 
   public static Path scriptExecution(final Connection connection, final String script)
       throws Exception {
-    final SchemaCrawlerExecutable executable = executableOf("script");
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
     final Config additionalConfig = new Config();
     additionalConfig.put("script", script);
+
+    final SchemaCrawlerExecutable executable = executableOf("script");
     executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     return executableExecution(connection, executable, "text");
   }
@@ -77,11 +85,17 @@ public class ScriptTestUtility {
       final TemplateLanguageType templateLanguage,
       final String templateResource)
       throws Exception {
-    final SchemaCrawlerExecutable executable = executableOf("template");
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
     final Config additionalConfig = new Config();
     additionalConfig.put("template", templateResource);
     additionalConfig.put("templating-language", templateLanguage.name());
+
+    final SchemaCrawlerExecutable executable = executableOf("template");
     executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     return executableExecution(connection, executable, "text");
   }

@@ -50,9 +50,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -75,10 +78,15 @@ public class LoadSnapshotTest {
   public void serializeCatalog(final Connection connection) {
 
     try {
+
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
       final SchemaCrawlerOptions schemaCrawlerOptions =
           DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+      final Catalog catalog =
+          getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
       assertThat("Could not obtain catalog", catalog, notNullValue());
       assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 

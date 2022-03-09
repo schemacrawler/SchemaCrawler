@@ -59,6 +59,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -84,6 +85,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
   @Test
   @DisplayName("Issue #628 - retrieve table and columns names with a slash or dot")
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "oracle")
   public void slashedName() throws Exception {
 
     final Connection connection = getConnection();
@@ -113,6 +115,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "oracle")
   public void testOracleWithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()

@@ -54,6 +54,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -71,6 +73,10 @@ public class LintTest {
 
   private static final String LINTS_OUTPUT = "lints_output/";
 
+  private static final SchemaRetrievalOptions schemaRetrievalOptions =
+      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+  private static final Config config = new Config();
+
   @Test
   public void lints(final Connection connection) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -81,7 +87,8 @@ public class LintTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -141,7 +148,8 @@ public class LintTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -175,7 +183,8 @@ public class LintTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -201,9 +210,7 @@ public class LintTest {
     final LintCollector lintCollector = linters.getCollector();
 
     assertThat(
-        lintCollector
-            .getLints()
-            .stream()
+        lintCollector.getLints().stream()
             .findFirst()
             .map(Lint::getMessage)
             .orElse("No value found"),
@@ -219,7 +226,8 @@ public class LintTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);

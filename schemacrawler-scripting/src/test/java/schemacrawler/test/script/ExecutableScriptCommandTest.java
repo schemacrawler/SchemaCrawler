@@ -43,6 +43,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -66,8 +67,8 @@ public class ExecutableScriptCommandTest {
   }
 
   @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void executablePython(final Connection connection) throws Exception {
-    System.setProperty("python.console.encoding", "UTF-8");
     assertThat(
         outputOf(scriptExecution(connection, "/plaintextschema.py")),
         hasSameContentAs(classpathResource("script_output.txt")));

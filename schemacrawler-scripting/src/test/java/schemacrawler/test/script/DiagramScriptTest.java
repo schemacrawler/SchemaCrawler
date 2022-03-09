@@ -43,6 +43,7 @@ import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -50,16 +51,16 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 public class DiagramScriptTest {
 
   @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void dbml(final TestContext testContext, final Connection connection) throws Exception {
-    System.setProperty("python.console.encoding", "UTF-8");
     assertThat(
         outputOf(scriptExecution(connection, "/dbml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
   @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void mermaid(final TestContext testContext, final Connection connection) throws Exception {
-    System.setProperty("python.console.encoding", "UTF-8");
     assertThat(
         outputOf(scriptExecution(connection, "/mermaid.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));

@@ -48,6 +48,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -180,10 +182,14 @@ public abstract class AbstractWeakAssociationsTest {
     additionalConfig.merge(config);
     additionalConfig.merge(schemaTextOptionsBuilder.toConfig());
 
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setConnection(connection);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     final String referenceFileName = testMethodName;
     assertAll(
