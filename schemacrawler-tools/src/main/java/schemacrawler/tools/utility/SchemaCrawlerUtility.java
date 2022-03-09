@@ -204,7 +204,7 @@ public final class SchemaCrawlerUtility {
     if (isBlank(urlDBServerType)) {
       return "";
     } else if ("mariadb".equals(urlDBServerType)) {
-      // Special case: MariaDB is served by the MySQL plugin
+      // Special case: MariaDB is handled by the MySQL plugin
       return "mysql";
     }
     return urlDBServerType;
