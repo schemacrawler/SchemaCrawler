@@ -51,6 +51,8 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
@@ -126,9 +128,13 @@ public class LintOutputTest {
                     () -> {
                       final String referenceFile = "lint." + outputFormat.getFormat();
 
+                      final SchemaRetrievalOptions schemaRetrievalOptions =
+                          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable("lint");
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),
