@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.sql.Connection;
 
@@ -39,8 +40,6 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseDriver;
 
 public class SchemaCrawlerCatalogLoaderTest {
@@ -77,11 +76,10 @@ public class SchemaCrawlerCatalogLoaderTest {
 
     assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
-    assertThat(catalogLoader.getSchemaRetrievalOptions().equals(schemaRetrievalOptions), is(true));
+    assertThat(
+        catalogLoader.getSchemaRetrievalOptions().equals(schemaRetrievalOptionsDefault), is(true));
   }
 }

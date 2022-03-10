@@ -29,6 +29,7 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -47,8 +48,6 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -129,9 +128,6 @@ public class SpinThroughOperationsExecutableTest {
 
     final String referenceFile = referenceFile(operation, infoLevel, outputFormat);
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeAllSequences()
@@ -150,7 +146,7 @@ public class SpinThroughOperationsExecutableTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(operation.name());
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     assertThat(
         outputOf(executableExecution(connection, executable, outputFormat)),

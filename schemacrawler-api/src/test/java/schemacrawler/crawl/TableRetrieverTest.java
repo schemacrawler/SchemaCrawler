@@ -34,6 +34,7 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -97,10 +98,7 @@ public class TableRetrieverTest {
 
     catalog =
         (MutableCatalog)
-            getCatalog(
-                connection,
-                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                schemaCrawlerOptions);
+            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, is(empty()));

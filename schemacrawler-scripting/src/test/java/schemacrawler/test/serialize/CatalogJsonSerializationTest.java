@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -61,8 +62,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -94,11 +93,8 @@ public class CatalogJsonSerializationTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");
     try (final OutputStream out = new FileOutputStream(testOutputFile.toFile())) {

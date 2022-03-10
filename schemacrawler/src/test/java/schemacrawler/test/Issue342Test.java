@@ -4,6 +4,7 @@ import static java.io.File.createTempFile;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -17,8 +18,6 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -48,14 +47,11 @@ public class Issue342Test {
     final OutputOptions outputOptions = ExecutableTestUtility.newOutputOptions("json", outputFile);
     final String command = "schema";
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     final ConfigurationException exception =
         assertThrows(ConfigurationException.class, () -> executable.execute());

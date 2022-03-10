@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
@@ -45,8 +46,6 @@ import picocli.CommandLine;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
@@ -142,18 +141,15 @@ public final class CommandlineTestUtility {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    state.setSchemaRetrievalOptions(SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions());
+    state.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     state.setDataSource(() -> connection); // is-connected
     return state;
   }
 
   public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection) {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
 
     final ShellState state = createConnectedSchemaCrawlerShellState(connection);
     state.setCatalog(catalog); // is-loaded

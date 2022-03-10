@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -93,10 +94,7 @@ public class RoutineRetrieverProceduresTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
     catalog =
         (MutableCatalog)
-            getCatalog(
-                connection,
-                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                schemaCrawlerOptions);
+            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
 
     assertThat(catalog.getRoutines(), is(empty()));
   }

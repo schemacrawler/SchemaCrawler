@@ -38,6 +38,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readFully;
 
@@ -70,9 +71,6 @@ public class SchemaCrawlerExecutableTest {
 
     final Path testOutputFile = createTempFilePath("sc", "data");
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -82,7 +80,7 @@ public class SchemaCrawlerExecutableTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     executable.setConnection(connection);
     executable.execute();
 

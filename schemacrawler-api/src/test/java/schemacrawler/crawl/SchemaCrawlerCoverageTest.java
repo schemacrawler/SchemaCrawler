@@ -41,6 +41,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
 
@@ -82,7 +83,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -279,8 +279,6 @@ public class SchemaCrawlerCoverageTest {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
 
     final Connection connection1 = mock(Connection.class);
     when(connection1.isClosed()).thenThrow(new SQLException("Forced SQL exception"));
@@ -288,7 +286,9 @@ public class SchemaCrawlerCoverageTest {
     final Throwable exception =
         assertThrows(
             DatabaseAccessException.class,
-            () -> new SchemaCrawler(connection1, schemaRetrievalOptions, schemaCrawlerOptions));
+            () ->
+                new SchemaCrawler(
+                    connection1, schemaRetrievalOptionsDefault, schemaCrawlerOptions));
     assertThat(exception.getCause().getMessage(), is("Forced SQL exception"));
 
     final Connection connection2 = mock(Connection.class);
@@ -302,7 +302,7 @@ public class SchemaCrawlerCoverageTest {
     when(databaseMetaData.getDriverVersion()).thenReturn("driverVersion");
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection2, schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(connection2, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
     final NullPointerException npe =
         assertThrows(NullPointerException.class, () -> schemaCrawler.crawl());
     assertThat(npe.getMessage(), is("Cannot use null results"));

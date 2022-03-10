@@ -31,6 +31,7 @@ package schemacrawler.test.serialize;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.oneOf;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 
@@ -45,8 +46,6 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -67,12 +66,9 @@ public class ExecutableSerializeCommandTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("serialize");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     return executableExecution(connection, executable, serializationFormat);
   }

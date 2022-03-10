@@ -30,6 +30,7 @@ package schemacrawler.test.utility;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -43,8 +44,6 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
@@ -59,11 +58,8 @@ public final class LintTestUtility {
       final String referenceFileName)
       throws Exception {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     if (!isBlank(linterConfigsResource)) {
       final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
       final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();

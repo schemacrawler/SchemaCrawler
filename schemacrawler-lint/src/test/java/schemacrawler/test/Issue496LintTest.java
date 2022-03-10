@@ -34,6 +34,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -47,8 +48,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
@@ -61,8 +60,6 @@ import schemacrawler.tools.options.Config;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class Issue496LintTest {
 
-  private static final SchemaRetrievalOptions schemaRetrievalOptions =
-      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
   private static final Config config = new Config();
 
   @Test
@@ -76,7 +73,7 @@ public class Issue496LintTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
+        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -103,7 +100,7 @@ public class Issue496LintTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
+        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);

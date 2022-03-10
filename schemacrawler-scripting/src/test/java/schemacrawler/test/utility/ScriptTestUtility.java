@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 */
 
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 
@@ -86,16 +87,13 @@ public class ScriptTestUtility {
       final String templateResource)
       throws Exception {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     final Config additionalConfig = new Config();
     additionalConfig.put("template", templateResource);
     additionalConfig.put("templating-language", templateLanguage.name());
 
     final SchemaCrawlerExecutable executable = executableOf("template");
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     return executableExecution(connection, executable, "text");
   }

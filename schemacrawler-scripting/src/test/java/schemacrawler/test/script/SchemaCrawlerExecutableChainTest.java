@@ -31,6 +31,7 @@ package schemacrawler.test.script;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -52,8 +53,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -108,13 +107,10 @@ public class SchemaCrawlerExecutableChainTest {
     final OutputOptions outputOptions =
         ExecutableTestUtility.newOutputOptions("text", testOutputFile);
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     executable.setConnection(connection);
     executable.execute();
 
