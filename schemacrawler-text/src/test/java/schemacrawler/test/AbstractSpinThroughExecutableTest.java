@@ -111,64 +111,58 @@ public abstract class AbstractSpinThroughExecutableTest {
                                     .map(
                                         schemaTextDetailType ->
                                             () -> {
-                                              final String javaVersion;
-                                              if (schemaTextDetailType
-                                                      == SchemaTextDetailType.details
-                                                  && infoLevel == InfoLevel.maximum) {
-                                                javaVersion = "." + javaVersion();
-                                              } else {
-                                                javaVersion = "";
-                                              }
-                                              final String referenceFile =
-                                                  referenceFile(
-                                                      schemaTextDetailType,
-                                                      infoLevel,
-                                                      outputFormat,
-                                                      javaVersion);
-
-                                              final LimitOptionsBuilder limitOptionsBuilder =
-                                                  LimitOptionsBuilder.builder()
-                                                      .includeAllSequences()
-                                                      .includeAllSynonyms()
-                                                      .includeAllRoutines();
-                                              final LoadOptionsBuilder loadOptionsBuilder =
-                                                  LoadOptionsBuilder.builder()
-                                                      .withSchemaInfoLevel(
-                                                          infoLevel.toSchemaInfoLevel());
-                                              final SchemaCrawlerOptions schemaCrawlerOptions =
-                                                  SchemaCrawlerOptionsBuilder
-                                                      .newSchemaCrawlerOptions()
-                                                      .withLimitOptions(
-                                                          limitOptionsBuilder.toOptions())
-                                                      .withLoadOptions(
-                                                          loadOptionsBuilder.toOptions());
-
-                                              final SchemaTextOptionsBuilder
-                                                  schemaTextOptionsBuilder =
-                                                      SchemaTextOptionsBuilder.builder();
-                                              schemaTextOptionsBuilder.noInfo(false);
-
-                                              final SchemaCrawlerExecutable executable =
-                                                  new SchemaCrawlerExecutable(
-                                                      schemaTextDetailType.name());
-                                              executable.setSchemaCrawlerOptions(
-                                                  schemaCrawlerOptions);
-                                              executable.setAdditionalConfiguration(
-                                                  schemaTextOptionsBuilder.toConfig());
-
-                                              executable.setSchemaRetrievalOptions(
-                                                  schemaRetrievalOptions);
-
-                                              assertThat(
-                                                  outputOf(
-                                                      executableExecution(
-                                                          connection, executable, outputFormat)),
-                                                  hasSameContentAndTypeAs(
-                                                      classpathResource(
-                                                          SPIN_THROUGH_OUTPUT + referenceFile),
-                                                      outputFormat));
+                                              spinThroughExecutable(
+                                                  connection,
+                                                  schemaRetrievalOptions,
+                                                  infoLevel,
+                                                  outputFormat,
+                                                  schemaTextDetailType);
                                             }))));
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
+
+  private void spinThroughExecutable(
+      final Connection connection,
+      final SchemaRetrievalOptions schemaRetrievalOptions,
+      final InfoLevel infoLevel,
+      final OutputFormat outputFormat,
+      final SchemaTextDetailType schemaTextDetailType)
+      throws Exception {
+    final String javaVersion;
+    if (schemaTextDetailType == SchemaTextDetailType.details && infoLevel == InfoLevel.maximum) {
+      javaVersion = "." + javaVersion();
+    } else {
+      javaVersion = "";
+    }
+    final String referenceFile =
+        referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    schemaTextOptionsBuilder.noInfo(false);
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(schemaTextDetailType.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(SPIN_THROUGH_OUTPUT + referenceFile), outputFormat));
+  }
 }
