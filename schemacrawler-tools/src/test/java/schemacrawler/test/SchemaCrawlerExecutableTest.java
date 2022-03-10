@@ -70,7 +70,8 @@ public class SchemaCrawlerExecutableTest {
 
     final Path testOutputFile = createTempFilePath("sc", "data");
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
@@ -78,8 +79,10 @@ public class SchemaCrawlerExecutableTest {
     final OutputOptions outputOptions =
         ExecutableTestUtility.newOutputOptions("text", testOutputFile);
 
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
     executable.setConnection(connection);
     executable.execute();
 

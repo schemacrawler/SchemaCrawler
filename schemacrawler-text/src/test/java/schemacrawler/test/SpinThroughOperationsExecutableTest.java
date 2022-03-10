@@ -47,6 +47,8 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -108,54 +110,51 @@ public class SpinThroughOperationsExecutableTest {
                                     .map(
                                         operation ->
                                             () -> {
-
-                                              // Special case where no output is generated
-                                              if (infoLevel == InfoLevel.minimum
-                                                  && operation == OperationType.dump) {
-                                                return;
-                                              }
-
-                                              final String referenceFile =
-                                                  referenceFile(operation, infoLevel, outputFormat);
-
-                                              final LimitOptionsBuilder limitOptionsBuilder =
-                                                  LimitOptionsBuilder.builder()
-                                                      .includeAllSequences()
-                                                      .includeAllSynonyms()
-                                                      .includeAllRoutines();
-                                              final LoadOptionsBuilder loadOptionsBuilder =
-                                                  LoadOptionsBuilder.builder()
-                                                      .withSchemaInfoLevel(
-                                                          infoLevel.toSchemaInfoLevel());
-                                              final SchemaCrawlerOptions schemaCrawlerOptions =
-                                                  SchemaCrawlerOptionsBuilder
-                                                      .newSchemaCrawlerOptions()
-                                                      .withLimitOptions(
-                                                          limitOptionsBuilder.toOptions())
-                                                      .withLoadOptions(
-                                                          loadOptionsBuilder.toOptions());
-
-                                              final SchemaTextOptionsBuilder
-                                                  schemaTextOptionsBuilder =
-                                                      SchemaTextOptionsBuilder.builder();
-                                              schemaTextOptionsBuilder.noInfo(false);
-
-                                              final SchemaCrawlerExecutable executable =
-                                                  new SchemaCrawlerExecutable(operation.name());
-                                              executable.setSchemaCrawlerOptions(
-                                                  schemaCrawlerOptions);
-                                              executable.setAdditionalConfiguration(
-                                                  schemaTextOptionsBuilder.toConfig());
-
-                                              assertThat(
-                                                  outputOf(
-                                                      executableExecution(
-                                                          connection, executable, outputFormat)),
-                                                  hasSameContentAndTypeAs(
-                                                      classpathResource(
-                                                          SPIN_THROUGH_OPERATIONS_OUTPUT
-                                                              + referenceFile),
-                                                      outputFormat));
+                                              assertOutput(
+                                                  connection, infoLevel, outputFormat, operation);
                                             }))));
+  }
+
+  private void assertOutput(
+      final Connection connection,
+      final InfoLevel infoLevel,
+      final TextOutputFormat outputFormat,
+      final OperationType operation)
+      throws Exception {
+
+    // Special case where no output is generated
+    if (infoLevel == InfoLevel.minimum && operation == OperationType.dump) {
+      return;
+    }
+
+    final String referenceFile = referenceFile(operation, infoLevel, outputFormat);
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    schemaTextOptionsBuilder.noInfo(false);
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(operation.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(SPIN_THROUGH_OPERATIONS_OUTPUT + referenceFile), outputFormat));
   }
 }

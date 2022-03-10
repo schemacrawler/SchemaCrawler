@@ -167,6 +167,7 @@ public class OfflineSnapshotTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotExecutable() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeAllRoutines();
