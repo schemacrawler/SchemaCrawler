@@ -109,39 +109,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile =
-                          "hidden_constraint_names." + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(
-                                  new RegularExpressionExclusionRule(
-                                      ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-                              .includeAllSequences()
-                              .includeAllRoutines();
-                      final LoadOptionsBuilder loadOptionsBuilder =
-                          LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions())
-                              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-                      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-                          SchemaTextOptionsBuilder.builder(textOptions);
-                      schemaTextOptionsBuilder.sortTables(true);
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile),
-                              outputFormat));
+                      compareHideConstraintNamesOutput(connection, textOptions, outputFormat);
                     }));
   }
 
@@ -161,35 +129,8 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 identifierQuotingStrategy ->
                     () -> {
-                      final OutputFormat outputFormat = TextOutputFormat.text;
-                      textOptionsBuilder.withIdentifierQuotingStrategy(identifierQuotingStrategy);
-                      final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
-
-                      final String referenceFile =
-                          "schema_"
-                              + identifierQuotingStrategy.name()
-                              + "."
-                              + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-                              .includeAllRoutines();
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions());
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(
-                          SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(IDENTIFIER_QUOTING_OUTPUT + referenceFile),
-                              outputFormat));
+                      compareIdentifierQuotingOutput(
+                          connection, textOptionsBuilder, identifierQuotingStrategy);
                     }));
   }
 
@@ -210,30 +151,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile = "schema_detailed." + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-                              .includeAllRoutines();
-                      final LoadOptionsBuilder loadOptionsBuilder =
-                          LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions())
-                              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(
-                          SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(NO_REMARKS_OUTPUT + referenceFile), outputFormat));
+                      compareNoRemarksOutput(connection, textOptions, outputFormat);
                     }));
   }
 
@@ -255,27 +173,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile = "schema_detailed." + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-                              .includeAllRoutines();
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions());
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(
-                          SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(NO_SCHEMA_COLORS_OUTPUT + referenceFile),
-                              outputFormat));
+                      compareNoSchemaColorsOutput(connection, textOptions, outputFormat);
                     }));
   }
 
@@ -293,38 +191,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile =
-                          "show_ordinal_numbers." + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(
-                                  new RegularExpressionExclusionRule(
-                                      ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-                              .includeAllSequences()
-                              .includeAllRoutines();
-                      final LoadOptionsBuilder loadOptionsBuilder =
-                          LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions())
-                              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-                      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-                          SchemaTextOptionsBuilder.builder(textOptions);
-                      schemaTextOptionsBuilder.sortTables(true);
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(ORDINAL_OUTPUT + referenceFile), outputFormat));
+                      compareOrdinalOutput(connection, textOptions, outputFormat);
                     }));
   }
 
@@ -345,37 +212,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile = "routines." + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(
-                                  new RegularExpressionExclusionRule(
-                                      ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-                              .includeTables(new ExcludeAll())
-                              .includeAllRoutines();
-                      final LoadOptionsBuilder loadOptionsBuilder =
-                          LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions())
-                              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-                      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-                          SchemaTextOptionsBuilder.builder(textOptions);
-                      schemaTextOptionsBuilder.sortTables(true).noInfo();
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(ROUTINES_OUTPUT + referenceFile), outputFormat));
+                      compareRoutinesOutput(connection, textOptions, outputFormat);
                     }));
   }
 
@@ -393,42 +230,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile = "schema_standard." + outputFormat.getFormat();
-
-                      final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
-                          SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard);
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(
-                                  new RegularExpressionExclusionRule(
-                                      ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-                              .includeAllRoutines();
-                      final LoadOptionsBuilder loadOptionsBuilder =
-                          LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions());
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions())
-                              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-                      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-                          SchemaTextOptionsBuilder.builder(textOptions);
-                      schemaTextOptionsBuilder.sortTables(true);
-
-                      final Config config = schemaTextOptionsBuilder.toConfig();
-                      config.put("weak-associations", Boolean.TRUE);
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(config);
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile),
-                              outputFormat));
+                      compareShowWeakAssociationsOutput(connection, textOptions, outputFormat);
                     }));
   }
 
@@ -445,41 +247,33 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile = "schema_maximum." + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(
-                                  new RegularExpressionExclusionRule(
-                                      ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-                              .includeAllRoutines();
-                      final LoadOptionsBuilder loadOptionsBuilder =
-                          LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions())
-                              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-                      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-                          SchemaTextOptionsBuilder.builder(textOptions);
-                      schemaTextOptionsBuilder.sortTables(true);
-
-                      final Config additionalConfig = new Config();
-                      additionalConfig.put("load-row-counts", true);
-                      additionalConfig.merge(schemaTextOptionsBuilder.toConfig());
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(additionalConfig);
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(TABLE_ROW_COUNT_OUTPUT + referenceFile),
-                              outputFormat));
+                      compareTableRowCountOutput(connection, textOptions, outputFormat);
                     }));
+  }
+
+  @Test
+  public void compareTitleOutput(final Connection connection) throws Exception {
+    clean(WITH_TITLE_OUTPUT);
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+        .noRemarks()
+        .noSchemaCrawlerInfo()
+        .showDatabaseInfo(false)
+        .showJdbcDriverInfo(false);
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    assertAll(
+        Arrays.asList("list", "schema").stream()
+            .flatMap(
+                command ->
+                    outputFormats()
+                        .map(
+                            outputFormat ->
+                                () -> {
+                                  compareTitleOutput(
+                                      connection, textOptions, command, outputFormat);
+                                })));
   }
 
   @Test
@@ -499,39 +293,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      final String referenceFile =
-                          "show_unqualified_names." + outputFormat.getFormat();
-
-                      final LimitOptionsBuilder limitOptionsBuilder =
-                          LimitOptionsBuilder.builder()
-                              .includeSchemas(
-                                  new RegularExpressionExclusionRule(
-                                      ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-                              .includeAllSequences()
-                              .includeAllRoutines();
-                      final LoadOptionsBuilder loadOptionsBuilder =
-                          LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptions schemaCrawlerOptions =
-                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                              .withLimitOptions(limitOptionsBuilder.toOptions())
-                              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-                      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-                          SchemaTextOptionsBuilder.builder(textOptions);
-                      schemaTextOptionsBuilder.sortTables(true);
-
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-                      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-
-                      assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(UNQUALIFIED_NAMES_OUTPUT + referenceFile),
-                              outputFormat));
+                      compareUnqualifiedNamesOutput(connection, textOptions, outputFormat);
                     }));
   }
 
@@ -540,61 +302,342 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
   }
 
-  @Test
-  public void titleOutput(final Connection connection) throws Exception {
-    clean(WITH_TITLE_OUTPUT);
+  protected abstract Stream<OutputFormat> outputFormats();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-        .noRemarks()
-        .noSchemaCrawlerInfo()
-        .showDatabaseInfo(false)
-        .showJdbcDriverInfo(false);
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+  private void compareHideConstraintNamesOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "hidden_constraint_names." + outputFormat.getFormat();
 
-    assertAll(
-        Arrays.asList("list", "schema")
-            .stream()
-            .flatMap(
-                command ->
-                    outputFormats()
-                        .map(
-                            outputFormat ->
-                                () -> {
-                                  final String referenceFile =
-                                      String.format(
-                                          "%s_with_title.%s", command, outputFormat.getFormat());
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeAllSequences()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
-                                  final LimitOptionsBuilder limitOptionsBuilder =
-                                      LimitOptionsBuilder.builder()
-                                          .includeSchemas(
-                                              new RegularExpressionInclusionRule(".*\\.BOOKS"));
-                                  final SchemaCrawlerOptions schemaCrawlerOptions =
-                                      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                                          .withLimitOptions(limitOptionsBuilder.toOptions());
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
+    schemaTextOptionsBuilder.sortTables(true);
 
-                                  final OutputOptionsBuilder outputOptionsBuilder =
-                                      OutputOptionsBuilder.builder()
-                                          .title("Database Design for Books and Publishers");
-                                  final OutputOptions outputOptions =
-                                      outputOptionsBuilder.toOptions();
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
-                                  final SchemaCrawlerExecutable executable =
-                                      new SchemaCrawlerExecutable(command);
-                                  executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                                  executable.setAdditionalConfiguration(
-                                      SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-                                  executable.setOutputOptions(outputOptions);
-
-                                  assertThat(
-                                      outputOf(
-                                          executableExecution(
-                                              connection, executable, outputFormat)),
-                                      hasSameContentAndTypeAs(
-                                          classpathResource(WITH_TITLE_OUTPUT + referenceFile),
-                                          outputFormat));
-                                })));
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile), outputFormat));
   }
 
-  protected abstract Stream<OutputFormat> outputFormats();
+  private void compareIdentifierQuotingOutput(
+      final Connection connection,
+      final SchemaTextOptionsBuilder textOptionsBuilder,
+      final IdentifierQuotingStrategy identifierQuotingStrategy)
+      throws Exception {
+    final OutputFormat outputFormat = TextOutputFormat.text;
+    textOptionsBuilder.withIdentifierQuotingStrategy(identifierQuotingStrategy);
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    final String referenceFile =
+        "schema_" + identifierQuotingStrategy.name() + "." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(IDENTIFIER_QUOTING_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareNoRemarksOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "schema_detailed." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(NO_REMARKS_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareNoSchemaColorsOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "schema_detailed." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(NO_SCHEMA_COLORS_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareOrdinalOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "show_ordinal_numbers." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeAllSequences()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
+    schemaTextOptionsBuilder.sortTables(true);
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(classpathResource(ORDINAL_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareRoutinesOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "routines." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeTables(new ExcludeAll())
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
+    schemaTextOptionsBuilder.sortTables(true).noInfo();
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(classpathResource(ROUTINES_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareShowWeakAssociationsOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "schema_standard." + outputFormat.getFormat();
+
+    final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
+        SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard);
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
+    schemaTextOptionsBuilder.sortTables(true);
+
+    final Config config = schemaTextOptionsBuilder.toConfig();
+    config.put("weak-associations", Boolean.TRUE);
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareTableRowCountOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "schema_maximum." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
+    schemaTextOptionsBuilder.sortTables(true);
+
+    final Config additionalConfig = new Config();
+    additionalConfig.put("load-row-counts", true);
+    additionalConfig.merge(schemaTextOptionsBuilder.toConfig());
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(TABLE_ROW_COUNT_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareTitleOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final String command,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile =
+        String.format("%s_with_title.%s", command, outputFormat.getFormat());
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final OutputOptionsBuilder outputOptionsBuilder =
+        OutputOptionsBuilder.builder().title("Database Design for Books and Publishers");
+    final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executable.setOutputOptions(outputOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(WITH_TITLE_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareUnqualifiedNamesOutput(
+      final Connection connection,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "show_unqualified_names." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeAllSequences()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
+    schemaTextOptionsBuilder.sortTables(true);
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(connection, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(UNQUALIFIED_NAMES_OUTPUT + referenceFile), outputFormat));
+  }
 }

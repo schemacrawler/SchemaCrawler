@@ -38,6 +38,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readFully;
 
@@ -56,6 +57,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
@@ -69,16 +71,16 @@ public class SchemaCrawlerExecutableTest {
 
     final Path testOutputFile = createTempFilePath("sc", "data");
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
-
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final OutputOptions outputOptions =
         ExecutableTestUtility.newOutputOptions("text", testOutputFile);
 
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     executable.setConnection(connection);
     executable.execute();
 
@@ -99,6 +101,7 @@ public class SchemaCrawlerExecutableTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executable_bad_command(final Connection connection) throws Exception {
 
     final String command1 = "bad-command";

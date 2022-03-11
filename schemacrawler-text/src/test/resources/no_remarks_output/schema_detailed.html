@@ -388,6 +388,76 @@ td.section {
 		<td class='minwidth'>COUNTRY</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Triggers</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRG_AUTHORS</td>
+		<td class='description right'>[trigger, after delete, per row]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>CHECK_UPPERCASE_STATE</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>STATE</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10106</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10107</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>FIRSTNAME</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10108</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>LASTNAME</td>
+		<td class='minwidth'></td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -516,6 +586,36 @@ td.section {
 		<td class='spacer'></td>
 		<td class='minwidth'>AUTHORID</td>
 		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10124</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>BOOKID</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10125</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>AUTHORID</td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -665,6 +765,60 @@ td.section {
 		<td class='minwidth'>PREVIOUSEDITIONID</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>U_PREVIOUSEDITION</td>
+		<td class='description right'>[unique constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>PREVIOUSEDITIONID</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10114</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10115</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>TITLE</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10116</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>PUBLISHERID</td>
+		<td class='minwidth'></td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -732,6 +886,24 @@ td.section {
 		<td class='minwidth'>ID</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10092</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'></td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -788,6 +960,24 @@ td.section {
 		<td class='spacer'></td>
 		<td class='minwidth'>ID</td>
 		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10103</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -855,6 +1045,48 @@ td.section {
 		<td class='spacer'></td>
 		<td class='minwidth'>ID</td>
 		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10095</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10096</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>FIRSTNAME</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10097</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>LASTNAME</td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1053,6 +1285,48 @@ td.section {
 		<td class='spacer'></td>
 		<td class='minwidth'>ΜΟΝΑΔΙΚΌΣ</td>
 		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10137</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΜΟΝΑΔΙΚΌΣ</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10138</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΤΊΤΛΟΣ</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10139</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΕΚΔΌΤΗΣ</td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>

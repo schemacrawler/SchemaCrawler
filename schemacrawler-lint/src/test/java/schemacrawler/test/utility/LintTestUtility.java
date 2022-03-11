@@ -30,6 +30,7 @@ package schemacrawler.test.utility;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -56,7 +57,9 @@ public final class LintTestUtility {
       final Config additionalConfig,
       final String referenceFileName)
       throws Exception {
-    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     if (!isBlank(linterConfigsResource)) {
       final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
       final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
@@ -64,11 +67,11 @@ public final class LintTestUtility {
 
       final Config config = optionsBuilder.toConfig();
       config.merge(additionalConfig);
-      lintExecutable.setAdditionalConfiguration(config);
+      executable.setAdditionalConfiguration(config);
     }
 
     assertThat(
-        outputOf(executableExecution(connection, lintExecutable)),
+        outputOf(executableExecution(connection, executable)),
         hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 

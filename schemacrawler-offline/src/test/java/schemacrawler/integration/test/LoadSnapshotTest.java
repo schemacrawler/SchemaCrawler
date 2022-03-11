@@ -34,6 +34,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -53,6 +54,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -75,10 +77,12 @@ public class LoadSnapshotTest {
   public void serializeCatalog(final Connection connection) {
 
     try {
+
       final SchemaCrawlerOptions schemaCrawlerOptions =
           DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+      final Catalog catalog =
+          getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
       assertThat("Could not obtain catalog", catalog, notNullValue());
       assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 

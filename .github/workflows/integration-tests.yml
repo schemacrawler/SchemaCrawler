@@ -120,7 +120,7 @@ jobs:
         bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
     - id: upload-coverage-test-results
       name: Upload coverage test results
-      uses: actions/upload-artifact@3446296876d12d4e3a0f3145a3c87e67bf0a16b5 # pin@v1
+      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
       with:
         name: coverage-test-results
         path: ./schemacrawler/target/site/jacoco-aggregate
@@ -161,7 +161,7 @@ jobs:
 # CHECK WEBSITE LINKS
     - id: check-links
       name: Check website links
-      uses: lycheeverse/lychee-action@d2bc7de736f6be63f02f38316295eaf5ea507b9f # @v1.3.1
+      uses: lycheeverse/lychee-action@f0cc8084f54ff3b7bb207090dbe8adcb0f1ea47f # @v1.3.2
       with:
         args: --verbose --accept 200,999 --no-progress ./schemacrawler-website/target/_website/**/*
       env:
@@ -169,7 +169,7 @@ jobs:
 
     - id: upload-link-check-report
       name: Upload website link check report
-      uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # pin@v2
+      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
       with:
         path: ./lychee/out.md
         name: website-link-check-report.md

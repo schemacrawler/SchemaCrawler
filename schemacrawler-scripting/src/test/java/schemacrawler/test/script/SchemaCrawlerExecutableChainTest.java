@@ -31,6 +31,7 @@ package schemacrawler.test.script;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -109,6 +110,7 @@ public class SchemaCrawlerExecutableChainTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     executable.setConnection(connection);
     executable.execute();
 

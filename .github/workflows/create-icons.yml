@@ -17,7 +17,7 @@ jobs:
 # CHECKOUT CODE
     - id: checkout-code
       name: Checkout code
-      uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+      uses: actions/checkout@v3
 
 # CREATE ICONS
     - id: create-icons
@@ -63,7 +63,7 @@ jobs:
 # UPLOAD ICONS
     - id: upload-icons
       name: Upload generated icons
-      uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # pin@v2
+      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
       with:
         name: icons
         path: ./schemacrawler-website/src/site/resources/images/schemacrawler_*.*

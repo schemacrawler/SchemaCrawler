@@ -4,6 +4,7 @@ import static java.io.File.createTempFile;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -50,6 +51,7 @@ public class Issue342Test {
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     final ConfigurationException exception =
         assertThrows(ConfigurationException.class, () -> executable.execute());

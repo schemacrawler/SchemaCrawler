@@ -71,6 +71,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -87,6 +88,7 @@ public class OfflineSnapshotTest {
   private Path serializedCatalogFile;
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotCommandLine() throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -111,6 +113,7 @@ public class OfflineSnapshotTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotCommandLineWithFilters() throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -134,6 +137,7 @@ public class OfflineSnapshotTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotCommandLineWithSchemaFilters() throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -163,6 +167,7 @@ public class OfflineSnapshotTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotExecutable() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeAllRoutines();

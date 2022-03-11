@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -67,6 +68,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.formatter.serialize.JsonSerializedCatalog;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -91,7 +93,8 @@ public class CatalogJsonSerializationTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");
     try (final OutputStream out = new FileOutputStream(testOutputFile.toFile())) {

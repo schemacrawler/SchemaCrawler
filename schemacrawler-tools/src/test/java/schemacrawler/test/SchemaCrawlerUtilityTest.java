@@ -48,12 +48,14 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerUtilityTest {
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void getCatalog(final Connection connection) throws Exception {
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions());
     assertThat(catalog, is(not(nullValue())));

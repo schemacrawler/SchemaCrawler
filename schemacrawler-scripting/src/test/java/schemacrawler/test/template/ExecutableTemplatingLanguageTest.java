@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.template;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -55,11 +56,14 @@ public class ExecutableTemplatingLanguageTest {
 
   private static Path executableTemplateFromFile(
       final Connection connection, final String language, final Path scriptFile) throws Exception {
-    final SchemaCrawlerExecutable executable = executableOf("template");
+
     final Config additionalConfig = new Config();
     additionalConfig.put("template", scriptFile.toString());
     additionalConfig.put("templating-language", language);
+
+    final SchemaCrawlerExecutable executable = executableOf("template");
     executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     return executableExecution(connection, executable, "text");
   }

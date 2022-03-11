@@ -30,6 +30,7 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -129,6 +130,7 @@ public class LintOutputTest {
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable("lint");
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+                      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),

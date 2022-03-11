@@ -42,7 +42,7 @@ public class TestWithSystemProperty implements BeforeEachCallback, AfterEachCall
 
   @Override
   public void afterEach(final ExtensionContext context) throws Exception {
-    System.setProperty(systemProperty.getKey(), systemProperty.getValue());
+    System.clearProperty(systemProperty.getKey());
     systemProperty = null;
   }
 

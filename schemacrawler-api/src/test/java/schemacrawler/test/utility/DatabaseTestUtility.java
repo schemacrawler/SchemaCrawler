@@ -47,15 +47,14 @@ import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class DatabaseTestUtility {
 
+  public static final SchemaRetrievalOptions schemaRetrievalOptionsDefault =
+      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
   public static final SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel =
       getMaximumSchemaCrawlerOptions();
 
   public static Catalog getCatalog(
       final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions) {
-    return getCatalog(
-        connection,
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-        schemaCrawlerOptions);
+    return getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
   }
 
   public static Catalog getCatalog(

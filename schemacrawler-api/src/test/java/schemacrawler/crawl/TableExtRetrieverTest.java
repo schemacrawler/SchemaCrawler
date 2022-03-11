@@ -36,6 +36,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -214,7 +215,7 @@ public class TableExtRetrieverTest {
         (MutableCatalog)
             getCatalog(
                 connection,
-                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                schemaRetrievalOptionsDefault,
                 SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
     final Collection<Table> tables = catalog.getTables();

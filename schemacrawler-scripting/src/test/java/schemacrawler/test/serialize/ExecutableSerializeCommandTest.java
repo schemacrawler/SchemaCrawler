@@ -31,6 +31,7 @@ package schemacrawler.test.serialize;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.oneOf;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 
@@ -67,6 +68,7 @@ public class ExecutableSerializeCommandTest {
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("serialize");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     return executableExecution(connection, executable, serializationFormat);
   }

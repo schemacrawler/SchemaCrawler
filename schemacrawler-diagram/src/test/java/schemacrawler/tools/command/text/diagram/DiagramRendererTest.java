@@ -203,6 +203,7 @@ public class DiagramRendererTest {
 
   @Test
   @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void diagramRenderer_graphviz(final TestContext testContext, final Connection connection)
       throws Exception {
 
@@ -221,6 +222,7 @@ public class DiagramRendererTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void diagramRenderer_graphviz_java(
       final TestContext testContext, final Connection connection) throws Exception {
 
@@ -240,6 +242,7 @@ public class DiagramRendererTest {
 
   @Test
   @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz(
       final TestContext testContext, final Connection connection) throws Exception {
 
@@ -259,6 +262,7 @@ public class DiagramRendererTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz_java(
       final TestContext testContext, final Connection connection) throws Exception {
 

@@ -46,6 +46,7 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -63,6 +64,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void operationOutput(final Connection connection) throws Exception {
     for (final OperationType operation : OperationType.values()) {
       textOutputTest(operation.name(), connection, new Config());
@@ -70,6 +72,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void queryOutput(final Connection connection) throws Exception {
     final String queryCommand = "all_tables";
     final Config config = new Config();
@@ -81,6 +84,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void queryOverOutput(final Connection connection) throws Exception {
     final String queryCommand = "dump_tables";
     final Config config = new Config();
@@ -90,6 +94,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void schemaTextOutput(final Connection connection) throws Exception {
     for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values()) {
       textOutputTest(schemaTextDetailType.name(), connection, new Config());
@@ -97,6 +102,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void sortedColumnsOutput(final Connection connection) throws Exception {
     final String queryCommand = "dump_tables_sorted_columns";
     final Config config = new Config();

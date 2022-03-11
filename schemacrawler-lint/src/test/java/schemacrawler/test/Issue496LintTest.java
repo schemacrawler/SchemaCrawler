@@ -34,6 +34,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -54,9 +55,12 @@ import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class Issue496LintTest {
+
+  private static final Config config = new Config();
 
   @Test
   public void issue496(final Connection connection) throws Exception {
@@ -68,7 +72,8 @@ public class Issue496LintTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -94,7 +99,8 @@ public class Issue496LintTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);

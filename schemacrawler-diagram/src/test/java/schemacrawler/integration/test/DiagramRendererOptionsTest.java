@@ -32,6 +32,7 @@ import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -122,6 +123,7 @@ public class DiagramRendererOptionsTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setConnection(connection);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails
