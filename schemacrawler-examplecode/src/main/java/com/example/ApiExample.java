@@ -58,7 +58,7 @@ public final class ApiExample {
         }
 
         for (final Column column : table.getColumns()) {
-          System.out.println("     o--> " + column + " (" + column.getColumnDataType() + ")");
+          System.out.printf("     o--> %s (%s)%n", column, column.getType());
         }
       }
     }
