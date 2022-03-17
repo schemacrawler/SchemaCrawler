@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultSchema": "STOCKMARKET",
+  "schemas":[
+    {
+      "name": "STOCKMARKET",
+      "type": "custom",
+      "factory": "org.apache.calcite.adapter.csv.CsvSchemaFactory",
+      "operand":{
+        "directory": "."
+      }
+    }
+  ]
+}
