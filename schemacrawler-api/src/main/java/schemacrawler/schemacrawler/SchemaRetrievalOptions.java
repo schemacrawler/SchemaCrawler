@@ -60,9 +60,10 @@ public final class SchemaRetrievalOptions implements Options {
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder) {
     final SchemaRetrievalOptionsBuilder bldr =
         builder == null ? SchemaRetrievalOptionsBuilder.builder() : builder;
+
     dbServerType = bldr.dbServerType;
-    supportsSchemas = bldr.supportsSchemas;
-    supportsCatalogs = bldr.supportsCatalogs;
+    supportsCatalogs = bldr.overridesSupportsCatalogs.orElse(bldr.supportsCatalogs);
+    supportsSchemas = bldr.overridesSupportsSchemas.orElse(bldr.supportsSchemas);
     identifierQuoteString = bldr.identifierQuoteString;
     informationSchemaViews = bldr.informationSchemaViews;
     identifiers = bldr.identifiers;
