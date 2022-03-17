@@ -48,6 +48,8 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -83,6 +85,15 @@ public class TeiidTest extends BaseAdditionalDatabaseTest {
 
   @Test
   public void testTeiidWithConnection() throws Exception {
+
+    // The Teiid JDBC driver incorrectly reports that it does not support catalogs and schemas
+    // Override that behavior
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.builder()
+            .withoutSupportsCatalogs()
+            .withoutSupportsSchemas()
+            .toOptions();
+
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -95,6 +106,7 @@ public class TeiidTest extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     final String expectedResource = String.format("testTeiidWithConnection.%s.txt", javaVersion());
     assertThat(
