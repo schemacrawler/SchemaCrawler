@@ -38,7 +38,6 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
@@ -48,15 +47,12 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@EnabledIfSystemProperty(named = "lightdb", matches = "^((?!(false|no)).)*$")
-public class TeiidTest extends BaseAdditionalDatabaseTest {
+public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
   private Connection connection;
 
@@ -70,7 +66,7 @@ public class TeiidTest extends BaseAdditionalDatabaseTest {
 
     final FileManagedConnectionFactory managedconnectionFactory =
         new FileManagedConnectionFactory();
-    managedconnectionFactory.setParentDirectory("src/main/resources/teiid-vdb");
+    managedconnectionFactory.setParentDirectory("src/test/resources/teiid-vdb");
     server.addConnectionFactory(
         "java:/marketdata-price-file", managedconnectionFactory.createConnectionFactory());
 
@@ -78,21 +74,31 @@ public class TeiidTest extends BaseAdditionalDatabaseTest {
     server.start(config);
 
     server.deployVDB(
-        TeiidTest.class.getClassLoader().getResourceAsStream("teiid-vdb/stock-market-vdb.xml"));
+        WithoutPluginTeiidTest.class
+            .getClassLoader()
+            .getResourceAsStream("teiid-vdb/stock-market-vdb.xml"));
 
     connection = server.getDriver().connect("jdbc:teiid:StockMarket", null);
   }
 
   @Test
-  public void testTeiidWithConnection() throws Exception {
+  public void testTeiidDump() throws Exception {
 
-    // The Teiid JDBC driver incorrectly reports that it does not support catalogs and schemas
-    // Override that behavior
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.builder()
-            .withoutSupportsCatalogs()
-            .withoutSupportsSchemas()
-            .toOptions();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("dump");
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    final String expectedResource = "testTeiidDump.txt";
+    assertThat(
+        outputOf(executableExecution(connection, executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  public void testTeiidWithConnection() throws Exception {
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -106,7 +112,6 @@ public class TeiidTest extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     final String expectedResource = String.format("testTeiidWithConnection.%s.txt", javaVersion());
     assertThat(

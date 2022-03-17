@@ -105,9 +105,9 @@
       <version>1.16.3</version>
       <scope>test</scope>
     </dependency>
-	
-	<!-- Teiid -->
-	<dependency>
+
+    <!-- Teiid -->
+    <dependency>
       <groupId>org.teiid</groupId>
       <artifactId>teiid-runtime</artifactId>
       <version>16.0.0</version>
@@ -125,6 +125,6 @@
       <version>16.0.0</version>
       <scope>test</scope>
     </dependency>
-    
+
   </dependencies>
 </project>
