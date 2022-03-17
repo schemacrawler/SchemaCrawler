@@ -3,16 +3,12 @@
 SchemaCrawler release notes.
 
 
-<a name="a16.16.14"></a>
-## Release 16.16.14 - 2022-03-10
-
-- Throw runtime exception if SchemaCrawler database plugin is not found on the CLASSPATH
-
-
 <a name="a16.16.12"></a>
 ## Release 16.16.12 - 2022-02-20
 
+- Add database plugin to support Teiid
 - Add support for hidden or invisible columns in MySQL and MariaDB
+- Throw runtime exception if SchemaCrawler database plugin is not found on the CLASSPATH
 
 
 <a name="a16.16.11"></a>
