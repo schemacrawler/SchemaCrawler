@@ -105,6 +105,26 @@
       <version>1.16.3</version>
       <scope>test</scope>
     </dependency>
+	
+	<!-- Teiid -->
+	<dependency>
+      <groupId>org.teiid</groupId>
+      <artifactId>teiid-runtime</artifactId>
+      <version>16.0.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.teiid.connectors</groupId>
+      <artifactId>translator-file</artifactId>
+      <version>16.0.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.teiid.wildfly.connectors</groupId>
+      <artifactId>connector-file</artifactId>
+      <version>16.0.0</version>
+      <scope>test</scope>
+    </dependency>
     
   </dependencies>
 </project>
