@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb
+  name="StockMarket"
+  version="1"
+>
+
+  <description>Stock Prices Virtual Database</description>
+
+  <!-- Each model represents a access to one or more sources. The name of 
+    the model will be used as a top level schema name for all of the metadata 
+    imported from the connector. -->
+  <model name="MarketData">
+    <source
+      name="text-connector"
+      translator-name="file"
+      connection-jndi-name="java:/marketdata-price-file" />
+  </model>
+
+  <model
+    name="Stocks"
+    type="VIRTUAL"
+  >
+    <metadata type="DDL"><![CDATA[
+                
+        CREATE VIEW StockPrices (
+            Symbol string,
+            Price bigdecimal
+            )
+            AS  
+               SELECT SP.symbol, SP.price
+                FROM (EXEC MarketData.getTextFiles('*.txt')) AS f, 
+                    TEXTTABLE(f.file COLUMNS symbol string, price bigdecimal HEADER) AS SP;
+                 
+        ]]>
+    </metadata>
+  </model>
+
+
+
+</vdb>
