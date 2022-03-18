@@ -1,0 +1,42 @@
+[
+ {
+   "SYMBOL": "RHT",
+   "PRICE": 30.0
+ },
+ {
+   "SYMBOL": "BA",
+   "PRICE": 42.75
+ },
+ {
+   "SYMBOL": "MON",
+   "PRICE": 78.75
+ },
+ {
+   "SYMBOL": "PNRA",
+   "PRICE": 84.97
+ },
+ {
+   "SYMBOL": "SY",
+   "PRICE": 24.3
+ },
+ {
+   "SYMBOL": "BTU",
+   "PRICE": 41.25
+ },
+ {
+   "SYMBOL": "IBM",
+   "PRICE": 80.89
+ },
+ {
+   "SYMBOL": "DELL",
+   "PRICE": 10.75
+ },
+ {
+   "SYMBOL": "HPQ",
+   "PRICE": 31.52
+ },
+ {
+   "SYMBOL": "GE",
+   "PRICE": 16.45
+ }
+]
