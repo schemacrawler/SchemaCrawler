@@ -41,6 +41,7 @@ import java.sql.DriverManager;
 import java.util.Properties;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -69,6 +70,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
+  @Disabled("Disable until Calcite example is worked out")
   public void testCalciteDump() throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();

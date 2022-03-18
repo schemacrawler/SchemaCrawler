@@ -5,7 +5,7 @@ Dump
 
 
 
-STOCKMARKET.STOCKPRICES                                                 
+STOCKS.STOCKPRICES                                                      
 ------------------------------------------------------------------------
 SYMBOL	PRICE
 BA	42.75
