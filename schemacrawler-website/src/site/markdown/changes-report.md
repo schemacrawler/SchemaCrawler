@@ -4,7 +4,7 @@ SchemaCrawler release notes.
 
 
 <a name="a16.16.12"></a>
-## Release 16.16.12 - 2022-02-20
+## Release 16.16.12 - 2022-03-20
 
 - Add database plugin to support Teiid
 - Add support for hidden or invisible columns in MySQL and MariaDB
