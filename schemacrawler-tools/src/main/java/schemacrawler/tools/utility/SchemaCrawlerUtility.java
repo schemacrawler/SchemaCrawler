@@ -259,7 +259,7 @@ public final class SchemaCrawlerUtility {
     final boolean useWithoutDatabasePlugin =
         urlDBServerType.equalsIgnoreCase(withoutDatabasePlugin);
 
-    // Throw exception is plugin is needed, but not found
+    // Throw exception if plugin is needed, but not found
     if (!dbConnectorPresent && !useWithoutDatabasePlugin) {
       throw new InternalRuntimeException(
           String.format(
