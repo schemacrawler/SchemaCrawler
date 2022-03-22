@@ -148,12 +148,20 @@ public final class SchemaCrawlerUtility {
    */
   private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(
       final Connection connection) {
+
     checkConnection(connection);
+
     final DatabaseConnectorRegistry registry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     DatabaseConnector dbConnector = registry.findDatabaseConnector(connection);
     final DatabaseServerType databaseServerType = dbConnector.getDatabaseServerType();
-    LOGGER.log(Level.INFO, "Using database plugin for " + databaseServerType);
+
+    // Log SchemaCrawler database plugin being used
+    if (databaseServerType.isUnknownDatabaseSystem()) {
+      LOGGER.log(Level.INFO, "Not using any SchemaCrawler database plugin");
+    } else {
+      LOGGER.log(Level.INFO, "Using SchemaCrawler database plugin for " + databaseServerType);
+    }
 
     final boolean useMatchedDatabasePlugin =
         useMatchedDatabasePlugin(connection, databaseServerType);
@@ -263,8 +271,9 @@ public final class SchemaCrawlerUtility {
     if (!dbConnectorPresent && !useWithoutDatabasePlugin) {
       throw new InternalRuntimeException(
           String.format(
-              "SchemaCrawler database plugin should be on the CLASSPATH for <%s>, "
-                  + "or the SC_WITHOUT_DATABASE_PLUGIN environmental variable should be set",
+              "SchemaCrawler database plugin should be on the CLASSPATH for <%s>, %n"
+                  + "or \"SC_WITHOUT_DATABASE_PLUGIN\" should be set to the name of the missing plugin %n"
+                  + "either as an environmental variable or as a Java system property",
               url));
     }
 
