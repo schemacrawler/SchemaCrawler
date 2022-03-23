@@ -82,7 +82,7 @@
 - To start SchemaCrawler with Microsoft SQL Server, run
   `docker-compose -f schemacrawler.yml -f sqlserver.yml up -d`
 - Create a test Microsoft SQL Server database schema, run
-  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:sqlserver://sqlserver:1433;databaseName=master" --user SA --password Schem#Crawl3r --debug`
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:sqlserver://sqlserver:1433;databaseName=master&encrypt=false" --user SA --password Schem#Crawl3r --debug`
 
 ### Testing
 
