@@ -58,13 +58,14 @@ RUN \
 USER schcrwlr
 WORKDIR /home/schcrwlr
 
-# Copy configuration files for the current user
+# Copy configuration and example files with rw-rw-r-- for the current user
 COPY \
     --chown=schcrwlr:users \
-    ./sc.db /home/schcrwlr/sc.db
-COPY \
-    --chown=schcrwlr:users \
-    ./config/* /home/schcrwlr/
+    --chmod=664 \
+    ./config/* \
+    ./sc.db \
+    ./*.py \
+    /home/schcrwlr
 
 # Create aliases for SchemaCrawler
 RUN \

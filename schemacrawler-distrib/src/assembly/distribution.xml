@@ -52,6 +52,11 @@
     <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.colormap.properties"
       todir="${schemacrawler.base-distribution}/config" />
+    <fixcrlf
+      srcdir="${schemacrawler.base-distribution}/config"
+      includes="*.properties"
+      eol="lf"
+      eof="remove"/>
 
     <copy todir="${schemacrawler.base-distribution}/lib">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/target/_jdbc-drivers/lib">
@@ -157,6 +162,11 @@
         <include name="**/dbml.py" />
       </fileset>
     </copy>
+    <fixcrlf
+      srcdir="${schemacrawler.expanded-distribution}"
+      includes="*.py"
+      eol="lf"
+      eof="remove"/>
 
   </target>
 
