@@ -57,7 +57,7 @@
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --server oracle --host oracle --database xepdb1 --user "SYS AS SYSDBA" --password test --info-level minimum -c list`
+  `schemacrawler --server oracle --host oracle --database xepdb1 --user "SYS AS SYSDBA" --password test --schemas BOOKS --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
 
 #### Oracle 11
@@ -65,7 +65,7 @@
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --url "jdbc:oracle:thin:@oracle:1521:xe" --user "SYS AS SYSDBA" --password test --info-level minimum -c list`
+  `schemacrawler --url "jdbc:oracle:thin:@oracle:1521:xe" --user "SYS AS SYSDBA" --password test --schemas BOOKS --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
 
 ### Tear Down
