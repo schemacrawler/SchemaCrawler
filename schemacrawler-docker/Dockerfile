@@ -64,7 +64,7 @@ COPY \
     ./config/* \
     ./sc.db \
     ./*.py \
-    /home/schcrwlr
+    /home/schcrwlr/
 
 # Create aliases for SchemaCrawler
 RUN \
