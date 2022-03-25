@@ -61,7 +61,6 @@ WORKDIR /home/schcrwlr
 # Copy configuration and example files with rw-rw-r-- for the current user
 COPY \
     --chown=schcrwlr:users \
-    --chmod=664 \
     ./config/* \
     ./sc.db \
     ./*.py \
