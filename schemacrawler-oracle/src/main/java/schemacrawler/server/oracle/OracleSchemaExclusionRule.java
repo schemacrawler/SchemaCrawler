@@ -30,13 +30,18 @@ package schemacrawler.server.oracle;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.inclusionrule.InclusionRule;
+import us.fatehi.utility.string.StringFormat;
 
 public final class OracleSchemaExclusionRule implements InclusionRule {
 
   private static final long serialVersionUID = 4955209955094408513L;
+
+  private static final Logger LOGGER = Logger.getLogger(OracleSchemaExclusionRule.class.getName());
 
   private static final List<String> schemaExclusions =
       Arrays.asList(
@@ -105,15 +110,21 @@ public final class OracleSchemaExclusionRule implements InclusionRule {
   public boolean test(final String text) {
 
     if (schemaExclusions.contains(text)) {
-      return true;
+      LOGGER.log(
+          Level.FINE, new StringFormat("Excluding <%s> since it is on the exclude list", text));
+      return false;
     }
 
     for (final Pattern schemaExclusionPattern : schemaExclusionPatterns) {
       if (schemaExclusionPattern.matcher(text).matches()) {
-        return true;
+        LOGGER.log(
+            Level.FINE,
+            new StringFormat("Excluding <%s> since it matches exclusion pattern", text));
+        return false;
       }
     }
 
-    return false;
+    LOGGER.log(Level.FINE, new StringFormat("Including <%s>", text));
+    return true;
   }
 }
