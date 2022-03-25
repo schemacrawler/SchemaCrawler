@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.16.14"></a>
+## Release 16.16.14 - 2022-03-31
+
+- Distribute Mermaid and DBML diagram creation scripts in Docker image
+
 
 <a name="a16.16.12"></a>
 ## Release 16.16.12 - 2022-03-20
