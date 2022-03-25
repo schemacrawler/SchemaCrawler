@@ -32,6 +32,7 @@ import java.sql.DriverManager;
 import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
+import us.fatehi.utility.database.SqlScript;
 
 @CommandLine.Command(
     description = "Creates a test database schema for testing SchemaCrawler",
@@ -85,7 +86,7 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
     try (final Connection connection =
         DriverManager.getConnection(connectionUrl, user, passwordProvided)) {
       findScriptsResource();
-      System.setProperty("schemacrawler.testdb.SqlScript.debug", String.valueOf(debug));
+      System.setProperty(SqlScript.class.getCanonicalName() + ".debug", String.valueOf(debug));
       final TestSchemaCreator testSchemaCreator =
           new TestSchemaCreator(connection, scriptsresource);
       testSchemaCreator.run();

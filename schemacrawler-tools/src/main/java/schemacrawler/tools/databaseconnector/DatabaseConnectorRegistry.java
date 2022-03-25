@@ -99,6 +99,10 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
       throw new InternalRuntimeException("Could not load database connector registry", e);
     }
 
+    LOGGER.log(
+        Level.CONFIG,
+        new StringFormat("Loaded %d database connectors", databaseConnectorRegistry.size()));
+
     return databaseConnectorRegistry;
   }
 

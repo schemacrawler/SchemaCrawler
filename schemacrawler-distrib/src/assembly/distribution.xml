@@ -52,6 +52,11 @@
     <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.colormap.properties"
       todir="${schemacrawler.base-distribution}/config" />
+    <fixcrlf
+      srcdir="${schemacrawler.base-distribution}/config"
+      includes="*.properties"
+      eol="lf"
+      eof="remove"/>
 
     <copy todir="${schemacrawler.base-distribution}/lib">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/target/_jdbc-drivers/lib">
@@ -69,7 +74,7 @@
     <copy todir="${schemacrawler.base-distribution}/logos">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-website/src/site/resources/images">
         <include name="schemacrawler_logo.*" />
-		<include name="schemacrawler_banner.*" />
+        <include name="schemacrawler_banner.*" />
       </fileset>
     </copy>
 
@@ -148,6 +153,20 @@
       <ivy:resources resolveId="velocity"
         file="${distribution.downloader}/velocity_ivy.xml"/>
     </copy>
+
+    <copy todir="${schemacrawler.expanded-distribution}"
+      flatten="true"
+      overwrite="true">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
+        <include name="**/mermaid.py" />
+        <include name="**/dbml.py" />
+      </fileset>
+    </copy>
+    <fixcrlf
+      srcdir="${schemacrawler.expanded-distribution}"
+      includes="*.py"
+      eol="lf"
+      eof="remove"/>
 
   </target>
 
