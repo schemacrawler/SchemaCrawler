@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle11Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
@@ -57,7 +57,7 @@ import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  private final JdbcDatabaseContainer<?> dbContainer = newOracle11Container();
+  private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;
@@ -72,7 +72,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
-    createDatabase("/oracle-11g.scripts.txt");
+    createDatabase("/oracle.scripts.txt");
 
     schemaOwnerUserDataSource =
         createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKS", "BOOKS", urlx);
