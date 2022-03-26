@@ -41,7 +41,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class Oracle21Test extends BaseOracleWithConnectionTest {
+public class OracleTest extends BaseOracleWithConnectionTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
