@@ -16,7 +16,7 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
   <dependency>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>16.16.12</version>
+    <version>16.16.14</version>
   </dependency>
 </dependencies>
 ```
@@ -26,7 +26,7 @@ In order to use SchemaCrawler in your [Gradle] projects, add a dependency to Sch
 
 ```groovy
 dependencies {
-  compile group: 'us.fatehi', name: 'schemacrawler', version: '16.16.12'
+  compile group: 'us.fatehi', name: 'schemacrawler', version: '16.16.14'
 }
 ```
 
