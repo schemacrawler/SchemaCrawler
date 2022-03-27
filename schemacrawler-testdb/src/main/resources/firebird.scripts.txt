@@ -7,7 +7,7 @@
 #,/db/books/11_domains_A.sql
 ;,/db/books/20_sequences_A.sql
 ;,/db/books/30_tables_01_base_A.sql
-;,/db/books/30_tables_02_pk_autoinc_H.sql
+;,/db/books/30_tables_02_pk_autoinc_G.sql
 ;,/db/books/30_tables_03_spaces_A.sql
 #,/db/books/30_tables_04_special_chars_A.sql
 ;,/db/books/31_views_A.sql
