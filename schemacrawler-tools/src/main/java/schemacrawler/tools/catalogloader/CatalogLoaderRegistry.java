@@ -84,7 +84,8 @@ public final class CatalogLoaderRegistry {
     final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
 
     try {
-      final ServiceLoader<CatalogLoader> serviceLoader = ServiceLoader.load(CatalogLoader.class);
+      final ServiceLoader<CatalogLoader> serviceLoader =
+          ServiceLoader.load(CatalogLoader.class, CatalogLoaderRegistry.class.getClassLoader());
       for (final CatalogLoader catalogLoader : serviceLoader) {
         LOGGER.log(
             Level.CONFIG,
