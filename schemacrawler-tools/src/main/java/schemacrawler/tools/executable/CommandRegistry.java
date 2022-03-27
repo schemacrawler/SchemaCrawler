@@ -68,7 +68,7 @@ public final class CommandRegistry {
 
     try {
       final ServiceLoader<CommandProvider> serviceLoader =
-          ServiceLoader.load(CommandProvider.class);
+          ServiceLoader.load(CommandProvider.class, CommandRegistry.class.getClassLoader());
       for (final CommandProvider commandProvider : serviceLoader) {
         LOGGER.log(
             Level.CONFIG,

@@ -70,7 +70,8 @@ public final class LinterRegistry implements Iterable<String> {
 
     final Map<String, Class<Linter>> linterRegistry = new HashMap<>();
     try {
-      final ServiceLoader<Linter> serviceLoader = ServiceLoader.load(Linter.class);
+      final ServiceLoader<Linter> serviceLoader =
+          ServiceLoader.load(Linter.class, LinterRegistry.class.getClassLoader());
       for (final Linter linter : serviceLoader) {
         final String linterId = linter.getLinterId();
         final Class<Linter> linterClass = (Class<Linter>) linter.getClass();
