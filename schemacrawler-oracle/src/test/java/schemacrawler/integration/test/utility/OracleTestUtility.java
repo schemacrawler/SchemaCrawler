@@ -34,11 +34,6 @@ import org.testcontainers.utility.DockerImageName;
 public final class OracleTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newOracle11Container() {
-    return newOracleContainer("11").usingSid();
-  }
-
-  @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newOracle21Container() {
     return newOracleContainer("21-slim");
   }

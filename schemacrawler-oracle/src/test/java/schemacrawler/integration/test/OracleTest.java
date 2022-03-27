@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle11Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
@@ -41,23 +41,24 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class Oracle11Test extends BaseOracleWithConnectionTest {
+public class OracleTest extends BaseOracleWithConnectionTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle11Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
   @BeforeEach
   public void createDatabase() {
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
-    createDatabase("/oracle-11g.scripts.txt");
+    createDatabase("/oracle.scripts.txt");
   }
 
   @Test
   public void testOracleWithConnection() throws Exception {
     final Connection connection = getConnection();
-    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 14);
+    final String expectedResource =
+        String.format("testOracle21WithConnection.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 33);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
   }
