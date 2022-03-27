@@ -117,7 +117,8 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     final StringBuilder buffer = new StringBuilder(1024);
     try {
       buffer.append("Registered JDBC drivers:").append(System.lineSeparator());
-      final ServiceLoader<Driver> serviceLoader = ServiceLoader.load(Driver.class);
+      final ServiceLoader<Driver> serviceLoader =
+          ServiceLoader.load(Driver.class, DatabaseConnectorRegistry.class.getClassLoader());
       for (final Driver driver : serviceLoader) {
         index++;
         if (log) {
