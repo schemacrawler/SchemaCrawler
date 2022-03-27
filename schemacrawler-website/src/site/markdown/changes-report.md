@@ -6,6 +6,7 @@ SchemaCrawler release notes.
 ## Release 16.16.14 - 2022-03-31
 
 - Distribute Mermaid and DBML diagram creation scripts in Docker image
+- Drop support for Oracle 11g
 
 
 <a name="a16.16.12"></a>

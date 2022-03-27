@@ -103,7 +103,7 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
     assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-zA-Z]{1,12}"));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
-    assertThat(databaseUsers, hasSize(numDatabaseUsers));
+    assertThat("Number of database users does not match", databaseUsers, hasSize(numDatabaseUsers));
     assertThat(
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("SYS", "SYSTEM", "BOOKS"));
@@ -111,7 +111,7 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
-        hasItems(2));
+        hasItems(3));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())

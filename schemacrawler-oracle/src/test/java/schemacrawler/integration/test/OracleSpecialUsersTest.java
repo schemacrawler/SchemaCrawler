@@ -92,7 +92,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 14);
+    testOracleWithConnection(connection, expectedResource, 33);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -122,7 +122,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = noAccessUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 14);
+    testOracleWithConnection(connection, expectedResource, 33);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -142,7 +142,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = schemaOwnerUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 14);
+    testOracleWithConnection(connection, expectedResource, 33);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
 
@@ -157,7 +157,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = selectUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 14);
+    testOracleWithConnection(connection, expectedResource, 33);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
 
