@@ -134,7 +134,7 @@ public class SqlScript implements Runnable {
 
         } catch (final SQLWarning e) {
           final int errorCode = e.getErrorCode();
-          if (errorCode == 5701 || errorCode == 5703) {
+          if (errorCode == 5701 || errorCode == 5703 || errorCode == 1280) {
             // SQL Server information message
             continue;
           }
