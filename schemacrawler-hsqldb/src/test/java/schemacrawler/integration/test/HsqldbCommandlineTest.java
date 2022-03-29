@@ -85,6 +85,7 @@ public class HsqldbCommandlineTest {
       argsMap.put("--no-info", Boolean.FALSE.toString());
       argsMap.put("--command", "details");
       argsMap.put("--info-level", "maximum");
+      argsMap.put("--table-types", "VIEW, TABLE, GLOBAL TEMPORARY");
       argsMap.put("--synonyms", ".*");
       argsMap.put("--routines", ".*");
       argsMap.put("--output-file", out.toString());
@@ -133,14 +134,12 @@ public class HsqldbCommandlineTest {
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("OTHERUSER", "SA"));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
         hasItems(4, 4));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
