@@ -46,7 +46,7 @@ final class CatalogModelInputStream extends ObjectInputStream {
 
   private static final Logger LOGGER = Logger.getLogger(CatalogModelInputStream.class.getName());
 
-  private final List<Pattern> acceptMatchers =
+  private final List<Pattern> acceptPatterns =
       Arrays.asList(
           Pattern.compile("schemacrawler\\.(schema(crawler)?|crawl)\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.[A-Z].*"),
@@ -65,13 +65,13 @@ final class CatalogModelInputStream extends ObjectInputStream {
     return super.resolveClass(objectStreamClass);
   }
 
-  private void validateClassName(final String name) throws InvalidClassException {
-    for (final Pattern pattern : acceptMatchers) {
-      if (pattern.matcher(name).matches()) {
-        LOGGER.log(Level.FINER, new StringFormat("Deserializing class <%s>", name));
+  private void validateClassName(final String className) throws InvalidClassException {
+    for (final Pattern pattern : acceptPatterns) {
+      if (pattern.matcher(className).matches()) {
+        LOGGER.log(Level.FINER, new StringFormat("Deserializing class <%s>", className));
         return;
       }
     }
-    throw new InvalidClassException(String.format("Not deserializing class <%s>", name));
+    throw new InvalidClassException(String.format("Not deserializing class <%s>", className));
   }
 }
