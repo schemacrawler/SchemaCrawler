@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -45,7 +44,7 @@ public final class JavaSerializedCatalog implements CatalogSerializer {
 
   private static Catalog readCatalog(final InputStream in) {
     requireNonNull(in, "No input stream provided");
-    try (final ObjectInputStream objIn = new ObjectInputStream(in)) {
+    try (final CatalogModelInputStream objIn = new CatalogModelInputStream(in)) {
       return (Catalog) objIn.readObject();
     } catch (ClassNotFoundException | IOException e) {
       throw new ExecutionRuntimeException("Cannot deserialize catalog", e);

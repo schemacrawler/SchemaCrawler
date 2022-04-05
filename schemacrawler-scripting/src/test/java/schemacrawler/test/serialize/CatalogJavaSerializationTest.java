@@ -39,10 +39,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -55,6 +51,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
@@ -76,18 +73,14 @@ public class CatalogJavaSerializationTest {
     assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_java_serialization", "ser");
-    try (final ObjectOutputStream out =
-        new ObjectOutputStream(new FileOutputStream(testOutputFile.toFile()))) {
-      out.writeObject(catalog);
-    }
+    final JavaSerializedCatalog javaSerializedCatalogForSave = new JavaSerializedCatalog(catalog);
+    javaSerializedCatalogForSave.save(Files.newOutputStream(testOutputFile));
     assertThat("Catalog was not serialized", Files.size(testOutputFile), greaterThan(0L));
     assertThat(fileHeaderOf(testOutputFile), is("ACED"));
 
-    Catalog catalogDeserialized = null;
-    try (final ObjectInputStream in =
-        new ObjectInputStream(new FileInputStream(testOutputFile.toFile()))) {
-      catalogDeserialized = (Catalog) in.readObject();
-    }
+    final JavaSerializedCatalog javaSerializedCatalogForLoad =
+        new JavaSerializedCatalog(Files.newInputStream(testOutputFile));
+    final Catalog catalogDeserialized = javaSerializedCatalogForLoad.getCatalog();
 
     final Schema schemaDeserialized = catalogDeserialized.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schemaDeserialized, notNullValue());
