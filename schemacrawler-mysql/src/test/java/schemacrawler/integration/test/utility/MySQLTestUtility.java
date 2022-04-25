@@ -40,7 +40,7 @@ public final class MySQLTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newMySQL8Container() {
-    return newMySQLContainer("8.0.27");
+    return newMySQLContainer("8.0.28");
   }
 
   @SuppressWarnings("resource")
