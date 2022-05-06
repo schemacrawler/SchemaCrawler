@@ -271,10 +271,10 @@ public final class SchemaCrawlerUtility {
     if (!dbConnectorPresent && !useWithoutDatabasePlugin) {
       throw new InternalRuntimeException(
           String.format(
-              "SchemaCrawler database plugin should be on the CLASSPATH for <%s>, %n"
-                  + "or \"SC_WITHOUT_DATABASE_PLUGIN\" should be set to the name of the missing plugin %n"
+              "Add the SchemaCrawler database plugin for <%s> to the CLASSPATH for %n<%s>%n"
+                  + "or set \"SC_WITHOUT_DATABASE_PLUGIN=%s\"%n"
                   + "either as an environmental variable or as a Java system property",
-              url));
+              urlDBServerType, url, urlDBServerType));
     }
 
     final boolean useMatchedDatabasePlugin = dbConnectorPresent && !useWithoutDatabasePlugin;

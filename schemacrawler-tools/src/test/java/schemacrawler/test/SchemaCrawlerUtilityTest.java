@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.is;
@@ -69,6 +70,15 @@ public class SchemaCrawlerUtilityTest {
     assertThrows(
         InternalRuntimeException.class,
         () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
+  }
+
+  @Test
+  public void getCatalogMissingPlugin(final Connection connection) throws Exception {
+    final InternalRuntimeException exception =
+        assertThrows(
+            InternalRuntimeException.class,
+            () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
+    assertThat(exception.getMessage(), containsString("hsqldb"));
   }
 
   @Test
