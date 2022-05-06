@@ -28,15 +28,13 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test;
 
-import static java.util.Comparator.naturalOrder;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,93 +58,86 @@ public class TemplatingTest {
     expanded = TemplatingUtility.expandTemplate("No variables", values);
     assertThat("Incorrect template expansion", expanded, is("No variables"));
 
-    expanded = TemplatingUtility.expandTemplate("${one} variable", values);
+    expanded = TemplatingUtility.expandTemplate("${ one } ${another } ${ unusual} ${good}", values);
+    assertThat("Incorrect template expansion", expanded, is("one.value two.value 10 good.value"));
+
+    expanded = TemplatingUtility.expandTemplate("${ one } variable", values);
     assertThat("Incorrect template expansion", expanded, is("one.value variable"));
 
     expanded =
-        TemplatingUtility.expandTemplate("Has ${one} variable, and ${another} variable", values);
+        TemplatingUtility.expandTemplate(
+            "Has ${ one } variable, and ${ another } variable", values);
     assertThat(
         "Incorrect template expansion",
         expanded,
         is("Has one.value variable, and two.value variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has $${unusual} variable", values);
+    expanded = TemplatingUtility.expandTemplate("Has $${ unusual } variable", values);
     assertThat("Incorrect template expansion", expanded, is("Has $10 variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has ${unusual}} variable", values);
-    assertThat("Incorrect template expansion", expanded, is("Has 10} variable"));
+    expanded = TemplatingUtility.expandTemplate("Has ${ unusual } } variable", values);
+    assertThat("Incorrect template expansion", expanded, is("Has 10 } variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has ${bad variable", values);
-    assertThat("Incorrect template expansion", expanded, is("Has ${bad variable"));
+    expanded = TemplatingUtility.expandTemplate("Has ${\t unusual \t\n} variable", values);
+    assertThat("Incorrect template expansion", expanded, is("Has 10 variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has ${good} and ${bad variable", values);
-    assertThat("Incorrect template expansion", expanded, is("Has good.value and ${bad variable"));
+    expanded = TemplatingUtility.expandTemplate("Has ${ bad variable", values);
+    assertThat("Incorrect template expansion", expanded, is("Has ${ bad variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has ${bad and ${good} variable", values);
-    assertThat("Incorrect template expansion", expanded, is("Has ${bad and ${good} variable"));
+    expanded = TemplatingUtility.expandTemplate("Has ${ good } and ${ bad variable", values);
+    assertThat("Incorrect template expansion", expanded, is("Has good.value and ${ bad variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has bad} variable", values);
-    assertThat("Incorrect template expansion", expanded, is("Has bad} variable"));
+    expanded = TemplatingUtility.expandTemplate("Has ${ bad and ${ good } variable", values);
+    assertThat("Incorrect template expansion", expanded, is("Has ${ bad and ${ good } variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has ${undefined} variable", values);
-    assertThat("Incorrect template expansion", expanded, is("Has ${undefined} variable"));
+    expanded = TemplatingUtility.expandTemplate("Has bad } variable", values);
+    assertThat("Incorrect template expansion", expanded, is("Has bad } variable"));
 
-    expanded = TemplatingUtility.expandTemplate("Has ${split-name} variable", values);
+    expanded = TemplatingUtility.expandTemplate("Has ${ undefined } variable", values);
+    assertThat("Incorrect template expansion", expanded, is("Has ${ undefined } variable"));
+
+    expanded = TemplatingUtility.expandTemplate("Has ${ split-name } variable", values);
     assertThat("Incorrect template expansion", expanded, is("Has split-name value variable"));
   }
 
   @Test
   public void extractTemplateVariables() throws Exception {
+
     Set<String> variables;
-    List<String> sortedVariables;
 
     variables = TemplatingUtility.extractTemplateVariables("No variables");
     assertThat("Incorrect number of variables found", variables, is(empty()));
 
-    variables = TemplatingUtility.extractTemplateVariables("${one} variable");
-    sortedVariables = getSortedVariables(variables);
+    variables = TemplatingUtility.extractTemplateVariables("${ one } variable");
     assertThat("Incorrect number of variables found", variables, hasSize(1));
-    assertThat("Variable not found", sortedVariables.get(0), is("one"));
+    assertThat("Variable not found", variables, hasItems("one"));
 
     variables =
-        TemplatingUtility.extractTemplateVariables("Has ${one} variable, and ${another} variable");
-    sortedVariables = getSortedVariables(variables);
-    assertThat("Incorrect number of variables found", variables, hasSize(2));
-    assertThat("Variable not found", sortedVariables.get(0), is("another"));
-    assertThat("Variable not found", sortedVariables.get(1), is("one"));
+        TemplatingUtility.extractTemplateVariables(
+            "Here are four variables: ${ one } ${two } ${ three} ${four}");
+    assertThat("Incorrect number of variables found", variables, hasSize(4));
+    assertThat("Variable not found", variables, hasItems("one", "two", "three", "four"));
 
-    variables = TemplatingUtility.extractTemplateVariables("Has $${unusual} variable");
-    sortedVariables = getSortedVariables(variables);
+    variables = TemplatingUtility.extractTemplateVariables("Has $${ unusual } variable");
     assertThat("Incorrect number of variables found", variables, hasSize(1));
-    assertThat("Variable not found", sortedVariables.get(0), is("unusual"));
+    assertThat("Variable not found", variables, hasItems("unusual"));
 
-    variables = TemplatingUtility.extractTemplateVariables("Has ${unusual}} variable");
-    sortedVariables = getSortedVariables(variables);
+    variables = TemplatingUtility.extractTemplateVariables("Has ${ unusual } } variable");
     assertThat("Incorrect number of variables found", variables, hasSize(1));
-    assertThat("Variable not found", sortedVariables.get(0), is("unusual"));
+    assertThat("Variable not found", variables, hasItems("unusual"));
 
-    variables = TemplatingUtility.extractTemplateVariables("Has ${bad variable");
-    sortedVariables = getSortedVariables(variables);
+    variables = TemplatingUtility.extractTemplateVariables("Has ${ bad variable");
     assertThat("Incorrect number of variables found", variables, is(empty()));
 
-    variables = TemplatingUtility.extractTemplateVariables("Has ${good} and ${bad variable");
-    sortedVariables = getSortedVariables(variables);
+    variables = TemplatingUtility.extractTemplateVariables("Has ${ good } and ${ bad variable");
     assertThat("Incorrect number of variables found", variables, hasSize(1));
-    assertThat("Variable not found", sortedVariables.get(0), is("good"));
+    assertThat("Variable not found", variables, hasItems("good"));
 
-    variables = TemplatingUtility.extractTemplateVariables("Has ${bad and ${good} variable");
-    sortedVariables = getSortedVariables(variables);
+    variables = TemplatingUtility.extractTemplateVariables("Has ${ bad and ${ good } variable");
     assertThat("Incorrect number of variables found", variables, hasSize(1));
-    assertThat("Variable not found", sortedVariables.get(0), is("bad and ${good"));
+    assertThat("Variable not found", variables, hasItems("bad and ${ good"));
 
-    variables = TemplatingUtility.extractTemplateVariables("Has bad} variable");
-    sortedVariables = getSortedVariables(variables);
+    variables = TemplatingUtility.extractTemplateVariables("Has bad } variable");
     assertThat("Incorrect number of variables found", variables, is(empty()));
-  }
-
-  private List<String> getSortedVariables(final Set<String> variables) {
-    final List<String> sortedVariables = new ArrayList<>(variables);
-    sortedVariables.sort(naturalOrder());
-    return sortedVariables;
   }
 }

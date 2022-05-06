@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility;
 
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +39,9 @@ import java.util.Set;
 public final class TemplatingUtility {
 
   private static final String DELIMITER_END = "}";
+  private static final int DELIMITER_END_LENGTH = DELIMITER_END.length();
   private static final String DELIMITER_START = "${";
+  private static final int DELIMITER_START_LENGTH = DELIMITER_START.length();
 
   /**
    * Expands a template using system properties. Variables in the template are in the form of
@@ -59,7 +64,7 @@ public final class TemplatingUtility {
    */
   public static String expandTemplate(
       final String template, final Map<String, String> variablesMap) {
-    if (Utility.isBlank(template) || variablesMap == null) {
+    if (isBlank(template) || variablesMap == null) {
       return template;
     }
 
@@ -83,21 +88,25 @@ public final class TemplatingUtility {
         buffer.append(template, currentPosition, delimiterStartPosition);
         delimiterEndPosition = template.indexOf(DELIMITER_END, delimiterStartPosition);
         if (delimiterEndPosition > -1) {
-          delimiterStartPosition = delimiterStartPosition + DELIMITER_START.length();
-          final String key = template.substring(delimiterStartPosition, delimiterEndPosition);
+          delimiterStartPosition = delimiterStartPosition + DELIMITER_START_LENGTH;
+          final String key =
+              trimToEmpty(template.substring(delimiterStartPosition, delimiterEndPosition));
           final String value = variablesMap.get(key);
           if (value != null) {
             buffer.append(value);
           } else {
             // Do not substitute
-            buffer.append(DELIMITER_START).append(key).append(DELIMITER_END);
+            buffer
+                .append(DELIMITER_START)
+                .append(template.substring(delimiterStartPosition, delimiterEndPosition))
+                .append(DELIMITER_END);
           }
           // Advance current position
-          currentPosition = delimiterEndPosition + DELIMITER_END.length();
+          currentPosition = delimiterEndPosition + DELIMITER_END_LENGTH;
         } else {
           // End brace not found, so advance current position
           buffer.append(DELIMITER_START);
-          currentPosition = delimiterStartPosition + DELIMITER_START.length();
+          currentPosition = delimiterStartPosition + DELIMITER_START_LENGTH;
         }
       }
     }
@@ -111,7 +120,7 @@ public final class TemplatingUtility {
    */
   public static Set<String> extractTemplateVariables(final String template) {
 
-    if (Utility.isBlank(template)) {
+    if (isBlank(template)) {
       return new HashSet<>();
     }
 
@@ -120,12 +129,12 @@ public final class TemplatingUtility {
     for (int left; (left = shrunkTemplate.indexOf(DELIMITER_START)) >= 0; ) {
       final int right = shrunkTemplate.indexOf(DELIMITER_END, left + 2);
       if (right >= 0) {
-        final String propertyKey = shrunkTemplate.substring(left + 2, right);
+        final String propertyKey = trimToEmpty(shrunkTemplate.substring(left + 2, right));
         keys.add(propertyKey);
         // Destroy key, so we can find the next one
         shrunkTemplate = shrunkTemplate.substring(0, left) + shrunkTemplate.substring(right + 1);
       } else {
-        // No ending baracket found
+        // No ending bracket found
         break;
       }
     }

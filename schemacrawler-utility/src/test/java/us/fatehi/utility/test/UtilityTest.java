@@ -37,6 +37,8 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isClassAvailable;
 import static us.fatehi.utility.Utility.isIntegral;
 import static us.fatehi.utility.Utility.join;
+import static us.fatehi.utility.Utility.stripEnd;
+import static us.fatehi.utility.Utility.stripStart;
 import static us.fatehi.utility.Utility.toSnakeCase;
 
 import java.util.ArrayList;
@@ -150,5 +152,27 @@ public class UtilityTest {
     assertThat(toSnakeCase("Ab"), equalTo("_ab"));
     assertThat(toSnakeCase("abIj"), equalTo("ab_ij"));
     assertThat(toSnakeCase("ABC"), equalTo("_a_b_c"));
+  }
+
+  @Test
+  public void stripEndTest() {
+    assertThat(stripEnd(null), is(""));
+    assertThat(stripEnd(""), is(""));
+    assertThat(stripEnd("\n"), is(""));
+    assertThat(stripEnd("preTest"), is("preTest"));
+    assertThat(stripEnd(" \tpreTest"), is(" \tpreTest"));
+    assertThat(stripEnd(" \tpreTest\t "), is(" \tpreTest"));
+    assertThat(stripEnd("preTest\t "), is("preTest"));
+  }
+
+  @Test
+  public void stripStartTest() {
+    assertThat(stripStart(null), is(""));
+    assertThat(stripStart(""), is(""));
+    assertThat(stripStart("\n"), is(""));
+    assertThat(stripEnd("preTest"), is("preTest"));
+    assertThat(stripStart(" \tpreTest"), is("preTest"));
+    assertThat(stripStart(" \tpreTest\t "), is("preTest\t "));
+    assertThat(stripStart("preTest\t "), is("preTest\t "));
   }
 }

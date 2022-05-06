@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
+import static java.lang.Character.isWhitespace;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -95,7 +97,7 @@ public final class Utility {
     }
 
     for (int i = 0; i < text.length(); i++) {
-      if (!Character.isWhitespace(text.charAt(i))) {
+      if (!isWhitespace(text.charAt(i))) {
         return false;
       }
     }
@@ -178,6 +180,29 @@ public final class Utility {
     return text;
   }
 
+  public static String stripEnd(final String text) {
+    if (text == null || text.length() == 0) {
+      return "";
+    }
+    int end = text.length();
+    while (end > 0 && isWhitespace(text.charAt(end - 1))) {
+      end--;
+    }
+    return text.substring(0, end);
+  }
+
+  public static String stripStart(final String text) {
+    if (text == null || text.length() == 0) {
+      return "";
+    }
+    final int length = text.length();
+    int start = 0;
+    while (start != length && isWhitespace(text.charAt(start))) {
+      start++;
+    }
+    return text.substring(start);
+  }
+
   public static String toSnakeCase(final String identifier) {
     if (isBlank(identifier)) {
       return identifier;
@@ -192,7 +217,7 @@ public final class Utility {
     if (isBlank(text)) {
       return "";
     } else {
-      return text;
+      return stripEnd(stripStart(text));
     }
   }
 
