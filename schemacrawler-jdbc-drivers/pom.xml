@@ -77,7 +77,7 @@
     <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
-      <version>3.13.17</version>
+      <version>3.13.18</version>
     </dependency>
     <dependency>
       <groupId>com.amazon.redshift</groupId>
@@ -92,7 +92,7 @@
     <dependency>
       <groupId>org.firebirdsql.jdbc</groupId>
       <artifactId>jaybird</artifactId>
-      <version>4.0.5.java8</version>
+      <version>4.0.6.java8</version>
     </dependency>
   </dependencies>
 
