@@ -75,6 +75,10 @@ public class TestCommandProvider extends BaseCommandProvider {
 
   @Override
   public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
-    return true;
+    if (outputOptions == null) {
+      return true;
+    }
+    final String outputFormatValue = outputOptions.getOutputFormatValue();
+    return outputFormatValue.equals("text");
   }
 }
