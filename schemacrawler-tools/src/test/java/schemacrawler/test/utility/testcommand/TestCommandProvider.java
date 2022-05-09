@@ -79,6 +79,6 @@ public class TestCommandProvider extends BaseCommandProvider {
       return true;
     }
     final String outputFormatValue = outputOptions.getOutputFormatValue();
-    return outputFormatValue.equals("text");
+    return outputFormatValue.equals("text") || outputFormatValue.equals("txt");
   }
 }
