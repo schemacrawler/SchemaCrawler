@@ -41,11 +41,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.LoggingConfig;
 
+@TestInstance(Lifecycle.PER_CLASS)
 public class IOUtilityTest {
+
+  @BeforeAll
+  public void disableLogging() throws Exception {
+    // Turn off logging
+    new LoggingConfig();
+  }
 
   @Test
   public void fileExtension_path() {

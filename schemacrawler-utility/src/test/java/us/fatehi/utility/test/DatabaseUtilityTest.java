@@ -37,8 +37,7 @@ import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -55,6 +54,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
+import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.database.DatabaseUtility;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -119,6 +119,12 @@ public class DatabaseUtilityTest {
     connection = db.getConnection();
   }
 
+  @BeforeAll
+  public void disableLogging() throws Exception {
+    // Turn off logging
+    new LoggingConfig();
+  }
+
   @Test
   public void executeSql() throws SQLException {
 
@@ -139,14 +145,15 @@ public class DatabaseUtilityTest {
   public void executeSql_throw() throws SQLException {
 
     final Statement statement = mock(Statement.class);
-    doThrow(new SQLException("Exception using a mocked statement")).when(statement).execute(any());
+    when(statement.execute(anyString()))
+        .thenThrow(new SQLException("Exception executing SQL statement"));
 
     final SQLException exception =
         assertThrows(
             SQLException.class,
             () ->
                 assertThat(DatabaseUtility.executeSql(statement, "<some query>"), is(nullValue())));
-    assertThat(exception.getMessage(), is("Exception using a mocked statement"));
+    assertThat(exception.getMessage(), is("Exception executing SQL statement"));
   }
 
   @Test

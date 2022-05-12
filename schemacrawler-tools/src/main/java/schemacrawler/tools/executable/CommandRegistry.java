@@ -33,6 +33,7 @@ import static java.util.Comparator.naturalOrder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -54,6 +55,27 @@ public final class CommandRegistry {
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class.getName());
 
   private static CommandRegistry commandRegistrySingleton;
+
+  public static final Comparator<? super CommandProvider> commandComparator =
+      (commandProvider1, commandProvider2) -> {
+        final String fallbackProviderTypeName = "OperationCommandProvider";
+        if (commandProvider1 == null || commandProvider2 == null) {
+          throw new IllegalArgumentException("Null command provider found");
+        }
+        final String typeName1 = commandProvider1.getClass().getSimpleName();
+        final String typeName2 = commandProvider2.getClass().getSimpleName();
+        if (typeName1.equals(typeName2)) {
+          return 0;
+        } else {
+          if (typeName1.equals(fallbackProviderTypeName)) {
+            return 1;
+          } else if (typeName2.equals(fallbackProviderTypeName)) {
+            return -1;
+          } else {
+            return typeName1.compareTo(typeName2);
+          }
+        }
+      };
 
   public static CommandRegistry getCommandRegistry() {
     if (commandRegistrySingleton == null) {
@@ -100,24 +122,7 @@ public final class CommandRegistry {
         command, schemaCrawlerOptions, additionalConfig, outputOptions, executableCommandProviders);
     findSupportedOutputFormats(command, outputOptions, executableCommandProviders);
 
-    Collections.sort(
-        executableCommandProviders,
-        (commandProvider1, commandProvider2) -> {
-          if (commandProvider1 == null || commandProvider2 == null) {
-            throw new IllegalArgumentException("Null command provider found");
-          }
-          final String typeName1 = commandProvider1.getClass().getSimpleName();
-          final String typeName2 = commandProvider2.getClass().getSimpleName();
-          if (typeName1.equals(typeName2)) {
-            return 0;
-          } else if (typeName1.equals("OperationCommandProvider")) {
-            return 1;
-          } else if (typeName2.equals("OperationCommandProvider")) {
-            return -1;
-          } else {
-            return typeName1.compareTo(typeName2);
-          }
-        });
+    Collections.sort(executableCommandProviders, commandComparator);
 
     final CommandProvider executableCommandProvider = executableCommandProviders.get(0);
     LOGGER.log(Level.INFO, new StringFormat("Matched provider <%s>", executableCommandProvider));
