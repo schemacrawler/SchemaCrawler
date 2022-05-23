@@ -120,7 +120,7 @@ jobs:
         bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
     - id: upload-coverage-test-results
       name: Upload coverage test results
-      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
+      uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # @v3
       with:
         name: coverage-test-results
         path: ./schemacrawler/target/site/jacoco-aggregate
@@ -169,7 +169,7 @@ jobs:
 
     - id: upload-link-check-report
       name: Upload website link check report
-      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
+      uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # @v3
       with:
         path: ./lychee/out.md
         name: website-link-check-report.md
