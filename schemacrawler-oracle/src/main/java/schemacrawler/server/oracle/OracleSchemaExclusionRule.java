@@ -111,6 +111,10 @@ public final class OracleSchemaExclusionRule implements InclusionRule {
   @Override
   public boolean test(final String text) {
 
+    if (text == null) {
+      return true;
+    }
+
     if (schemaExclusions.contains(text)) {
       LOGGER.log(
           Level.FINE, new StringFormat("Excluding <%s> since it is on the exclude list", text));
