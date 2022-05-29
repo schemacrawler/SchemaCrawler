@@ -37,13 +37,15 @@ import schemacrawler.server.oracle.OracleSchemaExclusionRule;
 public class OracleSchemaExclusionRuleTest {
 
   @Test
-  public void close() {
+  public void closeEnoughs() {
     final OracleSchemaExclusionRule exclusionRule = new OracleSchemaExclusionRule();
 
     final String[] closeEnoughs = new String[] {"ORDDAT", "SYSTEM", "APEX_12345", "FLOWS_1234567"};
     for (final String closeEnough : closeEnoughs) {
       assertThat(
-          "Exclude close enough strings - exclusion rule should evaluate to true",
+          String.format(
+              "<%s> - exclude close enough strings - inclusion rule should evaluate to true",
+              closeEnough),
           exclusionRule.test(closeEnough),
           is(true));
     }
@@ -56,9 +58,9 @@ public class OracleSchemaExclusionRuleTest {
     final String[] empties = new String[] {null, "", "\t", "  "};
     for (final String empty : empties) {
       assertThat(
-          "Exclude empties - exclusion rule should evaluate to true",
+          String.format("<%s> - exclude empties - inclusion rule should evaluate to false", empty),
           exclusionRule.test(empty),
-          is(true));
+          is(false));
     }
   }
 
@@ -69,7 +71,8 @@ public class OracleSchemaExclusionRuleTest {
     final String[] valids = new String[] {"ORDDATA", "\"SYSTEM\"", "APEX_123456", "FLOWS_12345"};
     for (final String valid : valids) {
       assertThat(
-          "Include valid schemas - exclusion rule should evaluate to false",
+          String.format(
+              "<%s> - include valid schemas - inclusion rule should evaluate to false", valid),
           exclusionRule.test(valid),
           is(false));
     }
