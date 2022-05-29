@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.server.oracle;
+package schemacrawler.inclusionrule;
 
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.inclusionrule.InclusionRule;
 import us.fatehi.utility.string.StringFormat;
 
 public class ListExclusionRule implements InclusionRule {

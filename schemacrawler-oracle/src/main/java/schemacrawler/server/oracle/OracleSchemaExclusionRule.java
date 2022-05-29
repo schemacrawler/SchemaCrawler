@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.ListExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 
 public final class OracleSchemaExclusionRule implements InclusionRule {
