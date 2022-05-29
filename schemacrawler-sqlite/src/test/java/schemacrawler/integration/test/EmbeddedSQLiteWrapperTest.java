@@ -29,53 +29,47 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
+import java.nio.file.Path;
 
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
+public class EmbeddedSQLiteWrapperTest extends BaseSqliteTest {
 
   @Test
-  public void foreignKeyWithoutReferencedPrimaryKey(final TestContext testContext)
-      throws Exception {
-    run(testContext.testMethodName(), "/foreignKeyWithoutReferencedPrimaryKey.sql", "schema");
+  public void djangoExcluded(final TestContext testContext) throws Exception {
+    weakAssociations(testContext, "/django_schema.sql");
   }
 
-  private void run(
-      final String currentMethodName, final String databaseSqlResource, final String command)
+  private void weakAssociations(final TestContext testContext, final String databaseSqlResource)
       throws Exception {
 
-    final DataSource dataSource = createDatabaseFromScriptInMemory(databaseSqlResource);
+    final String currentMethodFullName = testContext.testMethodFullName();
 
-    final SchemaCrawlerOptions options =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    // Create database from script, on disk
+    final Path dbFile = IOUtility.createTempFilePath("test_sqlite_db", "");
+    final DataSource dataSource =
+        createDatabaseFromScript(createDataSourceFromFile(dbFile), databaseSqlResource);
 
-    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.newSchemaTextOptions();
+    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
+    sqLiteDatabaseLoader.loadDatabaseFile(dbFile);
+    final Path diagram = sqLiteDatabaseLoader.createDiagram("Test Diagram Title", "text");
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    assertThat(
-        outputOf(executableExecution(dataSource.getConnection(), executable)),
-        hasSameContentAs(classpathResource(currentMethodName)));
+    assertThat(outputOf(diagram), hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

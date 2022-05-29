@@ -104,7 +104,7 @@ public class VirtualTablesTest extends BaseSqliteTest {
       final String command,
       final InclusionRule tableInclusionRule)
       throws Exception {
-    final DataSource dataSource = createDatabaseFromResource("with_spellfix1_tables.db");
+    final DataSource dataSource = createDataSourceFromResource("with_spellfix1_tables.db");
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeTables(tableInclusionRule);

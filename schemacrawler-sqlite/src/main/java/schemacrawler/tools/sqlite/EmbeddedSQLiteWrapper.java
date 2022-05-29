@@ -35,7 +35,12 @@ import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 
+import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.ListExclusionRule;
+import schemacrawler.schemacrawler.LimitOptions;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
@@ -48,6 +53,31 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class EmbeddedSQLiteWrapper {
+
+  private static InclusionRule sqliteTableExclusionRule =
+      new ListExclusionRule(
+          Arrays.asList(
+              // Django tables
+              "auth_group",
+              "auth_group_permissions",
+              "auth_permission",
+              "auth_user",
+              "auth_user_groups",
+              "auth_user_user_permissions",
+              "django_admin_log",
+              "django_content_type",
+              "django_migrations",
+              "django_session",
+              "django_session django_site",
+              "otp_totp_totpdevice",
+              // Liquibase
+              "DATABASECHANGELOG",
+              // Flyway
+              "SCHEMA_VERSION",
+              // Entity Framework Core https://github.com/dotnet/efcore
+              "_EFMigrationsHistory",
+              // Android
+              "android_metadata"));
 
   private Path databaseFile;
 
@@ -100,8 +130,10 @@ public class EmbeddedSQLiteWrapper {
     try {
       checkConnection(connection);
 
+      final LimitOptions limitOptions =
+          LimitOptionsBuilder.builder().includeTables(sqliteTableExclusionRule).toOptions();
       final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions().withLimitOptions(limitOptions);
 
       final Path diagramFile = createTempFilePath("schemacrawler", extension);
       final OutputOptions outputOptions =

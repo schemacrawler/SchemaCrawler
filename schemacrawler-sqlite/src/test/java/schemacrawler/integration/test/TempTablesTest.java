@@ -59,7 +59,7 @@ public class TempTablesTest extends BaseSqliteTest {
   @Test
   public void tempTables() throws Exception {
     final Path sqliteDbFile = createTestDatabase();
-    final DataSource dataSource = createDatabaseFromFile(sqliteDbFile);
+    final DataSource dataSource = createDataSourceFromFile(sqliteDbFile);
     final Connection connection = dataSource.getConnection();
 
     SqlScript.executeScriptFromResource("/db/books/33_temp_tables_B.sql", connection);
