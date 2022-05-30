@@ -36,9 +36,11 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.ListExclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -55,29 +57,37 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 public class EmbeddedSQLiteWrapper {
 
   private static InclusionRule sqliteTableExclusionRule =
-      new ListExclusionRule(
-          Arrays.asList(
-              // Django tables
-              "auth_group",
-              "auth_group_permissions",
-              "auth_permission",
-              "auth_user",
-              "auth_user_groups",
-              "auth_user_user_permissions",
-              "django_admin_log",
-              "django_content_type",
-              "django_migrations",
-              "django_session",
-              "django_session django_site",
-              "otp_totp_totpdevice",
-              // Liquibase
-              "DATABASECHANGELOG",
-              // Flyway
-              "SCHEMA_VERSION",
-              // Entity Framework Core https://github.com/dotnet/efcore
-              "_EFMigrationsHistory",
-              // Android
-              "android_metadata"));
+      new InclusionRule() {
+
+        private static final long serialVersionUID = -7643052797359767051L;
+
+        private final Predicate<String> exclusionRule =
+            new ListExclusionRule(
+                    Arrays.asList(
+                        // Django tables
+                        "auth_group",
+                        "auth_group_permissions",
+                        "auth_permission",
+                        "auth_user",
+                        "auth_user_groups",
+                        "auth_user_user_permissions",
+                        "otp_totp_totpdevice",
+                        // Liquibase
+                        "DATABASECHANGELOG",
+                        // Flyway
+                        "SCHEMA_VERSION",
+                        // Entity Framework Core https://github.com/dotnet/efcore
+                        "_EFMigrationsHistory",
+                        // Android
+                        "android_metadata"))
+                .and(new RegularExpressionExclusionRule("django_.*"));
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean test(final String text) {
+          return exclusionRule.test(text);
+        }
+      };
 
   private Path databaseFile;
 
