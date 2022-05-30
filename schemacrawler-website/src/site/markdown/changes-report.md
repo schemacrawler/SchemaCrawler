@@ -3,7 +3,7 @@
 SchemaCrawler release notes.
 
 <a name="a16.16.15"></a>
-## Release 16.16.15 - 2022-06-01
+## Release 16.16.15 - 2022-05-30
 
 - Exclude entity management framework metadata tables (from Liquibase, Flyway, django, EF Core, and so on) 
   by default from SQLLite schemas, when using `EmbeddedSQLiteWrapper`
