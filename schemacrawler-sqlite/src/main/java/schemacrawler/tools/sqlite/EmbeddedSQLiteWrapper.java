@@ -51,6 +51,7 @@ import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
@@ -101,9 +102,9 @@ public class EmbeddedSQLiteWrapper {
     return connectionOptions;
   }
 
-  public Path createDiagram(final String title, final String extension) {
+  public Path executeForOutput(final String title, final OutputFormat extension) {
     try (final Connection connection = createDatabaseConnectionSource().get()) {
-      return createDiagram(connection, title, extension);
+      return executeForOutput(connection, title, extension);
     } catch (final SQLException e) {
       throw new DatabaseAccessException("Could not create database connection", e);
     }
@@ -114,15 +115,15 @@ public class EmbeddedSQLiteWrapper {
     return "jdbc:sqlite:" + databaseFile.toString();
   }
 
-  public String getDatabase() {
+  public Path getDatabasePath() {
     if (databaseFile == null) {
-      return "";
+      return null;
     } else {
-      return databaseFile.toString();
+      return databaseFile;
     }
   }
 
-  public void loadDatabaseFile(final Path dbFile) {
+  public void setDatabasePath(final Path dbFile) {
     databaseFile = checkDatabaseFile(dbFile);
   }
 
@@ -135,8 +136,8 @@ public class EmbeddedSQLiteWrapper {
     return databaseFile;
   }
 
-  private Path createDiagram(
-      final Connection connection, final String title, final String extension) {
+  private Path executeForOutput(
+      final Connection connection, final String title, final OutputFormat extension) {
     try {
       checkConnection(connection);
 
@@ -145,11 +146,11 @@ public class EmbeddedSQLiteWrapper {
       final SchemaCrawlerOptions schemaCrawlerOptions =
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions().withLimitOptions(limitOptions);
 
-      final Path diagramFile = createTempFilePath("schemacrawler", extension);
+      final Path diagramFile = createTempFilePath("schemacrawler", extension.getFormat());
       final OutputOptions outputOptions =
           OutputOptionsBuilder.builder()
               .title(title)
-              .withOutputFormatValue(extension)
+              .withOutputFormat(extension)
               .withOutputFile(diagramFile)
               .toOptions();
 

@@ -44,6 +44,7 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import us.fatehi.utility.IOUtility;
 
@@ -67,8 +68,9 @@ public class EmbeddedSQLiteWrapperTest extends BaseSqliteTest {
         createDatabaseFromScript(createDataSourceFromFile(dbFile), databaseSqlResource);
 
     final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
-    sqLiteDatabaseLoader.loadDatabaseFile(dbFile);
-    final Path diagram = sqLiteDatabaseLoader.createDiagram("Test Diagram Title", "text");
+    sqLiteDatabaseLoader.setDatabasePath(dbFile);
+    final Path diagram =
+        sqLiteDatabaseLoader.executeForOutput("Test Diagram Title", TextOutputFormat.text);
 
     assertThat(outputOf(diagram), hasSameContentAs(classpathResource(currentMethodFullName)));
   }

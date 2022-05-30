@@ -43,6 +43,7 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility;
 import us.fatehi.utility.IOUtility;
 
@@ -57,8 +58,8 @@ public class SQLiteDiagramTest extends BaseSqliteTest {
         IOUtility.createTempFilePath("sc", ".scdot").normalize().toAbsolutePath();
 
     final Path schemaCrawlerDiagramFile =
-        SchemaCrawlerSQLiteUtility.createSchemaCrawlerDiagram(
-            sqliteDbFile, "Diagram Title", "scdot");
+        SchemaCrawlerSQLiteUtility.executeForOutput(
+            sqliteDbFile, "Diagram Title", DiagramOutputFormat.scdot);
     move(schemaCrawlerDiagramFile, sqliteDiagramTempFile);
 
     assertThat(
