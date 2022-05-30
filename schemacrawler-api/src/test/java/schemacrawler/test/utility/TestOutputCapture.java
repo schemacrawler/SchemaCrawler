@@ -33,7 +33,7 @@ import java.nio.file.Path;
 
 public interface TestOutputCapture extends Flushable, Closeable {
 
-  String getFileContents();
+  String getContents();
 
   Path getFilePath();
 }

@@ -47,7 +47,7 @@ public class TestAssertNoSystemOutOutput implements BeforeEachCallback, AfterEac
   public void afterEach(final ExtensionContext context) throws Exception {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 
-    assertThat("Expected no System.out output", out.getFileContents(), is(emptyString()));
+    assertThat("Expected no System.out output", out.getContents(), is(emptyString()));
   }
 
   @Override

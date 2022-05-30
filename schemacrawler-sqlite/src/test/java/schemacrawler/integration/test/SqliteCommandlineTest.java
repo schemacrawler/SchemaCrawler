@@ -156,6 +156,6 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
     }
 
     assertThat(outputOf(out), hasNoContent());
-    assertThat(err.getFileContents(), containsString("SQLITE_CANTOPEN"));
+    assertThat(err.getContents(), containsString("SQLITE_CANTOPEN"));
   }
 }
