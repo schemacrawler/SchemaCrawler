@@ -26,7 +26,7 @@ jobs:
 # LINT CODE
     - id: lint-code-base
       name: Lint Code Base
-      uses: github/super-linter/slim@ae4e373c56efad95924d9cc6b89624fdb2333007 # v4.9.2
+      uses: github/super-linter/slim@a320804d310fdeb8d1a46c6c6c1e615d443b10c9 # v4.9.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_ALL_CODEBASE: true
