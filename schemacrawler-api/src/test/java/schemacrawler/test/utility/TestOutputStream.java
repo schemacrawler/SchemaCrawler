@@ -55,7 +55,7 @@ public final class TestOutputStream extends OutputStream implements TestOutputCa
   }
 
   @Override
-  public String getFileContents() {
+  public String getContents() {
     try {
       out.flush();
       out.close();

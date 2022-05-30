@@ -29,13 +29,15 @@ package schemacrawler.tools.sqlite;
 
 import java.nio.file.Path;
 
+import schemacrawler.tools.options.OutputFormat;
+
 public class SchemaCrawlerSQLiteUtility {
 
-  public static Path createSchemaCrawlerDiagram(
-      final Path dbFile, final String title, final String extension) {
+  public static Path executeForOutput(
+      final Path dbFile, final String title, final OutputFormat extension) {
     final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
-    sqLiteDatabaseLoader.loadDatabaseFile(dbFile);
-    return sqLiteDatabaseLoader.createDiagram(title, extension);
+    sqLiteDatabaseLoader.setDatabasePath(dbFile);
+    return sqLiteDatabaseLoader.executeForOutput(title, extension);
   }
 
   private SchemaCrawlerSQLiteUtility() {

@@ -27,15 +27,20 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.io.FileMatchers.anExistingFile;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -43,9 +48,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import com.ginsberg.junit.exit.SystemExitPreventedException;
@@ -53,21 +58,37 @@ import com.ginsberg.junit.exit.SystemExitPreventedException;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-@ExtendWith(TestLoggingExtension.class)
 public class SqliteCommandlineTest extends BaseSqliteTest {
 
   private DatabaseConnector dbConnector;
+  private TestOutputStream err;
+  private TestOutputStream out;
+
+  @AfterEach
+  public void cleanUpStreams() {
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+  }
 
   @BeforeEach
-  public void setup() {
+  public void setUpDatabaseConnector() {
     final DatabaseConnectorRegistry registry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
+  }
+
+  @BeforeEach
+  public void setUpStreams() throws Exception {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 
   @Test
@@ -133,5 +154,8 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
       final int exitCode = e.getStatusCode();
       assertThat(exitCode, is(1));
     }
+
+    assertThat(outputOf(out), hasNoContent());
+    assertThat(err.getContents(), containsString("SQLITE_CANTOPEN"));
   }
 }

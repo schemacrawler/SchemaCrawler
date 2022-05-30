@@ -47,7 +47,7 @@ public class TestAssertNoSystemErrOutput implements BeforeEachCallback, AfterEac
   public void afterEach(final ExtensionContext context) throws Exception {
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
-    assertThat("Expected no System.err output", err.getFileContents(), is(emptyString()));
+    assertThat("Expected no System.err output", err.getContents(), is(emptyString()));
   }
 
   @Override

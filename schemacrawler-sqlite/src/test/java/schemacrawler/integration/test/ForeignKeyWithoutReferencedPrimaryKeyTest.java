@@ -63,7 +63,7 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
       final String currentMethodName, final String databaseSqlResource, final String command)
       throws Exception {
 
-    final DataSource dataSource = createDatabaseInMemoryFromScript(databaseSqlResource);
+    final DataSource dataSource = createDatabaseFromScriptInMemory(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;

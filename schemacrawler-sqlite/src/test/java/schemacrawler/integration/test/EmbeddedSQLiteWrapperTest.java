@@ -28,13 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-import static java.nio.file.Files.move;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.nio.file.Path;
+
+import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,27 +44,34 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
-import schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
+import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class SQLiteDiagramTest extends BaseSqliteTest {
+public class EmbeddedSQLiteWrapperTest extends BaseSqliteTest {
 
   @Test
-  public void utility(final TestContext testContext) throws Exception {
-    final Path sqliteDbFile = createTestDatabase();
-    final Path sqliteDiagramTempFile =
-        IOUtility.createTempFilePath("sc", ".scdot").normalize().toAbsolutePath();
+  public void djangoExcluded(final TestContext testContext) throws Exception {
+    weakAssociations(testContext, "/django_schema.sql");
+  }
 
-    final Path schemaCrawlerDiagramFile =
-        SchemaCrawlerSQLiteUtility.executeForOutput(
-            sqliteDbFile, "Diagram Title", DiagramOutputFormat.scdot);
-    move(schemaCrawlerDiagramFile, sqliteDiagramTempFile);
+  private void weakAssociations(final TestContext testContext, final String databaseSqlResource)
+      throws Exception {
 
-    assertThat(
-        outputOf(sqliteDiagramTempFile),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    final String currentMethodFullName = testContext.testMethodFullName();
+
+    // Create database from script, on disk
+    final Path dbFile = IOUtility.createTempFilePath("test_sqlite_db", "");
+    final DataSource dataSource =
+        createDatabaseFromScript(createDataSourceFromFile(dbFile), databaseSqlResource);
+
+    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
+    sqLiteDatabaseLoader.setDatabasePath(dbFile);
+    final Path diagram =
+        sqLiteDatabaseLoader.executeForOutput("Test Diagram Title", TextOutputFormat.text);
+
+    assertThat(outputOf(diagram), hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

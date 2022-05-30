@@ -43,18 +43,8 @@ import us.fatehi.utility.database.SqlScript;
 
 public abstract class BaseSqliteTest {
 
-  protected DataSource createDatabaseFromFile(final Path sqliteDbFile) {
-    return createDataSource("jdbc:sqlite:" + sqliteDbFile);
-  }
-
-  protected DataSource createDatabaseFromResource(final String sqliteDbResource) {
-    return createDataSource(String.format("jdbc:sqlite::resource:%s", sqliteDbResource));
-  }
-
-  protected DataSource createDatabaseInMemoryFromScript(final String databaseSqlResource)
-      throws Exception {
-
-    final DataSource dataSource = createDataSource("jdbc:sqlite::memory:");
+  protected DataSource createDatabaseFromScript(
+      final DataSource dataSource, final String databaseSqlResource) throws Exception {
 
     try (final Connection connection = dataSource.getConnection()) {
 
@@ -69,6 +59,25 @@ public abstract class BaseSqliteTest {
     }
 
     return dataSource;
+  }
+
+  protected DataSource createDatabaseFromScriptInMemory(final String databaseSqlResource)
+      throws Exception {
+
+    final DataSource dataSource = createDataSourceInMemory();
+    return createDatabaseFromScript(dataSource, databaseSqlResource);
+  }
+
+  protected DataSource createDataSourceFromFile(final Path sqliteDbFile) {
+    return createDataSource("jdbc:sqlite:" + sqliteDbFile);
+  }
+
+  protected DataSource createDataSourceFromResource(final String sqliteDbResource) {
+    return createDataSource(String.format("jdbc:sqlite::resource:%s", sqliteDbResource));
+  }
+
+  protected DataSource createDataSourceInMemory() {
+    return createDataSource("jdbc:sqlite::memory:");
   }
 
   protected Path createTestDatabase() throws Exception {

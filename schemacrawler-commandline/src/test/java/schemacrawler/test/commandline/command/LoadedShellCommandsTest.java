@@ -79,7 +79,7 @@ public class LoadedShellCommandsTest {
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("Database metadata is loaded"));
+    assertThat(out.getContents(), startsWith("Database metadata is loaded"));
   }
 
   @Test
@@ -94,7 +94,7 @@ public class LoadedShellCommandsTest {
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("Database metadata is not loaded"));
+    assertThat(out.getContents(), startsWith("Database metadata is not loaded"));
   }
 
   @BeforeEach

@@ -29,104 +29,82 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
+import java.util.function.Predicate;
 
 import schemacrawler.inclusionrule.InclusionRule;
-import us.fatehi.utility.string.StringFormat;
+import schemacrawler.inclusionrule.ListExclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 
 public final class OracleSchemaExclusionRule implements InclusionRule {
 
   private static final long serialVersionUID = 4955209955094408513L;
 
-  private static final Logger LOGGER = Logger.getLogger(OracleSchemaExclusionRule.class.getName());
-
-  private static final List<String> schemaExclusions =
-      Arrays.asList(
-          "ANONYMOUS",
-          "APEX_050000",
-          "APEX_PUBLIC_USER",
-          "APPQOSSYS",
-          "AUDSYS",
-          "BI",
-          "CTXSYS",
-          "DBSFWUSER",
-          "DBSNMP",
-          "DIP",
-          "DVF",
-          "DVSYS",
-          "EXFSYS",
-          "FLOWS_FILES",
-          "GGSYS",
-          "GSMADMIN_INTERNAL",
-          "GSMCATUSER",
-          "GSMUSER",
-          "HR",
-          "IX",
-          "LBACSYS",
-          "MDDATA",
-          "MDSYS",
-          "MGMT_VIEW",
-          "OE",
-          "OLAPSYS",
-          "OPS$ORACLE",
-          "ORACLE_OCM",
-          "ORDDATA",
-          "ORDPLUGINS",
-          "ORDSYS",
-          "OUTLN",
-          "OWBSYS",
-          "PDBADMIN",
-          "PM",
-          "RDSADMIN",
-          "REMOTE_SCHEDULER_AGENT",
-          "SCOTT",
-          "SH",
-          "SI_INFORMTN_SCHEMA",
-          "SPATIAL_CSW_ADMIN_USR",
-          "SPATIAL_WFS_ADMIN_USR",
-          "SYS",
-          "SYS$UMF",
-          "SYSBACKUP",
-          "SYSDG",
-          "SYSKM",
-          "SYSMAN",
-          "SYSRAC",
-          "\"SYSTEM\"",
-          "TSMSYS",
-          "WKPROXY",
-          "WKSYS",
-          "WK_TEST",
-          "WMSYS",
-          "XDB",
-          "XS$NULL");
-  private static final Pattern[] schemaExclusionPatterns =
-      new Pattern[] {
-        Pattern.compile("APEX_[0-9]{6}"), Pattern.compile("FLOWS_[0-9]{5,6}"),
-      };
+  private static final Predicate<String> exclusionRule =
+      new ListExclusionRule(
+              Arrays.asList(
+                  "ANONYMOUS",
+                  "APEX_050000",
+                  "APEX_PUBLIC_USER",
+                  "APPQOSSYS",
+                  "AUDSYS",
+                  "BI",
+                  "CTXSYS",
+                  "DBSFWUSER",
+                  "DBSNMP",
+                  "DIP",
+                  "DVF",
+                  "DVSYS",
+                  "EXFSYS",
+                  "FLOWS_FILES",
+                  "GGSYS",
+                  "GSMADMIN_INTERNAL",
+                  "GSMCATUSER",
+                  "GSMUSER",
+                  "HR",
+                  "IX",
+                  "LBACSYS",
+                  "MDDATA",
+                  "MDSYS",
+                  "MGMT_VIEW",
+                  "OE",
+                  "OLAPSYS",
+                  "OPS$ORACLE",
+                  "ORACLE_OCM",
+                  "ORDDATA",
+                  "ORDPLUGINS",
+                  "ORDSYS",
+                  "OUTLN",
+                  "OWBSYS",
+                  "PDBADMIN",
+                  "PM",
+                  "RDSADMIN",
+                  "REMOTE_SCHEDULER_AGENT",
+                  "SCOTT",
+                  "SH",
+                  "SI_INFORMTN_SCHEMA",
+                  "SPATIAL_CSW_ADMIN_USR",
+                  "SPATIAL_WFS_ADMIN_USR",
+                  "SYS",
+                  "SYS$UMF",
+                  "SYSBACKUP",
+                  "SYSDG",
+                  "SYSKM",
+                  "SYSMAN",
+                  "SYSRAC",
+                  "\"SYSTEM\"",
+                  "TSMSYS",
+                  "WKPROXY",
+                  "WKSYS",
+                  "WK_TEST",
+                  "WMSYS",
+                  "XDB",
+                  "XS$NULL"))
+          .and(new RegularExpressionExclusionRule("APEX_[0-9]{6}"))
+          .and(new RegularExpressionExclusionRule("FLOWS_[0-9]{5,6}"));
 
   /** {@inheritDoc} */
   @Override
   public boolean test(final String text) {
-
-    if (schemaExclusions.contains(text)) {
-      LOGGER.log(
-          Level.FINE, new StringFormat("Excluding <%s> since it is on the exclude list", text));
-      return false;
-    }
-
-    for (final Pattern schemaExclusionPattern : schemaExclusionPatterns) {
-      if (schemaExclusionPattern.matcher(text).matches()) {
-        LOGGER.log(
-            Level.FINE,
-            new StringFormat("Excluding <%s> since it matches exclusion pattern", text));
-        return false;
-      }
-    }
-
-    LOGGER.log(Level.FINE, new StringFormat("Including <%s>", text));
-    return true;
+    return exclusionRule.test(text);
   }
 }

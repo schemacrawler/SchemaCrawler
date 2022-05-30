@@ -121,7 +121,7 @@ public class DiffTest {
     final Path sqliteDbFile = copyResourceToTempFile(database);
 
     final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
-    sqLiteDatabaseLoader.loadDatabaseFile(sqliteDbFile);
+    sqLiteDatabaseLoader.setDatabasePath(sqliteDbFile);
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;

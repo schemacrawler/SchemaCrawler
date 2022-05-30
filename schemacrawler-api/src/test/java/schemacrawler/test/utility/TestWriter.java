@@ -59,8 +59,8 @@ public final class TestWriter extends Writer implements TestOutputCapture {
   }
 
   @Override
-  public String getFileContents() {
-    return out.getFileContents();
+  public String getContents() {
+    return out.getContents();
   }
 
   @Override

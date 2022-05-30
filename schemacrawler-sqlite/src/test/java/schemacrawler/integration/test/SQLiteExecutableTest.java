@@ -76,7 +76,7 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
       final String currentMethodFullName, final InfoLevel infoLevel, final String command)
       throws Exception {
     final Path sqliteDbFile = createTestDatabase();
-    final DataSource dataSource = createDatabaseFromFile(sqliteDbFile);
+    final DataSource dataSource = createDataSourceFromFile(sqliteDbFile);
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
