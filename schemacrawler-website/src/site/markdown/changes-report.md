@@ -9,8 +9,8 @@ SchemaCrawler release notes.
   by default from SQLLite schemas, when using `EmbeddedSQLiteWrapper`
 
 
-<a name="a16.16.14"></a>
-## Release 16.16.14 - 2022-03-27
+<a name="a16.16.15"></a>
+## Release 16.16.15 - 2022-03-27
 
 - Distribute Mermaid and DBML diagram creation scripts in Docker image
 - Drop support for Oracle 11g and rework Oracle plugin
