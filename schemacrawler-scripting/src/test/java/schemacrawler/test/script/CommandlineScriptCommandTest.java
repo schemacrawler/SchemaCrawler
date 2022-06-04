@@ -40,10 +40,10 @@ import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
-@ExtendWith(TestAssertNoSystemOutOutput.class)
+@ExtendWith(AssertNoSystemOutOutputExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class CommandlineScriptCommandTest {
 

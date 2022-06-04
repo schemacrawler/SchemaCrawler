@@ -27,19 +27,16 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
-import org.junit.jupiter.api.extension.ExtendWith;
+import us.fatehi.utility.LoggingConfig;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-@ExtendWith(WithSystemPropertyExtension.class)
-public @interface WithSystemProperty {
+public class DisableLoggingExtension implements BeforeAllCallback {
 
-  String key();
-
-  String value();
+  @Override
+  public void beforeAll(final ExtensionContext context) throws Exception {
+    // Turn off logging
+    new LoggingConfig();
+  }
 }

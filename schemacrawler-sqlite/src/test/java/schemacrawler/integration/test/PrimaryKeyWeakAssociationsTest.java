@@ -54,16 +54,16 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.NamedObjectSort;
 
-@ExtendWith(TestLoggingExtension.class)
+@DisableLogging
 @ExtendWith(TestContextParameterResolver.class)
 public class PrimaryKeyWeakAssociationsTest extends BaseSqliteTest {
 

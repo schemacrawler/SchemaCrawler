@@ -42,14 +42,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@ExtendWith(TestLoggingExtension.class)
+@DisableLogging
 @ExtendWith(TestContextParameterResolver.class)
 public class AdditionalCasesTest extends BaseSqliteTest {
 

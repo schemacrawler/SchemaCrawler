@@ -45,14 +45,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
+@ExtendWith(AssertNoSystemErrOutputExtension.class)
+@ExtendWith(AssertNoSystemOutOutputExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public abstract class AbstractTitleTest {
 

@@ -38,7 +38,6 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -49,11 +48,11 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.database.SqlScript;
 
-@ExtendWith(TestLoggingExtension.class)
+@DisableLogging
 public class TempTablesTest extends BaseSqliteTest {
 
   @Test

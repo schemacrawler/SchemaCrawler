@@ -43,13 +43,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestDatabaseDriver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 
-@ExtendWith(TestLoggingExtension.class)
+@DisableLogging
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class DatabaseConnectionSourceTest {
 

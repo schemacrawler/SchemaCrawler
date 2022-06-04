@@ -39,20 +39,20 @@ import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class TestAssertNoSystemOutOutput implements BeforeEachCallback, AfterEachCallback {
+public class AssertNoSystemErrOutputExtension implements BeforeEachCallback, AfterEachCallback {
 
-  private TestOutputStream out;
+  private TestOutputStream err;
 
   @Override
   public void afterEach(final ExtensionContext context) throws Exception {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
-    assertThat("Expected no System.out output", out.getContents(), is(emptyString()));
+    assertThat("Expected no System.err output", err.getContents(), is(emptyString()));
   }
 
   @Override
   public void beforeEach(final ExtensionContext context) throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 }

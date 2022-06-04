@@ -39,13 +39,13 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
+@ExtendWith(AssertNoSystemErrOutputExtension.class)
+@ExtendWith(AssertNoSystemOutOutputExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class ExecutableTemplateCommandTest {
 
