@@ -35,13 +35,14 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import schemacrawler.test.utility.HeavyDatabaseTest;
+
+@HeavyDatabaseTest
 @Testcontainers
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class OracleTest extends BaseOracleWithConnectionTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();

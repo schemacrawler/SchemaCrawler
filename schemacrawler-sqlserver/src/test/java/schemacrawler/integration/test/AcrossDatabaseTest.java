@@ -41,7 +41,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -55,6 +54,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -64,8 +64,8 @@ import us.fatehi.utility.database.SqlScript;
 
 @DisableLogging
 @ExtendWith(TestContextParameterResolver.class)
+@HeavyDatabaseTest
 @Testcontainers
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();

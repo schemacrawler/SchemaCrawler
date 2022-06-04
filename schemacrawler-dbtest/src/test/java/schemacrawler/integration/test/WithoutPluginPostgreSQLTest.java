@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -51,13 +50,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
+@HeavyDatabaseTest
 @Testcontainers
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
 
   private final DockerImageName imageName = DockerImageName.parse(PostgreSQLContainer.IMAGE);

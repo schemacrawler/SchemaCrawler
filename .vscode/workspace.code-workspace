@@ -22,12 +22,6 @@
         "vmargs": [
           "-Dheavydb"
         ]
-      },
-      {
-        "name": "Run Light Database Tests",
-        "vmargs": [
-          "-Dlightdb"
-        ]
       }
     ],
     "editor.tabSize": 2,
