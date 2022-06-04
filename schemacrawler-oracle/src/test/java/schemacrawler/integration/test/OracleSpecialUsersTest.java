@@ -47,17 +47,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 
 @TestInstance(PER_CLASS)
-@Testcontainers(disabledWithoutDocker = true)
+@Testcontainers
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;
@@ -67,7 +68,9 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @BeforeAll
   public void createDatabase() {
 
-    dbContainer.start();
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
 
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);

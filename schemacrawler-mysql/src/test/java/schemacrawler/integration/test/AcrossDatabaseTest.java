@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -63,7 +64,7 @@ import us.fatehi.utility.database.SqlScript;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-@Testcontainers(disabledWithoutDocker = true)
+@Testcontainers
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
@@ -104,6 +105,11 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws SQLException {
+
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
+
     // IMPORTANT: Use root user, since permissions are not granted to the new databases created by
     // the script. Also do not verify the server, and allow public key retrieval
     final String connectionUrl =
