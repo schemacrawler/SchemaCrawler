@@ -27,10 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
+import static org.junit.jupiter.api.condition.OS.LINUX;
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.disabled;
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.enabled;
 
-import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -40,22 +40,25 @@ public class HeavyDatabaseExtension implements ExecutionCondition {
   @Override
   public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context) {
 
-    final boolean overrideForDev = System.getProperty("usetestcontainers") == null;
+    final boolean overrideForDev = System.getProperty("usetestcontainers") != null;
 
     if (noHeavyDb()) {
       return disabled("Disable heavy database tests since \"heavydb\" is not set");
     } else if (overrideForDev) {
       return enabled("Override the test of Testcontainers for databases");
-    } else if (OS.LINUX.isCurrentOs()) {
+    } else if (LINUX.isCurrentOs()) {
       return enabled(
           "Enable heavy database tests on Linux, since GitHub Actions only supports Docker on this platform");
     } else {
+      // Disable by default
       return disabled("Disable heavy database tests since conditions are not met");
     }
   }
 
   private boolean noHeavyDb() {
     final String heavydb = System.getProperty("heavydb");
-    return heavydb == null || !Boolean.valueOf(heavydb) || heavydb.toLowerCase().equals("no");
+    return heavydb == null
+        || heavydb.toLowerCase().equals("false") // this is not the same as the Boolean check
+        || heavydb.toLowerCase().equals("no");
   }
 }
