@@ -25,27 +25,16 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.test.utility;
 
-package schemacrawler.test;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import static schemacrawler.test.utility.LintTestUtility.executableLint;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.sql.Connection;
-
-import org.junit.jupiter.api.Test;
-
-import schemacrawler.test.utility.AssertNoSystemErrOutput;
-import schemacrawler.test.utility.AssertNoSystemOutOutput;
-import schemacrawler.test.utility.WithTestDatabase;
-
-@WithTestDatabase
-@AssertNoSystemErrOutput
-@AssertNoSystemOutOutput
-public class LintSqlTest {
-
-  @Test
-  public void executableLintSQLReport(final Connection connection) throws Exception {
-    executableLint(
-        connection, "/schemacrawler-linter-configs-sql.yaml", null, "executableLintSQLReport");
-  }
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@ExtendWith(OnlyRunWithGraphvizExtension.class)
+public @interface OnlyRunWithGraphviz {}
