@@ -48,8 +48,8 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.operation.options.OperationType;
@@ -58,8 +58,8 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 
-@ExtendWith(AssertNoSystemErrOutputExtension.class)
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 @WithTestDatabase
 public class SpinThroughOperationsExecutableTest {
 

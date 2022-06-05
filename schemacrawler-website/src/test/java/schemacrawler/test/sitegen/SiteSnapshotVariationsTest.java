@@ -41,8 +41,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.ResolveTestContext;
@@ -55,8 +55,8 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
-@ExtendWith(AssertNoSystemErrOutputExtension.class)
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 @WithTestDatabase
 @ResolveTestContext
 @ExtendWith(TestDisabledWithoutGraphvizExtension.class)

@@ -40,14 +40,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.lint.LinterHelp;
 
-@ExtendWith(AssertNoSystemErrOutputExtension.class)
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 @ResolveTestContext
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
 public class SiteLinterHelpTest {

@@ -46,14 +46,14 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@ExtendWith(AssertNoSystemErrOutputExtension.class)
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 @WithTestDatabase
 public class ExecutableSerializeCommandTest {
 

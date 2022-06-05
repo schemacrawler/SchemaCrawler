@@ -27,32 +27,14 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.is;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-
-final class AssertNoSystemOutOutputExtension implements BeforeEachCallback, AfterEachCallback {
-
-  private TestOutputStream out;
-
-  @Override
-  public void afterEach(final ExtensionContext context) throws Exception {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-
-    assertThat("Expected no System.out output", out.getContents(), is(emptyString()));
-  }
-
-  @Override
-  public void beforeEach(final ExtensionContext context) throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-  }
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@ExtendWith(AssertNoSystemErrOutputExtension.class)
+public @interface AssertNoSystemErrOutput {}

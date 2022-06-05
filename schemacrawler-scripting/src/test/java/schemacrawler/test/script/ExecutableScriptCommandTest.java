@@ -41,11 +41,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemOutOutput
 @WithTestDatabase
 public class ExecutableScriptCommandTest {
 

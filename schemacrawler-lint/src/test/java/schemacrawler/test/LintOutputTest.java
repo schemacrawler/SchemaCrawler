@@ -52,8 +52,8 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -63,8 +63,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 
 @WithTestDatabase
-@ExtendWith(AssertNoSystemErrOutputExtension.class)
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 public class LintOutputTest {
 
   private static final String TEXT_OUTPUT = "lint_text_output/";

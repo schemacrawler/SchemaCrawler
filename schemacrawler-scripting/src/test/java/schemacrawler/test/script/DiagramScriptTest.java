@@ -39,13 +39,13 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemOutOutput
 @ResolveTestContext
 @WithTestDatabase
 public class DiagramScriptTest {

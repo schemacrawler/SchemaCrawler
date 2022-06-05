@@ -43,12 +43,12 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemOutOutput
 @WithTestDatabase
 public class ScriptingLanguageTest {
 

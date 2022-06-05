@@ -52,8 +52,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
-import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
-import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -70,8 +70,8 @@ import schemacrawler.tools.options.Config;
 
 @WithTestDatabase
 @ResolveTestContext
-@ExtendWith(AssertNoSystemErrOutputExtension.class)
-@ExtendWith(AssertNoSystemOutOutputExtension.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 public class LinterConfigsDispatchTest {
 
   private TestOutputStream err;
