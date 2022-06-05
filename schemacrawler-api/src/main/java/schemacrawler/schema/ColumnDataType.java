@@ -33,8 +33,6 @@ import java.util.List;
 /**
  * Represents a column type. Provides the java.sql.Types type, the java.sql.Types type name, and the
  * database specific data type name.
- *
- * @author Sualeh Fatehi
  */
 public interface ColumnDataType extends DatabaseObject, TypedObject<DataTypeType> {
 

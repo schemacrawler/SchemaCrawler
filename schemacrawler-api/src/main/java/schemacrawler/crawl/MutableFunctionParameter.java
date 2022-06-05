@@ -31,11 +31,7 @@ package schemacrawler.crawl;
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionParameter;
 
-/**
- * Represents a column in a database function. Created from metadata returned by a JDBC call.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a column in a database function. Created from metadata returned by a JDBC call. */
 final class MutableFunctionParameter extends MutableRoutineParameter<Function>
     implements FunctionParameter {
 

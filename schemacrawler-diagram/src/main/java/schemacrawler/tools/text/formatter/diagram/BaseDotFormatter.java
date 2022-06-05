@@ -45,11 +45,7 @@ import schemacrawler.tools.text.formatter.base.BaseFormatter;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
 
-/**
- * Text formatting of schema.
- *
- * @author Sualeh Fatehi
- */
+/** Text formatting of schema for diagrams. */
 public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
 
   protected BaseDotFormatter(

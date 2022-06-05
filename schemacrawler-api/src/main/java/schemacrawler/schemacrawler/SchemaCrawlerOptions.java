@@ -31,11 +31,7 @@ import static java.util.Objects.requireNonNull;
 
 import us.fatehi.utility.ObjectToString;
 
-/**
- * SchemaCrawler options.
- *
- * @author Sualeh Fatehi
- */
+/** SchemaCrawler options. */
 public final class SchemaCrawlerOptions implements Options {
 
   private final LimitOptions limitOptions;

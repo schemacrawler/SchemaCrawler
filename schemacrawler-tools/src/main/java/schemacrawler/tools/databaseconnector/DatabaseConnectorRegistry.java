@@ -50,11 +50,7 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Registry for mapping database connectors from DatabaseConnector-line switch.
- *
- * @author Sualeh Fatehi
- */
+/** Registry for database plugins. */
 public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerType> {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseConnectorRegistry.class.getName());

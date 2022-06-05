@@ -31,11 +31,7 @@ package schemacrawler.schema;
 import java.util.Collection;
 import java.util.Optional;
 
-/**
- * Represents a view in the database.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a view in the database. */
 public interface View extends Table {
 
   /**

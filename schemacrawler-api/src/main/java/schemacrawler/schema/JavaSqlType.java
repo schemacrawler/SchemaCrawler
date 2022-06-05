@@ -36,11 +36,7 @@ import java.io.Serializable;
 import java.sql.SQLType;
 import java.util.Comparator;
 
-/**
- * A wrapper around java.sql.Types.
- *
- * @author Sualeh Fatehi
- */
+/** A wrapper around java.sql.Types. */
 public final class JavaSqlType implements SQLType, Serializable, Comparable<JavaSqlType> {
 
   private static final long serialVersionUID = 2614819974745473431L;

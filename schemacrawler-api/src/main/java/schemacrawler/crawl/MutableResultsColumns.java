@@ -36,11 +36,7 @@ import java.util.Optional;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 
-/**
- * Represents a result set, a result of a query.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a result set, a result of a query. */
 final class MutableResultsColumns extends AbstractNamedObject implements ResultsColumns {
 
   private static final long serialVersionUID = 5204766782914559188L;

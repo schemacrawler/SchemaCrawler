@@ -41,11 +41,7 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 import us.fatehi.utility.CompareUtility;
 
-/**
- * Represents a database routine. Created from metadata returned by a JDBC call.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a database routine. Created from metadata returned by a JDBC call. */
 abstract class MutableRoutine extends AbstractDatabaseObject implements Routine {
 
   private static final long serialVersionUID = 3906925686089134130L;

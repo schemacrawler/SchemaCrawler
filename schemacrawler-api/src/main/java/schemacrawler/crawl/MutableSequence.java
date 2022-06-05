@@ -33,11 +33,7 @@ import java.math.BigInteger;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 
-/**
- * Represents a database sequence. Created from metadata returned by a JDBC call.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a database sequence. Created from metadata returned by a JDBC call. */
 final class MutableSequence extends AbstractDatabaseObject implements Sequence {
 
   private static final long serialVersionUID = -4774695374454532899L;

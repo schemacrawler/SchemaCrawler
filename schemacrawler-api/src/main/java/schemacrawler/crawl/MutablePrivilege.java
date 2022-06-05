@@ -43,11 +43,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.Privilege;
 
-/**
- * Represents a privilege of a table or column.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a privilege of a table or column. */
 final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependantObject<D>
     implements Privilege<D> {
 

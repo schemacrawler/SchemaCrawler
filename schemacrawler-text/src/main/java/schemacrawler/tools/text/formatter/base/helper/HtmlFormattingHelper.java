@@ -40,11 +40,7 @@ import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagBuilder;
 import us.fatehi.utility.html.TagOutputFormat;
 
-/**
- * Methods to format entire rows of output as HTML.
- *
- * @author Sualeh Fatehi
- */
+/** Methods to format entire rows of output as HTML. */
 public final class HtmlFormattingHelper extends BaseTextFormattingHelper {
 
   private static final String HTML_HEADER = htmlHeader();

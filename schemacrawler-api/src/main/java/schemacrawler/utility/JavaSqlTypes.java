@@ -39,11 +39,7 @@ import java.util.Map;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlTypeGroup;
 
-/**
- * Utility to work with java.sql.Types.
- *
- * @author Sualeh Fatehi
- */
+/** Utility to work with java.sql.Types. */
 public final class JavaSqlTypes implements Iterable<JavaSqlType> {
 
   private final Map<Integer, JavaSqlType> javaSqlTypeMap;

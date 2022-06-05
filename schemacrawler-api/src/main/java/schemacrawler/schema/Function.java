@@ -31,11 +31,7 @@ package schemacrawler.schema;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Represents a database function.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a database function. */
 public interface Function extends Routine {
 
   /**

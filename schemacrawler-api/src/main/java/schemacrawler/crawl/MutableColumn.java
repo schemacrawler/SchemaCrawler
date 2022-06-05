@@ -39,8 +39,6 @@ import schemacrawler.schema.Table;
 /**
  * Represents a column in a database table or routine. Created from metadata returned by a JDBC
  * call.
- *
- * @author Sualeh Fatehi
  */
 final class MutableColumn extends AbstractColumn<Table> implements Column {
 

@@ -44,11 +44,7 @@ import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagBuilder;
 import us.fatehi.utility.html.TagOutputFormat;
 
-/**
- * Methods to format entire rows of output as HTML.
- *
- * @author Sualeh Fatehi
- */
+/** Methods to format entire rows of output as HTML. */
 abstract class BaseTextFormattingHelper implements TextFormattingHelper {
 
   /** System specific line separator character. */

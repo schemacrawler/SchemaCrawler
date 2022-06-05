@@ -34,11 +34,7 @@ import java.util.Map;
 
 import us.fatehi.utility.Color;
 
-/**
- * Represents an HTML anchor.
- *
- * @author Sualeh Fatehi
- */
+/** Builds an HTML tag. */
 public final class TagBuilder {
 
   public static TagBuilder anchor() {

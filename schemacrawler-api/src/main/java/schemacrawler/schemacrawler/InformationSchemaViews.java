@@ -35,11 +35,7 @@ import java.util.Map;
 
 import us.fatehi.utility.ObjectToString;
 
-/**
- * The database specific views to get additional database metadata in a standard format.
- *
- * @author Sualeh Fatehi
- */
+/** The database specific views to get additional database metadata in a standard format. */
 public final class InformationSchemaViews implements Options {
 
   private final Map<InformationSchemaKey, String> informationSchemaQueries;

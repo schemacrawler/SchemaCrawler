@@ -31,11 +31,6 @@ package schemacrawler.tools.commandline.shell;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Unmatched;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
 public final class InteractiveShellOptions {
 
   @Option(

@@ -34,11 +34,7 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 
-/**
- * Represents a trigger.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a trigger. */
 class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
 
   private static final long serialVersionUID = -1619291073229701764L;

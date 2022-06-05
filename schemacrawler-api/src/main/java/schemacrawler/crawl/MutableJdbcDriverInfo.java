@@ -45,8 +45,6 @@ import schemacrawler.schema.JdbcDriverProperty;
 /**
  * JDBC driver information. Created from metadata returned by a JDBC call, and other sources of
  * information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableJdbcDriverInfo implements JdbcDriverInfo {
 

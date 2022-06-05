@@ -47,8 +47,6 @@ import us.fatehi.utility.string.StringFormat;
 /**
  * Represents a column type. Provides the java.sql.Types type, the java.sql.Types type name, and the
  * database specific data type name.
- *
- * @author Sualeh Fatehi
  */
 final class MutableColumnDataType extends AbstractDatabaseObject implements ColumnDataType {
 

@@ -35,11 +35,6 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
 public final class CommandOptions {
 
   @Option(

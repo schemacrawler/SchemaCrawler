@@ -28,9 +28,5 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-/**
- * Represents a column in a database procedure.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a column in a database procedure. */
 public interface ProcedureParameter extends RoutineParameter<Procedure> {}

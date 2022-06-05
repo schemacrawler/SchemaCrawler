@@ -45,11 +45,7 @@ import schemacrawler.schemacrawler.Options;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Configuration properties.
- *
- * @author Sualeh Fatehi
- */
+/** Configuration properties. */
 public final class Config implements Options {
 
   public static final Logger LOGGER = Logger.getLogger(Config.class.getName());

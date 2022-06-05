@@ -30,11 +30,7 @@ package schemacrawler.schema;
 
 import java.util.Collection;
 
-/**
- * Represents a privilege of a table or column.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a privilege of a table or column. */
 public interface Privilege<D extends DatabaseObject> extends NamedObject, DependantObject<D> {
 
   Collection<Grant<D>> getGrants();

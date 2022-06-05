@@ -31,11 +31,7 @@ package schemacrawler.crawl;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureParameter;
 
-/**
- * Represents a column in a database procedure. Created from metadata returned by a JDBC call.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a column in a database procedure. Created from metadata returned by a JDBC call. */
 final class MutableProcedureParameter extends MutableRoutineParameter<Procedure>
     implements ProcedureParameter {
 

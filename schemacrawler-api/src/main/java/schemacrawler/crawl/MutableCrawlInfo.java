@@ -54,11 +54,7 @@ import schemacrawler.Version;
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
 
-/**
- * SchemaCrawler crawl information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
- */
+/** SchemaCrawler crawl information. */
 final class MutableCrawlInfo implements CrawlInfo {
 
   private static final long serialVersionUID = 5982990326485881993L;

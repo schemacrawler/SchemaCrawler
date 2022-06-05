@@ -41,8 +41,6 @@ import us.fatehi.utility.string.StringFormat;
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the names, definitions, and
  * other attributes of named objects.
- *
- * @author Sualeh Fatehi
  */
 public final class RegularExpressionRule implements InclusionRuleWithRegularExpression {
 

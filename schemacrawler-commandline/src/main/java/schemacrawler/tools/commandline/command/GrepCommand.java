@@ -37,11 +37,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
 @Command(
     name = "grep",
     header = "** Grep for database object metadata",

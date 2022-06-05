@@ -40,11 +40,7 @@ import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
-/**
- * Represents a database procedure. Created from metadata returned by a JDBC call.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a database procedure. Created from metadata returned by a JDBC call. */
 final class MutableProcedure extends MutableRoutine implements Procedure {
 
   private static final long serialVersionUID = 3906925686089134130L;

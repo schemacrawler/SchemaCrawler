@@ -42,11 +42,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
 import us.fatehi.utility.CompareUtility;
 
-/**
- * Represents an index on a database table.
- *
- * @author Sualeh Fatehi
- */
+/** Represents an index on a database table. */
 class MutableIndex extends AbstractDependantObject<Table> implements Index {
 
   private static final long serialVersionUID = 4051326747138079028L;

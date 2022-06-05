@@ -28,11 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-/**
- * Represents a database object.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a database object. */
 public interface DatabaseObject extends NamedObject, AttributedObject, DescribedObject {
 
   Schema getSchema();

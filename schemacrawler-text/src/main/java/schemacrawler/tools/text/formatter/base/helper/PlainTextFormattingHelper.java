@@ -35,11 +35,7 @@ import java.io.PrintWriter;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import us.fatehi.utility.Color;
 
-/**
- * Methods to format entire rows of output as text.
- *
- * @author Sualeh Fatehi
- */
+/** Methods to format entire rows of output as text. */
 public class PlainTextFormattingHelper extends BaseTextFormattingHelper {
 
   public PlainTextFormattingHelper(final PrintWriter out, final TextOutputFormat outputFormat) {

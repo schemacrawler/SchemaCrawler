@@ -40,11 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
-/**
- * A SchemaCrawler tools executable unit.
- *
- * @author Sualeh Fatehi
- */
+/** A SchemaCrawler tools executable unit. */
 public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     implements SchemaCrawlerCommand<C> {
 

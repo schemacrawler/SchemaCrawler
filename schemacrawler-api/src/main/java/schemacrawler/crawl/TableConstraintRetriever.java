@@ -57,11 +57,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the constraints on the database tables.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the constraints on the database tables. */
 final class TableConstraintRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableConstraintRetriever.class.getName());

@@ -28,11 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-/**
- * Column for tables and routines.
- *
- * @author Sualeh Fatehi
- */
+/** Column for tables and routines. */
 public interface BaseColumn<D extends DatabaseObject>
     extends DependantObject<D>, TypedObject<ColumnDataType> {
 

@@ -54,11 +54,6 @@ import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Basic SchemaCrawler executor.
- *
- * @author Sualeh Fatehi
- */
 public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
   private static final Logger LOGGER = Logger.getLogger(OperationCommand.class.getName());
 

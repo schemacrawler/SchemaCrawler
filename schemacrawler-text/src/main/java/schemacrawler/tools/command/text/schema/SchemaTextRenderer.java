@@ -37,11 +37,7 @@ import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 
-/**
- * Basic SchemaCrawler executor.
- *
- * @author Sualeh Fatehi
- */
+/** Basic SchemaCrawler executor for text output. */
 public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTextOptions> {
 
   public SchemaTextRenderer(final String command) {

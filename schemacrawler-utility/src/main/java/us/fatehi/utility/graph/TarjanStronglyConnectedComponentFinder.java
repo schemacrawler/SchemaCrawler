@@ -41,7 +41,6 @@ import java.util.Objects;
  * algorithm</a>
  *
  * @param <T> Any comparable class
- * @author Sualeh Fatehi
  */
 public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super T>> {
 

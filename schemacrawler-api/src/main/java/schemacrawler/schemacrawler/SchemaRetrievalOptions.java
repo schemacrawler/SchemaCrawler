@@ -41,8 +41,6 @@ import us.fatehi.utility.ObjectToString;
  * Provides for database specific overrides for SchemaCrawler functionality. This can add or inject
  * database plugins, or override defaults. It is recommended to build these options using factory
  * methods in SchemaCrawlerUtility.
- *
- * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
 public final class SchemaRetrievalOptions implements Options {
 

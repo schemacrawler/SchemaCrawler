@@ -31,11 +31,7 @@ package schemacrawler.schema;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Represents an index on a database table.
- *
- * @author Sualeh Fatehi
- */
+/** Represents an index on a database table. */
 public interface Index
     extends DependantObject<Table>, TypedObject<IndexType>, DefinedObject, Iterable<IndexColumn> {
 

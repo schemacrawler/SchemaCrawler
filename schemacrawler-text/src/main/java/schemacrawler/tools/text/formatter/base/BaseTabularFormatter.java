@@ -44,11 +44,7 @@ import schemacrawler.tools.text.options.BaseTextOptions;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.html.Alignment;
 
-/**
- * Text formatting of schema.
- *
- * @author Sualeh Fatehi
- */
+/** Text formatting of schema. */
 public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends BaseFormatter<O> {
 
   protected BaseTabularFormatter(

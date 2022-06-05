@@ -32,11 +32,6 @@ import java.io.PrintWriter;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 
-/**
- * Main executor for the script engine integration.
- *
- * @author Sualeh Fatehi
- */
 public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
 
   static final String COMMAND = "test-command";

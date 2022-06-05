@@ -32,11 +32,7 @@ import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 
-/**
- * Represents a column in a database routine. Created from metadata returned by a JDBC call.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a parameter in a database routine. Created from metadata returned by a JDBC call. */
 abstract class MutableRoutineParameter<R extends Routine> extends AbstractColumn<R>
     implements RoutineParameter<R> {
 

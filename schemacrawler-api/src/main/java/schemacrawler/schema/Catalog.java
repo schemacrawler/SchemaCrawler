@@ -31,11 +31,7 @@ package schemacrawler.schema;
 import java.util.Collection;
 import java.util.Optional;
 
-/**
- * Database and connection information.
- *
- * @author Sualeh Fatehi
- */
+/** Database and connection information. */
 public interface Catalog extends NamedObject, AttributedObject, DescribedObject, Reducible {
 
   /**

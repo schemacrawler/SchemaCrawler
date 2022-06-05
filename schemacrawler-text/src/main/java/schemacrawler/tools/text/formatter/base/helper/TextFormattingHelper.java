@@ -31,11 +31,7 @@ package schemacrawler.tools.text.formatter.base.helper;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 
-/**
- * Methods to format entire rows of output.
- *
- * @author Sualeh Fatehi
- */
+/** Methods to format entire rows of output. */
 public interface TextFormattingHelper {
 
   enum DocumentHeaderType {

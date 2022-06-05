@@ -33,11 +33,7 @@ import java.util.Collection;
 
 import schemacrawler.ProductVersion;
 
-/**
- * JDBC driver information.
- *
- * @author Sualeh Fatehi
- */
+/** JDBC driver information. */
 public interface JdbcDriverInfo extends ProductVersion {
 
   /**

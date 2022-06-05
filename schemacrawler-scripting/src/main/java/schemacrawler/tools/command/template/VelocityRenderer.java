@@ -47,11 +47,6 @@ import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 
-/**
- * Main executor for the Velocity integration.
- *
- * @author Sualeh Fatehi
- */
 public final class VelocityRenderer extends BaseTemplateRenderer {
 
   private static void setVelocityResourceLoaderProperty(

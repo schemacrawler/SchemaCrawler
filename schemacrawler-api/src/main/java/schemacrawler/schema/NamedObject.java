@@ -30,11 +30,7 @@ package schemacrawler.schema;
 
 import java.io.Serializable;
 
-/**
- * Represents a named object.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a named object. */
 public interface NamedObject extends Serializable, Comparable<NamedObject> {
 
   /**

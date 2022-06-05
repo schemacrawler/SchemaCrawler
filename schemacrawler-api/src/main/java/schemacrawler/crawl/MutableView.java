@@ -37,11 +37,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 
-/**
- * Represents a view in the database.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a view in the database. */
 class MutableView extends MutableTable implements View {
 
   private static final long serialVersionUID = 3257290248802284852L;

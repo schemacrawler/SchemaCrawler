@@ -28,11 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-/**
- * Represents an trigger.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a trigger. */
 public interface Trigger extends DependantObject<Table> {
 
   /**

@@ -45,11 +45,6 @@ import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.FileOutputResource;
 import us.fatehi.utility.ioresource.OutputResource;
 
-/**
- * Contains output options.
- *
- * @author Sualeh Fatehi
- */
 public final class OutputOptions implements Options {
 
   private final Charset inputEncodingCharset;

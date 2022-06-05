@@ -38,8 +38,8 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
@@ -51,16 +51,11 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.TypeMap;
 
-/**
- * Base class for retriever that uses database metadata to get the details about the schema.
- *
- * @author Sualeh Fatehi
- */
+/** Base class for retriever that uses database metadata to get the details about the schema. */
 @Retriever
 abstract class AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(AbstractRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AbstractRetriever.class.getName());
   final MutableCatalog catalog;
   private final SchemaCrawlerOptions options;
   private final RetrieverConnection retrieverConnection;

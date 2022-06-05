@@ -37,11 +37,7 @@ import java.util.Objects;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 
-/**
- * Represents a named object.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a named object. */
 abstract class AbstractNamedObject implements NamedObject {
 
   private static final long serialVersionUID = -1486322887991472729L;

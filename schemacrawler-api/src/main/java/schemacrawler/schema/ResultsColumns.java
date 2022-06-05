@@ -31,11 +31,7 @@ package schemacrawler.schema;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Represents a result set, a result of a query.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a result set, a result of a query. */
 public interface ResultsColumns extends NamedObject, Iterable<ResultsColumn> {
 
   /**

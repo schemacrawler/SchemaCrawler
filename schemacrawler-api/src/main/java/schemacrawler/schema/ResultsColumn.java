@@ -28,11 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-/**
- * Represents a column in a result set.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a column in a result set. */
 public interface ResultsColumn extends BaseColumn<Table> {
 
   /**

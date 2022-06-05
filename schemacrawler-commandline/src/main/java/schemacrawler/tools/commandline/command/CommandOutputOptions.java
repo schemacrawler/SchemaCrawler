@@ -35,11 +35,6 @@ import java.util.Optional;
 
 import picocli.CommandLine.Option;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
 public final class CommandOutputOptions {
 
   @Option(

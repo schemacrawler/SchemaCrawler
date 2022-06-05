@@ -68,11 +68,7 @@ import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
 
-/**
- * Graphviz DOT formatting of schema.
- *
- * @author Sualeh Fatehi
- */
+/** Graphviz DOT formatting of schema. */
 public final class SchemaDotFormatter extends BaseDotFormatter implements SchemaTraversalHandler {
 
   private final boolean isVerbose;

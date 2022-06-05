@@ -43,8 +43,6 @@ import schemacrawler.schema.JdbcDriverProperty;
 /**
  * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call,
  * and other sources of information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class ImmutableJdbcDriverProperty extends AbstractProperty implements JdbcDriverProperty {
 

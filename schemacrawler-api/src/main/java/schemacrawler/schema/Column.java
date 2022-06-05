@@ -31,11 +31,7 @@ package schemacrawler.schema;
 import java.util.Collection;
 import java.util.Optional;
 
-/**
- * Represents a column in a database table or routine.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a column in a database table or routine. */
 public interface Column extends BaseColumn<Table> {
 
   /**

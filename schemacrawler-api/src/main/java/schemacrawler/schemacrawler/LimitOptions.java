@@ -40,11 +40,7 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.TableTypes;
 import us.fatehi.utility.ObjectToString;
 
-/**
- * SchemaCrawler options.
- *
- * @author Sualeh Fatehi
- */
+/** SchemaCrawler options. */
 public final class LimitOptions implements Options {
 
   private final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules;

@@ -30,11 +30,7 @@ package schemacrawler.inclusionrule;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-/**
- * Include all names, definitions, and other attributes of named objects.
- *
- * @author Sualeh Fatehi
- */
+/** Include all names, definitions, and other attributes of named objects. */
 public final class ExcludeAll implements InclusionRuleWithRegularExpression {
 
   private static final long serialVersionUID = -2992724018349021861L;

@@ -30,11 +30,7 @@ package schemacrawler.schema;
 
 import java.math.BigInteger;
 
-/**
- * Represents a database sequence.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a database sequence. */
 public interface Sequence extends DatabaseObject {
 
   /**

@@ -28,9 +28,5 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-/**
- * Represents a primary key in a table.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a primary key in a table. */
 public interface PrimaryKey extends TableConstraint {}

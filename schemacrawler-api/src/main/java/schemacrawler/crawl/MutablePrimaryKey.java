@@ -37,11 +37,7 @@ import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintType;
 
-/**
- * Represents a primary key in a table.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a primary key in a table. */
 final class MutablePrimaryKey extends MutableTableConstraint implements PrimaryKey {
 
   private static final long serialVersionUID = -7169206178562782087L;

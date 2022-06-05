@@ -32,11 +32,6 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
-/**
- * Operator options.
- *
- * @author Sualeh Fatehi
- */
 public final class OperationOptionsBuilder
     extends BaseTextOptionsBuilder<OperationOptionsBuilder, OperationOptions> {
   private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX + "data.show_lobs";

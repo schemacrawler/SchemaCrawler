@@ -48,11 +48,7 @@ import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TypeMap;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A connection for the retriever. Wraps a live database connection.
- *
- * @author Sualeh Fatehi
- */
+/** A connection for the retriever. Wraps a live database connection. */
 final class RetrieverConnection {
 
   private static final Logger LOGGER = Logger.getLogger(RetrieverConnection.class.getName());

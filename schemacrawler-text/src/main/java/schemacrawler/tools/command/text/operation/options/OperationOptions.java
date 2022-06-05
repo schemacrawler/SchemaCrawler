@@ -33,11 +33,6 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.text.options.BaseTextOptions;
 
-/**
- * Operator options.
- *
- * @author Sualeh Fatehi
- */
 public final class OperationOptions extends BaseTextOptions {
 
   private final Operation operation;

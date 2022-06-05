@@ -34,8 +34,6 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 /**
  * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of baggage, and is not
  * part of Java Compact Profile 2.
- *
- * @author Sualeh Fatehi
  */
 public final class Color {
 

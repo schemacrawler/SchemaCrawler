@@ -46,8 +46,6 @@ import schemacrawler.schema.Property;
 /**
  * Database and connection information. Created from metadata returned by a JDBC call, and other
  * sources of information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabaseInfo implements DatabaseInfo {
 

@@ -34,7 +34,6 @@ import schemacrawler.schemacrawler.Options;
  *
  * @param <B> Builder
  * @param <O> Options to be built
- * @author Sualeh Fatehi
  * @see <a href=
  *     "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing a
  *     Java Builder class</a>

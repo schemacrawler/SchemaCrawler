@@ -55,11 +55,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * A retriever uses database metadata to get the extended details about the database tables.
- *
- * @author Sualeh Fatehi
- */
+/** A retriever uses database metadata to get the extended details about the database tables. */
 final class TableExtRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableExtRetriever.class.getName());

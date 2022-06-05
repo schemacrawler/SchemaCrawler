@@ -30,11 +30,7 @@ package schemacrawler.schema;
 
 import java.io.Serializable;
 
-/**
- * Represents a single column mapping from a primary key column to a foreign key column.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a single column mapping from a primary key column to a foreign key column. */
 public interface ColumnReference extends Serializable, Comparable<ColumnReference> {
 
   /**

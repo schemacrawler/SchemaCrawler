@@ -44,8 +44,6 @@ import us.fatehi.utility.string.StringFormat;
 /**
  * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
  * state, but not for visiting a catalog. Includes code for dispatching a linter.
- *
- * @author Sualeh Fatehi
  */
 public abstract class Linter {
 

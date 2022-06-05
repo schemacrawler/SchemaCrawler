@@ -41,8 +41,6 @@ import schemacrawler.schemacrawler.Identifiers;
 /**
  * Represents the dependent of a database object, such as a column or an index, which are dependents
  * of a table.
- *
- * @author Sualeh Fatehi
  */
 abstract class AbstractDependantObject<D extends DatabaseObject> extends AbstractDatabaseObject
     implements DependantObject<D> {

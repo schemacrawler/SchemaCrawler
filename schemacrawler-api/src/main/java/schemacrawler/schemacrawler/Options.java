@@ -28,9 +28,5 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-/**
- * Options.
- *
- * @author Sualeh Fatehi
- */
+/** Options. */
 public interface Options {}
