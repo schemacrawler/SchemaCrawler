@@ -32,6 +32,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,6 +62,18 @@ public class ForeignKeyNamesTest {
   @BeforeEach
   public void loadCatalog() throws Exception {
 
+    final Connection connection = getConnection();
+
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    catalog = getCatalog(connection, schemaCrawlerOptions);
+  }
+
+  private Connection getConnection() throws SQLException {
     final EmbeddedDatabase db =
         new EmbeddedDatabaseBuilder()
             .generateUniqueName(true)
@@ -70,13 +83,6 @@ public class ForeignKeyNamesTest {
             .build();
 
     final Connection connection = db.getConnection();
-
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    catalog = getCatalog(connection, schemaCrawlerOptions);
+    return connection;
   }
 }
