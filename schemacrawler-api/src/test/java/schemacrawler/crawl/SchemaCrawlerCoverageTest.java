@@ -84,12 +84,12 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SchemaCrawlerCoverageTest {
 

@@ -36,7 +36,7 @@ import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class WithSystemPropertyExtension implements BeforeEachCallback, AfterEachCallback {
+final class WithSystemPropertyExtension implements BeforeEachCallback, AfterEachCallback {
 
   private SimpleImmutableEntry<String, String> systemProperty;
 

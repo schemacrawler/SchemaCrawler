@@ -25,28 +25,16 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.test.utility;
 
-package schemacrawler.integration.test;
-
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.AbstractWeakAssociationsTest;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.options.OutputFormat;
-
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ResolveTestContext
-public class DiagramWeakAssociationsTest extends AbstractWeakAssociationsTest {
-
-  @Override
-  protected Stream<OutputFormat> outputFormats() {
-    return Arrays.stream(new OutputFormat[] {scdot, htmlx});
-  }
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@ExtendWith(TestContextParameterResolver.class)
+public @interface ResolveTestContext {}

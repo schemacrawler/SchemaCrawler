@@ -37,12 +37,12 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.AbstractAlternateKeysTest;
-import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class DiagramAlternateKeysTest extends AbstractAlternateKeysTest {
 
   @Override

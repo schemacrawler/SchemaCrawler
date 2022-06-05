@@ -41,12 +41,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
 import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestDisabledWithoutGraphvizExtension;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
@@ -58,7 +58,7 @@ import schemacrawler.tools.options.OutputFormat;
 @ExtendWith(AssertNoSystemErrOutputExtension.class)
 @ExtendWith(AssertNoSystemOutOutputExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
 public class SiteSnapshotVariationsTest {

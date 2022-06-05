@@ -45,11 +45,11 @@ import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class JdbcDriverInfoRetrieverTest {
 
   private MutableCatalog catalog;

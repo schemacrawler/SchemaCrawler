@@ -37,18 +37,17 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility;
 import us.fatehi.utility.IOUtility;
 
 @DisableLogging
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class SQLiteDiagramTest extends BaseSqliteTest {
 
   @Test

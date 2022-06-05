@@ -38,7 +38,6 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
@@ -46,8 +45,8 @@ import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -57,7 +56,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
 
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class TextFormatterCoverageTest {
 
   private static final String FORMATTER_COVERAGE_OUTPUT = "formatter_coverage/";

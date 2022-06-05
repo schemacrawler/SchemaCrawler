@@ -52,8 +52,8 @@ import com.ginsberg.junit.exit.SystemExitPreventedException;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestUtility;
@@ -62,7 +62,7 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class MetadataRetrievalStrategyTest {
 
   private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT =

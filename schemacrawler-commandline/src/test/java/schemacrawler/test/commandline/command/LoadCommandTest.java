@@ -14,13 +14,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LoadCommandTest {
 

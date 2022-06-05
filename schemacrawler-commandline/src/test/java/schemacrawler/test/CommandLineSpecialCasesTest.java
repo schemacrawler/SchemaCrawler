@@ -49,14 +49,14 @@ import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class CommandLineSpecialCasesTest {
 
   private static final String COMMAND_LINE_SPECIAL_CASES_OUTPUT =

@@ -50,8 +50,8 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -62,7 +62,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public abstract class AbstractWeakAssociationsTest {
 
   private static final String WEAK_ASSOCIATIONS_OUTPUT = "weak_associations_output/";

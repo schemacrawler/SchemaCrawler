@@ -35,7 +35,7 @@ import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class HeavyDatabaseExtension implements ExecutionCondition {
+final class HeavyDatabaseExtension implements ExecutionCondition {
 
   @Override
   public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context) {

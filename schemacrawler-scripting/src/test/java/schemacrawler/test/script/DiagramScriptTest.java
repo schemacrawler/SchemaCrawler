@@ -40,13 +40,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.WithSystemProperty;
 
 @ExtendWith(AssertNoSystemOutOutputExtension.class)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class DiagramScriptTest {
 
