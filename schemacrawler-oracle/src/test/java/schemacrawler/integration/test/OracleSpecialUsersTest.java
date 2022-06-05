@@ -46,7 +46,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.schemacrawler.Query;
@@ -58,7 +57,7 @@ import schemacrawler.test.utility.HeavyDatabaseTest;
 @Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;
@@ -68,9 +67,8 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @BeforeAll
   public void createDatabase() {
 
-    if (!dbContainer.isRunning()) {
-      fail("Testcontainer for database is not available");
-    }
+    // Start once, and all tests will use the same container
+    dbContainer.start();
 
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
