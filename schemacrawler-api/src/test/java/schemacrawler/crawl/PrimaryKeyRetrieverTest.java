@@ -51,7 +51,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.PrimaryKey;
@@ -66,13 +65,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PrimaryKeyRetrieverTest {
 

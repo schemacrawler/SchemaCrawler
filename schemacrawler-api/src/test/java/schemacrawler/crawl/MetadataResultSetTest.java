@@ -50,17 +50,16 @@ import java.util.function.BiConsumer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.database.DatabaseUtility;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MetadataResultSetTest {
 

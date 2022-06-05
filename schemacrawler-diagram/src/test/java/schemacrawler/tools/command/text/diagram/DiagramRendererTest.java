@@ -43,7 +43,6 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.integration.test.DiagramOutputTest;
@@ -54,12 +53,12 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.OnlyRunWithGraphviz;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestDisabledWithoutGraphvizExtension;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithSystemProperty;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -71,8 +70,8 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.IOUtility;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 public class DiagramRendererTest {
 
   private final class GraphvizJavaExecutorFactory extends GraphExecutorFactory {
@@ -187,7 +186,7 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_GRAPHVIZ_PROC_DISABLE", value = "true")
   public void checkGraphvizAvailabilityDisabled() throws Exception {
 
@@ -195,14 +194,14 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  @OnlyRunWithGraphviz
   public void checkGraphvizAvailabilityEnabled() throws Exception {
 
     assertThat(GraphvizUtility.isGraphvizAvailable(), is(true));
   }
 
   @Test
-  @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void diagramRenderer_graphviz(final TestContext testContext, final Connection connection)
       throws Exception {
@@ -241,7 +240,7 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @ExtendWith(TestDisabledWithoutGraphvizExtension.class)
+  @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz(
       final TestContext testContext, final Connection connection) throws Exception {

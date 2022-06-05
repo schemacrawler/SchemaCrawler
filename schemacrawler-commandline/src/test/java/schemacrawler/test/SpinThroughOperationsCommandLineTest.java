@@ -41,21 +41,20 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
+@WithTestDatabase
 public class SpinThroughOperationsCommandLineTest {
 
   private static final String SPIN_THROUGH_OPERATIONS_OUTPUT = "spin_through_operations_output/";

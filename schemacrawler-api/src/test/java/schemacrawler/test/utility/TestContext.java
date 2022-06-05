@@ -48,7 +48,6 @@ public final class TestContext {
   }
 
   private final Optional<Class<?>> optionalTestClass;
-
   private final Optional<Method> optionalTestMethod;
 
   TestContext(final ExtensionContext extensionContext) {
@@ -80,7 +79,7 @@ public final class TestContext {
 
   public String testMethodName() {
     return optionalTestMethod
-        .map(method -> method.getName())
+        .map(Method::getName)
         .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 

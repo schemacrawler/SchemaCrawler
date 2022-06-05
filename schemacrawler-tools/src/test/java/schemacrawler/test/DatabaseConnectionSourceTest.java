@@ -39,18 +39,17 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestDatabaseDriver;
-import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 
-@ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@DisableLogging
+@WithTestDatabase
 public class DatabaseConnectionSourceTest {
 
   @Test

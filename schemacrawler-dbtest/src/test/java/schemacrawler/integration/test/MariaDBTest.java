@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -36,7 +37,6 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -50,12 +50,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@Testcontainers(disabledWithoutDocker = true)
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
+@HeavyDatabaseTest
+@Testcontainers
 public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
   private final DockerImageName imageName = DockerImageName.parse(MariaDBContainer.NAME);
@@ -70,6 +71,11 @@ public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() {
+
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
+
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 

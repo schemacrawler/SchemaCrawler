@@ -39,7 +39,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -51,15 +50,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestContextParameterResolver.class)
+@DisableLogging
+@ResolveTestContext
 public class VirtualTablesTest extends BaseSqliteTest {
 
   @Test

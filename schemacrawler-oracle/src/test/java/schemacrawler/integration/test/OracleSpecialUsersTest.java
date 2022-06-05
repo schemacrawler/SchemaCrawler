@@ -45,16 +45,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.test.utility.HeavyDatabaseTest;
 
 @TestInstance(PER_CLASS)
-@Testcontainers(disabledWithoutDocker = true)
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
+@HeavyDatabaseTest
+@Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
   private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
@@ -67,6 +67,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @BeforeAll
   public void createDatabase() {
 
+    // Start once, and all tests will use the same container
     dbContainer.start();
 
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";

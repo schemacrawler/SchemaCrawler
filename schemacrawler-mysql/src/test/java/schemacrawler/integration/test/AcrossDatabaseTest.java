@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -40,8 +41,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -53,18 +52,19 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.database.SqlScript;
 
-@ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestContextParameterResolver.class)
-@Testcontainers(disabledWithoutDocker = true)
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
+@DisableLogging
+@ResolveTestContext
+@HeavyDatabaseTest
+@Testcontainers
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newMySQL8Container();
@@ -104,6 +104,11 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws SQLException {
+
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
+
     // IMPORTANT: Use root user, since permissions are not granted to the new databases created by
     // the script. Also do not verify the server, and allow public key retrieval
     final String connectionUrl =

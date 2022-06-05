@@ -39,14 +39,13 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithSystemProperty;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestAssertNoSystemOutOutput.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@AssertNoSystemOutOutput
+@WithTestDatabase
 public class ExecutableScriptCommandTest {
 
   @Test

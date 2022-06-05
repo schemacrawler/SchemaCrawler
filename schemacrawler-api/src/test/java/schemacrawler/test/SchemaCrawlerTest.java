@@ -60,7 +60,6 @@ import java.util.TreeMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
@@ -99,15 +98,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SchemaCrawlerTest {
 

@@ -46,18 +46,17 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class LoadSnapshotTest {
 
   private Path serializedCatalogFile;

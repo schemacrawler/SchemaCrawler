@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL14Container;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
@@ -43,7 +44,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -56,9 +56,10 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.HeavyDatabaseTest;
 
-@Testcontainers(disabledWithoutDocker = true)
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
+@HeavyDatabaseTest
+@Testcontainers
 @DisplayName("Test for issue #458 - daterange index in Postgres results in NotLoadedException")
 public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
 
@@ -66,6 +67,11 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
+
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
+
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 

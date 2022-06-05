@@ -40,7 +40,6 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.DiffNode.State;
@@ -51,9 +50,9 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
@@ -62,8 +61,8 @@ import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
 import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
-@ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestContextParameterResolver.class)
+@DisableLogging
+@ResolveTestContext
 public class DiffTest {
 
   @Test

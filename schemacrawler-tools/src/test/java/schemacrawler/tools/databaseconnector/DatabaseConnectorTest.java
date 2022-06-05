@@ -34,15 +34,14 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestDatabaseConnector;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-@ExtendWith(TestLoggingExtension.class)
+@DisableLogging
 public class DatabaseConnectorTest {
 
   @Test

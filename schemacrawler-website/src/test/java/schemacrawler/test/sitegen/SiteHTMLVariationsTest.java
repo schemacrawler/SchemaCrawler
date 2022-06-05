@@ -41,20 +41,19 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
+@WithTestDatabase
+@ResolveTestContext
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
 public class SiteHTMLVariationsTest {
 

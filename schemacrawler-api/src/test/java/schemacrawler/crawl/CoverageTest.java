@@ -35,12 +35,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.NamedObject;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class CoverageTest {
 
   @Test

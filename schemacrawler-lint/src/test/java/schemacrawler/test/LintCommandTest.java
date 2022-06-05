@@ -34,18 +34,17 @@ import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.WithSystemProperty;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
+@WithTestDatabase
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 public class LintCommandTest {
 
   @Test

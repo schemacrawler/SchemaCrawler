@@ -36,7 +36,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-@ExtendWith(TestWithSystemProperty.class)
+@ExtendWith(WithSystemPropertyExtension.class)
 public @interface WithSystemProperty {
 
   String key();

@@ -41,15 +41,14 @@ import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 
-@ExtendWith(TestAssertNoSystemOutOutput.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@AssertNoSystemOutOutput
+@WithTestDatabase
 public class ScriptingLanguageTest {
 
   private static Path executableScriptFromFile(

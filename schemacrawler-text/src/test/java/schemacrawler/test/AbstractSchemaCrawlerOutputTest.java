@@ -45,7 +45,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -58,8 +57,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -70,7 +69,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 @TestInstance(PER_CLASS)
 public abstract class AbstractSchemaCrawlerOutputTest {
 

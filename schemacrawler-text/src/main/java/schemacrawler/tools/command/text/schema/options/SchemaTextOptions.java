@@ -30,7 +30,6 @@ package schemacrawler.tools.command.text.schema.options;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Objects;
 
 import schemacrawler.tools.text.options.BaseTextOptions;
 
@@ -56,7 +55,8 @@ public class SchemaTextOptions extends BaseTextOptions {
     isHideTableRowCounts = builder.isHideTableRowCounts;
 
     hideNames = new EnumMap<>(HideDatabaseObjectNamesType.class);
-    for (final HideDatabaseObjectNamesType databaseObjectNamesType : HideDatabaseObjectNamesType.values()) {
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
       hideNames.put(
           databaseObjectNamesType, builder.hideNames.getOrDefault(databaseObjectNamesType, false));
     }

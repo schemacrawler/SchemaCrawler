@@ -41,15 +41,14 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.WithSystemProperty;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class MatchSchemaRetrievalOptionsTest {
 
   @DisplayName("Exception does not match URL + plugin found = use plugin")

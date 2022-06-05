@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -40,7 +41,6 @@ import java.sql.Statement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -49,19 +49,25 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.database.SqlScript;
 
-@Testcontainers(disabledWithoutDocker = true)
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
+@HeavyDatabaseTest
+@Testcontainers
 public class Issue628Test extends BaseOracleWithConnectionTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
   @BeforeEach
   public void createDatabase() {
+
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
+
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
   }

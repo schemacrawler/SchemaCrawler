@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.collection.IsEmptyCollection.emptyCollectionOf;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL9Container;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -53,7 +54,6 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -64,14 +64,15 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 
-@Testcontainers(disabledWithoutDocker = true)
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
+@HeavyDatabaseTest
+@Testcontainers
 @DisplayName("Test for issue #284 - support enum values")
 public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
@@ -144,6 +145,11 @@ public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
+
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
+
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 

@@ -41,25 +41,23 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.logging.Logger;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 public class ResultColumnsTest {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(ResultColumnsTest.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ResultColumnsTest.class.getName());
 
   @Test
   public void columns(final TestContext testContext, final Connection cxn) throws Exception {

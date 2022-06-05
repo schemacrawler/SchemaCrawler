@@ -41,18 +41,17 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import us.fatehi.utility.IOUtility;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class GrepCommandLineTest {
 
   private static final String GREP_OUTPUT = "grep_output/";

@@ -37,7 +37,6 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Dlightdb \
           -Dheavydb \
           -Ddistrib \
           clean package

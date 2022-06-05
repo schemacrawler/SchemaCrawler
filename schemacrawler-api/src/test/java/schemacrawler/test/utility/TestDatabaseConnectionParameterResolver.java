@@ -41,7 +41,7 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 import schemacrawler.testdb.TestDatabase;
 import us.fatehi.utility.LoggingConfig;
 
-public class TestDatabaseConnectionParameterResolver
+final class TestDatabaseConnectionParameterResolver
     implements ParameterResolver, BeforeAllCallback {
 
   private static final TestDatabase testDatabase = TestDatabase.initialize();

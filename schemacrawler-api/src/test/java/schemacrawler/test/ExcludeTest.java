@@ -38,11 +38,10 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.logging.Logger;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -51,18 +50,17 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 public class ExcludeTest {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(ExcludeTest.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ExcludeTest.class.getName());
 
   @Test
   public void excludeColumns(final TestContext testContext, final Connection connection)

@@ -48,17 +48,16 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -68,10 +67,10 @@ import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
+@WithTestDatabase
+@ResolveTestContext
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 public class LinterConfigsDispatchTest {
 
   private TestOutputStream err;

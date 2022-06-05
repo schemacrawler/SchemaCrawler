@@ -38,17 +38,16 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.lint.LinterHelp;
 
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
-@ExtendWith(TestContextParameterResolver.class)
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
+@ResolveTestContext
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
 public class SiteLinterHelpTest {
 

@@ -37,20 +37,19 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestContextParameterResolver.class)
+@DisableLogging
+@ResolveTestContext
 public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
 
   @Test

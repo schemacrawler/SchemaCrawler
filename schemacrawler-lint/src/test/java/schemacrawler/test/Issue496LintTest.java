@@ -41,14 +41,13 @@ import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
@@ -57,7 +56,7 @@ import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class Issue496LintTest {
 
   private static final Config config = new Config();

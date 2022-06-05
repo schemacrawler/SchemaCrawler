@@ -39,17 +39,16 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 public class JdbcDriverInfoRetrieverTest {
 
   private MutableCatalog catalog;

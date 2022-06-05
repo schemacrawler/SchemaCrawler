@@ -40,15 +40,14 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class CommandLineScriptHelpTest {
 
   private static final String COMMANDLINE_HELP_OUTPUT = "commandline_help_output/";

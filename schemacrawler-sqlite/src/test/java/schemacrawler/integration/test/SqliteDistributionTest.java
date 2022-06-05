@@ -42,19 +42,18 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.OutputFormat;
 
-@ExtendWith(TestLoggingExtension.class)
+@DisableLogging
 public class SqliteDistributionTest extends BaseSqliteTest {
 
   private DatabaseConnector dbConnector;

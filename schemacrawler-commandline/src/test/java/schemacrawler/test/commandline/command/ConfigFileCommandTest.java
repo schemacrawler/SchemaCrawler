@@ -24,18 +24,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
+import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 
 @TestInstance(Lifecycle.PER_CLASS)
-@ExtendWith(TestContextParameterResolver.class)
+@ResolveTestContext
 public class ConfigFileCommandTest {
 
   private static final String CONFIG_FILE_COMMAND_OUTPUT = "config_file_command_output";

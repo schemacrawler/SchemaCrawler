@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
@@ -34,19 +35,25 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers(disabledWithoutDocker = true)
-@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
+import schemacrawler.test.utility.HeavyDatabaseTest;
+
+@HeavyDatabaseTest
+@Testcontainers
 public class OracleTest extends BaseOracleWithConnectionTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
   @BeforeEach
   public void createDatabase() {
+
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
+
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 

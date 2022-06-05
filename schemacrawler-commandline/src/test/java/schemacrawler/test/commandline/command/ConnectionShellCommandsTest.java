@@ -44,19 +44,18 @@ import java.sql.Connection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class ConnectionShellCommandsTest {
 
   private TestOutputStream err;

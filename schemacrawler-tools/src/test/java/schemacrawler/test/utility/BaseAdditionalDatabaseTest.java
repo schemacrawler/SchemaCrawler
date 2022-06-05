@@ -36,12 +36,11 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.testdb.TestSchemaCreator;
 import us.fatehi.utility.database.SqlScript;
 
-@ExtendWith(TestLoggingExtension.class)
+@DisableLogging
 public abstract class BaseAdditionalDatabaseTest {
 
   private DataSource dataSource;

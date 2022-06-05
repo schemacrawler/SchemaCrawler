@@ -34,14 +34,12 @@ import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.t
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.OutputFormat;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@WithTestDatabase
+@ResolveTestContext
 public class TextWeakAssociationsTest extends AbstractWeakAssociationsTest {
 
   @Override
