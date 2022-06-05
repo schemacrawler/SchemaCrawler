@@ -37,9 +37,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
 import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 @ExtendWith(AssertNoSystemErrOutputExtension.class)
 @ExtendWith(AssertNoSystemOutOutputExtension.class)
 public class LintSqlTest {

@@ -44,12 +44,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(AssertNoSystemOutOutputExtension.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class ScriptingLanguageTest {
 
   private static Path executableScriptFromFile(

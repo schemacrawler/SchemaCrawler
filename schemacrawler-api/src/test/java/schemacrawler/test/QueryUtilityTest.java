@@ -43,7 +43,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -51,10 +50,10 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.QueryUtility;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 @ResolveTestContext
 public class QueryUtilityTest {
 

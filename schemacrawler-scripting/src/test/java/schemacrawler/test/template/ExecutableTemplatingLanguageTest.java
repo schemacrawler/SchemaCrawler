@@ -45,13 +45,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.AssertNoSystemErrOutputExtension;
 import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(AssertNoSystemErrOutputExtension.class)
 @ExtendWith(AssertNoSystemOutOutputExtension.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class ExecutableTemplatingLanguageTest {
 
   private static Path executableTemplateFromFile(

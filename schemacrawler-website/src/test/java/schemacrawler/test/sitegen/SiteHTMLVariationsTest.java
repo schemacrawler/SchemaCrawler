@@ -48,12 +48,12 @@ import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
 @ExtendWith(AssertNoSystemErrOutputExtension.class)
 @ExtendWith(AssertNoSystemOutOutputExtension.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 @ResolveTestContext
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
 public class SiteHTMLVariationsTest {

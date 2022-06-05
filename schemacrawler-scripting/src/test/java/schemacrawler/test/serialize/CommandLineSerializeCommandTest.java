@@ -59,12 +59,12 @@ import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import us.fatehi.utility.IOUtility;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 @ResolveTestContext
 @ExtendWith(AssertNoSystemErrOutputExtension.class)
 @ExtendWith(AssertNoSystemOutOutputExtension.class)

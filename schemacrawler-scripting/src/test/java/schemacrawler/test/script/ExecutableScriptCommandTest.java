@@ -42,11 +42,11 @@ import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.AssertNoSystemOutOutputExtension;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.WithSystemProperty;
+import schemacrawler.test.utility.WithTestDatabase;
 
 @ExtendWith(AssertNoSystemOutOutputExtension.class)
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class ExecutableScriptCommandTest {
 
   @Test

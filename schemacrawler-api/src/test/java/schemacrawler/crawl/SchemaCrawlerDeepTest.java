@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -51,9 +50,9 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.WithTestDatabase;
 
-@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@WithTestDatabase
 public class SchemaCrawlerDeepTest {
 
   @Test
@@ -108,8 +107,8 @@ public class SchemaCrawlerDeepTest {
       table2.addPrivilege((MutablePrivilege) privilege);
     }
     for (final TableConstraint tableConstraint : table0.getTableConstraints()) {
-      table1.addTableConstraint((MutableTableConstraint) tableConstraint);
-      table2.addTableConstraint((MutableTableConstraint) tableConstraint);
+      table1.addTableConstraint(tableConstraint);
+      table2.addTableConstraint(tableConstraint);
     }
 
     assertThat("Tables should not be equal", table1, not(equalTo(table2)));
