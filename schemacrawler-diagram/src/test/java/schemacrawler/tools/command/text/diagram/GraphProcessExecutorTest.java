@@ -21,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.test.utility.OnlyRunWithGraphviz;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.IOUtility;
@@ -86,6 +87,7 @@ public class GraphProcessExecutorTest {
   }
 
   @Test
+  @OnlyRunWithGraphviz
   public void graphvizProcessExecutorError() throws IOException {
 
     final Path dotFile = Files.createTempFile("", "");
