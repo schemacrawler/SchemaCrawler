@@ -37,8 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.tools.command.text.schema.options.BaseSchemaTextOptionsBuilder;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.PropertiesUtility;
@@ -53,12 +53,13 @@ public final class DiagramOptionsBuilder
       SCHEMACRAWLER_GRAPH_PREFIX + "show.primarykey.cardinality";
   private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY =
       SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.cardinality";
+  private static final String GRAPH_SHOW_FOREIGN_KEY_FILTERED_TABLES =
+      SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.filtered_tables";
   private static final String GRAPH_GRAPHVIZ_OPTS = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
   private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
 
-  private static final Logger LOGGER =
-      Logger.getLogger(DiagramOptions.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DiagramOptions.class.getName());
 
   public static DiagramOptionsBuilder builder() {
     return new DiagramOptionsBuilder();
@@ -90,6 +91,7 @@ public final class DiagramOptionsBuilder
   protected Map<String, String> graphvizAttributes;
   protected boolean isShowForeignKeyCardinality;
   protected boolean isShowPrimaryKeyCardinality;
+  protected boolean isShowFilteredTables;
 
   private DiagramOptionsBuilder() {
     // Default values
@@ -97,6 +99,7 @@ public final class DiagramOptionsBuilder
     graphvizAttributes = makeDefaultGraphvizAttributes();
     isShowForeignKeyCardinality = true;
     isShowPrimaryKeyCardinality = true;
+    isShowFilteredTables = true;
   }
 
   @Override
@@ -108,6 +111,7 @@ public final class DiagramOptionsBuilder
 
     isShowPrimaryKeyCardinality = config.getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, true);
     isShowForeignKeyCardinality = config.getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true);
+    isShowFilteredTables = config.getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_FILTERED_TABLES, true);
 
     graphvizOpts = listGraphvizOpts(readGraphvizOpts(config));
 
@@ -128,10 +132,20 @@ public final class DiagramOptionsBuilder
 
     isShowPrimaryKeyCardinality = options.isShowPrimaryKeyCardinality();
     isShowForeignKeyCardinality = options.isShowForeignKeyCardinality();
+    isShowFilteredTables = options.isShowFilteredTables();
 
     graphvizOpts = options.getGraphvizOpts();
     graphvizAttributes = options.getGraphvizAttributes();
 
+    return this;
+  }
+
+  public DiagramOptionsBuilder showFilteredTables() {
+    return showFilteredTables(true);
+  }
+
+  public DiagramOptionsBuilder showFilteredTables(final boolean value) {
+    isShowFilteredTables = value;
     return this;
   }
 
@@ -159,6 +173,7 @@ public final class DiagramOptionsBuilder
 
     config.put(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, isShowPrimaryKeyCardinality);
     config.put(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, isShowForeignKeyCardinality);
+    config.put(GRAPH_SHOW_FOREIGN_KEY_FILTERED_TABLES, isShowFilteredTables);
 
     config.put(GRAPH_GRAPHVIZ_OPTS, join(graphvizOpts, " "));
 

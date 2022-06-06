@@ -422,6 +422,12 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         final boolean isFkColumnFiltered =
             referencingTable.getAttribute("schemacrawler.filtered_out", false)
                 || referencingTable instanceof PartialDatabaseObject;
+
+        // Hide foreign keys to filtered tables
+        if (!options.isShowFilteredTables() && (isPkColumnFiltered || isFkColumnFiltered)) {
+          continue;
+        }
+
         final String remarks;
         if (showRemarks) {
           remarks = foreignKey.getRemarks();

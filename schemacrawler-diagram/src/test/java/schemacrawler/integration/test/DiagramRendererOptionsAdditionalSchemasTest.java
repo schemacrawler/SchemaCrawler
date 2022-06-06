@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -109,7 +108,8 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
       schemaCrawlerOptions = options.withLimitOptions(limitOptionsBuilder.toOptions());
     }
 
-    final DiagramOptionsBuilder diagramOptionsBuilder = builder(diagramOptions);
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+        DiagramOptionsBuilder.builder(diagramOptions);
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
 
@@ -159,9 +159,8 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   public void executableAdditionalForDiagram_01(final TestContext testContext) throws Exception {
 
     final Connection connection = getConnection();
-    final DiagramOptionsBuilder diagramOptionsBuilder =
-        builder().showForeignKeyCardinality().showPrimaryKeyCardinality();
-    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
+    final DiagramOptions diagramOptions =
+        DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
 
     final GrepOptions grepOptions =
         GrepOptionsBuilder.builder()

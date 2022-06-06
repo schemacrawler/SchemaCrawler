@@ -180,7 +180,8 @@ public class DiagramRendererOptionsTest {
             .sortTableColumns()
             .showOrdinalNumbers()
             .showForeignKeyCardinality()
-            .showPrimaryKeyCardinality();
+            .showPrimaryKeyCardinality()
+            .showFilteredTables();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableDiagram(

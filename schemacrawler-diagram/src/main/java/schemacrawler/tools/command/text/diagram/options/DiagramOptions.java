@@ -38,6 +38,7 @@ public final class DiagramOptions extends SchemaTextOptions {
   private final Map<String, String> graphvizAttributes;
   private final boolean isShowForeignKeyCardinality;
   private final boolean isShowPrimaryKeyCardinality;
+  private final boolean isShowFilteredTables;
 
   protected DiagramOptions(final DiagramOptionsBuilder diagramOptionsBuilder) {
     super(diagramOptionsBuilder);
@@ -46,6 +47,7 @@ public final class DiagramOptions extends SchemaTextOptions {
     graphvizAttributes = diagramOptionsBuilder.graphvizAttributes;
     isShowForeignKeyCardinality = diagramOptionsBuilder.isShowForeignKeyCardinality;
     isShowPrimaryKeyCardinality = diagramOptionsBuilder.isShowPrimaryKeyCardinality;
+    isShowFilteredTables = diagramOptionsBuilder.isShowFilteredTables;
   }
 
   public Map<String, String> getGraphvizAttributes() {
@@ -54,6 +56,10 @@ public final class DiagramOptions extends SchemaTextOptions {
 
   public List<String> getGraphvizOpts() {
     return graphvizOpts;
+  }
+
+  public boolean isShowFilteredTables() {
+    return isShowFilteredTables;
   }
 
   public boolean isShowForeignKeyCardinality() {
