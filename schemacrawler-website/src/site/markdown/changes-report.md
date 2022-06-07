@@ -5,6 +5,14 @@ SchemaCrawler release notes.
 <a name="a16.16.15"></a>
 ## Release 16.16.15 - 2022-05-30
 
+- Add new diagram option to show or hide tables that are filtered out;  
+  can be set in the configuration properties file with  
+  `schemacrawler.graph.show.foreignkey.filtered_tables=false`
+
+
+<a name="a16.16.15"></a>
+## Release 16.16.15 - 2022-05-30
+
 - Exclude entity management framework metadata tables (from Liquibase, Flyway, django, EF Core, and so on) 
   by default from SQLLite schemas, when using `EmbeddedSQLiteWrapper`
 
