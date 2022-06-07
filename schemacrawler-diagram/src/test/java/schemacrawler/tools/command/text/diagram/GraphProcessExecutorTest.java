@@ -82,7 +82,9 @@ public class GraphProcessExecutorTest {
             IORuntimeException.class,
             () ->
                 new TestGraphProcessExecutor(
-                    dotFile, Paths.get("/unwritable_path"), diagramOutputFormat));
+                    dotFile,
+                    Paths.get("/not_a_directory/unwritable_file.dat"),
+                    diagramOutputFormat));
     assertThat(exception2.getMessage(), containsString("Cannot write output file"));
   }
 
