@@ -37,7 +37,7 @@ public class CapturedSystemStreams {
     this.out = out;
   }
 
-  public TestOutputCapture getErr() {
+  public TestOutputCapture err() {
     return err;
   }
 
@@ -45,7 +45,7 @@ public class CapturedSystemStreams {
     return err.getContents();
   }
 
-  public TestOutputCapture getOut() {
+  public TestOutputCapture out() {
     return out;
   }
 

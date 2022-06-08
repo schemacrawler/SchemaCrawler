@@ -92,9 +92,9 @@ public class CommandLineSpecialCasesTest {
     }
 
     assertThat(outputOf(outputFile), hasNoContent());
-    assertThat(outputOf(streams.getOut()), hasNoContent());
+    assertThat(outputOf(streams.out()), hasNoContent());
     assertThat(
-        outputOf(streams.getErr()),
+        outputOf(streams.err()),
         hasSameContentAs(
             classpathResource(
                 COMMAND_LINE_SPECIAL_CASES_OUTPUT + testContext.testMethodName() + ".stderr.txt")));

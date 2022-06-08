@@ -36,18 +36,14 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
@@ -56,16 +52,8 @@ import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 
 @WithTestDatabase
+@CaptureSystemStreams
 public class ConnectionShellCommandsTest {
-
-  private TestOutputStream err;
-  private TestOutputStream out;
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-  }
 
   @Test
   public void disconnect(final Connection connection) {
@@ -99,7 +87,7 @@ public class ConnectionShellCommandsTest {
   }
 
   @Test
-  public void isConnected(final Connection connection) {
+  public void isConnected(final Connection connection, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
     state.setDataSource(() -> connection); // is-connected
 
@@ -109,12 +97,13 @@ public class ConnectionShellCommandsTest {
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getContents(), startsWith("Connected to "));
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(streams.out().getContents(), startsWith("Connected to "));
   }
 
   @Test
-  public void isNotConnected(final DatabaseConnectionInfo connectionInfo) {
+  public void isNotConnected(
+      final DatabaseConnectionInfo connectionInfo, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
 
     final String[] args = new String[] {"--is-connected"};
@@ -123,17 +112,8 @@ public class ConnectionShellCommandsTest {
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getContents(), startsWith("Not connected to a database"));
-  }
-
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(streams.out().getContents(), startsWith("Not connected to a database"));
   }
 
   @Test

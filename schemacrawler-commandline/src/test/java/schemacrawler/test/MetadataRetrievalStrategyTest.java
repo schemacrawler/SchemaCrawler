@@ -101,7 +101,7 @@ public class MetadataRetrievalStrategyTest {
     }
 
     assertThat(
-        outputOf(streams.getErr()),
+        outputOf(streams.err()),
         hasSameContentAs(
             classpathResource(
                 METADATA_RETRIEVAL_STRATEGY_OUTPUT
@@ -138,6 +138,6 @@ public class MetadataRetrievalStrategyTest {
                     + testContext.testMethodName()
                     + ".stdout.txt")));
 
-    assertThat(outputOf(streams.getErr()), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
   }
 }
