@@ -6,26 +6,25 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.OnlyRunWithGraphviz;
-import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.IOUtility;
 
+@CaptureSystemStreams
 public class GraphProcessExecutorTest {
 
   private final class TestGraphProcessExecutor extends AbstractGraphProcessExecutor {
@@ -41,15 +40,6 @@ public class GraphProcessExecutorTest {
 
     @Override
     public void run() {}
-  }
-
-  private TestOutputStream err;
-  private TestOutputStream out;
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Test
@@ -90,7 +80,7 @@ public class GraphProcessExecutorTest {
 
   @Test
   @OnlyRunWithGraphviz
-  public void graphvizProcessExecutorError() throws IOException {
+  public void graphvizProcessExecutorError(final CapturedSystemStreams streams) throws IOException {
 
     final Path dotFile = Files.createTempFile("", "");
     Files.write(dotFile, "hello, world".getBytes());
@@ -104,15 +94,8 @@ public class GraphProcessExecutorTest {
         new GraphvizProcessExecutor(
             dotFile, outputFile, diagramOutputFormat, Collections.emptyList());
     processExecutor.run();
-    assertThat(err.getContents(), containsString("syntax error in line 1 near 'hello'"));
-  }
 
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
+    assertThat(streams.err().getContents(), containsString("syntax error in line 1 near 'hello'"));
+    assertThat(outputOf(streams.out()), hasNoContent());
   }
 }

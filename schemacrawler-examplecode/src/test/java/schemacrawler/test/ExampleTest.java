@@ -31,27 +31,24 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.example.ApiExample;
 import com.example.ExecutableExample;
 import com.example.ResultSetExample;
 
-import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.testdb.TestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
+@CaptureSystemStreams
 public class ExampleTest {
 
   private static TestDatabase testDatabase;
@@ -66,30 +63,21 @@ public class ExampleTest {
     testDatabase.stop();
   }
 
-  private TestOutputStream out;
-  private TestOutputStream err;
-
   @Test
-  public void apiExample() throws Exception {
+  public void apiExample(final CapturedSystemStreams streams) throws Exception {
     ApiExample.main(new String[0]);
 
-    assertThat(outputOf(out), hasSameContentAs(classpathResource("ApiExample.txt")));
-    assertThat(outputOf(err), hasNoContent());
-  }
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(outputOf(streams.out()), hasSameContentAs(classpathResource("ApiExample.txt")));
   }
 
   @Test
-  public void executableExample() throws Exception {
+  public void executableExample(final CapturedSystemStreams streams) throws Exception {
     // Test
     final Path tempFile = Files.createTempFile("sc", ".out").toAbsolutePath();
     ExecutableExample.main(new String[] {tempFile.toString()});
 
-    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
 
     final List<String> failures =
         compareOutput("ExecutableExample.html", tempFile, TextOutputFormat.html.name());
@@ -99,19 +87,11 @@ public class ExampleTest {
   }
 
   @Test
-  public void resultSetExample() throws Exception {
+  public void resultSetExample(final CapturedSystemStreams streams) throws Exception {
     ResultSetExample.main(new String[0]);
 
-    assertThat(outputOf(out), hasSameContentAs(classpathResource("ResultSetExample.txt")));
-    assertThat(outputOf(err), hasNoContent());
-  }
-
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(
+        outputOf(streams.out()), hasSameContentAs(classpathResource("ResultSetExample.txt")));
   }
 }
