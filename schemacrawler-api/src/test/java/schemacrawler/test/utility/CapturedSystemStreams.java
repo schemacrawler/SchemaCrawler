@@ -25,27 +25,31 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test;
+package schemacrawler.test.utility;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+public class CapturedSystemStreams {
 
-import org.junit.jupiter.api.Test;
+  private final TestOutputStream err;
+  private final TestOutputStream out;
 
-import schemacrawler.Version;
-import schemacrawler.test.utility.CaptureSystemStreams;
-import schemacrawler.test.utility.CapturedSystemStreams;
+  CapturedSystemStreams(final TestOutputStream out, final TestOutputStream err) {
+    this.err = err;
+    this.out = out;
+  }
 
-@CaptureSystemStreams
-public class VersionTest {
+  public TestOutputCapture getErr() {
+    return err;
+  }
 
-  @Test
-  public void version(final CapturedSystemStreams streams) throws Exception {
-    Version.main(new String[0]);
+  public String getErrContents() {
+    return err.getContents();
+  }
 
-    assertThat(streams.getOutContents(), startsWith("SchemaCrawler 16.16.16"));
-    assertThat(outputOf(streams.getErr()), hasNoContent());
+  public TestOutputCapture getOut() {
+    return out;
+  }
+
+  public String getOutContents() {
+    return out.getContents();
   }
 }
