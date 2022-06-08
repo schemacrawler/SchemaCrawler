@@ -2,10 +2,10 @@
 
 SchemaCrawler release notes.
 
-<a name="a16.16.15"></a>
-## Release 16.16.15 - 2022-05-30
+<a name="a16.16.16"></a>
+## Release 16.16.16 - 2022-06-07
 
-- Add new diagram option to show or hide tables that are filtered out;  
+- Add new diagram option to show or hide tables that are filtered out, which   
   can be set in the configuration properties file with  
   `schemacrawler.graph.show.foreignkey.filtered_tables=false`
 
