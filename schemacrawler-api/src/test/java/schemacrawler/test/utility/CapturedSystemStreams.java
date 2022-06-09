@@ -41,15 +41,7 @@ public class CapturedSystemStreams {
     return err;
   }
 
-  public String getErrContents() {
-    return err.getContents();
-  }
-
   public TestOutputCapture out() {
     return out;
-  }
-
-  public String getOutContents() {
-    return out.getContents();
   }
 }
