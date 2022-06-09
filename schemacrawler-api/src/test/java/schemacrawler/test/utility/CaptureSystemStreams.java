@@ -25,27 +25,16 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test;
+package schemacrawler.test.utility;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.Version;
-import schemacrawler.test.utility.CaptureSystemStreams;
-import schemacrawler.test.utility.CapturedSystemStreams;
-
-@CaptureSystemStreams
-public class VersionTest {
-
-  @Test
-  public void version(final CapturedSystemStreams streams) throws Exception {
-    Version.main(new String[0]);
-
-    assertThat(streams.getOutContents(), startsWith("SchemaCrawler 16.16.16"));
-    assertThat(outputOf(streams.err()), hasNoContent());
-  }
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@ExtendWith(CaptureSystemStreamsExtension.class)
+public @interface CaptureSystemStreams {}

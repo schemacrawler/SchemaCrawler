@@ -33,26 +33,20 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.hamcrest.Matcher;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
-import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.AssertNoSystemErrOutput;
+import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
@@ -60,25 +54,9 @@ import schemacrawler.tools.commandline.state.ShellState;
 import us.fatehi.utility.IOUtility;
 
 @WithTestDatabase
+@AssertNoSystemErrOutput
+@AssertNoSystemOutOutput
 public class ShellCommandSerializeCommandTest {
-
-  private TestOutputStream err;
-  private TestOutputStream out;
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-  }
-
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
 
   @Test
   public void shellSerializeJson(final Connection connection) throws IOException {
@@ -98,17 +76,12 @@ public class ShellCommandSerializeCommandTest {
 
     serializeCommand.run();
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
-
     assertThatOutputIsCorrect(testOutputFile, is(oneOf("7B0D", "7B0A")));
   }
 
   private void assertThatOutputIsCorrect(
       final Path testOutputFile, final Matcher<String> fileHeaderMatcher) {
     try {
-      assertThat(outputOf(err), hasNoContent());
-      assertThat(outputOf(out), hasNoContent());
       assertThat(Files.size(testOutputFile), greaterThan(0L));
       assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
     } catch (final IOException e) {

@@ -38,25 +38,21 @@ import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
@@ -69,29 +65,11 @@ import schemacrawler.tools.options.Config;
 
 @WithTestDatabase
 @ResolveTestContext
-@AssertNoSystemErrOutput
-@AssertNoSystemOutOutput
 public class LinterConfigsDispatchTest {
 
-  private TestOutputStream err;
-  private TestOutputStream out;
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-  }
-
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
-
   @Test
+  @AssertNoSystemErrOutput
+  @AssertNoSystemOutOutput
   public void testLinterConfigs() {
 
     final LintOptions lintOptions =
@@ -122,9 +100,13 @@ public class LinterConfigsDispatchTest {
   }
 
   @Test
+  @CaptureSystemStreams
   @ExpectSystemExitWithStatus(1)
   public void testSystemExitLinterConfigCommandLine(
-      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo,
+      final CapturedSystemStreams streams)
+      throws Exception {
 
     final Map<String, String> additionalArgs = new HashMap<>();
     additionalArgs.put("--lint-dispatch", LintDispatch.terminate_system.name());
@@ -136,13 +118,17 @@ public class LinterConfigsDispatchTest {
         additionalArgs,
         "schemacrawler-linter-configs-with-dispatch.txt");
 
-    checkSystemErrLog(testContext);
+    checkSystemErrLog(testContext, streams);
   }
 
   @Test
+  @CaptureSystemStreams
   @ExpectSystemExitWithStatus(1)
   public void testSystemExitLinterConfigExecutable(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext,
+      final Connection connection,
+      final CapturedSystemStreams streams)
+      throws Exception {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("lint-dispatch", "terminate_system");
@@ -153,13 +139,14 @@ public class LinterConfigsDispatchTest {
         additionalConfig,
         "schemacrawler-linter-configs-with-dispatch");
 
-    checkSystemErrLog(testContext);
+    checkSystemErrLog(testContext, streams);
   }
 
-  private void checkSystemErrLog(final TestContext testContext) throws Exception {
-    assertThat(outputOf(out), hasNoContent());
+  private void checkSystemErrLog(final TestContext testContext, final CapturedSystemStreams streams)
+      throws Exception {
     assertThat(
-        outputOf(err),
+        outputOf(streams.err()),
         hasSameContentAs(classpathResource(testContext.testMethodName() + ".stderr.txt")));
+    assertThat(outputOf(streams.out()), hasNoContent());
   }
 }

@@ -37,17 +37,13 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
-import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.SweepCommand;
@@ -55,20 +51,12 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 
 @WithTestDatabase
+@CaptureSystemStreams
 public class LoadedShellCommandsTest {
-
-  private TestOutputStream err;
-  private TestOutputStream out;
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-  }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void isLoaded(final Connection connection) {
+  public void isLoaded(final Connection connection, final CapturedSystemStreams streams) {
     final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final String[] args = new String[] {"--is-loaded"};
@@ -77,12 +65,12 @@ public class LoadedShellCommandsTest {
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getContents(), startsWith("Database metadata is loaded"));
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(streams.out().getContents(), startsWith("Database metadata is loaded"));
   }
 
   @Test
-  public void isNotConnected(final Connection connection) {
+  public void isNotConnected(final Connection connection, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
     state.setDataSource(() -> connection); // is-connected
 
@@ -92,17 +80,8 @@ public class LoadedShellCommandsTest {
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getContents(), startsWith("Database metadata is not loaded"));
-  }
-
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(streams.out().getContents(), startsWith("Database metadata is not loaded"));
   }
 
   @Test

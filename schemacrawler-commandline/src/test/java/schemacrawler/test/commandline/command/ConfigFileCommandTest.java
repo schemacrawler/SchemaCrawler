@@ -10,37 +10,31 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.savePropertiesToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.Properties;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import picocli.CommandLine;
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ResolveTestContext
+@CaptureSystemStreams
 public class ConfigFileCommandTest {
 
   private static final String CONFIG_FILE_COMMAND_OUTPUT = "config_file_command_output";
-
-  private TestOutputStream err;
-  private TestOutputStream out;
 
   private Path propertiesTempFile;
   private String key;
@@ -58,14 +52,8 @@ public class ConfigFileCommandTest {
     assertThat(config.containsKey(key), is(false));
   }
 
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-  }
-
   @Test
-  public void commandNoValue(final TestContext testContext) {
+  public void commandNoValue(final TestContext testContext, final CapturedSystemStreams streams) {
     final String[] args = {"-g"};
 
     final ShellState state = new ShellState();
@@ -76,9 +64,9 @@ public class ConfigFileCommandTest {
     assertThat("Config is not null", config.size(), is(0));
     assertThat(config.containsKey(key), is(false));
 
-    assertThat(outputOf(out), hasNoContent());
+    assertThat(outputOf(streams.out()), hasNoContent());
     assertThat(
-        outputOf(err),
+        outputOf(streams.err()),
         hasSameContentAs(
             classpathResource(
                 CONFIG_FILE_COMMAND_OUTPUT + testContext.testMethodName() + ".stderr.txt")));
@@ -116,15 +104,6 @@ public class ConfigFileCommandTest {
 
     assertThat("Config is not empty", config.size(), is(greaterThan(0)));
     assertThat(config.containsKey(key), is(false));
-  }
-
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
   }
 
   @Test

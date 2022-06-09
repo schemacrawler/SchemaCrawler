@@ -32,14 +32,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.oneOf;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,7 +43,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hamcrest.Matcher;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,7 +52,6 @@ import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import us.fatehi.utility.IOUtility;
@@ -71,9 +64,6 @@ public class CommandLineSerializeCommandTest {
 
   private static boolean DEBUG = true;
 
-  private TestOutputStream err;
-  private TestOutputStream out;
-
   private Path directory;
 
   @BeforeEach
@@ -83,12 +73,6 @@ public class CommandLineSerializeCommandTest {
       return;
     }
     directory = testContext.resolveTargetFromRootPath(".");
-  }
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Test
@@ -109,19 +93,8 @@ public class CommandLineSerializeCommandTest {
         commandlineSerialize(connectionInfo, SerializationFormat.yaml), is("2D2D"));
   }
 
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
-
   private void assertThatOutputIsCorrect(
       final Path testOutputFile, final Matcher<String> fileHeaderMatcher) throws IOException {
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
     assertThat(Files.size(testOutputFile), greaterThan(0L));
     assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
   }

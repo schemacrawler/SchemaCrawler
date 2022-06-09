@@ -34,19 +34,14 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shell.AvailableCatalogLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
@@ -56,89 +51,75 @@ import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
 @ResolveTestContext
+@CaptureSystemStreams
 public class ShellCommandsTest {
 
   private static final String SHELL_COMMANDS_OUTPUT = "shell_commands_output/";
-  private TestOutputStream err;
-  private TestOutputStream out;
 
   @Test
-  public void availableCommands(final TestContext testContext) {
+  public void availableCommands(
+      final TestContext testContext, final CapturedSystemStreams streams) {
     new AvailableCommandsCommand().run();
 
-    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
-        outputOf(out),
+        outputOf(streams.out()),
         hasSameContentAs(
             classpathResource(
                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
   }
 
   @Test
-  public void availableLoaders(final TestContext testContext) {
+  public void availableLoaders(final TestContext testContext, final CapturedSystemStreams streams) {
     new AvailableCatalogLoadersCommand().run();
 
-    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
-        outputOf(out),
+        outputOf(streams.out()),
         hasSameContentAs(
             classpathResource(
                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
   }
 
   @Test
-  public void availableServers(final TestContext testContext) {
+  public void availableServers(final TestContext testContext, final CapturedSystemStreams streams) {
     new AvailableServersCommand().run();
 
-    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
-        outputOf(out),
+        outputOf(streams.out()),
         hasSameContentAs(
             classpathResource(
                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
-  }
-
-  @AfterEach
-  public void cleanUpStreams() {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Test
   @ExpectSystemExitWithStatus(0)
-  public void exit(final TestContext testContext) {
+  public void exit(final TestContext testContext, final CapturedSystemStreams streams) {
     new ExitCommand().run();
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
-  }
-
-  @BeforeEach
-  public void setUpStreams() throws Exception {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(outputOf(streams.out()), hasNoContent());
   }
 
   @Test
-  public void system(final TestContext testContext) {
+  public void system(final TestContext testContext, final CapturedSystemStreams streams) {
     final String[] args = new String[] {"--version"};
 
     final ShellState state = new ShellState();
     newCommandLine(SystemCommand.class, new StateFactory(state)).execute(args);
 
-    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
-        outputOf(out),
+        outputOf(streams.out()),
         hasSameContentAs(
             classpathResource(
                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
   }
 
   @Test
-  public void systemShowStackTrace(final TestContext testContext) {
+  public void systemShowStackTrace(
+      final TestContext testContext, final CapturedSystemStreams streams) {
     final String[] args = new String[] {"--show-stacktrace"};
 
     final RuntimeException exception = new RuntimeException("Test to display stacktrace");
@@ -149,23 +130,24 @@ public class ShellCommandsTest {
 
     newCommandLine(SystemCommand.class, new StateFactory(state)).execute(args);
 
-    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
-        outputOf(out),
+        outputOf(streams.out()),
         hasSameContentAs(
             classpathResource(
                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
   }
 
   @Test
-  public void systemShowStackTraceWithoutException(final TestContext testContext) {
+  public void systemShowStackTraceWithoutException(
+      final TestContext testContext, final CapturedSystemStreams streams) {
     final String[] args = new String[] {"--show-stacktrace"};
 
     final ShellState state = new ShellState();
 
     newCommandLine(SystemCommand.class, new StateFactory(state)).execute(args);
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(outputOf(streams.out()), hasNoContent());
   }
 }
