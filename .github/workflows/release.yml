@@ -18,7 +18,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@760475f02126626b9077db49728d81849463c9dc # pin@v1.2.1
+      uses: sualeh/prepare-maven-build@v1.2.1
       with:
         java-version: 8
     - id: install-packages
@@ -46,7 +46,7 @@ jobs:
 # PUBLISH WEBSITE TO GITHUB PAGES
     - id: pubish-website
       name: Publish website to GitHub Pages
-      uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305 # pin@v3
+      uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./schemacrawler-website/target/_website

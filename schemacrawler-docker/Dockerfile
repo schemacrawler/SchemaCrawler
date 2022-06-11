@@ -70,5 +70,6 @@ COPY \
 RUN \
     echo 'alias schemacrawler="/opt/schemacrawler/bin/schemacrawler.sh"' \
     >> /home/schcrwlr/.profile \
- && echo 'alias schemacrawler="/opt/schemacrawler/bin/schemacrawler.sh"' \
-    >> /home/schcrwlr/.bashrc
+ && echo 'export schemacrawler' \
+    >> /home/schcrwlr/.profile \
+ && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc
