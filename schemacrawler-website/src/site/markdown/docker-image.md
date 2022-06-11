@@ -32,7 +32,9 @@ connect --server=sqlite --database=sc.db
 load --info-level=minimum
 execute --command list
 ```
-The easiest way to learn how to use the SchemaCrawler Interactive Shell is by doing the [online tutorial on Katacoda](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler-shell).
+The easiest way to learn how to use the SchemaCrawler Interactive Shell is by doing the 
+[live online tutorial](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler-shell). The tutorial works from within 
+any browser with no software or plugins needed.
 
 
 ## Run the SchemaCrawler Command-line
@@ -44,7 +46,9 @@ schemacrawler \
 --server=sqlite --database=sc.db \
 --info-level=maximum --command=schema
 ```
-The easiest way to learn how to use the SchemaCrawler command-line is by doing the [online tutorial on Katacoda](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler).
+The easiest way to learn how to use the SchemaCrawler command-line is by doing the 
+[live online tutorial](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler). The tutorial works from within 
+any browser with no software or plugins needed.
 
 
 ## How to Run SchemaCrawler With a Modified Configuration

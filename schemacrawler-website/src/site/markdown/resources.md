@@ -2,7 +2,9 @@
 
 ## SchemaCrawler Tutorials
 
-The easiest way to learn how to use the SchemaCrawler command-line is by doing the [online tutorial on Katacoda](https://www.katacoda.com/schemacrawler/scenarios/).
+The easiest way to learn how to use the SchemaCrawler command-line is by doing the 
+[live online tutorial](https://www.katacoda.com/schemacrawler). The tutorial works from within 
+any browser with no software or plugins needed.
 
 
 ## SchemaCrawler Whitepapers and Documentation

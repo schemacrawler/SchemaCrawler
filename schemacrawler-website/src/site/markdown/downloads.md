@@ -9,7 +9,7 @@
 
 SchemaCrawler is distributed in a variety of ways, to support various use cases.
 
-If you would like to use SchemaCrawler without installing it, you can explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler). The Katacoda tutorial works from within any browser with no software or plugins needed.
+If you would like to use SchemaCrawler without installing it, you can explore the SchemaCrawler command-line with a [live online tutorial](https://www.katacoda.com/schemacrawler). The tutorial works from within any browser with no software or plugins needed.
 
 If you need to use SchemaCrawler locally, you have a number of options. You can [download SchemaCrawler releases with tutorials from GitHub.](https://github.com/sualeh/SchemaCrawler/releases). You can install the SchemaCrawler Interactive Shell using platform-specific installers downloaded from [schemacrawler/SchemaCrawler-Installers](https://github.com/schemacrawler/SchemaCrawler-Installers). For Windows, SchemaCrawler is also available via the [Scoop command-line installer](https://scoop.sh/), [Chocolatey package manager](https://community.chocolatey.org/packages/schemacrawler), [SDKMan](https://sdkman.io/sdks#schemacrawler), as well as via [Microsoft Windows Package Manager, winget](https://docs.microsoft.com/en-us/windows/package-manager/).
 

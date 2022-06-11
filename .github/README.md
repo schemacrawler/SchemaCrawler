@@ -16,7 +16,7 @@
 # SchemaCrawler
 
 > * **Please see the [SchemaCrawler website](https://www.schemacrawler.com/) for more details.**
-> * **Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler).**
+> * **Explore the SchemaCrawler command-line with a [live online tutorial](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler).**
 
 ## About
 

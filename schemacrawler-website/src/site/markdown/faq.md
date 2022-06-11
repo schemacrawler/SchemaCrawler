@@ -66,7 +66,8 @@ SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.txt)
 
 ### <a name="commands">What are the SchemaCrawler commands?</a>
 
-Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler).
+Explore the SchemaCrawler command-line with a [live online tutorial](https://www.katacoda.com/schemacrawler). 
+The tutorial works from within any browser with no software or plugins needed.
 
 Then download and install SchemaCrawler, and run the provided scripts (`schemacrawler.sh` on Unix, and `schemacrawler.cmd` on Windows). Detailed command-line help will be displayed.
 
