@@ -91,7 +91,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   }
 
   private static void executableDiagram(
-      final String command,
+      final SchemaTextDetailType schemaTextDetailType,
       final Connection connection,
       final SchemaCrawlerOptions options,
       final Config config,
@@ -118,6 +118,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
     additionalConfig.put("schemacrawler.format.hide_weakassociation_names", "true");
 
+    final String command = schemaTextDetailType.name();
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
@@ -155,7 +156,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   }
 
   @Test
-  @DisplayName("Diagram with no hanging foreign keys")
+  @DisplayName("Diagram with no hanging foreign keys, with grep")
   public void executableAdditionalForDiagram_01(final TestContext testContext) throws Exception {
 
     final Connection connection = getConnection();
@@ -178,11 +179,49 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
             .withGrepOptions(grepOptions)
             .withFilterOptions(filterOptions);
 
+    final Config additionalConfig = new Config();
+
     executableDiagram(
-        SchemaTextDetailType.schema.name(),
+        SchemaTextDetailType.schema,
         connection,
         options,
-        new Config(),
+        additionalConfig,
+        diagramOptions,
+        testContext.testMethodName());
+  }
+
+  @Test
+  @DisplayName("Diagram with no hanging foreign keys, with brief command")
+  public void executableAdditionalForDiagram_02(final TestContext testContext) throws Exception {
+
+    final Connection connection = getConnection();
+    final DiagramOptions diagramOptions =
+        DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
+
+    final GrepOptions grepOptions =
+        GrepOptionsBuilder.builder()
+            .includeGreppedTables(tableName -> tableName.endsWith("TABLE3"))
+            .toOptions();
+
+    final FilterOptions filterOptions =
+        FilterOptionsBuilder.builder()
+            .parentTableFilterDepth(1)
+            .childTableFilterDepth(1)
+            .toOptions();
+
+    final SchemaCrawlerOptions options =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptions)
+            .withFilterOptions(filterOptions);
+
+    final Config additionalConfig = new Config();
+    additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
+
+    executableDiagram(
+        SchemaTextDetailType.schema,
+        connection,
+        options,
+        additionalConfig,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -193,7 +232,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
             .generateUniqueName(true)
             .setScriptEncoding("UTF-8")
             .ignoreFailedDrops(true)
-            .addScript("table_chain.sql")
+            .addScript("table-chain.sql")
             .build();
 
     final Connection connection = db.getConnection();

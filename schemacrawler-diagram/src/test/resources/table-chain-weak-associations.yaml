@@ -3,9 +3,13 @@ weak-associations:
 - name: Test 1
   # PK column and FK column not significant
   referenced-table:
-    name: TABLE1
-  referencing-table:
+    catalog: PUBLIC
+    schema: PUBLIC
     name: TABLE2
+  referencing-table:
+    catalog: PUBLIC
+    schema: PUBLIC
+    name: TABLE3
   column-references:
     COL2: COL2
   remarks:
@@ -14,9 +18,13 @@ weak-associations:
 - name: Test 2
   # PK column is, but FK column not significant
   referenced-table:
-    name: TABLE1
-  referencing-table:
+    catalog: PUBLIC
+    schema: PUBLIC
     name: TABLE2
+  referencing-table:
+    catalog: PUBLIC
+    schema: PUBLIC
+    name: TABLE3
   column-references:
     COL1: COL2
   remarks:
@@ -25,9 +33,13 @@ weak-associations:
 - name: Test 3
   # PK column is not significant, but FK column is
   referenced-table:
-    name: TABLE1
-  referencing-table:
+    catalog: PUBLIC
+    schema: PUBLIC
     name: TABLE2
+  referencing-table:
+    catalog: PUBLIC
+    schema: PUBLIC
+    name: TABLE3
   column-references:
     COL2: COL1
   remarks:
