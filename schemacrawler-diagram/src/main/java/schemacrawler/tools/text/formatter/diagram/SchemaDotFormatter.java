@@ -269,6 +269,11 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     return portIds;
   }
 
+  private boolean isTableFiltered(final Table table) {
+    return table.getAttribute("schemacrawler.filtered_out", false)
+        || table instanceof PartialDatabaseObject;
+  }
+
   private void printAlternateKeys(final Table table) {
     if (table == null) {
       return;
@@ -409,12 +414,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         if (isForeignKeyFiltered) {
           continue;
         }
-        final boolean isPkColumnFiltered =
-            referencedTable.getAttribute("schemacrawler.filtered_out", false)
-                || referencedTable instanceof PartialDatabaseObject;
-        final boolean isFkColumnFiltered =
-            referencingTable.getAttribute("schemacrawler.filtered_out", false)
-                || referencingTable instanceof PartialDatabaseObject;
+        final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
+        final boolean isFkColumnFiltered = isTableFiltered(referencingTable);
 
         // Hide foreign keys to filtered tables
         if (!options.isShowFilteredTables() && (isPkColumnFiltered || isFkColumnFiltered)) {
