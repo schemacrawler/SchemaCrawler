@@ -399,11 +399,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
       final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
       final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
-      final boolean isForeignKeyFiltered =
-          referencingTable.getAttribute("schemacrawler.table.no_grep_match", false);
-      if (isForeignKeyFiltered) {
-        continue;
-      }
+
       final boolean isPkColumnFiltered = referencedTable instanceof PartialDatabaseObject;
       final boolean isFkColumnFiltered = referencingTable instanceof PartialDatabaseObject;
 

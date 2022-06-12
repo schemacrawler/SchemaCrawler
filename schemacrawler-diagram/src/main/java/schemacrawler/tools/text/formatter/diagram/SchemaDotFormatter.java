@@ -409,11 +409,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
         final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
-        final boolean isForeignKeyFiltered =
-            referencingTable.getAttribute("schemacrawler.table.no_grep_match", false);
-        if (isForeignKeyFiltered) {
-          continue;
-        }
+
         final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
         final boolean isFkColumnFiltered = isTableFiltered(referencingTable);
 
