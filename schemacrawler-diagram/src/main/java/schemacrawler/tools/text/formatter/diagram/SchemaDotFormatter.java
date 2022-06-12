@@ -651,7 +651,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 
     for (final Column column : columns) {
-      if (isBrief() && !isColumnSignificant(column)) {
+      if (!isColumnSignificant(column)) {
         continue;
       }
 

@@ -120,11 +120,16 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   }
 
   protected boolean isColumnSignificant(final Column column) {
-    return column != null
-        && (column instanceof IndexColumn
-            || column.isPartOfPrimaryKey()
-            || column.isPartOfForeignKey()
-            || column.isPartOfIndex());
+    if (column == null) {
+      return false;
+    }
+    if (!isBrief()) {
+      return true;
+    }
+    return column instanceof IndexColumn
+        || column.isPartOfPrimaryKey()
+        || column.isPartOfForeignKey()
+        || column.isPartOfIndex();
   }
 
   protected boolean isVerbose() {
