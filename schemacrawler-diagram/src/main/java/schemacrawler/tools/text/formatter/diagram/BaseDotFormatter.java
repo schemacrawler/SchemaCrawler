@@ -50,15 +50,13 @@ import us.fatehi.utility.html.Tag;
 public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
 
   protected BaseDotFormatter(
-      final DiagramOptions options,
       final SchemaTextDetailType schemaTextDetailType,
-      final boolean printVerboseDatabaseInfo,
+      final DiagramOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
     super(
-        options,
         schemaTextDetailType,
-        printVerboseDatabaseInfo,
+        options,
         outputOptions,
         identifierQuoteString);
   }

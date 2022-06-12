@@ -81,7 +81,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       final OperationOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(options, schema, false, outputOptions, identifierQuoteString);
+    super(schema, options, outputOptions, identifierQuoteString);
     this.operation = requireNonNull(operation, "No operation provided");
   }
 

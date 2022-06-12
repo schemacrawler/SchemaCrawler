@@ -65,10 +65,10 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
     super(
-        options,
         schemaTextDetailType,
-        schemaTextDetailType == SchemaTextDetailType.details,
-        outputOptions, identifierQuoteString);
+        options,
+        outputOptions,
+        identifierQuoteString);
   }
 
   /** {@inheritDoc} */

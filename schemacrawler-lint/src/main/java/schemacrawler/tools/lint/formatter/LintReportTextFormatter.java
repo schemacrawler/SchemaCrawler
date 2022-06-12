@@ -76,7 +76,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
       final LintOptions lintOptions,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(lintOptions, schema, false, outputOptions, identifierQuoteString);
+    super(schema, lintOptions, outputOptions, identifierQuoteString);
     this.catalog = requireNonNull(catalog, "No catalog provided");
     this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }

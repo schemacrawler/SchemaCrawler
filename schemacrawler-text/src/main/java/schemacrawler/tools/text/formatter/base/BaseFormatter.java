@@ -60,13 +60,11 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   protected final TextFormattingHelper formattingHelper;
   protected final DatabaseObjectColorMap colorMap;
   protected final Identifiers identifiers;
-  protected final boolean printVerboseDatabaseInfo;
   private final PrintWriter out;
 
   protected BaseFormatter(
-      final O options,
       final SchemaTextDetailType schemaTextDetailType,
-      final boolean printVerboseDatabaseInfo,
+      final O options,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
 
@@ -75,7 +73,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
         requireNonNull(schemaTextDetailType, "SchemaTextDetailType not provided");
     this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
     colorMap = options.getColorMap();
-    this.printVerboseDatabaseInfo = !options.isNoInfo() && printVerboseDatabaseInfo;
 
     identifiers =
         Identifiers.identifiers()

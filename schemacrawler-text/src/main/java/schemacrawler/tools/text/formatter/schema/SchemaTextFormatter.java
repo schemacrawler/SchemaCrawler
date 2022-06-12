@@ -114,10 +114,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
     super(
-        options,
         schemaTextDetailType,
-        schemaTextDetailType == SchemaTextDetailType.details,
-        outputOptions, identifierQuoteString);
+        options,
+        outputOptions,
+        identifierQuoteString);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
@@ -125,7 +125,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handle(final ColumnDataType columnDataType) {
-    if (printVerboseDatabaseInfo && isVerbose) {
+    if (printVerboseDatabaseInfo() && isVerbose) {
       formattingHelper.writeObjectStart();
       printColumnDataType(columnDataType);
       formattingHelper.writeObjectEnd();
@@ -268,7 +268,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handleColumnDataTypesStart() {
-    if (printVerboseDatabaseInfo && isVerbose) {
+    if (printVerboseDatabaseInfo() && isVerbose) {
       formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Data Types");
     }
   }
