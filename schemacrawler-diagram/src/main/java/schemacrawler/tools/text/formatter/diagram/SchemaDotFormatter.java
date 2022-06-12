@@ -352,6 +352,11 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       return "";
     }
 
+    // Hide hanging foreign keys when filtered tables are not shown
+    if (!options.isShowFilteredTables() && !isFkColumnSignificant) {
+      return "";
+    }
+
     final String[] pkPortIds = getPortIds(primaryKeyColumn, isPkColumnFiltered);
     final String[] fkPortIds =
         getPortIds(foreignKeyColumn, isFkColumnFiltered || !isFkColumnSignificant);
