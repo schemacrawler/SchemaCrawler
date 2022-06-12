@@ -97,9 +97,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     return textValue;
   }
 
-  private final boolean isVerbose;
-  private final boolean isBrief;
-
   /**
    * Text formatting of schema.
    *
@@ -113,19 +110,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final SchemaTextOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(
-        schemaTextDetailType,
-        options,
-        outputOptions,
-        identifierQuoteString);
-    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-    isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
+    super(schemaTextDetailType, options, outputOptions, identifierQuoteString);
   }
 
   /** {@inheritDoc} */
   @Override
   public void handle(final ColumnDataType columnDataType) {
-    if (printVerboseDatabaseInfo() && isVerbose) {
+    if (printVerboseDatabaseInfo() && isVerbose()) {
       formattingHelper.writeObjectStart();
       printColumnDataType(columnDataType);
       formattingHelper.writeObjectEnd();
@@ -147,11 +138,11 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         nodeId(routine), routineName, routineType, colorMap.getColor(routine));
     printRemarks(routine);
 
-    if (!isBrief) {
+    if (!isBrief()) {
       printRoutineParameters(routine.getParameters());
     }
 
-    if (isVerbose) {
+    if (isVerbose()) {
       if (!options.isHideRoutineSpecificNames()) {
         final String specificName = routine.getSpecificName();
         if (!isBlank(specificName)) {
@@ -179,7 +170,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         nodeId(sequence), sequenceName, sequenceType, colorMap.getColor(sequence));
     printRemarks(sequence);
 
-    if (!isBrief) {
+    if (!isBrief()) {
       formattingHelper.writeDetailRow("", "increment", String.valueOf(sequence.getIncrement()));
       formattingHelper.writeDetailRow(
           "", "start value", Objects.toString(sequence.getStartValue(), ""));
@@ -206,7 +197,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         nodeId(synonym), synonymName, synonymType, colorMap.getColor(synonym));
     printRemarks(synonym);
 
-    if (!isBrief) {
+    if (!isBrief()) {
       final String referencedObjectName = quoteName(synonym.getReferencedObject());
       formattingHelper.writeDetailRow(
           "",
@@ -234,20 +225,20 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     printRemarks(table);
 
     printTableColumns(table.getColumns(), true);
-    if (isVerbose) {
+    if (isVerbose()) {
       printTableColumns(new ArrayList<>(table.getHiddenColumns()), true);
     }
 
     printPrimaryKey(table.getPrimaryKey());
     printForeignKeys(table);
-    if (!isBrief) {
+    if (!isBrief()) {
       printAlternateKeys(table);
       printWeakAssociations(table);
       printIndexes(table.getIndexes());
       printTriggers(table.getTriggers());
       printTableConstraints(table.getTableConstraints());
 
-      if (isVerbose) {
+      if (isVerbose()) {
         printPrivileges(table.getPrivileges());
         printDefinition(table);
         printViewTableUsage(table);
@@ -268,7 +259,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handleColumnDataTypesStart() {
-    if (printVerboseDatabaseInfo() && isVerbose) {
+    if (printVerboseDatabaseInfo() && isVerbose()) {
       formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Data Types");
     }
   }
@@ -477,7 +468,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     if (definedObject == null || !definedObject.hasDefinition()) {
       return;
     }
-    if (!isVerbose) {
+    if (!isVerbose()) {
       return;
     }
 
@@ -492,7 +483,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     if (definedObject == null || !definedObject.hasDefinition()) {
       return;
     }
-    if (!isVerbose) {
+    if (!isVerbose()) {
       return;
     }
 
@@ -584,7 +575,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
         printRemarks(index);
 
-        if (!isBrief) {
+        if (!isBrief()) {
           printTableColumns(index.getColumns(), false);
         }
         printDependantObjectDefinition(index);
@@ -758,7 +749,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 
     for (final Column column : columns) {
-      if (isBrief && !isColumnSignificant(column)) {
+      if (isBrief() && !isColumnSignificant(column)) {
         continue;
       }
 
@@ -838,7 +829,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeNameRow(constraintName, constraintDetails);
 
         printRemarks(constraint);
-        if (!isBrief) {
+        if (!isBrief()) {
           printTableColumns(constraint.getConstrainedColumns(), false);
         }
         printDependantObjectDefinition(constraint);

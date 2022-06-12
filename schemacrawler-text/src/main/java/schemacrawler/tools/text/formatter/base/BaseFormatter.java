@@ -115,12 +115,20 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     return columnNullable;
   }
 
+  protected boolean isBrief() {
+    return schemaTextDetailType == SchemaTextDetailType.brief;
+  }
+
   protected boolean isColumnSignificant(final Column column) {
     return column != null
         && (column instanceof IndexColumn
             || column.isPartOfPrimaryKey()
             || column.isPartOfForeignKey()
             || column.isPartOfIndex());
+  }
+
+  protected boolean isVerbose() {
+    return schemaTextDetailType == SchemaTextDetailType.details;
   }
 
   protected String nodeId(final DatabaseObject dbObject) {

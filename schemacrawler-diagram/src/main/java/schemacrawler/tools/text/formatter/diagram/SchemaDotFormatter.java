@@ -71,8 +71,6 @@ import us.fatehi.utility.html.Tag;
 /** Graphviz DOT formatting of schema. */
 public final class SchemaDotFormatter extends BaseDotFormatter implements SchemaTraversalHandler {
 
-  private final boolean isVerbose;
-  private final boolean isBrief;
   private final int tableColspan;
 
   /**
@@ -88,13 +86,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final DiagramOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(
-        schemaTextDetailType,
-        options,
-        outputOptions,
-        identifierQuoteString);
-    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-    isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
+    super(schemaTextDetailType, options, outputOptions, identifierQuoteString);
+
     tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
   }
 
@@ -176,7 +169,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     printTableRemarks(table);
 
     printTableColumns(table.getColumns());
-    if (isVerbose) {
+    if (isVerbose()) {
       printTableColumns(new ArrayList<>(table.getHiddenColumns()));
       printIndexes(table);
     }
@@ -658,7 +651,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 
     for (final Column column : columns) {
-      if (isBrief && !isColumnSignificant(column)) {
+      if (isBrief() && !isColumnSignificant(column)) {
         continue;
       }
 
