@@ -156,28 +156,14 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   }
 
   @Test
-  @DisplayName("Diagram with no hanging foreign keys, with grep")
+  @DisplayName("No hanging foreign keys")
   public void executableAdditionalForDiagram_01(final TestContext testContext) throws Exception {
 
     final Connection connection = getConnection();
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
 
-    final GrepOptions grepOptions =
-        GrepOptionsBuilder.builder()
-            .includeGreppedTables(tableName -> tableName.endsWith("TABLE3"))
-            .toOptions();
-
-    final FilterOptions filterOptions =
-        FilterOptionsBuilder.builder()
-            .parentTableFilterDepth(1)
-            .childTableFilterDepth(1)
-            .toOptions();
-
-    final SchemaCrawlerOptions options =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withGrepOptions(grepOptions)
-            .withFilterOptions(filterOptions);
+    final SchemaCrawlerOptions options = greppedForTable3();
 
     final Config additionalConfig = new Config();
 
@@ -191,34 +177,42 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   }
 
   @Test
-  @DisplayName("Diagram with no hanging foreign keys, with brief command")
+  @DisplayName("No hanging foreign keys; weak associations loaded; schema command")
   public void executableAdditionalForDiagram_02(final TestContext testContext) throws Exception {
 
     final Connection connection = getConnection();
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
 
-    final GrepOptions grepOptions =
-        GrepOptionsBuilder.builder()
-            .includeGreppedTables(tableName -> tableName.endsWith("TABLE3"))
-            .toOptions();
-
-    final FilterOptions filterOptions =
-        FilterOptionsBuilder.builder()
-            .parentTableFilterDepth(1)
-            .childTableFilterDepth(1)
-            .toOptions();
-
-    final SchemaCrawlerOptions options =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withGrepOptions(grepOptions)
-            .withFilterOptions(filterOptions);
+    final SchemaCrawlerOptions options = greppedForTable3();
 
     final Config additionalConfig = new Config();
     additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
 
     executableDiagram(
         SchemaTextDetailType.schema,
+        connection,
+        options,
+        additionalConfig,
+        diagramOptions,
+        testContext.testMethodName());
+  }
+
+  @Test
+  @DisplayName("No hanging foreign keys; weak associations loaded; brief command")
+  public void executableAdditionalForDiagram_03(final TestContext testContext) throws Exception {
+
+    final Connection connection = getConnection();
+    final DiagramOptions diagramOptions =
+        DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
+
+    final SchemaCrawlerOptions options = greppedForTable3();
+
+    final Config additionalConfig = new Config();
+    additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
+
+    executableDiagram(
+        SchemaTextDetailType.brief,
         connection,
         options,
         additionalConfig,
@@ -237,5 +231,24 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     final Connection connection = db.getConnection();
     return connection;
+  }
+
+  private SchemaCrawlerOptions greppedForTable3() {
+    final GrepOptions grepOptions =
+        GrepOptionsBuilder.builder()
+            .includeGreppedTables(tableName -> tableName.endsWith("TABLE3"))
+            .toOptions();
+
+    final FilterOptions filterOptions =
+        FilterOptionsBuilder.builder()
+            .parentTableFilterDepth(1)
+            .childTableFilterDepth(1)
+            .toOptions();
+
+    final SchemaCrawlerOptions options =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptions)
+            .withFilterOptions(filterOptions);
+    return options;
   }
 }
