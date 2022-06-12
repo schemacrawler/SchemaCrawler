@@ -1,0 +1,35 @@
+name: catalog
+weak-associations:
+- name: Test 1
+  # PK column and FK column not significant
+  referenced-table:
+    name: TABLE1
+  referencing-table:
+    name: TABLE2
+  column-references:
+    COL2: COL2
+  remarks:
+  - "Some remarks line 1"
+  - "Some remarks line 2"
+- name: Test 2
+  # PK column is, but FK column not significant
+  referenced-table:
+    name: TABLE1
+  referencing-table:
+    name: TABLE2
+  column-references:
+    COL1: COL2
+  remarks:
+  - "Some remarks line 1"
+  - "Some remarks line 2"
+- name: Test 3
+  # PK column is not significant, but FK column is
+  referenced-table:
+    name: TABLE1
+  referencing-table:
+    name: TABLE2
+  column-references:
+    COL2: COL1
+  remarks:
+  - "Some remarks line 1"
+  - "Some remarks line 2"
