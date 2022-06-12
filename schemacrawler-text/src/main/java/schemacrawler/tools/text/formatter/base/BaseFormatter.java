@@ -39,6 +39,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -130,6 +132,11 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
         || column.isPartOfPrimaryKey()
         || column.isPartOfForeignKey()
         || column.isPartOfIndex();
+  }
+
+  protected boolean isTableFiltered(final Table table) {
+    return table.getAttribute("schemacrawler.filtered_out", false)
+        || table instanceof PartialDatabaseObject;
   }
 
   protected boolean isVerbose() {

@@ -49,7 +49,6 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexType;
-import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
@@ -269,11 +268,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     return portIds;
   }
 
-  private boolean isTableFiltered(final Table table) {
-    return table.getAttribute("schemacrawler.filtered_out", false)
-        || table instanceof PartialDatabaseObject;
-  }
-
   private void printAlternateKeys(final Table table) {
     if (table == null) {
       return;
@@ -350,8 +344,17 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnRef.getForeignKeyColumn();
 
+    final boolean isPkColumnSignificant = isColumnSignificant(primaryKeyColumn);
+    final boolean isFkColumnSignificant = isColumnSignificant(foreignKeyColumn);
+
+    // Primary key column in a weak association is not a significant column
+    if (!isPkColumnSignificant) {
+      return "";
+    }
+
     final String[] pkPortIds = getPortIds(primaryKeyColumn, isPkColumnFiltered);
-    final String[] fkPortIds = getPortIds(foreignKeyColumn, isFkColumnFiltered);
+    final String[] fkPortIds =
+        getPortIds(foreignKeyColumn, isFkColumnFiltered || !isFkColumnSignificant);
 
     final DiagramOptions diagramOptions = options;
     final String pkSymbol;

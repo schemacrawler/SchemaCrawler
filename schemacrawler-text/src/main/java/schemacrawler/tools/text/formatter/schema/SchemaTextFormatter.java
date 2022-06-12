@@ -58,7 +58,6 @@ import schemacrawler.schema.Grant;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
-import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Routine;
@@ -400,8 +399,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
       final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
 
-      final boolean isPkColumnFiltered = referencedTable instanceof PartialDatabaseObject;
-      final boolean isFkColumnFiltered = referencingTable instanceof PartialDatabaseObject;
+      final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
+      final boolean isFkColumnFiltered = isTableFiltered(referencingTable);
 
       final String pkColumnName;
       final String fkColumnName;
