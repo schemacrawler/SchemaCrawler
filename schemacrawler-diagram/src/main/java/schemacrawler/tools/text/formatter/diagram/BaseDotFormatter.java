@@ -40,6 +40,7 @@ import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseFormatter;
 import us.fatehi.utility.html.Alignment;
@@ -50,10 +51,16 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
 
   protected BaseDotFormatter(
       final DiagramOptions options,
+      final SchemaTextDetailType schemaTextDetailType,
       final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(options, printVerboseDatabaseInfo, outputOptions, identifierQuoteString);
+    super(
+        options,
+        schemaTextDetailType,
+        printVerboseDatabaseInfo,
+        outputOptions,
+        identifierQuoteString);
   }
 
   @Override

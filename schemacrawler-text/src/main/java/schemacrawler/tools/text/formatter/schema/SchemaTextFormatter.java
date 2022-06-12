@@ -115,9 +115,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String identifierQuoteString) {
     super(
         options,
+        schemaTextDetailType,
         schemaTextDetailType == SchemaTextDetailType.details,
-        outputOptions,
-        identifierQuoteString);
+        outputOptions, identifierQuoteString);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }

@@ -29,6 +29,7 @@ package schemacrawler.tools.lint.formatter;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
       final LintOptions lintOptions,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(lintOptions, false, outputOptions, identifierQuoteString);
+    super(lintOptions, schema, false, outputOptions, identifierQuoteString);
     this.catalog = requireNonNull(catalog, "No catalog provided");
     this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }

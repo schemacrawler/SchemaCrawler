@@ -38,6 +38,7 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Property;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.options.BaseTextOptions;
@@ -49,10 +50,16 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
 
   protected BaseTabularFormatter(
       final O options,
+      final SchemaTextDetailType schemaTextDetailType,
       final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(options, printVerboseDatabaseInfo, outputOptions, identifierQuoteString);
+    super(
+        options,
+        schemaTextDetailType,
+        printVerboseDatabaseInfo,
+        outputOptions,
+        identifierQuoteString);
   }
 
   /** {@inheritDoc} */

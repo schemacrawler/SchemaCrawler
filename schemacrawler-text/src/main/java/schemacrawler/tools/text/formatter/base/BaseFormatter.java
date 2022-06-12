@@ -40,6 +40,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.HtmlFormattingHelper;
@@ -54,6 +55,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   private static final Logger LOGGER = Logger.getLogger(BaseFormatter.class.getName());
 
   protected final O options;
+  protected final SchemaTextDetailType schemaTextDetailType;
   protected final OutputOptions outputOptions;
   protected final TextFormattingHelper formattingHelper;
   protected final DatabaseObjectColorMap colorMap;
@@ -63,11 +65,14 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
 
   protected BaseFormatter(
       final O options,
+      final SchemaTextDetailType schemaTextDetailType,
       final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
 
     this.options = requireNonNull(options, "Options not provided");
+    this.schemaTextDetailType =
+        requireNonNull(schemaTextDetailType, "SchemaTextDetailType not provided");
     this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
     colorMap = options.getColorMap();
     this.printVerboseDatabaseInfo = !options.isNoInfo() && printVerboseDatabaseInfo;

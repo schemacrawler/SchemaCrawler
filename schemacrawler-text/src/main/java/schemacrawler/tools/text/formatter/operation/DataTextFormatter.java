@@ -30,6 +30,7 @@ package schemacrawler.tools.text.formatter.operation;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -80,12 +81,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       final OperationOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(
-        options,
-        /* printVerboseDatabaseInfo */
-        false,
-        outputOptions,
-        identifierQuoteString);
+    super(options, schema, false, outputOptions, identifierQuoteString);
     this.operation = requireNonNull(operation, "No operation provided");
   }
 

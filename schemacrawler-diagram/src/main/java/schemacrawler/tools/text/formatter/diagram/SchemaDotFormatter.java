@@ -90,9 +90,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final String identifierQuoteString) {
     super(
         options,
+        schemaTextDetailType,
         schemaTextDetailType == SchemaTextDetailType.details,
-        outputOptions,
-        identifierQuoteString);
+        outputOptions, identifierQuoteString);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
     tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
