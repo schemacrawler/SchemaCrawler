@@ -31,11 +31,26 @@ import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.config.LinterConfig;
 
 public class EqualsTest {
 
   @Test
   public void lint() {
     EqualsVerifier.forClass(Lint.class).withIgnoredFields("lintId", "linterInstanceId").verify();
+  }
+
+  @Test
+  public void linterConfig() {
+    EqualsVerifier.forClass(LinterConfig.class)
+        .withIgnoredFields(
+            "config",
+            "runLinter",
+            "threshold",
+            "tableInclusionPattern",
+            "tableExclusionPattern",
+            "columnInclusionPattern",
+            "columnExclusionPattern")
+        .verify();
   }
 }

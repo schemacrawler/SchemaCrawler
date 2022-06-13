@@ -1,0 +1,18 @@
+{
+  "@object": "schemacrawler.tools.lint.config.LinterConfigs",
+  "config":   {
+  },
+  "linterConfigs": ["{
+  "@object": "schemacrawler.tools.lint.config.LinterConfig",
+  "columnExclusionPattern": null,
+  "columnInclusionPattern": null,
+  "config":   {
+  },
+  "linterId": "schemacrawler.tools.linter.LinterTableWithNoIndexes",
+  "runLinter": true,
+  "severity": "critical",
+  "tableExclusionPattern": null,
+  "tableInclusionPattern": null,
+  "threshold": 1
+}"]
+}

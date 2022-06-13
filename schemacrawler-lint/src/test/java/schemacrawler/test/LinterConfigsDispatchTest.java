@@ -38,6 +38,7 @@ import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,7 @@ import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
@@ -70,7 +72,7 @@ public class LinterConfigsDispatchTest {
   @Test
   @AssertNoSystemErrOutput
   @AssertNoSystemOutOutput
-  public void testLinterConfigs() {
+  public void linterConfigs(final TestContext testContext) throws IOException {
 
     final LintOptions lintOptions =
         LintOptionsBuilder.builder()
@@ -97,6 +99,13 @@ public class LinterConfigsDispatchTest {
     if (!asserted) {
       fail();
     }
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      out.write(linterConfigs.toString());
+    }
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test

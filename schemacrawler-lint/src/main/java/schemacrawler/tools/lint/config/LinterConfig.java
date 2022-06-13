@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint.config;
 
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.beans.ConstructorProperties;
@@ -42,7 +41,7 @@ import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
-public class LinterConfig implements Serializable, Comparable<LinterConfig> {
+public final class LinterConfig implements Serializable, Comparable<LinterConfig> {
 
   private static final long serialVersionUID = 83079182550531365L;
 
@@ -167,13 +166,6 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
 
   public boolean isRunLinter() {
     return runLinter;
-  }
-
-  public void put(final String key, final String value) {
-    if (isBlank(key)) {
-      return;
-    }
-    config.put(key, value);
   }
 
   @Override

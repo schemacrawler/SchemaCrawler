@@ -55,11 +55,6 @@ public class LinterConfigs implements Iterable<LinterConfig> {
     }
   }
 
-  /** @return the linterConfigs */
-  public List<LinterConfig> getLinterConfigs() {
-    return linterConfigs;
-  }
-
   @Override
   public Iterator<LinterConfig> iterator() {
     return linterConfigs.iterator();
