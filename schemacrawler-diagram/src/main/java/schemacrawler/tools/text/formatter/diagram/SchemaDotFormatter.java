@@ -49,7 +49,6 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexType;
-import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
@@ -71,8 +70,6 @@ import us.fatehi.utility.html.Tag;
 /** Graphviz DOT formatting of schema. */
 public final class SchemaDotFormatter extends BaseDotFormatter implements SchemaTraversalHandler {
 
-  private final boolean isVerbose;
-  private final boolean isBrief;
   private final int tableColspan;
 
   /**
@@ -88,13 +85,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final DiagramOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(
-        options,
-        schemaTextDetailType == SchemaTextDetailType.details,
-        outputOptions,
-        identifierQuoteString);
-    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
-    isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
+    super(schemaTextDetailType, options, outputOptions, identifierQuoteString);
+
     tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
   }
 
@@ -176,7 +168,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     printTableRemarks(table);
 
     printTableColumns(table.getColumns());
-    if (isVerbose) {
+    if (isVerbose()) {
       printTableColumns(new ArrayList<>(table.getHiddenColumns()));
       printIndexes(table);
     }
@@ -352,8 +344,22 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnRef.getForeignKeyColumn();
 
+    final boolean isPkColumnSignificant = isColumnSignificant(primaryKeyColumn);
+    final boolean isFkColumnSignificant = isColumnSignificant(foreignKeyColumn);
+
+    // Primary key column in a weak association is not a significant column
+    if (!isPkColumnSignificant) {
+      return "";
+    }
+
+    // Hide hanging foreign keys when filtered tables are not shown
+    if (!options.isShowFilteredTables() && !isFkColumnSignificant) {
+      return "";
+    }
+
     final String[] pkPortIds = getPortIds(primaryKeyColumn, isPkColumnFiltered);
-    final String[] fkPortIds = getPortIds(foreignKeyColumn, isFkColumnFiltered);
+    final String[] fkPortIds =
+        getPortIds(foreignKeyColumn, isFkColumnFiltered || !isFkColumnSignificant);
 
     final DiagramOptions diagramOptions = options;
     final String pkSymbol;
@@ -411,17 +417,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
         final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
-        final boolean isForeignKeyFiltered =
-            referencingTable.getAttribute("schemacrawler.table.no_grep_match", false);
-        if (isForeignKeyFiltered) {
-          continue;
-        }
-        final boolean isPkColumnFiltered =
-            referencedTable.getAttribute("schemacrawler.filtered_out", false)
-                || referencedTable instanceof PartialDatabaseObject;
-        final boolean isFkColumnFiltered =
-            referencingTable.getAttribute("schemacrawler.filtered_out", false)
-                || referencingTable instanceof PartialDatabaseObject;
+
+        final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
+        final boolean isFkColumnFiltered = isTableFiltered(referencingTable);
 
         // Hide foreign keys to filtered tables
         if (!options.isShowFilteredTables() && (isPkColumnFiltered || isFkColumnFiltered)) {
@@ -658,7 +656,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 
     for (final Column column : columns) {
-      if (isBrief && !isColumnSignificant(column)) {
+      if (!isColumnSignificant(column)) {
         continue;
       }
 

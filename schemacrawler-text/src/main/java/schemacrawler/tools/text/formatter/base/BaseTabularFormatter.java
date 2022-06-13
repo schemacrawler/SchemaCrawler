@@ -38,6 +38,7 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Property;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.options.BaseTextOptions;
@@ -48,11 +49,11 @@ import us.fatehi.utility.html.Alignment;
 public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends BaseFormatter<O> {
 
   protected BaseTabularFormatter(
+      final SchemaTextDetailType schemaTextDetailType,
       final O options,
-      final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
       final String identifierQuoteString) {
-    super(options, printVerboseDatabaseInfo, outputOptions, identifierQuoteString);
+    super(schemaTextDetailType, options, outputOptions, identifierQuoteString);
   }
 
   /** {@inheritDoc} */
@@ -60,7 +61,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   public void begin() {
     formattingHelper.writeDocumentStart();
   }
-
   /** {@inheritDoc} */
   @Override
   public void end() {
@@ -112,7 +112,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
 
   @Override
   public final void handle(final DatabaseInfo dbInfo) {
-    if (!printVerboseDatabaseInfo || !options.isShowDatabaseInfo() || dbInfo == null) {
+    if (!printVerboseDatabaseInfo() || !options.isShowDatabaseInfo() || dbInfo == null) {
       return;
     }
 
@@ -156,7 +156,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
 
   @Override
   public void handle(final JdbcDriverInfo driverInfo) {
-    if (!printVerboseDatabaseInfo || !options.isShowJdbcDriverInfo() || driverInfo == null) {
+    if (!printVerboseDatabaseInfo() || !options.isShowJdbcDriverInfo() || driverInfo == null) {
       return;
     }
 
@@ -206,13 +206,17 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
 
   @Override
   public final void handleInfoStart() {
-    if (!printVerboseDatabaseInfo
+    if (!printVerboseDatabaseInfo()
         || options.isNoInfo()
         || !options.isShowDatabaseInfo() && !options.isShowJdbcDriverInfo()) {
       return;
     }
 
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "System Information");
+  }
+
+  protected boolean printVerboseDatabaseInfo() {
+    return !options.isNoInfo() && schemaTextDetailType == SchemaTextDetailType.details;
   }
 
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty) {

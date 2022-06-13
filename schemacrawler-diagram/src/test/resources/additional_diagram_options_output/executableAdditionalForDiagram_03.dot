@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2022-06-12 23:58:36</td>
+		<td align='left'>2022-06-13 00:14:50</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -62,11 +62,6 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'> </td>
 		<td port='col1_467fd9ae.end' align='left'>CHARACTER(25)</td>
 	</tr>
-	<tr>
-		<td port='col2_467fd9af.start' align='left'>COL2</td>
-		<td align='left'> </td>
-		<td port='col2_467fd9af.end' align='left'>CHARACTER(25)</td>
-	</tr>
       </table>
     >
   ];
@@ -97,11 +92,6 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'> </td>
 		<td port='col1_467fd9cd.end' align='left'>CHARACTER(25)</td>
 	</tr>
-	<tr>
-		<td port='col2_467fd9ce.start' align='left'>COL2</td>
-		<td align='left'> </td>
-		<td port='col2_467fd9ce.end' align='left'>CHARACTER(25)</td>
-	</tr>
       </table>
     >
   ];
@@ -131,11 +121,6 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='col1_467fd9ec.start' align='left'>COL1</td>
 		<td align='left'> </td>
 		<td port='col1_467fd9ec.end' align='left'>CHARACTER(25)</td>
-	</tr>
-	<tr>
-		<td port='col2_467fd9ed.start' align='left'>COL2</td>
-		<td align='left'> </td>
-		<td port='col2_467fd9ed.end' align='left'>CHARACTER(25)</td>
 	</tr>
       </table>
     >
