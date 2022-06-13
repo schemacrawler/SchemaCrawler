@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2022-06-12 23:58:38</td>
+		<td align='left'>2022-06-13 00:14:51</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -57,6 +57,11 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'> </td>
 		<td port='table1_id_75f0a374.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
+	<tr>
+		<td port='col1_467fd9ae.start' align='left'>COL1</td>
+		<td align='left'> </td>
+		<td port='col1_467fd9ae.end' align='left'>CHARACTER(25)</td>
+	</tr>
       </table>
     >
   ];
@@ -64,6 +69,8 @@ digraph "SchemaCrawler_Diagram" {
   "id_46603bd9" [label=<PUBLIC.PUBLIC.TABLE1.ID>];
   "table2_2b8f7d83":"table1_id_75f0a374.start":w -> "id_46603bd9":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "table3_2b8f7d84":"table2_id_75f117f2.start":w -> "table2_2b8f7d83":"id_46603bf8.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "col2_467fd9ce" [label=<PUBLIC.PUBLIC.TABLE3.COL2>];
+  "col2_467fd9ce":w -> "table2_2b8f7d83":"col1_467fd9ae.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* PUBLIC.PUBLIC.TABLE3 -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -83,6 +90,11 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='table2_id_75f117f2.start' align='left'>TABLE2_ID</td>
 		<td align='left'> </td>
 		<td port='table2_id_75f117f2.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='col1_467fd9cd.start' align='left'>COL1</td>
+		<td align='left'> </td>
+		<td port='col1_467fd9cd.end' align='left'>CHARACTER(25)</td>
 	</tr>
       </table>
     >
@@ -108,6 +120,11 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='table3_id_75f18c70.start' align='left'>TABLE3_ID</td>
 		<td align='left'> </td>
 		<td port='table3_id_75f18c70.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='col1_467fd9ec.start' align='left'>COL1</td>
+		<td align='left'> </td>
+		<td port='col1_467fd9ec.end' align='left'>CHARACTER(25)</td>
 	</tr>
       </table>
     >
