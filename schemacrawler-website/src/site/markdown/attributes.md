@@ -1,7 +1,8 @@
 # Extensions with Catalog Attributes
 
-SchemaCrawler can read and incorporate user-provided metadata in the form of table and column remarks, 
-and weak association definitions, and alternate key specifications from a YAML file. 
+SchemaCrawler can read and incorporate user-provided metadata in the form of table, column 
+and foreign key remarks and attributes, and weak association definitions, and alternate key 
+specifications from a YAML file. 
 Examples of attributes file are shown below. Then you can run SchemaCrawler with a
 `--attributes-file <path>` command-line option. 
 
@@ -34,6 +35,9 @@ tables:
     remarks:
     - Overwritten remarks line 1
 ```
+
+If your JDBC driver does not support catalogs, you can omit the "catalog" key, and if it
+does not support schemas, you can omit the "schema" key.
 
 ## Creating Weak Associations
 
@@ -82,6 +86,13 @@ weak-associations:
   - "Other remarks line 2"
 ```
 
+## Adding Foreign Key Remarks
+
+You can annotate foreign keys in your schema with remarks. These remarks can be shown
+in SchemaCrawler diagrams and in other SchemaCrawler output. Use syntax like the one above,
+still using the "weak-associations" key. SchemaCrawler will find a foreign key match for 
+the columns in the referenced and referencing tables, and will update the remarks on that
+foreign key.
 
 ## Specifying Alternate Keys
 
