@@ -1,52 +1,87 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
-    association: Z_FK_AUTHOR MutableForeignKey
+    foreign-key: Z_FK_AUTHOR
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
-    association: 2_weak_partial_fk MutableWeakAssociation
+      attributes: 
+        PK_NAME: PK_AUTHORS
+    weak-association: 2_weak_partial_fk
       column references: 
         key sequence: 1
           PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
-    association: 7_weak_duplicate MutableWeakAssociation
+      attributes: 
+        REMARKS: 
+    weak-association: 7_weak_duplicate
       column references: 
         key sequence: 1
           PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
-    association: 1_weak MutableWeakAssociation
+      attributes: 
+        REMARKS: 
+    weak-association: 11_same_as_fk
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
+      remarks: Overwritten foreign key remarks line 1
+      attributes: 
+        some tag 1: tagvalue1
+        REMARKS: Overwritten foreign key remarks line 1
+        tag2: tag value 2
+    weak-association: 1_weak
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
+      remarks: Overwritten remarks line 1
+      attributes: 
+        some tag 1: tagvalue1
+        REMARKS: Overwritten remarks line 1
+        tag2: tag value 2
   table: PUBLIC.BOOKS.BOOKS
-    association: FK_PREVIOUSEDITION MutableForeignKey
+    foreign-key: FK_PREVIOUSEDITION
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
-    association: FK_SALES_BOOK MutableForeignKey
+      attributes: 
+        PK_NAME: PK_BOOKS
+    foreign-key: FK_SALES_BOOK
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
-    association: SYS_FK_10126 MutableForeignKey
+      attributes: 
+        PK_NAME: PK_BOOKS
+    foreign-key: SYS_FK_10126
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
-    association: 3_weak_partial_pk MutableWeakAssociation
+      attributes: 
+        PK_NAME: PK_BOOKS
+    weak-association: 3_weak_partial_pk
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID --> PRIVATE.LIBRARY.BOOKS.ID
-    association: 1_weak MutableWeakAssociation
+      attributes: 
+        REMARKS: 
+    weak-association: 1_weak
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
-    association: 9_weak_self_reference MutableWeakAssociation
+      remarks: Overwritten remarks line 1
+      attributes: 
+        some tag 1: tagvalue1
+        REMARKS: Overwritten remarks line 1
+        tag2: tag value 2
+    weak-association: 9_weak_self_reference
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
-    association: SC_B8DA20C0_AFD2BA21 MutableWeakAssociation
+      attributes: 
+        REMARKS: 
+    weak-association: SC_B8DA20C0_AFD2BA21
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
   table: PUBLIC.BOOKS.COUPONS
-    association: SC_3B49BEC4_20BE6F95 MutableWeakAssociation
+    weak-association: SC_3B49BEC4_20BE6F95
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
@@ -54,67 +89,96 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.CUSTOMERS
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
-    association: FK_ΒΙΒΛΊΑ_PUBLISHERS MutableForeignKey
+    foreign-key: FK_ΒΙΒΛΊΑ_PUBLISHERS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
-    association: SC_B8DA20C0_AFD2BA21 MutableWeakAssociation
+      attributes: 
+        PK_NAME: SYS_PK_10134
+    weak-association: SC_B8DA20C0_AFD2BA21
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
   table: PUBLIC.BOOKS.BOOKAUTHORS
-    association: Z_FK_AUTHOR MutableForeignKey
+    foreign-key: Z_FK_AUTHOR
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
-    association: SYS_FK_10126 MutableForeignKey
+      attributes: 
+        PK_NAME: PK_AUTHORS
+    foreign-key: SYS_FK_10126
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+      attributes: 
+        PK_NAME: PK_BOOKS
+    weak-association: 11_same_as_fk
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
+      remarks: Overwritten foreign key remarks line 1
+      attributes: 
+        some tag 1: tagvalue1
+        REMARKS: Overwritten foreign key remarks line 1
+        tag2: tag value 2
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
-    association: FK_ΒΙΒΛΊΑ_PUBLISHERS MutableForeignKey
+    foreign-key: FK_ΒΙΒΛΊΑ_PUBLISHERS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
+      attributes: 
+        PK_NAME: SYS_PK_10134
   table: PUBLIC.BOOKS.AUTHORSLIST
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
-    association: FK_SALES_REGIONS MutableForeignKey
+    foreign-key: FK_SALES_REGIONS
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
         key sequence: 2
           PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
+      attributes: 
+        PK_NAME: PK_CUSTOMERS
   table: PUBLIC."PUBLISHER SALES".SALESDATA
-    association: FK_SALES_SALESDATA MutableForeignKey
+    foreign-key: FK_SALES_SALESDATA
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
+      attributes: 
+        PK_NAME: UQ_CUSTOMERS
   table: PUBLIC."PUBLISHER SALES".SALES
-    association: FK_SALES_BOOK MutableForeignKey
+    foreign-key: FK_SALES_BOOK
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
-    association: FK_SALES_SALESDATA MutableForeignKey
+      attributes: 
+        PK_NAME: PK_BOOKS
+    foreign-key: FK_SALES_SALESDATA
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
-    association: FK_SALES_REGIONS MutableForeignKey
+      attributes: 
+        PK_NAME: UQ_CUSTOMERS
+    foreign-key: FK_SALES_REGIONS
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
         key sequence: 2
           PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
-    association: SC_3B49BEC4_20BE6F95 MutableWeakAssociation
+      attributes: 
+        PK_NAME: PK_CUSTOMERS
+    weak-association: SC_3B49BEC4_20BE6F95
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
-    association: 8_weak_two_references MutableWeakAssociation
+    weak-association: 8_weak_two_references
       column references: 
         key sequence: 1
           PRIVATE.ALLSALES.REGIONS.POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
         key sequence: 2
           PRIVATE.ALLSALES.REGIONS.COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+      attributes: 
+        REMARKS: 
 schema: PUBLIC.SYSTEM_LOBS

@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+
+<a name="a16.16.17"></a>
+## Release 16.16.17 - 2022-06-12
+
+- Fix issue #749 - Diagram shows hanging references when columns are not displayed by the "brief" command 
+
+
 <a name="a16.16.16"></a>
 ## Release 16.16.16 - 2022-06-07
 

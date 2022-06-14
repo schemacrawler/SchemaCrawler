@@ -112,3 +112,20 @@ weak-associations:
     name: BOOKS
   column-references:
     PREVIOUSEDITIONID: ID
+# 11. Same as foreign key - add attributes and remarks
+- name: 11_same_as_fk
+  referenced-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: AUTHORS
+  referencing-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: BOOKAUTHORS
+  column-references:
+    AUTHORID: ID
+  remarks:
+  - "Overwritten foreign key remarks line 1"
+  attributes:
+    "some tag 1": tagvalue1
+    tag2: "tag value 2"

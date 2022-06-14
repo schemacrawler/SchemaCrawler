@@ -34,10 +34,14 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -83,9 +87,9 @@ public class WeakAssociationsAttributesTest {
         for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
           final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
-          printAssociations(foreignKeys, out);
+          printTableReferences("foreign-key", foreignKeys, out);
           final Collection<WeakAssociation> weakAssociations = table.getWeakAssociations();
-          printAssociations(weakAssociations, out);
+          printTableReferences("weak-association", weakAssociations, out);
         }
       }
     }
@@ -119,20 +123,32 @@ public class WeakAssociationsAttributesTest {
         getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
   }
 
-  private void printAssociations(
-      final Collection<? extends TableReference> associations, final TestWriter out) {
-    for (final TableReference association : associations) {
-      out.println(
-          "    association: "
-              + association.getName()
-              + " "
-              + association.getClass().getSimpleName());
+  private void printTableReferences(
+      final String tableReferenceType,
+      final Collection<? extends TableReference> tableReferences,
+      final TestWriter out) {
+    for (final TableReference tableReference : tableReferences) {
+      out.println("    " + tableReferenceType + ": " + tableReference.getName());
       out.println("      column references: ");
-      final List<ColumnReference> columnReferences = association.getColumnReferences();
+      final List<ColumnReference> columnReferences = tableReference.getColumnReferences();
       for (int i = 0; i < columnReferences.size(); i++) {
         final ColumnReference columnReference = columnReferences.get(i);
         out.println("        key sequence: " + (i + 1));
         out.println("          " + columnReference);
+      }
+      // Remarks
+      final String remarks = tableReference.getRemarks();
+      if (!isBlank(remarks)) {
+        out.println("      remarks: " + remarks);
+      }
+      // Attributes
+      final Map<String, Object> attributes = tableReference.getAttributes();
+      if (!attributes.isEmpty()) {
+        out.println("      attributes: ");
+        final Set<Entry<String, Object>> entrySet = attributes.entrySet();
+        for (final Entry<String, Object> entry : entrySet) {
+          out.println(String.format("        %s: %s", entry.getKey(), entry.getValue()));
+        }
       }
     }
   }
