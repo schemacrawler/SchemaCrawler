@@ -209,16 +209,16 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
         weakAssociationBuilder.addColumnReference(fkColumn, pkColumn);
       }
 
-      final TableReference tableReference =
+      final Optional<TableReference> optionalTableReference =
           weakAssociationBuilder.findOrCreate(weakAssociationAttributes.getName());
-      if (tableReference == null) {
-        continue;
-      }
 
-      tableReference.setRemarks(weakAssociationAttributes.getRemarks());
-      for (final Entry<String, String> attribute :
-          weakAssociationAttributes.getAttributes().entrySet()) {
-        tableReference.setAttribute(attribute.getKey(), attribute.getValue());
+      if (optionalTableReference.isPresent()) {
+        final TableReference tableReference = optionalTableReference.get();
+        tableReference.setRemarks(weakAssociationAttributes.getRemarks());
+        for (final Entry<String, String> attribute :
+            weakAssociationAttributes.getAttributes().entrySet()) {
+          tableReference.setAttribute(attribute.getKey(), attribute.getValue());
+        }
       }
     }
   }

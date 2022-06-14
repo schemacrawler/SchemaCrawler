@@ -153,10 +153,10 @@ public final class WeakAssociationBuilder {
     return this;
   }
 
-  public TableReference findOrCreate(final String name) {
+  public Optional<TableReference> findOrCreate(final String name) {
     if (columnReferences.isEmpty()) {
       LOGGER.log(Level.CONFIG, "Weak association not built, since there are no column references");
-      return null;
+      return Optional.empty();
     }
 
     final ColumnReference someColumnReference = columnReferences.iterator().next();
@@ -183,15 +183,25 @@ public final class WeakAssociationBuilder {
             new StringFormat(
                 "Weak association not built, since column references are not consistent, %s",
                 columnReferences));
-        return null;
+        return Optional.empty();
       }
     }
 
+    // If there is a matching foreign key, do not create a similar weak association
     final Optional<ForeignKey> optionalMatchingForeignKey =
         lookupMatchingForeignKey(weakAssociation);
     if (optionalMatchingForeignKey.isPresent()) {
-      return optionalMatchingForeignKey.get();
+      return Optional.of(optionalMatchingForeignKey.get());
+    }
+
+    // If there is a matching weak association (checked by the column references), do not create
+    // another
+    final Optional<WeakAssociation> optionalMatchingWeakAssociation =
+        lookupMatchingWeakAssociation(weakAssociation);
+    if (optionalMatchingWeakAssociation.isPresent()) {
+      return Optional.of(optionalMatchingWeakAssociation.get());
     } else {
+
       // Add weak association to tables if no matching foreign key is found
       if (referencedTable instanceof MutableTable) {
         ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
@@ -200,7 +210,7 @@ public final class WeakAssociationBuilder {
         ((MutableTable) referencingTable).addWeakAssociation(weakAssociation);
       }
 
-      return weakAssociation;
+      return Optional.of(weakAssociation);
     }
   }
 
@@ -217,6 +227,26 @@ public final class WeakAssociationBuilder {
     for (final ForeignKey foreignKey : exportedForeignKeys) {
       if (foreignKey.equals(weakAssociation)) {
         return Optional.of(foreignKey);
+      }
+    }
+
+    return Optional.empty();
+  }
+
+  private Optional<WeakAssociation> lookupMatchingWeakAssociation(
+      final WeakAssociation weakAssociation) {
+    requireNonNull(weakAssociation, "No weak association provided");
+
+    final Table referencedTable = weakAssociation.getReferencedTable();
+    if (!(referencedTable instanceof MutableTable)) {
+      return Optional.empty();
+    }
+
+    // Search weak associations by column references
+    final Collection<WeakAssociation> weakAssociations = referencedTable.getWeakAssociations();
+    for (final WeakAssociation weakAssociationInTable : weakAssociations) {
+      if (weakAssociationInTable.equals(weakAssociation)) {
+        return Optional.of(weakAssociationInTable);
       }
     }
 

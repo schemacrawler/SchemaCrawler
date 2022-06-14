@@ -27,7 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
+import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
 
 import java.beans.ConstructorProperties;
@@ -42,7 +44,7 @@ public final class CatalogAttributes extends ObjectAttributes {
   private static final long serialVersionUID = 1436642683972751860L;
 
   private final Set<TableAttributes> tables;
-  private final Set<WeakAssociationAttributes> weakAssociations;
+  private final List<WeakAssociationAttributes> weakAssociations;
   private final Set<AlternateKeyAttributes> alternateKeys;
 
   @ConstructorProperties({
@@ -58,7 +60,7 @@ public final class CatalogAttributes extends ObjectAttributes {
       final List<String> remarks,
       final Map<String, String> attributes,
       final Set<TableAttributes> tables,
-      final Set<WeakAssociationAttributes> weakAssociations,
+      final List<WeakAssociationAttributes> weakAssociations,
       final Set<AlternateKeyAttributes> alternateKeys) {
     super(name, remarks, attributes);
     if (tables == null) {
@@ -67,9 +69,9 @@ public final class CatalogAttributes extends ObjectAttributes {
       this.tables = new TreeSet<>(tables);
     }
     if (weakAssociations == null) {
-      this.weakAssociations = emptySet();
+      this.weakAssociations = emptyList();
     } else {
-      this.weakAssociations = unmodifiableSet(weakAssociations);
+      this.weakAssociations = unmodifiableList(weakAssociations);
     }
     if (alternateKeys == null) {
       this.alternateKeys = emptySet();
@@ -86,7 +88,7 @@ public final class CatalogAttributes extends ObjectAttributes {
     return tables;
   }
 
-  public Set<WeakAssociationAttributes> getWeakAssociations() {
+  public List<WeakAssociationAttributes> getWeakAssociations() {
     return weakAssociations;
   }
 }

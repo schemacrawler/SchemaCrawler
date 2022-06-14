@@ -29,11 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresent;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -53,6 +55,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -73,6 +76,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
@@ -87,6 +91,7 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
@@ -769,6 +774,21 @@ public class SchemaCrawlerTest {
             new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "PREVIOUSEDITIONID"),
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "ID"));
     builder.findOrCreate("10_weak_partial_self_reference");
+    // 11. Duplicate weak association (not built)
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(fkColumn), new WeakAssociationColumn(pkColumn));
+    builder.findOrCreate("1_weak_duplicate");
+    // 12. Same as foreign key
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(
+            new SchemaReference("PUBLIC", "BOOKS"), "BOOKAUTHORS", "AUTHORID"),
+        new WeakAssociationColumn(pkColumn));
+    final Optional<TableReference> optionalTableRef = builder.findOrCreate("12_same_as_fk");
+    assertThat(optionalTableRef, isPresent());
+    assertThat(optionalTableRef.get(), instanceOf(ForeignKey.class));
+    assertThat(optionalTableRef.get().getName(), is("Z_FK_AUTHOR"));
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
