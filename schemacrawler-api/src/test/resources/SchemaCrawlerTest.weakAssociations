@@ -24,7 +24,7 @@ schema: PUBLIC.BOOKS
     weak association: 9_weak_self_reference
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC.BOOKS.BOOKS.OTHEREDITIONID --> PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS

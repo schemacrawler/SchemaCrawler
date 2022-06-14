@@ -12,11 +12,6 @@ weak-associations:
     name: BOOKS
   column-references:
     ID: ID
-  remarks:
-  - "Overwritten remarks line 1"
-  attributes:
-    "some tag 1": tagvalue1
-    tag2: "tag value 2"
 # 2. Partial foreign key
 - name: 2_weak_partial_fk
   referenced-table:
@@ -99,7 +94,7 @@ weak-associations:
     schema: BOOKS
     name: BOOKS
   column-references:
-    PREVIOUSEDITIONID: ID
+    OTHEREDITIONID: ID
 # 10. Self-reference to partial table (not built)
 - name: 10_weak_partial_self_reference
   referenced-table:
@@ -112,8 +107,25 @@ weak-associations:
     name: BOOKS
   column-references:
     PREVIOUSEDITIONID: ID
-# 11. Same as foreign key - add attributes and remarks
-- name: 11_same_as_fk
+# 11. Duplicate weak association (not built, but overwrite remarks for 1_weak)
+- name: 1_weak_duplicate
+  referenced-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: AUTHORS
+  referencing-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: BOOKS
+  column-references:
+    ID: ID
+  remarks:
+  - "Overwritten remarks line 1"
+  attributes:
+    "some tag 1": tagvalue1
+    tag2: "tag value 2"    
+# 12. Same as foreign key (not built, but overwrite remarks for Z_FK_AUTHOR)
+- name: 12_same_as_fk
   referenced-table:
     catalog: PUBLIC
     schema: BOOKS

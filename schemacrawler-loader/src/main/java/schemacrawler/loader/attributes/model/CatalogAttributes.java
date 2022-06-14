@@ -27,23 +27,21 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
-import static java.util.Collections.emptySet;
-import static java.util.Collections.unmodifiableSet;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
 
 import java.beans.ConstructorProperties;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 public final class CatalogAttributes extends ObjectAttributes {
 
   private static final long serialVersionUID = 1436642683972751860L;
 
-  private final Set<TableAttributes> tables;
-  private final Set<WeakAssociationAttributes> weakAssociations;
-  private final Set<AlternateKeyAttributes> alternateKeys;
+  private final List<TableAttributes> tables;
+  private final List<WeakAssociationAttributes> weakAssociations;
+  private final List<AlternateKeyAttributes> alternateKeys;
 
   @ConstructorProperties({
     "name",
@@ -57,36 +55,36 @@ public final class CatalogAttributes extends ObjectAttributes {
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
-      final Set<TableAttributes> tables,
-      final Set<WeakAssociationAttributes> weakAssociations,
-      final Set<AlternateKeyAttributes> alternateKeys) {
+      final List<TableAttributes> tables,
+      final List<WeakAssociationAttributes> weakAssociations,
+      final List<AlternateKeyAttributes> alternateKeys) {
     super(name, remarks, attributes);
     if (tables == null) {
-      this.tables = Collections.emptySet();
+      this.tables = Collections.emptyList();
     } else {
-      this.tables = new TreeSet<>(tables);
+      this.tables = unmodifiableList(tables);
     }
     if (weakAssociations == null) {
-      this.weakAssociations = emptySet();
+      this.weakAssociations = emptyList();
     } else {
-      this.weakAssociations = unmodifiableSet(weakAssociations);
+      this.weakAssociations = unmodifiableList(weakAssociations);
     }
     if (alternateKeys == null) {
-      this.alternateKeys = emptySet();
+      this.alternateKeys = emptyList();
     } else {
-      this.alternateKeys = unmodifiableSet(alternateKeys);
+      this.alternateKeys = unmodifiableList(alternateKeys);
     }
   }
 
-  public Set<AlternateKeyAttributes> getAlternateKeys() {
+  public List<AlternateKeyAttributes> getAlternateKeys() {
     return alternateKeys;
   }
 
-  public Set<TableAttributes> getTables() {
+  public List<TableAttributes> getTables() {
     return tables;
   }
 
-  public Set<WeakAssociationAttributes> getWeakAssociations() {
+  public List<WeakAssociationAttributes> getWeakAssociations() {
     return weakAssociations;
   }
 }
