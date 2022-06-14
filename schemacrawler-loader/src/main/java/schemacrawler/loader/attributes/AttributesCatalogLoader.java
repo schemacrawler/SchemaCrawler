@@ -49,7 +49,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociation;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
@@ -209,16 +209,16 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
         weakAssociationBuilder.addColumnReference(fkColumn, pkColumn);
       }
 
-      final WeakAssociation weakAssociation =
-          weakAssociationBuilder.build(weakAssociationAttributes.getName());
-      if (weakAssociation == null) {
+      final TableReference tableReference =
+          weakAssociationBuilder.findOrCreate(weakAssociationAttributes.getName());
+      if (tableReference == null) {
         continue;
       }
 
-      weakAssociation.setRemarks(weakAssociationAttributes.getRemarks());
+      tableReference.setRemarks(weakAssociationAttributes.getRemarks());
       for (final Entry<String, String> attribute :
           weakAssociationAttributes.getAttributes().entrySet()) {
-        weakAssociation.setAttribute(attribute.getKey(), attribute.getValue());
+        tableReference.setAttribute(attribute.getKey(), attribute.getValue());
       }
     }
   }

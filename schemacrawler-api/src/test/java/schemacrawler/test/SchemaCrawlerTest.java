@@ -676,6 +676,7 @@ public class SchemaCrawlerTest {
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
+  /** Keep in sync with {@link WeakAssociationsAttributesTest#weakAssociations() LabelName} */
   @Test
   public void weakAssociations(final TestContext testContext) throws Exception {
 
@@ -697,30 +698,30 @@ public class SchemaCrawlerTest {
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(fkColumn), new WeakAssociationColumn(pkColumn));
-    builder.build("1_weak");
+    builder.findOrCreate("1_weak");
     // 2. Partial foreign key
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(
             new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"),
         new WeakAssociationColumn(pkColumn));
-    builder.build("2_weak_partial_fk");
+    builder.findOrCreate("2_weak_partial_fk");
     // 3. Partial primary key
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(fkColumn),
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "ID"));
-    builder.build("3_weak_partial_pk");
+    builder.findOrCreate("3_weak_partial_pk");
     // 4. Partial both (not built)
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(
             new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"),
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"));
-    builder.build("4_weak_partial_both");
+    builder.findOrCreate("4_weak_partial_both");
     // 5. No column references (not built)
     builder.clear();
-    builder.build("5_weak_no_references");
+    builder.findOrCreate("5_weak_no_references");
     // 6. Multiple tables in play (not built)
     builder.clear();
     builder.addColumnReference(
@@ -730,7 +731,7 @@ public class SchemaCrawlerTest {
     builder.addColumnReference(
         new WeakAssociationColumn(fkColumn),
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"));
-    builder.build("6_weak_conflicting");
+    builder.findOrCreate("6_weak_conflicting");
     // 7. Duplicate column references (only one column reference built)
     builder.clear();
     builder.addColumnReference(
@@ -741,7 +742,7 @@ public class SchemaCrawlerTest {
         new WeakAssociationColumn(
             new SchemaReference("PRIVATE", "LIBRARY"), "MAGAZINEARTICLES", "AUTHORID"),
         new WeakAssociationColumn(pkColumn));
-    builder.build("7_weak_duplicate");
+    builder.findOrCreate("7_weak_duplicate");
     // 8. Two column references
     builder.clear();
     builder.addColumnReference(
@@ -753,21 +754,21 @@ public class SchemaCrawlerTest {
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "COUNTRY"),
         new WeakAssociationColumn(
             new SchemaReference("PUBLIC", "PUBLISHER SALES"), "SALES", "COUNTRY"));
-    builder.build("8_weak_two_references");
+    builder.findOrCreate("8_weak_two_references");
     // 9. Self-reference
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(
-            new SchemaReference("PUBLIC", "BOOKS"), "BOOKS", "PREVIOUSEDITIONID"),
+            new SchemaReference("PUBLIC", "BOOKS"), "BOOKS", "OTHEREDITIONID"),
         new WeakAssociationColumn(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS", "ID"));
-    builder.build("9_weak_self_reference");
+    builder.findOrCreate("9_weak_self_reference");
     // 10. Self-reference in partial table (not built)
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(
             new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "PREVIOUSEDITIONID"),
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "ID"));
-    builder.build("10_weak_partial_self_reference");
+    builder.findOrCreate("10_weak_partial_self_reference");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

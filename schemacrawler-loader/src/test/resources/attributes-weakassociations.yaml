@@ -99,7 +99,7 @@ weak-associations:
     schema: BOOKS
     name: BOOKS
   column-references:
-    PREVIOUSEDITIONID: ID
+    OTHEREDITIONID: ID
 # 10. Self-reference to partial table (not built)
 - name: 10_weak_partial_self_reference
   referenced-table:
@@ -113,6 +113,7 @@ weak-associations:
   column-references:
     PREVIOUSEDITIONID: ID
 # 11. Same as foreign key - add attributes and remarks
+# Overwrite remarks for Z_FK_AUTHOR
 - name: 11_same_as_fk
   referenced-table:
     catalog: PUBLIC

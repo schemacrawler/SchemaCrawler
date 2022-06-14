@@ -35,15 +35,18 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.WeakAssociation;
 import us.fatehi.utility.string.StringFormat;
 
@@ -86,8 +89,7 @@ public final class WeakAssociationBuilder {
     }
   }
 
-  private static final Logger LOGGER =
-      Logger.getLogger(WeakAssociationBuilder.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(WeakAssociationBuilder.class.getName());
 
   public static WeakAssociationBuilder builder(final Catalog catalog) {
     return new WeakAssociationBuilder(catalog);
@@ -141,11 +143,17 @@ public final class WeakAssociationBuilder {
     return this;
   }
 
-  public WeakAssociation build() {
-    return build(null);
+  public void build() {
+    findOrCreate(null);
   }
 
-  public WeakAssociation build(final String name) {
+  public WeakAssociationBuilder clear() {
+    columnReferences.clear();
+    LOGGER.log(Level.FINER, new StringFormat("Builder <%s> cleared", hashCode()));
+    return this;
+  }
+
+  public TableReference findOrCreate(final String name) {
     if (columnReferences.isEmpty()) {
       LOGGER.log(Level.CONFIG, "Weak association not built, since there are no column references");
       return null;
@@ -179,19 +187,39 @@ public final class WeakAssociationBuilder {
       }
     }
 
-    if (referencedTable instanceof MutableTable) {
-      ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
-    }
-    if (referencingTable instanceof MutableTable) {
-      ((MutableTable) referencingTable).addWeakAssociation(weakAssociation);
-    }
+    final Optional<ForeignKey> optionalMatchingForeignKey =
+        lookupMatchingForeignKey(weakAssociation);
+    if (optionalMatchingForeignKey.isPresent()) {
+      return optionalMatchingForeignKey.get();
+    } else {
+      // Add weak association to tables if no matching foreign key is found
+      if (referencedTable instanceof MutableTable) {
+        ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
+      }
+      if (referencingTable instanceof MutableTable) {
+        ((MutableTable) referencingTable).addWeakAssociation(weakAssociation);
+      }
 
-    return weakAssociation;
+      return weakAssociation;
+    }
   }
 
-  public WeakAssociationBuilder clear() {
-    columnReferences.clear();
-    LOGGER.log(Level.FINER, new StringFormat("Builder <%s> cleared", hashCode()));
-    return this;
+  private Optional<ForeignKey> lookupMatchingForeignKey(final WeakAssociation weakAssociation) {
+    requireNonNull(weakAssociation, "No weak association provided");
+
+    final Table referencedTable = weakAssociation.getReferencedTable();
+    if (!(referencedTable instanceof MutableTable)) {
+      return Optional.empty();
+    }
+
+    // Search foreign keys by column references
+    final Collection<ForeignKey> exportedForeignKeys = referencedTable.getExportedForeignKeys();
+    for (final ForeignKey foreignKey : exportedForeignKeys) {
+      if (foreignKey.equals(weakAssociation)) {
+        return Optional.of(foreignKey);
+      }
+    }
+
+    return Optional.empty();
   }
 }

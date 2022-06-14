@@ -46,6 +46,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
@@ -70,13 +71,40 @@ import schemacrawler.tools.options.Config;
 
 @WithTestDatabase
 @ResolveTestContext
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(Lifecycle.PER_CLASS)
 public class WeakAssociationsAttributesTest {
 
   private Catalog catalog;
 
+  @BeforeAll
+  public void loadCatalog(final TestContext testContext, final Connection connection)
+      throws Exception {
+
+    System.out.println(testContext);
+
+    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final Config additionalConfig = new Config();
+    additionalConfig.put("weak-associations", Boolean.TRUE);
+    additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
+
+    catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+  }
+
+  /** Keep in sync with {@link SchemaCrawlerTest#weakAssociations() LabelName} */
   @Test
-  public void associations(final TestContext testContext) throws Exception {
+  public void weakAssociations(final TestContext testContext) throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
@@ -95,32 +123,6 @@ public class WeakAssociationsAttributesTest {
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-  }
-
-  @BeforeAll
-  public void loadCatalog(final Connection connection) throws Exception {
-
-    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
-
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-            .includeAllSynonyms()
-            .includeAllSequences()
-            .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final Config additionalConfig = new Config();
-    additionalConfig.put("weak-associations", Boolean.TRUE);
-    additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
-
-    catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
   }
 
   private void printTableReferences(
