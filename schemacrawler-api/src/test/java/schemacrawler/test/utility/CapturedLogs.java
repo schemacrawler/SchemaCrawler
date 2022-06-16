@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
+import java.util.regex.Pattern;
 
 public class CapturedLogs extends Handler implements Iterable<LogRecord> {
 
@@ -48,6 +50,15 @@ public class CapturedLogs extends Handler implements Iterable<LogRecord> {
   @Override
   public void close() {}
 
+  public boolean contains(final Level level, final Pattern pattern) {
+    for (final LogRecord logRecord : logs) {
+      if (logRecord.getLevel().equals(level) && pattern.matcher(logRecord.getMessage()).matches()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @Override
   public void flush() {}
 
@@ -59,9 +70,5 @@ public class CapturedLogs extends Handler implements Iterable<LogRecord> {
   @Override
   public void publish(final LogRecord record) {
     logs.add(record);
-  }
-
-  public int size() {
-    return logs.size();
   }
 }
