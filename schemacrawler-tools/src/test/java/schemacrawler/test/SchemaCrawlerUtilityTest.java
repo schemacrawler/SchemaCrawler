@@ -35,10 +35,13 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
@@ -78,6 +81,15 @@ public class SchemaCrawlerUtilityTest {
             InternalRuntimeException.class,
             () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
     assertThat(exception.getMessage(), containsString("hsqldb"));
+  }
+
+  @Test
+  public void getResultsColumns() throws Exception {
+    final ResultSet results = mock(ResultSet.class);
+    when(results.getMetaData()).thenThrow(SQLException.class);
+
+    assertThrows(
+        DatabaseAccessException.class, () -> SchemaCrawlerUtility.getResultsColumns(results));
   }
 
   @Test
