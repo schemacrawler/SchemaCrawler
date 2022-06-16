@@ -50,6 +50,8 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.test.utility.CaptureLogs;
+import schemacrawler.test.utility.CapturedLogs;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
@@ -59,11 +61,13 @@ public class SchemaCrawlerUtilityTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void getCatalog(final Connection connection) throws Exception {
+  @CaptureLogs
+  public void getCatalog(final Connection connection, final CapturedLogs logs) throws Exception {
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions());
     assertThat(catalog, is(not(nullValue())));
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, arrayWithSize(6));
+    assertThat("Incorrect number of log records", logs.size(), is(75));
   }
 
   @Test
