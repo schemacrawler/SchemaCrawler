@@ -135,7 +135,12 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return -1;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * IMPORTANT: This method is unstable until the table reference is fully built, since it uses
+   * column references.
+   *
+   * <p>{@inheritDoc}
+   */
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -191,7 +196,12 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return getName();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * IMPORTANT: This method is unstable until the table reference is fully built, since it uses
+   * column references.
+   *
+   * <p>{@inheritDoc}
+   */
   @Override
   public int hashCode() {
     return hash(columnReferences);
