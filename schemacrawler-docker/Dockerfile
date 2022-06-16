@@ -24,7 +24,7 @@
 #
 # ========================================================================
 
-FROM openjdk:17-jdk-alpine
+FROM eclipse-temurin:11-alpine
 
 LABEL \
   "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \
