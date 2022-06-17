@@ -13,5 +13,6 @@
                             available, or defaults to 5432
       --server=<server>   --server=postgresql
                           Loads SchemaCrawler plug-in for PostgreSQL
+Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

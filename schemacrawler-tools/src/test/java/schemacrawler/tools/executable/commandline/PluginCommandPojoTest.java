@@ -173,7 +173,7 @@ public class PluginCommandPojoTest {
     assertThat(pluginCommand.getHelpFooter().get(), is(arrayContaining(standardFooter)));
     assertThat(pluginCommand.getOptions(), contains(option));
     assertThat(pluginCommand.hasHelpDescription(), is(false));
-    assertThat(pluginCommand.hasHelpFooter(), is(false));
+    assertThat(pluginCommand.hasHelpFooter(), is(true));
     assertThat(pluginCommand.isEmpty(), is(false));
     for (final PluginCommandOption pluginCommandOption : pluginCommand) {
       assertThat(pluginCommandOption, is(option));

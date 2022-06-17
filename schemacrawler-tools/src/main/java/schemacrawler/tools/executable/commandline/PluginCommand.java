@@ -153,7 +153,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public boolean hasHelpFooter() {
-    return helpFooter != null;
+    return helpFooter != null || type != PluginCommandType.unknown;
   }
 
   public boolean isEmpty() {

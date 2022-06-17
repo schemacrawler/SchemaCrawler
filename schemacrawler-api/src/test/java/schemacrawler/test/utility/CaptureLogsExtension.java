@@ -83,11 +83,15 @@ final class CaptureLogsExtension
     for (final String loggerName : loggerNames) {
       final Logger logger = logManager.getLogger(loggerName);
       if (logger != null) {
-        logger.setLevel(logLevel);
         for (final Handler handler : logger.getHandlers()) {
           logger.removeHandler(handler);
         }
-        logger.addHandler(logs);
+        if (loggerName.startsWith("schemacrawler.") || loggerName.startsWith("us.fatehi.")) {
+          logger.setLevel(logLevel);
+          logger.addHandler(logs);
+        } else {
+          logger.setLevel(Level.OFF);
+        }
       }
     }
 
