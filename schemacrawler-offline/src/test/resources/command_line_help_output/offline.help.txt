@@ -8,5 +8,6 @@
       --server=<server>   --server=offline
                           Loads SchemaCrawler plug-in for offline catalog
                             snapshots
+Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

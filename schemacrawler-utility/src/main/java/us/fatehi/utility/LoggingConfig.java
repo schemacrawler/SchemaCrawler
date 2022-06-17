@@ -71,7 +71,14 @@ public final class LoggingConfig {
           } catch (final UnsupportedEncodingException e) {
             // Ignore exception
           }
-          handler.setLevel(logLevel);
+          try {
+            handler.setLevel(logLevel);
+            if (logLevel == Level.OFF) {
+              logger.removeHandler(handler);
+            }
+          } catch (final Exception e) {
+            // Ignore exception
+          }
         }
       }
     }

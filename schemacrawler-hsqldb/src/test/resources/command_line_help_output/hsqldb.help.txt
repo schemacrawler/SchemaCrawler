@@ -8,5 +8,6 @@
                           Optional, defaults to 9001
       --server=<server>   --server=hsqldb
                           Loads SchemaCrawler plug-in for HyperSQL
+Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

@@ -17,5 +17,6 @@
                             command-line
                           See https://www.schemacrawler.com/database-support.
                             html
+Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

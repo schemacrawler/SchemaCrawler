@@ -11,5 +11,6 @@
                           Optional, defaults to 1521
       --server=<server>   --server=oracle
                           Loads SchemaCrawler plug-in for Oracle
+Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

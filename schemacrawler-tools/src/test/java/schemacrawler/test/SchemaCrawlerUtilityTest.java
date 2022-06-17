@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static java.util.regex.Pattern.DOTALL;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
@@ -35,10 +36,15 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
@@ -47,6 +53,8 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.test.utility.CaptureLogs;
+import schemacrawler.test.utility.CapturedLogs;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
@@ -56,11 +64,14 @@ public class SchemaCrawlerUtilityTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void getCatalog(final Connection connection) throws Exception {
+  @CaptureLogs
+  public void getCatalog(final Connection connection, final CapturedLogs logs) throws Exception {
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions());
     assertThat(catalog, is(not(nullValue())));
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, arrayWithSize(6));
+    assertThat(
+        logs.contains(Level.INFO, Pattern.compile("Connected to.*HSQL.*", DOTALL)), is(true));
   }
 
   @Test
@@ -78,6 +89,15 @@ public class SchemaCrawlerUtilityTest {
             InternalRuntimeException.class,
             () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
     assertThat(exception.getMessage(), containsString("hsqldb"));
+  }
+
+  @Test
+  public void getResultsColumns() throws Exception {
+    final ResultSet results = mock(ResultSet.class);
+    when(results.getMetaData()).thenThrow(SQLException.class);
+
+    assertThrows(
+        DatabaseAccessException.class, () -> SchemaCrawlerUtility.getResultsColumns(results));
   }
 
   @Test

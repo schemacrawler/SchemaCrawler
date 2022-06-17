@@ -6,5 +6,6 @@
       --port=<port>       Should be omitted
       --server=<server>   --server=sqlite
                           Loads SchemaCrawler plug-in for SQLite
+Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

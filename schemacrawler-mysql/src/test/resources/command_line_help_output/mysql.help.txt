@@ -8,5 +8,6 @@
                           Optional, defaults to 3306
       --server=<server>   --server=mysql
                           Loads SchemaCrawler plug-in for MySQL
+Add connection options to the `connect` command in the SchemaCrawler Shell
 
 
