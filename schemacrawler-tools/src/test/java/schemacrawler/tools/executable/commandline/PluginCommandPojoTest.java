@@ -29,6 +29,12 @@ package schemacrawler.tools.executable.commandline;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.jupiter.api.Test;
 
@@ -44,14 +50,84 @@ import nl.jqno.equalsverifier.Warning;
 public class PluginCommandPojoTest {
 
   @Test
+  public void emptyCommand() {
+
+    final PluginCommand pluginCommand = PluginCommand.empty();
+    assertThat(pluginCommand.toString(), is("PluginCommand[name='null', options=[]]"));
+    assertThat(pluginCommand.getName(), is(nullValue()));
+    assertThat(pluginCommand.getHelpHeader(), is(nullValue()));
+    assertThat(pluginCommand.getHelpDescription(), is(nullValue()));
+    assertThat(pluginCommand.getHelpFooter().get(), is(arrayWithSize(0)));
+    assertThat(pluginCommand.getOptions(), is(empty()));
+    assertThat(pluginCommand.hasHelpDescription(), is(false));
+    assertThat(pluginCommand.hasHelpFooter(), is(false));
+    assertThat(pluginCommand.isEmpty(), is(true));
+  }
+
+  @Test
+  public void newCatalogLoaderCommand() {
+    final PluginCommand pluginCommand = PluginCommand.newCatalogLoaderCommand("name", "helpHeader");
+    pluginCommand.addOption("option1", Object.class, "helpOption1", "helpOption2");
+    assertPluginCommandValues(
+        pluginCommand, "Add loader options to the `load` command in the SchemaCrawler Shell");
+  }
+
+  @Test
+  public void newDatabasePluginCommand() {
+    final PluginCommand pluginCommand =
+        PluginCommand.newDatabasePluginCommand("name", "helpHeader");
+    pluginCommand.addOption("option1", Object.class, "helpOption1", "helpOption2");
+    assertPluginCommandValues(
+        pluginCommand,
+        "Add connection options to the `connect` command in the SchemaCrawler Shell");
+  }
+
+  @Test
+  public void newPluginCommand() {
+    final PluginCommand pluginCommand = PluginCommand.newPluginCommand("name", "helpHeader");
+    pluginCommand.addOption("option1", Object.class, "helpOption1", "helpOption2");
+    assertPluginCommandValues(
+        pluginCommand, "Add command options to the `execute` command in the SchemaCrawler Shell");
+  }
+
+  @Test
   public void pluginCommand() {
     EqualsVerifier.forClass(PluginCommand.class)
         .suppress(Warning.STRICT_INHERITANCE)
         .withOnlyTheseFields("name")
         .verify();
 
-    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand("name", "helpText");
+    final PluginCommand pluginCommand =
+        PluginCommand.newDatabasePluginCommand("name", "helpHeader");
     assertThat(pluginCommand.toString(), is("PluginCommand[name='name', options=[]]"));
+  }
+
+  @Test
+  public void pluginCommandExtraMethods() {
+
+    final PluginCommand pluginCommand =
+        PluginCommand.newPluginCommand(
+            "name",
+            "helpHeader",
+            () -> new String[] {"helpDescription1", "helpDescription2"},
+            () -> new String[] {"helpFooter1", "helpFooter2"});
+    assertThat(pluginCommand.toString(), is("PluginCommand[name='name', options=[]]"));
+    assertThat(pluginCommand.getName(), endsWith(":name"));
+    assertThat(pluginCommand.getHelpHeader(), is("helpHeader"));
+    assertThat(
+        pluginCommand.getHelpDescription().get(),
+        is(arrayContaining("helpDescription1", "helpDescription2")));
+    assertThat(
+        pluginCommand.getHelpFooter().get(),
+        is(
+            arrayContaining(
+                "helpFooter1",
+                "helpFooter2",
+                "Add command options to the `execute` command in the SchemaCrawler Shell")));
+    assertThat(pluginCommand.getOptions(), is(empty()));
+    assertThat(pluginCommand.hasHelpDescription(), is(true));
+    assertThat(pluginCommand.hasHelpFooter(), is(true));
+    assertThat(pluginCommand.isEmpty(), is(false));
   }
 
   @Test
@@ -71,5 +147,36 @@ public class PluginCommandPojoTest {
         pluginCommandOption.toString(),
         is(
             "PluginCommandOption[name='name', valueClass=schemacrawler.tools.executable.commandline.PluginCommandPojoTest]"));
+  }
+
+  @Test
+  public void pluginCommandOptionEmpty() {
+    final PluginCommandOption pluginCommandOption =
+        new PluginCommandOption("option1", (Class<?>) null, (String[]) null);
+    assertThat(pluginCommandOption.getValueClass(), is(String.class));
+    assertThat(pluginCommandOption.getHelpText(), is(arrayWithSize(0)));
+  }
+
+  private void assertPluginCommandValues(
+      final PluginCommand pluginCommand, final String standardFooter) {
+
+    final PluginCommandOption option =
+        new PluginCommandOption("option1", Object.class, "helpOption1", "helpOption2");
+
+    assertThat(
+        pluginCommand.toString(),
+        is(
+            "PluginCommand[name='name', options=[PluginCommandOption[name='option1', valueClass=java.lang.Object]]]"));
+    assertThat(pluginCommand.getName(), endsWith(":name"));
+    assertThat(pluginCommand.getHelpHeader(), is("helpHeader"));
+    assertThat(pluginCommand.getHelpDescription(), is(nullValue()));
+    assertThat(pluginCommand.getHelpFooter().get(), is(arrayContaining(standardFooter)));
+    assertThat(pluginCommand.getOptions(), contains(option));
+    assertThat(pluginCommand.hasHelpDescription(), is(false));
+    assertThat(pluginCommand.hasHelpFooter(), is(false));
+    assertThat(pluginCommand.isEmpty(), is(false));
+    for (final PluginCommandOption pluginCommandOption : pluginCommand) {
+      assertThat(pluginCommandOption, is(option));
+    }
   }
 }

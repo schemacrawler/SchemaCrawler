@@ -75,7 +75,6 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   private final PluginCommandType type;
-
   private final Supplier<String[]> helpDescription;
   private final String helpHeader;
   private final String name;
@@ -92,9 +91,6 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     this.type = requireNonNull(type, "No plugin command type provided");
     this.options = new ArrayList<>();
 
-    if (isBlank(name) && !this.options.isEmpty()) {
-      throw new IllegalArgumentException("No command name provided");
-    }
     this.name = name;
 
     if (isBlank(helpHeader)) {
@@ -111,9 +107,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   public PluginCommand addOption(
       final String name, final Class<?> valueClass, final String... helpText) {
     final PluginCommandOption option = new PluginCommandOption(name, valueClass, helpText);
-    if (option != null) {
-      options.add(option);
-    }
+    options.add(option);
     return this;
   }
 
@@ -159,7 +153,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public boolean hasHelpFooter() {
-    return !(helpFooter == null && type == server);
+    return helpFooter != null;
   }
 
   public boolean isEmpty() {
@@ -195,9 +189,9 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
         newFooter.add("Add loader options to the `load` command in the SchemaCrawler Shell");
         break;
       case server:
-        newFooter.add("Add loader options to the `connect` command in the SchemaCrawler Shell");
+        newFooter.add("Add connection options to the `connect` command in the SchemaCrawler Shell");
         break;
-        
+
       default:
         break;
     }
