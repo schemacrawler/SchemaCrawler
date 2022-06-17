@@ -58,6 +58,7 @@ public class DatabaseConnectorRegistryTest {
 
     assertThat(databaseServerTypes, hasSize(1));
     assertThat(databaseConnectorRegistry.hasDatabaseSystemIdentifier("test-db"), is(true));
+    assertThat(databaseConnectorRegistry.getHelpCommands(), hasSize(1));
 
     final DatabaseConnector testDbConnector =
         databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier("test-db");
@@ -73,8 +74,22 @@ public class DatabaseConnectorRegistryTest {
   }
 
   @Test
-  public void databaseConnectorRegistryUnknown() {
-    final DatabaseServerType databaseServerType =
+  public void findDatabaseConnectorFromUrl() {
+    DatabaseServerType databaseServerType;
+
+    databaseServerType =
+        databaseConnectorRegistry
+            .findDatabaseConnectorFromUrl("jdbc:test-db:something")
+            .getDatabaseServerType();
+    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("test-db"));
+
+    databaseServerType =
+        databaseConnectorRegistry
+            .findDatabaseConnectorFromUrl("jdbc:other-db:something")
+            .getDatabaseServerType();
+    assertThat(databaseServerType, is(DatabaseServerType.UNKNOWN));
+
+    databaseServerType =
         databaseConnectorRegistry.findDatabaseConnectorFromUrl(null).getDatabaseServerType();
     assertThat(databaseServerType, is(DatabaseServerType.UNKNOWN));
   }
