@@ -12,7 +12,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
-import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
+import static schemacrawler.test.utility.CommandlineTestUtility.executeCommandInTest;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
@@ -40,7 +40,7 @@ public class LimitCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
-        () -> runCommandInTest(new LimitCommand(state), args));
+        () -> executeCommandInTest(new LimitCommand(state), args));
   }
 
   @Test
@@ -152,14 +152,14 @@ public class LimitCommandTest {
   }
 
   @Test
-  public void noValidArgs() {
+  public void noValidArgs() throws Throwable {
     final String[] args = {"--some-option"};
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    runCommandInTest(new LimitCommand(state), args);
+    executeCommandInTest(new LimitCommand(state), args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));

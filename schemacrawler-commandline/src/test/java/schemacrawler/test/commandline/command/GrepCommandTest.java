@@ -3,7 +3,7 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
+import static schemacrawler.test.utility.CommandlineTestUtility.executeCommandInTest;
 
 import java.util.regex.Pattern;
 
@@ -20,7 +20,7 @@ import schemacrawler.tools.commandline.state.ShellState;
 public class GrepCommandTest {
 
   @Test
-  public void allArgs() {
+  public void allArgs() throws Throwable {
     final String[] args = {
       "--grep-columns",
       "new.*pattern[1-3]",
@@ -37,7 +37,7 @@ public class GrepCommandTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    runCommandInTest(new GrepCommand(state), args);
+    executeCommandInTest(new GrepCommand(state), args);
 
     final GrepOptions grepOptions = state.getSchemaCrawlerOptions().getGrepOptions();
     assertThat(grepOptions.isGrepColumns(), is(true));
@@ -67,7 +67,8 @@ public class GrepCommandTest {
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
-        CommandLine.ParameterException.class, () -> runCommandInTest(new GrepCommand(state), args));
+        CommandLine.ParameterException.class,
+        () -> executeCommandInTest(new GrepCommand(state), args));
   }
 
   @Test
@@ -80,18 +81,19 @@ public class GrepCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     assertThrows(
-        CommandLine.ParameterException.class, () -> runCommandInTest(new GrepCommand(state), args));
+        CommandLine.ParameterException.class,
+        () -> executeCommandInTest(new GrepCommand(state), args));
   }
 
   @Test
-  public void noArgs() {
+  public void noArgs() throws Throwable {
     final String[] args = new String[0];
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    runCommandInTest(new GrepCommand(state), args);
+    executeCommandInTest(new GrepCommand(state), args);
 
     final GrepOptions grepOptions = schemaCrawlerOptions.getGrepOptions();
     assertThat(grepOptions.isGrepColumns(), is(false));
@@ -101,14 +103,14 @@ public class GrepCommandTest {
   }
 
   @Test
-  public void noValidArgs() {
+  public void noValidArgs() throws Throwable {
     final String[] args = {"--some-option"};
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    runCommandInTest(new GrepCommand(state), args);
+    executeCommandInTest(new GrepCommand(state), args);
 
     final GrepOptions grepOptions = schemaCrawlerOptions.getGrepOptions();
     assertThat(grepOptions.isGrepColumns(), is(false));
