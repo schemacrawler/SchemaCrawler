@@ -50,6 +50,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -89,7 +90,8 @@ public class TableExtRetrieverTest {
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve view column privileges")
+  @DisplayName("Retrieve column privileges")
+  @Disabled("Allow for retrieval strategy for column privileges")
   public void columnPrivileges(final Connection connection, final TestContext testContext)
       throws Exception {
 
