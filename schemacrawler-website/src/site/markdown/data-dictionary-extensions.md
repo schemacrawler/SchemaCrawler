@@ -133,6 +133,16 @@ For details on the columns in this view, please refer to [getTables](https://doc
 For details on the columns in this view, please refer to [getColumns](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getColumns-java.lang.String-java.lang.String-java.lang.String-java.lang.String-)
 
 
+### DATABASE_METADATA.TABLE_PRIVILEGES
+
+For details on the columns in this view, please refer to [getTablePrivileges](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getTablePrivileges-java.lang.String-java.lang.String-java.lang.String-)
+
+
+### DATABASE_METADATA.TABLE_COLUMN_PRIVILEGES
+
+For details on the columns in this view, please refer to [getColumnPrivileges](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getColumnPrivileges-java.lang.String-java.lang.String-java.lang.String-java.lang.String-)
+
+
 ### DATABASE_METADATA.FOREIGN_KEYS
 
 For details on the columns in this view, please refer to [getImportedKeys](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getImportedKeys-java.lang.String-java.lang.String-java.lang.String-)
