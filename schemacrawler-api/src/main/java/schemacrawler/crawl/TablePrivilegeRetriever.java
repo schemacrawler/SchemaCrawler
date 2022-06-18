@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
+
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -51,24 +54,39 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
   }
 
   void retrieveTableColumnPrivileges() throws SQLException {
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData().getColumnPrivileges(null, null, null, null),
-            "DatabaseMetaData::getColumnPrivileges")) {
-      createPrivileges(results, true);
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:" + e.getMessage());
+    switch (getRetrieverConnection().get(tableColumnPrivilegesRetrievalStrategy)) {
+      case data_dictionary_all:
+        LOGGER.log(
+            Level.INFO, "Retrieving column privileges, using fast data dictionary retrieval");
+        retrieveTableColumnPrivilegesFromDataDictionary();
+        break;
+
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving column privileges from metadata");
+        retrieveTableColumnPrivilegesFromMetadata();
+        break;
+
+      default:
+        LOGGER.log(Level.INFO, "Not retrieving tables");
+        break;
     }
   }
 
   void retrieveTablePrivileges() throws SQLException {
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData().getTablePrivileges(null, null, null),
-            "DatabaseMetaData::getTablePrivileges")) {
-      createPrivileges(results, false);
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
+    switch (getRetrieverConnection().get(tablePrivilegesRetrievalStrategy)) {
+      case data_dictionary_all:
+        LOGGER.log(Level.INFO, "Retrieving table privileges, using fast data dictionary retrieval");
+        retrieveTablePrivilegesFromDataDictionary();
+        break;
+
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving table privileges from metadata");
+        retrieveTablePrivilegesFromMetadata();
+        break;
+
+      default:
+        LOGGER.log(Level.INFO, "Not retrieving tables");
+        break;
     }
   }
 
@@ -129,6 +147,36 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       } else {
         table.addPrivilege((MutablePrivilege<Table>) privilege);
       }
+    }
+  }
+
+  private void retrieveTableColumnPrivilegesFromDataDictionary() {
+    throw new UnsupportedOperationException();
+  }
+
+  private void retrieveTableColumnPrivilegesFromMetadata() {
+    try (final MetadataResultSet results =
+        new MetadataResultSet(
+            getMetaData().getColumnPrivileges(null, null, null, null),
+            "DatabaseMetaData::getColumnPrivileges")) {
+      createPrivileges(results, true);
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:" + e.getMessage());
+    }
+  }
+
+  private void retrieveTablePrivilegesFromDataDictionary() {
+    throw new UnsupportedOperationException();
+  }
+
+  private void retrieveTablePrivilegesFromMetadata() {
+    try (final MetadataResultSet results =
+        new MetadataResultSet(
+            getMetaData().getTablePrivileges(null, null, null),
+            "DatabaseMetaData::getTablePrivileges")) {
+      createPrivileges(results, false);
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
     }
   }
 }
