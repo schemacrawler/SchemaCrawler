@@ -268,6 +268,31 @@ public class SchemaCrawlerTest {
   }
 
   @Test
+  public void columnPrivileges(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      final Table table = catalog.lookupTable(schemas[0], "AUTHORS").get();
+      out.println(table.getFullName());
+      for (final Column column : table.getColumns()) {
+        out.println("  " + column.getName());
+        final Collection<Privilege<Column>> privileges = column.getPrivileges();
+        for (final Privilege<Column> privilege : privileges) {
+          out.println(String.format("    privilege: %s", privilege.getName()));
+          final Collection<Grant<Column>> grants = privilege.getGrants();
+          for (final Grant<Column> grant : grants) {
+            out.println("      " + grant);
+          }
+        }
+      }
+    }
+
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
   public void counts(final TestContext testContext) throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -362,34 +387,6 @@ public class SchemaCrawlerTest {
   @Test
   public void primaryKeys(final TestContext testContext) throws Exception {
     verifyRetrievePrimaryKeys(catalog);
-  }
-
-  @Test
-  public void privileges(final TestContext testContext) throws Exception {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      final Table table = catalog.lookupTable(schemas[0], "AUTHORS").get();
-
-      out.println(table.getFullName());
-      final Collection<Privilege<Table>> privileges = table.getPrivileges();
-      for (final Privilege<Table> privilege : privileges) {
-        out.println(String.format("  privilege: %s", privilege.getName()));
-        final Collection<Grant<Table>> grants = privilege.getGrants();
-        for (final Grant<Table> grant : grants) {
-          if (!privilege.getName().equals("SELECT")) {
-            assertThat(grant.getGrantor(), is("_SYSTEM"));
-            assertThat(grant.getGrantee(), is("SA"));
-            assertThat(grant.isGrantable(), is(true));
-          }
-          out.println("    " + grant);
-        }
-      }
-    }
-
-    assertThat(
-        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -558,6 +555,34 @@ public class SchemaCrawlerTest {
         }
       }
     }
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void tablePrivileges(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      final Table table = catalog.lookupTable(schemas[0], "AUTHORS").get();
+
+      out.println(table.getFullName());
+      final Collection<Privilege<Table>> privileges = table.getPrivileges();
+      for (final Privilege<Table> privilege : privileges) {
+        out.println(String.format("  privilege: %s", privilege.getName()));
+        final Collection<Grant<Table>> grants = privilege.getGrants();
+        for (final Grant<Table> grant : grants) {
+          if (!privilege.getName().equals("SELECT")) {
+            assertThat(grant.getGrantor(), is("_SYSTEM"));
+            assertThat(grant.getGrantee(), is("SA"));
+            assertThat(grant.isGrantable(), is(true));
+          }
+          out.println("    " + grant);
+        }
+      }
+    }
+
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }

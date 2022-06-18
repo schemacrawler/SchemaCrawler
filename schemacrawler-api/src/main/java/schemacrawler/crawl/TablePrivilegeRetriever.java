@@ -28,17 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMN_PRIVILEGES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_PRIVILEGES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 
 /** A retriever uses database metadata to get the extended details about the database tables. */
 final class TablePrivilegeRetriever extends AbstractRetriever {
@@ -150,8 +156,18 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
     }
   }
 
-  private void retrieveTableColumnPrivilegesFromDataDictionary() {
-    throw new UnsupportedOperationException();
+  private void retrieveTableColumnPrivilegesFromDataDictionary() throws SQLException {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(TABLE_COLUMN_PRIVILEGES)) {
+      throw new ExecutionRuntimeException("No table column privileges SQL provided");
+    }
+    final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_COLUMN_PRIVILEGES);
+    try (final Statement statement = createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule())) {
+      createPrivileges(results, true);
+    }
   }
 
   private void retrieveTableColumnPrivilegesFromMetadata() {
@@ -165,8 +181,18 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
     }
   }
 
-  private void retrieveTablePrivilegesFromDataDictionary() {
-    throw new UnsupportedOperationException();
+  private void retrieveTablePrivilegesFromDataDictionary() throws SQLException {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(TABLE_PRIVILEGES)) {
+      throw new ExecutionRuntimeException("No table privileges SQL provided");
+    }
+    final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_PRIVILEGES);
+    try (final Statement statement = createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule())) {
+      createPrivileges(results, false);
+    }
   }
 
   private void retrieveTablePrivilegesFromMetadata() {

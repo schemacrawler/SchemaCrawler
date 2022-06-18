@@ -47,6 +47,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.Utility.isBlank;
@@ -283,6 +285,7 @@ public final class TestUtility {
 
     return SchemaRetrievalOptionsBuilder.builder()
         .withInformationSchemaViews(informationSchemaViews)
+        .with(tableColumnPrivilegesRetrievalStrategy, data_dictionary_all)
         .toOptions();
   }
 
