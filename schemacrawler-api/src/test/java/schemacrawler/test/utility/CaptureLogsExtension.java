@@ -47,6 +47,8 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 final class CaptureLogsExtension
     implements ParameterResolver, BeforeEachCallback, AfterEachCallback {
 
+  private static final Level MAXIMUM_LEVEL = Level.CONFIG;
+
   private CapturedLogs logs;
 
   @Override
@@ -57,7 +59,7 @@ final class CaptureLogsExtension
   @Override
   public void beforeEach(final ExtensionContext context) throws Exception {
     logs = new CapturedLogs();
-    applyApplicationLogLevel(Level.INFO);
+    applyApplicationLogLevel(MAXIMUM_LEVEL);
   }
 
   @Override

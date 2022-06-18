@@ -17,12 +17,16 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.CaptureLogs;
+import schemacrawler.test.utility.CapturedLogs;
 import schemacrawler.test.utility.CommandlineTestUtility;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -57,6 +61,25 @@ public class LoadCommandTest {
   }
 
   @Test
+  @CaptureLogs
+  public void executeDeferCatalogLoad(final CapturedLogs logs) throws Throwable {
+
+    final String[] args = {"--info-level", "detailed", "--load-row-counts", "additional", "-extra"};
+
+    final ShellState state = new ShellState();
+    state.setDeferCatalogLoad(true);
+    state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+    assertThat(state.getCatalog(), is(nullValue()));
+
+    final LoadCommand optionsParser = new LoadCommand(state);
+    CommandlineTestUtility.executeCommandInTest(optionsParser, args);
+    assertThat(state.getCatalog(), is(nullValue()));
+    assertThat(
+        logs.contains(Level.CONFIG, Pattern.compile("Not loading catalog, since this is deferred")),
+        is(true));
+  }
+
+  @Test
   public void executeExceptionLoading() throws SQLException {
 
     final Connection connection = mock(Connection.class);
@@ -72,6 +95,21 @@ public class LoadCommandTest {
     final LoadCommand optionsParser = new LoadCommand(state);
     assertThrows(
         IllegalArgumentException.class,
+        () -> CommandlineTestUtility.executeCommandInTest(optionsParser, args));
+  }
+
+  @Test
+  public void executeNotConnected() throws SQLException {
+
+    final String[] args = {"--info-level", "detailed", "--load-row-counts", "additional", "-extra"};
+
+    final ShellState state = new ShellState();
+    state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+    assertThat(state.getCatalog(), is(nullValue()));
+
+    final LoadCommand optionsParser = new LoadCommand(state);
+    assertThrows(
+        CommandLine.ExecutionException.class,
         () -> CommandlineTestUtility.executeCommandInTest(optionsParser, args));
   }
 
