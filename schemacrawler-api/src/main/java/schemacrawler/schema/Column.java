@@ -42,9 +42,9 @@ public interface Column extends BaseColumn<Table> {
   String getDefaultValue();
 
   /**
-   * Gets the list of privileges for the table.
+   * Gets the list of privileges for the column.
    *
-   * @return Privileges for the table
+   * @return Privileges for the column
    */
   Collection<Privilege<Column>> getPrivileges();
 
