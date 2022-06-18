@@ -28,32 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
-
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.plugin.EnumDataTypeInfo;
-import schemacrawler.schema.ActionOrientationType;
-import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ConditionTimingType;
-import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the extended details about the database tables. */
 final class TablePrivilegeRetriever extends AbstractRetriever {
