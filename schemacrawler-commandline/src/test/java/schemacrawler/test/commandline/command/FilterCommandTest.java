@@ -3,7 +3,7 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
+import static schemacrawler.test.utility.CommandlineTestUtility.executeCommandInTest;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
@@ -47,7 +47,7 @@ public class FilterCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
-        () -> runCommandInTest(new FilterCommand(state), args));
+        () -> executeCommandInTest(new FilterCommand(state), args));
   }
 
   @Test
@@ -60,7 +60,7 @@ public class FilterCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
-        () -> runCommandInTest(new FilterCommand(state), args));
+        () -> executeCommandInTest(new FilterCommand(state), args));
   }
 
   @Test
@@ -80,14 +80,14 @@ public class FilterCommandTest {
   }
 
   @Test
-  public void noValidArgs() {
+  public void noValidArgs() throws Throwable {
     final String[] args = {"--some-option"};
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    runCommandInTest(new FilterCommand(state), args);
+    executeCommandInTest(new FilterCommand(state), args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));
@@ -104,7 +104,7 @@ public class FilterCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
-        () -> runCommandInTest(new FilterCommand(state), args));
+        () -> executeCommandInTest(new FilterCommand(state), args));
   }
 
   @Test
@@ -117,6 +117,6 @@ public class FilterCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
-        () -> runCommandInTest(new FilterCommand(state), args));
+        () -> executeCommandInTest(new FilterCommand(state), args));
   }
 }

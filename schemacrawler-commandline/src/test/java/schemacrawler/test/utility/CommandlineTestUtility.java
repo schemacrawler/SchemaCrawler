@@ -43,6 +43,7 @@ import java.util.Properties;
 import com.typesafe.config.ConfigFactory;
 
 import picocli.CommandLine;
+import picocli.CommandLine.PicocliException;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -156,21 +157,13 @@ public final class CommandlineTestUtility {
     return state;
   }
 
-  public static void runCommandInTest(final Object object, final String[] args) {
+  public static void executeCommandInTest(final Object object, final String[] args)
+      throws Throwable {
 
     class SaveExceptionHandler
         implements CommandLine.IParameterExceptionHandler, CommandLine.IExecutionExceptionHandler {
-      private Exception lastException;
 
-      public RuntimeException getLastException() {
-        if (lastException == null) {
-          return new NullPointerException();
-        } else if (lastException instanceof RuntimeException) {
-          return (RuntimeException) lastException;
-        } else {
-          return new RuntimeException(lastException);
-        }
-      }
+      private Throwable lastException;
 
       @Override
       public int handleExecutionException(
@@ -179,6 +172,12 @@ public final class CommandlineTestUtility {
           final CommandLine.ParseResult parseResult)
           throws Exception {
         lastException = ex;
+        if (ex instanceof PicocliException) {
+          final PicocliException picocliException = (PicocliException) ex;
+          if (picocliException.getCause() != null) {
+            lastException = picocliException.getCause();
+          }
+        }
         return 0;
       }
 
@@ -189,8 +188,10 @@ public final class CommandlineTestUtility {
         return 0;
       }
 
-      public boolean hasException() {
-        return lastException != null;
+      public void throwOnException() throws Throwable {
+        if (lastException != null) {
+          throw lastException;
+        }
       }
     }
 
@@ -199,9 +200,7 @@ public final class CommandlineTestUtility {
     commandLine.setParameterExceptionHandler(saveExceptionHandler);
     commandLine.setExecutionExceptionHandler(saveExceptionHandler);
     commandLine.execute(args);
-    if (saveExceptionHandler.hasException()) {
-      throw saveExceptionHandler.getLastException();
-    }
+    saveExceptionHandler.throwOnException();
   }
 
   public static Path writeConfigToTempFile(final Map<String, ?> config) throws IOException {
