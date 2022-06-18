@@ -156,7 +156,8 @@ public final class SchemaCrawler {
     }
   }
 
-  private void crawlAdditionalTableColumnInformation(final TableExtRetriever retrieverExtra)
+  private void crawlAdditionalTableColumnInformation(
+      final TableExtRetriever retrieverExtra, final TablePrivilegeRetriever retrieverPrivilege)
       throws Exception {
     LOGGER.log(Level.INFO, "Retrieving additional table column information");
     stopWatch.time(
@@ -169,12 +170,14 @@ public final class SchemaCrawler {
         retrieveTableColumns);
     stopWatch.time(
         retrieveTableColumnPrivileges,
-        retrieverExtra::retrieveTableColumnPrivileges,
+        retrieverPrivilege::retrieveTableColumnPrivileges,
         retrieveTableColumns);
   }
 
   private void crawlAdditionalTableInformation(
-      final TableConstraintRetriever constraintRetriever, final TableExtRetriever retrieverExtra)
+      final TableConstraintRetriever constraintRetriever,
+      final TableExtRetriever retrieverExtra,
+      final TablePrivilegeRetriever retrieverPrivilege)
       throws Exception {
     stopWatch.time(
         retrieveTableConstraintDefinitions,
@@ -190,7 +193,7 @@ public final class SchemaCrawler {
     stopWatch.time(
         retrieveAdditionalTableAttributes,
         () -> retrieverExtra.retrieveAdditionalTableAttributes());
-    stopWatch.time(retrieveTablePrivileges, () -> retrieverExtra.retrieveTablePrivileges());
+    stopWatch.time(retrieveTablePrivileges, () -> retrieverPrivilege.retrieveTablePrivileges());
   }
 
   private void crawlColumnDataTypes() throws Exception {
@@ -356,6 +359,8 @@ public final class SchemaCrawler {
         new TableConstraintRetriever(retrieverConnection, catalog, options);
     final TableExtRetriever retrieverExtra =
         new TableExtRetriever(retrieverConnection, catalog, options);
+    final TablePrivilegeRetriever retrieverPrivilege =
+        new TablePrivilegeRetriever(retrieverConnection, catalog, options);
     final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
 
     stopWatch.time(
@@ -422,7 +427,7 @@ public final class SchemaCrawler {
 
     stopWatch.time(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation);
 
-    crawlAdditionalTableInformation(constraintRetriever, retrieverExtra);
-    crawlAdditionalTableColumnInformation(retrieverExtra);
+    crawlAdditionalTableInformation(constraintRetriever, retrieverExtra, retrieverPrivilege);
+    crawlAdditionalTableColumnInformation(retrieverExtra, retrieverPrivilege);
   }
 }
