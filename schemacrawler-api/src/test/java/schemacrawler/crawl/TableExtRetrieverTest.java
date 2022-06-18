@@ -32,11 +32,16 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -55,8 +60,10 @@ import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.Grant;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
@@ -70,6 +77,8 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 
 @WithTestDatabase
@@ -78,6 +87,60 @@ import schemacrawler.test.utility.WithTestDatabase;
 public class TableExtRetrieverTest {
 
   private MutableCatalog catalog;
+
+  @Test
+  @DisplayName("Retrieve view column privileges")
+  public void columnPrivileges(final Connection connection, final TestContext testContext)
+      throws Exception {
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables) {
+      if (!table.getName().equals("AUTHORS")) {
+        continue;
+      }
+      final MutableColumn firstNameColumn = (MutableColumn) table.lookupColumn("FIRSTNAME").get();
+      final MutableColumn firstNameColumnSpy = spy(firstNameColumn);
+      final MutablePrivilege<Column> columnPrivilege =
+          new MutablePrivilege<>(new ColumnPointer(firstNameColumnSpy), "SPY_PRIVILEGE");
+      columnPrivilege.addGrant("SC_SPY", "ALL", false);
+      when(firstNameColumnSpy.getPrivileges()).thenReturn(Arrays.asList(columnPrivilege));
+      ((MutableTable) table).addColumn(firstNameColumnSpy);
+    }
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableExtRetriever tableExtRetriever =
+        new TableExtRetriever(retrieverConnection, catalog, options);
+    tableExtRetriever.retrieveTableColumnPrivileges();
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Table table = catalog.lookupTable(schemas[0], "AUTHORS").get();
+
+      out.println(table.getFullName());
+      for (final Column column : table.getColumns()) {
+        out.println(String.format("  - column: %s", column.getName()));
+        final Collection<Privilege<Column>> privileges = column.getPrivileges();
+        for (final Privilege<Column> privilege : privileges) {
+          out.println(String.format("      privilege: %s", privilege.getName()));
+          final Collection<Grant<Column>> grants = privilege.getGrants();
+          for (final Grant<Column> grant : grants) {
+            out.println("        " + grant);
+          }
+        }
+      }
+    }
+
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
 
   @Test
   @DisplayName("Retrieve enum data types")

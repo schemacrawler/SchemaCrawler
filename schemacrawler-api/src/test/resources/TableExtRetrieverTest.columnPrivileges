@@ -1,0 +1,12 @@
+PUBLIC.BOOKS.AUTHORS
+  - column: ID
+  - column: FIRSTNAME
+      privilege: SPY_PRIVILEGE
+        SC_SPY --> ALL
+  - column: LASTNAME
+  - column: ADDRESS1
+  - column: ADDRESS2
+  - column: CITY
+  - column: STATE
+  - column: POSTALCODE
+  - column: COUNTRY
