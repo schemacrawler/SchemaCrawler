@@ -14,7 +14,7 @@ your database. You can find potential schema design issues with
 SchemaCrawler supports almost any database that has a JDBC driver, but for
 convenience is [bundled with drivers](database-support.html) for some commonly used
 RDBMS systems. SchemaCrawler works with any operating system that supports
-Java SE 8, Compact Profile 2 or better.
+Java SE 8 or better.
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)](https://github.com/schemacrawler/SchemaCrawler)
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
