@@ -127,8 +127,8 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
 
     // -- Additional catalog tests
     final Catalog catalog = executable.getCatalog();
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
+    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
     assertThat(serverInfo.size(), equalTo(4));
     assertThat(serverInfo.get(0).getName(), equalTo("HOST_NAME"));
     assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-z]{12}"));

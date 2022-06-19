@@ -117,8 +117,8 @@ public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
 
     // -- Additional catalog tests
     final Catalog catalog = executable.getCatalog();
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
+    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
     assertThat(serverInfo.size(), equalTo(1));
     assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
     assertThat(serverInfo.get(0).getValue(), equalTo("test"));
