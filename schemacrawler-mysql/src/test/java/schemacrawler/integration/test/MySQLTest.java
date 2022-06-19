@@ -27,7 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
@@ -47,12 +49,15 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseUser;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -110,6 +115,10 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
 
     // Additional catalog tests
     final Catalog catalog = executable.getCatalog();
+
+    final Table table = catalog.lookupTable(new SchemaReference("books", null), "authors").get();
+    final Column column = table.lookupColumn("FirstName").get();
+    assertThat(column.getPrivileges(), is(empty()));
 
     // INFO: Current user has no access to MYSQL.USER
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
