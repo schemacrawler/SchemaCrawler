@@ -1,0 +1,11 @@
+** Display SchemaCrawler version and system information
+Shell Command:
+system
+Options:
+  -C, --is-connected       Checks whether the shell has a connection to a
+                             database
+  -E, --show-environment   Shows SchemaCrawler plugins and environment
+  -L, --is-loaded          Checks whether the shell has loaded database metadata
+      --show-stacktrace    Shows stack trace from previous command
+      --show-state         Shows internal state
+  -V, --version            Display SchemaCrawler version and system information

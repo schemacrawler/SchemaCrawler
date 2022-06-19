@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -124,7 +123,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
       final Connection connection = state.getDataSource().get();
       final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
       System.out.println(connectionInfo);
-    } catch (final SQLException e) {
+    } catch (final Exception e) {
       System.err.println("Could not log connection information");
       e.printStackTrace();
     }
