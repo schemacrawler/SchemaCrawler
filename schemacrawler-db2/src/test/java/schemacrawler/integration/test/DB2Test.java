@@ -27,7 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.matchesPattern;
@@ -53,13 +55,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -127,6 +132,10 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     assertThat(serverInfo.size(), equalTo(4));
     assertThat(serverInfo.get(0).getName(), equalTo("HOST_NAME"));
     assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-z]{12}"));
+
+    final Table table = catalog.lookupTable(new SchemaReference(null, "DB2INST1"), "AUTHORS").get();
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+    assertThat(column.getPrivileges(), is(empty()));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(1));
