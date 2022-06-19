@@ -1,0 +1,3 @@
+-- Grants
+-- Oracle syntax
+GRANT SELECT ON BOOKS.AUTHORS TO SELUSER;
