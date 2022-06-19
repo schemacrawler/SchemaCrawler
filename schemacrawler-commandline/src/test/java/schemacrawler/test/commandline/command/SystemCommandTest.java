@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
+import schemacrawler.schema.Catalog;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.ResolveTestContext;
@@ -75,10 +76,7 @@ public class SystemCommandTest {
 
     final ShellState state = new ShellState();
     state.setDataSource(() -> connection);
-    final SystemCommand optionsParser = new SystemCommand(state);
-
-    final CommandLine commandLine = newCommandLine(optionsParser, null);
-    commandLine.execute(args);
+    executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(streams.out().getContents(), containsString("Connected to"));
@@ -93,10 +91,7 @@ public class SystemCommandTest {
 
     final ShellState state = new ShellState();
     state.setDataSource(() -> connection);
-    final SystemCommand optionsParser = new SystemCommand(state);
-
-    final CommandLine commandLine = newCommandLine(optionsParser, null);
-    commandLine.execute(args);
+    executeSystemCommand(state, args);
 
     assertThat(streams.err().getContents(), startsWith("Could not log connection information"));
     assertThat(outputOf(streams.out()), hasNoContent());
@@ -113,17 +108,37 @@ public class SystemCommandTest {
   }
 
   @Test
+  public void showLoaded(final CapturedSystemStreams streams) {
+    final String[] args = {"-L"};
+
+    final ShellState state = new ShellState();
+    state.setCatalog(mock(Catalog.class));
+    executeSystemCommand(state, args);
+
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(streams.out().getContents(), containsString("Database metadata is loaded"));
+  }
+
+  @Test
   public void showNotConnected(final CapturedSystemStreams streams) {
     final String[] args = {"-C"};
 
     final ShellState state = new ShellState();
-    final SystemCommand optionsParser = new SystemCommand(state);
-
-    final CommandLine commandLine = newCommandLine(optionsParser, null);
-    commandLine.execute(args);
+    executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(streams.out().getContents(), startsWith("Not connected to a database"));
+  }
+
+  @Test
+  public void showNotLoaded(final CapturedSystemStreams streams) {
+    final String[] args = {"-L"};
+
+    final ShellState state = new ShellState();
+    executeSystemCommand(state, args);
+
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(streams.out().getContents(), containsString("Database metadata is not loaded"));
   }
 
   @Test
@@ -131,10 +146,7 @@ public class SystemCommandTest {
     final String[] args = {"--show-state"};
 
     final ShellState state = new ShellState();
-    final SystemCommand optionsParser = new SystemCommand(state);
-
-    final CommandLine commandLine = newCommandLine(optionsParser, null);
-    commandLine.execute(args);
+    executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
@@ -148,10 +160,7 @@ public class SystemCommandTest {
     final String[] args = {"-V"};
 
     final ShellState state = new ShellState();
-    final SystemCommand optionsParser = new SystemCommand(state);
-
-    final CommandLine commandLine = newCommandLine(optionsParser, null);
-    commandLine.execute(args);
+    executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
@@ -170,5 +179,12 @@ public class SystemCommandTest {
         streams.out().getContents(),
         containsString("Available SchemaCrawler database server plugins:"));
     assertThat(streams.out().getContents(), containsString("Available SchemaCrawler commands:"));
+  }
+
+  private void executeSystemCommand(final ShellState state, final String[] args) {
+    final SystemCommand optionsParser = new SystemCommand(state);
+
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
+    commandLine.execute(args);
   }
 }
