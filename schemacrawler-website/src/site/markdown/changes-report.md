@@ -3,9 +3,10 @@
 SchemaCrawler release notes.
 
 <a name="a16.16.18"></a>
-## Release 16.16.18 - 2022-06-14
+## Release 16.16.18 - 2022-06-20
 
 - Add support for updating remarks for foreign keys in diagrams and other output
+- Ensure that column privileges are being retrieved for databases that support them
 - Add website page on security considerations
 
 
