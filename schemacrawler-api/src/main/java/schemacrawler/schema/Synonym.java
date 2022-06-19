@@ -31,7 +31,7 @@ package schemacrawler.schema;
 /**
  * Represents a database synonym.
  *
- * @author Matt Albrecht, Sualeh Fatehi
+ * <p>(Based on an idea from Matt Albrecht)
  */
 public interface Synonym extends DatabaseObject {
 

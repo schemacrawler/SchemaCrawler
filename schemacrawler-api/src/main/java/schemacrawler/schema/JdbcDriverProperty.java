@@ -30,11 +30,7 @@ package schemacrawler.schema;
 
 import java.util.Collection;
 
-/**
- * Represents a JDBC driver property, and it's value.
- *
- * @author sfatehi
- */
+/** Represents a JDBC driver property, and it's value. */
 public interface JdbcDriverProperty extends Property {
 
   /**

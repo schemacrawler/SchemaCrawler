@@ -51,11 +51,6 @@ import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.Identifiers;
 import us.fatehi.utility.UtilityMarker;
 
-/**
- * SchemaCrawler utility methods.
- *
- * @author sfatehi
- */
 @UtilityMarker
 public final class MetaDataUtility {
 

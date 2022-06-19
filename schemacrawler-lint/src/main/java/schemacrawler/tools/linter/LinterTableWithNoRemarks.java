@@ -41,7 +41,7 @@ import schemacrawler.tools.lint.LintSeverity;
 /**
  * Check that tables and columns) have remarks.
  *
- * @author Michèle Barré, Sualeh Fatehi
+ * <p>(Based on an idea from Michèle Barré)
  */
 public class LinterTableWithNoRemarks extends BaseLinter {
 

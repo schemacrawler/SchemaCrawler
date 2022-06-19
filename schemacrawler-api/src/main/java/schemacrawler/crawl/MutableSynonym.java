@@ -37,7 +37,7 @@ import schemacrawler.schema.Synonym;
 /**
  * Represents a database synonym. Created from metadata returned by a JDBC call.
  *
- * @author Matt Albrecht, Sualeh Fatehi
+ * <p>(Based on an idea from Matt Albrecht)
  */
 final class MutableSynonym extends AbstractDatabaseObject implements Synonym {
 

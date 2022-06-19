@@ -35,8 +35,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
@@ -51,7 +51,7 @@ import us.fatehi.utility.string.StringFormat;
 /**
  * A retriever that uses database metadata to get the extended details about the database synonyms.
  *
- * @author Matt Albrecht, Sualeh Fatehi
+ * <p>(Based on an idea from Matt Albrecht)
  */
 final class SynonymRetriever extends AbstractRetriever {
 
@@ -64,8 +64,7 @@ final class SynonymRetriever extends AbstractRetriever {
     }
   }
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SynonymRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SynonymRetriever.class.getName());
 
   SynonymRetriever(
       final RetrieverConnection retrieverConnection,

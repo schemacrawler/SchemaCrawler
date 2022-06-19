@@ -35,11 +35,7 @@ import picocli.CommandLine.Spec;
 import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
-/**
- * Options for the command-line.
- *
- * @author sfatehi
- */
+/** Options for the command-line. */
 public final class UserCredentialsOptions {
 
   @ArgGroup private UserOptions userOptions;
