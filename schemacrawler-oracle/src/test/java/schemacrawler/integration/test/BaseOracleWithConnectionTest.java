@@ -27,7 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.matchesPattern;
@@ -42,17 +44,21 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -95,6 +101,14 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
 
     // -- Additional catalog tests
     final Catalog catalog = executable.getCatalog();
+
+    final Optional<Table> optionalTable =
+        catalog.lookupTable(new SchemaReference(null, "BOOKS"), "BOOKS");
+    if (optionalTable.isPresent()) {
+      final Table table = optionalTable.get();
+      final Column column = table.lookupColumn("TITLE").get();
+      assertThat(column.getPrivileges(), is(empty()));
+    }
 
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 

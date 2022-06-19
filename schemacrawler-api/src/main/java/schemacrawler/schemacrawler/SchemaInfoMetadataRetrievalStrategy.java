@@ -36,7 +36,9 @@ public enum SchemaInfoMetadataRetrievalStrategy {
   primaryKeysRetrievalStrategy("primarykeys"),
   proceduresRetrievalStrategy("procedures"),
   procedureParametersRetrievalStrategy("procedureparameters"),
+  tableColumnPrivilegesRetrievalStrategy("tablecolumnprivileges"),
   tableColumnsRetrievalStrategy("tablecolumns"),
+  tablePrivilegesRetrievalStrategy("tableprivileges"),
   tablesRetrievalStrategy("tables"),
   typeInfoRetrievalStrategy("typeinfo"),
   ;

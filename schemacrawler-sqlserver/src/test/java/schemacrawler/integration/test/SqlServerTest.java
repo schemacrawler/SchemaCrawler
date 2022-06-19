@@ -29,6 +29,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -57,13 +58,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.sqlserver.SqlServerDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
@@ -170,5 +174,12 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     assertThat(
         outputOf(executableExecution(getConnection(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
+
+    // -- Additional catalog tests
+    final Catalog catalog = executable.getCatalog();
+
+    final Table table = catalog.lookupTable(new SchemaReference("BOOKS", "dbo"), "Authors").get();
+    final Column column = table.lookupColumn("FirstName").get();
+    assertThat(column.getPrivileges(), is(empty()));
   }
 }

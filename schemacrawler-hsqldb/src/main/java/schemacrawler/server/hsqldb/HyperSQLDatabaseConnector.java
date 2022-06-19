@@ -27,6 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.hsqldb;
 
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -40,7 +43,9 @@ public final class HyperSQLDatabaseConnector extends DatabaseConnector {
         url -> url != null && url.startsWith("jdbc:hsqldb:"),
         (informationSchemaViewsBuilder, connection) ->
             informationSchemaViewsBuilder.fromResourceFolder("/hsqldb.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) -> {},
+        (schemaRetrievalOptionsBuilder, connection) ->
+            schemaRetrievalOptionsBuilder.with(
+                tableColumnPrivilegesRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder -> {},
         () ->
             DatabaseConnectionUrlBuilder.builder("jdbc:hsqldb:hsql://${host}:${port}/${database}")

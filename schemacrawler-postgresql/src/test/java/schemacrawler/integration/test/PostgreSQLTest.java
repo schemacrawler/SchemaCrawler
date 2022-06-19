@@ -27,9 +27,12 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL9Container;
@@ -52,13 +55,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -117,8 +123,12 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 
     // -- Additional catalog tests
     final Catalog catalog = executable.getCatalog();
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
+    final Table table = catalog.lookupTable(new SchemaReference(null, "books"), "authors").get();
+    final Column column = table.lookupColumn("firstname").get();
+    assertThat(column.getPrivileges(), is(not(empty())));
+
+    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
     assertThat(serverInfo.size(), equalTo(1));
     assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
     assertThat(serverInfo.get(0).getValue(), equalTo("test"));

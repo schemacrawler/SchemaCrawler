@@ -29,7 +29,9 @@ package schemacrawler.integration.test;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static java.util.Objects.requireNonNull;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
@@ -52,6 +54,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -67,7 +70,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.OutputFormat;
 
 @WithTestDatabase
-public class HsqldbCommandlineTest {
+public class HsqldbTest {
 
   @Test
   public void testHsqldbMain(final DatabaseConnectionInfo connectionInfo) throws Exception {
@@ -123,6 +126,9 @@ public class HsqldbCommandlineTest {
     assertThat(catalog.getTables(schema), hasSize(10));
     final Table table = catalog.lookupTable(schema, "AUTHORS").orElse(null);
     assertThat(table, notNullValue());
+
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+    assertThat(column.getPrivileges(), is(not(empty())));
 
     assertThat(table.getTriggers(), hasSize(1));
     assertThat(table.lookupTrigger("TRG_AUTHORS"), not(isEmpty()));

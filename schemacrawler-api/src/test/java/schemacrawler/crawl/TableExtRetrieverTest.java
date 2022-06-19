@@ -90,61 +90,6 @@ public class TableExtRetrieverTest {
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve column privileges")
-  @Disabled("Allow for retrieval strategy for column privileges")
-  public void columnPrivileges(final Connection connection, final TestContext testContext)
-      throws Exception {
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables) {
-      if (!table.getName().equals("AUTHORS")) {
-        continue;
-      }
-      final MutableColumn firstNameColumn = (MutableColumn) table.lookupColumn("FIRSTNAME").get();
-      final MutableColumn firstNameColumnSpy = spy(firstNameColumn);
-      final MutablePrivilege<Column> columnPrivilege =
-          new MutablePrivilege<>(new ColumnPointer(firstNameColumnSpy), "SPY_PRIVILEGE");
-      columnPrivilege.addGrant("SC_SPY", "ALL", false);
-      when(firstNameColumnSpy.getPrivileges()).thenReturn(Arrays.asList(columnPrivilege));
-      ((MutableTable) table).addColumn(firstNameColumnSpy);
-    }
-
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableExtRetriever tableExtRetriever =
-        new TableExtRetriever(retrieverConnection, catalog, options);
-    tableExtRetriever.retrieveTableColumnPrivileges();
-
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      final Table table = catalog.lookupTable(schemas[0], "AUTHORS").get();
-
-      out.println(table.getFullName());
-      for (final Column column : table.getColumns()) {
-        out.println(String.format("  - column: %s", column.getName()));
-        final Collection<Privilege<Column>> privileges = column.getPrivileges();
-        for (final Privilege<Column> privilege : privileges) {
-          out.println(String.format("      privilege: %s", privilege.getName()));
-          final Collection<Grant<Column>> grants = privilege.getGrants();
-          for (final Grant<Column> grant : grants) {
-            out.println("        " + grant);
-          }
-        }
-      }
-    }
-
-    assertThat(
-        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-  }
-
-  @Test
   @DisplayName("Retrieve enum data types")
   public void enumDataTypes(final Connection connection) throws Exception {
 
