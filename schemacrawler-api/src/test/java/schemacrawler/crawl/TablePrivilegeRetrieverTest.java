@@ -32,7 +32,13 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMN_PRIVILEGES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_PRIVILEGES;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.none;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
@@ -56,6 +62,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 
@@ -65,6 +72,58 @@ import schemacrawler.test.utility.WithTestDatabase;
 public class TablePrivilegeRetrieverTest {
 
   private MutableCatalog catalog;
+
+  @Test
+  @DisplayName("Retrieve column privileges without metadata retrieval strategy")
+  public void columnPrivilegesBadMetadataRetrievalStrategy(final Connection connection)
+      throws Exception {
+
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(TABLE_COLUMN_PRIVILEGES, "<<bad sql>>")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .withInformationSchemaViews(informationSchemaViews)
+        .with(tableColumnPrivilegesRetrievalStrategy, none);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TablePrivilegeRetriever tablePrivilegeRetriever =
+        new TablePrivilegeRetriever(retrieverConnection, catalog, options);
+    tablePrivilegeRetriever.retrieveTableColumnPrivileges();
+
+    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+    final Table table = catalog.lookupTable(schemas[0], "AUTHORS").get();
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+
+    assertThat(column.getPrivileges(), is(empty()));
+  }
+
+  @Test
+  @DisplayName("Retrieve column privileges without query")
+  public void columnPrivilegesFromDataDictionaryWithoutQuery(final Connection connection)
+      throws Exception {
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.with(tableColumnPrivilegesRetrievalStrategy, data_dictionary_all);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TablePrivilegeRetriever tablePrivilegeRetriever =
+        new TablePrivilegeRetriever(retrieverConnection, catalog, options);
+    assertThrows(
+        ExecutionRuntimeException.class,
+        () -> tablePrivilegeRetriever.retrieveTableColumnPrivileges());
+  }
 
   @Test
   @DisplayName("Retrieve column privileges from metadata")
@@ -114,6 +173,37 @@ public class TablePrivilegeRetrieverTest {
   }
 
   @Test
+  @DisplayName("Retrieve table privileges without metadata retrieval strategy")
+  public void tablePrivilegesBadMetadataRetrievalStrategy(final Connection connection)
+      throws Exception {
+
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(TABLE_PRIVILEGES, "<<bad sql>>")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .withInformationSchemaViews(informationSchemaViews)
+        .with(tablePrivilegesRetrievalStrategy, none);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+    final Table table = catalog.lookupTable(schemas[0], "AUTHORS").get();
+    assertThat(table.getPrivileges(), is(empty()));
+
+    final TablePrivilegeRetriever tablePrivilegeRetriever =
+        new TablePrivilegeRetriever(retrieverConnection, catalog, options);
+    tablePrivilegeRetriever.retrieveTablePrivileges();
+
+    assertThat(table.getPrivileges(), is(empty()));
+  }
+
+  @Test
   @DisplayName("Retrieve table privileges from data dictionary")
   public void tablePrivilegesFromDataDictionary(final Connection connection) throws Exception {
 
@@ -128,7 +218,9 @@ public class TablePrivilegeRetrieverTest {
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    schemaRetrievalOptionsBuilder
+        .withInformationSchemaViews(informationSchemaViews)
+        .with(tablePrivilegesRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(connection, schemaRetrievalOptions);
@@ -144,5 +236,25 @@ public class TablePrivilegeRetrieverTest {
     tablePrivilegeRetriever.retrieveTablePrivileges();
 
     assertThat(table.getPrivileges(), hasSize(6));
+  }
+
+  @Test
+  @DisplayName("Retrieve table privileges without query")
+  public void tablePrivilegesFromDataDictionaryWithoutQuery(final Connection connection)
+      throws Exception {
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.with(tablePrivilegesRetrievalStrategy, data_dictionary_all);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TablePrivilegeRetriever tablePrivilegeRetriever =
+        new TablePrivilegeRetriever(retrieverConnection, catalog, options);
+    assertThrows(
+        ExecutionRuntimeException.class, () -> tablePrivilegeRetriever.retrieveTablePrivileges());
   }
 }
