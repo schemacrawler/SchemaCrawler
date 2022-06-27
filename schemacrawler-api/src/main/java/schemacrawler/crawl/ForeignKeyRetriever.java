@@ -133,7 +133,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         foreignKeys.put(fkLookupKey, foreignKey);
       }
 
-      foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
+      foreignKey.addColumnReference(keySequence, fkColumn, pkColumn);
       foreignKey.setUpdateRule(updateRule);
       foreignKey.setDeleteRule(deleteRule);
       foreignKey.setDeferrability(deferrability);

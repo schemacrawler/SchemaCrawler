@@ -103,7 +103,7 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
     return deferrability == ForeignKeyDeferrability.initiallyDeferred;
   }
 
-  void addColumnReference(final int keySequence, final Column pkColumn, final Column fkColumn) {
+  void addColumnReference(final int keySequence, final Column fkColumn, final Column pkColumn) {
     final ColumnReference fkColumnReference =
         new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
     addColumnReference(fkColumnReference);
