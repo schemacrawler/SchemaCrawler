@@ -61,6 +61,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -708,6 +709,7 @@ public class SchemaCrawlerTest {
 
   /** Keep in sync with {@link WeakAssociationsAttributesTest#weakAssociations() LabelName} */
   @Test
+  @Disabled()
   public void weakAssociations(final TestContext testContext) throws Exception {
 
     final Column pkColumn =

@@ -166,8 +166,8 @@ public class EqualsTest {
   @Test
   public void weakAssociation() {
     EqualsVerifier.forClass(MutableWeakAssociation.class)
-        .withNonnullFields("columnReferences")
-        .withOnlyTheseFields("columnReferences")
+        .withNonnullFields("name")
+        .withOnlyTheseFields("name")
         .verify();
   }
 }

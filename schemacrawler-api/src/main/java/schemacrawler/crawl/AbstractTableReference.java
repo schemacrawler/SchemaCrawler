@@ -135,27 +135,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return -1;
   }
 
-  /**
-   * IMPORTANT: This method is unstable until the table reference is fully built, since it uses
-   * column references.
-   *
-   * <p>{@inheritDoc}
-   */
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof TableReference)) {
-      return false;
-    }
-    final TableReference other = (TableReference) obj;
-    return Objects.equals(getColumnReferences(), other.getColumnReferences());
-  }
-
   /** {@inheritDoc} */
   @Override
   public List<ColumnReference> getColumnReferences() {
@@ -194,17 +173,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
   @Override
   public String getShortName() {
     return getName();
-  }
-
-  /**
-   * IMPORTANT: This method is unstable until the table reference is fully built, since it uses
-   * column references.
-   *
-   * <p>{@inheritDoc}
-   */
-  @Override
-  public int hashCode() {
-    return hash(columnReferences);
   }
 
   @Override
