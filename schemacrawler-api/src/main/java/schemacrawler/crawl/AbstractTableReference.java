@@ -28,14 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -101,10 +99,15 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
   private final NamedObjectList<TableConstraintColumn> tableConstraintColumns;
   private transient MemoState state;
 
-  public AbstractTableReference(final String name) {
+  public AbstractTableReference(final String name, final ColumnReference columnReference) {
     super(name);
+    requireNonNull(columnReference, "No column reference provided");
+
     columnReferences = new TreeSet<>();
     tableConstraintColumns = new NamedObjectList<>();
+
+    addColumnReference(columnReference);
+    buildState();
   }
 
   /**

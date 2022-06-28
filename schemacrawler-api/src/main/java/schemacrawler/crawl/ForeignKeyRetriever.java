@@ -42,6 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -122,18 +123,20 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
       final NamedObjectKey fkLookupKey =
           new NamedObjectKey(fkTableCatalogName, fkTableSchemaName, fkTableName, foreignKeyName);
+      final ColumnReference columnReference =
+          new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
 
       final Optional<MutableForeignKey> foreignKeyOptional =
           Optional.ofNullable(foreignKeys.get(fkLookupKey));
       final MutableForeignKey foreignKey;
       if (foreignKeyOptional.isPresent()) {
         foreignKey = foreignKeyOptional.get();
+        foreignKey.addColumnReference(columnReference);
       } else {
-        foreignKey = new MutableForeignKey(foreignKeyName);
+        foreignKey = new MutableForeignKey(foreignKeyName, columnReference);
         foreignKeys.put(fkLookupKey, foreignKey);
       }
 
-      foreignKey.addColumnReference(keySequence, fkColumn, pkColumn);
       foreignKey.setUpdateRule(updateRule);
       foreignKey.setDeleteRule(deleteRule);
       foreignKey.setDeferrability(deferrability);

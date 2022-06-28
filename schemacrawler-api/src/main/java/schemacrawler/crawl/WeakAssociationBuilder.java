@@ -35,6 +35,7 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -161,7 +162,9 @@ public final class WeakAssociationBuilder {
       return Optional.empty();
     }
 
-    final ColumnReference someColumnReference = columnReferences.iterator().next();
+    final Iterator<ColumnReference> iterator = columnReferences.iterator();
+
+    final ColumnReference someColumnReference = iterator.next();
     final Table referencedTable = someColumnReference.getPrimaryKeyColumn().getParent();
     final Table referencingTable = someColumnReference.getForeignKeyColumn().getParent();
 
@@ -173,8 +176,10 @@ public final class WeakAssociationBuilder {
       weakAssociationName = name;
     }
 
-    final MutableWeakAssociation weakAssociation = new MutableWeakAssociation(weakAssociationName);
-    for (final ColumnReference columnReference : columnReferences) {
+    final MutableWeakAssociation weakAssociation =
+        new MutableWeakAssociation(weakAssociationName, someColumnReference);
+    while (iterator.hasNext()) {
+      final ColumnReference columnReference = iterator.next();
       // Add a column reference only if they reference the same two tables
       if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())
           && referencingTable.equals(columnReference.getForeignKeyColumn().getParent())) {
