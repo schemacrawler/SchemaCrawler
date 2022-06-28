@@ -136,8 +136,10 @@ public final class WeakAssociationBuilder {
       return this;
     }
 
+    // Start key sequences at index 1
+    final int keySequence = columnReferences.size() + 1;
     final ColumnReference columnReference =
-        new ImmutableColumnReference(columnReferences.size(), fkColumn, pkColumn);
+        new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
     columnReferences.add(columnReference);
 
     return this;
@@ -217,6 +219,7 @@ public final class WeakAssociationBuilder {
   private Optional<ForeignKey> lookupMatchingForeignKey(final WeakAssociation weakAssociation) {
     requireNonNull(weakAssociation, "No weak association provided");
 
+    final TableReferenceComparator comparator = new TableReferenceComparator();
     final Table referencedTable = weakAssociation.getReferencedTable();
     if (!(referencedTable instanceof MutableTable)) {
       return Optional.empty();
@@ -225,7 +228,7 @@ public final class WeakAssociationBuilder {
     // Search foreign keys by column references
     final Collection<ForeignKey> exportedForeignKeys = referencedTable.getExportedForeignKeys();
     for (final ForeignKey foreignKey : exportedForeignKeys) {
-      if (foreignKey.equals(weakAssociation)) {
+      if (comparator.compare(foreignKey, weakAssociation) == 0) {
         return Optional.of(foreignKey);
       }
     }
@@ -237,6 +240,7 @@ public final class WeakAssociationBuilder {
       final WeakAssociation weakAssociation) {
     requireNonNull(weakAssociation, "No weak association provided");
 
+    final TableReferenceComparator comparator = new TableReferenceComparator();
     final Table referencedTable = weakAssociation.getReferencedTable();
     if (!(referencedTable instanceof MutableTable)) {
       return Optional.empty();
@@ -245,7 +249,7 @@ public final class WeakAssociationBuilder {
     // Search weak associations by column references
     final Collection<WeakAssociation> weakAssociations = referencedTable.getWeakAssociations();
     for (final WeakAssociation weakAssociationInTable : weakAssociations) {
-      if (weakAssociationInTable.equals(weakAssociation)) {
+      if (comparator.compare(weakAssociationInTable, weakAssociation) == 0) {
         return Optional.of(weakAssociationInTable);
       }
     }
