@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.16.19"></a>
+## Release 16.16.19 - 2022-07-05
+
+- Assign names to foreign keys where the database has not assigned a name
+- Do not have inconsistent column references in a table reference (such as a foreign key or weak association)
+
+
 <a name="a16.16.18"></a>
 ## Release 16.16.18 - 2022-06-20
 
