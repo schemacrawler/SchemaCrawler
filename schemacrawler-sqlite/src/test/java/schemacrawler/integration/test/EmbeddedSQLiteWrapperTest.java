@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.text;
 
 import java.nio.file.Path;
 
@@ -43,7 +44,6 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import us.fatehi.utility.IOUtility;
 
@@ -68,9 +68,8 @@ public class EmbeddedSQLiteWrapperTest extends BaseSqliteTest {
 
     final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
     sqLiteDatabaseLoader.setDatabasePath(dbFile);
-    final Path diagram =
-        sqLiteDatabaseLoader.executeForOutput("Test Diagram Title", TextOutputFormat.text);
+    final Path outputFile = sqLiteDatabaseLoader.executeForOutput("Test Diagram Title", text);
 
-    assertThat(outputOf(diagram), hasSameContentAs(classpathResource(currentMethodFullName)));
+    assertThat(outputOf(outputFile), hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

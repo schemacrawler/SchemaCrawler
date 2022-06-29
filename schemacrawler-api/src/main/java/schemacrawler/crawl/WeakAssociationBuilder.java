@@ -181,10 +181,8 @@ public final class WeakAssociationBuilder {
     while (iterator.hasNext()) {
       final ColumnReference columnReference = iterator.next();
       // Add a column reference only if they reference the same two tables
-      if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())
-          && referencingTable.equals(columnReference.getForeignKeyColumn().getParent())) {
-        weakAssociation.addColumnReference(columnReference);
-      } else {
+      final boolean addedColumnReference = weakAssociation.addColumnReference(columnReference);
+      if (!addedColumnReference) {
         LOGGER.log(
             Level.CONFIG,
             new StringFormat(

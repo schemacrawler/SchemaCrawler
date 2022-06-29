@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -42,11 +44,14 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
 import us.fatehi.utility.CompareUtility;
+import us.fatehi.utility.string.StringFormat;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
 abstract class AbstractTableReference extends MutableTableConstraint implements TableReference {
 
   private static final long serialVersionUID = -5164664131926303038L;
+
+  private static final Logger LOGGER = Logger.getLogger(AbstractTableReference.class.getName());
 
   private final Table pkTable;
   private final SortedSet<ColumnReference> columnReferences;
@@ -58,10 +63,9 @@ abstract class AbstractTableReference extends MutableTableConstraint implements 
             .getParent(),
         name);
 
+    pkTable = columnReference.getPrimaryKeyColumn().getParent();
     columnReferences = new TreeSet<>();
     addColumnReference(columnReference);
-
-    pkTable = columnReference.getPrimaryKeyColumn().getParent();
   }
 
   /**
@@ -114,12 +118,25 @@ abstract class AbstractTableReference extends MutableTableConstraint implements 
     return columnReferences.iterator();
   }
 
-  void addColumnReference(final ColumnReference columnReference) {
+  boolean addColumnReference(final ColumnReference columnReference) {
     if (columnReference == null) {
-      return;
+      return false;
     }
-    columnReferences.add(columnReference);
-    addTableConstraintColumn(columnReference);
+    // Add a column reference only if they reference the same two tables
+    final Table fkTable = getParent();
+    if (pkTable.equals(columnReference.getPrimaryKeyColumn().getParent())
+        && fkTable.equals(columnReference.getForeignKeyColumn().getParent())) {
+      columnReferences.add(columnReference);
+      addTableConstraintColumn(columnReference);
+      return true;
+    } else {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Column reference <%s> not added, since it is not consistent with <%s --> %s>",
+              columnReference, fkTable, pkTable));
+      return false;
+    }
   }
 
   private void addTableConstraintColumn(final ColumnReference columnReference) {
