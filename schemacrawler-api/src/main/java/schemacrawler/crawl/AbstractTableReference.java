@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,52 +51,13 @@ import us.fatehi.utility.CompareUtility;
 abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     implements TableReference {
 
-  private final class MemoState implements Serializable {
-
-    private static final long serialVersionUID = -8137191924777748304L;
-
-    private final Table pkTable;
-    private final Table fkTable;
-    private final NamedObjectKey key;
-
-    MemoState() {
-      Table pkTable = null;
-      Table fkTable = null;
-
-      final List<ColumnReference> columnReferences =
-          new ArrayList<>(AbstractTableReference.this.columnReferences);
-      for (int i = 0; i < columnReferences.size(); i++) {
-
-        final ColumnReference columnReference = columnReferences.get(i);
-        if (i == 0) {
-          pkTable = columnReference.getPrimaryKeyColumn().getParent();
-          fkTable = columnReference.getForeignKeyColumn().getParent();
-        }
-      }
-      this.pkTable = requireNonNull(pkTable, "No primary table found");
-      this.fkTable = requireNonNull(fkTable, "No foreign table found");
-
-      this.key = fkTable.key().with(getName());
-    }
-
-    Table getForeignKeyTable() {
-      return fkTable;
-    }
-
-    Table getPrimaryKeyTable() {
-      return pkTable;
-    }
-
-    NamedObjectKey key() {
-      return key;
-    }
-  }
-
   private static final long serialVersionUID = -5164664131926303038L;
 
+  private final Table pkTable;
+  private final Table fkTable;
+  private final NamedObjectKey key;
   private final SortedSet<ColumnReference> columnReferences;
   private final NamedObjectList<TableConstraintColumn> tableConstraintColumns;
-  private transient MemoState state;
 
   public AbstractTableReference(final String name, final ColumnReference columnReference) {
     super(name);
@@ -107,7 +67,9 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     tableConstraintColumns = new NamedObjectList<>();
 
     addColumnReference(columnReference);
-    buildState();
+    pkTable = columnReference.getPrimaryKeyColumn().getParent();
+    fkTable = columnReference.getForeignKeyColumn().getParent();
+    key = fkTable.key().with(getName());
   }
 
   /**
@@ -151,8 +113,7 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
 
   @Override
   public Table getForeignKeyTable() {
-    buildState();
-    return state.getForeignKeyTable();
+    return fkTable;
   }
 
   @Override
@@ -162,15 +123,13 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
 
   @Override
   public Table getPrimaryKeyTable() {
-    buildState();
-    return state.getPrimaryKeyTable();
+    return pkTable;
   }
 
   /** Gets the schema of the constrained table - that is the referencing table. */
   @Override
   public Schema getSchema() {
-    buildState();
-    return state.getForeignKeyTable().getSchema();
+    return fkTable.getSchema();
   }
 
   @Override
@@ -191,8 +150,7 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
 
   @Override
   public NamedObjectKey key() {
-    buildState();
-    return state.key();
+    return key;
   }
 
   void addColumnReference(final ColumnReference columnReference) {
@@ -209,11 +167,5 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
         new MutableTableConstraintColumn(AbstractTableReference.this, fkColumn);
     tableConstraintColumn.setKeyOrdinalPosition(columnReference.getKeySequence());
     tableConstraintColumns.add(tableConstraintColumn);
-  }
-
-  private void buildState() {
-    if (state == null) {
-      state = new MemoState();
-    }
   }
 }
