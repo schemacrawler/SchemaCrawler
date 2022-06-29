@@ -71,12 +71,12 @@ schema: PUBLIC.BOOKS
           PUBLIC.BOOKS.BOOKS.OTHEREDITIONID --> PUBLIC.BOOKS.BOOKS.ID
       attributes: 
         REMARKS: 
-    weak-association: SC_B8DA20C0_AFD2BA21
+    weak-association: SCHCRWLR_AFD2BA21_B8DA20C0
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
   table: PUBLIC.BOOKS.COUPONS
-    weak-association: SC_3B49BEC4_20BE6F95
+    weak-association: SCHCRWLR_20BE6F95_3B49BEC4
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
@@ -90,7 +90,7 @@ schema: PUBLIC.BOOKS
           PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
       attributes: 
         PK_NAME: SYS_PK_10134
-    weak-association: SC_B8DA20C0_AFD2BA21
+    weak-association: SCHCRWLR_AFD2BA21_B8DA20C0
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
@@ -159,7 +159,7 @@ schema: PUBLIC."PUBLISHER SALES"
           PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
       attributes: 
         PK_NAME: PK_CUSTOMERS
-    weak-association: SC_3B49BEC4_20BE6F95
+    weak-association: SCHCRWLR_20BE6F95_3B49BEC4
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
