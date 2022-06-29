@@ -130,7 +130,7 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 ------------------------------------------------------------------------
 
                                                         [lint, critical]
-	foreign key self-references primary key	FK_SELFREFERENCE
+	foreign key self-references primary key	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
                                                              [lint, low]
 	empty table	
 	should have remarks	

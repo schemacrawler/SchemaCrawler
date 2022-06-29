@@ -39,37 +39,29 @@ import java.util.TreeSet;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.NamedObjectKey;
-import schemacrawler.schema.PartialDatabaseObject;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import us.fatehi.utility.CompareUtility;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
-    implements TableReference {
+abstract class AbstractTableReference extends MutableTableConstraint implements TableReference {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
   private final Table pkTable;
-  private final Table fkTable;
-  private final NamedObjectKey key;
   private final SortedSet<ColumnReference> columnReferences;
-  private final NamedObjectList<TableConstraintColumn> tableConstraintColumns;
 
   public AbstractTableReference(final String name, final ColumnReference columnReference) {
-    super(name);
-    requireNonNull(columnReference, "No column reference provided");
+    super(
+        requireNonNull(columnReference, "No column reference provided")
+            .getForeignKeyColumn()
+            .getParent(),
+        name);
 
     columnReferences = new TreeSet<>();
-    tableConstraintColumns = new NamedObjectList<>();
-
     addColumnReference(columnReference);
+
     pkTable = columnReference.getPrimaryKeyColumn().getParent();
-    fkTable = columnReference.getForeignKeyColumn().getParent();
-    key = fkTable.key().with(getName());
   }
 
   /**
@@ -107,18 +99,8 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
   }
 
   @Override
-  public List<TableConstraintColumn> getConstrainedColumns() {
-    return tableConstraintColumns.values();
-  }
-
-  @Override
   public Table getForeignKeyTable() {
-    return fkTable;
-  }
-
-  @Override
-  public Table getParent() {
-    return getForeignKeyTable();
+    return getParent();
   }
 
   @Override
@@ -126,31 +108,10 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return pkTable;
   }
 
-  /** Gets the schema of the constrained table - that is the referencing table. */
-  @Override
-  public Schema getSchema() {
-    return fkTable.getSchema();
-  }
-
-  @Override
-  public String getShortName() {
-    return getName();
-  }
-
-  @Override
-  public final boolean isParentPartial() {
-    return getParent() instanceof PartialDatabaseObject;
-  }
-
   /** {@inheritDoc} */
   @Override
   public Iterator<ColumnReference> iterator() {
     return columnReferences.iterator();
-  }
-
-  @Override
-  public NamedObjectKey key() {
-    return key;
   }
 
   void addColumnReference(final ColumnReference columnReference) {
@@ -166,6 +127,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     final MutableTableConstraintColumn tableConstraintColumn =
         new MutableTableConstraintColumn(AbstractTableReference.this, fkColumn);
     tableConstraintColumn.setKeyOrdinalPosition(columnReference.getKeySequence());
-    tableConstraintColumns.add(tableConstraintColumn);
+    addColumn(tableConstraintColumn);
   }
 }

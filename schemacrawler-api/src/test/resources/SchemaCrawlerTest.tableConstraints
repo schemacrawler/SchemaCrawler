@@ -16,12 +16,12 @@ schema: PUBLIC.BOOKS
       type: check
       on column: LASTNAME
   table: PUBLIC.BOOKS.BOOKS
-    constraint: FK_PREVIOUSEDITION
-      type: foreign_key
-      on column: PREVIOUSEDITIONID
     constraint: PK_BOOKS
       type: primary_key
       on column: ID
+    constraint: FK_PREVIOUSEDITION
+      type: foreign_key
+      on column: PREVIOUSEDITIONID
     constraint: U_PREVIOUSEDITION
       type: unique
       on column: PREVIOUSEDITIONID
@@ -80,12 +80,12 @@ schema: PUBLIC.BOOKS
       type: check
       on column: AUTHORID
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
-    constraint: FK_ΒΙΒΛΊΑ_PUBLISHERS
-      type: foreign_key
-      on column: ΕΚΔΌΤΗΣ
     constraint: PK_ΒΙΒΛΊΑ
       type: primary_key
       on column: ΜΟΝΑΔΙΚΌΣ
+    constraint: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      type: foreign_key
+      on column: ΕΚΔΌΤΗΣ
     constraint: SYS_CT_10137
       type: check
       on column: ΜΟΝΑΔΙΚΌΣ

@@ -70,7 +70,7 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 ------------------------------------------------------------------------
 
                                                         [lint, critical]
-	foreign key self-references primary key	FK_SELFREFERENCE
+	foreign key self-references primary key	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
                                                             [lint, high]
 	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_FK_SELFREFERENCE_10210
 	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_PK_SELFREFERENCE_10207
@@ -85,7 +85,7 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	foreign key data type different from primary key	FK_WRITERS_PUBLICATION
+	foreign key data type different from primary key	PUBLIC.FOR_LINT.WRITERS.FK_WRITERS_PUBLICATION
 	redundant index	PUBLIC.FOR_LINT.WRITERS.IDX_A1_WRITERS
                                                           [lint, medium]
 	unique index with nullable columns	PUBLIC.FOR_LINT.WRITERS.IDX_U_WRITERS
