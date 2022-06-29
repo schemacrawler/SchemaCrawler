@@ -51,7 +51,13 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
     definition = new StringBuilder();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   *
+   * <p>NOTE: compareTo is not compatible with equals. equals compares the full name of a database
+   * object, but compareTo uses more fields to define a "natural" sorting order. compareTo may
+   * return incorrect results until the object is fully built by SchemaCrawler.
+   */
   @Override
   public int compareTo(final NamedObject obj) {
     if (obj == null) {
@@ -133,11 +139,6 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
   }
 
   @Override
-  public boolean isColumnDataTypeKnown() {
-    return column.isColumnDataTypeKnown();
-  }
-
-  @Override
   public boolean hasDefinition() {
     return definition.length() > 0;
   }
@@ -146,6 +147,11 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
   @Override
   public boolean isAutoIncremented() {
     return column.isAutoIncremented();
+  }
+
+  @Override
+  public boolean isColumnDataTypeKnown() {
+    return column.isColumnDataTypeKnown();
   }
 
   /** {@inheritDoc} */

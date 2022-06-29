@@ -71,8 +71,12 @@ abstract class AbstractTableReference extends MutableTableConstraint implements 
   /**
    * {@inheritDoc}
    *
-   * <p>Note: Since foreign keys are not always explicitly named in databases, the sorting routine
-   * orders the foreign keys by the names of the columns in the foreign keys.
+   * <p>NOTE: compareTo is not compatible with equals. equals compares the full name of a database
+   * object, but compareTo uses more fields to define a "natural" sorting order. compareTo may
+   * return incorrect results until the object is fully built by SchemaCrawler.
+   *
+   * <p>Since foreign keys are not always explicitly named in databases, the sorting routine orders
+   * the foreign keys by the names of the columns in the foreign keys.
    */
   @Override
   public int compareTo(final NamedObject obj) {
