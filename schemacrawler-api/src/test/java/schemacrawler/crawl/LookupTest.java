@@ -31,10 +31,13 @@ package schemacrawler.crawl;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresent;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.sql.Connection;
+import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -45,11 +48,18 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DataTypeType;
+import schemacrawler.schema.Function;
+import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureParameter;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableTypes;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -122,6 +132,78 @@ public class LookupTest {
   }
 
   @Test
+  public void lookupColumn() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+
+    assertThat(column.lookupAttribute(null), isEmpty());
+    assertThat(column.lookupAttribute(NOTHING_AT_ALL), isEmpty());
+    assertThat(column.lookupAttribute("CHAR_OCTET_LENGTH"), isPresentAndIs(20));
+
+    final Privilege<Column> privilege = new MutablePrivilege<>(new ColumnPointer(column), "DELETE");
+    assertThat(column.lookupPrivilege(null), isEmpty());
+    assertThat(column.lookupPrivilege(NOTHING_AT_ALL), isEmpty());
+    assertThat(column.lookupPrivilege("DELETE"), isPresentAndIs(privilege));
+  }
+
+  @Test
+  public void lookupFunction() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+
+    final Collection<Routine> functions = catalog.getRoutines(schema, "CUSTOMADD");
+    assertThat(functions, hasSize(2));
+    final Function function = (Function) functions.iterator().next();
+
+    assertThat(function.lookupAttribute(null), isEmpty());
+    assertThat(function.lookupAttribute(NOTHING_AT_ALL), isEmpty());
+    assertThat(function.lookupAttribute("DECLARED_NUMERIC_SCALE"), isPresentAndIs(0L));
+
+    assertThat(function.lookupParameter(null), isEmpty());
+    assertThat(function.lookupParameter(NOTHING_AT_ALL), isEmpty());
+    assertThat(function.lookupParameter("ONE"), isPresent());
+    final FunctionParameter parameter = function.lookupParameter("ONE").get();
+    assertThat(parameter.getName(), is("ONE"));
+  }
+
+  @Test
+  public void lookupIndex() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final Index index = table.lookupIndex("IDX_B_AUTHORS").get();
+
+    assertThat(index.lookupAttribute(null), isEmpty());
+    assertThat(index.lookupAttribute(NOTHING_AT_ALL), isEmpty());
+    assertThat(index.lookupAttribute("INDEX_QUALIFIER"), isPresentAndIs("PUBLIC"));
+
+    final IndexColumn column = new MutableIndexColumn(index, new ColumnPartial(table, "FIRSTNAME"));
+    assertThat(index.lookupColumn(null), isEmpty());
+    assertThat(index.lookupColumn(NOTHING_AT_ALL), isEmpty());
+    assertThat(index.lookupColumn("FIRSTNAME"), isPresentAndIs(column));
+  }
+
+  @Test
+  public void lookupProcedure() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+
+    final Collection<Routine> procedures = catalog.getRoutines(schema, "NEW_PUBLISHER");
+    assertThat(procedures, hasSize(2));
+    final Procedure procedure = (Procedure) procedures.iterator().next();
+
+    assertThat(procedure.lookupAttribute(null), isEmpty());
+    assertThat(procedure.lookupAttribute(NOTHING_AT_ALL), isEmpty());
+    assertThat(procedure.lookupAttribute("SCHEMA_LEVEL_ROUTINE"), isPresentAndIs("YES"));
+
+    assertThat(procedure.lookupParameter(null), isEmpty());
+    assertThat(procedure.lookupParameter(NOTHING_AT_ALL), isEmpty());
+    assertThat(procedure.lookupParameter("PUBLISHER"), isPresent());
+    final ProcedureParameter parameter = procedure.lookupParameter("PUBLISHER").get();
+    assertThat(parameter.getName(), is("PUBLISHER"));
+  }
+
+  @Test
   public void lookupTable() throws Exception {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
 
@@ -163,5 +245,15 @@ public class LookupTest {
     assertThat(
         catalog.lookupTable(schema, "BOOKAUTHORS").get().lookupTableConstraint("Z_FK_AUTHOR"),
         isPresent());
+  }
+
+  @Test
+  public void lookupTableTypes(final Connection connection) throws Exception {
+
+    final TableTypes tableTypes = TableTypes.from(connection);
+
+    assertThat(tableTypes.lookupTableType(null), isEmpty());
+    assertThat(tableTypes.lookupTableType(NOTHING_AT_ALL), isEmpty());
+    assertThat(tableTypes.lookupTableType("VIEW"), isPresent());
   }
 }
