@@ -95,36 +95,6 @@ public class SchemaCrawlerCoverageTest {
   private Catalog catalog;
 
   @Test
-  public void catalogLookup() throws Exception {
-    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-
-    assertThat(catalog.lookupSchema(null), isEmpty());
-    assertThat(catalog.lookupSchema("UNKNOWN"), isEmpty());
-    assertThat(catalog.lookupSchema("PUBLIC.BOOKS"), isPresentAndIs(schema));
-
-    final Sequence sequence = new MutableSequence(schema, "PUBLISHER_ID_SEQ");
-    assertThat(catalog.lookupSequence(schema, null), isEmpty());
-    assertThat(catalog.lookupSequence(schema, "UNKNOWN"), isEmpty());
-    assertThat(catalog.lookupSequence(schema, "PUBLISHER_ID_SEQ"), isPresentAndIs(sequence));
-
-    final Synonym synonym = new MutableSynonym(schema, "PUBLICATIONS");
-    assertThat(catalog.lookupSynonym(schema, null), isEmpty());
-    assertThat(catalog.lookupSynonym(schema, "UNKNOWN"), isEmpty());
-    assertThat(catalog.lookupSynonym(schema, "PUBLICATIONS"), isPresentAndIs(synonym));
-
-    final ColumnDataType systemColumnDataType =
-        new MutableColumnDataType(new SchemaReference(), "VARCHAR", DataTypeType.system);
-    assertThat(catalog.lookupSystemColumnDataType(null), isEmpty());
-    assertThat(catalog.lookupSystemColumnDataType("UNKNOWN"), isEmpty());
-    assertThat(catalog.lookupSystemColumnDataType("VARCHAR"), isPresentAndIs(systemColumnDataType));
-
-    final Table table = new MutableTable(schema, "AUTHORS");
-    assertThat(catalog.lookupTable(schema, null), isEmpty());
-    assertThat(catalog.lookupTable(schema, "UNKNOWN"), isEmpty());
-    assertThat(catalog.lookupTable(schema, "AUTHORS"), isPresentAndIs(table));
-  }
-
-  @Test
   public void catalogReduce() throws Exception {
     final Reducer reducer = spy(Reducer.class);
 
