@@ -28,90 +28,55 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.NamedObjectKey;
-import schemacrawler.schema.PartialDatabaseObject;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import us.fatehi.utility.CompareUtility;
+import us.fatehi.utility.string.StringFormat;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
-    implements TableReference {
-
-  private final class MemoState implements Serializable {
-
-    private static final long serialVersionUID = -8137191924777748304L;
-
-    private final Table pkTable;
-    private final Table fkTable;
-    private final NamedObjectKey key;
-
-    MemoState() {
-      Table pkTable = null;
-      Table fkTable = null;
-
-      final List<ColumnReference> columnReferences =
-          new ArrayList<>(AbstractTableReference.this.columnReferences);
-      for (int i = 0; i < columnReferences.size(); i++) {
-
-        final ColumnReference columnReference = columnReferences.get(i);
-        if (i == 0) {
-          pkTable = columnReference.getPrimaryKeyColumn().getParent();
-          fkTable = columnReference.getForeignKeyColumn().getParent();
-        }
-      }
-      this.pkTable = requireNonNull(pkTable, "No primary table found");
-      this.fkTable = requireNonNull(fkTable, "No foreign table found");
-
-      this.key = fkTable.key().with(getName());
-    }
-
-    Table getForeignKeyTable() {
-      return fkTable;
-    }
-
-    Table getPrimaryKeyTable() {
-      return pkTable;
-    }
-
-    NamedObjectKey key() {
-      return key;
-    }
-  }
+abstract class AbstractTableReference extends MutableTableConstraint implements TableReference {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
-  private final SortedSet<ColumnReference> columnReferences;
-  private final NamedObjectList<TableConstraintColumn> tableConstraintColumns;
-  private transient MemoState state;
+  private static final Logger LOGGER = Logger.getLogger(AbstractTableReference.class.getName());
 
-  public AbstractTableReference(final String name) {
-    super(name);
+  private final Table pkTable;
+  private final SortedSet<ColumnReference> columnReferences;
+
+  public AbstractTableReference(final String name, final ColumnReference columnReference) {
+    super(
+        requireNonNull(columnReference, "No column reference provided")
+            .getForeignKeyColumn()
+            .getParent(),
+        name);
+
+    pkTable = columnReference.getPrimaryKeyColumn().getParent();
     columnReferences = new TreeSet<>();
-    tableConstraintColumns = new NamedObjectList<>();
+    addColumnReference(columnReference);
   }
 
   /**
    * {@inheritDoc}
    *
-   * <p>Note: Since foreign keys are not always explicitly named in databases, the sorting routine
-   * orders the foreign keys by the names of the columns in the foreign keys.
+   * <p>NOTE: compareTo is not compatible with equals. equals compares the full name of a database
+   * object, but compareTo uses more fields to define a "natural" sorting order. compareTo may
+   * return incorrect results until the object is fully built by SchemaCrawler.
+   *
+   * <p>Since foreign keys are not always explicitly named in databases, the sorting routine orders
+   * the foreign keys by the names of the columns in the foreign keys.
    */
   @Override
   public int compareTo(final NamedObject obj) {
@@ -135,27 +100,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return -1;
   }
 
-  /**
-   * IMPORTANT: This method is unstable until the table reference is fully built, since it uses
-   * column references.
-   *
-   * <p>{@inheritDoc}
-   */
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof TableReference)) {
-      return false;
-    }
-    final TableReference other = (TableReference) obj;
-    return Objects.equals(getColumnReferences(), other.getColumnReferences());
-  }
-
   /** {@inheritDoc} */
   @Override
   public List<ColumnReference> getColumnReferences() {
@@ -163,53 +107,13 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
   }
 
   @Override
-  public List<TableConstraintColumn> getConstrainedColumns() {
-    return tableConstraintColumns.values();
-  }
-
-  @Override
   public Table getForeignKeyTable() {
-    buildState();
-    return state.getForeignKeyTable();
-  }
-
-  @Override
-  public Table getParent() {
-    return getForeignKeyTable();
+    return getParent();
   }
 
   @Override
   public Table getPrimaryKeyTable() {
-    buildState();
-    return state.getPrimaryKeyTable();
-  }
-
-  /** Gets the schema of the constrained table - that is the referencing table. */
-  @Override
-  public Schema getSchema() {
-    buildState();
-    return state.getForeignKeyTable().getSchema();
-  }
-
-  @Override
-  public String getShortName() {
-    return getName();
-  }
-
-  /**
-   * IMPORTANT: This method is unstable until the table reference is fully built, since it uses
-   * column references.
-   *
-   * <p>{@inheritDoc}
-   */
-  @Override
-  public int hashCode() {
-    return hash(columnReferences);
-  }
-
-  @Override
-  public final boolean isParentPartial() {
-    return getParent() instanceof PartialDatabaseObject;
+    return pkTable;
   }
 
   /** {@inheritDoc} */
@@ -218,18 +122,25 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return columnReferences.iterator();
   }
 
-  @Override
-  public NamedObjectKey key() {
-    buildState();
-    return state.key();
-  }
-
-  void addColumnReference(final ColumnReference columnReference) {
+  boolean addColumnReference(final ColumnReference columnReference) {
     if (columnReference == null) {
-      return;
+      return false;
     }
-    columnReferences.add(columnReference);
-    addTableConstraintColumn(columnReference);
+    // Add a column reference only if they reference the same two tables
+    final Table fkTable = getParent();
+    if (pkTable.equals(columnReference.getPrimaryKeyColumn().getParent())
+        && fkTable.equals(columnReference.getForeignKeyColumn().getParent())) {
+      columnReferences.add(columnReference);
+      addTableConstraintColumn(columnReference);
+      return true;
+    } else {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Column reference <%s> not added, since it is not consistent with <%s --> %s>",
+              columnReference, fkTable, pkTable));
+      return false;
+    }
   }
 
   private void addTableConstraintColumn(final ColumnReference columnReference) {
@@ -237,12 +148,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     final MutableTableConstraintColumn tableConstraintColumn =
         new MutableTableConstraintColumn(AbstractTableReference.this, fkColumn);
     tableConstraintColumn.setKeyOrdinalPosition(columnReference.getKeySequence());
-    tableConstraintColumns.add(tableConstraintColumn);
-  }
-
-  private void buildState() {
-    if (state == null) {
-      state = new MemoState();
-    }
+    addColumn(tableConstraintColumn);
   }
 }

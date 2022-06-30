@@ -60,7 +60,13 @@ abstract class AbstractColumn<P extends DatabaseObject> extends AbstractDependan
     super(parent, name);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   *
+   * <p>NOTE: compareTo is not compatible with equals. equals compares the full name of a database
+   * object, but compareTo uses more fields to define a "natural" sorting order. compareTo may
+   * return incorrect results until the object is fully built by SchemaCrawler.
+   */
   @Override
   public final int compareTo(final NamedObject obj) {
     if (obj == null) {

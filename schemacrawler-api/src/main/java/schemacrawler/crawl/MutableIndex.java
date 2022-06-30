@@ -64,6 +64,10 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   /**
    * {@inheritDoc}
    *
+   * <p>NOTE: compareTo is not compatible with equals. equals compares the full name of a database
+   * object, but compareTo uses more fields to define a "natural" sorting order. compareTo may
+   * return incorrect results until the object is fully built by SchemaCrawler.
+   *
    * <p>Note: Since indexes are not always explicitly named in databases, the sorting routine orders
    * the indexes by the names of the columns in the index.
    */

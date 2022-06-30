@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
@@ -45,8 +44,8 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyUpdateRule updateRule;
 
-  MutableForeignKey(final String name) {
-    super(name);
+  MutableForeignKey(final String name, final ColumnReference columnReference) {
+    super(name, columnReference);
 
     definition = new StringBuilder();
 
@@ -101,12 +100,6 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
       throw new NotLoadedException(this);
     }
     return deferrability == ForeignKeyDeferrability.initiallyDeferred;
-  }
-
-  void addColumnReference(final int keySequence, final Column fkColumn, final Column pkColumn) {
-    final ColumnReference fkColumnReference =
-        new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
-    addColumnReference(fkColumnReference);
   }
 
   void appendDefinition(final String definition) {

@@ -162,12 +162,4 @@ public class EqualsTest {
   public void vertex() {
     EqualsVerifier.forClass(Vertex.class).withIgnoredFields("attributes").verify();
   }
-
-  @Test
-  public void weakAssociation() {
-    EqualsVerifier.forClass(MutableWeakAssociation.class)
-        .withNonnullFields("columnReferences")
-        .withOnlyTheseFields("columnReferences")
-        .verify();
-  }
 }

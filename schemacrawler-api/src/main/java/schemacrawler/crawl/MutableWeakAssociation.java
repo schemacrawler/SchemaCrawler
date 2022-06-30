@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.WeakAssociation;
 
@@ -36,8 +37,8 @@ final class MutableWeakAssociation extends AbstractTableReference implements Wea
 
   private static final long serialVersionUID = -5164664131926303038L;
 
-  public MutableWeakAssociation(final String name) {
-    super(name);
+  public MutableWeakAssociation(final String name, final ColumnReference columnReference) {
+    super(name, columnReference);
   }
 
   @Override

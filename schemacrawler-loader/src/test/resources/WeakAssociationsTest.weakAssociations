@@ -1,12 +1,12 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
   table: PUBLIC.BOOKS.BOOKS
-    weak association: SC_B8DA20C0_AFD2BA21
+    weak association: SCHCRWLR_AFD2BA21_B8DA20C0
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
   table: PUBLIC.BOOKS.COUPONS
-    weak association: SC_3B49BEC4_20BE6F95
+    weak association: SCHCRWLR_20BE6F95_3B49BEC4
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
@@ -14,7 +14,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.CUSTOMERS
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
-    weak association: SC_B8DA20C0_AFD2BA21
+    weak association: SCHCRWLR_AFD2BA21_B8DA20C0
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
@@ -27,7 +27,7 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
   table: PUBLIC."PUBLISHER SALES".SALESDATA
   table: PUBLIC."PUBLISHER SALES".SALES
-    weak association: SC_3B49BEC4_20BE6F95
+    weak association: SCHCRWLR_20BE6F95_3B49BEC4
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID

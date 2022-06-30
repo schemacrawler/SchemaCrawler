@@ -87,7 +87,13 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     definition = new StringBuilder();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   *
+   * <p>NOTE: compareTo is not compatible with equals. equals compares the full name of a database
+   * object, but compareTo uses more fields to define a "natural" sorting order. compareTo may
+   * return incorrect results until the object is fully built by SchemaCrawler.
+   */
   @Override
   public int compareTo(final NamedObject obj) {
     if (obj == null) {

@@ -31,6 +31,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -42,9 +43,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -88,7 +91,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       final MetadataResultSet results, final Map<NamedObjectKey, MutableForeignKey> foreignKeys)
       throws SQLException {
     while (results.next()) {
-      final String foreignKeyName = results.getString("FK_NAME");
+      String foreignKeyName = results.getString("FK_NAME");
       LOGGER.log(Level.FINE, new StringFormat("Retrieving foreign key: %s", foreignKeyName));
 
       final String pkTableCatalogName = normalizeCatalogName(results.getString("PKTABLE_CAT"));
@@ -120,20 +123,34 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         continue;
       }
 
+      final Table fkTable = fkColumn.getParent();
+      final Table pkTable = pkColumn.getParent();
+
+      if (isBlank(foreignKeyName)) {
+        foreignKeyName = RetrieverUtility.constructForeignKeyName(fkTable, pkTable);
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat(
+                "Identifying foreign key with blank name: %s from %s --> %s",
+                foreignKeyName, fkTable, pkTable));
+      }
+
       final NamedObjectKey fkLookupKey =
           new NamedObjectKey(fkTableCatalogName, fkTableSchemaName, fkTableName, foreignKeyName);
+      final ColumnReference columnReference =
+          new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
 
       final Optional<MutableForeignKey> foreignKeyOptional =
           Optional.ofNullable(foreignKeys.get(fkLookupKey));
       final MutableForeignKey foreignKey;
       if (foreignKeyOptional.isPresent()) {
         foreignKey = foreignKeyOptional.get();
+        foreignKey.addColumnReference(columnReference);
       } else {
-        foreignKey = new MutableForeignKey(foreignKeyName);
+        foreignKey = new MutableForeignKey(foreignKeyName, columnReference);
         foreignKeys.put(fkLookupKey, foreignKey);
       }
 
-      foreignKey.addColumnReference(keySequence, fkColumn, pkColumn);
       foreignKey.setUpdateRule(updateRule);
       foreignKey.setDeleteRule(deleteRule);
       foreignKey.setDeferrability(deferrability);
@@ -141,16 +158,16 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
       if (fkColumn instanceof MutableColumn) {
         ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
-        ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
+        ((MutableTable) fkTable).addForeignKey(foreignKey);
       } else if (isFkColumnPartial) {
         ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
-        ((TablePartial) fkColumn.getParent()).addForeignKey(foreignKey);
+        ((TablePartial) fkTable).addForeignKey(foreignKey);
       }
 
       if (pkColumn instanceof MutableColumn) {
-        ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
+        ((MutableTable) pkTable).addForeignKey(foreignKey);
       } else if (isPkColumnPartial) {
-        ((TablePartial) pkColumn.getParent()).addForeignKey(foreignKey);
+        ((TablePartial) pkTable).addForeignKey(foreignKey);
       }
     }
   }

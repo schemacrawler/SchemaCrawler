@@ -59,6 +59,7 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
     databaseSystemName = null;
   }
 
+  /** {@inheritDoc} */
   @Override
   public int compareTo(final DatabaseServerType other) {
     if (this == other) {

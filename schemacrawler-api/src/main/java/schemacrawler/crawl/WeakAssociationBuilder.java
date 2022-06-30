@@ -35,6 +35,7 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -136,8 +137,10 @@ public final class WeakAssociationBuilder {
       return this;
     }
 
+    // Start key sequences at index 1
+    final int keySequence = columnReferences.size() + 1;
     final ColumnReference columnReference =
-        new ImmutableColumnReference(columnReferences.size(), fkColumn, pkColumn);
+        new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
     columnReferences.add(columnReference);
 
     return this;
@@ -159,7 +162,9 @@ public final class WeakAssociationBuilder {
       return Optional.empty();
     }
 
-    final ColumnReference someColumnReference = columnReferences.iterator().next();
+    final Iterator<ColumnReference> iterator = columnReferences.iterator();
+
+    final ColumnReference someColumnReference = iterator.next();
     final Table referencedTable = someColumnReference.getPrimaryKeyColumn().getParent();
     final Table referencingTable = someColumnReference.getForeignKeyColumn().getParent();
 
@@ -171,13 +176,13 @@ public final class WeakAssociationBuilder {
       weakAssociationName = name;
     }
 
-    final MutableWeakAssociation weakAssociation = new MutableWeakAssociation(weakAssociationName);
-    for (final ColumnReference columnReference : columnReferences) {
+    final MutableWeakAssociation weakAssociation =
+        new MutableWeakAssociation(weakAssociationName, someColumnReference);
+    while (iterator.hasNext()) {
+      final ColumnReference columnReference = iterator.next();
       // Add a column reference only if they reference the same two tables
-      if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())
-          && referencingTable.equals(columnReference.getForeignKeyColumn().getParent())) {
-        weakAssociation.addColumnReference(columnReference);
-      } else {
+      final boolean addedColumnReference = weakAssociation.addColumnReference(columnReference);
+      if (!addedColumnReference) {
         LOGGER.log(
             Level.CONFIG,
             new StringFormat(
@@ -225,7 +230,7 @@ public final class WeakAssociationBuilder {
     // Search foreign keys by column references
     final Collection<ForeignKey> exportedForeignKeys = referencedTable.getExportedForeignKeys();
     for (final ForeignKey foreignKey : exportedForeignKeys) {
-      if (foreignKey.equals(weakAssociation)) {
+      if (weakAssociation.compareTo(foreignKey) == 0) {
         return Optional.of(foreignKey);
       }
     }
@@ -245,7 +250,7 @@ public final class WeakAssociationBuilder {
     // Search weak associations by column references
     final Collection<WeakAssociation> weakAssociations = referencedTable.getWeakAssociations();
     for (final WeakAssociation weakAssociationInTable : weakAssociations) {
-      if (weakAssociationInTable.equals(weakAssociation)) {
+      if (weakAssociation.compareTo(weakAssociationInTable) == 0) {
         return Optional.of(weakAssociationInTable);
       }
     }

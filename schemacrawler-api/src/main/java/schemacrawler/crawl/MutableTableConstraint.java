@@ -91,10 +91,6 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
     return initiallyDeferred;
   }
 
-  public void setTableConstraintType(final TableConstraintType tableConstraintType) {
-    this.tableConstraintType = tableConstraintType;
-  }
-
   void addColumn(final MutableTableConstraintColumn column) {
     columns.add(column);
   }
@@ -111,5 +107,9 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
 
   void setInitiallyDeferred(final boolean initiallyDeferred) {
     this.initiallyDeferred = initiallyDeferred;
+  }
+
+  void setTableConstraintType(final TableConstraintType tableConstraintType) {
+    this.tableConstraintType = tableConstraintType;
   }
 }

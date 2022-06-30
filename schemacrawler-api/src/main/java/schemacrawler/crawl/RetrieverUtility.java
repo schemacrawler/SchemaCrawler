@@ -33,8 +33,8 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -46,16 +46,16 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class RetrieverUtility {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(RetrieverUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(RetrieverUtility.class.getName());
 
   static String constructForeignKeyName(final Table pkTable, final Table fkTable) {
     requireNonNull(pkTable, "No referenced table provided");
     requireNonNull(fkTable, "No referencing table provided");
 
-    final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
-    final String fkHex = Integer.toHexString(fkTable.getFullName().hashCode());
-    final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex).toUpperCase();
+    final String foreignKeyName =
+        String.format(
+            "SCHCRWLR_%1$08X_%2$08X",
+            fkTable.getFullName().hashCode(), pkTable.getFullName().hashCode());
     return foreignKeyName;
   }
 
