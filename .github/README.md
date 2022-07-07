@@ -16,7 +16,7 @@
 # SchemaCrawler
 
 > * **Please see the [SchemaCrawler website](https://www.schemacrawler.com/) for more details.**
-> * **Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler/scenarios/schemacrawler).**
+> * **Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler).**
 
 ## About
 
@@ -34,7 +34,7 @@ SchemaCrawler is available under a number of [licenses](https://www.schemacrawle
 
 ## Distributions and Downloads
 
-Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler/scenarios/schemacrawler).
+Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler).
 
 SchemaCrawler is available in a number of formats, including a download with examples, source code examples, plugin starters, a Maven reporting plugin, Docker containers, operating system specific installers, and jars on The Central Repository. For a complete list, see [downloads and distributions](https://www.schemacrawler.com/downloads.html).
 

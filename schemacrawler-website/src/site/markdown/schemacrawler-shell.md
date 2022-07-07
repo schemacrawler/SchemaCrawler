@@ -46,4 +46,4 @@ For more help, run `help filter` in the SchemaCrawler interactive shell, or `-h 
 
 
 
-The live online tutorial on the [interactive shell](https://killercoda.com/schemacrawler/scenarios/schemacrawler-shell) walks you through these concepts to help you understand them.
+The live online tutorial on the [interactive shell](https://killercoda.com/schemacrawler/scenario/schemacrawler-shell) walks you through these concepts to help you understand them.

@@ -33,7 +33,7 @@ load --info-level=minimum
 execute --command list
 ```
 The easiest way to learn how to use the SchemaCrawler Interactive Shell is by doing the 
-[live online tutorial](https://killercoda.com/schemacrawler/scenarios/schemacrawler-shell). The tutorial works from within 
+[live online tutorial](https://killercoda.com/schemacrawler/scenario/schemacrawler-shell). The tutorial works from within 
 any browser with no software or plugins needed.
 
 
@@ -47,7 +47,7 @@ schemacrawler \
 --info-level=maximum --command=schema
 ```
 The easiest way to learn how to use the SchemaCrawler command-line is by doing the 
-[live online tutorial](https://killercoda.com/schemacrawler/scenarios/schemacrawler). The tutorial works from within 
+[live online tutorial](https://killercoda.com/schemacrawler/scenario/schemacrawler). The tutorial works from within 
 any browser with no software or plugins needed.
 
 
