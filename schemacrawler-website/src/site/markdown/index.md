@@ -61,7 +61,7 @@ You can write templates to generate SQL scripts or any other text output.
 However, you will need to download the templating engine separately, since these are
 not part of the SchemaCrawler download.
 
-Explore the SchemaCrawler command-line with a [live online tutorial](https://www.katacoda.com/schemacrawler). 
+Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler). 
 The tutorial works from within any browser with no software or plugins needed.
 
 

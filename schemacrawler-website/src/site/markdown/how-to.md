@@ -58,7 +58,7 @@
 
 ## <a name="command-line">How to Use the SchemaCrawler Command-line</a>
 
-Explore the SchemaCrawler command-line with a [live online tutorial](https://www.katacoda.com/schemacrawler). 
+Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler). 
 The tutorial works from within any browser with no software or plugins needed.
 
 Use `schemacrawler.Main` to launch SchemaCrawler from the command-line. This launch offers a

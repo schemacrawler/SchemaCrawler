@@ -42,7 +42,7 @@ And finally, here are some other quick getting started articles:
 
 ### Explore the Command-Line
 
-Explore the SchemaCrawler command-line with a [live online tutorial](https://www.katacoda.com/schemacrawler). 
+Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler). 
 The tutorial works from within any browser with no software or plugins needed.
 
 SchemaCrawler provides detailed command-line help. Simply run `schemacrawler.cmd` (or

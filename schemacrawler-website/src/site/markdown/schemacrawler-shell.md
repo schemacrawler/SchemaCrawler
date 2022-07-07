@@ -3,7 +3,7 @@
 SchemaCrawler Interactive Shell is an interactive shell environment that allows you to work with your database metadata.
 
 The easiest way to learn how to use the SchemaCrawler Interactive Shell is by doing the 
-[live online tutorial](https://www.katacoda.com/schemacrawler). The tutorial works from within 
+[live online tutorial](https://killercoda.com/schemacrawler). The tutorial works from within 
 any browser with no software or plugins needed.
 
 You can connect to a database, load the schema metadata catalog, and then execute commands against the metadata.
@@ -46,4 +46,4 @@ For more help, run `help filter` in the SchemaCrawler interactive shell, or `-h 
 
 
 
-The live online tutorial on the [interactive shell](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler-shell) walks you through these concepts to help you understand them.
+The live online tutorial on the [interactive shell](https://killercoda.com/schemacrawler/scenarios/schemacrawler-shell) walks you through these concepts to help you understand them.

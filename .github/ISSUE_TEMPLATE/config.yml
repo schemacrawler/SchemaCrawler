@@ -4,7 +4,7 @@ contact_links:
     url: https://stackoverflow.com/search?tab=newest&q=schemacrawler
     about: Please ask and answer questions on StackOverflow
   - name: SchemaCrawler Tutorials
-    url: https://www.katacoda.com/schemacrawler
+    url: https://killercoda.com/schemacrawler
     about: Learn how to use the SchemaCrawler command-line with live tutorials
   - name: SchemaCrawler
     url: https://www.schemacrawler.com/
