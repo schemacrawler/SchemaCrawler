@@ -9,4 +9,4 @@ option for details on the error
 Additional resources are on the SchemaCrawler website,
 https://www.schemacrawler.com
 and a live, interactive tutorial is on
-https://katacoda.com/schemacrawler
+https://killercoda.com/schemacrawler
