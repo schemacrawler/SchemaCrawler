@@ -309,12 +309,16 @@ public final class TestUtility {
   }
 
   public static Path writeStringToTempFile(final String data) throws IOException {
+
     final Path tempFile =
         IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
     if (data == null) {
       return tempFile;
     }
-    Files.write(tempFile, data.getBytes(StandardCharsets.UTF_8));
+
+    final NeuteredExpressionsFilter neuteredExpressionsFilter = new NeuteredExpressionsFilter();
+    final String filteredData = neuteredExpressionsFilter.apply(data);
+    Files.write(tempFile, filteredData.getBytes(StandardCharsets.UTF_8));
 
     return tempFile;
   }
