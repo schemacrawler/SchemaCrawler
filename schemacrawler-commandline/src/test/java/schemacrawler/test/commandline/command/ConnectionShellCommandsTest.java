@@ -32,6 +32,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
+import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
@@ -98,7 +99,7 @@ public class ConnectionShellCommandsTest {
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), startsWith("Connected to "));
+    assertThat(contentsOf(streams.out()), startsWith("Connected to "));
   }
 
   @Test
@@ -113,7 +114,7 @@ public class ConnectionShellCommandsTest {
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), startsWith("Not connected to a database"));
+    assertThat(contentsOf(streams.out()), startsWith("Not connected to a database"));
   }
 
   @Test

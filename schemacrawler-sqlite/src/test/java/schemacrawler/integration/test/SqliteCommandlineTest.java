@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.io.FileMatchers.anExistingFile;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -136,7 +137,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
       assertThat(exitCode, is(1));
     }
 
-    assertThat(streams.err().getContents(), containsString("SQLITE_CANTOPEN"));
+    assertThat(contentsOf(streams.err()), containsString("SQLITE_CANTOPEN"));
     assertThat(outputOf(streams.out()), hasNoContent());
   }
 }

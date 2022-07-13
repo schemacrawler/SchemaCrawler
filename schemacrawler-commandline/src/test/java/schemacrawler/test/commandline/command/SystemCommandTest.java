@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -79,8 +80,8 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), containsString("Connected to"));
-    assertThat(streams.out().getContents(), containsString("HSQL Database Engine"));
+    assertThat(contentsOf(streams.out()), containsString("Connected to"));
+    assertThat(contentsOf(streams.out()), containsString("HSQL Database Engine"));
   }
 
   @Test
@@ -93,7 +94,7 @@ public class SystemCommandTest {
     state.setDataSource(() -> connection);
     executeSystemCommand(state, args);
 
-    assertThat(streams.err().getContents(), startsWith("Could not log connection information"));
+    assertThat(contentsOf(streams.err()), startsWith("Could not log connection information"));
     assertThat(outputOf(streams.out()), hasNoContent());
   }
 
@@ -116,7 +117,7 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), containsString("Database metadata is loaded"));
+    assertThat(contentsOf(streams.out()), containsString("Database metadata is loaded"));
   }
 
   @Test
@@ -127,7 +128,7 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), startsWith("Not connected to a database"));
+    assertThat(contentsOf(streams.out()), startsWith("Not connected to a database"));
   }
 
   @Test
@@ -138,7 +139,7 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), containsString("Database metadata is not loaded"));
+    assertThat(contentsOf(streams.out()), containsString("Database metadata is not loaded"));
   }
 
   @Test
@@ -150,7 +151,7 @@ public class SystemCommandTest {
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
-        streams.out().getContents(),
+        contentsOf(streams.out()),
         matchesPattern(
             Pattern.compile(".*\"@object\": \"schemacrawler.tools.options.Config\".*", DOTALL)));
   }
@@ -164,7 +165,7 @@ public class SystemCommandTest {
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
-        streams.out().getContents(),
+        contentsOf(streams.out()),
         matchesPattern(Pattern.compile("SchemaCrawler \\d{1,2}\\.\\d{1,2}\\.\\d{1,2}.*", DOTALL)));
   }
 
@@ -174,11 +175,11 @@ public class SystemCommandTest {
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), containsString("Available JDBC drivers:"));
+    assertThat(contentsOf(streams.out()), containsString("Available JDBC drivers:"));
     assertThat(
-        streams.out().getContents(),
+        contentsOf(streams.out()),
         containsString("Available SchemaCrawler database server plugins:"));
-    assertThat(streams.out().getContents(), containsString("Available SchemaCrawler commands:"));
+    assertThat(contentsOf(streams.out()), containsString("Available SchemaCrawler commands:"));
   }
 
   private void executeSystemCommand(final ShellState state, final String[] args) {

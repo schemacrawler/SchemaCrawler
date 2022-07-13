@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
@@ -95,7 +96,7 @@ public class GraphProcessExecutorTest {
             dotFile, outputFile, diagramOutputFormat, Collections.emptyList());
     processExecutor.run();
 
-    assertThat(streams.err().getContents(), containsString("syntax error in line 1 near 'hello'"));
+    assertThat(contentsOf(streams.err()), containsString("syntax error in line 1 near 'hello'"));
     assertThat(outputOf(streams.out()), hasNoContent());
   }
 }

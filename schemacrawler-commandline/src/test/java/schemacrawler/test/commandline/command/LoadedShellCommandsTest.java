@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
+import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
@@ -66,7 +67,7 @@ public class LoadedShellCommandsTest {
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), startsWith("Database metadata is loaded"));
+    assertThat(contentsOf(streams.out()), startsWith("Database metadata is loaded"));
   }
 
   @Test
@@ -81,7 +82,7 @@ public class LoadedShellCommandsTest {
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(streams.out().getContents(), startsWith("Database metadata is not loaded"));
+    assertThat(contentsOf(streams.out()), startsWith("Database metadata is not loaded"));
   }
 
   @Test

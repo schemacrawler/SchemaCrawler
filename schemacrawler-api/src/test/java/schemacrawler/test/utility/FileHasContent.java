@@ -52,6 +52,11 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     return new TestResource("/" + classpathResource);
   }
 
+  public static String contentsOf(final TestOutputCapture testoutput) {
+    requireNonNull(testoutput, "No test output capture provided");
+    return testoutput.getContents();
+  }
+
   public static Matcher<TestResource> hasNoContent() {
     return new FileHasContent(null, null);
   }
@@ -101,7 +106,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
   private final String outputFormatValue;
   private List<String> failures;
 
-  public FileHasContent(final TestResource referenceFileResource, final String outputFormatValue) {
+  private FileHasContent(final TestResource referenceFileResource, final String outputFormatValue) {
     this.referenceFileResource = referenceFileResource;
     this.outputFormatValue = outputFormatValue;
   }
