@@ -99,7 +99,6 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
               LOGGER.log(
                   Level.INFO, "Not retrieving table row counts, since this was not requested");
             }
-            return null;
           });
 
       stopWatch.time(
@@ -107,7 +106,6 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
           () -> {
             final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);
             catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
-            return null;
           });
 
       LOGGER.log(Level.INFO, stopWatch.report());

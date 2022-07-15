@@ -39,7 +39,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 public final class StopWatch {
@@ -128,13 +127,6 @@ public final class StopWatch {
 
       return buffer.toString();
     };
-  }
-
-  public <V> V time(final String taskName, final Callable<V> callable) throws Exception {
-    start(taskName);
-    final V returnValue = callable.call();
-    stop();
-    return returnValue;
   }
 
   public void time(final String taskName, final Function callable) throws Exception {

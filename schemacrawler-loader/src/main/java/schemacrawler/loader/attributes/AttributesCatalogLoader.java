@@ -103,7 +103,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
           () -> {
             final String catalogAttributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
             if (isBlank(catalogAttributesFile)) {
-              return null;
+              return;
             }
             final InputResource inputResource =
                 InputResourceUtility.createInputResource(catalogAttributesFile)
@@ -117,8 +117,6 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             loadRemarks(catalog, catalogAttributes);
             loadAlternateKeys(catalog, catalogAttributes);
             loadWeakAssociations(catalog, catalogAttributes);
-
-            return null;
           });
 
       LOGGER.log(Level.INFO, stopWatch.report());

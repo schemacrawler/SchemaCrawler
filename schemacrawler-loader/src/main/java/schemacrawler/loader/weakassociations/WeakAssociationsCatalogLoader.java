@@ -112,11 +112,9 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
                 config.getBooleanValue(OPTION_WEAK_ASSOCIATIONS, false);
             if (findWeakAssociations) {
               findWeakAssociations();
-              return null;
             } else {
               LOGGER.log(
                   Level.INFO, "Not retrieving weak associations, since this was not requested");
-              return null;
             }
           });
 
