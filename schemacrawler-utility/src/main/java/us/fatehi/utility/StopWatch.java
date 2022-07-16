@@ -31,6 +31,8 @@ import static java.time.temporal.ChronoField.HOUR_OF_DAY;
 import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -54,6 +56,8 @@ public final class StopWatch {
     private final String taskName;
 
     TaskInfo(final String taskName, final Duration duration) {
+      requireNonNull(taskName, "Task name not provided");
+      requireNonNull(duration, "Duration not provided");
       this.taskName = taskName;
       this.duration = duration;
     }
@@ -78,13 +82,9 @@ public final class StopWatch {
           .appendValue(SECOND_OF_MINUTE, 2)
           .appendFraction(NANO_OF_SECOND, 3, 3, true)
           .toFormatter();
+
   private final String id;
   private final List<TaskInfo> tasks = new LinkedList<>();
-  private String currentTaskName;
-  private boolean running;
-  // State for current task
-  private Instant start;
-
   private Duration totalDuration;
 
   public StopWatch(final String id) {
@@ -94,15 +94,6 @@ public final class StopWatch {
 
   public String getId() {
     return id;
-  }
-
-  /**
-   * Return whether the stop watch is currently running.
-   *
-   * @see #currentTaskName
-   */
-  public boolean isRunning() {
-    return running;
   }
 
   /**
@@ -129,10 +120,32 @@ public final class StopWatch {
     };
   }
 
-  public void time(final String taskName, final Function callable) throws Exception {
-    start(taskName);
-    callable.call();
-    stop();
+  public void time(final String taskName, final Function task) throws Exception {
+
+    requireNotBlank(taskName, "Task name not provided");
+    requireNonNull(task, "Task not provided");
+
+    Exception executionError = null;
+
+    final Instant start = Instant.now();
+
+    try {
+      task.call();
+    } catch (final Exception t) {
+      executionError = t;
+    }
+
+    final Instant stop = Instant.now();
+    final Duration runTime = Duration.between(start, stop);
+
+    totalDuration = totalDuration.plus(runTime);
+
+    final TaskInfo lastTaskInfo = new TaskInfo(taskName, runTime);
+    tasks.add(lastTaskInfo);
+
+    if (executionError != null) {
+      throw executionError;
+    }
   }
 
   private double calculatePercentage(final Duration duration, final Duration totalDuration) {
@@ -142,35 +155,5 @@ public final class StopWatch {
     } else {
       return duration.toMillis() * 100D / totalMillis;
     }
-  }
-
-  private void start(final String taskName) {
-    if (running) {
-      throw new IllegalStateException(
-          String.format("Cannot stop <%s>, since it is already running", id));
-    }
-
-    running = true;
-    currentTaskName = taskName;
-    start = Instant.now();
-  }
-
-  private void stop() {
-    if (!running) {
-      throw new IllegalStateException(
-          String.format("Cannot stop <%s>, since it is not running", id));
-    }
-
-    final Instant stop = Instant.now();
-    final Duration runTime = Duration.between(start, stop);
-
-    totalDuration = totalDuration.plus(runTime);
-
-    final TaskInfo lastTaskInfo = new TaskInfo(currentTaskName, runTime);
-    tasks.add(lastTaskInfo);
-
-    running = false;
-    currentTaskName = null;
-    start = null;
   }
 }
