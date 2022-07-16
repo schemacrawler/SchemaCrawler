@@ -85,11 +85,9 @@ public final class StopWatch {
 
   private final String id;
   private final List<TaskInfo> tasks = new LinkedList<>();
-  private Duration totalDuration;
 
   public StopWatch(final String id) {
     this.id = id;
-    totalDuration = Duration.ofNanos(0);
   }
 
   public String getId() {
@@ -103,6 +101,11 @@ public final class StopWatch {
    */
   public Supplier<String> report() {
     return () -> {
+      Duration totalDuration = Duration.ofNanos(0);
+      for (final TaskInfo task : tasks) {
+        totalDuration = totalDuration.plus(task.getDuration());
+      }
+
       final StringBuilder buffer = new StringBuilder(1024);
 
       final LocalTime totalDurationLocal = LocalTime.ofNanoOfDay(totalDuration.toNanos());
@@ -137,8 +140,6 @@ public final class StopWatch {
 
     final Instant stop = Instant.now();
     final Duration runTime = Duration.between(start, stop);
-
-    totalDuration = totalDuration.plus(runTime);
 
     final TaskInfo lastTaskInfo = new TaskInfo(taskName, runTime);
     tasks.add(lastTaskInfo);
