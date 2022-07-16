@@ -41,6 +41,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 public final class StopWatch {
@@ -50,20 +51,62 @@ public final class StopWatch {
     void call() throws Exception;
   }
 
+  private static class CallableFunction implements Callable<TaskInfo> {
+
+    private final String taskName;
+    private final Function task;
+
+    public CallableFunction(final String taskName, final Function task) {
+      this.taskName = requireNotBlank(taskName, "Task name not provided");
+      this.task = requireNonNull(task, "Task not provided");
+    }
+
+    @Override
+    public TaskInfo call() throws Exception {
+
+      Exception executionError = null;
+
+      final Instant start = Instant.now();
+
+      try {
+        task.call();
+      } catch (final Exception t) {
+        executionError = t;
+      }
+
+      final Instant stop = Instant.now();
+      final Duration runTime = Duration.between(start, stop);
+
+      final TaskInfo taskInfo = new TaskInfo(taskName, runTime, executionError);
+
+      return taskInfo;
+    }
+  }
+
   private static final class TaskInfo {
 
     private final Duration duration;
     private final String taskName;
+    private final Exception executionError;
 
-    TaskInfo(final String taskName, final Duration duration) {
+    TaskInfo(final String taskName, final Duration duration, final Exception executionError) {
       requireNonNull(taskName, "Task name not provided");
       requireNonNull(duration, "Duration not provided");
       this.taskName = taskName;
       this.duration = duration;
+      this.executionError = executionError; // Can be null
     }
 
     public Duration getDuration() {
       return duration;
+    }
+
+    public Exception getExecutionError() {
+      return executionError;
+    }
+
+    public boolean hasExecutionError() {
+      return executionError != null;
     }
 
     @Override
@@ -128,24 +171,11 @@ public final class StopWatch {
     requireNotBlank(taskName, "Task name not provided");
     requireNonNull(task, "Task not provided");
 
-    Exception executionError = null;
+    final CallableFunction callableFunction = new CallableFunction(taskName, task);
+    final TaskInfo taskInfo = callableFunction.call();
 
-    final Instant start = Instant.now();
-
-    try {
-      task.call();
-    } catch (final Exception t) {
-      executionError = t;
-    }
-
-    final Instant stop = Instant.now();
-    final Duration runTime = Duration.between(start, stop);
-
-    final TaskInfo lastTaskInfo = new TaskInfo(taskName, runTime);
-    tasks.add(lastTaskInfo);
-
-    if (executionError != null) {
-      throw executionError;
+    if (taskInfo.hasExecutionError()) {
+      throw taskInfo.getExecutionError();
     }
   }
 
