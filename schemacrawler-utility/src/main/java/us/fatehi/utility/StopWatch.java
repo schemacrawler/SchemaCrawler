@@ -74,6 +74,11 @@ public final class StopWatch {
     @Override
     public TaskInfo call() throws Exception {
 
+      LOGGER.log(
+          Level.INFO,
+          new StringFormat(
+              "Running <%s> on thread <%s>", taskName, Thread.currentThread().getName()));
+
       final Instant start = Instant.now();
 
       task.call();
@@ -185,6 +190,18 @@ public final class StopWatch {
     };
   }
 
+  public void run(final String taskName, final Function task) throws Exception {
+
+    requireNotBlank(taskName, "Task name not provided");
+    requireNonNull(task, "Task not provided");
+
+    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in main thread", taskName));
+
+    final CallableFunction callableFunction = new CallableFunction(taskName, task);
+    final TaskInfo taskInfo = callableFunction.call();
+    tasks.add(taskInfo);
+  }
+
   public void stop() throws ExecutionException {
     executorService.shutdown();
 
@@ -207,18 +224,6 @@ public final class StopWatch {
         // Ignore
       }
     }
-  }
-
-  public void run(final String taskName, final Function task) throws Exception {
-
-    requireNotBlank(taskName, "Task name not provided");
-    requireNonNull(task, "Task not provided");
-
-    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in main thread", taskName));
-
-    final CallableFunction callableFunction = new CallableFunction(taskName, task);
-    final TaskInfo taskInfo = callableFunction.call();
-    tasks.add(taskInfo);
   }
 
   private double calculatePercentage(final Duration duration, final Duration totalDuration) {

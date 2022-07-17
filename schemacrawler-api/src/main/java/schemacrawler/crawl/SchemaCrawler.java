@@ -160,14 +160,15 @@ public final class SchemaCrawler {
       final TableExtRetriever retrieverExtra, final TablePrivilegeRetriever retrieverPrivilege)
       throws Exception {
     LOGGER.log(Level.INFO, "Retrieving additional table column information");
-    stopWatch.fire(
+    stopWatch.time(
         retrieveAdditionalColumnAttributes,
         retrieverExtra::retrieveAdditionalColumnAttributes,
         retrieveTableColumns);
-    stopWatch.fire(
+    stopWatch.time(
         retrieveAdditionalColumnMetadata,
         retrieverExtra::retrieveAdditionalColumnMetadata,
-        retrieveTableColumns);
+        retrieveTableColumns,
+        retrieveAdditionalColumnAttributes);
     stopWatch.fire(
         retrieveTableColumnPrivileges,
         retrieverPrivilege::retrieveTableColumnPrivileges,

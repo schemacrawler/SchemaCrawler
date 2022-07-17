@@ -33,7 +33,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -138,7 +137,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   /** {@inheritDoc} */
   @Override
   public List<String> getEnumValues() {
-    return enumValues;
+    return new ArrayList<>(enumValues);
   }
 
   /** {@inheritDoc} */
@@ -265,9 +264,9 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
 
   void setEnumValues(final List<String> enumValues) {
     if (enumValues == null) {
-      this.enumValues = new CopyOnWriteArrayList<>();
+      this.enumValues = new ArrayList<>();
     } else {
-      this.enumValues = enumValues;
+      this.enumValues = new ArrayList<>(enumValues);
     }
   }
 
