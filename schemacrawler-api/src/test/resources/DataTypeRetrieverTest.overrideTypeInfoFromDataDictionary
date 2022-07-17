@@ -12,9 +12,6 @@ BIGINT
   java.sql.Types: BIGINT
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 BINARY
   column data-type
@@ -30,9 +27,6 @@ BINARY
   java.sql.Types: BINARY
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 BIT
   column data-type
@@ -48,9 +42,6 @@ BIT
   java.sql.Types: BIT
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 BLOB
   column data-type
@@ -66,9 +57,6 @@ BLOB
   java.sql.Types: BLOB
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 BOOLEAN
   column data-type
@@ -84,9 +72,6 @@ BOOLEAN
   java.sql.Types: BOOLEAN
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 CHARACTER
   column data-type
@@ -102,9 +87,6 @@ CHARACTER
   java.sql.Types: CHAR
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 CLOB
   column data-type
@@ -120,9 +102,6 @@ CLOB
   java.sql.Types: CLOB
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 DATE
   column data-type
@@ -138,9 +117,6 @@ DATE
   java.sql.Types: DATE
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 DECIMAL
   column data-type
@@ -156,9 +132,6 @@ DECIMAL
   java.sql.Types: DECIMAL
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 DOUBLE
   column data-type
@@ -174,9 +147,6 @@ DOUBLE
   java.sql.Types: DOUBLE
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 FLOAT
   column data-type
@@ -192,9 +162,6 @@ FLOAT
   java.sql.Types: DOUBLE
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 INTEGER
   column data-type
@@ -210,9 +177,6 @@ INTEGER
   java.sql.Types: INTEGER
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 NUMERIC
   column data-type
@@ -228,9 +192,6 @@ NUMERIC
   java.sql.Types: NUMERIC
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 NVARCHAR
   column data-type
@@ -246,9 +207,6 @@ NVARCHAR
   java.sql.Types: VARCHAR
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 OTHER
   column data-type
@@ -264,9 +222,6 @@ OTHER
   java.sql.Types: OTHER
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 REAL
   column data-type
@@ -282,9 +237,6 @@ REAL
   java.sql.Types: DOUBLE
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 SMALLINT
   column data-type
@@ -300,9 +252,6 @@ SMALLINT
   java.sql.Types: SMALLINT
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 TIME
   column data-type
@@ -318,9 +267,6 @@ TIME
   java.sql.Types: TIME
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 TIMESTAMP
   column data-type
@@ -336,9 +282,6 @@ TIMESTAMP
   java.sql.Types: TIMESTAMP
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 TINYINT
   column data-type
@@ -354,9 +297,6 @@ TINYINT
   java.sql.Types: TINYINT
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 UUID
   column data-type
@@ -372,9 +312,6 @@ UUID
   java.sql.Types: BINARY
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 VARBINARY
   column data-type
@@ -390,9 +327,6 @@ VARBINARY
   java.sql.Types: VARBINARY
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 
 VARCHAR
   column data-type
@@ -408,7 +342,4 @@ VARCHAR
   java.sql.Types: VARCHAR
   attributes:
     INJECTED_TEST_ATTRIBUTE=99
-    INTERVAL_PRECISION=null
-    SQL_DATA_TYPE=null
-    SQL_DATETIME_SUB=null
 

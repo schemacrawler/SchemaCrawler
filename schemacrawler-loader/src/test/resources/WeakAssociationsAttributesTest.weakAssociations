@@ -28,8 +28,8 @@ schema: PUBLIC.BOOKS
           PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
       remarks: Overwritten remarks line 1
       attributes: 
-        some tag 1: tagvalue1
         REMARKS: Overwritten remarks line 1
+        some tag 1: tagvalue1
         tag2: tag value 2
   table: PUBLIC.BOOKS.BOOKS
     foreign-key: FK_PREVIOUSEDITION
@@ -62,8 +62,8 @@ schema: PUBLIC.BOOKS
           PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
       remarks: Overwritten remarks line 1
       attributes: 
-        some tag 1: tagvalue1
         REMARKS: Overwritten remarks line 1
+        some tag 1: tagvalue1
         tag2: tag value 2
     weak-association: 9_weak_self_reference
       column references: 
