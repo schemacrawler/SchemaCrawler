@@ -167,8 +167,7 @@ public final class SchemaCrawler {
     stopWatch.time(
         retrieveAdditionalColumnMetadata,
         retrieverExtra::retrieveAdditionalColumnMetadata,
-        retrieveTableColumns,
-        retrieveAdditionalColumnAttributes);
+        retrieveTableColumns);
     stopWatch.fire(
         retrieveTableColumnPrivileges,
         retrieverPrivilege::retrieveTableColumnPrivileges,
