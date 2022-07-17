@@ -49,6 +49,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import us.fatehi.utility.string.StringFormat;
 
 public final class StopWatch {
 
@@ -105,6 +109,8 @@ public final class StopWatch {
     }
   }
 
+  private static final Logger LOGGER = Logger.getLogger(StopWatch.class.getName());
+
   private static final DateTimeFormatter df =
       new DateTimeFormatterBuilder()
           .appendValue(HOUR_OF_DAY, 2)
@@ -131,12 +137,21 @@ public final class StopWatch {
     requireNotBlank(taskName, "Task name not provided");
     requireNonNull(task, "Task not provided");
 
+    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in a new thread", taskName));
+
     final Future<TaskInfo> future = executorService.submit(new CallableFunction(taskName, task));
     futures.add(future);
   }
 
   public String getId() {
     return id;
+  }
+
+  public void noOp(final String taskName) {
+    LOGGER.log(Level.INFO, new StringFormat("Not running <%s>", taskName));
+
+    final TaskInfo taskInfo = new TaskInfo(taskName, Duration.ZERO);
+    tasks.add(taskInfo);
   }
 
   /**
@@ -194,10 +209,12 @@ public final class StopWatch {
     }
   }
 
-  public void time(final String taskName, final Function task) throws Exception {
+  public void run(final String taskName, final Function task) throws Exception {
 
     requireNotBlank(taskName, "Task name not provided");
     requireNonNull(task, "Task not provided");
+
+    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in main thread", taskName));
 
     final CallableFunction callableFunction = new CallableFunction(taskName, task);
     final TaskInfo taskInfo = callableFunction.call();

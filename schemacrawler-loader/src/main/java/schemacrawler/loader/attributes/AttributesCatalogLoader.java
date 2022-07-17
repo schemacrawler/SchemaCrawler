@@ -98,7 +98,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     try {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();
-      stopWatch.time(
+      stopWatch.run(
           "retrieveCatalogAttributes",
           () -> {
             final String catalogAttributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);

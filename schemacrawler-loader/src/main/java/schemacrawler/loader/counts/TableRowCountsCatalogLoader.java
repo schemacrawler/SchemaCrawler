@@ -89,7 +89,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
       final TableRowCountsRetriever rowCountsRetriever =
           new TableRowCountsRetriever(getConnection(), catalog);
       final Config config = getAdditionalConfiguration();
-      stopWatch.time(
+      stopWatch.run(
           "retrieveTableRowCounts",
           () -> {
             final boolean loadRowCounts = config.getBooleanValue(OPTION_LOAD_ROW_COUNTS, false);
@@ -101,7 +101,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
             }
           });
 
-      stopWatch.time(
+      stopWatch.run(
           "filterEmptyTables",
           () -> {
             final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);

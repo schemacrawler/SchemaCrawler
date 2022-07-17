@@ -104,7 +104,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
 
     LOGGER.log(Level.INFO, "Finding weak associations");
     try {
-      stopWatch.time(
+      stopWatch.run(
           "retrieveWeakAssociations",
           () -> {
             final Config config = getAdditionalConfiguration();

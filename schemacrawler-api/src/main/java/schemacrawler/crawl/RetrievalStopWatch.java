@@ -68,6 +68,10 @@ public final class RetrievalStopWatch {
     fire(retrievalName, run, function);
   }
 
+  public void noOp(final String retrievalName) throws Exception {
+    stopWatch.noOp(retrievalName);
+  }
+
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
@@ -107,16 +111,11 @@ public final class RetrievalStopWatch {
 
   private void fire(final String retrievalName, final boolean run, final Function function)
       throws Exception {
-    stopWatch.fire(
-        retrievalName,
-        () -> {
-          if (run) {
-            LOGGER.log(Level.INFO, "Running " + retrievalName);
-            function.call();
-          } else {
-            LOGGER.log(Level.INFO, retrievalName + " not requested");
-          }
-        });
+    if (run) {
+      stopWatch.fire(retrievalName, function);
+    } else {
+      stopWatch.noOp(retrievalName);
+    }
   }
 
   private void newStopWatch(final SchemaInfoLevel infoLevel) {
@@ -135,15 +134,10 @@ public final class RetrievalStopWatch {
 
   private void time(final String retrievalName, final boolean run, final Function function)
       throws Exception {
-    stopWatch.time(
-        retrievalName,
-        () -> {
-          if (run) {
-            LOGGER.log(Level.INFO, "Running " + retrievalName);
-            function.call();
-          } else {
-            LOGGER.log(Level.INFO, retrievalName + " not requested");
-          }
-        });
+    if (run) {
+      stopWatch.run(retrievalName, function);
+    } else {
+      stopWatch.noOp(retrievalName);
+    }
   }
 }
