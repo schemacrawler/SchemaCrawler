@@ -32,10 +32,10 @@ import static schemacrawler.utility.NamedObjectSort.alphabetical;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
@@ -45,7 +45,7 @@ public final class SchemaReference implements Schema {
 
   private static final long serialVersionUID = -5309848447599233878L;
 
-  private final Map<String, Object> attributeMap = new HashMap<>();
+  private final Map<String, Object> attributeMap = new ConcurrentHashMap<>();
   private final String catalogName;
   private final String schemaName;
   private transient NamedObjectKey key;

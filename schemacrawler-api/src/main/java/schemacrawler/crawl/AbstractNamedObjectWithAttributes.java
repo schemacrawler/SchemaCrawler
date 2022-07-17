@@ -32,9 +32,9 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.DescribedObject;
@@ -56,7 +56,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
    */
   AbstractNamedObjectWithAttributes(final String name) {
     super(name);
-    attributeMap = new HashMap<>();
+    attributeMap = new ConcurrentHashMap<>();
   }
 
   /** {@inheritDoc} */
