@@ -33,6 +33,7 @@ import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -132,8 +133,16 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   }
 
   protected final void addAttributes(final Map<String, Object> values) {
-    if (values != null) {
-      attributeMap.putAll(values);
+    if (values == null) {
+      return;
+    }
+    // Check for null entries, since concurrent hash map does not allow them
+    for (final Entry<String, Object> entry : values.entrySet()) {
+      final String key = entry.getKey();
+      final Object value = entry.getValue();
+      if (key != null && value != null) {
+        attributeMap.put(key, value);
+      }
     }
   }
 }
