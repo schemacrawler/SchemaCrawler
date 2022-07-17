@@ -29,7 +29,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.function.Supplier;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,17 +50,41 @@ public final class RetrievalStopWatch {
     newStopWatch(infoLevel);
   }
 
+  public void fire(
+      final SchemaInfoRetrieval retrieval,
+      final Function function,
+      final SchemaInfoRetrieval... additionalRetrievals)
+      throws Exception {
+    final boolean run = infoLevel.is(retrieval) && run(additionalRetrievals);
+    fire(retrieval.name(), run, function);
+  }
+
+  public void fire(
+      final String retrievalName,
+      final Function function,
+      final SchemaInfoRetrieval... additionalRetrievals)
+      throws Exception {
+    final boolean run = run(additionalRetrievals);
+    fire(retrievalName, run, function);
+  }
+
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
    * @return String supplier.
    */
-  public Supplier<String> stopAndLogTime() {
-    final Supplier<String> stringify = stopWatch.report();
+  public void stopAndLogTime() throws ExecutionException {
+    ExecutionException exception = null;
+    try {
+      stopWatch.stop();
+    } catch (final ExecutionException e) {
+      exception = e;
+    }
     LOGGER.log(Level.INFO, stopWatch.report());
+    if (exception != null) {
+      throw exception;
+    }
     newStopWatch(infoLevel);
-
-    return stringify;
   }
 
   public void time(
@@ -81,7 +105,21 @@ public final class RetrievalStopWatch {
     time(retrievalName, run, function);
   }
 
-  private void newStopWatch(SchemaInfoLevel infoLevel) {
+  private void fire(final String retrievalName, final boolean run, final Function function)
+      throws Exception {
+    stopWatch.fire(
+        retrievalName,
+        () -> {
+          if (run) {
+            LOGGER.log(Level.INFO, "Running " + retrievalName);
+            function.call();
+          } else {
+            LOGGER.log(Level.INFO, retrievalName + " not requested");
+          }
+        });
+  }
+
+  private void newStopWatch(final SchemaInfoLevel infoLevel) {
     stopWatch = new StopWatch(infoLevel.getTag());
   }
 

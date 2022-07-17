@@ -146,13 +146,13 @@ public final class SchemaCrawler {
       crawlSynonyms();
       crawlSequences();
 
+      stopWatch.stopAndLogTime();
+
       return catalog;
     } catch (final RuntimeException e) {
       throw e;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e);
-    } finally {
-      stopWatch.stopAndLogTime();
     }
   }
 
@@ -160,15 +160,15 @@ public final class SchemaCrawler {
       final TableExtRetriever retrieverExtra, final TablePrivilegeRetriever retrieverPrivilege)
       throws Exception {
     LOGGER.log(Level.INFO, "Retrieving additional table column information");
-    stopWatch.time(
+    stopWatch.fire(
         retrieveAdditionalColumnAttributes,
         retrieverExtra::retrieveAdditionalColumnAttributes,
         retrieveTableColumns);
-    stopWatch.time(
+    stopWatch.fire(
         retrieveAdditionalColumnMetadata,
         retrieverExtra::retrieveAdditionalColumnMetadata,
         retrieveTableColumns);
-    stopWatch.time(
+    stopWatch.fire(
         retrieveTableColumnPrivileges,
         retrieverPrivilege::retrieveTableColumnPrivileges,
         retrieveTableColumns);
@@ -179,21 +179,29 @@ public final class SchemaCrawler {
       final TableExtRetriever retrieverExtra,
       final TablePrivilegeRetriever retrieverPrivilege)
       throws Exception {
-    stopWatch.time(
+    stopWatch.fire(
         retrieveTableConstraintDefinitions,
         constraintRetriever::retrieveTableConstraintDefinitions,
         retrieveTableConstraints);
 
-    stopWatch.time(retrieveViewInformation, retrieverExtra::retrieveViewInformation);
-    stopWatch.time(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage);
-    stopWatch.time(retrieveTableDefinitionsInformation, retrieverExtra::retrieveTableDefinitions);
-    stopWatch.time(
+    stopWatch.fire(
+        retrieveViewInformation, retrieverExtra::retrieveViewInformation, retrieveTables);
+    stopWatch.fire(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage, retrieveTables);
+    stopWatch.fire(
+        retrieveTableDefinitionsInformation,
+        retrieverExtra::retrieveTableDefinitions,
+        retrieveTables);
+    stopWatch.fire(
         retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation(), retrieveIndexes);
 
-    stopWatch.time(
+    stopWatch.fire(
         retrieveAdditionalTableAttributes,
-        () -> retrieverExtra.retrieveAdditionalTableAttributes());
-    stopWatch.time(retrieveTablePrivileges, () -> retrieverPrivilege.retrieveTablePrivileges());
+        () -> retrieverExtra.retrieveAdditionalTableAttributes(),
+        retrieveTables);
+    stopWatch.fire(
+        retrieveTablePrivileges,
+        () -> retrieverPrivilege.retrieveTablePrivileges(),
+        retrieveTables);
   }
 
   private void crawlColumnDataTypes() throws Exception {

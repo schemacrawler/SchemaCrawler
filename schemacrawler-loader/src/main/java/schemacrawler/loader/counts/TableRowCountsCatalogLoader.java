@@ -108,6 +108,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
             catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
           });
 
+      stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving table row counts", e);

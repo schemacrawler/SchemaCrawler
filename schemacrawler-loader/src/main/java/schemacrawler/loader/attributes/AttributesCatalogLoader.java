@@ -119,6 +119,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             loadWeakAssociations(catalog, catalogAttributes);
           });
 
+      stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception loading catalog attributes", e);

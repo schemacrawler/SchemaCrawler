@@ -118,6 +118,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
             }
           });
 
+      stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving weak association information", e);

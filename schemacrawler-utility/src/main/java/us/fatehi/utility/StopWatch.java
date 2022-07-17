@@ -39,9 +39,15 @@ import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public final class StopWatch {
@@ -64,21 +70,14 @@ public final class StopWatch {
     @Override
     public TaskInfo call() throws Exception {
 
-      Exception executionError = null;
-
       final Instant start = Instant.now();
 
-      try {
-        task.call();
-      } catch (final Exception t) {
-        executionError = t;
-      }
+      task.call();
 
       final Instant stop = Instant.now();
       final Duration runTime = Duration.between(start, stop);
 
-      final TaskInfo taskInfo = new TaskInfo(taskName, runTime, executionError);
-
+      final TaskInfo taskInfo = new TaskInfo(taskName, runTime);
       return taskInfo;
     }
   }
@@ -87,26 +86,16 @@ public final class StopWatch {
 
     private final Duration duration;
     private final String taskName;
-    private final Exception executionError;
 
-    TaskInfo(final String taskName, final Duration duration, final Exception executionError) {
+    TaskInfo(final String taskName, final Duration duration) {
       requireNonNull(taskName, "Task name not provided");
       requireNonNull(duration, "Duration not provided");
       this.taskName = taskName;
       this.duration = duration;
-      this.executionError = executionError; // Can be null
     }
 
     public Duration getDuration() {
       return duration;
-    }
-
-    public Exception getExecutionError() {
-      return executionError;
-    }
-
-    public boolean hasExecutionError() {
-      return executionError != null;
     }
 
     @Override
@@ -128,9 +117,22 @@ public final class StopWatch {
 
   private final String id;
   private final List<TaskInfo> tasks = new LinkedList<>();
+  private final ExecutorService executorService;
+  private final List<Future<TaskInfo>> futures;
 
   public StopWatch(final String id) {
     this.id = id;
+    executorService = Executors.newFixedThreadPool(5);
+    futures = new ArrayList<>();
+  }
+
+  public void fire(final String taskName, final Function task) throws Exception {
+
+    requireNotBlank(taskName, "Task name not provided");
+    requireNonNull(task, "Task not provided");
+
+    final Future<TaskInfo> future = executorService.submit(new CallableFunction(taskName, task));
+    futures.add(future);
   }
 
   public String getId() {
@@ -141,8 +143,10 @@ public final class StopWatch {
    * Allows for a deferred conversion to a string. Useful in logging.
    *
    * @return String supplier.
+   * @throws Exception
    */
   public Supplier<String> report() {
+
     return () -> {
       Duration totalDuration = Duration.ofNanos(0);
       for (final TaskInfo task : tasks) {
@@ -166,6 +170,30 @@ public final class StopWatch {
     };
   }
 
+  public void stop() throws ExecutionException {
+    executorService.shutdown();
+
+    try {
+      if (!executorService.awaitTermination(1, TimeUnit.HOURS)) {
+        executorService.shutdownNow();
+      }
+    } catch (final InterruptedException ex) {
+      executorService.shutdownNow();
+      Thread.currentThread().interrupt();
+    }
+
+    for (final Future<TaskInfo> future : futures) {
+      try {
+        if (future.isDone()) {
+          final TaskInfo taskInfo = future.get();
+          tasks.add(taskInfo);
+        }
+      } catch (final InterruptedException e) {
+        // Ignore
+      }
+    }
+  }
+
   public void time(final String taskName, final Function task) throws Exception {
 
     requireNotBlank(taskName, "Task name not provided");
@@ -173,10 +201,7 @@ public final class StopWatch {
 
     final CallableFunction callableFunction = new CallableFunction(taskName, task);
     final TaskInfo taskInfo = callableFunction.call();
-
-    if (taskInfo.hasExecutionError()) {
-      throw taskInfo.getExecutionError();
-    }
+    tasks.add(taskInfo);
   }
 
   private double calculatePercentage(final Duration duration, final Duration totalDuration) {
