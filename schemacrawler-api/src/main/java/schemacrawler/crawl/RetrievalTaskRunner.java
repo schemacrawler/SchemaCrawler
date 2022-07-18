@@ -38,38 +38,20 @@ import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 import us.fatehi.utility.scheduler.StopWatch;
 import us.fatehi.utility.scheduler.TaskDefinition;
 
-public final class RetrievalStopWatch {
+public final class RetrievalTaskRunner {
 
-  private static final Logger LOGGER = Logger.getLogger(RetrievalStopWatch.class.getName());
-  private StopWatch stopWatch;
+  private static final Logger LOGGER = Logger.getLogger(RetrievalTaskRunner.class.getName());
+  private StopWatch taskRunner;
 
   private final SchemaInfoLevel infoLevel;
 
-  public RetrievalStopWatch(final SchemaInfoLevel infoLevel) {
+  public RetrievalTaskRunner(final SchemaInfoLevel infoLevel) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
     newStopWatch(infoLevel);
   }
 
-  public void fire(
-      final SchemaInfoRetrieval retrieval,
-      final TaskDefinition.TaskRunnable function,
-      final SchemaInfoRetrieval... additionalRetrievals)
-      throws Exception {
-    final boolean run = infoLevel.is(retrieval) && run(additionalRetrievals);
-    fire(retrieval.name(), run, function);
-  }
-
-  public void fire(
-      final String retrievalName,
-      final TaskDefinition.TaskRunnable function,
-      final SchemaInfoRetrieval... additionalRetrievals)
-      throws Exception {
-    final boolean run = run(additionalRetrievals);
-    fire(retrievalName, run, function);
-  }
-
   public void noOp(final String retrievalName) throws Exception {
-    stopWatch.noOp(retrievalName);
+    taskRunner.noOp(retrievalName);
   }
 
   /**
@@ -80,11 +62,11 @@ public final class RetrievalStopWatch {
   public void stopAndLogTime() throws ExecutionException {
     ExecutionException exception = null;
     try {
-      stopWatch.stop();
+      taskRunner.stop();
     } catch (final ExecutionException e) {
       exception = e;
     }
-    LOGGER.log(Level.INFO, stopWatch.report());
+    LOGGER.log(Level.INFO, taskRunner.report());
     if (exception != null) {
       throw exception;
     }
@@ -96,7 +78,7 @@ public final class RetrievalStopWatch {
       final TaskDefinition.TaskRunnable function,
       final SchemaInfoRetrieval... additionalRetrievals)
       throws Exception {
-    final boolean run = infoLevel.is(retrieval) && run(additionalRetrievals);
+    final boolean run = run(retrieval) && run(additionalRetrievals);
     time(retrieval.name(), run, function);
   }
 
@@ -109,18 +91,8 @@ public final class RetrievalStopWatch {
     time(retrievalName, run, function);
   }
 
-  private void fire(
-      final String retrievalName, final boolean run, final TaskDefinition.TaskRunnable function)
-      throws Exception {
-    if (run) {
-      stopWatch.fire(new TaskDefinition(retrievalName, function));
-    } else {
-      stopWatch.noOp(retrievalName);
-    }
-  }
-
   private void newStopWatch(final SchemaInfoLevel infoLevel) {
-    stopWatch = new StopWatch(infoLevel.getTag());
+    taskRunner = new StopWatch(infoLevel.getTag());
   }
 
   private boolean run(final SchemaInfoRetrieval... additionalRetrievals) {
@@ -137,9 +109,9 @@ public final class RetrievalStopWatch {
       final String retrievalName, final boolean run, final TaskDefinition.TaskRunnable function)
       throws Exception {
     if (run) {
-      stopWatch.run(new TaskDefinition(retrievalName, function));
+      taskRunner.run(new TaskDefinition(retrievalName, function));
     } else {
-      stopWatch.noOp(retrievalName);
+      taskRunner.noOp(retrievalName);
     }
   }
 }

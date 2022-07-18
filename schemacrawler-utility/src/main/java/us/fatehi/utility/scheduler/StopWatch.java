@@ -37,19 +37,19 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import us.fatehi.utility.string.StringFormat;
 
@@ -71,24 +71,11 @@ public final class StopWatch {
 
   private final List<TaskInfo> tasks;
   private final ExecutorService executorService;
-  private final List<Future<?>> futures;
 
   public StopWatch(final String id) {
     this.id = id;
     tasks = new LinkedList<>();
     executorService = Executors.newFixedThreadPool(5);
-    futures = new CopyOnWriteArrayList<>();
-  }
-
-  public void fire(final TaskDefinition task) throws Exception {
-
-    requireNonNull(task, "Task not provided");
-
-    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in a new thread", task));
-
-    final CompletableFuture<Void> future =
-        CompletableFuture.runAsync(new TimedTask(tasks, task), executorService);
-    futures.add(future);
   }
 
   public String getId() {
@@ -144,14 +131,19 @@ public final class StopWatch {
     };
   }
 
-  public void run(final TaskDefinition task) throws Exception {
+  public void run(final TaskDefinition... taskDefinitions) throws Exception {
 
-    requireNonNull(task, "Task not provided");
+    requireNonNull(taskDefinitions, "Tasks not provided");
 
-    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in main thread", task));
+    final CompletableFuture<Void> completableFuture =
+        CompletableFuture.allOf(
+            Arrays.stream(taskDefinitions)
+                .map(
+                    task -> CompletableFuture.runAsync(new TimedTask(tasks, task), executorService))
+                .collect(Collectors.toList())
+                .toArray(new CompletableFuture[taskDefinitions.length]));
 
-    final TimedTask taskRunnable = new TimedTask(tasks, task);
-    taskRunnable.run();
+    completableFuture.join();
   }
 
   public void stop() throws ExecutionException {

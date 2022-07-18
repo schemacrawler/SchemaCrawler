@@ -102,7 +102,7 @@ public final class SchemaCrawler {
   private final SchemaCrawlerOptions options;
   private final RetrieverConnection retrieverConnection;
   private final SchemaInfoLevel infoLevel;
-  private final RetrievalStopWatch stopWatch;
+  private final RetrievalTaskRunner stopWatch;
   private MutableCatalog catalog;
 
   /**
@@ -121,7 +121,7 @@ public final class SchemaCrawler {
       retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
       this.options = requireNonNull(options, "No SchemaCrawler options provided");
       infoLevel = options.getLoadOptions().getSchemaInfoLevel();
-      stopWatch = new RetrievalStopWatch(infoLevel);
+      stopWatch = new RetrievalTaskRunner(infoLevel);
     } catch (final SQLException e) {
       throw new DatabaseAccessException(e);
     }
@@ -168,7 +168,7 @@ public final class SchemaCrawler {
         retrieveAdditionalColumnMetadata,
         retrieverExtra::retrieveAdditionalColumnMetadata,
         retrieveTableColumns);
-    stopWatch.fire(
+    stopWatch.time(
         retrieveTableColumnPrivileges,
         retrieverPrivilege::retrieveTableColumnPrivileges,
         retrieveTableColumns);
@@ -179,26 +179,26 @@ public final class SchemaCrawler {
       final TableExtRetriever retrieverExtra,
       final TablePrivilegeRetriever retrieverPrivilege)
       throws Exception {
-    stopWatch.fire(
+    stopWatch.time(
         retrieveTableConstraintDefinitions,
         constraintRetriever::retrieveTableConstraintDefinitions,
         retrieveTableConstraints);
 
-    stopWatch.fire(
+    stopWatch.time(
         retrieveViewInformation, retrieverExtra::retrieveViewInformation, retrieveTables);
-    stopWatch.fire(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage, retrieveTables);
-    stopWatch.fire(
+    stopWatch.time(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage, retrieveTables);
+    stopWatch.time(
         retrieveTableDefinitionsInformation,
         retrieverExtra::retrieveTableDefinitions,
         retrieveTables);
-    stopWatch.fire(
+    stopWatch.time(
         retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation(), retrieveIndexes);
 
-    stopWatch.fire(
+    stopWatch.time(
         retrieveAdditionalTableAttributes,
         () -> retrieverExtra.retrieveAdditionalTableAttributes(),
         retrieveTables);
-    stopWatch.fire(
+    stopWatch.time(
         retrieveTablePrivileges,
         () -> retrieverPrivilege.retrieveTablePrivileges(),
         retrieveTables);
