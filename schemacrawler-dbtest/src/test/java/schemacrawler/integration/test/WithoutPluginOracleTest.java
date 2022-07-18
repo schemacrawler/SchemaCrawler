@@ -57,7 +57,6 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.WithSystemProperty;
@@ -110,9 +109,8 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final ExecutionRuntimeException executionRuntimeException =
-        assertThrows(
-            ExecutionRuntimeException.class, () -> getCatalog(connection, schemaCrawlerOptions));
+    final RuntimeException executionRuntimeException =
+        assertThrows(RuntimeException.class, () -> getCatalog(connection, schemaCrawlerOptions));
     final SQLException cause = (SQLException) executionRuntimeException.getCause().getCause();
     assertThat(
         cause.getSQLState(),
