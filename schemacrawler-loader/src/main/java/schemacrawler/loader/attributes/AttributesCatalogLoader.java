@@ -59,6 +59,7 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
 import us.fatehi.utility.scheduler.StopWatch;
+import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
@@ -98,8 +99,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     try {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();
-      stopWatch.run(
-          "retrieveCatalogAttributes",
+      final TaskDefinition.TaskRunnable taskRunnable =
           () -> {
             final String catalogAttributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
             if (isBlank(catalogAttributesFile)) {
@@ -117,7 +117,8 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             loadRemarks(catalog, catalogAttributes);
             loadAlternateKeys(catalog, catalogAttributes);
             loadWeakAssociations(catalog, catalogAttributes);
-          });
+          };
+      stopWatch.run(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
 
       stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());

@@ -44,6 +44,7 @@ import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.scheduler.StopWatch;
+import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
@@ -105,18 +106,19 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
     LOGGER.log(Level.INFO, "Finding weak associations");
     try {
       stopWatch.run(
-          "retrieveWeakAssociations",
-          () -> {
-            final Config config = getAdditionalConfiguration();
-            final boolean findWeakAssociations =
-                config.getBooleanValue(OPTION_WEAK_ASSOCIATIONS, false);
-            if (findWeakAssociations) {
-              findWeakAssociations();
-            } else {
-              LOGGER.log(
-                  Level.INFO, "Not retrieving weak associations, since this was not requested");
-            }
-          });
+          new TaskDefinition(
+              "retrieveWeakAssociations",
+              () -> {
+                final Config config = getAdditionalConfiguration();
+                final boolean findWeakAssociations =
+                    config.getBooleanValue(OPTION_WEAK_ASSOCIATIONS, false);
+                if (findWeakAssociations) {
+                  findWeakAssociations();
+                } else {
+                  LOGGER.log(
+                      Level.INFO, "Not retrieving weak associations, since this was not requested");
+                }
+              }));
 
       stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());

@@ -41,6 +41,7 @@ import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.scheduler.StopWatch;
+import us.fatehi.utility.scheduler.TaskDefinition;
 
 public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
 
@@ -90,23 +91,26 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
           new TableRowCountsRetriever(getConnection(), catalog);
       final Config config = getAdditionalConfiguration();
       stopWatch.run(
-          "retrieveTableRowCounts",
-          () -> {
-            final boolean loadRowCounts = config.getBooleanValue(OPTION_LOAD_ROW_COUNTS, false);
-            if (loadRowCounts) {
-              rowCountsRetriever.retrieveTableRowCounts();
-            } else {
-              LOGGER.log(
-                  Level.INFO, "Not retrieving table row counts, since this was not requested");
-            }
-          });
+          new TaskDefinition(
+              "retrieveTableRowCounts",
+              () -> {
+                final boolean loadRowCounts = config.getBooleanValue(OPTION_LOAD_ROW_COUNTS, false);
+                if (loadRowCounts) {
+                  rowCountsRetriever.retrieveTableRowCounts();
+                } else {
+                  LOGGER.log(
+                      Level.INFO, "Not retrieving table row counts, since this was not requested");
+                }
+              }));
 
       stopWatch.run(
-          "filterEmptyTables",
-          () -> {
-            final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);
-            catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
-          });
+          new TaskDefinition(
+              "filterEmptyTables",
+              () -> {
+                final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);
+                catalog.reduce(
+                    Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
+              }));
 
       stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());

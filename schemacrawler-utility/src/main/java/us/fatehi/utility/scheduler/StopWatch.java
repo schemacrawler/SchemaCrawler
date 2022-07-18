@@ -51,7 +51,6 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import us.fatehi.utility.scheduler.TaskDefinition.TaskRunnable;
 import us.fatehi.utility.string.StringFormat;
 
 public final class StopWatch {
@@ -143,10 +142,6 @@ public final class StopWatch {
 
       return buffer.toString();
     };
-  }
-
-  public void run(final String taskName, final TaskRunnable task) throws Exception {
-    run(new TaskDefinition(taskName, task));
   }
 
   public void run(final TaskDefinition task) throws Exception {
