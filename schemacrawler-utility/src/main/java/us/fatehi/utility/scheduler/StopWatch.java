@@ -32,7 +32,6 @@ import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -52,6 +51,7 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import us.fatehi.utility.scheduler.TaskDefinition.TaskRunnable;
 import us.fatehi.utility.string.StringFormat;
 
 public final class StopWatch {
@@ -81,20 +81,14 @@ public final class StopWatch {
     futures = new CopyOnWriteArrayList<>();
   }
 
-  public TimedTask createJob(
-      final String taskName, final us.fatehi.utility.scheduler.TimedTask.Function task) {
-    return new TimedTask(tasks, taskName, task);
-  }
+  public void fire(final TaskDefinition task) throws Exception {
 
-  public void fire(final String taskName, final TimedTask.Function task) throws Exception {
-
-    requireNotBlank(taskName, "Task name not provided");
     requireNonNull(task, "Task not provided");
 
-    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in a new thread", taskName));
+    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in a new thread", task));
 
     final CompletableFuture<Void> future =
-        CompletableFuture.runAsync(new TimedTask(tasks, taskName, task), executorService);
+        CompletableFuture.runAsync(new TimedTask(tasks, task), executorService);
     futures.add(future);
   }
 
@@ -151,14 +145,17 @@ public final class StopWatch {
     };
   }
 
-  public void run(final String taskName, final TimedTask.Function task) throws Exception {
+  public void run(final String taskName, final TaskRunnable task) throws Exception {
+    run(new TaskDefinition(taskName, task));
+  }
 
-    requireNotBlank(taskName, "Task name not provided");
+  public void run(final TaskDefinition task) throws Exception {
+
     requireNonNull(task, "Task not provided");
 
-    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in main thread", taskName));
+    LOGGER.log(Level.INFO, new StringFormat("Running <%s> in main thread", task));
 
-    final TimedTask taskRunnable = new TimedTask(tasks, taskName, task);
+    final TimedTask taskRunnable = new TimedTask(tasks, task);
     taskRunnable.run();
   }
 
