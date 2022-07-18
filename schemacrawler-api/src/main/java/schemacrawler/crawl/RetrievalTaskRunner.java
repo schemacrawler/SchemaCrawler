@@ -44,14 +44,15 @@ public final class RetrievalTaskRunner {
 
   private static final Logger LOGGER = Logger.getLogger(RetrievalTaskRunner.class.getName());
 
-  private TaskRunner taskRunner;
+  private final TaskRunner taskRunner;
   private final SchemaInfoLevel infoLevel;
-
-  private List<TaskDefinition> taskDefinitions;
+  private final List<TaskDefinition> taskDefinitions;
 
   public RetrievalTaskRunner(final SchemaInfoLevel infoLevel) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
-    newStopWatch(infoLevel);
+
+    taskRunner = new TaskRunner(infoLevel.getTag());
+    taskDefinitions = new CopyOnWriteArrayList<>();
   }
 
   public RetrievalTaskRunner add(
@@ -74,6 +75,10 @@ public final class RetrievalTaskRunner {
     return this;
   }
 
+  public boolean isStopped() {
+    return taskRunner.isStopped();
+  }
+
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
@@ -90,7 +95,6 @@ public final class RetrievalTaskRunner {
     if (exception != null) {
       throw exception;
     }
-    newStopWatch(infoLevel);
   }
 
   public void submit() throws Exception {
@@ -103,16 +107,16 @@ public final class RetrievalTaskRunner {
       final boolean shouldRun,
       final TaskDefinition.TaskRunnable function)
       throws Exception {
+
+    if (taskRunner.isStopped()) {
+      throw new IllegalStateException("Task runner is stopped");
+    }
+
     if (shouldRun) {
       taskDefinitions.add(new TaskDefinition(retrievalName, function));
     } else {
       taskDefinitions.add(new TaskDefinition(retrievalName));
     }
-  }
-
-  private void newStopWatch(final SchemaInfoLevel infoLevel) {
-    taskRunner = new TaskRunner(infoLevel.getTag());
-    taskDefinitions = new CopyOnWriteArrayList<>();
   }
 
   private boolean shouldRun(final SchemaInfoRetrieval... additionalRetrievals) {

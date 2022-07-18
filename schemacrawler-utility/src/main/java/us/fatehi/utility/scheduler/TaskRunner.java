@@ -76,6 +76,10 @@ public final class TaskRunner {
     return id;
   }
 
+  public boolean isStopped() {
+    return executorService.isShutdown();
+  }
+
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
@@ -119,6 +123,10 @@ public final class TaskRunner {
   }
 
   public void run(final TaskDefinition... taskDefinitions) throws Exception {
+
+    if (executorService.isShutdown()) {
+      throw new IllegalStateException("Task runner is stopped");
+    }
 
     requireNonNull(taskDefinitions, "Tasks not provided");
 

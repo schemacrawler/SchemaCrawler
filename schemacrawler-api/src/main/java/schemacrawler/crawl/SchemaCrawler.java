@@ -379,6 +379,8 @@ public final class SchemaCrawler {
             retrievePrimaryKeys,
             () -> pkRetriever.retrievePrimaryKeys(allTables),
             retrieveTableColumns)
+        .submit();
+    taskRunner
         .add(
             retrieveForeignKeys,
             () -> fkRetriever.retrieveForeignKeys(allTables),
@@ -404,7 +406,9 @@ public final class SchemaCrawler {
         .submit();
 
     LOGGER.log(Level.INFO, "Retrieving additional table information");
-    taskRunner.add(retrieveTableConstraints, constraintRetriever::retrieveTableConstraints).submit();
+    taskRunner
+        .add(retrieveTableConstraints, constraintRetriever::retrieveTableConstraints)
+        .submit();
     taskRunner
         .add(
             retrieveTableConstraintInformation,
