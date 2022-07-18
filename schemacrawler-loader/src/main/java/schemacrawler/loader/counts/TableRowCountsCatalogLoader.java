@@ -40,7 +40,7 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.scheduler.StopWatch;
+import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
 
 public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
@@ -84,7 +84,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving table row counts");
-    final StopWatch stopWatch = new StopWatch("loadTableRowCounts");
+    final TaskRunner stopWatch = new TaskRunner("loadTableRowCounts");
     try {
       final Catalog catalog = getCatalog();
       final TableRowCountsRetriever rowCountsRetriever =

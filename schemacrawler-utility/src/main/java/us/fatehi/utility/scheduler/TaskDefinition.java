@@ -52,6 +52,11 @@ public class TaskDefinition implements Runnable {
   private final String taskName;
   private final TaskRunnable task;
 
+  public TaskDefinition(final String taskName) {
+    this.taskName = toSnakeCase(requireNotBlank(taskName, "Task name not provided"));
+    this.task = () -> LOGGER.log(Level.INFO, new StringFormat("Not running task <%s>", taskName));
+  }
+
   public TaskDefinition(final String taskName, final TaskRunnable task) {
     this.taskName = toSnakeCase(requireNotBlank(taskName, "Task name not provided"));
     this.task = requireNonNull(task, "Task not provided");

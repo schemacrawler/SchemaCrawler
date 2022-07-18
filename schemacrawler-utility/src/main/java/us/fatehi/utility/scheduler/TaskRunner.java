@@ -47,15 +47,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import us.fatehi.utility.string.StringFormat;
-
-public final class StopWatch {
-
-  private static final Logger LOGGER = Logger.getLogger(StopWatch.class.getName());
+public final class TaskRunner {
 
   private static final DateTimeFormatter df =
       new DateTimeFormatterBuilder()
@@ -72,7 +66,7 @@ public final class StopWatch {
   private final List<TaskInfo> tasks;
   private final ExecutorService executorService;
 
-  public StopWatch(final String id) {
+  public TaskRunner(final String id) {
     this.id = id;
     tasks = new LinkedList<>();
     executorService = Executors.newFixedThreadPool(5);
@@ -80,13 +74,6 @@ public final class StopWatch {
 
   public String getId() {
     return id;
-  }
-
-  public void noOp(final String taskName) {
-    LOGGER.log(Level.INFO, new StringFormat("Not running <%s>", taskName));
-
-    final TaskInfo taskInfo = new TaskInfo(taskName, Duration.ZERO);
-    tasks.add(taskInfo);
   }
 
   /**

@@ -29,29 +29,29 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
-import us.fatehi.utility.scheduler.StopWatch;
+import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
 
 public final class RetrievalTaskRunner {
 
   private static final Logger LOGGER = Logger.getLogger(RetrievalTaskRunner.class.getName());
-  private StopWatch taskRunner;
 
+  private TaskRunner taskRunner;
   private final SchemaInfoLevel infoLevel;
+
+  private List<TaskDefinition> taskDefinitions;
 
   public RetrievalTaskRunner(final SchemaInfoLevel infoLevel) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
     newStopWatch(infoLevel);
-  }
-
-  public void noOp(final String retrievalName) throws Exception {
-    taskRunner.noOp(retrievalName);
   }
 
   /**
@@ -73,45 +73,57 @@ public final class RetrievalTaskRunner {
     newStopWatch(infoLevel);
   }
 
-  public void time(
+  public void submit() throws Exception {
+    taskRunner.run(taskDefinitions.toArray(new TaskDefinition[taskDefinitions.size()]));
+    taskDefinitions.clear();
+  }
+
+  public RetrievalTaskRunner time(
       final SchemaInfoRetrieval retrieval,
       final TaskDefinition.TaskRunnable function,
       final SchemaInfoRetrieval... additionalRetrievals)
       throws Exception {
-    final boolean run = run(retrieval) && run(additionalRetrievals);
-    time(retrieval.name(), run, function);
+    final boolean shouldRun = shouldRun(retrieval) && shouldRun(additionalRetrievals);
+    add(retrieval.name(), shouldRun, function);
+    submit();
+    return this;
   }
 
-  public void time(
+  public RetrievalTaskRunner time(
       final String retrievalName,
       final TaskDefinition.TaskRunnable function,
       final SchemaInfoRetrieval... additionalRetrievals)
       throws Exception {
-    final boolean run = run(additionalRetrievals);
-    time(retrievalName, run, function);
+    final boolean shouldRun = shouldRun(additionalRetrievals);
+    add(retrievalName, shouldRun, function);
+    submit();
+    return this;
+  }
+
+  private void add(
+      final String retrievalName,
+      final boolean shouldRun,
+      final TaskDefinition.TaskRunnable function)
+      throws Exception {
+    if (shouldRun) {
+      taskDefinitions.add(new TaskDefinition(retrievalName, function));
+    } else {
+      taskDefinitions.add(new TaskDefinition(retrievalName));
+    }
   }
 
   private void newStopWatch(final SchemaInfoLevel infoLevel) {
-    taskRunner = new StopWatch(infoLevel.getTag());
+    taskRunner = new TaskRunner(infoLevel.getTag());
+    taskDefinitions = new CopyOnWriteArrayList<>();
   }
 
-  private boolean run(final SchemaInfoRetrieval... additionalRetrievals) {
-    boolean run = true;
+  private boolean shouldRun(final SchemaInfoRetrieval... additionalRetrievals) {
+    boolean shouldRun = true;
     if (additionalRetrievals != null && additionalRetrievals.length > 0) {
       for (final SchemaInfoRetrieval additionalRetrieval : additionalRetrievals) {
-        run = run && infoLevel.is(additionalRetrieval);
+        shouldRun = shouldRun && infoLevel.is(additionalRetrieval);
       }
     }
-    return run;
-  }
-
-  private void time(
-      final String retrievalName, final boolean run, final TaskDefinition.TaskRunnable function)
-      throws Exception {
-    if (run) {
-      taskRunner.run(new TaskDefinition(retrievalName, function));
-    } else {
-      taskRunner.noOp(retrievalName);
-    }
+    return shouldRun;
   }
 }
