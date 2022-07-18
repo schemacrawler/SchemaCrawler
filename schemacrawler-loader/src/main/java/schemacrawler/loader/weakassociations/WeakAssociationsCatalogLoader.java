@@ -43,7 +43,7 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.StopWatch;
+import us.fatehi.utility.scheduler.StopWatch;
 import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package us.fatehi.utility;
+package us.fatehi.utility.scheduler;
 
 import static java.time.temporal.ChronoField.HOUR_OF_DAY;
 import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
@@ -35,19 +35,19 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,64 +55,6 @@ import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
 
 public final class StopWatch {
-
-  @FunctionalInterface
-  public interface Function {
-    void call() throws Exception;
-  }
-
-  private static class CallableFunction implements Callable<TaskInfo> {
-
-    private final String taskName;
-    private final Function task;
-
-    public CallableFunction(final String taskName, final Function task) {
-      this.taskName = requireNotBlank(taskName, "Task name not provided");
-      this.task = requireNonNull(task, "Task not provided");
-    }
-
-    @Override
-    public TaskInfo call() throws Exception {
-
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat(
-              "Running <%s> on thread <%s>", taskName, Thread.currentThread().getName()));
-
-      final Instant start = Instant.now();
-
-      task.call();
-
-      final Instant stop = Instant.now();
-      final Duration runTime = Duration.between(start, stop);
-
-      final TaskInfo taskInfo = new TaskInfo(taskName, runTime);
-      return taskInfo;
-    }
-  }
-
-  private static final class TaskInfo {
-
-    private final Duration duration;
-    private final String taskName;
-
-    TaskInfo(final String taskName, final Duration duration) {
-      requireNonNull(taskName, "Task name not provided");
-      requireNonNull(duration, "Duration not provided");
-      this.taskName = taskName;
-      this.duration = duration;
-    }
-
-    public Duration getDuration() {
-      return duration;
-    }
-
-    @Override
-    public String toString() {
-      final LocalTime durationLocal = LocalTime.ofNanoOfDay(duration.toNanos());
-      return String.format("%s - <%s>", durationLocal.format(df), taskName);
-    }
-  }
 
   private static final Logger LOGGER = Logger.getLogger(StopWatch.class.getName());
 
@@ -127,24 +69,32 @@ public final class StopWatch {
           .toFormatter();
 
   private final String id;
-  private final List<TaskInfo> tasks = new LinkedList<>();
+
+  private final List<TaskInfo> tasks;
   private final ExecutorService executorService;
-  private final List<Future<TaskInfo>> futures;
+  private final List<Future<?>> futures;
 
   public StopWatch(final String id) {
     this.id = id;
+    tasks = new LinkedList<>();
     executorService = Executors.newFixedThreadPool(5);
-    futures = new ArrayList<>();
+    futures = new CopyOnWriteArrayList<>();
   }
 
-  public void fire(final String taskName, final Function task) throws Exception {
+  public TimedTask createJob(
+      final String taskName, final us.fatehi.utility.scheduler.TimedTask.Function task) {
+    return new TimedTask(tasks, taskName, task);
+  }
+
+  public void fire(final String taskName, final TimedTask.Function task) throws Exception {
 
     requireNotBlank(taskName, "Task name not provided");
     requireNonNull(task, "Task not provided");
 
     LOGGER.log(Level.INFO, new StringFormat("Running <%s> in a new thread", taskName));
 
-    final Future<TaskInfo> future = executorService.submit(new CallableFunction(taskName, task));
+    final CompletableFuture<Void> future =
+        CompletableFuture.runAsync(new TimedTask(tasks, taskName, task), executorService);
     futures.add(future);
   }
 
@@ -168,6 +118,16 @@ public final class StopWatch {
   public Supplier<String> report() {
 
     return () -> {
+      final BiFunction<Duration, Duration, Double> calculatePercentage =
+          (final Duration duration, final Duration totalDuration) -> {
+            final long totalMillis = totalDuration.toMillis();
+            if (totalMillis == 0) {
+              return 0d;
+            } else {
+              return duration.toMillis() * 100D / totalMillis;
+            }
+          };
+
       Duration totalDuration = Duration.ofNanos(0);
       for (final TaskInfo task : tasks) {
         totalDuration = totalDuration.plus(task.getDuration());
@@ -183,23 +143,23 @@ public final class StopWatch {
       for (final TaskInfo task : tasks) {
         buffer.append(
             String.format(
-                "-%5.1f%% - %s%n", calculatePercentage(task.getDuration(), totalDuration), task));
+                "-%5.1f%% - %s%n",
+                calculatePercentage.apply(task.getDuration(), totalDuration), task));
       }
 
       return buffer.toString();
     };
   }
 
-  public void run(final String taskName, final Function task) throws Exception {
+  public void run(final String taskName, final TimedTask.Function task) throws Exception {
 
     requireNotBlank(taskName, "Task name not provided");
     requireNonNull(task, "Task not provided");
 
     LOGGER.log(Level.INFO, new StringFormat("Running <%s> in main thread", taskName));
 
-    final CallableFunction callableFunction = new CallableFunction(taskName, task);
-    final TaskInfo taskInfo = callableFunction.call();
-    tasks.add(taskInfo);
+    final TimedTask taskRunnable = new TimedTask(tasks, taskName, task);
+    taskRunnable.run();
   }
 
   public void stop() throws ExecutionException {
@@ -212,26 +172,6 @@ public final class StopWatch {
     } catch (final InterruptedException ex) {
       executorService.shutdownNow();
       Thread.currentThread().interrupt();
-    }
-
-    for (final Future<TaskInfo> future : futures) {
-      try {
-        if (future.isDone()) {
-          final TaskInfo taskInfo = future.get();
-          tasks.add(taskInfo);
-        }
-      } catch (final InterruptedException e) {
-        // Ignore
-      }
-    }
-  }
-
-  private double calculatePercentage(final Duration duration, final Duration totalDuration) {
-    final long totalMillis = totalDuration.toMillis();
-    if (totalMillis == 0) {
-      return 0;
-    } else {
-      return duration.toMillis() * 100D / totalMillis;
     }
   }
 }

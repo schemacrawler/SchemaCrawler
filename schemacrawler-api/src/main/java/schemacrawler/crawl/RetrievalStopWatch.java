@@ -35,8 +35,8 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
-import us.fatehi.utility.StopWatch;
-import us.fatehi.utility.StopWatch.Function;
+import us.fatehi.utility.scheduler.StopWatch;
+import us.fatehi.utility.scheduler.TimedTask;
 
 public final class RetrievalStopWatch {
 
@@ -52,7 +52,7 @@ public final class RetrievalStopWatch {
 
   public void fire(
       final SchemaInfoRetrieval retrieval,
-      final Function function,
+      final TimedTask.Function function,
       final SchemaInfoRetrieval... additionalRetrievals)
       throws Exception {
     final boolean run = infoLevel.is(retrieval) && run(additionalRetrievals);
@@ -61,7 +61,7 @@ public final class RetrievalStopWatch {
 
   public void fire(
       final String retrievalName,
-      final Function function,
+      final TimedTask.Function function,
       final SchemaInfoRetrieval... additionalRetrievals)
       throws Exception {
     final boolean run = run(additionalRetrievals);
@@ -93,7 +93,7 @@ public final class RetrievalStopWatch {
 
   public void time(
       final SchemaInfoRetrieval retrieval,
-      final Function function,
+      final TimedTask.Function function,
       final SchemaInfoRetrieval... additionalRetrievals)
       throws Exception {
     final boolean run = infoLevel.is(retrieval) && run(additionalRetrievals);
@@ -102,14 +102,15 @@ public final class RetrievalStopWatch {
 
   public void time(
       final String retrievalName,
-      final Function function,
+      final TimedTask.Function function,
       final SchemaInfoRetrieval... additionalRetrievals)
       throws Exception {
     final boolean run = run(additionalRetrievals);
     time(retrievalName, run, function);
   }
 
-  private void fire(final String retrievalName, final boolean run, final Function function)
+  private void fire(
+      final String retrievalName, final boolean run, final TimedTask.Function function)
       throws Exception {
     if (run) {
       stopWatch.fire(retrievalName, function);
@@ -132,7 +133,8 @@ public final class RetrievalStopWatch {
     return run;
   }
 
-  private void time(final String retrievalName, final boolean run, final Function function)
+  private void time(
+      final String retrievalName, final boolean run, final TimedTask.Function function)
       throws Exception {
     if (run) {
       stopWatch.run(retrievalName, function);
