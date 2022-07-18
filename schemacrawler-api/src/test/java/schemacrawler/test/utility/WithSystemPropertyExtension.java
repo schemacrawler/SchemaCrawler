@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Optional;
@@ -52,8 +53,11 @@ final class WithSystemPropertyExtension implements BeforeEachCallback, AfterEach
         findAnnotation(context.getTestMethod(), WithSystemProperty.class);
     optionalAnnotation.ifPresent(
         withSystemProperty -> {
-          systemProperty =
-              new SimpleImmutableEntry<>(withSystemProperty.key(), withSystemProperty.value());
+          final String key = withSystemProperty.key();
+          if (isBlank(key)) {
+            throw new IllegalArgumentException("No system property name provided");
+          }
+          systemProperty = new SimpleImmutableEntry<>(key, withSystemProperty.value());
           System.setProperty(systemProperty.getKey(), systemProperty.getValue());
         });
   }
