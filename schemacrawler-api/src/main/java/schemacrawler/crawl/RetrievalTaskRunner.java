@@ -37,8 +37,8 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
-import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
+import us.fatehi.utility.scheduler.TaskRunner;
 
 public final class RetrievalTaskRunner {
 
@@ -52,6 +52,26 @@ public final class RetrievalTaskRunner {
   public RetrievalTaskRunner(final SchemaInfoLevel infoLevel) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
     newStopWatch(infoLevel);
+  }
+
+  public RetrievalTaskRunner add(
+      final SchemaInfoRetrieval retrieval,
+      final TaskDefinition.TaskRunnable function,
+      final SchemaInfoRetrieval... additionalRetrievals)
+      throws Exception {
+    final boolean shouldRun = shouldRun(retrieval) && shouldRun(additionalRetrievals);
+    add(retrieval.name(), shouldRun, function);
+    return this;
+  }
+
+  public RetrievalTaskRunner add(
+      final String retrievalName,
+      final TaskDefinition.TaskRunnable function,
+      final SchemaInfoRetrieval... additionalRetrievals)
+      throws Exception {
+    final boolean shouldRun = shouldRun(additionalRetrievals);
+    add(retrievalName, shouldRun, function);
+    return this;
   }
 
   /**
@@ -76,28 +96,6 @@ public final class RetrievalTaskRunner {
   public void submit() throws Exception {
     taskRunner.run(taskDefinitions.toArray(new TaskDefinition[taskDefinitions.size()]));
     taskDefinitions.clear();
-  }
-
-  public RetrievalTaskRunner time(
-      final SchemaInfoRetrieval retrieval,
-      final TaskDefinition.TaskRunnable function,
-      final SchemaInfoRetrieval... additionalRetrievals)
-      throws Exception {
-    final boolean shouldRun = shouldRun(retrieval) && shouldRun(additionalRetrievals);
-    add(retrieval.name(), shouldRun, function);
-    submit();
-    return this;
-  }
-
-  public RetrievalTaskRunner time(
-      final String retrievalName,
-      final TaskDefinition.TaskRunnable function,
-      final SchemaInfoRetrieval... additionalRetrievals)
-      throws Exception {
-    final boolean shouldRun = shouldRun(additionalRetrievals);
-    add(retrievalName, shouldRun, function);
-    submit();
-    return this;
   }
 
   private void add(
