@@ -39,7 +39,7 @@ import us.fatehi.utility.string.StringFormat;
 public class TaskDefinition implements Runnable {
 
   /**
-   * Not quite a Callable<Void> (no return null; required) and not quite a Runnable because it
+   * Not quite a Callable<Void> (no "return null;" required) and not quite a Runnable because it
    * allows throwing checked exceptions.
    */
   @FunctionalInterface
@@ -58,7 +58,9 @@ public class TaskDefinition implements Runnable {
   }
 
   public TaskDefinition(final String taskName, final TaskRunnable task) {
-    this.taskName = toSnakeCase(requireNotBlank(taskName, "Task name not provided"));
+    requireNotBlank(taskName, "Task name not provided");
+
+    this.taskName = toSnakeCase(taskName);
     this.task = requireNonNull(task, "Task not provided");
   }
 

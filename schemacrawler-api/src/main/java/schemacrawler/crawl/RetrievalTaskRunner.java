@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -37,6 +38,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 
@@ -98,7 +100,16 @@ public final class RetrievalTaskRunner {
   }
 
   public void submit() throws Exception {
-    taskRunner.run(taskDefinitions.toArray(new TaskDefinition[taskDefinitions.size()]));
+    try {
+      taskRunner.run(taskDefinitions.toArray(new TaskDefinition[taskDefinitions.size()]));
+    } catch (final CompletionException e) {
+      final Throwable cause = e.getCause();
+      if (cause != null) {
+        throw new ExecutionRuntimeException(cause);
+      } else {
+        throw e;
+      }
+    }
     taskDefinitions.clear();
   }
 
