@@ -401,17 +401,7 @@ public final class SchemaCrawler {
 
     taskRunner
         .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
-        .submit();
-
-    LOGGER.log(Level.INFO, "Retrieving additional table information");
-    taskRunner
         .add(retrieveTableConstraints, constraintRetriever::retrieveTableConstraints)
-        .submit();
-    taskRunner
-        .add(
-            retrieveTableConstraintInformation,
-            constraintRetriever::retrieveTableConstraintInformation,
-            retrieveTableConstraints)
         .submit();
     // Required step: Match all constraints such as primary keys and foreign keys
     taskRunner
@@ -426,6 +416,10 @@ public final class SchemaCrawler {
         .add(
             retrieveTableConstraintDefinitions,
             constraintRetriever::retrieveTableConstraintDefinitions,
+            retrieveTableConstraints)
+        .add(
+            retrieveTableConstraintInformation,
+            constraintRetriever::retrieveTableConstraintInformation,
             retrieveTableConstraints)
         .add(retrieveViewInformation, retrieverExtra::retrieveViewInformation, retrieveTables)
         .add(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage, retrieveTables)
