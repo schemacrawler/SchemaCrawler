@@ -38,9 +38,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -68,7 +68,7 @@ public final class TaskRunner {
 
   public TaskRunner(final String id) {
     this.id = id;
-    tasks = new LinkedList<>();
+    tasks = new CopyOnWriteArrayList<>();
     executorService = Executors.newFixedThreadPool(5);
   }
 
