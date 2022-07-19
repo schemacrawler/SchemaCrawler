@@ -33,6 +33,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * Wrapper around a task definition that runs the task and times it. It puts timing information on a
+ * shared thread-safe list for reporting. Throws an exception if the task does not succeed.
+ */
 class TimedTask implements Runnable {
 
   private final TaskDefinition task;

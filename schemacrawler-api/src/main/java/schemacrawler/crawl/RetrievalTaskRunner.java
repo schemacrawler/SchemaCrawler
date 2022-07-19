@@ -42,6 +42,10 @@ import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 
+/**
+ * Builds a list of task definitions that can be run in parallel. These are then submitted to be run
+ * (in parallel) in a blocked way until all are complete.
+ */
 public final class RetrievalTaskRunner {
 
   private static final Logger LOGGER = Logger.getLogger(RetrievalTaskRunner.class.getName());
@@ -109,8 +113,9 @@ public final class RetrievalTaskRunner {
       } else {
         throw e;
       }
+    } finally {
+      taskDefinitions.clear();
     }
-    taskDefinitions.clear();
   }
 
   private void add(
