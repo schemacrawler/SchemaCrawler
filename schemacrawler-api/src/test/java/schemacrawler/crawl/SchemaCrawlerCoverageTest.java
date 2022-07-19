@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,7 +61,6 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
@@ -69,7 +69,6 @@ import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
-import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -272,9 +271,8 @@ public class SchemaCrawlerCoverageTest {
 
     final SchemaCrawler schemaCrawler =
         new SchemaCrawler(connection2, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
-    final NullPointerException npe =
-        assertThrows(NullPointerException.class, () -> schemaCrawler.crawl());
-    assertThat(npe.getMessage(), is("Cannot use null results"));
+    final RuntimeException ex = assertThrows(RuntimeException.class, () -> schemaCrawler.crawl());
+    assertThat(ex.getMessage(), endsWith("Cannot use null results"));
   }
 
   @Test

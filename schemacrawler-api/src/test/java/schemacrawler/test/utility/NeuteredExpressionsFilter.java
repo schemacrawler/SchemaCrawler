@@ -44,7 +44,9 @@ final class NeuteredExpressionsFilter implements Function<String, String> {
     Pattern.compile("SYS_C00\\d{4}"),
     // SQL Server
     // -- primary key names
-    Pattern.compile("PK__.{8}__[0-9A-F]{16}")
+    Pattern.compile("PK__.{8}__[0-9A-F]{16}"),
+    // Multi-threading
+    Pattern.compile("main|pool-\\d+-thread-\\d+"),
   };
 
   @Override

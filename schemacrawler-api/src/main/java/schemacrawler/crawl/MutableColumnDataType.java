@@ -137,7 +137,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   /** {@inheritDoc} */
   @Override
   public List<String> getEnumValues() {
-    return enumValues;
+    return new ArrayList<>(enumValues);
   }
 
   /** {@inheritDoc} */
@@ -266,7 +266,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
     if (enumValues == null) {
       this.enumValues = new ArrayList<>();
     } else {
-      this.enumValues = enumValues;
+      this.enumValues = new ArrayList<>(enumValues);
     }
   }
 

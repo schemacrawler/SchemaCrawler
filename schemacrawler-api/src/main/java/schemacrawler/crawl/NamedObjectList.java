@@ -33,13 +33,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.AttributedObject;
@@ -76,7 +76,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     return key;
   }
 
-  private final Map<NamedObjectKey, N> objects = new HashMap<>();
+  private final Map<NamedObjectKey, N> objects = new ConcurrentHashMap<>();
 
   @Override
   public void filter(final Predicate<? super N> predicate) {

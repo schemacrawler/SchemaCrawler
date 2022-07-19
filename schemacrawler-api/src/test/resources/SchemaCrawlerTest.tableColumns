@@ -14,19 +14,12 @@ PUBLIC.BOOKS.AUTHORS.ID
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.FIRSTNAME
   - short name=AUTHORS.FIRSTNAME
   - data-type=VARCHAR
@@ -43,19 +36,11 @@ PUBLIC.BOOKS.AUTHORS.FIRSTNAME
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=20
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.LASTNAME
   - short name=AUTHORS.LASTNAME
   - data-type=VARCHAR
@@ -72,19 +57,11 @@ PUBLIC.BOOKS.AUTHORS.LASTNAME
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=20
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.ADDRESS1
   - short name=AUTHORS.ADDRESS1
   - data-type=VARCHAR
@@ -101,19 +78,11 @@ PUBLIC.BOOKS.AUTHORS.ADDRESS1
   - ordinal position=4
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=255
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.ADDRESS2
   - short name=AUTHORS.ADDRESS2
   - data-type=VARCHAR
@@ -130,19 +99,11 @@ PUBLIC.BOOKS.AUTHORS.ADDRESS2
   - ordinal position=5
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=255
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.CITY
   - short name=AUTHORS.CITY
   - data-type=VARCHAR
@@ -159,19 +120,11 @@ PUBLIC.BOOKS.AUTHORS.CITY
   - ordinal position=6
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=50
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.STATE
   - short name=AUTHORS.STATE
   - data-type=CHARACTER
@@ -188,19 +141,11 @@ PUBLIC.BOOKS.AUTHORS.STATE
   - ordinal position=7
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=2
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=1
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.POSTALCODE
   - short name=AUTHORS.POSTALCODE
   - data-type=VARCHAR
@@ -217,19 +162,11 @@ PUBLIC.BOOKS.AUTHORS.POSTALCODE
   - ordinal position=8
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=10
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.COUNTRY
   - short name=AUTHORS.COUNTRY
   - data-type=VARCHAR
@@ -246,19 +183,11 @@ PUBLIC.BOOKS.AUTHORS.COUNTRY
   - ordinal position=9
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=50
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.AUTHORSLIST.ID
   - short name=AUTHORSLIST.ID
@@ -276,19 +205,12 @@ PUBLIC.BOOKS.AUTHORSLIST.ID
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORSLIST.FIRSTNAME
   - short name=AUTHORSLIST.FIRSTNAME
   - data-type=VARCHAR
@@ -305,19 +227,11 @@ PUBLIC.BOOKS.AUTHORSLIST.FIRSTNAME
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=20
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORSLIST.LASTNAME
   - short name=AUTHORSLIST.LASTNAME
   - data-type=VARCHAR
@@ -334,19 +248,11 @@ PUBLIC.BOOKS.AUTHORSLIST.LASTNAME
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=20
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   - short name=BOOKAUTHORS.BOOKID
@@ -364,19 +270,12 @@ PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
   - short name=BOOKAUTHORS.AUTHORID
   - data-type=INTEGER
@@ -393,19 +292,12 @@ PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKAUTHORS.SOMEDATA
   - short name=BOOKAUTHORS.SOMEDATA
   - data-type=VARCHAR
@@ -422,19 +314,11 @@ PUBLIC.BOOKS.BOOKAUTHORS.SOMEDATA
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=30
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.BOOKS.ID
   - short name=BOOKS.ID
@@ -452,19 +336,12 @@ PUBLIC.BOOKS.BOOKS.ID
   - ordinal position=1
   - remarks=Unique (internal) id for book
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=Unique (internal) id for book
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.TITLE
   - short name=BOOKS.TITLE
   - data-type=VARCHAR
@@ -481,19 +358,11 @@ PUBLIC.BOOKS.BOOKS.TITLE
   - ordinal position=2
   - remarks=Book title
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=255
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=Book title
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.DESCRIPTION
   - short name=BOOKS.DESCRIPTION
   - data-type=VARCHAR
@@ -511,20 +380,12 @@ PUBLIC.BOOKS.BOOKS.DESCRIPTION
   - remarks=Book description
 (Usually the blurb from the book jacket or promotional materials)
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=255
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=Book description
 (Usually the blurb from the book jacket or promotional materials)
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.PUBLISHERID
   - short name=BOOKS.PUBLISHERID
   - data-type=INTEGER
@@ -541,19 +402,12 @@ PUBLIC.BOOKS.BOOKS.PUBLISHERID
   - ordinal position=4
   - remarks=Foreign key to the book publisher
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=Foreign key to the book publisher
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
   - short name=BOOKS.PUBLICATIONDATE
   - data-type=DATE
@@ -570,17 +424,10 @@ PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
   - ordinal position=5
   - remarks=Book publication date
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=Book publication date
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=91
     ~ SQL_DATETIME_SUB=1
 PUBLIC.BOOKS.BOOKS.PRICE
@@ -599,19 +446,12 @@ PUBLIC.BOOKS.BOOKS.PRICE
   - ordinal position=6
   - remarks=Current price for the book
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=Current price for the book
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=8
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
   - short name=BOOKS.PREVIOUSEDITIONID
   - data-type=INTEGER
@@ -628,19 +468,12 @@ PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
   - ordinal position=7
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.COUPONS.ID
   - short name=COUPONS.ID
@@ -658,19 +491,12 @@ PUBLIC.BOOKS.COUPONS.ID
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.COUPONS.DATA
   - short name=COUPONS.DATA
   - data-type=CLOB
@@ -687,19 +513,11 @@ PUBLIC.BOOKS.COUPONS.DATA
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=1073741824
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=40
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.COUPONS.COUPONS
   - short name=COUPONS.COUPONS
   - data-type=PUBLIC.BOOKS."INTEGER ARRAY"
@@ -716,19 +534,11 @@ PUBLIC.BOOKS.COUPONS.COUPONS
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=50
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.COUPONS.BOOKS
   - short name=COUPONS.BOOKS
   - data-type=PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]"
@@ -745,19 +555,11 @@ PUBLIC.BOOKS.COUPONS.BOOKS
   - ordinal position=4
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=50
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.CUSTOMERDATA.ID
   - short name=CUSTOMERDATA.ID
@@ -775,19 +577,12 @@ PUBLIC.BOOKS.CUSTOMERDATA.ID
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERDATA.DATA
   - short name=CUSTOMERDATA.DATA
   - data-type=PUBLIC.BOOKS.VALID_STRING
@@ -804,19 +599,12 @@ PUBLIC.BOOKS.CUSTOMERDATA.DATA
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=20
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
     ~ SOURCE_DATA_TYPE=12
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.CUSTOMERS.ID
   - short name=CUSTOMERS.ID
@@ -834,19 +622,12 @@ PUBLIC.BOOKS.CUSTOMERS.ID
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
   - short name=CUSTOMERS.FIRSTNAME
   - data-type=PUBLIC.BOOKS.NAME_TYPE
@@ -863,19 +644,12 @@ PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=100
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
     ~ SOURCE_DATA_TYPE=12
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERS.LASTNAME
   - short name=CUSTOMERS.LASTNAME
   - data-type=PUBLIC.BOOKS.NAME_TYPE
@@ -892,19 +666,12 @@ PUBLIC.BOOKS.CUSTOMERS.LASTNAME
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=100
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
     ~ SOURCE_DATA_TYPE=12
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERS.AGE
   - short name=CUSTOMERS.AGE
   - data-type=PUBLIC.BOOKS.AGE_TYPE
@@ -921,19 +688,13 @@ PUBLIC.BOOKS.CUSTOMERS.AGE
   - ordinal position=4
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
     ~ SOURCE_DATA_TYPE=5
     ~ SQL_DATA_TYPE=5
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS."Global Counts"."Global Count"
   - short name="Global Counts"."Global Count"
@@ -951,19 +712,12 @@ PUBLIC.BOOKS."Global Counts"."Global Count"
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS."Global Counts"."UPDATE"
   - short name="Global Counts"."UPDATE"
   - data-type=VARCHAR
@@ -980,19 +734,11 @@ PUBLIC.BOOKS."Global Counts"."UPDATE"
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=20
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.PUBLISHERS.ID
   - short name=PUBLISHERS.ID
@@ -1010,19 +756,12 @@ PUBLIC.BOOKS.PUBLISHERS.ID
   - ordinal position=1
   - remarks=Unique (internal) id for book publisher
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=Unique (internal) id for book publisher
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
   - short name=PUBLISHERS.PUBLISHER
   - data-type=VARCHAR
@@ -1039,19 +778,11 @@ PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
   - ordinal position=2
   - remarks=Name of book publisher
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=255
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=Name of book publisher
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
   - short name=ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
@@ -1069,19 +800,12 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=5
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
   - short name=ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
   - data-type=VARCHAR
@@ -1098,19 +822,11 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=255
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
   - short name=ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
   - data-type=VARCHAR
@@ -1127,19 +843,11 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=255
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
   - short name=ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
   - data-type=SMALLINT
@@ -1156,19 +864,12 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
   - ordinal position=4
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=5
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC."PUBLISHER SALES".REGIONS.CITY
   - short name=REGIONS.CITY
@@ -1186,19 +887,11 @@ PUBLIC."PUBLISHER SALES".REGIONS.CITY
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=50
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".REGIONS.STATE
   - short name=REGIONS.STATE
   - data-type=VARCHAR
@@ -1215,19 +908,11 @@ PUBLIC."PUBLISHER SALES".REGIONS.STATE
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=2
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
   - short name=REGIONS.POSTALCODE
   - data-type=VARCHAR
@@ -1244,19 +929,11 @@ PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=10
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
   - short name=REGIONS.COUNTRY
   - data-type=VARCHAR
@@ -1273,19 +950,11 @@ PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
   - ordinal position=4
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=50
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
   - short name=SALES.POSTALCODE
@@ -1303,19 +972,11 @@ PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=10
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   - short name=SALES.COUNTRY
   - data-type=VARCHAR
@@ -1332,19 +993,11 @@ PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=50
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=NO
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.BOOKID
   - short name=SALES.BOOKID
   - data-type=INTEGER
@@ -1361,19 +1014,12 @@ PUBLIC."PUBLISHER SALES".SALES.BOOKID
   - ordinal position=3
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.COUPON_ID
   - short name=SALES.COUPON_ID
   - data-type=INTEGER
@@ -1390,19 +1036,12 @@ PUBLIC."PUBLISHER SALES".SALES.COUPON_ID
   - ordinal position=4
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
   - short name=SALES.PERIODENDDATE
   - data-type=DATE
@@ -1419,17 +1058,10 @@ PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
   - ordinal position=5
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=null
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=91
     ~ SQL_DATETIME_SUB=1
 PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
@@ -1448,19 +1080,12 @@ PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
   - ordinal position=6
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=8
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
   - short name=SALES.SALESDATAID
   - data-type=INTEGER
@@ -1477,19 +1102,12 @@ PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
   - ordinal position=7
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 
 PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
   - short name=SALESDATA.SALESDATAID
@@ -1507,19 +1125,12 @@ PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
   - ordinal position=1
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
-    ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALESDATA.YEARLYAMOUNT
   - short name=SALESDATA.YEARLYAMOUNT
   - data-type=DOUBLE
@@ -1536,17 +1147,10 @@ PUBLIC."PUBLISHER SALES".SALESDATA.YEARLYAMOUNT
   - ordinal position=2
   - remarks=
   - attibutes=
-    ~ BUFFER_LENGTH=null
     ~ CHAR_OCTET_LENGTH=0
-    ~ GENERATION_EXPRESSION=null
     ~ IS_GENERATED=NEVER
     ~ IS_NULLABLE=YES
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
-    ~ SCOPE_CATALOG=null
-    ~ SCOPE_SCHEMA=null
-    ~ SCOPE_TABLE=null
-    ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=8
-    ~ SQL_DATETIME_SUB=null
 

@@ -56,9 +56,10 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.StopWatch;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
+import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
@@ -94,16 +95,15 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving catalog attributes");
-    final StopWatch stopWatch = new StopWatch("loadAttributes");
+    final TaskRunner stopWatch = new TaskRunner("loadAttributes");
     try {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();
-      stopWatch.time(
-          "retrieveCatalogAttributes",
+      final TaskDefinition.TaskRunnable taskRunnable =
           () -> {
             final String catalogAttributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
             if (isBlank(catalogAttributesFile)) {
-              return null;
+              return;
             }
             final InputResource inputResource =
                 InputResourceUtility.createInputResource(catalogAttributesFile)
@@ -117,10 +117,10 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             loadRemarks(catalog, catalogAttributes);
             loadAlternateKeys(catalog, catalogAttributes);
             loadWeakAssociations(catalog, catalogAttributes);
+          };
+      stopWatch.run(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
 
-            return null;
-          });
-
+      stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception loading catalog attributes", e);

@@ -125,7 +125,7 @@ jobs:
         path: ./schemacrawler/target/site/jacoco-aggregate
 
   build-test-docker:
-    name: Build, run coverage tests, and build Docker image
+    name: Build, run tests, and build Docker image
     runs-on: ubuntu-latest
     steps:
 

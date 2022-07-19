@@ -132,12 +132,12 @@ public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
-        hasItems(4));
+        hasItems(3));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
-        hasItems("USESYSID", "USESUPER", "PASSWD", "VALUNTIL"));
+        hasItems("USESYSID", "USESUPER", "PASSWD"));
   }
 }

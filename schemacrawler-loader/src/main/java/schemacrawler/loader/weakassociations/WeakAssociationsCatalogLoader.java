@@ -43,7 +43,8 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.StopWatch;
+import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
@@ -100,26 +101,26 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final StopWatch stopWatch = new StopWatch("loadWeakAssociations");
+    final TaskRunner stopWatch = new TaskRunner("loadWeakAssociations");
 
     LOGGER.log(Level.INFO, "Finding weak associations");
     try {
-      stopWatch.time(
-          "retrieveWeakAssociations",
-          () -> {
-            final Config config = getAdditionalConfiguration();
-            final boolean findWeakAssociations =
-                config.getBooleanValue(OPTION_WEAK_ASSOCIATIONS, false);
-            if (findWeakAssociations) {
-              findWeakAssociations();
-              return null;
-            } else {
-              LOGGER.log(
-                  Level.INFO, "Not retrieving weak associations, since this was not requested");
-              return null;
-            }
-          });
+      stopWatch.run(
+          new TaskDefinition(
+              "retrieveWeakAssociations",
+              () -> {
+                final Config config = getAdditionalConfiguration();
+                final boolean findWeakAssociations =
+                    config.getBooleanValue(OPTION_WEAK_ASSOCIATIONS, false);
+                if (findWeakAssociations) {
+                  findWeakAssociations();
+                } else {
+                  LOGGER.log(
+                      Level.INFO, "Not retrieving weak associations, since this was not requested");
+                }
+              }));
 
+      stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving weak association information", e);

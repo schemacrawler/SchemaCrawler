@@ -31,10 +31,11 @@ package schemacrawler.crawl;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.DescribedObject;
@@ -56,7 +57,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
    */
   AbstractNamedObjectWithAttributes(final String name) {
     super(name);
-    attributeMap = new HashMap<>();
+    attributeMap = new ConcurrentHashMap<>();
   }
 
   /** {@inheritDoc} */
@@ -75,7 +76,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final Map<String, Object> getAttributes() {
-    return Collections.unmodifiableMap(attributeMap);
+    return new TreeMap<>(attributeMap);
   }
 
   /** {@inheritDoc} */
@@ -103,6 +104,9 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final <T> Optional<T> lookupAttribute(final String name) {
+    if (name == null) {
+      return Optional.empty();
+    }
     return Optional.ofNullable(getAttribute(name));
   }
 
@@ -132,8 +136,16 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   }
 
   protected final void addAttributes(final Map<String, Object> values) {
-    if (values != null) {
-      attributeMap.putAll(values);
+    if (values == null) {
+      return;
+    }
+    // Check for null entries, since concurrent hash map does not allow them
+    for (final Entry<String, Object> entry : values.entrySet()) {
+      final String key = entry.getKey();
+      final Object value = entry.getValue();
+      if (key != null && value != null) {
+        attributeMap.put(key, value);
+      }
     }
   }
 }

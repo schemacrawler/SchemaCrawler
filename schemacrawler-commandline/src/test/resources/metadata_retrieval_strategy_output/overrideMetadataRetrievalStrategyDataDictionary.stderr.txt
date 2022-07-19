@@ -1,6 +1,6 @@
 SchemaCrawler 16.16.18
 
-Error: No tables SQL provided
+Error: Exception running <retrieve_tables> on thread <pool-1-thread-2>: No tables SQL provided
 
 Run SchemaCrawler again with just the
 -h

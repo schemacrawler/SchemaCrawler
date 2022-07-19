@@ -40,7 +40,8 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.StopWatch;
+import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.TaskDefinition;
 
 public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
 
@@ -83,33 +84,35 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving table row counts");
-    final StopWatch stopWatch = new StopWatch("loadTableRowCounts");
+    final TaskRunner stopWatch = new TaskRunner("loadTableRowCounts");
     try {
       final Catalog catalog = getCatalog();
       final TableRowCountsRetriever rowCountsRetriever =
           new TableRowCountsRetriever(getConnection(), catalog);
       final Config config = getAdditionalConfiguration();
-      stopWatch.time(
-          "retrieveTableRowCounts",
-          () -> {
-            final boolean loadRowCounts = config.getBooleanValue(OPTION_LOAD_ROW_COUNTS, false);
-            if (loadRowCounts) {
-              rowCountsRetriever.retrieveTableRowCounts();
-            } else {
-              LOGGER.log(
-                  Level.INFO, "Not retrieving table row counts, since this was not requested");
-            }
-            return null;
-          });
+      stopWatch.run(
+          new TaskDefinition(
+              "retrieveTableRowCounts",
+              () -> {
+                final boolean loadRowCounts = config.getBooleanValue(OPTION_LOAD_ROW_COUNTS, false);
+                if (loadRowCounts) {
+                  rowCountsRetriever.retrieveTableRowCounts();
+                } else {
+                  LOGGER.log(
+                      Level.INFO, "Not retrieving table row counts, since this was not requested");
+                }
+              }));
 
-      stopWatch.time(
-          "filterEmptyTables",
-          () -> {
-            final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);
-            catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
-            return null;
-          });
+      stopWatch.run(
+          new TaskDefinition(
+              "filterEmptyTables",
+              () -> {
+                final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);
+                catalog.reduce(
+                    Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
+              }));
 
+      stopWatch.stop();
       LOGGER.log(Level.INFO, stopWatch.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving table row counts", e);

@@ -142,12 +142,12 @@ public class HsqldbTest {
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
-        hasItems(4, 4));
+        hasItems(3, 3));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
-        hasItems("INITIAL_SCHEMA", "AUTHENTICATION", "PASSWORD_DIGEST", "ADMIN"));
+        hasItems("AUTHENTICATION", "PASSWORD_DIGEST", "ADMIN"));
   }
 }
