@@ -51,16 +51,6 @@ import java.util.stream.Collectors;
 
 public final class TaskRunner {
 
-  private static final DateTimeFormatter df =
-      new DateTimeFormatterBuilder()
-          .appendValue(HOUR_OF_DAY, 2)
-          .appendLiteral(':')
-          .appendValue(MINUTE_OF_HOUR, 2)
-          .appendLiteral(':')
-          .appendValue(SECOND_OF_MINUTE, 2)
-          .appendFraction(NANO_OF_SECOND, 3, 3, true)
-          .toFormatter();
-
   private final String id;
 
   private final List<TaskInfo> tasks;
@@ -98,6 +88,16 @@ public final class TaskRunner {
               return duration.toMillis() * 100D / totalMillis;
             }
           };
+
+      final DateTimeFormatter df =
+          new DateTimeFormatterBuilder()
+              .appendValue(HOUR_OF_DAY, 2)
+              .appendLiteral(':')
+              .appendValue(MINUTE_OF_HOUR, 2)
+              .appendLiteral(':')
+              .appendValue(SECOND_OF_MINUTE, 2)
+              .appendFraction(NANO_OF_SECOND, 3, 3, true)
+              .toFormatter();
 
       Duration totalDuration = Duration.ofNanos(0);
       for (final TaskInfo task : tasks) {
