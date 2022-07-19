@@ -32,6 +32,7 @@ import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -52,12 +53,11 @@ import java.util.stream.Collectors;
 public final class TaskRunner {
 
   private final String id;
-
   private final List<TaskInfo> tasks;
   private final ExecutorService executorService;
 
   public TaskRunner(final String id) {
-    this.id = id;
+    this.id = requireNotBlank(id, "No id provided");
     tasks = new CopyOnWriteArrayList<>();
     executorService = Executors.newFixedThreadPool(5);
   }

@@ -379,8 +379,6 @@ public final class SchemaCrawler {
             retrievePrimaryKeys,
             () -> pkRetriever.retrievePrimaryKeys(allTables),
             retrieveTableColumns)
-        .submit();
-    taskRunner
         .add(
             retrieveForeignKeys,
             () -> fkRetriever.retrieveForeignKeys(allTables),
