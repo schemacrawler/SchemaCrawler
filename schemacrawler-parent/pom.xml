@@ -197,13 +197,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.21</version>
+      <version>5.3.22</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>5.3.21</version>
+      <version>5.3.22</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -294,7 +294,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
