@@ -43,8 +43,8 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
+import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
@@ -101,7 +101,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final TaskRunner stopWatch = new TaskRunner("loadWeakAssociations");
+    final TaskRunner stopWatch = new TaskRunner("loadWeakAssociations", 1);
 
     LOGGER.log(Level.INFO, "Finding weak associations");
     try {

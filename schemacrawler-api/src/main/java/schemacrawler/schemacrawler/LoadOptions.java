@@ -34,9 +34,20 @@ import us.fatehi.utility.ObjectToString;
 public final class LoadOptions implements Options {
 
   private final SchemaInfoLevel schemaInfoLevel;
+  private final int maxThreads;
 
-  LoadOptions(final SchemaInfoLevel schemaInfoLevel) {
+  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final int maxThreads) {
     this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
+    this.maxThreads = maxThreads;
+  }
+
+  /**
+   * Maximum number of threads.
+   *
+   * @return Maximum number of threads.
+   */
+  public int getMaxThreads() {
+    return maxThreads;
   }
 
   /**

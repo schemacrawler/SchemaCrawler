@@ -48,18 +48,36 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import us.fatehi.utility.string.StringFormat;
+
 public final class TaskRunner {
+
+  private static final Logger LOGGER = Logger.getLogger(TaskRunner.class.getName());
 
   private final String id;
   private final List<TaskInfo> tasks;
   private final ExecutorService executorService;
 
-  public TaskRunner(final String id) {
+  public TaskRunner(final String id, final int maxThreadsSuggested) {
     this.id = requireNotBlank(id, "No id provided");
+
+    final int maxThreads;
+    if (maxThreadsSuggested <= 0) {
+      maxThreads = 1;
+    } else if (maxThreadsSuggested > 5) {
+      maxThreads = 5;
+    } else {
+      maxThreads = maxThreadsSuggested;
+    }
+    LOGGER.log(
+        Level.INFO, new StringFormat("Configured to run loaders in <%d> threads", maxThreads));
+
     tasks = new CopyOnWriteArrayList<>();
-    executorService = Executors.newFixedThreadPool(5);
+    executorService = Executors.newFixedThreadPool(maxThreads);
   }
 
   public String getId() {

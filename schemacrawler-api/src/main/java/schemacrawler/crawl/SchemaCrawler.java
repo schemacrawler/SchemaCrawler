@@ -86,6 +86,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptions;
+import schemacrawler.schemacrawler.LoadOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -120,8 +121,11 @@ public final class SchemaCrawler {
     try {
       retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
       this.options = requireNonNull(options, "No SchemaCrawler options provided");
-      infoLevel = options.getLoadOptions().getSchemaInfoLevel();
-      taskRunner = new RetrievalTaskRunner(infoLevel);
+
+      final LoadOptions loadOptions = options.getLoadOptions();
+      infoLevel = loadOptions.getSchemaInfoLevel();
+      final int maxThreads = loadOptions.getMaxThreads();
+      taskRunner = new RetrievalTaskRunner(infoLevel, maxThreads);
     } catch (final SQLException e) {
       throw new DatabaseAccessException(e);
     }

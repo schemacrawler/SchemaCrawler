@@ -2,6 +2,14 @@
 
 SchemaCrawler release notes.
 
+SchemaCrawler release notes.
+
+<a name="a16.17.1"></a>
+## Release 16.17.1 - 2022-07-22
+
+- Run catalog loader with multiple threads, defalting to 5; this can be set with `schemacrawler.load.max_threads`
+
+
 <a name="a16.16.19"></a>
 ## Release 16.16.19 - 2022-07-05
 

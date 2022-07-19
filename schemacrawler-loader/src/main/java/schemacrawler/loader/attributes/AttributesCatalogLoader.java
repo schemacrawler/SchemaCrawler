@@ -58,8 +58,8 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
-import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
+import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
@@ -95,7 +95,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving catalog attributes");
-    final TaskRunner stopWatch = new TaskRunner("loadAttributes");
+    final TaskRunner stopWatch = new TaskRunner("loadAttributes", 1);
     try {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();

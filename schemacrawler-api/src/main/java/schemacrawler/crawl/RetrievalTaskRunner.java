@@ -54,10 +54,10 @@ public final class RetrievalTaskRunner {
   private final SchemaInfoLevel infoLevel;
   private final List<TaskDefinition> taskDefinitions;
 
-  public RetrievalTaskRunner(final SchemaInfoLevel infoLevel) {
+  public RetrievalTaskRunner(final SchemaInfoLevel infoLevel, final int maxThreads) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
 
-    taskRunner = new TaskRunner(infoLevel.getTag());
+    taskRunner = new TaskRunner(infoLevel.getTag(), maxThreads);
     taskDefinitions = new CopyOnWriteArrayList<>();
   }
 

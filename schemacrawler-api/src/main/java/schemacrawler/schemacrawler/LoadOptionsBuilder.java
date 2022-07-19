@@ -39,10 +39,12 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
   }
 
   private SchemaInfoLevel schemaInfoLevel;
+  private int maxThreads;
 
   /** Default options. */
   private LoadOptionsBuilder() {
     schemaInfoLevel = SchemaInfoLevelBuilder.standard();
+    maxThreads = 5;
   }
 
   @Override
@@ -52,18 +54,30 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
     }
 
     schemaInfoLevel = options.getSchemaInfoLevel();
+    maxThreads = options.getMaxThreads();
 
     return this;
   }
 
   @Override
   public LoadOptions toOptions() {
-    return new LoadOptions(schemaInfoLevel);
+    return new LoadOptions(schemaInfoLevel, maxThreads);
   }
 
   public LoadOptionsBuilder withInfoLevel(final InfoLevel infoLevel) {
     if (infoLevel != null) {
       this.schemaInfoLevel = infoLevel.toSchemaInfoLevel();
+    }
+    return this;
+  }
+
+  public LoadOptionsBuilder withMaxThreads(final int maxThreads) {
+    if (maxThreads <= 0) {
+      this.maxThreads = 1;
+    } else if (maxThreads > 5) {
+      this.maxThreads = 5;
+    } else {
+      this.maxThreads = maxThreads;
     }
     return this;
   }
