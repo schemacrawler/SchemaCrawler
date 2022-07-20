@@ -1,4 +1,4 @@
-package schemacrawler.loader.weakassociations;
+package schemacrawler.test.utility.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;

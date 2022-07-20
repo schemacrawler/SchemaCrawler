@@ -37,6 +37,8 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Column;
+import schemacrawler.test.utility.crawl.LightColumn;
+import schemacrawler.test.utility.crawl.LightTable;
 
 public class ColumnMatchKeysMapTest {
 
@@ -51,9 +53,11 @@ public class ColumnMatchKeysMapTest {
     table3.addColumn("Entity_ID");
     final LightTable table4 = new LightTable("Table4");
     table4.addColumn("EntityID");
+    final LightTable table5 = new LightTable("Table5");
+    table5.addColumn("NonEntity");
 
     final ColumnMatchKeysMap columnMatchKeysMap =
-        new ColumnMatchKeysMap(Arrays.asList(table1, table2, table3, table4));
+        new ColumnMatchKeysMap(Arrays.asList(table1, table2, table3, table4, table5));
 
     assertThat(
         columnMatchKeysMap.toString(),
@@ -72,5 +76,29 @@ public class ColumnMatchKeysMapTest {
     assertThat(
         columnMatchKeysMap.get(column).stream().collect(Collectors.toSet()),
         containsInAnyOrder("entity"));
+  }
+
+  @Test
+  public void id() {
+
+    final LightTable table1 = new LightTable("Table1");
+    table1.addColumn("id");
+    final LightTable table2 = new LightTable("Table2");
+    table2.addColumn("_id");
+    final LightTable table3 = new LightTable("Table3");
+    table3.addColumn("ID");
+    final LightTable table4 = new LightTable("Table4");
+    table4.addColumn("_ID");
+
+    final ColumnMatchKeysMap columnMatchKeysMap =
+        new ColumnMatchKeysMap(Arrays.asList(table1, table2, table3, table4));
+
+    assertThat(columnMatchKeysMap.toString(), is("{}"));
+
+    assertThat(columnMatchKeysMap.containsKey("entity"), is(false));
+    assertThat(columnMatchKeysMap.containsKey(""), is(false));
+
+    final LightColumn column = new LightColumn(table4, "EntityID");
+    assertThat(columnMatchKeysMap.containsKey(column), is(false));
   }
 }

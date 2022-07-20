@@ -40,6 +40,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Table;
+import schemacrawler.test.utility.crawl.LightTable;
 
 public class TableMatchKeysTest {
 
