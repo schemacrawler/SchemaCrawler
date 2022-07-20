@@ -39,28 +39,15 @@ import schemacrawler.schema.Table;
 
 final class ForeignKeys {
 
-  private final Collection<ColumnReference> foreignKeys;
+  private final Collection<ProposedWeakAssociation> foreignKeys;
 
   ForeignKeys(final List<Table> tables) {
     foreignKeys = mapForeignKeyColumns(tables);
   }
 
-  public boolean contains(final ProposedWeakAssociation columnMap) {
-    if (columnMap == null) {
-      return false;
-    }
-
-    // We have to loop through the collection, since we want to use the
-    // equals from the WeakAssociation
-    for (final ColumnReference columnReference : foreignKeys) {
-      final ProposedWeakAssociation columnReferenceAsProposal =
-          new ProposedWeakAssociation(columnReference);
-      final boolean equals = columnMap.equals(columnReferenceAsProposal);
-      if (equals) {
-        return true;
-      }
-    }
-    return false;
+  public boolean contains(final ProposedWeakAssociation proposedWeakAssociation) {
+    // IMPORTANT: Ensure that the ProposedWeakAssociation equals method is used
+    return foreignKeys.contains(proposedWeakAssociation);
   }
 
   @Override
@@ -68,14 +55,14 @@ final class ForeignKeys {
     return foreignKeys.toString();
   }
 
-  private Collection<ColumnReference> mapForeignKeyColumns(final List<Table> tables) {
+  private Collection<ProposedWeakAssociation> mapForeignKeyColumns(final List<Table> tables) {
     requireNonNull(tables, "No tables provided");
 
-    final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
+    final Collection<ProposedWeakAssociation> fkColumnsMap = new HashSet<>();
     for (final Table table : tables) {
       for (final ForeignKey foreignKey : table.getForeignKeys()) {
         for (final ColumnReference columnRef : foreignKey) {
-          fkColumnsMap.add(columnRef);
+          fkColumnsMap.add(new ProposedWeakAssociation(columnRef));
         }
       }
     }

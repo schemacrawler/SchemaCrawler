@@ -76,7 +76,7 @@ final class ColumnMatchKeysMap {
     for (final Column column : table.getColumns()) {
       final String columnName = column.getName().toLowerCase();
       final String matchColumnName = columnName.replaceAll("_?id$", "");
-      if (!columnName.equals(matchColumnName) && !isBlank(matchColumnName)) {
+      if (!isBlank(matchColumnName)) {
         columnsForMatchKey.add(matchColumnName, column);
         matchKeysForColumn.add(column, matchColumnName);
       }

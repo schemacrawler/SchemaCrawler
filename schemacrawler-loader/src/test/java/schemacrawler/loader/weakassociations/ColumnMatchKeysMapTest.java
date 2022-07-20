@@ -61,7 +61,9 @@ public class ColumnMatchKeysMapTest {
 
     assertThat(
         columnMatchKeysMap.toString(),
-        is("{entity=[Table1.EntityId, Table2.Entity_Id, Table3.Entity_ID, Table4.EntityID]}"));
+        is(
+            "{nonentity=[Table5.NonEntity], "
+                + "entity=[Table1.EntityId, Table2.Entity_Id, Table3.Entity_ID, Table4.EntityID]}"));
 
     assertThat(columnMatchKeysMap.containsKey("entity"), is(true));
     assertThat(
