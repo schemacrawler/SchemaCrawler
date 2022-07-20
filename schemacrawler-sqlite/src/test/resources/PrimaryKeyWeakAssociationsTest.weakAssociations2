@@ -1,7 +1,0 @@
-schema: 
-  table: TABLE3_FK
-    weak association (1 to (0..many)):
-      column reference: TABLE3_FK.ENTITY_ID --> TABLE9_PK.ENTITY_ID
-  table: TABLE9_PK
-    weak association (1 to (0..many)):
-      column reference: TABLE3_FK.ENTITY_ID --> TABLE9_PK.ENTITY_ID
