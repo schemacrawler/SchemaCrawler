@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,16 +35,22 @@ public final class LightTable implements Table {
 
   private final Schema schema;
   private final String name;
+  private final List<Column> columns;
   private final Map<String, Object> attributes;
 
   public LightTable(final Schema schema, final String name) {
     this.schema = requireNonNull(schema, "No schema provided");
     this.name = requireNotBlank(name, "No table name provided");
     attributes = new HashMap<>();
+    columns = new ArrayList<>();
   }
 
   public LightTable(final String name) {
     this(new SchemaReference(), name);
+  }
+
+  public void addColumn(final String name) {
+    columns.add(new LightColumn(this, name));
   }
 
   @Override
@@ -92,7 +99,7 @@ public final class LightTable implements Table {
 
   @Override
   public List<Column> getColumns() {
-    return Collections.emptyList();
+    return columns;
   }
 
   @Override
@@ -137,6 +144,7 @@ public final class LightTable implements Table {
 
   @Override
   public PrimaryKey getPrimaryKey() {
+	  
     return null;
   }
 
@@ -232,6 +240,11 @@ public final class LightTable implements Table {
 
   @Override
   public <C extends Column> Optional<C> lookupColumn(final String name) {
+    for (final Column column : columns) {
+      if (column.getName().equals(name)) {
+        return (Optional<C>) Optional.of(column);
+      }
+    }
     return Optional.empty();
   }
 
