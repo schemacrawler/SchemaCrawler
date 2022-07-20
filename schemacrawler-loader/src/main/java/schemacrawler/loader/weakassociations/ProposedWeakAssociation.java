@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.weakassociations;
 
-import java.util.AbstractMap;
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -35,51 +35,69 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 
-public final class ProposedWeakAssociation
-    extends AbstractMap.SimpleImmutableEntry<Column, Column> {
+public final class ProposedWeakAssociation implements ColumnReference {
 
-  private static final long serialVersionUID = 24677218335455928L;
+  private static final long serialVersionUID = 2986663326992262188L;
 
-  ProposedWeakAssociation(final Column key, final Column value) {
-    super(key, value);
+  private final Column primaryKeyColumn;
+  private final Column foreignKeyColumn;
+
+  ProposedWeakAssociation(final Column foreignKeyColumn, final Column primaryKeyColumn) {
+    this.primaryKeyColumn = requireNonNull(primaryKeyColumn, "No primary key column provided");
+    this.foreignKeyColumn = requireNonNull(foreignKeyColumn, "No foreign key column provided");
   }
 
-  ProposedWeakAssociation(final ColumnReference columnReference) {
-    super(columnReference.getPrimaryKeyColumn(), columnReference.getForeignKeyColumn());
+  @Override
+  public int compareTo(final ColumnReference o) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Column getForeignKeyColumn() {
+    return foreignKeyColumn;
+  }
+
+  @Override
+  public int getKeySequence() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Column getPrimaryKeyColumn() {
+    return primaryKeyColumn;
   }
 
   public boolean isValid() {
 
-    final Column pkColumn = getKey();
-    final Column fkColumn = getValue();
-    if (pkColumn == null || fkColumn == null) {
-      return false;
-    }
-
-    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
-    final boolean isFkColumnPartial = fkColumn instanceof PartialDatabaseObject;
+    final boolean isPkColumnPartial = primaryKeyColumn instanceof PartialDatabaseObject;
+    final boolean isFkColumnPartial = foreignKeyColumn instanceof PartialDatabaseObject;
     if (isFkColumnPartial && isPkColumnPartial) {
       return false;
     }
 
-    if (pkColumn.equals(fkColumn)) {
+    if (primaryKeyColumn.equals(foreignKeyColumn)) {
       return false;
     }
 
-    final Table pkTable = pkColumn.getParent();
-    final Table fkTable = fkColumn.getParent();
-    if ((fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
+    final Table pkTable = primaryKeyColumn.getParent();
+    final Table fkTable = foreignKeyColumn.getParent();
+    if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn.isPartOfUniqueIndex())
         && pkTable.compareTo(fkTable) > 0) {
       return false;
     }
 
-    if (!pkColumn.isColumnDataTypeKnown() || !fkColumn.isColumnDataTypeKnown()) {
+    if (!primaryKeyColumn.isColumnDataTypeKnown() || !foreignKeyColumn.isColumnDataTypeKnown()) {
       return false;
     }
-    final ColumnDataType fkColumnType = fkColumn.getColumnDataType();
-    final ColumnDataType pkColumnType = pkColumn.getColumnDataType();
+    final ColumnDataType fkColumnType = foreignKeyColumn.getColumnDataType();
+    final ColumnDataType pkColumnType = primaryKeyColumn.getColumnDataType();
     final boolean isValid =
         fkColumnType.getJavaSqlType().getName().equals(pkColumnType.getJavaSqlType().getName());
     return isValid;
+  }
+
+  @Override
+  public String toString() {
+    return foreignKeyColumn + " ~~> " + primaryKeyColumn;
   }
 }

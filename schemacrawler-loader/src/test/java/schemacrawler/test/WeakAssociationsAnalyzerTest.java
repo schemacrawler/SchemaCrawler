@@ -99,9 +99,9 @@ public class WeakAssociationsAnalyzerTest {
           "Proposed weak association count does not match", proposedWeakAssociations, hasSize(6));
       for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
         out.println(String.format("weak association: %s", proposedWeakAssociation));
-        assertThat(proposedWeakAssociation.getKey().getParent().getWeakAssociations(), is(empty()));
+        assertThat(proposedWeakAssociation.getPrimaryKeyColumn().getParent().getWeakAssociations(), is(empty()));
         assertThat(
-            proposedWeakAssociation.getValue().getParent().getWeakAssociations(), is(empty()));
+            proposedWeakAssociation.getForeignKeyColumn().getParent().getWeakAssociations(), is(empty()));
       }
     }
 

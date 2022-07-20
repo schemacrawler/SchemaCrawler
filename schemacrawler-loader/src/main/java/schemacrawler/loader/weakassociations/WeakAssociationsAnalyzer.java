@@ -99,7 +99,7 @@ public final class WeakAssociationsAnalyzer {
 
         for (final Column fkColumn : fkColumns) {
           final ProposedWeakAssociation proposedWeakAssociation =
-              new ProposedWeakAssociation(pkColumn, fkColumn);
+              new ProposedWeakAssociation(fkColumn, pkColumn);
           if (proposedWeakAssociation.isValid()) {
             LOGGER.log(
                 Level.FINE,

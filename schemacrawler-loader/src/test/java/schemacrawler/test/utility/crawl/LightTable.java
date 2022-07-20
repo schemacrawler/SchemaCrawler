@@ -49,8 +49,10 @@ public final class LightTable implements Table {
     this(new SchemaReference(), name);
   }
 
-  public void addColumn(final String name) {
-    columns.add(new LightColumn(this, name));
+  public LightColumn addColumn(final String name) {
+    final LightColumn column = new LightColumn(this, name);
+    columns.add(column);
+    return column;
   }
 
   @Override
@@ -144,7 +146,7 @@ public final class LightTable implements Table {
 
   @Override
   public PrimaryKey getPrimaryKey() {
-	  
+
     return null;
   }
 
