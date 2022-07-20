@@ -32,7 +32,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.DB2TestUtility.newDB211Container;
@@ -129,9 +128,10 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     final Catalog catalog = executable.getCatalog();
 
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
-    assertThat(serverInfo.size(), equalTo(4));
-    assertThat(serverInfo.get(0).getName(), equalTo("HOST_NAME"));
-    assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-z]{12}"));
+    assertThat(serverInfo.size(), equalTo(6));
+    final Property property = serverInfo.get(0);
+    assertThat(property.getName(), equalTo("CURRENT_SERVER"));
+    assertThat(property.getValue(), equalTo("TEST"));
 
     final Table table = catalog.lookupTable(new SchemaReference(null, "DB2INST1"), "AUTHORS").get();
     final Column column = table.lookupColumn("FIRSTNAME").get();
