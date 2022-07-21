@@ -35,13 +35,10 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
@@ -57,6 +54,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.NamedObjectSort;
@@ -66,24 +64,20 @@ import schemacrawler.utility.NamedObjectSort;
 public class SimpleWeakAssociationsTest {
 
   @Test
-  public void simpleWeakAssociationWithPlurals(final TestContext testContext) throws Exception {
-    weakAssociations(testContext, "/simple_weak_association_with_plurals.sql");
+  @WithTestDatabase(script = "/simple_weak_association_with_ids.sql")
+  public void simpleWeakAssociationWithIds(
+      final TestContext testContext, final Connection connection) throws Exception {
+    weakAssociations(testContext, connection);
   }
 
-  private Connection getConnection(final String databaseSqlResource) throws SQLException {
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript(databaseSqlResource)
-            .build();
-
-    final Connection connection = db.getConnection();
-    return connection;
+  @Test
+  @WithTestDatabase(script = "/simple_weak_association_with_plurals.sql")
+  public void simpleWeakAssociationWithPlurals(
+      final TestContext testContext, final Connection connection) throws Exception {
+    weakAssociations(testContext, connection);
   }
 
-  private void weakAssociations(final TestContext testContext, final String databaseSqlResource)
+  private void weakAssociations(final TestContext testContext, final Connection connection)
       throws Exception {
 
     final String currentMethodFullName = testContext.testMethodFullName();
@@ -92,8 +86,6 @@ public class SimpleWeakAssociationsTest {
     try (final TestWriter out = testout) {
       final SchemaCrawlerOptions schemaCrawlerOptions =
           DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-
-      final Connection connection = getConnection(databaseSqlResource);
 
       final SchemaRetrievalOptions schemaRetrievalOptions =
           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
