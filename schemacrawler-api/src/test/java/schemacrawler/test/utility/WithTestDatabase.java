@@ -37,4 +37,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public @interface WithTestDatabase {}
+public @interface WithTestDatabase {
+
+  String script() default "";
+}

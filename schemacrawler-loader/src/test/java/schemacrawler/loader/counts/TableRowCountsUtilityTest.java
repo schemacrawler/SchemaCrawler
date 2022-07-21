@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.loader.weakassociations.LightTable;
 import schemacrawler.schema.Table;
+import schemacrawler.test.utility.crawl.LightTable;
 
 public class TableRowCountsUtilityTest {
 

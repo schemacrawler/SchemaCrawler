@@ -31,6 +31,7 @@ import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Table;
+import schemacrawler.test.utility.crawl.LightTable;
 
 public class TableMatchKeysTest {
 
@@ -67,6 +69,9 @@ public class TableMatchKeysTest {
 
     withoutPrefix = matchkeys.get(new LightTable("table1"));
     assertThat(withoutPrefix, containsInAnyOrder("table1"));
+
+    withoutPrefix = matchkeys.get(null);
+    assertThat(withoutPrefix, is(nullValue()));
   }
 
   @Test
