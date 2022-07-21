@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.weakassociations;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
 
@@ -73,14 +74,9 @@ final class ColumnMatchKeysMap {
 
   private void mapColumnNameMatches(final Table table) {
     for (final Column column : table.getColumns()) {
-      String matchColumnName = column.getName().toLowerCase();
-      if (matchColumnName.endsWith("_id")) {
-        matchColumnName = matchColumnName.substring(0, matchColumnName.length() - 3);
-      }
-      if (matchColumnName.endsWith("id") && !matchColumnName.equals("id")) {
-        matchColumnName = matchColumnName.substring(0, matchColumnName.length() - 2);
-      }
-      if (!matchColumnName.equals("id")) {
+      final String columnName = column.getName().toLowerCase();
+      final String matchColumnName = columnName.replaceAll("_?id$", "");
+      if (!isBlank(matchColumnName)) {
         columnsForMatchKey.add(matchColumnName, column);
         matchKeysForColumn.add(column, matchColumnName);
       }

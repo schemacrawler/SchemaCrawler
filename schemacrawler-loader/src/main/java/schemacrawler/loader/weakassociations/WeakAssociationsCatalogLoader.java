@@ -70,8 +70,8 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       LOGGER.log(
           Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
 
-      final Column fkColumn = proposedWeakAssociation.getValue();
-      final Column pkColumn = proposedWeakAssociation.getKey();
+      final Column fkColumn = proposedWeakAssociation.getForeignKeyColumn();
+      final Column pkColumn = proposedWeakAssociation.getPrimaryKeyColumn();
 
       final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
       builder.addColumnReference(

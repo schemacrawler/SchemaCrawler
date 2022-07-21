@@ -28,15 +28,21 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import schemacrawler.testdb.TestDatabase;
 import us.fatehi.utility.LoggingConfig;
@@ -65,17 +71,42 @@ final class TestDatabaseConnectionParameterResolver
       final ParameterContext parameterContext, final ExtensionContext extensionContext)
       throws ParameterResolutionException {
     try {
-      final Parameter parameter = parameterContext.getParameter();
-      if (isParameterConnection(parameter)) {
-        return testDatabase.getConnection();
-      } else if (isParameterDatabaseConnectionInfo(parameter)) {
-        return new DatabaseConnectionInfo(
-            testDatabase.getHost(),
-            testDatabase.getPort(),
-            testDatabase.getDatabase(),
-            testDatabase.getConnectionUrl());
+      final WithTestDatabase withTestDatabase = locateAnnotation(extensionContext);
+      final String script;
+      if (withTestDatabase == null) {
+        script = "";
       } else {
-        throw new ParameterResolutionException("Could not resolve " + parameter);
+        script = withTestDatabase.script();
+      }
+
+      final Parameter parameter = parameterContext.getParameter();
+      if (isBlank(script)) {
+        if (isParameterConnection(parameter)) {
+          return testDatabase.getConnection();
+        } else if (isParameterDatabaseConnectionInfo(parameter)) {
+          return new DatabaseConnectionInfo(
+              testDatabase.getHost(),
+              testDatabase.getPort(),
+              testDatabase.getDatabase(),
+              testDatabase.getConnectionUrl());
+        } else {
+          throw new ParameterResolutionException("Could not resolve " + parameter);
+        }
+      } else {
+        if (isParameterConnection(parameter)) {
+          final EmbeddedDatabase db =
+              new EmbeddedDatabaseBuilder()
+                  .generateUniqueName(true)
+                  .setScriptEncoding("UTF-8")
+                  .ignoreFailedDrops(true)
+                  .addScript(script)
+                  .build();
+
+          final Connection connection = db.getConnection();
+          return connection;
+        } else {
+          throw new ParameterResolutionException("Could not resolve " + parameter);
+        }
       }
     } catch (final SQLException e) {
       throw new ParameterResolutionException("", e);
@@ -94,5 +125,22 @@ final class TestDatabaseConnectionParameterResolver
     hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
 
     return hasConnection || hasDatabaseConnectionInfo;
+  }
+
+  private WithTestDatabase locateAnnotation(final ExtensionContext extensionContext) {
+    final Optional<WithTestDatabase> optionalMethodAnnotation =
+        findAnnotation(extensionContext.getTestMethod(), WithTestDatabase.class);
+    final Optional<WithTestDatabase> optionalClassAnnotation =
+        findAnnotation(extensionContext.getTestClass(), WithTestDatabase.class);
+
+    final WithTestDatabase withTestDatabase;
+    if (optionalMethodAnnotation.isPresent()) {
+      withTestDatabase = optionalMethodAnnotation.get();
+    } else if (optionalClassAnnotation.isPresent()) {
+      withTestDatabase = optionalClassAnnotation.get();
+    } else {
+      withTestDatabase = null;
+    }
+    return withTestDatabase;
   }
 }

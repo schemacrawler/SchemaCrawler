@@ -41,13 +41,10 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.FilterOptions;
@@ -60,6 +57,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -70,6 +68,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 @ResolveTestContext
+@WithTestDatabase(script = "table-chain.sql")
 public class DiagramRendererOptionsAdditionalSchemasTest {
 
   private static final String ADDITIONAL_DIAGRAM_OPTIONS_OUTPUT =
@@ -160,9 +159,9 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
   @Test
   @DisplayName("No hanging foreign keys")
-  public void executableAdditionalForDiagram_01(final TestContext testContext) throws Exception {
+  public void executableAdditionalForDiagram_01(
+      final TestContext testContext, final Connection connection) throws Exception {
 
-    final Connection connection = getConnection();
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
 
@@ -181,9 +180,9 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
   @Test
   @DisplayName("No hanging foreign keys; weak associations loaded; schema command")
-  public void executableAdditionalForDiagram_02(final TestContext testContext) throws Exception {
+  public void executableAdditionalForDiagram_02(
+      final TestContext testContext, final Connection connection) throws Exception {
 
-    final Connection connection = getConnection();
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
 
@@ -203,9 +202,9 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
   @Test
   @DisplayName("No hanging foreign keys; weak associations loaded; brief command")
-  public void executableAdditionalForDiagram_03(final TestContext testContext) throws Exception {
+  public void executableAdditionalForDiagram_03(
+      final TestContext testContext, final Connection connection) throws Exception {
 
-    final Connection connection = getConnection();
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
 
@@ -225,9 +224,9 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
   @Test
   @DisplayName("Allow hanging foreign keys; weak associations loaded; brief command")
-  public void executableAdditionalForDiagram_04(final TestContext testContext) throws Exception {
+  public void executableAdditionalForDiagram_04(
+      final TestContext testContext, final Connection connection) throws Exception {
 
-    final Connection connection = getConnection();
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(true).toOptions();
 
@@ -243,19 +242,6 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
         additionalConfig,
         diagramOptions,
         testContext.testMethodName());
-  }
-
-  private Connection getConnection() throws SQLException {
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("table-chain.sql")
-            .build();
-
-    final Connection connection = db.getConnection();
-    return connection;
   }
 
   private SchemaCrawlerOptions greppedForTable3() {

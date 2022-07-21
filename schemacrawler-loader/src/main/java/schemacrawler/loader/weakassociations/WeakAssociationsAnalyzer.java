@@ -36,16 +36,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationsAnalyzer {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(WeakAssociationsAnalyzer.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final List<Table> tables;
   private final Collection<ProposedWeakAssociation> weakAssociations;
@@ -70,7 +69,6 @@ public final class WeakAssociationsAnalyzer {
 
   private void findWeakAssociations(final List<Table> tables) {
     LOGGER.log(Level.INFO, "Finding weak associations");
-    final ForeignKeys foreignKeys = new ForeignKeys(tables);
     final ColumnMatchKeysMap columnMatchKeysMap = new ColumnMatchKeysMap(tables);
     final TableMatchKeys tableMatchKeys = new TableMatchKeys(tables);
 
@@ -101,8 +99,8 @@ public final class WeakAssociationsAnalyzer {
 
         for (final Column fkColumn : fkColumns) {
           final ProposedWeakAssociation proposedWeakAssociation =
-              new ProposedWeakAssociation(pkColumn, fkColumn);
-          if (proposedWeakAssociation.isValid() && !foreignKeys.contains(proposedWeakAssociation)) {
+              new ProposedWeakAssociation(fkColumn, pkColumn);
+          if (proposedWeakAssociation.isValid()) {
             LOGGER.log(
                 Level.FINE,
                 new StringFormat("Found weak association <%s>", proposedWeakAssociation));

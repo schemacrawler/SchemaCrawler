@@ -32,13 +32,10 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Description;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -47,8 +44,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.WithTestDatabase;
 
 @ResolveTestContext
+@WithTestDatabase(script = "fk_dupe_name.sql")
 public class ForeignKeyNamesTest {
 
   private Catalog catalog;
@@ -60,9 +59,7 @@ public class ForeignKeyNamesTest {
   }
 
   @BeforeEach
-  public void loadCatalog() throws Exception {
-
-    final Connection connection = getConnection();
+  public void loadCatalog(final Connection connection) throws Exception {
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -71,18 +68,5 @@ public class ForeignKeyNamesTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     catalog = getCatalog(connection, schemaCrawlerOptions);
-  }
-
-  private Connection getConnection() throws SQLException {
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("fk_dupe_name.sql")
-            .build();
-
-    final Connection connection = db.getConnection();
-    return connection;
   }
 }
