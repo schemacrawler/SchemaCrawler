@@ -1,0 +1,11 @@
+table: PUBLIC.PUBLIC.AREF
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.AREF.BOOK_ID --> PUBLIC.PUBLIC.BOOK.ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.AREF.BOOK_ID --> PUBLIC.PUBLIC.BOOKS.ID
+table: PUBLIC.PUBLIC.BOOK
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.AREF.BOOK_ID --> PUBLIC.PUBLIC.BOOK.ID
+table: PUBLIC.PUBLIC.BOOKS
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.AREF.BOOK_ID --> PUBLIC.PUBLIC.BOOKS.ID

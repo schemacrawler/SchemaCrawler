@@ -80,8 +80,6 @@ public class WeakAssociationsAttributesTest {
   public void loadCatalog(final TestContext testContext, final Connection connection)
       throws Exception {
 
-    System.out.println(testContext);
-
     final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
 
     final LimitOptionsBuilder limitOptionsBuilder =
