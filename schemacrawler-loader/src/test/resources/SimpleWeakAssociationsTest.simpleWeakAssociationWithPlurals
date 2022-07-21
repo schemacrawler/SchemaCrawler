@@ -9,3 +9,4 @@ table: PUBLIC.PUBLIC.BOOKREF
 table: PUBLIC.PUBLIC.BOOKS
   weak association (1 to (0..1)):
     column reference: PUBLIC.PUBLIC.BOOKREF.BOOK_ID --> PUBLIC.PUBLIC.BOOKS.ID
+table: PUBLIC.PUBLIC.BOOKSREF

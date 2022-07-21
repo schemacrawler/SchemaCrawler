@@ -66,13 +66,8 @@ import schemacrawler.utility.NamedObjectSort;
 public class SimpleWeakAssociationsTest {
 
   @Test
-  public void simpleWeakAssociation(final TestContext testContext) throws Exception {
-    weakAssociations(testContext, "/simple_weak_association.sql");
-  }
-
-  @Test
-  public void simpleWeakAssociationShortTableNames(final TestContext testContext) throws Exception {
-    weakAssociations(testContext, "/simple_weak_association_small_table_names.sql");
+  public void simpleWeakAssociationWithPlurals(final TestContext testContext) throws Exception {
+    weakAssociations(testContext, "/simple_weak_association_with_plurals.sql");
   }
 
   private Connection getConnection(final String databaseSqlResource) throws SQLException {
