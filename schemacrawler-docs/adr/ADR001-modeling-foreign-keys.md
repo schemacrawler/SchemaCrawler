@@ -13,4 +13,4 @@ Find the best way to model foreign keys. Model foreign keys consistently with a 
 
 ## Decision Outcome
 
-In previous versions of SchemaCrawler, foreign keys were viewed as maps between two tables. From 16.16.18 onwards, SchemaCrawler views foreign keys more consistently with the SQL standard view.
+In previous versions of SchemaCrawler, foreign keys were viewed as maps between two tables. From 16.16.9 onwards, SchemaCrawler views foreign keys more consistently with the SQL standard view.
