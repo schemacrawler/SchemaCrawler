@@ -9,8 +9,8 @@ SchemaCrawler release notes.
 - Do not have inconsistent column references in a table reference (such as a foreign key or weak association)
 
 
-<a name="a16.16.18"></a>
-## Release 16.16.18 - 2022-06-20
+<a name="a16.17.1"></a>
+## Release 16.17.1 - 2022-06-20
 
 - Add support for updating remarks for foreign keys in diagrams and other output
 - Ensure that column privileges are being retrieved for databases that support them

@@ -13,4 +13,4 @@ Determine the most appropriate auto-commit settings for SchemaCrawler and manage
 
 ## Decision Outcome
 
-In previous versions of SchemaCrawler, the test schema creator explicitly turned off the auto-commit mode and explicitly committed each DDL or SQL statement. The test framework behaved in the same way, masking the behavior of the Oracle plugin which had to execute some SQL. From 16.16.18 onwards, SchemaCrawler does not explicitly set the auto-commit mode, either in the test schema creator, or in the Oracle plugin. Commits are done where needed after checking if the auto-commit mode is off.
+In previous versions of SchemaCrawler, the test schema creator explicitly turned off the auto-commit mode and explicitly committed each DDL or SQL statement. The test framework behaved in the same way, masking the behavior of the Oracle plugin which had to execute some SQL. From 16.16.9 onwards, SchemaCrawler does not explicitly set the auto-commit mode, either in the test schema creator, or in the Oracle plugin. Commits are done where needed after checking if the auto-commit mode is off.
