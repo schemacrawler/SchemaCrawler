@@ -58,6 +58,9 @@ public final class TaskRunner {
 
   private static final Logger LOGGER = Logger.getLogger(TaskRunner.class.getName());
 
+  public static final int MIN_THREADS = 1;
+  public static final int MAX_THREADS = 10;
+
   private final String id;
   private final List<TaskInfo> tasks;
   private final ExecutorService executorService;
@@ -66,10 +69,10 @@ public final class TaskRunner {
     this.id = requireNotBlank(id, "No id provided");
 
     final int maxThreads;
-    if (maxThreadsSuggested <= 0) {
-      maxThreads = 1;
-    } else if (maxThreadsSuggested > 5) {
-      maxThreads = 5;
+    if (maxThreadsSuggested < MIN_THREADS) {
+      maxThreads = MIN_THREADS;
+    } else if (maxThreadsSuggested > MAX_THREADS) {
+      maxThreads = MAX_THREADS;
     } else {
       maxThreads = maxThreadsSuggested;
     }

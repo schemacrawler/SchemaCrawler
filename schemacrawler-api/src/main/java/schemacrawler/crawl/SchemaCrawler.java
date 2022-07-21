@@ -443,10 +443,10 @@ public final class SchemaCrawler {
             retrieveTablePrivileges,
             () -> retrieverPrivilege.retrieveTablePrivileges(),
             retrieveTables)
-        .submit();
-
-    LOGGER.log(Level.INFO, "Retrieving additional table column information");
-    taskRunner
+        .add(
+            retrieveTableColumnPrivileges,
+            retrieverPrivilege::retrieveTableColumnPrivileges,
+            retrieveTableColumns)
         .add(
             retrieveAdditionalColumnAttributes,
             retrieverExtra::retrieveAdditionalColumnAttributes,
@@ -457,10 +457,6 @@ public final class SchemaCrawler {
         .add(
             retrieveAdditionalColumnMetadata,
             retrieverExtra::retrieveAdditionalColumnMetadata,
-            retrieveTableColumns)
-        .add(
-            retrieveTableColumnPrivileges,
-            retrieverPrivilege::retrieveTableColumnPrivileges,
             retrieveTableColumns)
         .submit();
   }
