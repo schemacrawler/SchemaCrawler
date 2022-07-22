@@ -40,6 +40,7 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.scheduler.MainThreadTaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 
@@ -84,13 +85,13 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving table row counts");
-    final TaskRunner stopWatch = new TaskRunner("loadTableRowCounts", 1);
+    final TaskRunner taskRunner = new MainThreadTaskRunner("loadTableRowCounts");
     try {
       final Catalog catalog = getCatalog();
       final TableRowCountsRetriever rowCountsRetriever =
           new TableRowCountsRetriever(getConnection(), catalog);
       final Config config = getAdditionalConfiguration();
-      stopWatch.run(
+      taskRunner.run(
           new TaskDefinition(
               "retrieveTableRowCounts",
               () -> {
@@ -103,7 +104,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
                 }
               }));
 
-      stopWatch.run(
+      taskRunner.run(
           new TaskDefinition(
               "filterEmptyTables",
               () -> {
@@ -112,8 +113,8 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
                     Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
               }));
 
-      stopWatch.stop();
-      LOGGER.log(Level.INFO, stopWatch.report());
+      taskRunner.stop();
+      LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving table row counts", e);
     }

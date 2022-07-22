@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.MultiThreadedTaskRunner;
 
 public class LoadOptionsBuilderTest {
 
@@ -41,27 +41,27 @@ public class LoadOptionsBuilderTest {
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder();
 
     // Default
-    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(TaskRunner.MAX_THREADS));
+    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(MultiThreadedTaskRunner.MAX_THREADS));
 
     loadOptionsBuilder.withMaxThreads(Integer.MIN_VALUE);
-    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(TaskRunner.MIN_THREADS));
+    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(MultiThreadedTaskRunner.MIN_THREADS));
 
     loadOptionsBuilder.withMaxThreads(-2);
-    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(TaskRunner.MIN_THREADS));
+    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(MultiThreadedTaskRunner.MIN_THREADS));
 
     loadOptionsBuilder.withMaxThreads(0);
-    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(TaskRunner.MIN_THREADS));
+    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(MultiThreadedTaskRunner.MIN_THREADS));
 
     loadOptionsBuilder.withMaxThreads(1);
-    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(TaskRunner.MIN_THREADS));
+    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(MultiThreadedTaskRunner.MIN_THREADS));
 
     loadOptionsBuilder.withMaxThreads(2);
     assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(2));
 
     loadOptionsBuilder.withMaxThreads(11);
-    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(TaskRunner.MAX_THREADS));
+    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(MultiThreadedTaskRunner.MAX_THREADS));
 
     loadOptionsBuilder.withMaxThreads(Integer.MAX_VALUE);
-    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(TaskRunner.MAX_THREADS));
+    assertThat(loadOptionsBuilder.toOptions().getMaxThreads(), is(MultiThreadedTaskRunner.MAX_THREADS));
   }
 }

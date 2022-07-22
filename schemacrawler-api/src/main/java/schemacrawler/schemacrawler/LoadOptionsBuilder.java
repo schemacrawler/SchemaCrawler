@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-import static us.fatehi.utility.scheduler.TaskRunner.MAX_THREADS;
-import static us.fatehi.utility.scheduler.TaskRunner.MIN_THREADS;
+import static us.fatehi.utility.scheduler.MultiThreadedTaskRunner.MAX_THREADS;
+import static us.fatehi.utility.scheduler.MultiThreadedTaskRunner.MIN_THREADS;
 
 public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuilder, LoadOptions> {
 
@@ -74,6 +74,12 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
     return this;
   }
 
+  /**
+   * IMPORTANT: Multi-threading is not implemented. It is possibly future functionality.
+   *
+   * @param maxThreads Maximum number of threads for multi-threaded operation.
+   * @return Maximum number of threads.
+   */
   public LoadOptionsBuilder withMaxThreads(final int maxThreads) {
     if (maxThreads < MIN_THREADS) {
       this.maxThreads = MIN_THREADS;

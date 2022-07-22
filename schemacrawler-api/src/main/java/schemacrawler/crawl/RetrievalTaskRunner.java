@@ -39,6 +39,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.scheduler.MainThreadTaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 
@@ -57,7 +58,7 @@ public final class RetrievalTaskRunner {
   public RetrievalTaskRunner(final SchemaInfoLevel infoLevel, final int maxThreads) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
 
-    taskRunner = new TaskRunner(infoLevel.getTag(), maxThreads);
+    taskRunner = new MainThreadTaskRunner(infoLevel.getTag());
     taskDefinitions = new CopyOnWriteArrayList<>();
   }
 

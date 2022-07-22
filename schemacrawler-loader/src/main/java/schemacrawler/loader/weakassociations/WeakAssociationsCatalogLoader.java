@@ -43,6 +43,7 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.scheduler.MainThreadTaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.string.StringFormat;
@@ -101,11 +102,11 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final TaskRunner stopWatch = new TaskRunner("loadWeakAssociations", 1);
+    final TaskRunner taskRunner = new MainThreadTaskRunner("loadWeakAssociations");
 
     LOGGER.log(Level.INFO, "Finding weak associations");
     try {
-      stopWatch.run(
+      taskRunner.run(
           new TaskDefinition(
               "retrieveWeakAssociations",
               () -> {
@@ -120,8 +121,8 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
                 }
               }));
 
-      stopWatch.stop();
-      LOGGER.log(Level.INFO, stopWatch.report());
+      taskRunner.stop();
+      LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving weak association information", e);
     }

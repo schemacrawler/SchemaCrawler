@@ -27,24 +27,33 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.scheduler;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.concurrent.ExecutionException;
-import java.util.function.Supplier;
 
-public interface TaskRunner {
+public final class MainThreadTaskRunner extends AbstractTaskRunner {
 
-  String getId();
+  public MainThreadTaskRunner(final String id) {
+    super(id);
+  }
 
-  boolean isStopped();
+  @Override
+  public boolean isStopped() {
+    return false;
+  }
 
-  /**
-   * Allows for a deferred conversion to a string. Useful in logging.
-   *
-   * @return String supplier.
-   * @throws Exception
-   */
-  Supplier<String> report();
+  @Override
+  public void run(final TaskDefinition... taskDefinitions) throws Exception {
 
-  void run(TaskDefinition... taskDefinitions) throws Exception;
+    requireNonNull(taskDefinitions, "Tasks not provided");
 
-  void stop() throws ExecutionException;
+    for (final TaskDefinition taskDefinition : taskDefinitions) {
+      taskDefinition.run();
+    }
+  }
+
+  @Override
+  public void stop() throws ExecutionException {
+    // No-op
+  }
 }
