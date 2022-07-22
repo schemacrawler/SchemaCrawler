@@ -58,5 +58,5 @@ jobs:
           --batch-mode \
           -DSC_EXPERIMENTAL=true \
           -Dheavydb \
-          -pl !schemacrawler-sqlserver \
+          -pl !schemacrawler-sqlserver,!schemacrawler-examplecode \
           clean package
