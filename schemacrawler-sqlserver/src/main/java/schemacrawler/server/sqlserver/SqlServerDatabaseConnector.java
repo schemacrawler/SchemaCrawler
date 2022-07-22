@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.sqlserver;
 
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 
 import schemacrawler.inclusionrule.RegularExpressionRule;
@@ -45,7 +46,9 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
         (informationSchemaViewsBuilder, connection) ->
             informationSchemaViewsBuilder.fromResourceFolder("/sqlserver.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) ->
-            schemaRetrievalOptionsBuilder.with(primaryKeysRetrievalStrategy, data_dictionary_all),
+            schemaRetrievalOptionsBuilder
+                .with(primaryKeysRetrievalStrategy, data_dictionary_all)
+                .with(foreignKeysRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder ->
             limitOptionsBuilder.includeSchemas(
                 new RegularExpressionRule(

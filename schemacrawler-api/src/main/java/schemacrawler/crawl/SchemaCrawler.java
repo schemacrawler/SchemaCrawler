@@ -387,6 +387,12 @@ public final class SchemaCrawler {
             retrieveForeignKeys,
             () -> fkRetriever.retrieveForeignKeys(allTables),
             retrieveTableColumns)
+        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
+        .add(
+            retrieveTableConstraints,
+            constraintRetriever::retrieveTableConstraints,
+            retrieveTableColumns)
+        .add(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation)
         .submit();
 
     taskRunner
@@ -401,14 +407,6 @@ public final class SchemaCrawler {
               final TablesGraph tablesGraph = new TablesGraph(allTables);
               tablesGraph.setTablesSortIndexes();
             })
-        .submit();
-
-    taskRunner
-        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
-        .add(retrieveTableConstraints, constraintRetriever::retrieveTableConstraints)
-        .submit();
-    // Required step: Match all constraints such as primary keys and foreign keys
-    taskRunner
         .add(
             "matchTableConstraints",
             () -> constraintRetriever.matchTableConstraints(allTables),
@@ -416,7 +414,6 @@ public final class SchemaCrawler {
         .submit();
 
     taskRunner
-        .add(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation)
         .add(
             retrieveTableConstraintDefinitions,
             constraintRetriever::retrieveTableConstraintDefinitions,
