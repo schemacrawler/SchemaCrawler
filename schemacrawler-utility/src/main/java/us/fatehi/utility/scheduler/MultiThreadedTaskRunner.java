@@ -50,7 +50,7 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
 
   private final ExecutorService executorService;
 
-  public MultiThreadedTaskRunner(final String id, final int maxThreadsSuggested) {
+  MultiThreadedTaskRunner(final String id, final int maxThreadsSuggested) {
     super(id);
 
     final int maxThreads;

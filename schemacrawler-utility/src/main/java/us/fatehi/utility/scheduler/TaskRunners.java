@@ -27,33 +27,9 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.scheduler;
 
-import static java.util.Objects.requireNonNull;
+public class TaskRunners {
 
-import java.util.concurrent.ExecutionException;
-
-final class MainThreadTaskRunner extends AbstractTaskRunner {
-
-  public MainThreadTaskRunner(final String id) {
-    super(id);
-  }
-
-  @Override
-  public boolean isStopped() {
-    return false;
-  }
-
-  @Override
-  public void run(final TaskDefinition... taskDefinitions) throws Exception {
-
-    requireNonNull(taskDefinitions, "Tasks not provided");
-
-    for (final TaskDefinition taskDefinition : taskDefinitions) {
-      taskDefinition.run();
-    }
-  }
-
-  @Override
-  public void stop() throws ExecutionException {
-    // No-op
+  public static TaskRunner getTaskRunner(final String id, final int maxThreadsSuggested) {
+    return new MainThreadTaskRunner(id);
   }
 }
