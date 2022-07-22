@@ -5,7 +5,7 @@ SchemaCrawler release notes.
 <a name="a16.17.1"></a>
 ## Release 16.17.1 - 2022-07-22
 
-- Run catalog loader with multiple threads, defaulting to 10 (maximum); this can be set with `schemacrawler.load.max_threads`
+- Experimental feature to run catalog loader with multiple threads
 - Fix weak associations algorithm to find common use cases - fixes #793
 - Extract IBM DB2 database name into the `catalog.getDatabaseInfo().getServerInfo()` - fixes #789
 - Change references to online tutorials to Killercoda - fixes #781
