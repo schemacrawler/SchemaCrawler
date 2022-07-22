@@ -56,6 +56,7 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -DSC_EXPERIMENTAL=true
+          -DSC_EXPERIMENTAL=true \
           -Dheavydb \
+          -pl !schemacrawler-sqlserver \
           clean package
