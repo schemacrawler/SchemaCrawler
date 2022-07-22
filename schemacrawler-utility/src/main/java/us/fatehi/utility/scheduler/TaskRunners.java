@@ -25,43 +25,28 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+package us.fatehi.utility.scheduler;
 
-import static java.util.Objects.requireNonNull;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.PropertiesUtility;
 
-public final class LoadOptions implements Options {
+public class TaskRunners {
 
-  private final SchemaInfoLevel schemaInfoLevel;
-  private final int maxThreads;
+  private static final Logger LOGGER = Logger.getLogger(TaskRunners.class.getName());
 
-  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final int maxThreads) {
-    this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
-    this.maxThreads = maxThreads;
-  }
-
-  /**
-   * Maximum number of threads.
-   *
-   * @return Maximum number of threads.
-   */
-  public int getMaxThreads() {
-    return maxThreads;
-  }
-
-  /**
-   * Gets the schema information level, identifying to what level the schema should be crawled.
-   *
-   * @return Schema information level.
-   */
-  public SchemaInfoLevel getSchemaInfoLevel() {
-    return schemaInfoLevel;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    return ObjectToString.toString(this);
+  public static TaskRunner getTaskRunner(final String id, final int maxThreadsSuggested) {
+    final String experimentalFlag =
+        PropertiesUtility.getSystemConfigurationProperty(
+            "SC_EXPERIMENTAL", Boolean.FALSE.toString());
+    final Boolean isExperimental = Boolean.valueOf(experimentalFlag);
+    if (isExperimental) {
+      LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
+      return new MultiThreadedTaskRunner(id, maxThreadsSuggested);
+    } else {
+      LOGGER.log(Level.CONFIG, "Loading database schema using a single main thread");
+      return new MainThreadTaskRunner(id);
+    }
   }
 }

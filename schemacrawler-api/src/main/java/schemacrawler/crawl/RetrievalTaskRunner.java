@@ -41,6 +41,7 @@ import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.TaskRunners;
 
 /**
  * Builds a list of task definitions that can be run in parallel. These are then submitted to be run
@@ -54,10 +55,10 @@ public final class RetrievalTaskRunner {
   private final SchemaInfoLevel infoLevel;
   private final List<TaskDefinition> taskDefinitions;
 
-  public RetrievalTaskRunner(final SchemaInfoLevel infoLevel) {
+  public RetrievalTaskRunner(final SchemaInfoLevel infoLevel, final int maxThreads) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
 
-    taskRunner = new TaskRunner(infoLevel.getTag());
+    taskRunner = TaskRunners.getTaskRunner(infoLevel.getTag(), maxThreads);
     taskDefinitions = new CopyOnWriteArrayList<>();
   }
 

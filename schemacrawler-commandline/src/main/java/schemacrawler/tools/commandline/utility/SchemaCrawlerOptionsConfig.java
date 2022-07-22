@@ -36,6 +36,8 @@ import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptions;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.Config;
@@ -123,6 +125,27 @@ public final class SchemaCrawlerOptionsConfig {
     return builder;
   }
 
+  public static LoadOptionsBuilder fromConfig(
+      final LoadOptionsBuilder providedBuilder, final Config config) {
+
+    final LoadOptionsBuilder builder;
+    if (providedBuilder == null) {
+      builder = LoadOptionsBuilder.builder();
+    } else {
+      builder = providedBuilder;
+    }
+
+    if (config == null) {
+      return builder;
+    }
+
+    final String SC_LOAD_MAX_THREADS = "schemacrawler.load.max_threads";
+
+    builder.withMaxThreads(config.getIntegerValue(SC_LOAD_MAX_THREADS, 5));
+
+    return builder;
+  }
+
   public static SchemaCrawlerOptions fromConfig(
       final SchemaCrawlerOptions providedOptions, final Config config) {
     SchemaCrawlerOptions schemaCrawlerOptions;
@@ -135,6 +158,13 @@ public final class SchemaCrawlerOptionsConfig {
     if (config == null) {
       return schemaCrawlerOptions;
     }
+
+    // Load only number of thread for load options
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
+    final LoadOptions loadOptions =
+        SchemaCrawlerOptionsConfig.fromConfig(loadOptionsBuilder, config).toOptions();
+    schemaCrawlerOptions = schemaCrawlerOptions.withLoadOptions(loadOptions);
 
     // Load only inclusion rules for limit options
     final LimitOptionsBuilder limitOptionsBuilder =

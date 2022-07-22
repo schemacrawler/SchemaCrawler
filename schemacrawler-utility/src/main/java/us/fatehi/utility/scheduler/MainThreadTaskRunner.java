@@ -25,43 +25,35 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
 
-import us.fatehi.utility.ObjectToString;
+import java.util.concurrent.ExecutionException;
 
-public final class LoadOptions implements Options {
+final class MainThreadTaskRunner extends AbstractTaskRunner {
 
-  private final SchemaInfoLevel schemaInfoLevel;
-  private final int maxThreads;
-
-  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final int maxThreads) {
-    this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
-    this.maxThreads = maxThreads;
+  public MainThreadTaskRunner(final String id) {
+    super(id);
   }
 
-  /**
-   * Maximum number of threads.
-   *
-   * @return Maximum number of threads.
-   */
-  public int getMaxThreads() {
-    return maxThreads;
-  }
-
-  /**
-   * Gets the schema information level, identifying to what level the schema should be crawled.
-   *
-   * @return Schema information level.
-   */
-  public SchemaInfoLevel getSchemaInfoLevel() {
-    return schemaInfoLevel;
-  }
-
-  /** {@inheritDoc} */
   @Override
-  public String toString() {
-    return ObjectToString.toString(this);
+  public boolean isStopped() {
+    return false;
+  }
+
+  @Override
+  public void run(final TaskDefinition... taskDefinitions) throws Exception {
+
+    requireNonNull(taskDefinitions, "Tasks not provided");
+
+    for (final TaskDefinition taskDefinition : taskDefinitions) {
+      taskDefinition.run();
+    }
+  }
+
+  @Override
+  public void stop() throws ExecutionException {
+    // No-op
   }
 }

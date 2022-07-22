@@ -58,8 +58,9 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
-import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskDefinition;
+import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.TaskRunners;
 import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
@@ -95,7 +96,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving catalog attributes");
-    final TaskRunner stopWatch = new TaskRunner("loadAttributes");
+    final TaskRunner taskRunner = TaskRunners.getTaskRunner("loadAttributes", 1);
     try {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();
@@ -118,10 +119,10 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             loadAlternateKeys(catalog, catalogAttributes);
             loadWeakAssociations(catalog, catalogAttributes);
           };
-      stopWatch.run(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
+      taskRunner.run(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
 
-      stopWatch.stop();
-      LOGGER.log(Level.INFO, stopWatch.report());
+      taskRunner.stop();
+      LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception loading catalog attributes", e);
     }

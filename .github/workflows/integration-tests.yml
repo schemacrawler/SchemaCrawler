@@ -10,7 +10,7 @@ permissions: read-all
 
 jobs:
   build:
-    name: Build, run database integration tests, and publish results
+    name: Build, run database integration tests
     strategy:
       fail-fast: false
       matrix:
@@ -96,7 +96,7 @@ jobs:
 
 # BUILD AND TEST
     - id: build-test
-      name: Build and run database integration tests
+      name: Build and run coverage tests
       shell: bash
       run: |
         # Build
@@ -146,7 +146,7 @@ jobs:
 
 # BUILD AND TEST
     - id: build-test
-      name: Build and run tests, and build Docker image
+      name: Build, run tests, and build Docker image
       shell: bash
       run: |
         # Build

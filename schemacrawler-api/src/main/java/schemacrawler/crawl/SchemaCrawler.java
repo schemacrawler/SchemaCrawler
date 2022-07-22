@@ -86,6 +86,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptions;
+import schemacrawler.schemacrawler.LoadOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -120,8 +121,11 @@ public final class SchemaCrawler {
     try {
       retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
       this.options = requireNonNull(options, "No SchemaCrawler options provided");
-      infoLevel = options.getLoadOptions().getSchemaInfoLevel();
-      taskRunner = new RetrievalTaskRunner(infoLevel);
+
+      final LoadOptions loadOptions = options.getLoadOptions();
+      infoLevel = loadOptions.getSchemaInfoLevel();
+      final int maxThreads = loadOptions.getMaxThreads();
+      taskRunner = new RetrievalTaskRunner(infoLevel, maxThreads);
     } catch (final SQLException e) {
       throw new DatabaseAccessException(e);
     }
@@ -383,6 +387,12 @@ public final class SchemaCrawler {
             retrieveForeignKeys,
             () -> fkRetriever.retrieveForeignKeys(allTables),
             retrieveTableColumns)
+        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
+        .add(
+            retrieveTableConstraints,
+            constraintRetriever::retrieveTableConstraints,
+            retrieveTableColumns)
+        .add(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation)
         .submit();
 
     taskRunner
@@ -397,14 +407,6 @@ public final class SchemaCrawler {
               final TablesGraph tablesGraph = new TablesGraph(allTables);
               tablesGraph.setTablesSortIndexes();
             })
-        .submit();
-
-    taskRunner
-        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
-        .add(retrieveTableConstraints, constraintRetriever::retrieveTableConstraints)
-        .submit();
-    // Required step: Match all constraints such as primary keys and foreign keys
-    taskRunner
         .add(
             "matchTableConstraints",
             () -> constraintRetriever.matchTableConstraints(allTables),
@@ -412,7 +414,6 @@ public final class SchemaCrawler {
         .submit();
 
     taskRunner
-        .add(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation)
         .add(
             retrieveTableConstraintDefinitions,
             constraintRetriever::retrieveTableConstraintDefinitions,
@@ -439,10 +440,10 @@ public final class SchemaCrawler {
             retrieveTablePrivileges,
             () -> retrieverPrivilege.retrieveTablePrivileges(),
             retrieveTables)
-        .submit();
-
-    LOGGER.log(Level.INFO, "Retrieving additional table column information");
-    taskRunner
+        .add(
+            retrieveTableColumnPrivileges,
+            retrieverPrivilege::retrieveTableColumnPrivileges,
+            retrieveTableColumns)
         .add(
             retrieveAdditionalColumnAttributes,
             retrieverExtra::retrieveAdditionalColumnAttributes,
@@ -453,10 +454,6 @@ public final class SchemaCrawler {
         .add(
             retrieveAdditionalColumnMetadata,
             retrieverExtra::retrieveAdditionalColumnMetadata,
-            retrieveTableColumns)
-        .add(
-            retrieveTableColumnPrivileges,
-            retrieverPrivilege::retrieveTableColumnPrivileges,
             retrieveTableColumns)
         .submit();
   }

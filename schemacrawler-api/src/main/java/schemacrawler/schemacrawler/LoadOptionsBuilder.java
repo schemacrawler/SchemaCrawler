@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
+import static us.fatehi.utility.scheduler.MultiThreadedTaskRunner.MAX_THREADS;
+import static us.fatehi.utility.scheduler.MultiThreadedTaskRunner.MIN_THREADS;
+
 public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuilder, LoadOptions> {
 
   public static LoadOptionsBuilder builder() {
@@ -39,10 +42,12 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
   }
 
   private SchemaInfoLevel schemaInfoLevel;
+  private int maxThreads;
 
   /** Default options. */
   private LoadOptionsBuilder() {
     schemaInfoLevel = SchemaInfoLevelBuilder.standard();
+    maxThreads = MAX_THREADS;
   }
 
   @Override
@@ -52,18 +57,36 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
     }
 
     schemaInfoLevel = options.getSchemaInfoLevel();
+    maxThreads = options.getMaxThreads();
 
     return this;
   }
 
   @Override
   public LoadOptions toOptions() {
-    return new LoadOptions(schemaInfoLevel);
+    return new LoadOptions(schemaInfoLevel, maxThreads);
   }
 
   public LoadOptionsBuilder withInfoLevel(final InfoLevel infoLevel) {
     if (infoLevel != null) {
       this.schemaInfoLevel = infoLevel.toSchemaInfoLevel();
+    }
+    return this;
+  }
+
+  /**
+   * IMPORTANT: Multi-threading is not implemented. It is possibly future functionality.
+   *
+   * @param maxThreads Maximum number of threads for multi-threaded operation.
+   * @return Maximum number of threads.
+   */
+  public LoadOptionsBuilder withMaxThreads(final int maxThreads) {
+    if (maxThreads < MIN_THREADS) {
+      this.maxThreads = MIN_THREADS;
+    } else if (maxThreads > MAX_THREADS) {
+      this.maxThreads = MAX_THREADS;
+    } else {
+      this.maxThreads = maxThreads;
     }
     return this;
   }
