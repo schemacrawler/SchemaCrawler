@@ -47,4 +47,5 @@ FROM
     AS information_schema_tables
     ON tables.name = information_schema_tables.TABLE_NAME
 WHERE
-  triggers.type = 'TR'
+  triggers.IS_MS_SHIPPED != 1
+  and triggers.type = 'TR'
