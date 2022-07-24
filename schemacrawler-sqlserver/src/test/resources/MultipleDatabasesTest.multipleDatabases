@@ -1,0 +1,95 @@
+
+
+Tables
+========================================================================
+
+
+
+DATABASE_A.dbo.A_DBO_TABLE1                                      [table]
+------------------------------------------------------------------------
+  Id                                int not null                
+  Name                              varchar(40) not null        
+
+Primary Key
+
+PK__A_DBO_TA__3214EC07A0BFF37E                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_DBO_TO_DBO                              [foreign key, with no action]
+  Id <--(0..many) DATABASE_A.dbo.A_DBO_TABLE2.FK_COL_TO_DBO                              
+
+Indexes
+
+PK__A_DBO_TA__3214EC07A0BFF37E                  [unique clustered index]
+  Id                                ascending                   
+
+
+
+DATABASE_A.dbo.A_DBO_TABLE2                                      [table]
+------------------------------------------------------------------------
+  Id                                int not null                
+  Name                              varchar(40) not null        
+  FK_COL_TO_DBO                     int not null                
+
+Primary Key
+
+PK__A_DBO_TA__3214EC071ED550BE                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_DBO_TO_DBO                              [foreign key, with no action]
+  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+
+Indexes
+
+PK__A_DBO_TA__3214EC071ED550BE                  [unique clustered index]
+  Id                                ascending                   
+
+
+
+DATABASE_B.dbo.B_DBO_TABLE1                                      [table]
+------------------------------------------------------------------------
+  Id                                int not null                
+  Name                              varchar(40) not null        
+
+Primary Key
+
+PK__B_DBO_TA__3214EC0784E38419                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_DBO_TO_DBO                              [foreign key, with no action]
+  Id <--(0..many) DATABASE_B.dbo.B_DBO_TABLE2.FK_COL_TO_DBO                              
+
+Indexes
+
+PK__B_DBO_TA__3214EC0784E38419                  [unique clustered index]
+  Id                                ascending                   
+
+
+
+DATABASE_B.dbo.B_DBO_TABLE2                                      [table]
+------------------------------------------------------------------------
+  Id                                int not null                
+  Name                              varchar(40) not null        
+  FK_COL_TO_DBO                     int not null                
+
+Primary Key
+
+PK__B_DBO_TA__3214EC076068D950                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+FK_DBO_TO_DBO                              [foreign key, with no action]
+  FK_COL_TO_DBO (0..many)--> DATABASE_B.dbo.B_DBO_TABLE1.Id                              
+
+Indexes
+
+PK__B_DBO_TA__3214EC076068D950                  [unique clustered index]
+  Id                                ascending                   
+
