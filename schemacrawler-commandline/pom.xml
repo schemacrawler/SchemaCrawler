@@ -81,7 +81,7 @@
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
-      <version>21.3.3</version>
+      <version>22.2.0</version>
       <scope>provided</scope>
     </dependency>
 
