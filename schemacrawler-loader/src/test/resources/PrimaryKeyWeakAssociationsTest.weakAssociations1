@@ -1,9 +1,5 @@
 table: PUBLIC.PUBLIC.TABLE1_PK
   weak association (1 to (0..1)):
-    column reference: PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID
-  weak association (1 to (0..1)):
-    column reference: PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID
-  weak association (1 to (0..1)):
     column reference: PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID
   weak association (1 to (0..1)):
     column reference: PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID --> PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID
@@ -12,10 +8,6 @@ table: PUBLIC.PUBLIC.TABLE1_PK
 table: PUBLIC.PUBLIC.TABLE2_PK
   weak association (1 to (0..1)):
     column reference: PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID
-  weak association (1 to (0..1)):
-    column reference: PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID
-  weak association (1 to (0..1)):
-    column reference: PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID
   weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.TABLE3_FK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID
   weak association (1 to (0..1)):
@@ -32,10 +24,6 @@ table: PUBLIC.PUBLIC.TABLE4_UNIQUE
     column reference: PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID --> PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID
   weak association (1 to (0..1)):
     column reference: PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID --> PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID
-  weak association (1 to (0..1)):
-    column reference: PUBLIC.PUBLIC.TABLE1_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID
-  weak association (1 to (0..1)):
-    column reference: PUBLIC.PUBLIC.TABLE2_PK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID
   weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.TABLE3_FK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE4_UNIQUE.ENTITY_ID
 table: PUBLIC.PUBLIC.TABLE5_FK

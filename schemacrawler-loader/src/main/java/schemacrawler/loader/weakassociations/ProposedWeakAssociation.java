@@ -35,6 +35,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.Table;
 
 public final class ProposedWeakAssociation implements ColumnReference {
 
@@ -80,6 +81,19 @@ public final class ProposedWeakAssociation implements ColumnReference {
     final boolean fkColEndsWithId = endsWithIdPattern.matcher(foreignKeyColumn.getName()).matches();
     if (pkColEndsWithId && !fkColEndsWithId) {
       return false;
+    }
+
+    final String pkColumnName =
+        primaryKeyColumn.getName().replaceAll("[^\\p{L}\\{d}]", "").toLowerCase();
+    final String fkColumnName =
+        foreignKeyColumn.getName().replaceAll("[^\\p{L}\\{d}]", "").toLowerCase();
+    if (pkColumnName.equals(fkColumnName)) {
+      final Table pkTable = primaryKeyColumn.getParent();
+      final Table fkTable = foreignKeyColumn.getParent();
+      if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn.isPartOfUniqueIndex())
+          && pkTable.compareTo(fkTable) > 0) {
+        return false;
+      }
     }
 
     final boolean isPkColumnPartial = primaryKeyColumn instanceof PartialDatabaseObject;
