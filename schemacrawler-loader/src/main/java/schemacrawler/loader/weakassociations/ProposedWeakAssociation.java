@@ -29,8 +29,6 @@ package schemacrawler.loader.weakassociations;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.regex.Pattern;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -39,8 +37,6 @@ import schemacrawler.schema.PartialDatabaseObject;
 public final class ProposedWeakAssociation implements ColumnReference {
 
   private static final long serialVersionUID = 2986663326992262188L;
-
-  private static final Pattern endsWithIdPattern = Pattern.compile(".*(?i)_?id$");
 
   private final Column primaryKeyColumn;
   private final Column foreignKeyColumn;
@@ -73,12 +69,6 @@ public final class ProposedWeakAssociation implements ColumnReference {
   public boolean isValid() {
 
     if (primaryKeyColumn.equals(foreignKeyColumn)) {
-      return false;
-    }
-
-    final boolean pkColEndsWithId = endsWithIdPattern.matcher(primaryKeyColumn.getName()).matches();
-    final boolean fkColEndsWithId = endsWithIdPattern.matcher(foreignKeyColumn.getName()).matches();
-    if (pkColEndsWithId && !fkColEndsWithId) {
       return false;
     }
 
