@@ -8,22 +8,14 @@ table: PUBLIC.PUBLIC.BOOK2
     column reference: PUBLIC.PUBLIC.BOOK2.BOOKID --> PUBLIC.PUBLIC.BOOK.ID
   weak association (1 to (0..1)):
     column reference: PUBLIC.PUBLIC.BOOK2.BOOKID --> PUBLIC.PUBLIC.BOOK3.BOOK
-  weak association (1 to (0..many)):
-    column reference: PUBLIC.PUBLIC.READER1.BOOKID --> PUBLIC.PUBLIC.BOOK2.BOOKID
 table: PUBLIC.PUBLIC.BOOK3
   weak association (1 to (0..1)):
     column reference: PUBLIC.PUBLIC.BOOK2.BOOKID --> PUBLIC.PUBLIC.BOOK3.BOOK
   weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.READER1.BOOKID --> PUBLIC.PUBLIC.BOOK3.BOOK
-  weak association (1 to (0..many)):
-    column reference: PUBLIC.PUBLIC.READER2.BOOK --> PUBLIC.PUBLIC.BOOK3.BOOK
 table: PUBLIC.PUBLIC.READER1
   weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.READER1.BOOKID --> PUBLIC.PUBLIC.BOOK.ID
   weak association (1 to (0..many)):
-    column reference: PUBLIC.PUBLIC.READER1.BOOKID --> PUBLIC.PUBLIC.BOOK2.BOOKID
-  weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.READER1.BOOKID --> PUBLIC.PUBLIC.BOOK3.BOOK
 table: PUBLIC.PUBLIC.READER2
-  weak association (1 to (0..many)):
-    column reference: PUBLIC.PUBLIC.READER2.BOOK --> PUBLIC.PUBLIC.BOOK3.BOOK

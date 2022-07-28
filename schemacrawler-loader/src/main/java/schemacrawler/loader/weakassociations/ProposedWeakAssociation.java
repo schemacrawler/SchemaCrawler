@@ -29,19 +29,14 @@ package schemacrawler.loader.weakassociations;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.regex.Pattern;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
-import schemacrawler.schema.Table;
 
 public final class ProposedWeakAssociation implements ColumnReference {
 
   private static final long serialVersionUID = 2986663326992262188L;
-
-  private static final Pattern endsWithIdPattern = Pattern.compile(".*(?i)_?id$");
 
   private final Column primaryKeyColumn;
   private final Column foreignKeyColumn;
@@ -75,25 +70,6 @@ public final class ProposedWeakAssociation implements ColumnReference {
 
     if (primaryKeyColumn.equals(foreignKeyColumn)) {
       return false;
-    }
-
-    final boolean pkColEndsWithId = endsWithIdPattern.matcher(primaryKeyColumn.getName()).matches();
-    final boolean fkColEndsWithId = endsWithIdPattern.matcher(foreignKeyColumn.getName()).matches();
-    if (pkColEndsWithId && !fkColEndsWithId) {
-      return false;
-    }
-
-    final String pkColumnName =
-        primaryKeyColumn.getName().replaceAll("[^\\p{L}\\{d}]", "").toLowerCase();
-    final String fkColumnName =
-        foreignKeyColumn.getName().replaceAll("[^\\p{L}\\{d}]", "").toLowerCase();
-    if (pkColumnName.equals(fkColumnName)) {
-      final Table pkTable = primaryKeyColumn.getParent();
-      final Table fkTable = foreignKeyColumn.getParent();
-      if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn.isPartOfUniqueIndex())
-          && pkTable.compareTo(fkTable) > 0) {
-        return false;
-      }
     }
 
     final boolean isPkColumnPartial = primaryKeyColumn instanceof PartialDatabaseObject;

@@ -1,6 +1,2 @@
 table: PUBLIC.PUBLIC.TABLE3_FK
-  weak association (1 to (0..many)):
-    column reference: PUBLIC.PUBLIC.TABLE3_FK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE9_PK.ENTITY_ID
 table: PUBLIC.PUBLIC.TABLE9_PK
-  weak association (1 to (0..many)):
-    column reference: PUBLIC.PUBLIC.TABLE3_FK.ENTITY_ID --> PUBLIC.PUBLIC.TABLE9_PK.ENTITY_ID

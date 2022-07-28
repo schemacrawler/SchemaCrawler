@@ -67,9 +67,15 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
     final Collection<ProposedWeakAssociation> proposedWeakAssociations =
         weakAssociationsAnalyzer.analyzeTables();
 
+    final IdMatcher idMatcher = new IdMatcher();
     for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
-      LOGGER.log(
-          Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
+
+      if (!idMatcher.test(proposedWeakAssociation)) {
+        continue;
+      } else {
+        LOGGER.log(
+            Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
+      }
 
       final Column fkColumn = proposedWeakAssociation.getForeignKeyColumn();
       final Column pkColumn = proposedWeakAssociation.getPrimaryKeyColumn();
