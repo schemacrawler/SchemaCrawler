@@ -2,6 +2,14 @@
 
 SchemaCrawler release notes.
 
+
+<a name="a16.17.2"></a>
+## Release 16.17.2 - 2022-07-30
+
+- When determining weak associations, by default only match patterns similar to `table2.table1_id` -> `table1.id`
+- Introduce a `--infer-extension-tables` command-line switch to look for tables that share a primary key name
+
+
 <a name="a16.17.1"></a>
 ## Release 16.17.1 - 2022-07-22
 
