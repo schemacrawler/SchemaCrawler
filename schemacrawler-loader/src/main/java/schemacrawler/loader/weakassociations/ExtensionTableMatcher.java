@@ -61,8 +61,10 @@ public final class ExtensionTableMatcher implements Predicate<ProposedWeakAssoci
     if (pkColumnName.equals(fkColumnName)) {
       final Table pkTable = primaryKeyColumn.getParent();
       final Table fkTable = foreignKeyColumn.getParent();
-      return !(foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn.isPartOfUniqueIndex())
-          && pkTable.compareTo(fkTable) > 0;
+      final boolean fkIsUnique =
+          foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn.isPartOfUniqueIndex();
+      final boolean pkTableSortsFirst = pkTable.compareTo(fkTable) < 0;
+      return fkIsUnique && pkTableSortsFirst;
     } else {
       return false;
     }

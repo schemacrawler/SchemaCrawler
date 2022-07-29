@@ -9,10 +9,34 @@ table: PUBLIC.PUBLIC.TABLE1_SECTION1_BOOKS
   weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.TABLE5_WEAK.BOOK_ID --> PUBLIC.PUBLIC.TABLE1_SECTION1_BOOKS.BOOK
 table: PUBLIC.PUBLIC.TABLE3_WEAK
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE4_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE3_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE5_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE3_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE6_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE3_WEAK.WEAK_ID
 table: PUBLIC.PUBLIC.TABLE4_WEAK
   weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.TABLE4_WEAK.BOOKID --> PUBLIC.PUBLIC.TABLE1_SECTION1_BOOKS.BOOK
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE4_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE3_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE5_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE4_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE6_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE4_WEAK.WEAK_ID
 table: PUBLIC.PUBLIC.TABLE5_WEAK
   weak association (1 to (0..many)):
     column reference: PUBLIC.PUBLIC.TABLE5_WEAK.BOOK_ID --> PUBLIC.PUBLIC.TABLE1_SECTION1_BOOKS.BOOK
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE5_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE3_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE5_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE4_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE6_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE5_WEAK.WEAK_ID
 table: PUBLIC.PUBLIC.TABLE6_WEAK
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE6_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE3_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE6_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE4_WEAK.WEAK_ID
+  weak association (1 to (0..1)):
+    column reference: PUBLIC.PUBLIC.TABLE6_WEAK.WEAK_ID --> PUBLIC.PUBLIC.TABLE5_WEAK.WEAK_ID

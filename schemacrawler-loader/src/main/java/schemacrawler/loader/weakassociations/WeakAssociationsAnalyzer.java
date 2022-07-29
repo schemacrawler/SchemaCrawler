@@ -106,6 +106,11 @@ public final class WeakAssociationsAnalyzer {
         for (final Column fkColumn : fkColumns) {
           final ProposedWeakAssociation proposedWeakAssociation =
               new ProposedWeakAssociation(fkColumn, pkColumn);
+
+          if (proposedWeakAssociation.isValid()) {
+            System.out.println(proposedWeakAssociation);
+          }
+
           if (proposedWeakAssociation.isValid()
               && weakAssociationRule.test(proposedWeakAssociation)) {
             LOGGER.log(
