@@ -45,23 +45,23 @@ final class TableMatchKeys {
     return new PrefixMatches(tableNames, "_");
   }
 
-  private final PrefixMatches tableKeys;
+  private final PrefixMatches matchKeysForTable;
 
   TableMatchKeys(final List<Table> tables) {
     requireNonNull(tables, "No tables provided");
 
-    tableKeys = analyzeTables(tables);
+    matchKeysForTable = analyzeTables(tables);
   }
 
   public List<String> get(final Table table) {
     if (table == null) {
       return null;
     }
-    return tableKeys.get(table.getName());
+    return matchKeysForTable.get(table.getName());
   }
 
   @Override
   public String toString() {
-    return tableKeys.toString();
+    return matchKeysForTable.toString();
   }
 }
