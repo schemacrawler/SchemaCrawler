@@ -13,6 +13,11 @@ Options:
                               metadata retrieved, and also determines the time
                               taken to crawl the schema
                             Optional, defaults to standard
+      --infer-extension-tables
+                            Infers extension tables that have similarly named
+                              primary keys, and reports them as weak
+                              associations
+                            Optional, defaults to false
       --load-row-counts     Loads row counts for each table
                             This can be a time consuming operation
                             Optional, defaults to false

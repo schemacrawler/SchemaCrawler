@@ -1,4 +1,4 @@
-SchemaCrawler 16.14.2
+SchemaCrawler 16.17.2
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2022, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -224,6 +224,11 @@ Command:
 loader:weakassociationsloader
 
 Options:
+      --infer-extension-tables
+                            Infers extension tables that have similarly named
+                              primary keys, and reports them as weak
+                              associations
+                            Optional, defaults to false
       --weak-associations   Analyzes the schema to find weak associations
                               between tables, based on table and column naming
                               patterns

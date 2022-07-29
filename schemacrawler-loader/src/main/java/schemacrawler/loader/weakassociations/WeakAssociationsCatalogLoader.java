@@ -30,6 +30,7 @@ package schemacrawler.loader.weakassociations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,37 +55,10 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       Logger.getLogger(WeakAssociationsCatalogLoader.class.getName());
 
   private static final String OPTION_WEAK_ASSOCIATIONS = "weak-associations";
+  private static final String OPTION_INFER_EXTENSION_TABLES = "infer-extension-tables";
 
   public WeakAssociationsCatalogLoader() {
     super(new CommandDescription("weakassociationsloader", "Loader for weak associations"), 3);
-  }
-
-  public void findWeakAssociations() {
-    final Catalog catalog = getCatalog();
-    final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
-        new WeakAssociationsAnalyzer(allTables);
-    final Collection<ProposedWeakAssociation> proposedWeakAssociations =
-        weakAssociationsAnalyzer.analyzeTables();
-
-    final IdMatcher idMatcher = new IdMatcher();
-    for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
-
-      if (!idMatcher.test(proposedWeakAssociation)) {
-        continue;
-      } else {
-        LOGGER.log(
-            Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
-      }
-
-      final Column fkColumn = proposedWeakAssociation.getForeignKeyColumn();
-      final Column pkColumn = proposedWeakAssociation.getPrimaryKeyColumn();
-
-      final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
-      builder.addColumnReference(
-          new WeakAssociationColumn(fkColumn), new WeakAssociationColumn(pkColumn));
-      builder.build();
-    }
   }
 
   @Override
@@ -98,6 +72,11 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
         Boolean.class,
         "Analyzes the schema to find weak associations between tables, based on table and column naming patterns",
         "This can be a time consuming operation",
+        "Optional, defaults to false");
+    pluginCommand.addOption(
+        OPTION_INFER_EXTENSION_TABLES,
+        Boolean.class,
+        "Infers extension tables that have similarly named primary keys, and reports them as weak associations",
         "Optional, defaults to false");
     return pluginCommand;
   }
@@ -119,8 +98,10 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
                 final Config config = getAdditionalConfiguration();
                 final boolean findWeakAssociations =
                     config.getBooleanValue(OPTION_WEAK_ASSOCIATIONS, false);
+                final boolean inferExtensionTables =
+                    config.getBooleanValue(OPTION_INFER_EXTENSION_TABLES, false);
                 if (findWeakAssociations) {
-                  findWeakAssociations();
+                  findWeakAssociations(inferExtensionTables);
                 } else {
                   LOGGER.log(
                       Level.INFO, "Not retrieving weak associations, since this was not requested");
@@ -131,6 +112,35 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving weak association information", e);
+    }
+  }
+
+  private void findWeakAssociations(final boolean inferExtensionTables) {
+    final Catalog catalog = getCatalog();
+    final List<Table> allTables = new ArrayList<>(catalog.getTables());
+    final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
+        new WeakAssociationsAnalyzer(allTables);
+    final Collection<ProposedWeakAssociation> proposedWeakAssociations =
+        weakAssociationsAnalyzer.analyzeTables();
+
+    final Predicate<ProposedWeakAssociation> matcher =
+        new IdMatcher().or(new ExtensionTableMatcher(inferExtensionTables));
+    for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
+
+      if (!matcher.test(proposedWeakAssociation)) {
+        continue;
+      }
+
+      LOGGER.log(
+          Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
+
+      final Column fkColumn = proposedWeakAssociation.getForeignKeyColumn();
+      final Column pkColumn = proposedWeakAssociation.getPrimaryKeyColumn();
+
+      final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
+      builder.addColumnReference(
+          new WeakAssociationColumn(fkColumn), new WeakAssociationColumn(pkColumn));
+      builder.build();
     }
   }
 }
