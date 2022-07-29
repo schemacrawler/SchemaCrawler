@@ -116,21 +116,17 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
   }
 
   private void findWeakAssociations(final boolean inferExtensionTables) {
+
+    final Predicate<ProposedWeakAssociation> weakAssociationRule =
+        new IdMatcher().or(new ExtensionTableMatcher(inferExtensionTables));
     final Catalog catalog = getCatalog();
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
     final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
-        new WeakAssociationsAnalyzer(allTables);
+        new WeakAssociationsAnalyzer(allTables, weakAssociationRule);
     final Collection<ProposedWeakAssociation> proposedWeakAssociations =
         weakAssociationsAnalyzer.analyzeTables();
 
-    final Predicate<ProposedWeakAssociation> matcher =
-        new IdMatcher().or(new ExtensionTableMatcher(inferExtensionTables));
     for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
-
-      if (!matcher.test(proposedWeakAssociation)) {
-        continue;
-      }
-
       LOGGER.log(
           Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
 

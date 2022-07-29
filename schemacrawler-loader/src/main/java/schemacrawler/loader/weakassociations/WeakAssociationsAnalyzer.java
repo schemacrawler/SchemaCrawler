@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,12 +48,17 @@ public final class WeakAssociationsAnalyzer {
   private static final Logger LOGGER = Logger.getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final List<Table> tables;
+  private final Predicate<ProposedWeakAssociation> weakAssociationRule;
   private final Collection<ProposedWeakAssociation> weakAssociations;
 
-  public WeakAssociationsAnalyzer(final Collection<Table> tables) {
+  public WeakAssociationsAnalyzer(
+      final Collection<Table> tables,
+      final Predicate<ProposedWeakAssociation> weakAssociationRule) {
     requireNonNull(tables, "No tables provided");
     this.tables = new ArrayList<>(tables);
     Collections.sort(this.tables);
+
+    this.weakAssociationRule = requireNonNull(weakAssociationRule, "No rules provided");
 
     weakAssociations = new ArrayList<>();
   }
@@ -100,7 +106,8 @@ public final class WeakAssociationsAnalyzer {
         for (final Column fkColumn : fkColumns) {
           final ProposedWeakAssociation proposedWeakAssociation =
               new ProposedWeakAssociation(fkColumn, pkColumn);
-          if (proposedWeakAssociation.isValid()) {
+          if (proposedWeakAssociation.isValid()
+              && weakAssociationRule.test(proposedWeakAssociation)) {
             LOGGER.log(
                 Level.FINE,
                 new StringFormat("Found weak association <%s>", proposedWeakAssociation));
