@@ -37,6 +37,14 @@ import us.fatehi.utility.PrefixMatches;
 
 final class TableMatchKeys {
 
+  private static PrefixMatches analyzeTables(final List<Table> tables) {
+    final List<String> tableNames = new ArrayList<>();
+    for (final Table table : tables) {
+      tableNames.add(table.getName());
+    }
+    return new PrefixMatches(tableNames, "_");
+  }
+
   private final PrefixMatches tableKeys;
 
   TableMatchKeys(final List<Table> tables) {
@@ -55,13 +63,5 @@ final class TableMatchKeys {
   @Override
   public String toString() {
     return tableKeys.toString();
-  }
-
-  private PrefixMatches analyzeTables(final List<Table> tables) {
-    final List<String> tableNames = new ArrayList<>();
-    for (final Table table : tables) {
-      tableNames.add(table.getName());
-    }
-    return new PrefixMatches(tableNames, "_");
   }
 }

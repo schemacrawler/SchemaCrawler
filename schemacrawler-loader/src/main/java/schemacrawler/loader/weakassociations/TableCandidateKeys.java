@@ -71,7 +71,7 @@ final class TableCandidateKeys implements Iterable<Column> {
     table.lookupColumn(tableConstraintColumn.getName()).ifPresent(column -> tableKeys.add(column));
   }
 
-  private Set<Column> listTableKeys(final Table table) {
+  private void listTableKeys(final Table table) {
     final PrimaryKey primaryKey = table.getPrimaryKey();
     if (primaryKey != null && primaryKey.getConstrainedColumns().size() == 1) {
       addColumnFromPrimaryKey(table, primaryKey);
@@ -82,7 +82,5 @@ final class TableCandidateKeys implements Iterable<Column> {
         addColumnFromIndex(table, index);
       }
     }
-
-    return tableKeys;
   }
 }
