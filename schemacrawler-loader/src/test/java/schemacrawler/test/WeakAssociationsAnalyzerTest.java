@@ -92,16 +92,19 @@ public class WeakAssociationsAnalyzerTest {
     try (final TestWriter out = testout) {
 
       final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
-          new WeakAssociationsAnalyzer(catalog.getTables());
+          new WeakAssociationsAnalyzer(catalog.getTables(), w -> true);
       final Collection<ProposedWeakAssociation> proposedWeakAssociations =
           weakAssociationsAnalyzer.analyzeTables();
       assertThat(
           "Proposed weak association count does not match", proposedWeakAssociations, hasSize(6));
       for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
         out.println(String.format("weak association: %s", proposedWeakAssociation));
-        assertThat(proposedWeakAssociation.getPrimaryKeyColumn().getParent().getWeakAssociations(), is(empty()));
         assertThat(
-            proposedWeakAssociation.getForeignKeyColumn().getParent().getWeakAssociations(), is(empty()));
+            proposedWeakAssociation.getPrimaryKeyColumn().getParent().getWeakAssociations(),
+            is(empty()));
+        assertThat(
+            proposedWeakAssociation.getForeignKeyColumn().getParent().getWeakAssociations(),
+            is(empty()));
       }
     }
 
@@ -112,17 +115,21 @@ public class WeakAssociationsAnalyzerTest {
   @Test
   public void weakAssociationsFewTables() throws Exception {
 
-    assertThat(new WeakAssociationsAnalyzer(new ArrayList<>()).analyzeTables(), hasSize(0));
+    assertThat(
+        new WeakAssociationsAnalyzer(new ArrayList<>(), w -> true).analyzeTables(), hasSize(0));
 
     final Table booksTable =
         catalog.lookupTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS").get();
     final Table bookAuthorsTable =
         catalog.lookupTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKAUTHORS").get();
 
-    assertThat(new WeakAssociationsAnalyzer(Arrays.asList(booksTable)).analyzeTables(), hasSize(0));
+    assertThat(
+        new WeakAssociationsAnalyzer(Arrays.asList(booksTable), w -> true).analyzeTables(),
+        hasSize(0));
 
     assertThat(
-        new WeakAssociationsAnalyzer(Arrays.asList(booksTable, bookAuthorsTable)).analyzeTables(),
+        new WeakAssociationsAnalyzer(Arrays.asList(booksTable, bookAuthorsTable), w -> true)
+            .analyzeTables(),
         hasSize(1));
   }
 }

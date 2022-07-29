@@ -37,31 +37,31 @@ import us.fatehi.utility.PrefixMatches;
 
 final class TableMatchKeys {
 
-  private final PrefixMatches tableKeys;
+  private static PrefixMatches analyzeTables(final List<Table> tables) {
+    final List<String> tableNames = new ArrayList<>();
+    for (final Table table : tables) {
+      tableNames.add(table.getName());
+    }
+    return new PrefixMatches(tableNames, "_");
+  }
+
+  private final PrefixMatches matchKeysForTable;
 
   TableMatchKeys(final List<Table> tables) {
     requireNonNull(tables, "No tables provided");
 
-    tableKeys = analyzeTables(tables);
+    matchKeysForTable = analyzeTables(tables);
   }
 
   public List<String> get(final Table table) {
     if (table == null) {
       return null;
     }
-    return tableKeys.get(table.getName());
+    return matchKeysForTable.get(table.getName());
   }
 
   @Override
   public String toString() {
-    return tableKeys.toString();
-  }
-
-  private PrefixMatches analyzeTables(final List<Table> tables) {
-    final List<String> tableNames = new ArrayList<>();
-    for (final Table table : tables) {
-      tableNames.add(table.getName());
-    }
-    return new PrefixMatches(tableNames, "_");
+    return matchKeysForTable.toString();
   }
 }

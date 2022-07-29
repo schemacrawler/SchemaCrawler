@@ -28,108 +28,42 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.loader.weakassociations;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
+import static schemacrawler.test.utility.ProposedWeakAssociationsTestUtility.weakAssociations;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociation;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.options.Config;
-import schemacrawler.tools.utility.SchemaCrawlerUtility;
-import schemacrawler.utility.NamedObjectSort;
+import schemacrawler.test.utility.WithTestDatabase;
 
 @DisableLogging
 @ResolveTestContext
 public class PrimaryKeyWeakAssociationsTest {
 
   @Test
-  public void weakAssociations1(final TestContext testContext) throws Exception {
-    weakAssociations(testContext, "/pk_test_1.sql");
-  }
-
-  @Test
-  public void weakAssociations2(final TestContext testContext) throws Exception {
-    weakAssociations(testContext, "/pk_test_2.sql");
-  }
-
-  @Test
-  public void weakAssociations3(final TestContext testContext) throws Exception {
-    weakAssociations(testContext, "/pk_test_3.sql");
-  }
-
-  private Connection getConnection(final String databaseSqlResource) throws SQLException {
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript(databaseSqlResource)
-            .build();
-
-    final Connection connection = db.getConnection();
-    return connection;
-  }
-
-  private void weakAssociations(final TestContext testContext, final String databaseSqlResource)
+  @WithTestDatabase(script = "/pk_test_1.sql")
+  public void weakAssociations1(final TestContext testContext, final Connection connection)
       throws Exception {
+    weakAssociations(testContext, connection, false);
+    weakAssociations(testContext, connection, true);
+  }
 
-    final String currentMethodFullName = testContext.testMethodFullName();
+  @Test
+  @WithTestDatabase(script = "/pk_test_2.sql")
+  public void weakAssociations2(final TestContext testContext, final Connection connection)
+      throws Exception {
+    weakAssociations(testContext, connection, false);
+    weakAssociations(testContext, connection, true);
+  }
 
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-          DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-
-      final Connection connection = getConnection(databaseSqlResource);
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-
-      final Config config = new Config();
-      config.put("weak-associations", Boolean.TRUE);
-
-      final Catalog catalog =
-          SchemaCrawlerUtility.getCatalog(
-              connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
-
-      final Schema schema = new SchemaReference("PUBLIC", "PUBLIC");
-      final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-      Arrays.sort(tables, NamedObjectSort.alphabetical);
-      for (final Table table : tables) {
-        out.println("table: " + table.getFullName());
-        final Collection<WeakAssociation> weakAssociations = table.getWeakAssociations();
-        for (final WeakAssociation weakFk : weakAssociations) {
-          out.println(
-              String.format("  weak association (1 to %s):", findForeignKeyCardinality(weakFk)));
-          for (final ColumnReference weakAssociationColumnReference : weakFk) {
-            out.println(String.format("    column reference: %s", weakAssociationColumnReference));
-          }
-        }
-      }
-    }
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource(currentMethodFullName)));
+  @Test
+  @WithTestDatabase(script = "/pk_test_3.sql")
+  public void weakAssociations3(final TestContext testContext, final Connection connection)
+      throws Exception {
+    weakAssociations(testContext, connection, false);
+    weakAssociations(testContext, connection, true);
   }
 }

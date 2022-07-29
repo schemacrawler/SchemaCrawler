@@ -68,7 +68,8 @@ public class LoaderPluginCommandTest {
         weakAssociationsPluginCommand.toString(),
         is(
             "PluginCommand[name='weakassociationsloader', options=["
-                + "PluginCommandOption[name='weak-associations', valueClass=java.lang.Boolean]"
+                + "PluginCommandOption[name='weak-associations', valueClass=java.lang.Boolean], "
+                + "PluginCommandOption[name='infer-extension-tables', valueClass=java.lang.Boolean]"
                 + "]]"));
   }
 }
