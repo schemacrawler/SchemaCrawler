@@ -1,6 +1,6 @@
-SchemaCrawler 16.16.18
+SchemaCrawler 16.17.1
 
-Error: Exception running <retrieve_tables> on thread <pool-1-thread-2>: No tables SQL provided
+Error: Exception running <retrieve_tables> on thread <main>: No tables SQL provided
 
 Run SchemaCrawler again with just the
 -h
@@ -17,9 +17,9 @@ https://killercoda.com/schemacrawler
 
 
 Environment:
-  SchemaCrawler 16.16.18
+  SchemaCrawler 16.17.1
   Windows 10 10.0
   Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 1.8.0_301-b09
-  HSQL Database Engine 2.6.1
-  HSQL Database Engine Driver 2.6.1
+  HSQL Database Engine 2.7.0
+  HSQL Database Engine Driver 2.7.0
 

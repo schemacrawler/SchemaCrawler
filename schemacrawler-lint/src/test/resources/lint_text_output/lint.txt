@@ -72,8 +72,8 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
                                                         [lint, critical]
 	foreign key self-references primary key	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
                                                             [lint, high]
-	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_FK_SELFREFERENCE_10210
-	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_PK_SELFREFERENCE_10207
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.PK_SELFREFERENCE
                                                              [lint, low]
 	empty table	
 	should have remarks	
