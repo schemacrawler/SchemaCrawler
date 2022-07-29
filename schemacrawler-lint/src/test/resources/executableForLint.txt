@@ -40,7 +40,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_IDX_SYS_FK_10126_10130
+	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_FK_10120
 	no primary key	
 	primary key may not be a surrogate	
                                                              [lint, low]
@@ -52,10 +52,10 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10123
-	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_FK_PREVIOUSEDITION_10121
+	redundant index	PUBLIC.BOOKS.BOOKS.FK_PREVIOUSEDITION
+	redundant index	PUBLIC.BOOKS.BOOKS.U_PREVIOUSEDITION
                                                           [lint, medium]
-	unique index with nullable columns	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10123
+	unique index with nullable columns	PUBLIC.BOOKS.BOOKS.U_PREVIOUSEDITION
                                                              [lint, low]
 	should have remarks	PREVIOUSEDITIONID
 
@@ -192,8 +192,8 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
                                                         [lint, critical]
 	foreign key self-references primary key	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
                                                             [lint, high]
-	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_FK_SELFREFERENCE_10210
-	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_PK_SELFREFERENCE_10207
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.PK_SELFREFERENCE
                                                              [lint, low]
 	empty table	
 	should have remarks	
@@ -258,7 +258,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 	no primary key	
 	primary key may not be a surrogate	
                                                           [lint, medium]
-	unique index with nullable columns	PUBLIC."PUBLISHER SALES".SALESDATA.SYS_IDX_UQ_CUSTOMERS_10233
+	unique index with nullable columns	PUBLIC."PUBLISHER SALES".SALESDATA.UQ_CUSTOMERS
 	no non-nullable data columns	
                                                              [lint, low]
 	empty table	

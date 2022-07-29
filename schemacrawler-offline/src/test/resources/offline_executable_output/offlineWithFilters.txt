@@ -29,13 +29,13 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_SALES_BOOK_10244                           [non-unique index]
+FK_SALES_BOOK                                         [non-unique index]
   BOOKID                            ascending                   
 
-SYS_IDX_FK_SALES_SALESDATA_10241                      [non-unique index]
+FK_SALES_SALESDATA                                    [non-unique index]
   SALESDATAID                       ascending                   
 
-SYS_IDX_FK_SALES_REGIONS_10239                        [non-unique index]
+FK_SALES_REGIONS                                      [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 

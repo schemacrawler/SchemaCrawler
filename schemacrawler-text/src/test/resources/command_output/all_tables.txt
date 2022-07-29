@@ -91,7 +91,7 @@ PUBLIC	INFORMATION_SCHEMA	SYSTEM_KEY_INDEX_USAGE	SYSTEM TABLE	names of indexes g
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_PRIMARYKEYS	SYSTEM TABLE	the visible columns of the primary key of each accessible table defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_PROCEDURECOLUMNS	SYSTEM TABLE	a description of the return type, parameters and result columns of each accessible callable procedure, SQL function, trigger body and UDT method defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_PROCEDURES	SYSTEM TABLE	the procedures, SQL functions, trigger body routines and UDT methods defined within the database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
-PUBLIC	INFORMATION_SCHEMA	SYSTEM_PROPERTIES	SYSTEM TABLE	the static and dynamic system properties and operating parameters of this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
+PUBLIC	INFORMATION_SCHEMA	SYSTEM_PROPERTIES	SYSTEM TABLE	the system properties and operating parameters of this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_SCHEMAS	SYSTEM TABLE	the accessible schemas defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_SEQUENCES	SYSTEM TABLE	the visible sequences in this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_SESSIONINFO	SYSTEM TABLE	information about the current database session	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
@@ -102,6 +102,7 @@ PUBLIC	INFORMATION_SCHEMA	SYSTEM_TABLESTATS	SYSTEM TABLE	cardinality and storage
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_TABLETYPES	SYSTEM TABLE	the types of tables that can be created/found within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_TEXTTABLES	SYSTEM TABLE	the data source descriptors of the accessible TEXT TABLE objects defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_TYPEINFO	SYSTEM TABLE	a description of predefined table column data types known to this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
+PUBLIC	INFORMATION_SCHEMA	SYSTEM_UDTATTRIBUTES	SYSTEM TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_UDTS	SYSTEM TABLE	the user-defined types that are available within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_USERS	SYSTEM TABLE	users defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_VERSIONCOLUMNS	SYSTEM TABLE	the visible columns of the accessible tables that are automatically updated when any value in a row is updated	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL

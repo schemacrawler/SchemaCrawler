@@ -30,7 +30,7 @@ Z_FK_AUTHOR                                [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_AUTHORS_10111                                  [unique index]
+PK_AUTHORS                                                [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -54,15 +54,15 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
-SYS_CT_10108                                          [check constraint]
+SYS_CT_10104                                          [check constraint]
   ID                                                            
 BOOKS.AUTHORS.ID IS NOT NULL
 
-SYS_CT_10109                                          [check constraint]
+SYS_CT_10105                                          [check constraint]
   FIRSTNAME                                                     
 BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10110                                          [check constraint]
+SYS_CT_10106                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 

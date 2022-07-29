@@ -29,7 +29,7 @@ Z_FK_AUTHOR                                [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_AUTHORS_10109                                  [unique index]
+PK_AUTHORS                                                [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -63,15 +63,15 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-SYS_FK_10126                               [foreign key, with no action]
+SYS_FK_10120                               [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
 
-SYS_IDX_Z_FK_AUTHOR_10132                             [non-unique index]
+Z_FK_AUTHOR                                           [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_SYS_FK_10126_10130                            [non-unique index]
+SYS_FK_10120                                          [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -100,7 +100,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-SYS_FK_10126                               [foreign key, with no action]
+SYS_FK_10120                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -108,13 +108,13 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_BOOKS_10117                                    [unique index]
+PK_BOOKS                                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_U_PREVIOUSEDITION_10123                           [unique index]
+U_PREVIOUSEDITION                                         [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-SYS_IDX_FK_PREVIOUSEDITION_10121                      [non-unique index]
+FK_PREVIOUSEDITION                                    [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
 
@@ -133,7 +133,7 @@ PK_COUPONS                                                 [primary key]
 
 Indexes
 
-SYS_IDX_PK_COUPONS_10093                                  [unique index]
+PK_COUPONS                                                [unique index]
   ID                                ascending                   
 
 
@@ -150,7 +150,7 @@ PK_CUSTOMERDATA                                            [primary key]
 
 Indexes
 
-SYS_IDX_PK_CUSTOMERDATA_10104                             [unique index]
+PK_CUSTOMERDATA                                           [unique index]
   ID                                ascending                   
 
 
@@ -169,7 +169,7 @@ PK_CUSTOMERS                                               [primary key]
 
 Indexes
 
-SYS_IDX_PK_CUSTOMERS_10098                                [unique index]
+PK_CUSTOMERS                                              [unique index]
   ID                                ascending                   
 
 
@@ -189,7 +189,7 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 
 Primary Key
 
-SYS_PK_10134                                               [primary key]
+SYS_PK_10126                                               [primary key]
   ID                                                            
 
 Foreign Keys
@@ -199,7 +199,7 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_SYS_PK_10134_10135                                [unique index]
+SYS_PK_10126                                              [unique index]
   ID                                ascending                   
 
 
@@ -223,10 +223,10 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144                    [non-unique index]
+FK_ΒΙΒΛΊΑ_PUBLISHERS                                  [non-unique index]
   ΕΚΔΌΤΗΣ                           ascending                   
 
-SYS_IDX_PK_ΒΙΒΛΊΑ_10140                                   [unique index]
+PK_ΒΙΒΛΊΑ                                                 [unique index]
   ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
 

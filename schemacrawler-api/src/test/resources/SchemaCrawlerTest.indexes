@@ -1,5 +1,5 @@
 PUBLIC.BOOKS.AUTHORS
-  index: SYS_IDX_PK_AUTHORS_10109
+  index: PK_AUTHORS
     columns: [PUBLIC.BOOKS.AUTHORS.ID]
     is unique: true
     cardinality: 0
@@ -19,13 +19,13 @@ PUBLIC.BOOKS.AUTHORS
     index type: other
 PUBLIC.BOOKS.AUTHORSLIST
 PUBLIC.BOOKS.BOOKAUTHORS
-  index: SYS_IDX_Z_FK_AUTHOR_10132
+  index: Z_FK_AUTHOR
     columns: [PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID]
     is unique: false
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_SYS_FK_10126_10130
+  index: SYS_FK_10120
     columns: [PUBLIC.BOOKS.BOOKAUTHORS.BOOKID]
     is unique: false
     cardinality: 0
@@ -38,40 +38,40 @@ PUBLIC.BOOKS.BOOKAUTHORS
     pages: 0
     index type: other
 PUBLIC.BOOKS.BOOKS
-  index: SYS_IDX_PK_BOOKS_10117
+  index: PK_BOOKS
     columns: [PUBLIC.BOOKS.BOOKS.ID]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_U_PREVIOUSEDITION_10123
+  index: U_PREVIOUSEDITION
     columns: [PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_FK_PREVIOUSEDITION_10121
+  index: FK_PREVIOUSEDITION
     columns: [PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID]
     is unique: false
     cardinality: 0
     pages: 0
     index type: other
 PUBLIC.BOOKS.COUPONS
-  index: SYS_IDX_PK_COUPONS_10093
+  index: PK_COUPONS
     columns: [PUBLIC.BOOKS.COUPONS.ID]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
 PUBLIC.BOOKS.CUSTOMERDATA
-  index: SYS_IDX_PK_CUSTOMERDATA_10104
+  index: PK_CUSTOMERDATA
     columns: [PUBLIC.BOOKS.CUSTOMERDATA.ID]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
 PUBLIC.BOOKS.CUSTOMERS
-  index: SYS_IDX_PK_CUSTOMERS_10098
+  index: PK_CUSTOMERS
     columns: [PUBLIC.BOOKS.CUSTOMERS.ID]
     is unique: true
     cardinality: 0
@@ -79,53 +79,53 @@ PUBLIC.BOOKS.CUSTOMERS
     index type: other
 PUBLIC.BOOKS."Global Counts"
 PUBLIC.BOOKS.PUBLISHERS
-  index: SYS_IDX_SYS_PK_10134_10135
+  index: SYS_PK_10126
     columns: [PUBLIC.BOOKS.PUBLISHERS.ID]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
 PUBLIC.BOOKS.ΒΙΒΛΊΑ
-  index: SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144
+  index: FK_ΒΙΒΛΊΑ_PUBLISHERS
     columns: [PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ]
     is unique: false
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_PK_ΒΙΒΛΊΑ_10140
+  index: PK_ΒΙΒΛΊΑ
     columns: [PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
 PUBLIC."PUBLISHER SALES".REGIONS
-  index: SYS_IDX_PK_CUSTOMERS_10227
+  index: PK_CUSTOMERS
     columns: [PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE, PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY]
     is unique: true
     cardinality: 0
     pages: 0
     index type: other
 PUBLIC."PUBLISHER SALES".SALES
-  index: SYS_IDX_FK_SALES_BOOK_10244
+  index: FK_SALES_BOOK
     columns: [PUBLIC."PUBLISHER SALES".SALES.BOOKID]
     is unique: false
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_FK_SALES_SALESDATA_10241
+  index: FK_SALES_SALESDATA
     columns: [PUBLIC."PUBLISHER SALES".SALES.SALESDATAID]
     is unique: false
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_IDX_FK_SALES_REGIONS_10239
+  index: FK_SALES_REGIONS
     columns: [PUBLIC."PUBLISHER SALES".SALES.POSTALCODE, PUBLIC."PUBLISHER SALES".SALES.COUNTRY]
     is unique: false
     cardinality: 0
     pages: 0
     index type: other
 PUBLIC."PUBLISHER SALES".SALESDATA
-  index: SYS_IDX_UQ_CUSTOMERS_10233
+  index: UQ_CUSTOMERS
     columns: [PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID]
     is unique: true
     cardinality: 0
