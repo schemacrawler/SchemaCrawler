@@ -163,6 +163,16 @@ public class SiteDiagramVariationsTest {
   }
 
   @Test
+  public void diagram_14_weak_associations(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--weak-associations", "true");
+
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
+  }
+
+  @Test
   public void diagram_2_portablenames(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();

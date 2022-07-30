@@ -98,7 +98,11 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_13_indexes.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_13_indexes.png" style="width: 200px;" />
 </a>
-
+- See weak associations in dotted lines on the diagram, use `--weak-associations` on the command-line.
+<br />
+<a href="diagram-examples/diagram_14_weak_associations.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_14_weak_associations.png" style="width: 200px;" />
+</a>
 
 ## Additional Configuration
 
