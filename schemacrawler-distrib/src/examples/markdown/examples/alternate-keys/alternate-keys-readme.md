@@ -14,7 +14,7 @@ in a YAML file with the `--attributes-file` command-line switch.
 1. Make sure that java is on your PATH
 2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the `alternate-keys` example directory 
-4. Run `alternate-keys.cmd alternate-keys.yaml` (or `alternate-keys.sh alternate-keys.yaml` on Unix). 
+4. Run `alternate-keys.cmd alternate-keys.yaml alternate-keys.png` (or `alternate-keys.sh alternate-keys.yaml alternate-keys.png` on Unix). 
 5. View the image in `alternate-keys.png` to see the alternate keys that were loaded from the YAML file
 
 ## How to Experiment
