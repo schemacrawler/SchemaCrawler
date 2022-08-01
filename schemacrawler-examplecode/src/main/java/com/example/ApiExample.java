@@ -43,7 +43,7 @@ public final class ApiExample {
 
     // Get the schema definition
     final Catalog catalog;
-    try (Connection connection = getConnection()) {
+    try (final Connection connection = getConnection()) {
       catalog = SchemaCrawlerUtility.getCatalog(connection, options);
     }
 

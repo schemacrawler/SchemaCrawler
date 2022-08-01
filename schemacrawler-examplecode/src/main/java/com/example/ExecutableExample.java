@@ -47,7 +47,7 @@ public final class ExecutableExample {
         OutputOptionsBuilder.newOutputOptions(TextOutputFormat.html, outputFile);
     final String command = "schema";
 
-    try (Connection connection = getConnection()) {
+    try (final Connection connection = getConnection()) {
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(options);
       executable.setOutputOptions(outputOptions);
