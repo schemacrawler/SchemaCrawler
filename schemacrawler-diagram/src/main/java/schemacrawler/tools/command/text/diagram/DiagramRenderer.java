@@ -38,6 +38,7 @@ import java.nio.file.Path;
 
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -122,8 +123,15 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
               dotFile, diagramOutputFormat, outputFile, commandOptions);
       graphExecutor.run();
     } catch (final Exception e) {
-      final String message = readResourceFully("/dot.error.txt");
-      throw new ExecutionRuntimeException(message);
+      final String message;
+      final boolean isSchemaCrawlerException = e instanceof SchemaCrawlerException;
+      if (isSchemaCrawlerException) {
+        message = e.getMessage();
+      } else {
+        message = "Could not generate diagram" + e.getMessage();
+      }
+      final String helpText = readResourceFully("/dot.error.txt");
+      throw new ExecutionRuntimeException(String.format("%s%n%n%s", message, helpText), e);
     }
   }
 

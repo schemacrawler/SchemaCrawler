@@ -3,6 +3,12 @@
 SchemaCrawler release notes.
 
 
+<a name="a16.17.3"></a>
+## Release 16.17.3 - 2022-08-05
+
+- Allow more variations of output in tutorials
+
+
 <a name="a16.17.2"></a>
 ## Release 16.17.2 - 2022-07-30
 

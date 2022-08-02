@@ -22,11 +22,12 @@ The diagram example demonstrates the integration of SchemaCrawler with Graphviz.
 
 1. Start the test database server by following instructions in the `_testdb/README.html` file
 2. Start a command shell in the diagram example directory 
-3. Run `diagram.cmd` (or `diagram.sh` on Unix) 
+3. Run `diagram.cmd database-diagram.png` (or `diagram.sh database-diagram.png` on Unix) 
 
 ## How to Experiment
-1. Try using grep options to include certain tables. For example, try using a command-line option of `--grep-columns=.*\\.AUTHOR.*`
-2. Try controlling display of foreign-key names, column ordinal numbers, and schema names by setting the 
+1. Try other output formats like PDF by changing the extension of the output file
+2. Try using grep options to include certain tables. For example, try using a command-line option of `--grep-columns=.*\\.AUTHOR.*`
+3. Try controlling display of foreign-key names, column ordinal numbers, and schema names by setting the 
    following properties in the SchemaCrawler configuration file, `config/schemacrawler.config.properties`. 
 
 ```           
@@ -34,9 +35,9 @@ schemacrawler.format.show_ordinal_numbers=true
 schemacrawler.format.hide_foreignkey_names=true
 schemacrawler.format.hide_weakassociation_names=true
 schemacrawler.format.show_unqualified_names=true
-```    
+```   
 
-3. Try using Graphviz command-line options by setting the following property in the SchemaCrawler configuration file, 
+4. Try using Graphviz command-line options by setting the following property in the SchemaCrawler configuration file, 
    `config/schemacrawler.config.properties`. 
     
 ```        
