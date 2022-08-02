@@ -135,7 +135,8 @@ public final class OutputOptions implements Options {
       return new PrintWriter(
           outputResource.openNewOutputWriter(getOutputCharset(), appendOutput), true);
     } catch (final IOException e) {
-      throw new IORuntimeException(String.format("Could not open output writer <%s>"), e);
+      throw new IORuntimeException(
+          String.format("Could not open output writer: <%s>", e.getMessage()), e);
     }
   }
 
