@@ -30,7 +30,10 @@ package schemacrawler.integration.test;
 
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.plugin.EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO;
 import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.enumerated_column;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -40,6 +43,7 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.Arrays;
 
@@ -56,6 +60,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -167,6 +173,32 @@ public class DiagramOutputTest {
     executable.setOutputOptions(outputOptions);
 
     executable.execute();
+  }
+
+  @Test
+  @DisplayName("Diagram output to a bad directory")
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  public void executableForDiagram_badOutputFile(
+      final TestContext testContext, final Connection connection) throws Exception {
+
+    final Catalog catalog = getCatalog(connection, EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER);
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
+    executable.setConnection(connection);
+    executable.setCatalog(catalog);
+    final OutputOptionsBuilder outputOptionsBuilder =
+        OutputOptionsBuilder.builder(executable.getOutputOptions())
+            .withOutputFormatValue(DiagramOutputFormat.png.getFormat())
+            .withOutputFile(Paths.get("bad-path", "filename"));
+
+    executable.setOutputOptions(outputOptionsBuilder.toOptions());
+    executable.setConnection(connection);
+    final ExecutionRuntimeException runtimeException =
+        assertThrows(ExecutionRuntimeException.class, () -> executable.execute());
+    final Throwable exception = runtimeException.getCause();
+    assertThat(exception, instanceOf(IORuntimeException.class));
+    assertThat(exception.getMessage(), startsWith("Cannot write output file"));
   }
 
   @Test
