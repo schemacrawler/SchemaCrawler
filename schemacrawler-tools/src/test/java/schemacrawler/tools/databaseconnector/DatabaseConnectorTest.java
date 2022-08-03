@@ -150,7 +150,7 @@ public class DatabaseConnectorTest {
 
   private DatabaseConnectionSource expectedDatabaseConnectionSource(final String connectionUrl) {
     final DatabaseConnectionSource expectedDatabaseConnectionSource =
-        new DatabaseConnectionSource(connectionUrl);
+        DatabaseConnectionSources.newDatabaseConnectionSource(connectionUrl);
     expectedDatabaseConnectionSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
     return expectedDatabaseConnectionSource;
   }

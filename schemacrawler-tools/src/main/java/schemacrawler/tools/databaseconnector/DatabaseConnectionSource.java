@@ -65,11 +65,7 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
   private final String connectionUrl;
   private UserCredentials userCredentials;
 
-  public DatabaseConnectionSource(final String connectionUrl) {
-    this(connectionUrl, null);
-  }
-
-  public DatabaseConnectionSource(
+  DatabaseConnectionSource(
       final String connectionUrl, final Map<String, String> connectionProperties) {
     this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
     this.connectionProperties = connectionProperties;

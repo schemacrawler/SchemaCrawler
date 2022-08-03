@@ -143,7 +143,8 @@ public abstract class DatabaseConnector implements Options {
       final DatabaseUrlConnectionOptions databaseUrlConnectionOptions =
           (DatabaseUrlConnectionOptions) connectionOptions;
       databaseConnectionSource =
-          new DatabaseConnectionSource(databaseUrlConnectionOptions.getConnectionUrl());
+          DatabaseConnectionSources.newDatabaseConnectionSource(
+              databaseUrlConnectionOptions.getConnectionUrl());
     } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions) {
       final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
           (DatabaseServerHostConnectionOptions) connectionOptions;

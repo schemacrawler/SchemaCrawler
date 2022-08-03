@@ -46,6 +46,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSources;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 
 @DisableLogging
@@ -58,7 +59,7 @@ public class DatabaseConnectionSourceTest {
     Class.forName("schemacrawler.test.utility.TestDatabaseDriver");
 
     final DatabaseConnectionSource connectionSource =
-        new DatabaseConnectionSource("jdbc:test-db:test");
+        DatabaseConnectionSources.newDatabaseConnectionSource("jdbc:test-db:test");
 
     assertThat(
         connectionSource.toString(),
@@ -83,7 +84,8 @@ public class DatabaseConnectionSourceTest {
       throws SQLException, ClassNotFoundException {
 
     final DatabaseConnectionSource connectionSource =
-        new DatabaseConnectionSource(databaseConnectionInfo.getConnectionUrl());
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            databaseConnectionInfo.getConnectionUrl());
 
     assertThat(connectionSource.toString(), startsWith("driver=org.hsqldb.jdbc.JDBCDriver"));
     assertThat(connectionSource.getUserCredentials(), is(not(nullValue())));
@@ -99,7 +101,7 @@ public class DatabaseConnectionSourceTest {
   @Test
   public void noDriver() throws SQLException, ClassNotFoundException {
     final DatabaseConnectionSource connectionSource =
-        new DatabaseConnectionSource("jdbc:unknown-db:test");
+        DatabaseConnectionSources.newDatabaseConnectionSource("jdbc:unknown-db:test");
 
     final Exception sqlException =
         assertThrows(SQLException.class, () -> connectionSource.getJdbcDriver());
