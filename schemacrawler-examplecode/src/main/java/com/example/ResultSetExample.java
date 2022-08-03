@@ -47,8 +47,8 @@ public final class ResultSetExample {
   private static Connection getConnection() {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
     final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connectionUrl);
-    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            connectionUrl, new SingleUseUserCredentials("sa", ""));
     return dataSource.get();
   }
 }

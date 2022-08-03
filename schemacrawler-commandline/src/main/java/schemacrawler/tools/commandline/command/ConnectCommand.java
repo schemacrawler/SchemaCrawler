@@ -141,8 +141,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     // Connect using connection options provided from the command-line,
     // provided configuration, and database plugin defaults
     final DatabaseConnectionSource databaseConnectionSource =
-        databaseConnector.newDatabaseConnectionSource(connectionOptions);
-    databaseConnectionSource.setUserCredentials(userCredentials);
+        databaseConnector.newDatabaseConnectionSource(connectionOptions, userCredentials);
 
     state.setDataSource(databaseConnectionSource);
   }

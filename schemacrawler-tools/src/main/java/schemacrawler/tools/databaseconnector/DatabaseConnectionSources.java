@@ -32,16 +32,19 @@ import java.util.Map;
 
 public class DatabaseConnectionSources {
 
-  public static DatabaseConnectionSource newDatabaseConnectionSource(final String connectionUrl) {
-    return newDatabaseConnectionSource(connectionUrl, null);
+  public static DatabaseConnectionSource newDatabaseConnectionSource(
+      final String connectionUrl,
+      final Map<String, String> connectionProperties,
+      final UserCredentials userCredentials) {
+    return new SingleDatabaseConnectionSource(connectionUrl, connectionProperties, userCredentials);
   }
 
   public static DatabaseConnectionSource newDatabaseConnectionSource(
-      final String connectionUrl, final Map<String, String> connectionProperties) {
-    return new DatabaseConnectionSource(connectionUrl, connectionProperties);
+      final String connectionUrl, final UserCredentials userCredentials) {
+    return newDatabaseConnectionSource(connectionUrl, null, userCredentials);
   }
 
   private DatabaseConnectionSources() {
-    // Prevent instatiation
+    // Prevent instantiation
   }
 }

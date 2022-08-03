@@ -133,7 +133,7 @@ public abstract class DatabaseConnector implements Options {
    * @param connectionUrl Database connection URL
    */
   public DatabaseConnectionSource newDatabaseConnectionSource(
-      final DatabaseConnectionOptions connectionOptions) {
+      final DatabaseConnectionOptions connectionOptions, final UserCredentials userCredentials) {
     requireNonNull(connectionOptions, "No database connection options provided");
 
     // Connect using connection options provided from the command-line,
@@ -144,7 +144,7 @@ public abstract class DatabaseConnector implements Options {
           (DatabaseUrlConnectionOptions) connectionOptions;
       databaseConnectionSource =
           DatabaseConnectionSources.newDatabaseConnectionSource(
-              databaseUrlConnectionOptions.getConnectionUrl());
+              databaseUrlConnectionOptions.getConnectionUrl(), userCredentials);
     } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions) {
       final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
           (DatabaseServerHostConnectionOptions) connectionOptions;
@@ -162,7 +162,9 @@ public abstract class DatabaseConnector implements Options {
 
       final String connectionUrl = databaseConnectionUrlBuilder.toURL();
       final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toUrlx();
-      databaseConnectionSource = new DatabaseConnectionSource(connectionUrl, connectionUrlx);
+      databaseConnectionSource =
+          DatabaseConnectionSources.newDatabaseConnectionSource(
+              connectionUrl, connectionUrlx, userCredentials);
     } else {
       throw new ConfigurationException("Could not create new database connection source");
     }
