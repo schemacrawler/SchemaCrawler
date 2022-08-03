@@ -99,17 +99,15 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
         throw new ExecutionException(spec.commandLine(), "Not able to make database connection");
       }
 
-      try (final Connection connection = state.getDataSource().get()) {
+      final Connection connection = state.getDataSource().get();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
+      final Catalog catalog = state.getCatalog();
 
-        final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
-        final Catalog catalog = state.getCatalog();
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+      executable.setConnection(connection);
+      executable.setCatalog(catalog);
 
-        executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-        executable.setConnection(connection);
-        executable.setCatalog(catalog);
-
-        executable.execute();
-      }
+      executable.execute();
 
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot execute SchemaCrawler command", e);

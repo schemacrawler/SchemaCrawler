@@ -40,7 +40,6 @@ import java.sql.SQLFeatureNotSupportedException;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -88,24 +87,5 @@ public class DatabaseConnectionSourceTest {
     final Connection connection = connectionSource.get();
 
     assertThat(connection, is(not(nullValue())));
-  }
-
-  @Test
-  public void noDriver() throws SQLException, ClassNotFoundException {
-    final DatabaseConnectionSource connectionSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(
-            "jdbc:unknown-db:test", new SingleUseUserCredentials());
-
-    assertThat(
-        connectionSource.toString(),
-        is(
-            "driver=<unknown>"
-                + System.lineSeparator()
-                + "url=jdbc:unknown-db:test"
-                + System.lineSeparator()));
-
-    final Exception connectionException =
-        assertThrows(InternalRuntimeException.class, () -> connectionSource.get());
-    connectionException.printStackTrace();
   }
 }

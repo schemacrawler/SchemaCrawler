@@ -177,12 +177,10 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     LOGGER.log(Level.FINE, "Creating SchemaCrawler retrieval options builder");
 
     final Config config = state.getConfig();
-    try (final Connection connection = state.getDataSource().get()) {
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-          databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
-      state.setSchemaRetrievalOptions(
-          SchemaRetrievalOptionsConfig.fromConfig(schemaRetrievalOptionsBuilder, config)
-              .toOptions());
-    }
+    final Connection connection = state.getDataSource().get();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
+    state.setSchemaRetrievalOptions(
+        SchemaRetrievalOptionsConfig.fromConfig(schemaRetrievalOptionsBuilder, config).toOptions());
   }
 }

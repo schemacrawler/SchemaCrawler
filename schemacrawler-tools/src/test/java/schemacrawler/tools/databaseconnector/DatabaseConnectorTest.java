@@ -52,8 +52,14 @@ public class DatabaseConnectorTest {
         databaseConnector.getDatabaseServerType().getDatabaseSystemIdentifier(), is("test-db"));
     assertThat(databaseConnector.getHelpCommand().getName(), is("server:test-db"));
 
-    final DatabaseConnectionOptions connectionOptions;
-    final DatabaseConnectionSource connectionSource;
+    DatabaseConnectionOptions connectionOptions;
+    DatabaseConnectionSource connectionSource;
+
+    connectionOptions = new DatabaseUrlConnectionOptions("jdbc:test-db:some-database");
+    connectionSource =
+        databaseConnector.newDatabaseConnectionSource(
+            connectionOptions, new SingleUseUserCredentials());
+    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
 
     connectionOptions =
         new DatabaseServerHostConnectionOptions(
@@ -61,6 +67,7 @@ public class DatabaseConnectorTest {
     connectionSource =
         databaseConnector.newDatabaseConnectionSource(
             connectionOptions, new SingleUseUserCredentials());
+    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
 
     assertThat(
         databaseConnector.getSchemaRetrievalOptionsBuilder(connectionSource.get()),
