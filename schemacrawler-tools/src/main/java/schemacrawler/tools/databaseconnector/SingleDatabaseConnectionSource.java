@@ -37,8 +37,10 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -48,6 +50,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
+import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
 final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
@@ -100,25 +103,22 @@ final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
   }
 
   private static Connection getConnection(
-      final String connectionUrl,
-      final Map<String, String> connectionProperties,
-      final String user,
-      final String password) {
-    if (isBlank(user)) {
-      LOGGER.log(Level.WARNING, "Database user is not provided");
-    }
-    if (isBlank(password)) {
-      LOGGER.log(Level.WARNING, "Database password is not provided");
+      final String connectionUrl, final Properties jdbcConnectionProperties) {
+
+    final String username;
+    final String user = jdbcConnectionProperties.getProperty("user");
+    if (user != null) {
+      username = String.format("user \'%s\'", user);
+    } else {
+      username = "unspecified user";
     }
 
-    final Properties jdbcConnectionProperties =
-        createConnectionProperties(connectionUrl, connectionProperties, user, password);
     try {
       LOGGER.log(
           Level.INFO,
           new StringFormat(
               "Making connection to %s%nfor user \'%s\', with properties %s",
-              connectionUrl, user, safeProperties(jdbcConnectionProperties)));
+              connectionUrl, username, safeProperties(jdbcConnectionProperties)));
       // (Using java.sql.DriverManager.getConnection(String, Properties)
       // to make a connection is not the best idea,
       // since for some strange reason, it does not check if a Driver
@@ -135,12 +135,6 @@ final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
 
       return connection;
     } catch (final SQLException e) {
-      final String username;
-      if (user != null) {
-        username = String.format("user \'%s\'", user);
-      } else {
-        username = "unspecified user";
-      }
       throw new DatabaseAccessException(
           String.format(
               "Could not connect to <%s>, for <%s>, with properties <%s>",
@@ -167,35 +161,89 @@ final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
     return logProperties;
   }
 
-  private final Connection connection;
+  private final UserCredentials userCredentials;
   private final String connectionUrl;
+  private final Properties jdbcConnectionProperties;
+  private final LinkedList<Connection> connectionPool;
+  private final LinkedList<Connection> usedConnections;
 
   SingleDatabaseConnectionSource(
       final String connectionUrl,
       final Map<String, String> connectionProperties,
       final UserCredentials userCredentials) {
+
     this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
-    // Ensure that user credentials are not null
-    requireNonNull(userCredentials, "No user credentials provided");
+    this.userCredentials = requireNonNull(userCredentials, "No user credentials provided");
 
     final String user = userCredentials.getUser();
     final String password = userCredentials.getPassword();
-    connection = getConnection(connectionUrl, connectionProperties, user, password);
+    if (isBlank(user)) {
+      LOGGER.log(Level.WARNING, "Database user is not provided");
+    }
+    if (isBlank(password)) {
+      LOGGER.log(Level.WARNING, "Database password is not provided");
+    }
+
+    jdbcConnectionProperties =
+        createConnectionProperties(connectionUrl, connectionProperties, user, password);
+
+    connectionPool = new LinkedList<>();
+    usedConnections = new LinkedList<>();
   }
 
   @Override
   public void close() throws Exception {
-    connection.close();
+
+    final List<Connection> connections = new ArrayList<>();
+    connections.addAll(connectionPool);
+    connections.addAll(usedConnections);
+
+    for (final Connection connection : connections) {
+      try {
+        connection.close();
+      } catch (final Exception e) {
+        LOGGER.log(Level.WARNING, "Cannot close connection", e);
+      }
+    }
+
+    connectionPool.clear();
+    usedConnections.clear();
   }
 
   @Override
   public Connection get() {
+    // Create a connection if needed
+    if (connectionPool.isEmpty()) {
+      final Connection connection = getConnection(connectionUrl, jdbcConnectionProperties);
+      connectionPool.add(connection);
+    }
+
+    // Mark connection as in-use
+    final Connection connection = connectionPool.removeFirst();
+    usedConnections.add(connection);
+
     return connection;
   }
 
   @Override
   public String getConnectionUrl() {
     return connectionUrl;
+  }
+
+  @Override
+  public boolean releaseConnection(final Connection connection) {
+
+    final boolean removed = usedConnections.remove(connection);
+
+    try {
+      DatabaseUtility.checkConnection(connection);
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Cannot release connection from pool", e);
+    }
+
+    connectionPool.add(connection);
+
+    return removed;
   }
 
   @Override
