@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.state;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -42,10 +41,11 @@ import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LoadOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
-public class ShellState {
+public class ShellState implements AutoCloseable {
 
   private static final Logger LOGGER = Logger.getLogger(ShellState.class.getName());
 
@@ -53,21 +53,27 @@ public class ShellState {
   private Config commandOptions;
   private Config catalogLoaderOptions;
   private Catalog catalog;
-  private Supplier<Connection> dataSource;
+  private DatabaseConnectionSource dataSource;
   private Throwable lastException;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private boolean isDeferCatalogLoad;
 
+  @Override
+  public void close() throws Exception {
+    sweep();
+  }
+
   public void disconnect() {
     if (dataSource == null) {
       return;
     }
-    try (final Connection connection = dataSource.get(); ) {
-      LOGGER.log(Level.INFO, new StringFormat("Closing connection <%s>", connection));
+    try {
+      dataSource.close();
+      LOGGER.log(Level.INFO, new StringFormat("Closing database connections"));
       dataSource = null;
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Cannot close connection");
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Cannot close database connections");
     }
   }
 
@@ -140,7 +146,7 @@ public class ShellState {
     }
   }
 
-  public void setDataSource(final Supplier<Connection> dataSource) {
+  public void setDataSource(final DatabaseConnectionSource dataSource) {
     this.dataSource = dataSource;
   }
 

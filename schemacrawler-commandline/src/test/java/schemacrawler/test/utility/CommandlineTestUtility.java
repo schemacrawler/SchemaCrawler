@@ -31,6 +31,7 @@ package schemacrawler.test.utility;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.databaseconnector.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.IOException;
@@ -143,7 +144,7 @@ public final class CommandlineTestUtility {
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     state.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
-    state.setDataSource(() -> connection); // is-connected
+    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
     return state;
   }
 

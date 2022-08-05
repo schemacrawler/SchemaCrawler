@@ -59,6 +59,7 @@ public class PooledConnectionUtility {
       switch (methodName) {
         case "close":
           databaseConnectionSource.releaseConnection(connection);
+          return null;
         case "isWrapperFor":
           final Class<?> clazz = (Class<?>) args[0];
           return clazz.isAssignableFrom(connection.getClass());

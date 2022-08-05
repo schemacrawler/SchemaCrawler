@@ -13,6 +13,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.databaseconnector.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -46,7 +47,7 @@ public class LoadCommandTest {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setDataSource(() -> connection);
+    state.setDataSource(newTestDatabaseConnectionSource(connection));
     assertThat(state.getCatalog(), is(nullValue()));
 
     final LoadCommand optionsParser = new LoadCommand(state);
@@ -89,7 +90,7 @@ public class LoadCommandTest {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setDataSource(() -> connection);
+    state.setDataSource(newTestDatabaseConnectionSource(connection));
     assertThat(state.getCatalog(), is(nullValue()));
 
     final LoadCommand optionsParser = new LoadCommand(state);

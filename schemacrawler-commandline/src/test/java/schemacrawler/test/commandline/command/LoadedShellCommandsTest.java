@@ -37,6 +37,7 @@ import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.databaseconnector.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
 
 import java.sql.Connection;
 
@@ -73,7 +74,7 @@ public class LoadedShellCommandsTest {
   @Test
   public void isNotConnected(final Connection connection, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
-    state.setDataSource(() -> connection); // is-connected
+    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
 
     final String[] args = new String[] {"--is-loaded"};
 

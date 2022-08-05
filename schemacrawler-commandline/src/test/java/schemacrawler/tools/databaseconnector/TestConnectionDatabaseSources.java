@@ -25,26 +25,14 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.tools.databaseconnector;
 
-import java.util.Map;
+import java.sql.Connection;
 
-public class DatabaseConnectionSources {
+public class TestConnectionDatabaseSources {
 
-  public static DatabaseConnectionSource newDatabaseConnectionSource(
-      final String connectionUrl,
-      final Map<String, String> connectionProperties,
-      final UserCredentials userCredentials) {
-    return new SimpleDatabaseConnectionSource(connectionUrl, connectionProperties, userCredentials);
-  }
-
-  public static DatabaseConnectionSource newDatabaseConnectionSource(
-      final String connectionUrl, final UserCredentials userCredentials) {
-    return newDatabaseConnectionSource(connectionUrl, null, userCredentials);
-  }
-
-  private DatabaseConnectionSources() {
-    // Prevent instantiation
+  public static DatabaseConnectionSource newTestDatabaseConnectionSource(
+      final Connection connection) {
+    return new SingleDatabaseConnectionSource("test-database-connection", connection);
   }
 }
