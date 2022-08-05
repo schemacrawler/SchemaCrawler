@@ -161,7 +161,6 @@ final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
     return logProperties;
   }
 
-  private final UserCredentials userCredentials;
   private final String connectionUrl;
   private final Properties jdbcConnectionProperties;
   private final LinkedList<Connection> connectionPool;
@@ -173,7 +172,7 @@ final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
       final UserCredentials userCredentials) {
 
     this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
-    this.userCredentials = requireNonNull(userCredentials, "No user credentials provided");
+    requireNonNull(userCredentials, "No user credentials provided");
 
     final String user = userCredentials.getUser();
     final String password = userCredentials.getPassword();
@@ -206,6 +205,10 @@ final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
       }
     }
 
+    if (!usedConnections.isEmpty()) {
+      LOGGER.log(Level.SEVERE, "Abnormal termination - not all database connections are closed");
+    }
+
     connectionPool.clear();
     usedConnections.clear();
   }
@@ -222,6 +225,7 @@ final class SingleDatabaseConnectionSource implements DatabaseConnectionSource {
     final Connection connection = connectionPool.removeFirst();
     usedConnections.add(connection);
 
+    // return PooledConnectionUtility.newPooledConnection(connection, this);
     return connection;
   }
 

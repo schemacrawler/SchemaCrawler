@@ -31,6 +31,7 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +95,7 @@ public class CommandLineUtility {
   }
 
   public static String getEnvironment(final ShellState state) {
-    String environment =
+    String environmentInfoString =
         String.format(
             "Environment:%n  %s%n  %s%n  %s%n",
             Version.version(),
@@ -102,9 +103,8 @@ public class CommandLineUtility {
             JvmSystemInfo.jvmSystemInfo());
 
     if (state != null && state.isConnected()) {
-      try {
-        final ConnectionInfo connectionInfo =
-            ConnectionInfoBuilder.builder(state.getDataSource().get()).build();
+      try (final Connection connection = state.getDataSource().get(); ) {
+        final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
         final ProductVersion databaseInfo =
             new BaseProductVersion(
                 connectionInfo.getDatabaseProductName(),
@@ -112,14 +112,15 @@ public class CommandLineUtility {
         final ProductVersion jdbcDriverInfo =
             new BaseProductVersion(
                 connectionInfo.getDriverName(), connectionInfo.getDriverVersion());
-        final String connection = String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
-        environment = environment + connection;
+        final String connectionInfoString =
+            String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
+        environmentInfoString = environmentInfoString + connectionInfoString;
       } catch (final Exception e) {
         // Ignore - do not log
       }
     }
 
-    return environment;
+    return environmentInfoString;
   }
 
   /**

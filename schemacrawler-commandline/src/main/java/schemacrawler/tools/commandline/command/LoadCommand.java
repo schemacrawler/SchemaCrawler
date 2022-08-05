@@ -118,8 +118,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
   }
 
   private Catalog loadCatalog() {
-    try {
-      final Connection connection = state.getDataSource().get();
+    try (final Connection connection = state.getDataSource().get(); ) {
       LOGGER.log(Level.INFO, new StringFormat("infolevel=%s", infolevel));
 
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
