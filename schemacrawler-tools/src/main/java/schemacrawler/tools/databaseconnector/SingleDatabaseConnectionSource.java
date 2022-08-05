@@ -82,4 +82,13 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
     // No-op
     return true;
   }
+
+  @Override
+  protected void finalize() throws Throwable {
+    // Assert that all connections are closed
+    if (!connection.isClosed()) {
+      throw new ExecutionRuntimeException("Connection pool is not closed");
+    }
+    super.finalize();
+  }
 }
