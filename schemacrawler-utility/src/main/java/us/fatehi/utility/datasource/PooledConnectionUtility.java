@@ -42,21 +42,28 @@ public class PooledConnectionUtility {
 
     private final Connection connection;
     private final DatabaseConnectionSource databaseConnectionSource;
+    private boolean isClosed;
 
     PooledConnectionInvocationHandler(
         final Connection connection, final DatabaseConnectionSource databaseConnectionSource) {
       this.connection = requireNonNull(connection, "No database connnection provided");
       this.databaseConnectionSource =
           requireNonNull(databaseConnectionSource, "No database connection source provided");
+      isClosed = false;
     }
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args)
         throws Exception {
       final String methodName = method.getName();
+      if (isClosed) {
+        throw new RuntimeException(
+            String.format("Cannot call <%s> since connection is closed", method));
+      }
       switch (methodName) {
         case "close":
           databaseConnectionSource.releaseConnection(connection);
+          isClosed = true;
           return null;
         case "isWrapperFor":
           final Class<?> clazz = (Class<?>) args[0];
