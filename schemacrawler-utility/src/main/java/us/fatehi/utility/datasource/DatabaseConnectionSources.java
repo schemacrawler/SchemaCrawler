@@ -25,19 +25,26 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.databaseconnector;
 
-import schemacrawler.schemacrawler.Options;
+package us.fatehi.utility.datasource;
 
-public interface UserCredentials extends Options {
+import java.util.Map;
 
-  void clearPassword();
+public class DatabaseConnectionSources {
 
-  String getPassword();
+  public static DatabaseConnectionSource newDatabaseConnectionSource(
+      final String connectionUrl,
+      final Map<String, String> connectionProperties,
+      final UserCredentials userCredentials) {
+    return new SimpleDatabaseConnectionSource(connectionUrl, connectionProperties, userCredentials);
+  }
 
-  String getUser();
+  public static DatabaseConnectionSource newDatabaseConnectionSource(
+      final String connectionUrl, final UserCredentials userCredentials) {
+    return newDatabaseConnectionSource(connectionUrl, null, userCredentials);
+  }
 
-  boolean hasPassword();
-
-  boolean hasUser();
+  private DatabaseConnectionSources() {
+    // Prevent instantiation
+  }
 }

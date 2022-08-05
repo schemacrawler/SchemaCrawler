@@ -26,25 +26,14 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.databaseconnector;
+package us.fatehi.utility.datasource;
 
-import java.util.Map;
+import java.sql.Connection;
+import java.util.function.Supplier;
 
-public class DatabaseConnectionSources {
+public interface DatabaseConnectionSource extends AutoCloseable, Supplier<Connection> {
 
-  public static DatabaseConnectionSource newDatabaseConnectionSource(
-      final String connectionUrl,
-      final Map<String, String> connectionProperties,
-      final UserCredentials userCredentials) {
-    return new SimpleDatabaseConnectionSource(connectionUrl, connectionProperties, userCredentials);
-  }
+  String getConnectionUrl();
 
-  public static DatabaseConnectionSource newDatabaseConnectionSource(
-      final String connectionUrl, final UserCredentials userCredentials) {
-    return newDatabaseConnectionSource(connectionUrl, null, userCredentials);
-  }
-
-  private DatabaseConnectionSources() {
-    // Prevent instantiation
-  }
+  boolean releaseConnection(Connection connection);
 }

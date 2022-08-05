@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.databaseconnector;
+package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
@@ -41,7 +41,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.database.DatabaseUtility;
 
 final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSource
@@ -137,7 +136,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   protected void finalize() throws Throwable {
     // Assert that all connections are closed
     if (!connectionPool.isEmpty() || !usedConnections.isEmpty()) {
-      throw new ExecutionRuntimeException("Connection pool is not closed");
+      throw new RuntimeException("Connection pool is not closed");
     }
     super.finalize();
   }

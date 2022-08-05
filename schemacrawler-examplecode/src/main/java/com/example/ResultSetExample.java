@@ -7,11 +7,11 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSources;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.LoggingConfig;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.SingleUseUserCredentials;
 
 public final class ResultSetExample {
 

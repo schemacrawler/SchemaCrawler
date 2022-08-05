@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.databaseconnector;
+package us.fatehi.utility.datasource;
 
 import java.sql.Connection;
 

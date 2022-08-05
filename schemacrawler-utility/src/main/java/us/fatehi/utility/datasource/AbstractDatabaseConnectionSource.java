@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.databaseconnector;
+package us.fatehi.utility.datasource;
 
 import static us.fatehi.utility.Utility.requireNotBlank;
 
@@ -43,9 +43,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSource {
@@ -91,7 +88,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
         }
       }
     } catch (final SQLException e) {
-      throw new InternalRuntimeException("Could not get connection properties", e);
+      throw new RuntimeException("Could not get connection properties", e);
     }
 
     return jdbcConnectionProperties;
@@ -130,7 +127,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
 
       return connection;
     } catch (final SQLException e) {
-      throw new DatabaseAccessException(
+      throw new RuntimeException(
           String.format(
               "Could not connect to <%s>, for <%s>, with properties <%s>",
               connectionUrl, username, safeProperties(jdbcConnectionProperties)),
@@ -142,7 +139,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
     try {
       return DriverManager.getDriver(connectionUrl);
     } catch (final SQLException e) {
-      throw new WrappedSQLException(
+      throw new SQLException(
           String.format(
               "Could not find a suitable JDBC driver for database connection URL <%s>",
               connectionUrl),

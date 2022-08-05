@@ -43,9 +43,9 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSources;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.SingleUseUserCredentials;
 
 @DisableLogging
 @WithTestDatabase

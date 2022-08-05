@@ -25,15 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package us.fatehi.utility.datasource;
 
-package schemacrawler.tools.databaseconnector;
+public interface UserCredentials {
 
-import java.sql.Connection;
-import java.util.function.Supplier;
+  void clearPassword();
 
-public interface DatabaseConnectionSource extends AutoCloseable, Supplier<Connection> {
+  String getPassword();
 
-  String getConnectionUrl();
+  String getUser();
 
-  boolean releaseConnection(Connection connection);
+  boolean hasPassword();
+
+  boolean hasUser();
 }

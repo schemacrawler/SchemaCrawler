@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.state;
 
-import schemacrawler.tools.databaseconnector.UserCredentials;
+import us.fatehi.utility.datasource.UserCredentials;
 
 public class MultiUseUserCredentials implements UserCredentials {
   private final String password;

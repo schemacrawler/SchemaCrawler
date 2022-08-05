@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.databaseconnector;
+package us.fatehi.utility.datasource;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Objects.requireNonNull;
@@ -35,8 +35,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 
 public class PooledConnectionUtility {
 
@@ -77,8 +75,7 @@ public class PooledConnectionUtility {
             if (cause instanceof Exception) {
               throw (Exception) cause;
             }
-            throw new ExecutionRuntimeException(
-                String.format("Could not delegate method <%s>", method), e);
+            throw new RuntimeException(String.format("Could not delegate method <%s>", method), e);
           }
       }
     }
