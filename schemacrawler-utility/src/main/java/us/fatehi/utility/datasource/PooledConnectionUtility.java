@@ -56,7 +56,7 @@ public class PooledConnectionUtility {
     public Object invoke(final Object proxy, final Method method, final Object[] args)
         throws Exception {
       final String methodName = method.getName();
-      if (isClosed) {
+      if (!methodName.equals("isClosed") && isClosed) {
         throw new RuntimeException(
             String.format("Cannot call <%s> since connection is closed", method));
       }
@@ -65,6 +65,8 @@ public class PooledConnectionUtility {
           databaseConnectionSource.releaseConnection(connection);
           isClosed = true;
           return null;
+        case "isClosed":
+          return isClosed;
         case "isWrapperFor":
           final Class<?> clazz = (Class<?>) args[0];
           return clazz.isAssignableFrom(connection.getClass());
