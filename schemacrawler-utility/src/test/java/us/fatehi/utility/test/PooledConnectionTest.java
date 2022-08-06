@@ -109,7 +109,7 @@ public class PooledConnectionTest {
 
     for (final Method method : methodsMap.values()) {
       if (method.getParameterCount() == 0) {
-        if (Arrays.asList("close", "setSavepoint").contains(method.getName())) {
+        if (Arrays.asList("close", "setSavepoint", "isClosed").contains(method.getName())) {
           continue;
         }
         assertThrows(

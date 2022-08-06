@@ -52,6 +52,27 @@ public class SimpleDatabaseConnectionSourceTest {
   private DatabaseConnectionSource databaseConnectionSource;
 
   @Test
+  public void badConstructorArgs() throws Exception {
+
+    assertThrows(
+        RuntimeException.class,
+        () ->
+            new SimpleDatabaseConnectionSource(
+                "<bad-url>", null, new SingleUseUserCredentials("user", "!")));
+
+    final String connectionUrl = databaseConnectionSource.getConnectionUrl();
+    assertThrows(
+        RuntimeException.class,
+        () -> {
+          final SimpleDatabaseConnectionSource badDatabaseConnectionSource =
+              new SimpleDatabaseConnectionSource(
+                  connectionUrl, null, new SingleUseUserCredentials("user", "!"));
+          final Connection connection = badDatabaseConnectionSource.get();
+          badDatabaseConnectionSource.close();
+        });
+  }
+
+  @Test
   public void closedConnectionTests() throws Exception {
 
     final Connection connection = databaseConnectionSource.get();
