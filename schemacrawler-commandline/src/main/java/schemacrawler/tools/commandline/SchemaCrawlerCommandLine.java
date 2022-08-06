@@ -84,6 +84,8 @@ public final class SchemaCrawlerCommandLine {
       printCommandLineErrorMessage(errorMessage, state);
 
       System.exit(1);
+    } finally {
+      state.close();
     }
   }
 

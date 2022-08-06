@@ -60,7 +60,7 @@ public class ShellState implements AutoCloseable {
   private boolean isDeferCatalogLoad;
 
   @Override
-  public void close() throws Exception {
+  public void close() {
     sweep();
   }
 
