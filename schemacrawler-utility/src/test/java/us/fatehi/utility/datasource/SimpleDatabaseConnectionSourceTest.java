@@ -47,21 +47,25 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class SingleDatabaseConnectionSourceTest {
+public class SimpleDatabaseConnectionSourceTest {
 
   private DatabaseConnectionSource databaseConnectionSource;
-  private Connection wrappedConnection;
 
   @Test
   public void closedConnectionTests() throws Exception {
+
+    final Connection connection = databaseConnectionSource.get();
+    final Connection wrappedConnection = connection.unwrap(Connection.class);
+
     wrappedConnection.close();
+
     assertThrows(
-        RuntimeException.class,
-        () -> new SingleDatabaseConnectionSource("<none>", wrappedConnection));
+        RuntimeException.class, () -> databaseConnectionSource.releaseConnection(connection));
   }
 
   @Test
   public void connectionTests() throws Exception {
+
     final Connection connection = databaseConnectionSource.get();
     assertThat(connection, is(not(nullValue())));
     assertThat(connection.getClass().getName(), not(endsWith("JDBCConnection")));
@@ -84,22 +88,6 @@ public class SingleDatabaseConnectionSourceTest {
     assertThat(unwrappedConnection.isClosed(), is(true));
   }
 
-  @Test
-  public void constructorTest() throws Exception {
-    final DatabaseMetaData metaData = wrappedConnection.getMetaData();
-    final String connectionUrl = metaData.getURL();
-    final String userName = metaData.getUserName();
-    final String password = "";
-    final HashMap<String, String> connectionProperties = new HashMap<String, String>();
-    connectionProperties.put("key", "value");
-    databaseConnectionSource =
-        new SingleDatabaseConnectionSource(
-            connectionUrl, connectionProperties, new SingleUseUserCredentials(userName, password));
-
-    final Connection connection = databaseConnectionSource.get();
-    assertThat(connection, is(not(nullValue())));
-  }
-
   @BeforeEach
   public void createDatabase() throws Exception {
 
@@ -111,11 +99,13 @@ public class SingleDatabaseConnectionSourceTest {
             .addScript("testdb.sql")
             .build();
 
-    wrappedConnection = db.getConnection();
+    final Connection wrappedConnection = db.getConnection();
     final DatabaseMetaData metaData = wrappedConnection.getMetaData();
     final String connectionUrl = metaData.getURL();
     final String userName = metaData.getUserName();
     final String password = "";
-    databaseConnectionSource = new SingleDatabaseConnectionSource(connectionUrl, wrappedConnection);
+    databaseConnectionSource =
+        new SimpleDatabaseConnectionSource(
+            connectionUrl, new HashMap<>(), new SingleUseUserCredentials(userName, password));
   }
 }

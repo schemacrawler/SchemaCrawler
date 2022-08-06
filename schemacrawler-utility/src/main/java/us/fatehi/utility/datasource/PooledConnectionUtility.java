@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.util.Arrays;
 
 public class PooledConnectionUtility {
 
@@ -56,7 +57,7 @@ public class PooledConnectionUtility {
     public Object invoke(final Object proxy, final Method method, final Object[] args)
         throws Exception {
       final String methodName = method.getName();
-      if (!methodName.equals("isClosed") && isClosed) {
+      if (!Arrays.asList("isClosed", "unwrap").contains(methodName) && isClosed) {
         throw new RuntimeException(
             String.format("Cannot call <%s> since connection is closed", method));
       }
