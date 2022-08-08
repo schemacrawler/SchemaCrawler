@@ -34,6 +34,7 @@ import static java.util.Objects.requireNonNull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Collections;
 
@@ -59,6 +60,10 @@ public class OfflineConnectionUtility {
         case "getOfflineDatabasePath":
           return offlineDatabasePath;
         case "isWrapperFor":
+          final Class<?> clazz = (Class<?>) args[0];
+          return clazz.isAssignableFrom(Connection.class);
+        case "unwrap":
+          return proxy;
         case "isClosed":
           return false;
         case "isValid":
