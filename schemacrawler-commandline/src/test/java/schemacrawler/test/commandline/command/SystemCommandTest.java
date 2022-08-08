@@ -13,6 +13,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static us.fatehi.utility.datasource.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.util.regex.Pattern;
@@ -76,7 +77,7 @@ public class SystemCommandTest {
     final String[] args = {"-C"};
 
     final ShellState state = new ShellState();
-    state.setDataSource(() -> connection);
+    state.setDataSource(newTestDatabaseConnectionSource(connection));
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
@@ -91,7 +92,7 @@ public class SystemCommandTest {
     final Connection connection = mock(Connection.class);
 
     final ShellState state = new ShellState();
-    state.setDataSource(() -> connection);
+    state.setDataSource(newTestDatabaseConnectionSource(connection));
     executeSystemCommand(state, args);
 
     assertThat(contentsOf(streams.err()), startsWith("Could not log connection information"));

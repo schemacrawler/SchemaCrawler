@@ -40,6 +40,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.SingleUseUserCredentials;
 
 @DisableLogging
 public class DatabaseConnectorTest {
@@ -56,13 +58,17 @@ public class DatabaseConnectorTest {
     DatabaseConnectionSource connectionSource;
 
     connectionOptions = new DatabaseUrlConnectionOptions("jdbc:test-db:some-database");
-    connectionSource = databaseConnector.newDatabaseConnectionSource(connectionOptions);
+    connectionSource =
+        databaseConnector.newDatabaseConnectionSource(
+            connectionOptions, new SingleUseUserCredentials());
     assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
 
     connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "test-db", "some-host", 2121, "some-database", null);
-    connectionSource = databaseConnector.newDatabaseConnectionSource(connectionOptions);
+    connectionSource =
+        databaseConnector.newDatabaseConnectionSource(
+            connectionOptions, new SingleUseUserCredentials());
     assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
 
     assertThat(
@@ -76,36 +82,6 @@ public class DatabaseConnectorTest {
         is(not(nullValue())));
 
     assertThat(databaseConnector.supportsUrl("jdbc:test-db:some-database"), is(true));
-  }
-
-  @Test
-  public void newConnectionWithUnknownConnector() {
-    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
-
-    final DatabaseConnectionSource expectedDatabaseConnectionSource =
-        expectedDatabaseConnectionSource("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
-
-    final DatabaseConnectionSource databaseConnectionSource =
-        databaseConnector.newDatabaseConnectionSource(
-            new DatabaseUrlConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler"));
-    assertThat(
-        databaseConnectionSource.getConnectionUrl(),
-        is(expectedDatabaseConnectionSource.getConnectionUrl()));
-  }
-
-  @Test
-  public void newMajorDatabaseConnectionWithUnknownConnectorWithOverride() {
-    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
-
-    final DatabaseConnectionSource expectedDatabaseConnectionSource =
-        expectedDatabaseConnectionSource("jdbc:mysql://localhost:9001/schemacrawler");
-
-    final DatabaseConnectionSource databaseConnectionSource =
-        databaseConnector.newDatabaseConnectionSource(
-            new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler"));
-    assertThat(
-        databaseConnectionSource.getConnectionUrl(),
-        is(expectedDatabaseConnectionSource.getConnectionUrl()));
   }
 
   /**
@@ -146,12 +122,5 @@ public class DatabaseConnectorTest {
 
     assertThat(
         databaseConnector.toString(), is("Database connector for unknown database system type"));
-  }
-
-  private DatabaseConnectionSource expectedDatabaseConnectionSource(final String connectionUrl) {
-    final DatabaseConnectionSource expectedDatabaseConnectionSource =
-        new DatabaseConnectionSource(connectionUrl);
-    expectedDatabaseConnectionSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
-    return expectedDatabaseConnectionSource;
   }
 }

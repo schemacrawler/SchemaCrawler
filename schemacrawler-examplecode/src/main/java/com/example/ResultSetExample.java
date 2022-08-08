@@ -7,10 +7,11 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.LoggingConfig;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.SingleUseUserCredentials;
 
 public final class ResultSetExample {
 
@@ -45,8 +46,9 @@ public final class ResultSetExample {
 
   private static Connection getConnection() {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
-    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            connectionUrl, new SingleUseUserCredentials("sa", ""));
     return dataSource.get();
   }
 }

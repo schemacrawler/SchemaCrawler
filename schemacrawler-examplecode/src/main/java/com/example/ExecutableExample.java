@@ -14,12 +14,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.LoggingConfig;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.SingleUseUserCredentials;
 
 public final class ExecutableExample {
 
@@ -60,8 +61,9 @@ public final class ExecutableExample {
 
   private static Connection getConnection() {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
-    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            connectionUrl, new SingleUseUserCredentials("sa", ""));
     return dataSource.get();
   }
 

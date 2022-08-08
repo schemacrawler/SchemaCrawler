@@ -48,12 +48,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.SingleUseUserCredentials;
 
 public class EmbeddedSQLiteWrapper {
 
@@ -98,7 +99,8 @@ public class EmbeddedSQLiteWrapper {
     final DatabaseUrlConnectionOptions urlConnectionOptions =
         new DatabaseUrlConnectionOptions(getConnectionUrl());
     final DatabaseConnectionSource connectionOptions =
-        new SQLiteDatabaseConnector().newDatabaseConnectionSource(urlConnectionOptions);
+        new SQLiteDatabaseConnector()
+            .newDatabaseConnectionSource(urlConnectionOptions, new SingleUseUserCredentials());
     return connectionOptions;
   }
 

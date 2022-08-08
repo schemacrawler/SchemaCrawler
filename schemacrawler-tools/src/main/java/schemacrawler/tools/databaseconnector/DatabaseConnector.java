@@ -47,6 +47,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.UserCredentials;
 
 public abstract class DatabaseConnector implements Options {
 
@@ -133,7 +136,7 @@ public abstract class DatabaseConnector implements Options {
    * @param connectionUrl Database connection URL
    */
   public DatabaseConnectionSource newDatabaseConnectionSource(
-      final DatabaseConnectionOptions connectionOptions) {
+      final DatabaseConnectionOptions connectionOptions, final UserCredentials userCredentials) {
     requireNonNull(connectionOptions, "No database connection options provided");
 
     // Connect using connection options provided from the command-line,
@@ -143,7 +146,8 @@ public abstract class DatabaseConnector implements Options {
       final DatabaseUrlConnectionOptions databaseUrlConnectionOptions =
           (DatabaseUrlConnectionOptions) connectionOptions;
       databaseConnectionSource =
-          new DatabaseConnectionSource(databaseUrlConnectionOptions.getConnectionUrl());
+          DatabaseConnectionSources.newDatabaseConnectionSource(
+              databaseUrlConnectionOptions.getConnectionUrl(), userCredentials);
     } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions) {
       final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
           (DatabaseServerHostConnectionOptions) connectionOptions;
@@ -161,7 +165,9 @@ public abstract class DatabaseConnector implements Options {
 
       final String connectionUrl = databaseConnectionUrlBuilder.toURL();
       final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toUrlx();
-      databaseConnectionSource = new DatabaseConnectionSource(connectionUrl, connectionUrlx);
+      databaseConnectionSource =
+          DatabaseConnectionSources.newDatabaseConnectionSource(
+              connectionUrl, connectionUrlx, userCredentials);
     } else {
       throw new ConfigurationException("Could not create new database connection source");
     }

@@ -34,6 +34,7 @@ import static java.util.Objects.requireNonNull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Collections;
 
@@ -59,16 +60,28 @@ public class OfflineConnectionUtility {
         case "getOfflineDatabasePath":
           return offlineDatabasePath;
         case "isWrapperFor":
+          final Class<?> clazz = (Class<?>) args[0];
+          return clazz.isAssignableFrom(Connection.class);
+        case "unwrap":
+          return proxy;
         case "isClosed":
           return false;
         case "isValid":
           return true;
         case "getTypeMap":
           return Collections.emptyMap();
+        case "hashCode":
+          return offlineDatabasePath.hashCode();
         case "toString":
           return String.format(
               "schemacrawler.tools.offline.jdbc.OfflineConnection@%s",
               offlineDatabasePath.hashCode());
+        case "equals":
+          if (args != null && args.length > 0 && args[0] instanceof OfflineConnection) {
+            final OfflineConnection otherOfflineConnection = (OfflineConnection) args[0];
+            return otherOfflineConnection.hashCode() == offlineDatabasePath.hashCode();
+          }
+          // Fall through
         default:
           throw new SQLFeatureNotSupportedException(
               String.format(

@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.UserCredentialsOptions;
-import schemacrawler.tools.databaseconnector.UserCredentials;
+import us.fatehi.utility.datasource.UserCredentials;
 
 public class PasswordParserTest {
 

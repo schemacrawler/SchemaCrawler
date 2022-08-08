@@ -26,10 +26,8 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.databaseconnector;
+package us.fatehi.utility.datasource;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
@@ -42,90 +40,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.string.StringFormat;
 
-public final class DatabaseConnectionSource implements Supplier<Connection> {
+abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSource {
 
-  private static final Logger LOGGER = Logger.getLogger(DatabaseConnectionSource.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(AbstractDatabaseConnectionSource.class.getName());
 
-  private static Properties safeProperties(final Properties properties) {
-    final Properties logProperties = new Properties(properties);
-    logProperties.remove("password");
-    return logProperties;
-  }
-
-  private final Map<String, String> connectionProperties;
-  private final String connectionUrl;
-  private UserCredentials userCredentials;
-
-  public DatabaseConnectionSource(final String connectionUrl) {
-    this(connectionUrl, null);
-  }
-
-  public DatabaseConnectionSource(
-      final String connectionUrl, final Map<String, String> connectionProperties) {
-    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
-    this.connectionProperties = connectionProperties;
-
-    // Ensure that user credentials are not null
-    userCredentials = new SingleUseUserCredentials();
-  }
-
-  @Override
-  public Connection get() {
-    final String user = userCredentials.getUser();
-    final String password = userCredentials.getPassword();
-    return getConnection(user, password);
-  }
-
-  public String getConnectionUrl() {
-    return connectionUrl;
-  }
-
-  public Driver getJdbcDriver() throws SQLException {
-    return getJdbcDriver(connectionUrl);
-  }
-
-  public UserCredentials getUserCredentials() {
-    return userCredentials;
-  }
-
-  public void setUserCredentials(final UserCredentials userCredentials) {
-    this.userCredentials = requireNonNull(userCredentials, "No user credentials provided");
-  }
-
-  @Override
-  public String toString() {
-    String jdbcDriverClass = "<unknown>";
-    try {
-      final Driver jdbcDriver = getJdbcDriver();
-      jdbcDriverClass = jdbcDriver.getClass().getName();
-    } catch (final SQLException e) {
-      jdbcDriverClass = "<unknown>";
-    }
-
-    final StringBuilder builder = new StringBuilder(1024);
-    builder.append("driver=").append(jdbcDriverClass).append(System.lineSeparator());
-    builder.append("url=").append(connectionUrl).append(System.lineSeparator());
-    return builder.toString();
-  }
-
-  private Properties createConnectionProperties(
-      final String connectionUrl, final String user, final String password) {
+  protected static Properties createConnectionProperties(
+      final String connectionUrl,
+      final Map<String, String> connectionProperties,
+      final String user,
+      final String password) {
     final List<String> skipProperties =
         Arrays.asList("server", "host", "port", "database", "urlx", "user", "password", "url");
     final Properties jdbcConnectionProperties;
     try {
       final Driver jdbcDriver = getJdbcDriver(connectionUrl);
       final DriverPropertyInfo[] propertyInfo =
-          jdbcDriver.getPropertyInfo(this.connectionUrl, new Properties());
+          jdbcDriver.getPropertyInfo(connectionUrl, new Properties());
       final Map<String, Boolean> jdbcDriverProperties = new HashMap<>();
       for (final DriverPropertyInfo driverPropertyInfo : propertyInfo) {
         final String jdbcPropertyName = driverPropertyInfo.name.toLowerCase();
@@ -152,28 +88,29 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
         }
       }
     } catch (final SQLException e) {
-      throw new InternalRuntimeException("Could not get connection properties", e);
+      throw new RuntimeException("Could not get connection properties", e);
     }
 
     return jdbcConnectionProperties;
   }
 
-  private Connection getConnection(final String user, final String password) {
-    if (isBlank(user)) {
-      LOGGER.log(Level.WARNING, "Database user is not provided");
-    }
-    if (isBlank(password)) {
-      LOGGER.log(Level.WARNING, "Database password is not provided");
+  protected static Connection getConnection(
+      final String connectionUrl, final Properties jdbcConnectionProperties) {
+
+    final String username;
+    final String user = jdbcConnectionProperties.getProperty("user");
+    if (user != null) {
+      username = String.format("user \'%s\'", user);
+    } else {
+      username = "unspecified user";
     }
 
-    final Properties jdbcConnectionProperties =
-        createConnectionProperties(connectionUrl, user, password);
     try {
       LOGGER.log(
           Level.INFO,
           new StringFormat(
               "Making connection to %s%nfor user \'%s\', with properties %s",
-              connectionUrl, user, safeProperties(jdbcConnectionProperties)));
+              connectionUrl, username, safeProperties(jdbcConnectionProperties)));
       // (Using java.sql.DriverManager.getConnection(String, Properties)
       // to make a connection is not the best idea,
       // since for some strange reason, it does not check if a Driver
@@ -190,13 +127,7 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
 
       return connection;
     } catch (final SQLException e) {
-      final String username;
-      if (user != null) {
-        username = String.format("user \'%s\'", user);
-      } else {
-        username = "unspecified user";
-      }
-      throw new DatabaseAccessException(
+      throw new RuntimeException(
           String.format(
               "Could not connect to <%s>, for <%s>, with properties <%s>",
               connectionUrl, username, safeProperties(jdbcConnectionProperties)),
@@ -204,15 +135,48 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
     }
   }
 
-  private Driver getJdbcDriver(final String connectionUrl) throws SQLException {
+  private static Driver getJdbcDriver(final String connectionUrl) throws SQLException {
     try {
       return DriverManager.getDriver(connectionUrl);
     } catch (final SQLException e) {
-      throw new WrappedSQLException(
+      throw new SQLException(
           String.format(
               "Could not find a suitable JDBC driver for database connection URL <%s>",
-              this.connectionUrl),
+              connectionUrl),
           e);
     }
+  }
+
+  private static Properties safeProperties(final Properties properties) {
+    final Properties logProperties = new Properties(properties);
+    logProperties.remove("password");
+    return logProperties;
+  }
+
+  protected final String connectionUrl;
+
+  AbstractDatabaseConnectionSource(final String connectionUrl) {
+    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
+  }
+
+  @Override
+  public final String getConnectionUrl() {
+    return connectionUrl;
+  }
+
+  @Override
+  public final String toString() {
+    String jdbcDriverClass = "<unknown>";
+    try {
+      final Driver jdbcDriver = getJdbcDriver(connectionUrl);
+      jdbcDriverClass = jdbcDriver.getClass().getName();
+    } catch (final SQLException e) {
+      jdbcDriverClass = "<unknown>";
+    }
+
+    final StringBuilder builder = new StringBuilder(1024);
+    builder.append("driver=").append(jdbcDriverClass).append(System.lineSeparator());
+    builder.append("url=").append(connectionUrl).append(System.lineSeparator());
+    return builder.toString();
   }
 }

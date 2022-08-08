@@ -50,10 +50,10 @@ import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.UserCredentials;
 import us.fatehi.utility.string.StringFormat;
 
 @Command(
@@ -141,8 +141,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     // Connect using connection options provided from the command-line,
     // provided configuration, and database plugin defaults
     final DatabaseConnectionSource databaseConnectionSource =
-        databaseConnector.newDatabaseConnectionSource(connectionOptions);
-    databaseConnectionSource.setUserCredentials(userCredentials);
+        databaseConnector.newDatabaseConnectionSource(connectionOptions, userCredentials);
 
     state.setDataSource(databaseConnectionSource);
   }
@@ -178,7 +177,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     LOGGER.log(Level.FINE, "Creating SchemaCrawler retrieval options builder");
 
     final Config config = state.getConfig();
-    try (final Connection connection = state.getDataSource().get()) {
+    try (final Connection connection = state.getDataSource().get(); ) {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
           databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
       state.setSchemaRetrievalOptions(

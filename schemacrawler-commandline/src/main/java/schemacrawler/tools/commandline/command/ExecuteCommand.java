@@ -99,8 +99,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
         throw new ExecutionException(spec.commandLine(), "Not able to make database connection");
       }
 
-      try (final Connection connection = state.getDataSource().get()) {
-
+      try (final Connection connection = state.getDataSource().get(); ) {
         final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
         final Catalog catalog = state.getCatalog();
 

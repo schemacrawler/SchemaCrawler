@@ -143,6 +143,8 @@ public final class SchemaCrawlerShell {
       }
     } catch (final Throwable throwable) {
       handleFatalError(args, throwable, state);
+    } finally {
+      state.close();
     }
   }
 

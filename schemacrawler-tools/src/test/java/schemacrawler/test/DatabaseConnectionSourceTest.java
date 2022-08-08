@@ -40,13 +40,12 @@ import java.sql.SQLFeatureNotSupportedException;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.test.utility.WithTestDatabase;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.SingleUseUserCredentials;
 
 @DisableLogging
 @WithTestDatabase
@@ -58,7 +57,8 @@ public class DatabaseConnectionSourceTest {
     Class.forName("schemacrawler.test.utility.TestDatabaseDriver");
 
     final DatabaseConnectionSource connectionSource =
-        new DatabaseConnectionSource("jdbc:test-db:test");
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            "jdbc:test-db:test", new SingleUseUserCredentials());
 
     assertThat(
         connectionSource.toString(),
@@ -67,15 +67,11 @@ public class DatabaseConnectionSourceTest {
                 + System.lineSeparator()
                 + "url=jdbc:test-db:test"
                 + System.lineSeparator()));
-    assertThat(connectionSource.getUserCredentials(), is(not(nullValue())));
-    assertThat(
-        connectionSource.getJdbcDriver().getClass().getSimpleName(), is("TestDatabaseDriver"));
 
     final Connection connection = connectionSource.get();
 
     assertThat(connection, is(not(nullValue())));
     assertThrows(SQLFeatureNotSupportedException.class, () -> connection.getMetaData());
-    assertThat(connectionSource.getJdbcDriver().getClass(), is(TestDatabaseDriver.class));
   }
 
   @Test
@@ -83,41 +79,13 @@ public class DatabaseConnectionSourceTest {
       throws SQLException, ClassNotFoundException {
 
     final DatabaseConnectionSource connectionSource =
-        new DatabaseConnectionSource(databaseConnectionInfo.getConnectionUrl());
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            databaseConnectionInfo.getConnectionUrl(), new SingleUseUserCredentials("sa", ""));
 
     assertThat(connectionSource.toString(), startsWith("driver=org.hsqldb.jdbc.JDBCDriver"));
-    assertThat(connectionSource.getUserCredentials(), is(not(nullValue())));
-    assertThat(connectionSource.getJdbcDriver().getClass().getSimpleName(), is("JDBCDriver"));
-
-    connectionSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
 
     final Connection connection = connectionSource.get();
 
     assertThat(connection, is(not(nullValue())));
-  }
-
-  @Test
-  public void noDriver() throws SQLException, ClassNotFoundException {
-    final DatabaseConnectionSource connectionSource =
-        new DatabaseConnectionSource("jdbc:unknown-db:test");
-
-    final Exception sqlException =
-        assertThrows(SQLException.class, () -> connectionSource.getJdbcDriver());
-    assertThat(
-        sqlException.getMessage(),
-        is(
-            "Could not find a suitable JDBC driver for database connection URL <jdbc:unknown-db:test>: No suitable driver"));
-
-    assertThat(
-        connectionSource.toString(),
-        is(
-            "driver=<unknown>"
-                + System.lineSeparator()
-                + "url=jdbc:unknown-db:test"
-                + System.lineSeparator()));
-
-    final Exception connectionException =
-        assertThrows(InternalRuntimeException.class, () -> connectionSource.get());
-    connectionException.printStackTrace();
   }
 }

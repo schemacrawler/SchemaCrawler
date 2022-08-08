@@ -27,9 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.io.FileMatchers.anExistingFile;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -44,6 +44,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -137,7 +138,12 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
       assertThat(exitCode, is(1));
     }
 
-    assertThat(contentsOf(streams.err()), containsString("SQLITE_CANTOPEN"));
+    assertThat(
+        contentsOf(streams.err()),
+        matchesPattern(
+            Pattern.compile(
+                ".*Error: Could not connect to <.*>, for <unspecified user>, with properties <\\{\\}>.*",
+                Pattern.DOTALL)));
     assertThat(outputOf(streams.out()), hasNoContent());
   }
 }

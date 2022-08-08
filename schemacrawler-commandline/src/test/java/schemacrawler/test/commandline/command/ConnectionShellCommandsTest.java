@@ -36,6 +36,7 @@ import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static us.fatehi.utility.datasource.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
 
 import java.sql.Connection;
 
@@ -59,7 +60,7 @@ public class ConnectionShellCommandsTest {
   @Test
   public void disconnect(final Connection connection) {
     final ShellState state = new ShellState();
-    state.setDataSource(() -> connection); // is-connected
+    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
 
     final String[] args = new String[0];
 
@@ -90,7 +91,7 @@ public class ConnectionShellCommandsTest {
   @Test
   public void isConnected(final Connection connection, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
-    state.setDataSource(() -> connection); // is-connected
+    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
 
     final String[] args = new String[] {"--is-connected"};
 

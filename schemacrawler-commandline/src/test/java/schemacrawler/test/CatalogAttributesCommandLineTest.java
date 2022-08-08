@@ -74,6 +74,7 @@ public class CatalogAttributesCommandLineTest {
     argsMap.put("--info-level", InfoLevel.standard.name());
     argsMap.put("--no-info", "true");
     argsMap.put("--attributes-file", attributesFile.toString());
+    argsMap.put("--log-level", "ALL");
 
     assertThat(
         outputOf(

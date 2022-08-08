@@ -119,8 +119,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void printConnectionInfo() {
-    try {
-      final Connection connection = state.getDataSource().get();
+    try (final Connection connection = state.getDataSource().get(); ) {
       final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
       System.out.println(connectionInfo);
     } catch (final Exception e) {
