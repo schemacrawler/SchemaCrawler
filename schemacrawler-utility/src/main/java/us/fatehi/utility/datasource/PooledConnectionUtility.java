@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class PooledConnectionUtility {
@@ -85,7 +86,7 @@ public class PooledConnectionUtility {
             if (cause instanceof Exception) {
               throw (Exception) cause;
             }
-            throw new RuntimeException(String.format("Could not delegate method <%s>", method), e);
+            throw new SQLException(String.format("Could not delegate method <%s>", method), e);
           }
       }
     }

@@ -41,14 +41,11 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
 
   private final Connection connection;
 
-  public SingleDatabaseConnectionSource(final String connectionUrl, final Connection connection) {
+  @Deprecated
+  public SingleDatabaseConnectionSource(final String connectionUrl, final Connection connection)
+      throws SQLException {
     super(connectionUrl);
-    this.connection = requireNonNull(connection, "No database connection provided");
-    try {
-      DatabaseUtility.checkConnection(connection);
-    } catch (final SQLException e) {
-      throw new RuntimeException("Could not use provided connection", e);
-    }
+    this.connection = DatabaseUtility.checkConnection(connection);
   }
 
   SingleDatabaseConnectionSource(

@@ -237,9 +237,10 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
     final Query databaseUsersSql = informationSchemaViews.getQuery(DATABASE_USERS);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(databaseUsersSql, statement, new IncludeAll())) {
+            new MetadataResultSet(databaseUsersSql, statement, new IncludeAll()); ) {
       while (results.next()) {
         final String username = results.getString("USERNAME");
         if (isBlank(username)) {
@@ -271,9 +272,10 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
     final Query serverInfoSql = informationSchemaViews.getQuery(SERVER_INFORMATION);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(serverInfoSql, statement, new IncludeAll())) {
+            new MetadataResultSet(serverInfoSql, statement, new IncludeAll()); ) {
       while (results.next()) {
         final String propertyName = results.getString("NAME");
         if (isBlank(propertyName)) {

@@ -37,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -56,8 +57,7 @@ public class SingleDatabaseConnectionSourceTest {
   public void closedConnectionTests() throws Exception {
     wrappedConnection.close();
     assertThrows(
-        RuntimeException.class,
-        () -> new SingleDatabaseConnectionSource("<none>", wrappedConnection));
+        SQLException.class, () -> new SingleDatabaseConnectionSource("<none>", wrappedConnection));
   }
 
   @Test

@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -46,6 +45,8 @@ import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TypeMap;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.string.StringFormat;
 
 /** A connection for the retriever. Wraps a live database connection. */
@@ -53,7 +54,7 @@ final class RetrieverConnection {
 
   private static final Logger LOGGER = Logger.getLogger(RetrieverConnection.class.getName());
 
-  private final Connection connection;
+  private final DatabaseConnectionSource dataSource;
   private final JavaSqlTypes javaSqlTypes;
   private final DatabaseMetaData metaData;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
@@ -64,7 +65,7 @@ final class RetrieverConnection {
       final Connection connection, final SchemaRetrievalOptions schemaRetrievalOptions)
       throws SQLException {
 
-    this.connection = checkConnection(connection);
+    this.dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     metaData = requireNonNull(connection.getMetaData(), "No database metadata obtained");
     this.schemaRetrievalOptions =
         requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
@@ -86,7 +87,7 @@ final class RetrieverConnection {
   }
 
   Connection getConnection() {
-    return connection;
+    return dataSource.get();
   }
 
   EnumDataTypeHelper getEnumDataTypeHelper() {
