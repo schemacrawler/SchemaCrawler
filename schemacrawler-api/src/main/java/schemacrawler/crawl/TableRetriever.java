@@ -140,6 +140,7 @@ final class TableRetriever extends AbstractRetriever {
     if (tableFilter.test(table)) {
       table.setTableType(tableType);
       table.setRemarks(remarks);
+      table.addAttributes(results.getAttributes());
 
       catalog.addTable(table);
     }
