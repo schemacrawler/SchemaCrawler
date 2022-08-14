@@ -34,6 +34,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
@@ -199,9 +200,10 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No function columns SQL provided");
     }
     final Query functionColumnsSql = informationSchemaViews.getQuery(FUNCTION_COLUMNS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(functionColumnsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(functionColumnsSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         createFunctionParameter(results, allRoutines, parameterFilter);
       }

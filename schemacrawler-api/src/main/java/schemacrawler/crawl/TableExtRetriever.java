@@ -36,6 +36,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -82,9 +83,10 @@ final class TableExtRetriever extends AbstractRetriever {
     }
     final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(columnAttributesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(columnAttributesSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -172,9 +174,10 @@ final class TableExtRetriever extends AbstractRetriever {
     }
     final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tableAttributesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tableAttributesSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -218,9 +221,11 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
     final Query extIndexesInformationSql = informationSchemaViews.getQuery(EXT_INDEXES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(extIndexesInformationSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(
+                extIndexesInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("INDEX_CATALOG"));
@@ -282,10 +287,11 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
     final Query tableDefinitionsInformationSql = informationSchemaViews.getQuery(EXT_TABLES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                tableDefinitionsInformationSql, statement, getSchemaInclusionRule())) {
+                tableDefinitionsInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -332,9 +338,10 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
     final Query triggerInformationSql = informationSchemaViews.getQuery(TRIGGERS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(triggerInformationSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(triggerInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TRIGGER_CATALOG"));
@@ -407,9 +414,10 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
     final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(viewInformationSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(viewInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -461,9 +469,10 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving view table usage");
 
     final Query viewTableUsageSql = informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(viewTableUsageSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(viewTableUsageSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("VIEW_CATALOG"));

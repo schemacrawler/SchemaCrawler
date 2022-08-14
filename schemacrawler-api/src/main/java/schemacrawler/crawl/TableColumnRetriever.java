@@ -35,6 +35,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -209,9 +210,10 @@ final class TableColumnRetriever extends AbstractRetriever {
       return hiddenTableColumnsLookupKeys;
     }
     final Query hiddenColumnsSql = informationSchemaViews.getQuery(EXT_HIDDEN_TABLE_COLUMNS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
@@ -246,9 +248,10 @@ final class TableColumnRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table columns SQL provided");
     }
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
       }

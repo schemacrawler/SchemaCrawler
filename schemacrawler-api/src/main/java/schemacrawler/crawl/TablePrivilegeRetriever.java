@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_PRIVILEGES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -163,9 +164,10 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table column privileges SQL provided");
     }
     final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_COLUMN_PRIVILEGES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule()); ) {
       createPrivileges(results, true);
     }
   }
@@ -188,9 +190,10 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table privileges SQL provided");
     }
     final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_PRIVILEGES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule()); ) {
       createPrivileges(results, false);
     }
   }

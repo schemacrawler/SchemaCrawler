@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -165,9 +166,10 @@ final class TableRetriever extends AbstractRetriever {
     } else {
       filteredTableTypes = tableTypes;
     }
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tablesSql, statement, getSchemaInclusionRule()); ) {
       int numTables = 0;
       while (results.next()) {
         numTables = numTables + 1;

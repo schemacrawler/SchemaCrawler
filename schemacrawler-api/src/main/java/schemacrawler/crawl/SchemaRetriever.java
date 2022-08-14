@@ -31,6 +31,7 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -192,9 +193,10 @@ final class SchemaRetriever extends AbstractRetriever {
     }
     final Query schemataSql = informationSchemaViews.getQuery(SCHEMATA);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule()); ) {
       int numSchemas = 0;
       while (results.next()) {
         numSchemas = numSchemas + 1;

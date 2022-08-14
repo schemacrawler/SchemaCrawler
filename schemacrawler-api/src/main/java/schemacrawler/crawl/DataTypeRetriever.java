@@ -34,6 +34,7 @@ import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -159,9 +160,10 @@ final class DataTypeRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No system column data types SQL provided");
     }
     final Query typeInfoSql = informationSchemaViews.getQuery(TYPE_INFO);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule()); ) {
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;

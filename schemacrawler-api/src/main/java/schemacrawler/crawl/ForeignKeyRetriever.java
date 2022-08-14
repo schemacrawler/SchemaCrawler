@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -196,9 +197,10 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
     final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(fkSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(fkSql, statement, getSchemaInclusionRule()); ) {
       createForeignKeys(results, foreignKeys);
     } catch (final SQLException e) {
       throw new WrappedSQLException(
