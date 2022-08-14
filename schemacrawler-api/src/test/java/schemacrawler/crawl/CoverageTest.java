@@ -38,6 +38,8 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 public class CoverageTest {
@@ -71,7 +73,7 @@ public class CoverageTest {
 
   @Test
   public void retrieverConnection() throws SQLException {
-    assertThrows(SQLException.class, () -> new RetrieverConnection(null, null));
+    assertThrows(NullPointerException.class, () -> new RetrieverConnection(null, null));
   }
 
   @Test
@@ -80,7 +82,9 @@ public class CoverageTest {
         SQLException.class,
         () -> {
           connection.close();
-          new RetrieverConnection(connection, null);
+          final DatabaseConnectionSource dataSource =
+              DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+          new RetrieverConnection(dataSource, null);
         });
   }
 }

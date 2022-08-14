@@ -67,6 +67,8 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -95,8 +97,10 @@ public class RoutineRetrieverFunctionsTest {
         .with(functionsRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 

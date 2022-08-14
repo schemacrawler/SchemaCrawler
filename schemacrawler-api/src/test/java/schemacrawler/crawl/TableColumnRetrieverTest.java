@@ -75,6 +75,8 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -154,8 +156,10 @@ public class TableColumnRetrieverTest {
         .with(tableColumnsRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -223,8 +227,10 @@ public class TableColumnRetrieverTest {
         .with(tableColumnsRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 

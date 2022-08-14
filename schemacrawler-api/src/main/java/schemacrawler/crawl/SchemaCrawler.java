@@ -93,6 +93,8 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.string.StringFormat;
 
 /** SchemaCrawler uses database meta-data to get the details about the schema. */
@@ -119,7 +121,9 @@ public final class SchemaCrawler {
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions options) {
     try {
-      retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+      final DatabaseConnectionSource dataSource =
+          DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+      retrieverConnection = new RetrieverConnection(dataSource, schemaRetrievalOptions);
       this.options = requireNonNull(options, "No SchemaCrawler options provided");
 
       final LoadOptions loadOptions = options.getLoadOptions();

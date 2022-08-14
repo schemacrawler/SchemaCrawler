@@ -65,6 +65,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -88,8 +90,10 @@ public class TablePrivilegeRetrieverTest {
         .withInformationSchemaViews(informationSchemaViews)
         .with(tableColumnPrivilegesRetrievalStrategy, none);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -113,8 +117,10 @@ public class TablePrivilegeRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.with(tableColumnPrivilegesRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -131,8 +137,10 @@ public class TablePrivilegeRetrieverTest {
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -187,8 +195,10 @@ public class TablePrivilegeRetrieverTest {
         .withInformationSchemaViews(informationSchemaViews)
         .with(tablePrivilegesRetrievalStrategy, none);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -222,8 +232,10 @@ public class TablePrivilegeRetrieverTest {
         .withInformationSchemaViews(informationSchemaViews)
         .with(tablePrivilegesRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -247,8 +259,10 @@ public class TablePrivilegeRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.with(tablePrivilegesRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
