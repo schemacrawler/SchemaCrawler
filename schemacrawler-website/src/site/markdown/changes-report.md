@@ -4,7 +4,7 @@ SchemaCrawler release notes.
 
 
 <a name="a16.17.4"></a>
-## Release 16.17.4 - 2022-08-05
+## Release 16.17.4 - 2022-08-14
 
 - Proxy database connections, and close them by closing the datasource
 - Fix issue #826 - add attributes for tables when retrieving them
