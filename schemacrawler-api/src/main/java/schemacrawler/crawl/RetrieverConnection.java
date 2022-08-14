@@ -44,7 +44,6 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TypeMap;
 import us.fatehi.utility.string.StringFormat;
@@ -56,6 +55,7 @@ final class RetrieverConnection {
 
   private final Connection connection;
   private final JavaSqlTypes javaSqlTypes;
+  private final DatabaseMetaData metaData;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
   private final TableTypes tableTypes;
   private final ConnectionInfo connectionInfo;
@@ -65,6 +65,7 @@ final class RetrieverConnection {
       throws SQLException {
 
     this.connection = checkConnection(connection);
+    metaData = requireNonNull(connection.getMetaData(), "No database metadata obtained");
     this.schemaRetrievalOptions =
         requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
     connectionInfo = ConnectionInfoBuilder.builder(connection).build();
@@ -106,15 +107,7 @@ final class RetrieverConnection {
   }
 
   DatabaseMetaData getMetaData() {
-    try {
-      final DatabaseMetaData metaData = connection.getMetaData();
-      if (metaData == null) {
-        throw new NullPointerException("No database metadata obtained");
-      }
-      return metaData;
-    } catch (final SQLException e) {
-      throw new DatabaseAccessException("No database metadata obtained", e);
-    }
+    return metaData;
   }
 
   TableTypes getTableTypes() {
