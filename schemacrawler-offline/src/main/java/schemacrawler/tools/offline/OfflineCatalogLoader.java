@@ -48,11 +48,15 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
     }
 
     final Catalog catalog;
-    try {
-      final Connection connection = getConnection();
-      if (connection == null
-          || !(connection instanceof OfflineConnection
-              || connection.isWrapperFor(OfflineConnection.class))) {
+    try (final Connection connection = getDataSource().get(); ) {
+      if (connection == null) {
+        return;
+      }
+
+      final boolean isOfflineConnection =
+          connection instanceof OfflineConnection
+              || connection.isWrapperFor(OfflineConnection.class);
+      if (!isOfflineConnection) {
         return;
       }
 

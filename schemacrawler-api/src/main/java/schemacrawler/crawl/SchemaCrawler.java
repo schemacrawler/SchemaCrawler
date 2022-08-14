@@ -109,7 +109,7 @@ public final class SchemaCrawler {
   /**
    * Constructs a SchemaCrawler object, from a connection.
    *
-   * @param connection An database connection.
+   * @param dataSource An database connection source.
    * @param schemaRetrievalOptions Database-specific schema retrieval overrides
    * @param options SchemaCrawler options
    * @throws SQLException

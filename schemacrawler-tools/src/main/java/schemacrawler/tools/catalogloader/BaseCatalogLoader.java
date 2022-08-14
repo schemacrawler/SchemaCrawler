@@ -33,7 +33,6 @@ import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
 
-import java.sql.Connection;
 import java.util.Comparator;
 
 import schemacrawler.schema.Catalog;
@@ -44,6 +43,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
 
@@ -56,8 +56,7 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private Config additionalConfig;
-  private Connection connection;
-
+  private DatabaseConnectionSource dataSource;
   private Catalog catalog;
 
   protected BaseCatalogLoader(final CommandDescription commandDescription, final int priority) {
@@ -86,8 +85,8 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public Connection getConnection() {
-    return connection;
+  public DatabaseConnectionSource getDataSource() {
+    return dataSource;
   }
 
   @Override
@@ -125,8 +124,8 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public void setConnection(final Connection connection) {
-    this.connection = connection;
+  public void setDataSource(final DatabaseConnectionSource dataSource) {
+    this.dataSource = dataSource;
   }
 
   @Override

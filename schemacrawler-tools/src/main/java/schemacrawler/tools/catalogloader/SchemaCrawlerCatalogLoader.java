@@ -28,17 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-import static java.util.Objects.requireNonNull;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
 
@@ -54,18 +46,8 @@ public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final Connection connection = getConnection();
-    requireNonNull(connection, "No connection provided");
-
-    final DatabaseConnectionSource dataSource;
-    try {
-      dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
-    } catch (final SQLException e) {
-      throw new ExecutionRuntimeException(e);
-    }
-
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(dataSource, getSchemaRetrievalOptions(), getSchemaCrawlerOptions());
+        new SchemaCrawler(getDataSource(), getSchemaRetrievalOptions(), getSchemaCrawlerOptions());
     final Catalog catalog = schemaCrawler.crawl();
     setCatalog(catalog);
   }

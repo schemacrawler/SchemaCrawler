@@ -33,23 +33,28 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoader;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 public class OfflineCatalogLoaderTest {
 
   @Test
-  public void connection() {
+  public void connection() throws SQLException {
     final CatalogLoader catalogLoader = new OfflineCatalogLoader();
 
-    assertThat(catalogLoader.getConnection(), is(nullValue()));
+    assertThat(catalogLoader.getDataSource(), is(nullValue()));
 
     final Connection connection = new TestDatabaseDriver().connect("jdbc:test-db:test", null);
-    catalogLoader.setConnection(connection);
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+    catalogLoader.setDataSource(dataSource);
 
-    assertThat(catalogLoader.getConnection(), is(not(nullValue())));
+    assertThat(catalogLoader.getDataSource(), is(not(nullValue())));
   }
 }

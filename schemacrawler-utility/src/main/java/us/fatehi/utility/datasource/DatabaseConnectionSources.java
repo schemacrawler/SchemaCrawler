@@ -43,7 +43,11 @@ public class DatabaseConnectionSources {
   @Deprecated
   public static DatabaseConnectionSource newDatabaseConnectionSource(final Connection connection)
       throws SQLException {
-    return new SingleDatabaseConnectionSource("<no database connection URL>", connection);
+    Connection connectionInternal = connection;
+    if (connection.isWrapperFor(Connection.class)) {
+      connectionInternal = connection.unwrap(Connection.class);
+    }
+    return new SingleDatabaseConnectionSource("<no database connection URL>", connectionInternal);
   }
 
   public static DatabaseConnectionSource newDatabaseConnectionSource(

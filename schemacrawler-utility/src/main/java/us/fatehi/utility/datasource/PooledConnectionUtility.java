@@ -75,7 +75,9 @@ public class PooledConnectionUtility {
         case "unwrap":
           return connection;
         case "toString":
-          return String.format("Pooled connection <%s> - <%s>", connection.getClass(), connection);
+          return String.format(
+              "Pooled connection <%s@%d> for <%s>",
+              proxy.getClass().getName(), proxy.hashCode(), connection);
         default:
           try {
             return method.invoke(connection, args);

@@ -35,8 +35,6 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 
-import us.fatehi.utility.database.DatabaseUtility;
-
 final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private final Connection connection;
@@ -45,7 +43,7 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   public SingleDatabaseConnectionSource(final String connectionUrl, final Connection connection)
       throws SQLException {
     super(connectionUrl);
-    this.connection = DatabaseUtility.checkConnection(connection);
+    this.connection = requireNonNull(connection, "No connection provided");
   }
 
   SingleDatabaseConnectionSource(

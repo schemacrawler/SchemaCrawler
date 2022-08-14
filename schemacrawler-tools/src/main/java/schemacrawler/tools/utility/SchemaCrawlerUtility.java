@@ -50,6 +50,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -59,6 +60,8 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -97,7 +100,14 @@ public final class SchemaCrawlerUtility {
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
     logConnection(connection);
 
-    catalogLoader.setConnection(connection);
+    final DatabaseConnectionSource dataSource;
+    try {
+      dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+    } catch (final SQLException e) {
+      throw new ExecutionRuntimeException(e);
+    }
+
+    catalogLoader.setDataSource(dataSource);
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
     catalogLoader.setAdditionalConfiguration(additionalConfig);

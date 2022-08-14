@@ -30,7 +30,6 @@ package schemacrawler.tools.catalogloader;
 
 import static java.util.Objects.requireNonNull;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +39,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<CatalogLoader> {
 
@@ -62,13 +62,13 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
   @Override
   public void loadCatalog() {
     Catalog catalog = null;
-    final Connection connection = getConnection();
+    final DatabaseConnectionSource dataSource = getDataSource();
     final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
     final SchemaRetrievalOptions schemaRetrievalOptions = getSchemaRetrievalOptions();
     final Config additionalConfig = getAdditionalConfiguration();
     for (final CatalogLoader nextCatalogLoader : chainedCatalogLoaders) {
       nextCatalogLoader.setCatalog(catalog);
-      nextCatalogLoader.setConnection(connection);
+      nextCatalogLoader.setDataSource(dataSource);
       nextCatalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
       nextCatalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
       nextCatalogLoader.setAdditionalConfiguration(additionalConfig);
