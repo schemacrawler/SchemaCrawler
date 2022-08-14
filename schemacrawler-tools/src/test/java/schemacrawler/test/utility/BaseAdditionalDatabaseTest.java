@@ -39,6 +39,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.testdb.TestSchemaCreator;
 import us.fatehi.utility.database.SqlScript;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
 public abstract class BaseAdditionalDatabaseTest {
@@ -92,6 +93,41 @@ public abstract class BaseAdditionalDatabaseTest {
       fail("Could not get database connection", e);
       return null; // Appeasing the compiler - this line will never be executed.
     }
+  }
+
+  protected final DatabaseConnectionSource getDataSource() {
+    return new DatabaseConnectionSource() {
+
+      @Override
+      public void close() throws Exception {
+        ((BasicDataSource) dataSource).close();
+      }
+
+      @Override
+      public Connection get() {
+        try {
+          return dataSource.getConnection();
+        } catch (final SQLException e) {
+          throw new RuntimeException(e);
+        }
+      }
+
+      @Override
+      public String getConnectionUrl() {
+        return ((BasicDataSource) dataSource).getUrl();
+      }
+
+      @Override
+      public boolean releaseConnection(final Connection connection) {
+        try {
+          connection.close();
+        } catch (final SQLException e) {
+          fail(e);
+          return false;
+        }
+        return true;
+      }
+    };
   }
 
   protected void runScript(final String databaseSqlResource) throws Exception {

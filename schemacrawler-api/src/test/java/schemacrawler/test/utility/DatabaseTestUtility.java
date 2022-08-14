@@ -28,9 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -43,6 +46,8 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.PropertiesUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class DatabaseTestUtility {
@@ -61,8 +66,17 @@ public final class DatabaseTestUtility {
       final Connection connection,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions) {
+
+    final DatabaseConnectionSource dataSource;
+    try {
+      dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+    } catch (final SQLException e) {
+      fail(e);
+      return null;
+    }
+
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(dataSource, schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
     return catalog;
   }

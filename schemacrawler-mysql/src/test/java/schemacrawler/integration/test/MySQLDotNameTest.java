@@ -98,7 +98,7 @@ public class MySQLDotNameTest extends BaseAdditionalDatabaseTest {
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
     final Schema schema = catalog.lookupSchema("test").orElse(null);

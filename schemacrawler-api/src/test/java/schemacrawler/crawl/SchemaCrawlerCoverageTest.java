@@ -48,7 +48,6 @@ import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerP
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -81,10 +80,11 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -248,17 +248,6 @@ public class SchemaCrawlerCoverageTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final Connection connection1 = mock(Connection.class);
-    when(connection1.isClosed()).thenThrow(new SQLException("Forced SQL exception"));
-
-    final Throwable exception =
-        assertThrows(
-            DatabaseAccessException.class,
-            () ->
-                new SchemaCrawler(
-                    connection1, schemaRetrievalOptionsDefault, schemaCrawlerOptions));
-    assertThat(exception.getCause().getMessage(), is("Forced SQL exception"));
-
     final Connection connection2 = mock(Connection.class);
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
     when(connection2.isClosed()).thenReturn(false);
@@ -269,8 +258,11 @@ public class SchemaCrawlerCoverageTest {
     when(databaseMetaData.getDriverName()).thenReturn("driverName");
     when(databaseMetaData.getDriverVersion()).thenReturn("driverVersion");
 
+    final DatabaseConnectionSource dataSource2 =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection2);
+
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection2, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
+        new SchemaCrawler(dataSource2, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
     final RuntimeException ex = assertThrows(RuntimeException.class, () -> schemaCrawler.crawl());
     assertThat(ex.getMessage(), endsWith("Cannot use null results"));
   }

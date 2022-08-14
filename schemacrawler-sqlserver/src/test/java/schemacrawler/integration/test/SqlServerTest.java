@@ -119,7 +119,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
         databaseConnector.getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(getConnection(), schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
