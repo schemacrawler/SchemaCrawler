@@ -104,10 +104,6 @@ abstract class AbstractRetriever {
     return catalog.getAllSchemas();
   }
 
-  final DatabaseMetaData getMetaData() {
-    return retrieverConnection.getMetaData();
-  }
-
   final RetrieverConnection getRetrieverConnection() {
     return retrieverConnection;
   }

@@ -195,12 +195,14 @@ final class TableRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getTables(
-                      catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()),
-              "DatabaseMetaData::getTables")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getTables(
+                          catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()),
+                  "DatabaseMetaData::getTables"); ) {
         int numTables = 0;
         while (results.next()) {
           numTables = numTables + 1;

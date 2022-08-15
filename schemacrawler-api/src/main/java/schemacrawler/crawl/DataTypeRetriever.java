@@ -177,8 +177,10 @@ final class DataTypeRetriever extends AbstractRetriever {
 
   private void retrieveSystemColumnDataTypesFromMetadata(final Schema systemSchema)
       throws SQLException {
-    try (final MetadataResultSet results =
-        new MetadataResultSet(getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo"); ) {
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
@@ -208,10 +210,11 @@ final class DataTypeRetriever extends AbstractRetriever {
     final String catalogName = schema.getCatalogName();
     final String schemaName = schema.getName();
 
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData().getUDTs(catalogName, schemaName, null, null),
-            "DatabaseMetaData::getUDTs")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getUDTs(catalogName, schemaName, null, null),
+                "DatabaseMetaData::getUDTs"); ) {
       while (results.next()) {
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");

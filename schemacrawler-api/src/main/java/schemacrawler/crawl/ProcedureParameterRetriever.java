@@ -225,15 +225,17 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
 
       final MutableProcedure procedure = (MutableProcedure) routine;
       LOGGER.log(Level.FINE, "Retrieving procedure parameters for " + procedure);
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getProcedureColumns(
-                      procedure.getSchema().getCatalogName(),
-                      procedure.getSchema().getName(),
-                      procedure.getName(),
-                      null),
-              "DatabaseMetaData::getProcedureColumns")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getProcedureColumns(
+                          procedure.getSchema().getCatalogName(),
+                          procedure.getSchema().getName(),
+                          procedure.getName(),
+                          null),
+                  "DatabaseMetaData::getProcedureColumns"); ) {
         while (results.next()) {
           createProcedureParameter(results, allRoutines, parameterFilter);
         }

@@ -55,7 +55,6 @@ final class RetrieverConnection {
 
   private final DatabaseConnectionSource dataSource;
   private final JavaSqlTypes javaSqlTypes;
-  private final DatabaseMetaData metaData;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
   private final TableTypes tableTypes;
   private final ConnectionInfo connectionInfo;
@@ -68,7 +67,6 @@ final class RetrieverConnection {
     this.dataSource = requireNonNull(dataSource, "Database connection source not provided");
 
     try (final Connection connection = dataSource.get(); ) {
-      metaData = requireNonNull(connection.getMetaData(), "No database metadata obtained");
       this.schemaRetrievalOptions =
           requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
       connectionInfo = ConnectionInfoBuilder.builder(connection).build();
@@ -108,10 +106,6 @@ final class RetrieverConnection {
 
   JavaSqlTypes getJavaSqlTypes() {
     return javaSqlTypes;
-  }
-
-  DatabaseMetaData getMetaData() {
-    return metaData;
   }
 
   TableTypes getTableTypes() {

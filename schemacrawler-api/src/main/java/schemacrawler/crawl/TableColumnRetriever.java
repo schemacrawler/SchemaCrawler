@@ -265,15 +265,17 @@ final class TableColumnRetriever extends AbstractRetriever {
       throws WrappedSQLException {
     for (final MutableTable table : allTables) {
       LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getColumns(
-                      table.getSchema().getCatalogName(),
-                      table.getSchema().getName(),
-                      table.getName(),
-                      null),
-              "DatabaseMetaData::getColumns")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getColumns(
+                          table.getSchema().getCatalogName(),
+                          table.getSchema().getName(),
+                          table.getName(),
+                          null),
+                  "DatabaseMetaData::getColumns"); ) {
         while (results.next()) {
           createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
         }

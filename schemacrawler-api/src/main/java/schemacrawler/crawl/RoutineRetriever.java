@@ -222,10 +222,11 @@ final class RoutineRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData().getFunctions(catalogName, schemaName, null),
-              "DatabaseMetaData::getFunctions")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getFunctions(catalogName, schemaName, null),
+                  "DatabaseMetaData::getFunctions"); ) {
         int numFunctions = 0;
         while (results.next()) {
           numFunctions = numFunctions + 1;
@@ -300,10 +301,11 @@ final class RoutineRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData().getProcedures(catalogName, schemaName, null),
-              "DatabaseMetaData::getProcedures")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getProcedures(catalogName, schemaName, null),
+                  "DatabaseMetaData::getProcedures"); ) {
         int numProcedures = 0;
         while (results.next()) {
           numProcedures = numProcedures + 1;

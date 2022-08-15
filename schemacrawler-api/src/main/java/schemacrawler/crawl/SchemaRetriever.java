@@ -125,7 +125,8 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> catalogNames = new HashSet<>();
 
     if (supportsCatalogs) {
-      try (final ResultSet catalogsResults = getMetaData().getCatalogs()) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final ResultSet catalogsResults = connection.getMetaData().getCatalogs(); ) {
         int numCatalogs = 0;
         final List<String> metaDataCatalogNames = readResultsVector(catalogsResults);
         for (final String catalogName : metaDataCatalogNames) {
@@ -149,8 +150,10 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas) {
       int numSchemas = 0;
-      try (final MetadataResultSet results =
-          new MetadataResultSet(getMetaData().getSchemas(), "DatabaseMetaData::getSchemas")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getSchemas(), "DatabaseMetaData::getSchemas"); ) {
         while (results.next()) {
           numSchemas = numSchemas + 1;
           final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));

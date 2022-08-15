@@ -142,55 +142,59 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
    * @throws SQLException On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo() {
-    final DatabaseMetaData dbMetaData = getMetaData();
-    final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
+    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+      final DatabaseMetaData dbMetaData = connection.getMetaData();
+      final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
 
-    final Collection<ImmutableDatabaseProperty> dbProperties = new ArrayList<>();
+      final Collection<ImmutableDatabaseProperty> dbProperties = new ArrayList<>();
 
-    final Method[] methods = DatabaseMetaData.class.getMethods();
-    for (final Method method : methods) {
-      try {
-        if (method.getParameterTypes().length > 0 || ignoreMethods.contains(method.getName())) {
-          continue;
+      final Method[] methods = DatabaseMetaData.class.getMethods();
+      for (final Method method : methods) {
+        try {
+          if (method.getParameterTypes().length > 0 || ignoreMethods.contains(method.getName())) {
+            continue;
+          }
+
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Retrieving database property using method <%s>", method));
+
+          final Object methodReturnValue = method.invoke(dbMetaData);
+          if (isDatabasePropertyListMethod(method)) {
+            final String value = (String) methodReturnValue;
+            final String[] list = value == null ? new String[0] : value.split(",");
+            dbProperties.add(new ImmutableDatabaseProperty(method.getName(), list));
+          } else if (isDatabasePropertyMethod(method)) {
+            dbProperties.add(new ImmutableDatabaseProperty(method.getName(), methodReturnValue));
+          } else if (isDatabasePropertiesResultSetMethod(method)) {
+            final ResultSet results = (ResultSet) methodReturnValue;
+            final List<String> resultsList = DatabaseUtility.readResultsVector(results);
+            Collections.sort(resultsList);
+            dbProperties.add(
+                new ImmutableDatabaseProperty(
+                    method.getName(), resultsList.toArray(new String[resultsList.size()])));
+          }
+
+        } catch (final IllegalAccessException | InvocationTargetException e) {
+          LOGGER.log(
+              Level.FINE, e.getCause(), new StringFormat("Could not execute method <%s>", method));
+        } catch (final AbstractMethodError | SQLFeatureNotSupportedException e) {
+          logSQLFeatureNotSupported(
+              new StringFormat("Database metadata method <%s> not supported", method), e);
+        } catch (final SQLException e) {
+          logPossiblyUnsupportedSQLFeature(
+              new StringFormat("SQL exception invoking method <%s>", method), e);
         }
-
-        LOGGER.log(
-            Level.FINER,
-            new StringFormat("Retrieving database property using method <%s>", method));
-
-        final Object methodReturnValue = method.invoke(dbMetaData);
-        if (isDatabasePropertyListMethod(method)) {
-          final String value = (String) methodReturnValue;
-          final String[] list = value == null ? new String[0] : value.split(",");
-          dbProperties.add(new ImmutableDatabaseProperty(method.getName(), list));
-        } else if (isDatabasePropertyMethod(method)) {
-          dbProperties.add(new ImmutableDatabaseProperty(method.getName(), methodReturnValue));
-        } else if (isDatabasePropertiesResultSetMethod(method)) {
-          final ResultSet results = (ResultSet) methodReturnValue;
-          final List<String> resultsList = DatabaseUtility.readResultsVector(results);
-          Collections.sort(resultsList);
-          dbProperties.add(
-              new ImmutableDatabaseProperty(
-                  method.getName(), resultsList.toArray(new String[resultsList.size()])));
-        }
-
-      } catch (final IllegalAccessException | InvocationTargetException e) {
-        LOGGER.log(
-            Level.FINE, e.getCause(), new StringFormat("Could not execute method <%s>", method));
-      } catch (final AbstractMethodError | SQLFeatureNotSupportedException e) {
-        logSQLFeatureNotSupported(
-            new StringFormat("Database metadata method <%s> not supported", method), e);
-      } catch (final SQLException e) {
-        logPossiblyUnsupportedSQLFeature(
-            new StringFormat("SQL exception invoking method <%s>", method), e);
       }
+
+      final Collection<ImmutableDatabaseProperty> resultSetTypesProperties =
+          retrieveResultSetTypesProperties(dbMetaData);
+      dbProperties.addAll(resultSetTypesProperties);
+
+      dbInfo.addAll(dbProperties);
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Could not obtain additional database information", e);
     }
-
-    final Collection<ImmutableDatabaseProperty> resultSetTypesProperties =
-        retrieveResultSetTypesProperties(dbMetaData);
-    dbProperties.addAll(resultSetTypesProperties);
-
-    dbInfo.addAll(dbProperties);
   }
 
   /**
@@ -204,11 +208,11 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       return;
     }
 
-    try {
-      final DatabaseMetaData dbMetaData = getMetaData();
+    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+      final DatabaseMetaData dbMetaData = connection.getMetaData();
       final String url = dbMetaData.getURL();
 
-      final Driver jdbcDriver = DriverManager.getDriver(getMetaData().getURL());
+      final Driver jdbcDriver = DriverManager.getDriver(dbMetaData.getURL());
       if (jdbcDriver == null) {
         throw new SQLException("No JDBC driver found");
       }

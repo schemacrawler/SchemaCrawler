@@ -151,12 +151,14 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         continue;
       }
       final Schema tableSchema = table.getSchema();
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getPrimaryKeys(
-                      tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
-              "DatabaseMetaData::getPrimaryKeys")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getPrimaryKeys(
+                          tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
+                  "DatabaseMetaData::getPrimaryKeys"); ) {
         while (results.next()) {
           createPrimaryKeyForTable(table, results);
         }

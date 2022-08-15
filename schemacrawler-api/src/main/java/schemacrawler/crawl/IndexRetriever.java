@@ -205,16 +205,18 @@ final class IndexRetriever extends AbstractRetriever {
       throws SQLException {
 
     final Schema tableSchema = table.getSchema();
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData()
-                .getIndexInfo(
-                    tableSchema.getCatalogName(),
-                    tableSchema.getName(),
-                    table.getName(),
-                    unique,
-                    true /* approximate */),
-            "DatabaseMetaData::getIndexInfo")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection
+                    .getMetaData()
+                    .getIndexInfo(
+                        tableSchema.getCatalogName(),
+                        tableSchema.getName(),
+                        table.getName(),
+                        unique,
+                        true /* approximate */),
+                "DatabaseMetaData::getIndexInfo"); ) {
       createIndexes(table, results);
     } catch (final SQLException e) {
       throw new WrappedSQLException(

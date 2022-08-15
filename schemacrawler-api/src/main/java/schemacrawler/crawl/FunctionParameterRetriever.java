@@ -220,15 +220,17 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       final MutableFunction function = (MutableFunction) routine;
 
       LOGGER.log(Level.FINE, "Retrieving function parameters for " + function);
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getFunctionColumns(
-                      function.getSchema().getCatalogName(),
-                      function.getSchema().getName(),
-                      function.getName(),
-                      null),
-              "DatabaseMetaData::getFunctionColumns")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getFunctionColumns(
+                          function.getSchema().getCatalogName(),
+                          function.getSchema().getName(),
+                          function.getName(),
+                          null),
+                  "DatabaseMetaData::getFunctionColumns"); ) {
         while (results.next()) {
           createFunctionParameter(results, allRoutines, parameterFilter);
         }

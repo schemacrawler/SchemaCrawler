@@ -173,10 +173,11 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
   }
 
   private void retrieveTableColumnPrivilegesFromMetadata() {
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData().getColumnPrivileges(null, null, null, null),
-            "DatabaseMetaData::getColumnPrivileges")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getColumnPrivileges(null, null, null, null),
+                "DatabaseMetaData::getColumnPrivileges"); ) {
       createPrivileges(results, true);
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:" + e.getMessage());
@@ -199,10 +200,11 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
   }
 
   private void retrieveTablePrivilegesFromMetadata() {
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData().getTablePrivileges(null, null, null),
-            "DatabaseMetaData::getTablePrivileges")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getTablePrivileges(null, null, null),
+                "DatabaseMetaData::getTablePrivileges"); ) {
       createPrivileges(results, false);
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
