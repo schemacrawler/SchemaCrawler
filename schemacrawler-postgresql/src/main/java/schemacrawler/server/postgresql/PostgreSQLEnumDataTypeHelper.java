@@ -41,8 +41,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
@@ -54,13 +54,33 @@ public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
   private static final Logger LOGGER =
       Logger.getLogger(PostgreSQLEnumDataTypeHelper.class.getName());
 
+  private static String constructEnumSql(final ColumnDataType columnDataType) {
+    final String columnDataTypeName = columnDataType.getName();
+    final String sql =
+        String.format(
+            "SELECT  \n"
+                // + "  NULL AS TYPE_CATALOG,  \n"
+                // + "  n.nspname AS TYPE_SCHEMA,  \n"
+                // + "  t.typname AS TYPE_NAME,  \n"
+                + "  e.enumlabel AS ENUM_LABEL  \n"
+                + "FROM  \n"
+                + "  pg_enum e  \n"
+                + "  INNER JOIN pg_type t  \n"
+                + "    ON e.enumtypid = t.oid  \n"
+                + "  INNER JOIN pg_catalog.pg_namespace n  \n"
+                + "    ON n.oid = t.typnamespace  \n"
+                + "WHERE  \n"
+                + "  t.typname = '%s'  \n"
+                + "",
+            columnDataTypeName);
+    // NOTE: No check is made on the column data type schema
+    return sql;
+  }
+
   private static List<String> getEnumValues(
       final ColumnDataType columnDataType, final Connection connection) {
     requireNonNull(columnDataType, "No column provided");
-    final String sql =
-        String.format(
-            "SELECT e.enumlabel FROM pg_enum e JOIN pg_type t ON e.enumtypid = t.oid WHERE t.typname = '%s'",
-            columnDataType.getName());
+    final String sql = constructEnumSql(columnDataType);
     try (final Statement statement = connection.createStatement(); ) {
       final ResultSet resultSet = executeSql(statement, sql);
       final List<String> enumValues = readResultsVector(resultSet);

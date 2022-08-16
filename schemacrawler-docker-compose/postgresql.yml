@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   postgresql:
-    image: postgres:9.6.23
+    image: postgres:9.6.24
     container_name: postgres
     ports:
       - target: 5432
