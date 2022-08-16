@@ -30,7 +30,6 @@ package schemacrawler.tools.lint;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -40,10 +39,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
 public final class Linters implements Iterable<Linter> {
@@ -170,22 +167,17 @@ public final class Linters implements Iterable<Linter> {
     return linters.iterator();
   }
 
-  public void lint(final Catalog catalog, final DatabaseConnectionSource dataSource) {
-    try (final Connection connection = dataSource.get(); ) {
-      for (final Linter linter : linters) {
+  public void lint(final Catalog catalog, final Connection connection) {
+    for (final Linter linter : linters) {
+      LOGGER.log(Level.CONFIG, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
+      try {
+        linter.lint(catalog, connection);
+      } catch (final Exception e) {
         LOGGER.log(
-            Level.CONFIG, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
-        try {
-          linter.lint(catalog, connection);
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              e,
-              new StringFormat("Could not run linter <%s>", linter.getLinterInstanceId()));
-        }
+            Level.WARNING,
+            e,
+            new StringFormat("Could not run linter <%s>", linter.getLinterInstanceId()));
       }
-    } catch (final SQLException e) {
-      throw new InternalRuntimeException("Could not run lint", e);
     }
   }
 

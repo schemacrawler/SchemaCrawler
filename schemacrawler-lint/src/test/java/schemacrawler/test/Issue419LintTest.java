@@ -38,6 +38,8 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
+import java.sql.Connection;
+
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
@@ -78,13 +80,15 @@ public class Issue419LintTest {
 
     final Linters linters = new Linters(linterConfigs, false);
 
-    linters.lint(catalog, dataSource);
-    final LintCollector lintCollector = linters.getCollector();
+    try (final Connection connection = dataSource.get(); ) {
+      linters.lint(catalog, connection);
+      final LintCollector lintCollector = linters.getCollector();
 
-    assertThat(lintCollector.size(), is(1));
-    assertThat(
-        lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
-        containsInAnyOrder("[PUBLIC.\"PUBLISHER SALES\".REGIONS] primary key not first" /*,
+      assertThat(lintCollector.size(), is(1));
+      assertThat(
+          lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
+          containsInAnyOrder("[PUBLIC.\"PUBLISHER SALES\".REGIONS] primary key not first" /*,
             "[PUBLIC.FOR_LINT.EXTRA_PK] primary key not first" */));
+    }
   }
 }

@@ -43,8 +43,6 @@ import schemacrawler.tools.lint.formatter.LintReportBuilder;
 import schemacrawler.tools.lint.formatter.LintReportJsonBuilder;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
 import schemacrawler.tools.lint.formatter.LintReportYamlBuilder;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -72,9 +70,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
       LOGGER.log(Level.FINEST, new ObjectToStringFormat(linterConfigs));
       final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
-      final DatabaseConnectionSource dataSource =
-          DatabaseConnectionSources.newDatabaseConnectionSource(connection);
-      linters.lint(catalog, dataSource);
+      linters.lint(catalog, connection);
 
       // Produce the lint report
       final LintReport lintReport =
