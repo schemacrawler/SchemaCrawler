@@ -73,6 +73,12 @@ public class Issue482Test extends BaseAdditionalDatabaseTest {
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/sqlserver.scripts.txt");
+
+    createDataSource(
+        dbContainer.getJdbcUrl(),
+        dbContainer.getUsername(),
+        dbContainer.getPassword(),
+        "database=BOOKS");
   }
 
   @Test
