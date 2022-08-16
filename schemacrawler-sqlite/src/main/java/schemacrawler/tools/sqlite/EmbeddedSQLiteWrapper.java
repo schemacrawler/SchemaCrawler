@@ -52,7 +52,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 public class EmbeddedSQLiteWrapper {
 
@@ -98,7 +98,7 @@ public class EmbeddedSQLiteWrapper {
         new DatabaseUrlConnectionOptions(getConnectionUrl());
     final DatabaseConnectionSource connectionOptions =
         new SQLiteDatabaseConnector()
-            .newDatabaseConnectionSource(urlConnectionOptions, new SingleUseUserCredentials());
+            .newDatabaseConnectionSource(urlConnectionOptions, new MultiUseUserCredentials());
     return connectionOptions;
   }
 

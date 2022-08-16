@@ -17,7 +17,7 @@ import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 public final class ApiExample {
 
@@ -66,7 +66,7 @@ public final class ApiExample {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, new SingleUseUserCredentials("sa", ""));
+            connectionUrl, new MultiUseUserCredentials("sa", ""));
     return dataSource;
   }
 }

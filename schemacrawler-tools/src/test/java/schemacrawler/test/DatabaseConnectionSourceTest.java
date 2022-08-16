@@ -45,7 +45,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @WithTestDatabase
@@ -58,7 +58,7 @@ public class DatabaseConnectionSourceTest {
 
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            "jdbc:test-db:test", new SingleUseUserCredentials());
+            "jdbc:test-db:test", new MultiUseUserCredentials());
 
     assertThat(
         connectionSource.toString(),
@@ -80,7 +80,7 @@ public class DatabaseConnectionSourceTest {
 
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            databaseConnectionInfo.getConnectionUrl(), new SingleUseUserCredentials("sa", ""));
+            databaseConnectionInfo.getConnectionUrl(), new MultiUseUserCredentials("sa", ""));
 
     assertThat(connectionSource.toString(), startsWith("driver=org.hsqldb.jdbc.JDBCDriver"));
 

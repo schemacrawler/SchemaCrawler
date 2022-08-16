@@ -42,7 +42,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 public class DatabaseConnectionSourcesTest {
 
@@ -65,7 +65,7 @@ public class DatabaseConnectionSourcesTest {
 
     final DatabaseConnectionSource databaseConnectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, new SingleUseUserCredentials(userName, password));
+            connectionUrl, new MultiUseUserCredentials(userName, password));
 
     assertThat(databaseConnectionSource.get(), is(not(nullValue())));
   }
