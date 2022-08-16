@@ -93,7 +93,7 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(getConnection(), schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(getDataSource(), schemaCrawlerOptions);
     final Schema schema = catalog.lookupSchema("public").orElse(null);
     assertThat(schema, notNullValue());
     final Table table = catalog.lookupTable(schema, "prices").orElse(null);

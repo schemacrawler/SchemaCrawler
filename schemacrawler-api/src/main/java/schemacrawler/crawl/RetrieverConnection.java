@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

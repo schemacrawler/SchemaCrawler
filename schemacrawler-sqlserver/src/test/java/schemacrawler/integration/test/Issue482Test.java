@@ -89,7 +89,7 @@ public class Issue482Test extends BaseAdditionalDatabaseTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(), schemaCrawlerOptions);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource(), schemaCrawlerOptions);
 
     assertThat(catalog.getTables(), hasSize(10));
     assertThat(catalog.getSynonyms(), hasSize(2));

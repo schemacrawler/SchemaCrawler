@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -59,7 +58,6 @@ import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -77,16 +75,9 @@ public final class SchemaCrawlerUtility {
    * @return Database catalog.
    */
   public static Catalog getCatalog(
-      final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions) {
-    checkConnection(connection);
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
+      final DatabaseConnectionSource dataSource, final SchemaCrawlerOptions schemaCrawlerOptions) {
 
-    final DatabaseConnectionSource dataSource;
-    try {
-      dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
-    } catch (final SQLException e) {
-      throw new ExecutionRuntimeException(e);
-    }
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
 
     final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
 

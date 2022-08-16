@@ -125,11 +125,11 @@ public class DiffTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final DatabaseConnectionSource connectionOptions =
+    final DatabaseConnectionSource dataSource =
         sqLiteDatabaseLoader.createDatabaseConnectionSource();
 
     final Catalog catalog =
-        SchemaCrawlerUtility.getCatalog(connectionOptions.get(), schemaCrawlerOptions);
+        SchemaCrawlerUtility.getCatalog(dataSource, schemaCrawlerOptions);
 
     return catalog;
   }

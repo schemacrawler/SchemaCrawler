@@ -30,6 +30,7 @@ package schemacrawler.test.utility;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -45,6 +46,16 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public abstract class BaseAdditionalDatabaseTest {
 
   private DataSource dataSource;
+
+  protected void closeDataSource() {
+    try {
+      if (dataSource instanceof Closeable) {
+        ((Closeable) dataSource).close();
+      }
+    } catch (final Exception e) {
+      failTestSetup("Could not close data source", e);
+    }
+  }
 
   protected void createDatabase(final String scriptsResource) {
     try (final Connection connection = getConnection()) {
