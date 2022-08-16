@@ -40,10 +40,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import schemacrawler.crawl.ConnectionInfoBuilder;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -83,13 +81,20 @@ public final class SchemaCrawlerUtility {
     checkConnection(connection);
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
+    final DatabaseConnectionSource dataSource;
+    try {
+      dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+    } catch (final SQLException e) {
+      throw new ExecutionRuntimeException(e);
+    }
 
-    return getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+
+    return getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
   }
 
   public static Catalog getCatalog(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions,
       final Config additionalConfig) {
@@ -98,14 +103,6 @@ public final class SchemaCrawlerUtility {
     final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();
 
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
-    logConnection(connection);
-
-    final DatabaseConnectionSource dataSource;
-    try {
-      dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
-    } catch (final SQLException e) {
-      throw new ExecutionRuntimeException(e);
-    }
 
     catalogLoader.setDataSource(dataSource);
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
@@ -141,13 +138,20 @@ public final class SchemaCrawlerUtility {
    *
    * @return SchemaRetrievalOptions
    */
-  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection) {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        buildSchemaRetrievalOptions(connection);
+  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(
+      final DatabaseConnectionSource dataSource) {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    try (final Connection connection = dataSource.get()) {
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+          buildSchemaRetrievalOptions(connection);
 
-    return schemaRetrievalOptions;
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          schemaRetrievalOptionsBuilder.toOptions();
+
+      return schemaRetrievalOptions;
+    } catch (final SQLException e) {
+      throw new InternalRuntimeException("Could not obtain schema retrieval options", e);
+    }
   }
 
   /**
@@ -238,19 +242,6 @@ public final class SchemaCrawlerUtility {
       return "";
     }
     return url;
-  }
-
-  private static void logConnection(final Connection connection) {
-    if (connection == null || !LOGGER.isLoggable(Level.INFO)) {
-      return;
-    }
-    try {
-      final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-      LOGGER.log(Level.INFO, connectionInfo.toString());
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not log connection information");
-      LOGGER.log(Level.FINE, "Could not log connection information", e);
-    }
   }
 
   private static boolean useMatchedDatabasePlugin(

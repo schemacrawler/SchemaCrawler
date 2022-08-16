@@ -51,6 +51,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @CaptureSystemStreams
@@ -58,8 +59,9 @@ public class LoadedShellCommandsTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void isLoaded(final Connection connection, final CapturedSystemStreams streams) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+  public void isLoaded(
+      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
 
     final String[] args = new String[] {"--is-loaded"};
 
@@ -88,8 +90,8 @@ public class LoadedShellCommandsTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void sweepCatalog(final Connection connection) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+  public void sweepCatalog(final DatabaseConnectionSource dataSource) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
 
     final String[] args = new String[0];
 

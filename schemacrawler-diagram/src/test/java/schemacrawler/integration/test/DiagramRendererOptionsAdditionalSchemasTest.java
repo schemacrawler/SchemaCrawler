@@ -40,7 +40,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -66,6 +65,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
 @WithTestDatabase(script = "table-chain.sql")
@@ -92,7 +92,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
   private static void executableDiagram(
       final SchemaTextDetailType schemaTextDetailType,
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaCrawlerOptions options,
       final Config config,
       final DiagramOptions diagramOptions,
@@ -124,7 +124,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     // Generate diagram, so that we have something to look at, even if
@@ -134,7 +134,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     // Check DOT file
     final String referenceFileName = testMethodName;
     assertThat(
-        outputOf(executableExecution(connection, executable, DiagramOutputFormat.scdot)),
+        outputOf(executableExecution(dataSource, executable, DiagramOutputFormat.scdot)),
         hasSameContentAndTypeAs(
             classpathResource(ADDITIONAL_DIAGRAM_OPTIONS_OUTPUT + referenceFileName + ".dot"),
             DiagramOutputFormat.scdot));
@@ -160,7 +160,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("No hanging foreign keys")
   public void executableAdditionalForDiagram_01(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
@@ -171,7 +171,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.schema,
-        connection,
+        dataSource,
         options,
         additionalConfig,
         diagramOptions,
@@ -181,7 +181,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("No hanging foreign keys; weak associations loaded; schema command")
   public void executableAdditionalForDiagram_02(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
@@ -193,7 +193,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.schema,
-        connection,
+        dataSource,
         options,
         additionalConfig,
         diagramOptions,
@@ -203,7 +203,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("No hanging foreign keys; weak associations loaded; brief command")
   public void executableAdditionalForDiagram_03(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
@@ -215,7 +215,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.brief,
-        connection,
+        dataSource,
         options,
         additionalConfig,
         diagramOptions,
@@ -225,7 +225,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("Allow hanging foreign keys; weak associations loaded; brief command")
   public void executableAdditionalForDiagram_04(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(true).toOptions();
@@ -237,7 +237,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.brief,
-        connection,
+        dataSource,
         options,
         additionalConfig,
         diagramOptions,

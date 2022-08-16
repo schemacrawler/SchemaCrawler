@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +67,7 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -77,7 +77,7 @@ public class WeakAssociationsAttributesTest {
   private Catalog catalog;
 
   @BeforeAll
-  public void loadCatalog(final TestContext testContext, final Connection connection)
+  public void loadCatalog(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
 
     final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
@@ -97,7 +97,7 @@ public class WeakAssociationsAttributesTest {
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
     catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+        getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
   }
 
   /** Keep in sync with {@link SchemaCrawlerTest#weakAssociations() LabelName} */

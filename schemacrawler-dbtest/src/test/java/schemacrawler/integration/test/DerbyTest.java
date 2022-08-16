@@ -84,7 +84,7 @@ public class DerbyTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = String.format("testDerbyWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

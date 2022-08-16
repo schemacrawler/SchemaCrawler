@@ -118,7 +118,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
     final String expectedResultsResource =
         String.format("testPostgreSQLWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));
 
     // -- Additional catalog tests

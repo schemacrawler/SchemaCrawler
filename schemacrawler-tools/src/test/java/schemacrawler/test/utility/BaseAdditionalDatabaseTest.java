@@ -96,38 +96,8 @@ public abstract class BaseAdditionalDatabaseTest {
   }
 
   protected final DatabaseConnectionSource getDataSource() {
-    return new DatabaseConnectionSource() {
-
-      @Override
-      public void close() throws Exception {
-        ((BasicDataSource) dataSource).close();
-      }
-
-      @Override
-      public Connection get() {
-        try {
-          return dataSource.getConnection();
-        } catch (final SQLException e) {
-          throw new RuntimeException(e);
-        }
-      }
-
-      @Override
-      public String getConnectionUrl() {
-        return ((BasicDataSource) dataSource).getUrl();
-      }
-
-      @Override
-      public boolean releaseConnection(final Connection connection) {
-        try {
-          connection.close();
-        } catch (final SQLException e) {
-          fail(e);
-          return false;
-        }
-        return true;
-      }
-    };
+    final BasicDataSource basicDataSource = (BasicDataSource) dataSource;
+    return new DataSourceConnectionSource(basicDataSource.getUrl(), basicDataSource);
   }
 
   protected void runScript(final String databaseSqlResource) throws Exception {

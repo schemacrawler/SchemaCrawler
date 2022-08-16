@@ -106,7 +106,7 @@ public class Issue628Test extends BaseOracleWithConnectionTest {
 
     // -- Schema output tests
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

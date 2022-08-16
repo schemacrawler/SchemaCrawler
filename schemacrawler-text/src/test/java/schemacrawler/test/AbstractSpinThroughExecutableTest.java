@@ -35,7 +35,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -56,6 +55,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemErrOutput
 @AssertNoSystemOutOutput
@@ -95,7 +95,7 @@ public abstract class AbstractSpinThroughExecutableTest {
   }
 
   @Test
-  public void spinThroughExecutable(final Connection connection) throws Exception {
+  public void spinThroughExecutable(final DatabaseConnectionSource dataSource) throws Exception {
 
     final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
 
@@ -111,7 +111,7 @@ public abstract class AbstractSpinThroughExecutableTest {
                                         schemaTextDetailType ->
                                             () -> {
                                               spinThroughExecutable(
-                                                  connection,
+                                                  dataSource,
                                                   schemaRetrievalOptions,
                                                   infoLevel,
                                                   outputFormat,
@@ -122,7 +122,7 @@ public abstract class AbstractSpinThroughExecutableTest {
   protected abstract Stream<OutputFormat> outputFormats();
 
   private void spinThroughExecutable(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final InfoLevel infoLevel,
       final OutputFormat outputFormat,
@@ -160,7 +160,7 @@ public abstract class AbstractSpinThroughExecutableTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(connection, executable, outputFormat)),
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(SPIN_THROUGH_OUTPUT + referenceFile), outputFormat));
   }

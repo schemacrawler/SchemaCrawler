@@ -35,7 +35,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -60,6 +59,7 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -69,7 +69,7 @@ public class WeakAssociationsTest {
   private Catalog catalog;
 
   @BeforeAll
-  public void loadCatalog(final Connection connection) throws Exception {
+  public void loadCatalog(final DatabaseConnectionSource dataSource) throws Exception {
 
     final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
 
@@ -90,7 +90,7 @@ public class WeakAssociationsTest {
     additionalConfig.put("weak-associations", Boolean.TRUE);
 
     catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+        getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
   }
 
   @Test

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-import static java.util.regex.Pattern.DOTALL;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
@@ -43,8 +42,6 @@ import static schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder.newSchemaC
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
@@ -70,8 +67,6 @@ public class SchemaCrawlerUtilityTest {
     assertThat(catalog, is(not(nullValue())));
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, arrayWithSize(6));
-    assertThat(
-        logs.contains(Level.INFO, Pattern.compile("Connected to.*HSQL.*", DOTALL)), is(true));
   }
 
   @Test

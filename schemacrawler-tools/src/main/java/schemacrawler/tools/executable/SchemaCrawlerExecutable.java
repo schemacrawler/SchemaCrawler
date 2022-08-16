@@ -39,10 +39,13 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -59,7 +62,7 @@ public final class SchemaCrawlerExecutable {
   private final String command;
   private Config additionalConfig;
   private Catalog catalog;
-  private Connection connection;
+  private DatabaseConnectionSource dataSource;
   private OutputOptions outputOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
@@ -74,37 +77,44 @@ public final class SchemaCrawlerExecutable {
 
   public void execute() {
 
-    if (schemaRetrievalOptions == null) {
-      schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
+    try (Connection connection = dataSource.get(); ) {
+      if (schemaRetrievalOptions == null) {
+        schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+      }
+
+      // Load the command to see if it is available
+      // Fail early (before loading the catalog) if the command is not
+      // available
+      final SchemaCrawlerCommand<?> scCommand = loadCommand();
+
+      // Set identifiers strategy
+      scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
+
+      // Initialize, and check if the command is available
+      scCommand.initialize();
+      scCommand.checkAvailability();
+
+      if (catalog == null) {
+        loadCatalog();
+      }
+
+      // Prepare to execute
+      scCommand.setCatalog(catalog);
+
+      if (scCommand.usesConnection()) {
+        scCommand.setConnection(connection);
+      }
+
+      // Execute
+      LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getIdentifiers()));
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getCommandOptions()));
+      scCommand.execute();
+    } catch (final SchemaCrawlerException e) {
+      throw e;
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException(e);
     }
-
-    // Load the command to see if it is available
-    // Fail early (before loading the catalog) if the command is not
-    // available
-    final SchemaCrawlerCommand<?> scCommand = loadCommand();
-
-    // Set identifiers strategy
-    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
-
-    // Initialize, and check if the command is available
-    scCommand.initialize();
-    scCommand.checkAvailability();
-
-    if (catalog == null) {
-      loadCatalog();
-    }
-
-    // Prepare to execute
-    scCommand.setCatalog(catalog);
-    if (scCommand.usesConnection()) {
-      scCommand.setConnection(connection);
-    }
-
-    // Execute
-    LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getIdentifiers()));
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getCommandOptions()));
-    scCommand.execute();
   }
 
   public Catalog getCatalog() {
@@ -132,8 +142,8 @@ public final class SchemaCrawlerExecutable {
     this.catalog = catalog;
   }
 
-  public void setConnection(final Connection connection) {
-    this.connection = requireNonNull(connection, "No connection provided");
+  public void setDataSource(final DatabaseConnectionSource dataSource) {
+    this.dataSource = requireNonNull(dataSource, "No data source provided");
   }
 
   public void setOutputOptions(final OutputOptions outputOptions) {
@@ -165,7 +175,7 @@ public final class SchemaCrawlerExecutable {
   private void loadCatalog() {
     catalog =
         SchemaCrawlerUtility.getCatalog(
-            connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+            dataSource, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 

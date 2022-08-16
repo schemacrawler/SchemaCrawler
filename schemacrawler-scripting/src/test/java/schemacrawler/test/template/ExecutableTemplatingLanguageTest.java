@@ -38,7 +38,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -47,6 +46,7 @@ import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemErrOutput
 @AssertNoSystemOutOutput
@@ -54,7 +54,8 @@ import schemacrawler.tools.options.Config;
 public class ExecutableTemplatingLanguageTest {
 
   private static Path executableTemplateFromFile(
-      final Connection connection, final String language, final Path scriptFile) throws Exception {
+      final DatabaseConnectionSource dataSource, final String language, final Path scriptFile)
+      throws Exception {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("template", scriptFile.toString());
@@ -64,14 +65,14 @@ public class ExecutableTemplatingLanguageTest {
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    return executableExecution(connection, executable, "text");
+    return executableExecution(dataSource, executable, "text");
   }
 
   @Test
-  public void executableVelocity(final Connection connection) throws Exception {
+  public void executableVelocity(final DatabaseConnectionSource dataSource) throws Exception {
     final Path scriptFile = copyResourceToTempFile("/plaintextschema.vm");
     assertThat(
-        outputOf(executableTemplateFromFile(connection, "velocity", scriptFile)),
+        outputOf(executableTemplateFromFile(dataSource, "velocity", scriptFile)),
         hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 }

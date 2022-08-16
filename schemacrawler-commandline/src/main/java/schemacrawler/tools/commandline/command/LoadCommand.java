@@ -30,7 +30,6 @@ package schemacrawler.tools.commandline.command;
 
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.matchedOptionValues;
 
-import java.sql.Connection;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,7 +117,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
   }
 
   private Catalog loadCatalog() {
-    try (final Connection connection = state.getDataSource().get(); ) {
+    try {
       LOGGER.log(Level.INFO, new StringFormat("infolevel=%s", infolevel));
 
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
@@ -126,7 +125,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       final Config additionalConfig = state.getConfig();
 
       return SchemaCrawlerUtility.getCatalog(
-          connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+          state.getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
 
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);

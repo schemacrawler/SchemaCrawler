@@ -30,14 +30,13 @@ package schemacrawler.loader.weakassociations;
 
 import static schemacrawler.test.utility.ProposedWeakAssociationsTestUtility.weakAssociations;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
 @ResolveTestContext
@@ -46,16 +45,16 @@ public class SimpleWeakAssociationsTest {
   @Test
   @WithTestDatabase(script = "/simple_weak_association_with_ids.sql")
   public void simpleWeakAssociationWithIds(
-      final TestContext testContext, final Connection connection) throws Exception {
-    weakAssociations(testContext, connection, false);
-    weakAssociations(testContext, connection, true);
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+    weakAssociations(testContext, dataSource, false);
+    weakAssociations(testContext, dataSource, true);
   }
 
   @Test
   @WithTestDatabase(script = "/simple_weak_association_with_plurals.sql")
   public void simpleWeakAssociationWithPlurals(
-      final TestContext testContext, final Connection connection) throws Exception {
-    weakAssociations(testContext, connection, false);
-    weakAssociations(testContext, connection, true);
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+    weakAssociations(testContext, dataSource, false);
+    weakAssociations(testContext, dataSource, true);
   }
 }

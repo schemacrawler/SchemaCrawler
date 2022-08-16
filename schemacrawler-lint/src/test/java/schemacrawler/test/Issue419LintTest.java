@@ -38,8 +38,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
@@ -54,18 +52,19 @@ import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class Issue419LintTest {
 
   @Test
-  public void issue419(final Connection connection) throws Exception {
+  public void issue419(final DatabaseConnectionSource dataSource) throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -79,7 +78,7 @@ public class Issue419LintTest {
 
     final Linters linters = new Linters(linterConfigs, false);
 
-    linters.lint(catalog, connection);
+    linters.lint(catalog, dataSource);
     final LintCollector lintCollector = linters.getCollector();
 
     assertThat(lintCollector.size(), is(1));

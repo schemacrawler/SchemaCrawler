@@ -109,7 +109,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
     // -- Schema output tests
     final String expectedResource = String.format("testDB2WithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,12 +21,13 @@ import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class Issue342Test {
 
   @Test
-  public void unsupportedOutputFormat(final Connection connection) throws Exception {
+  public void unsupportedOutputFormat(final DatabaseConnectionSource dataSource) throws Exception {
     // Create the options
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -49,7 +49,7 @@ public class Issue342Test {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     final ConfigurationException exception =

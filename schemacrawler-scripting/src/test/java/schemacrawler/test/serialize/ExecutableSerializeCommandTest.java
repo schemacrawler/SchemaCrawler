@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -50,6 +49,7 @@ import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemErrOutput
 @AssertNoSystemOutOutput
@@ -57,7 +57,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class ExecutableSerializeCommandTest {
 
   private static Path executeSerialize(
-      final Connection connection, final SerializationFormat serializationFormat) throws Exception {
+      final DatabaseConnectionSource dataSource, final SerializationFormat serializationFormat)
+      throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
@@ -69,24 +70,24 @@ public class ExecutableSerializeCommandTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    return executableExecution(connection, executable, serializationFormat);
+    return executableExecution(dataSource, executable, serializationFormat);
   }
 
   @Test
   @Disabled("Cannot compare files during testing, since a new file is generated")
-  public void executableSerializeJava(final Connection connection) throws Exception {
-    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.ser)), is("ACED"));
+  public void executableSerializeJava(final DatabaseConnectionSource dataSource) throws Exception {
+    assertThat(fileHeaderOf(executeSerialize(dataSource, SerializationFormat.ser)), is("ACED"));
   }
 
   @Test
-  public void executableSerializeJson(final Connection connection) throws Exception {
+  public void executableSerializeJson(final DatabaseConnectionSource dataSource) throws Exception {
     assertThat(
-        fileHeaderOf(executeSerialize(connection, SerializationFormat.json)),
+        fileHeaderOf(executeSerialize(dataSource, SerializationFormat.json)),
         is(oneOf("7B0D", "7B0A")));
   }
 
   @Test
-  public void executableSerializeYaml(final Connection connection) throws Exception {
-    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.yaml)), is("2D2D"));
+  public void executableSerializeYaml(final DatabaseConnectionSource dataSource) throws Exception {
+    assertThat(fileHeaderOf(executeSerialize(dataSource, SerializationFormat.yaml)), is("2D2D"));
   }
 }

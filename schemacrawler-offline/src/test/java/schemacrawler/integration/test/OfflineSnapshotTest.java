@@ -77,7 +77,10 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 public class OfflineSnapshotTest {
@@ -181,18 +184,20 @@ public class OfflineSnapshotTest {
     schemaTextOptionsBuilder.noInfo(false);
 
     final Connection connection = newOfflineConnection(serializedCatalogFile);
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
 
     final String expectedResource = String.format("details.%s.txt", javaVersion());
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
   }
 
   @BeforeEach
-  public void serializeCatalog(final Connection connection) {
+  public void serializeCatalog(final DatabaseConnectionSource dataSource) {
     try {
       final LimitOptionsBuilder limitOptionsBuilder =
           LimitOptionsBuilder.builder().includeAllRoutines();
@@ -203,7 +208,12 @@ public class OfflineSnapshotTest {
               .withLimitOptions(limitOptionsBuilder.toOptions())
               .withLoadOptions(loadOptionsBuilder.toOptions());
 
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+      final Catalog catalog =
+          getCatalog(
+              dataSource,
+              SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+              schemaCrawlerOptions,
+              new Config());
       assertThat("Could not obtain catalog", catalog, notNullValue());
       assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 
@@ -226,7 +236,8 @@ public class OfflineSnapshotTest {
   private void executeExecutable(
       final SchemaCrawlerExecutable executable, final String referenceFileName) throws Exception {
     final OfflineConnection connection = newOfflineConnection(serializedCatalogFile);
-
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
@@ -234,7 +245,7 @@ public class OfflineSnapshotTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAndTypeAs(
             classpathResource(referenceFileName), TextOutputFormat.text.getFormat()));
   }

@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.state;
 
-import java.sql.Connection;
 import java.util.Map;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -90,7 +88,7 @@ public class ShellState implements AutoCloseable {
     return config;
   }
 
-  public Supplier<Connection> getDataSource() {
+  public DatabaseConnectionSource getDataSource() {
     return dataSource;
   }
 

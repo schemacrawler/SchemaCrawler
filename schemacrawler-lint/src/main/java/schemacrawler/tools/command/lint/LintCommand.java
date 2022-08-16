@@ -43,6 +43,8 @@ import schemacrawler.tools.lint.formatter.LintReportBuilder;
 import schemacrawler.tools.lint.formatter.LintReportJsonBuilder;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
 import schemacrawler.tools.lint.formatter.LintReportYamlBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -63,25 +65,31 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
   @Override
   public void execute() {
-    checkCatalog();
+    try {
+      checkCatalog();
 
-    // Lint the catalog
-    final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
-    LOGGER.log(Level.FINEST, new ObjectToStringFormat(linterConfigs));
-    final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
-    linters.lint(catalog, connection);
+      // Lint the catalog
+      final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
+      LOGGER.log(Level.FINEST, new ObjectToStringFormat(linterConfigs));
+      final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
+      final DatabaseConnectionSource dataSource =
+          DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+      linters.lint(catalog, dataSource);
 
-    // Produce the lint report
-    final LintReport lintReport =
-        new LintReport(
-            outputOptions.getTitle(), catalog.getCrawlInfo(), linters.getCollector().getLints());
+      // Produce the lint report
+      final LintReport lintReport =
+          new LintReport(
+              outputOptions.getTitle(), catalog.getCrawlInfo(), linters.getCollector().getLints());
 
-    // Write out the lint report
-    LOGGER.log(Level.INFO, "Generating lint report");
-    getLintReportBuilder().generateLintReport(lintReport);
+      // Write out the lint report
+      LOGGER.log(Level.INFO, "Generating lint report");
+      getLintReportBuilder().generateLintReport(lintReport);
 
-    LOGGER.log(Level.INFO, "Dispatching lint results");
-    dispatch(linters);
+      LOGGER.log(Level.INFO, "Dispatching lint results");
+      dispatch(linters);
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not run lint command", e);
+    }
   }
 
   @Override

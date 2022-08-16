@@ -39,7 +39,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Test;
@@ -52,6 +51,7 @@ import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @AssertNoSystemErrOutput
@@ -59,11 +59,11 @@ import us.fatehi.utility.IOUtility;
 public class ShellCommandSerializeCommandTest {
 
   @Test
-  public void shellSerializeJson(final Connection connection) throws IOException {
+  public void shellSerializeJson(final DatabaseConnectionSource dataSource) throws IOException {
 
     final SerializationFormat serializationFormat = SerializationFormat.json;
 
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
 
     final Path testOutputFile =
         IOUtility.createTempFilePath("test", "." + serializationFormat.name());

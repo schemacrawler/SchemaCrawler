@@ -49,7 +49,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,6 +68,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.formatter.serialize.JsonSerializedCatalog;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -88,12 +88,12 @@ public class CatalogJsonSerializationTest {
 
   @Test
   public void catalogSerializationWithJson(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");
     try (final OutputStream out = new FileOutputStream(testOutputFile.toFile())) {

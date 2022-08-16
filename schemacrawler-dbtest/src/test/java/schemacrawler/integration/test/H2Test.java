@@ -80,7 +80,7 @@ public class H2Test extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = String.format("testH2WithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

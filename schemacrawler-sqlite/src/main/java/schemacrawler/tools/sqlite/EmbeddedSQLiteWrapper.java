@@ -30,10 +30,8 @@ package schemacrawler.tools.sqlite;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.isFileReadable;
-import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -105,10 +103,12 @@ public class EmbeddedSQLiteWrapper {
   }
 
   public Path executeForOutput(final String title, final OutputFormat extension) {
-    try (final Connection connection = createDatabaseConnectionSource().get()) {
-      return executeForOutput(connection, title, extension);
+    try (final DatabaseConnectionSource dataSource = createDatabaseConnectionSource()) {
+      return executeForOutput(dataSource, title, extension);
     } catch (final SQLException e) {
       throw new DatabaseAccessException("Could not create database connection", e);
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException("Could not create database connection", e);
     }
   }
 
@@ -139,9 +139,8 @@ public class EmbeddedSQLiteWrapper {
   }
 
   private Path executeForOutput(
-      final Connection connection, final String title, final OutputFormat extension) {
+      final DatabaseConnectionSource dataSource, final String title, final OutputFormat extension) {
     try {
-      checkConnection(connection);
 
       final LimitOptions limitOptions =
           LimitOptionsBuilder.builder().includeTables(sqliteTableExclusionRule).toOptions();
@@ -159,7 +158,7 @@ public class EmbeddedSQLiteWrapper {
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(connection);
+      executable.setDataSource(dataSource);
       executable.execute();
 
       return diagramFile;

@@ -32,11 +32,9 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-import static us.fatehi.utility.datasource.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -51,6 +49,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public final class CommandlineTestUtility {
 
@@ -139,21 +138,23 @@ public final class CommandlineTestUtility {
     return commandlineExecution(connectionInfo, command, argsMap, (Path) null, outputFormatValue);
   }
 
-  public static ShellState createConnectedSchemaCrawlerShellState(final Connection connection) {
+  public static ShellState createConnectedSchemaCrawlerShellState(
+      final DatabaseConnectionSource dataSource) {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     state.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
-    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
+    state.setDataSource(dataSource); // is-connected
     return state;
   }
 
-  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection) {
+  public static ShellState createLoadedSchemaCrawlerShellState(
+      final DatabaseConnectionSource dataSource) {
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
 
-    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
+    final ShellState state = createConnectedSchemaCrawlerShellState(dataSource);
     state.setCatalog(catalog); // is-loaded
     return state;
   }

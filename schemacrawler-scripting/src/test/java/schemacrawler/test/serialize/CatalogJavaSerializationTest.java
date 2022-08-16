@@ -41,7 +41,6 @@ import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -53,17 +52,19 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class CatalogJavaSerializationTest {
 
   @Test
-  public void catalogSerializationWithJava(final Connection connection) throws Exception {
+  public void catalogSerializationWithJava(final DatabaseConnectionSource dataSource)
+      throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
     assertThat("Could not obtain catalog", catalog, notNullValue());
     assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 

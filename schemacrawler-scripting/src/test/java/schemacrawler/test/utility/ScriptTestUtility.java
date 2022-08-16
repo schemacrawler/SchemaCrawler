@@ -34,7 +34,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +42,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class ScriptTestUtility {
 
@@ -65,7 +65,7 @@ public class ScriptTestUtility {
     return commandlineExecution(connectionInfo, "template", argsMap, "text");
   }
 
-  public static Path scriptExecution(final Connection connection, final String script)
+  public static Path scriptExecution(final DatabaseConnectionSource dataSource, final String script)
       throws Exception {
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
@@ -78,11 +78,11 @@ public class ScriptTestUtility {
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
-    return executableExecution(connection, executable, "text");
+    return executableExecution(dataSource, executable, "text");
   }
 
   public static Path templateExecution(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final TemplateLanguageType templateLanguage,
       final String templateResource)
       throws Exception {
@@ -95,7 +95,7 @@ public class ScriptTestUtility {
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    return executableExecution(connection, executable, "text");
+    return executableExecution(dataSource, executable, "text");
   }
 
   private static Map<String, String> additionalArgsMap() {

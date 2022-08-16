@@ -34,8 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -47,6 +45,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
 @ResolveTestContext
@@ -62,7 +61,8 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
       final String currentMethodName, final String databaseSqlResource, final String command)
       throws Exception {
 
-    final DataSource dataSource = createDatabaseFromScriptInMemory(databaseSqlResource);
+    final DatabaseConnectionSource dataSource =
+        createDatabaseFromScriptInMemory(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -74,7 +74,7 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(dataSource.getConnection(), executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(currentMethodName)));
   }
 }

@@ -40,7 +40,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +68,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -93,7 +93,7 @@ public class DiagramRendererOptionsTest {
 
   private static void executableDiagram(
       final String command,
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaCrawlerOptions options,
       final Config config,
       final DiagramOptions diagramOptions,
@@ -121,7 +121,7 @@ public class DiagramRendererOptionsTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     // Generate diagram, so that we have something to look at, even if
@@ -131,7 +131,7 @@ public class DiagramRendererOptionsTest {
     // Check DOT file
     final String referenceFileName = testMethodName;
     assertThat(
-        outputOf(executableExecution(connection, executable, DiagramOutputFormat.scdot)),
+        outputOf(executableExecution(dataSource, executable, DiagramOutputFormat.scdot)),
         hasSameContentAndTypeAs(
             classpathResource(DIAGRAM_OPTIONS_OUTPUT + referenceFileName + ".dot"),
             DiagramOutputFormat.scdot));
@@ -156,15 +156,15 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with no options")
-  public void executableForDiagram_00(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_00(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final DiagramOptions diagramOptions = DiagramOptionsBuilder.builder().toOptions();
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -173,8 +173,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with ordinal numbers and weak associations")
-  public void executableForDiagram_01(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_01(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder =
         builder()
             .sortTableColumns()
@@ -186,7 +186,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
         configWithWeakAssociations(),
         diagramOptions,
@@ -195,8 +195,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram no foreign key names")
-  public void executableForDiagram_02(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_02(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder =
         builder()
             .noForeignKeyNames()
@@ -206,7 +206,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
         configWithWeakAssociations(),
         diagramOptions,
@@ -215,8 +215,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with no-info")
-  public void executableForDiagram_03(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_03(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     diagramOptionsBuilder
         .noSchemaCrawlerInfo(true)
@@ -226,7 +226,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
         configWithWeakAssociations(),
         diagramOptions,
@@ -235,15 +235,15 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with unqualified names")
-  public void executableForDiagram_04(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_04(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     diagramOptionsBuilder.showUnqualifiedNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
         configWithWeakAssociations(),
         diagramOptions,
@@ -252,8 +252,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with limit options")
-  public void executableForDiagram_05(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_05(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -264,7 +264,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -273,15 +273,15 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with default options, with brief command")
-  public void executableForDiagram_06(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_06(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final DiagramOptions diagramOptions = builder().toOptions();
 
     executableDiagram(
         SchemaTextDetailType.brief.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -290,15 +290,15 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with default options, with schema command")
-  public void executableForDiagram_07(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_07(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final DiagramOptions diagramOptions = builder().toOptions();
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -307,8 +307,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with limit options, and unqualified names")
-  public void executableForDiagram_08(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_08(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -320,7 +320,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -329,8 +329,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with limit options, and grep tables")
-  public void executableForDiagram_09(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_09(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final GrepOptionsBuilder grepOptionsBuilder =
@@ -347,7 +347,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -356,8 +356,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with a grep for column patterns, with primary key filtered")
-  public void executableForDiagram_10a(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_10a(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder()
             .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.SALES\\..*"));
@@ -369,7 +369,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -378,8 +378,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with a grep for column patterns, with foreign key filtered")
-  public void executableForDiagram_10b(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_10b(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder()
             .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
@@ -391,7 +391,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -400,8 +400,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with a grep for column patterns")
-  public void executableForDiagram_11(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_11(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder()
             .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
@@ -413,7 +413,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -422,8 +422,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with table row counts")
-  public void executableForDiagram_12(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_12(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
@@ -438,7 +438,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         additionalConfig,
         diagramOptions,
@@ -447,8 +447,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram after setting Graphviz options such as ortho splines")
-  public void executableForDiagram_13(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_13(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final Map<String, String> graphvizAttributes = new HashMap<>();
 
     final String GRAPH = "graph.";
@@ -466,7 +466,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -475,8 +475,8 @@ public class DiagramRendererOptionsTest {
 
   @Test
   @DisplayName("Diagram with maximum output, including indexes")
-  public void executableForDiagram_14(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void executableForDiagram_14(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
@@ -486,7 +486,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.details.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,
@@ -496,7 +496,7 @@ public class DiagramRendererOptionsTest {
   @Test
   @DisplayName("Diagram of the FOR_LINT schema")
   public void executableForDiagram_lintschema(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
@@ -511,7 +511,7 @@ public class DiagramRendererOptionsTest {
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         null,
         diagramOptions,

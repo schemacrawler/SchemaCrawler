@@ -84,7 +84,7 @@ public class MySQLEnumColumnTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource("testColumnWithEnum.txt")));
 
     // Additional programmatic test

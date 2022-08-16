@@ -50,7 +50,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.test.utility.DataSourceConnectionSource;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @TestInstance(PER_CLASS)
 @HeavyDatabaseTest
@@ -91,14 +93,16 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   public void testOracleSelectCatalogRoleUser() throws Exception {
 
     final Connection connection = catalogUserDataSource.getConnection();
+    final DatabaseConnectionSource dataSource =
+        new DataSourceConnectionSource("", catalogUserDataSource);
     final String expectedResource =
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 33);
 
     final DatabaseAccessException sqlException =
         assertThrows(
             DatabaseAccessException.class,
-            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
+            () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
     assertThat(
         sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
 
@@ -121,14 +125,16 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   public void testOracleWithNoAccessUser() throws Exception {
 
     final Connection connection = noAccessUserDataSource.getConnection();
+    final DatabaseConnectionSource dataSource =
+        new DataSourceConnectionSource("", noAccessUserDataSource);
     final String expectedResource =
         String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 33);
 
     final DatabaseAccessException sqlException =
         assertThrows(
             DatabaseAccessException.class,
-            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
+            () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
     assertThat(
         sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
 
@@ -141,11 +147,13 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   public void testOracleWithSchemaOwnerUser() throws Exception {
 
     final Connection connection = schemaOwnerUserDataSource.getConnection();
+    final DatabaseConnectionSource dataSource =
+        new DataSourceConnectionSource("", schemaOwnerUserDataSource);
     final String expectedResource =
         String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 33);
 
-    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
     assertCatalogScope(connection, false, true);
   }
@@ -156,11 +164,14 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   public void testOracleWithSelectGrantUser() throws Exception {
 
     final Connection connection = selectUserDataSource.getConnection();
+    final DatabaseConnectionSource dataSource =
+        new DataSourceConnectionSource("", selectUserDataSource);
+
     final String expectedResource =
         String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 33);
 
-    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
     assertCatalogScope(connection, false, true);
   }

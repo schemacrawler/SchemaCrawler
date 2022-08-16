@@ -44,7 +44,6 @@ import static us.fatehi.utility.IOUtility.readFully;
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -62,6 +61,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class SchemaCrawlerExecutableChainTest {
@@ -86,7 +86,7 @@ public class SchemaCrawlerExecutableChainTest {
   }
 
   @Test
-  public void executableChain(final Connection connection) throws Exception {
+  public void executableChain(final DatabaseConnectionSource dataSource) throws Exception {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
@@ -110,7 +110,7 @@ public class SchemaCrawlerExecutableChainTest {
     executable.setOutputOptions(outputOptions);
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
     executable.execute();
 
     assertThat(

@@ -36,8 +36,6 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +47,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.DataSourceConnectionSource;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
@@ -107,13 +106,14 @@ public class DiffTest {
     printSchema(testContext, "/test2.db");
   }
 
-  private DataSource createDataSource(final Path sqliteDbFile) {
+  private DatabaseConnectionSource createDataSource(final Path sqliteDbFile) {
+    final String connectionUrl = "jdbc:sqlite:" + sqliteDbFile;
     final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
+    dataSource.setUrl(connectionUrl);
     dataSource.setUsername(null);
     dataSource.setPassword(null);
 
-    return dataSource;
+    return new DataSourceConnectionSource(connectionUrl, dataSource);
   }
 
   private Catalog getCatalog(final String database) throws Exception {
@@ -140,9 +140,9 @@ public class DiffTest {
     executable.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
     final Path sqliteDbFile = TestUtility.copyResourceToTempFile(database);
-    final DataSource dataSource = createDataSource(sqliteDbFile);
+    final DatabaseConnectionSource dataSource = createDataSource(sqliteDbFile);
     assertThat(
-        outputOf(executableExecution(dataSource.getConnection(), executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

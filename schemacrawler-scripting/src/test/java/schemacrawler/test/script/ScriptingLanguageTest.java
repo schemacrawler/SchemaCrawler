@@ -38,7 +38,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -46,13 +45,15 @@ import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemOutOutput
 @WithTestDatabase
 public class ScriptingLanguageTest {
 
   private static Path executableScriptFromFile(
-      final Connection connection, final String language, final Path scriptFile) throws Exception {
+      final DatabaseConnectionSource dataSource, final String language, final Path scriptFile)
+      throws Exception {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("script", scriptFile.toString());
@@ -62,14 +63,14 @@ public class ScriptingLanguageTest {
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    return executableExecution(connection, executable, "text");
+    return executableExecution(dataSource, executable, "text");
   }
 
   @Test
-  public void executableGroovy(final Connection connection) throws Exception {
+  public void executableGroovy(final DatabaseConnectionSource dataSource) throws Exception {
     final Path scriptFile = copyResourceToTempFile("/plaintextschema.groovy");
     assertThat(
-        outputOf(executableScriptFromFile(connection, "groovy", scriptFile)),
+        outputOf(executableScriptFromFile(dataSource, "groovy", scriptFile)),
         hasSameContentAs(classpathResource("script_output.txt")));
   }
 }

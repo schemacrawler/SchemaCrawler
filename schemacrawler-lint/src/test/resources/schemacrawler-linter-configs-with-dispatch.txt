@@ -40,7 +40,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_IDX_SYS_FK_10128_10132
+	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_FK_10120
 	no primary key	
 	primary key may not be a surrogate	
                                                              [lint, low]
@@ -52,10 +52,10 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_FK_PREVIOUSEDITION_10123
-	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10125
+	redundant index	PUBLIC.BOOKS.BOOKS.FK_PREVIOUSEDITION
+	redundant index	PUBLIC.BOOKS.BOOKS.U_PREVIOUSEDITION
                                                           [lint, medium]
-	unique index with nullable columns	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10125
+	unique index with nullable columns	PUBLIC.BOOKS.BOOKS.U_PREVIOUSEDITION
                                                              [lint, low]
 	should have remarks	PREVIOUSEDITIONID
 
@@ -125,7 +125,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	foreign key data type different from primary key	FK_ΒΙΒΛΊΑ_PUBLISHERS
+	foreign key data type different from primary key	PUBLIC.BOOKS.ΒΙΒΛΊΑ.FK_ΒΙΒΛΊΑ_PUBLISHERS
                                                              [lint, low]
 	empty table	
 	should have remarks	
@@ -192,10 +192,10 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 ------------------------------------------------------------------------
 
                                                         [lint, critical]
-	foreign key self-references primary key	FK_SELFREFERENCE
+	foreign key self-references primary key	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
                                                             [lint, high]
-	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_FK_SELFREFERENCE_10210
-	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_PK_SELFREFERENCE_10207
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.PK_SELFREFERENCE
                                                              [lint, low]
 	empty table	
 	should have remarks	
@@ -207,7 +207,7 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	foreign key data type different from primary key	FK_WRITERS_PUBLICATION
+	foreign key data type different from primary key	PUBLIC.FOR_LINT.WRITERS.FK_WRITERS_PUBLICATION
 	redundant index	PUBLIC.FOR_LINT.WRITERS.IDX_A1_WRITERS
                                                           [lint, medium]
 	unique index with nullable columns	PUBLIC.FOR_LINT.WRITERS.IDX_U_WRITERS
@@ -249,7 +249,7 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 	primary key may not be a surrogate	
                                                              [lint, low]
 	should have remarks	
-	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
+	should have remarks	POSTALCODE, COUNTRY, BOOKID, COUPON_ID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
 
 
 
@@ -260,7 +260,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 	no primary key	
 	primary key may not be a surrogate	
                                                           [lint, medium]
-	unique index with nullable columns	PUBLIC."PUBLISHER SALES".SALESDATA.SYS_IDX_UQ_CUSTOMERS_10233
+	unique index with nullable columns	PUBLIC."PUBLISHER SALES".SALESDATA.UQ_CUSTOMERS
 	no non-nullable data columns	
                                                              [lint, low]
 	empty table	

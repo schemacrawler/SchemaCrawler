@@ -40,7 +40,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -65,6 +64,7 @@ import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class LintTest {
@@ -74,7 +74,7 @@ public class LintTest {
   private static final Config config = new Config();
 
   @Test
-  public void lints(final Connection connection) throws Exception {
+  public void lints(final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .tableTypes("TABLE", "VIEW", "GLOBAL TEMPORARY")
@@ -84,7 +84,7 @@ public class LintTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -110,7 +110,7 @@ public class LintTest {
     linterConfigs.add(linterConfig);
 
     final Linters linters = new Linters(linterConfigs, true);
-    linters.lint(catalog, connection);
+    linters.lint(catalog, dataSource);
     final LintCollector lintCollector = linters.getCollector();
     assertThat(lintCollector.size(), is(51));
 
@@ -134,7 +134,7 @@ public class LintTest {
   }
 
   @Test
-  public void lintsWithExcludedColumns(final Connection connection) throws Exception {
+  public void lintsWithExcludedColumns(final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .tableTypes("TABLE", "VIEW", "GLOBAL TEMPORARY")
@@ -145,7 +145,7 @@ public class LintTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -154,7 +154,7 @@ public class LintTest {
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final Linters linters = new Linters(linterConfigs, true);
-    linters.lint(catalog, connection);
+    linters.lint(catalog, dataSource);
     final LintCollector lintCollector = linters.getCollector();
     assertThat(lintCollector.size(), is(40));
 
@@ -171,7 +171,7 @@ public class LintTest {
   }
 
   @Test
-  public void runLintersWithConfig(final Connection connection) throws Exception {
+  public void runLintersWithConfig(final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
@@ -180,7 +180,7 @@ public class LintTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -202,7 +202,7 @@ public class LintTest {
 
     final Linters linters = new Linters(linterConfigs, false);
 
-    linters.lint(catalog, connection);
+    linters.lint(catalog, dataSource);
     final LintCollector lintCollector = linters.getCollector();
 
     assertThat(
@@ -214,7 +214,7 @@ public class LintTest {
   }
 
   @Test
-  public void runNoLinters(final Connection connection) throws Exception {
+  public void runNoLinters(final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
@@ -223,7 +223,7 @@ public class LintTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -234,7 +234,7 @@ public class LintTest {
     final Linters linters = new Linters(linterConfigs, false);
     assertThat("All linters should be turned off", linters.size(), is(0));
 
-    linters.lint(catalog, connection);
+    linters.lint(catalog, dataSource);
     final LintCollector lintCollector = linters.getCollector();
     assertThat(
         "All linters should be turned off, so there should be no lints",

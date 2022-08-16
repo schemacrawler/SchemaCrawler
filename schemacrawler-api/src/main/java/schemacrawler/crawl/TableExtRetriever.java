@@ -125,36 +125,41 @@ final class TableExtRetriever extends AbstractRetriever {
 
   /** Retrieves additional column metadata. */
   void retrieveAdditionalColumnMetadata() {
-    final EnumDataTypeHelper enumDataTypeHelper = getRetrieverConnection().getEnumDataTypeHelper();
 
-    final NamedObjectList<MutableTable> tables = catalog.getAllTables();
-    for (final MutableTable table : tables) {
-      final NamedObjectList<MutableColumn> columns = table.getAllColumns();
-      for (final MutableColumn column : columns) {
-        MutableColumnDataType columnDataType = (MutableColumnDataType) column.getColumnDataType();
+    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+      final EnumDataTypeHelper enumDataTypeHelper =
+          getRetrieverConnection().getEnumDataTypeHelper();
 
-        // Check for enumerated column data-types
-        final EnumDataTypeInfo enumDataTypeInfo =
-            enumDataTypeHelper.getEnumDataTypeInfo(
-                column, columnDataType, getRetrieverConnection().getConnection());
-        switch (enumDataTypeInfo.getType()) {
-          case enumerated_column:
-            // Create new column data-type with enumeration
-            final MutableColumnDataType copiedColumnDataType =
-                new MutableColumnDataType(columnDataType);
-            columnDataType = copiedColumnDataType; // overwrite with new column data-type
-            columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
-            break;
-          case enumerated_data_type:
-            // Update column data-type with enumeration
-            columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
-            break;
-          default:
-            break;
+      final NamedObjectList<MutableTable> tables = catalog.getAllTables();
+      for (final MutableTable table : tables) {
+        final NamedObjectList<MutableColumn> columns = table.getAllColumns();
+        for (final MutableColumn column : columns) {
+          MutableColumnDataType columnDataType = (MutableColumnDataType) column.getColumnDataType();
+
+          // Check for enumerated column data-types
+          final EnumDataTypeInfo enumDataTypeInfo =
+              enumDataTypeHelper.getEnumDataTypeInfo(column, columnDataType, connection);
+          switch (enumDataTypeInfo.getType()) {
+            case enumerated_column:
+              // Create new column data-type with enumeration
+              final MutableColumnDataType copiedColumnDataType =
+                  new MutableColumnDataType(columnDataType);
+              columnDataType = copiedColumnDataType; // overwrite with new column data-type
+              columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
+              break;
+            case enumerated_data_type:
+              // Update column data-type with enumeration
+              columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
+              break;
+            default:
+              break;
+          }
+
+          column.setColumnDataType(columnDataType);
         }
-
-        column.setColumnDataType(columnDataType);
       }
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve additional column metadata", e);
     }
   }
 

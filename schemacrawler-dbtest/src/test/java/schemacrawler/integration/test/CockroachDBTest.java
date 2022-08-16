@@ -104,7 +104,7 @@ public class CockroachDBTest extends BaseAdditionalDatabaseTest {
     final String expectedResultsResource =
         String.format("testCockroachDBWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));
   }
 }

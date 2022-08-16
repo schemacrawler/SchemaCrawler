@@ -39,7 +39,6 @@ import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +63,7 @@ import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -135,7 +135,7 @@ public class LinterConfigsDispatchTest {
   @ExpectSystemExitWithStatus(1)
   public void testSystemExitLinterConfigExecutable(
       final TestContext testContext,
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final CapturedSystemStreams streams)
       throws Exception {
 
@@ -143,7 +143,7 @@ public class LinterConfigsDispatchTest {
     additionalConfig.put("lint-dispatch", "terminate_system");
 
     executableLint(
-        connection,
+        dataSource,
         "/schemacrawler-linter-configs-with-dispatch.yaml",
         additionalConfig,
         "schemacrawler-linter-configs-with-dispatch");

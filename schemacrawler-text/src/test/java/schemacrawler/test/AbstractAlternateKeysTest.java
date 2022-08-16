@@ -38,7 +38,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder.builder;
 
-import java.sql.Connection;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -59,6 +58,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -73,8 +73,8 @@ public abstract class AbstractAlternateKeysTest {
 
   @Test
   @DisplayName("Alternate keys loaded from catalog attributes file")
-  public void alternateKeys_01(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void alternateKeys_01(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder.builder().toOptions();
@@ -84,7 +84,7 @@ public abstract class AbstractAlternateKeysTest {
 
     multipleExecutions(
         SchemaTextDetailType.schema.name(),
-        connection,
+        dataSource,
         schemaCrawlerOptions,
         additionalConfig,
         schemaTextOptions,
@@ -95,7 +95,7 @@ public abstract class AbstractAlternateKeysTest {
 
   private void multipleExecutions(
       final String command,
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaCrawlerOptions options,
       final Config config,
       final SchemaTextOptions schemaTextOptions,
@@ -122,7 +122,7 @@ public abstract class AbstractAlternateKeysTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     final String referenceFileName = testMethodName;
@@ -132,7 +132,7 @@ public abstract class AbstractAlternateKeysTest {
                 outputFormat ->
                     () -> {
                       assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
+                          outputOf(executableExecution(dataSource, executable, outputFormat)),
                           hasSameContentAndTypeAs(
                               classpathResource(
                                   ALTERNATE_KEYS_OUTPUT

@@ -72,16 +72,21 @@ public final class TableRowCountsRetriever {
       return;
     }
 
-    final Query query =
-        new Query("schemacrawler.table.row_counts", "SELECT COUNT(*) FROM ${table}");
-    final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    for (final Table table : allTables) {
-      try (Connection connection = dataSource.get(); ) {
-        final long count = executeForLong(query, connection, table, identifiers);
-        addRowCountToTable(table, count);
-      } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, e, new StringFormat("Could not get count for table <%s>", table));
+    try (Connection connection = dataSource.get(); ) {
+      final Query query =
+          new Query("schemacrawler.table.row_counts", "SELECT COUNT(*) FROM ${table}");
+      final List<Table> allTables = new ArrayList<>(catalog.getTables());
+      for (final Table table : allTables) {
+        try {
+          final long count = executeForLong(query, connection, table, identifiers);
+          addRowCountToTable(table, count);
+        } catch (final SQLException e) {
+          LOGGER.log(
+              Level.WARNING, e, new StringFormat("Could not get count for table <%s>", table));
+        }
       }
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Could not get table row counts", e);
     }
   }
 }

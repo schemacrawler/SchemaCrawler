@@ -172,7 +172,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     final String expectedResource =
         String.format("testSQLServerWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
 
     // -- Additional catalog tests

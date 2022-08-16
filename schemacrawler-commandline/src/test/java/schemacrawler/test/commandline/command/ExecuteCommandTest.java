@@ -38,7 +38,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.command
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +52,7 @@ import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -60,8 +60,8 @@ public class ExecuteCommandTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void executeBadCommand(final Connection connection, final TestContext testContext)
-      throws Exception {
+  public void executeBadCommand(
+      final DatabaseConnectionSource dataSource, final TestContext testContext) throws Exception {
 
     class ExceptionHandler implements IExecutionExceptionHandler {
 
@@ -81,7 +81,7 @@ public class ExecuteCommandTest {
     }
     final ExceptionHandler exceptionHandler = new ExceptionHandler();
 
-    final CommandLine commandLine = createShellCommandLine(connection);
+    final CommandLine commandLine = createShellCommandLine(dataSource);
     commandLine.setExecutionExceptionHandler(exceptionHandler);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
@@ -103,10 +103,10 @@ public class ExecuteCommandTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void executeSchemaCommand(final Connection connection, final TestContext testContext)
-      throws Exception {
+  public void executeSchemaCommand(
+      final DatabaseConnectionSource dataSource, final TestContext testContext) throws Exception {
 
-    final CommandLine commandLine = createShellCommandLine(connection);
+    final CommandLine commandLine = createShellCommandLine(dataSource);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
     final String[] args =
@@ -121,11 +121,11 @@ public class ExecuteCommandTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void executeTestCommand(final Connection connection, final TestContext testContext)
-      throws Exception {
+  public void executeTestCommand(
+      final DatabaseConnectionSource dataSource, final TestContext testContext) throws Exception {
 
     int exitCode;
-    final CommandLine commandLine = createShellCommandLine(connection);
+    final CommandLine commandLine = createShellCommandLine(dataSource);
 
     final Path testOutputFile1 = IOUtility.createTempFilePath("test", ".1.txt");
     exitCode =
@@ -170,8 +170,8 @@ public class ExecuteCommandTest {
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".4.txt")));
   }
 
-  private CommandLine createShellCommandLine(final Connection connection) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+  private CommandLine createShellCommandLine(final DatabaseConnectionSource dataSource) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
     final CommandLine executeCommandLine =

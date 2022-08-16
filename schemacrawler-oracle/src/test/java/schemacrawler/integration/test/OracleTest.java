@@ -31,8 +31,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -40,6 +38,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @HeavyDatabaseTest
 @Testcontainers
@@ -62,10 +61,11 @@ public class OracleTest extends BaseOracleWithConnectionTest {
 
   @Test
   public void testOracleWithConnection() throws Exception {
-    final Connection connection = getConnection();
-    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 33);
+    final DatabaseConnectionSource dataSource = getDataSource();
 
-    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
+    testOracleWithConnection(dataSource, expectedResource, 33);
+
+    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
   }
 }

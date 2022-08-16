@@ -36,6 +36,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -46,6 +47,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import schemacrawler.testdb.TestDatabase;
 import us.fatehi.utility.LoggingConfig;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 final class TestDatabaseConnectionParameterResolver
     implements ParameterResolver, BeforeAllCallback {
@@ -53,11 +55,15 @@ final class TestDatabaseConnectionParameterResolver
   private static final TestDatabase testDatabase = TestDatabase.initialize();
 
   private static boolean isParameterConnection(final Parameter parameter) {
-    return parameter.getType().equals(Connection.class);
+    return parameter.getType().isAssignableFrom(Connection.class);
   }
 
   private static boolean isParameterDatabaseConnectionInfo(final Parameter parameter) {
     return parameter.getType().equals(DatabaseConnectionInfo.class);
+  }
+
+  private static boolean isParameterDatabaseConnectionSource(final Parameter parameter) {
+    return parameter.getType().isAssignableFrom(DatabaseConnectionSource.class);
   }
 
   @Override
@@ -89,21 +95,25 @@ final class TestDatabaseConnectionParameterResolver
               testDatabase.getPort(),
               testDatabase.getDatabase(),
               testDatabase.getConnectionUrl());
+        } else if (isParameterDatabaseConnectionSource(parameter)) {
+          final BasicDataSource dataSource = new BasicDataSource();
+          dataSource.setUrl(testDatabase.getConnectionUrl());
+          dataSource.setUsername("sa");
+          dataSource.setPassword("");
+
+          return new DataSourceConnectionSource(dataSource.getUrl(), dataSource);
+
         } else {
           throw new ParameterResolutionException("Could not resolve " + parameter);
         }
       } else {
         if (isParameterConnection(parameter)) {
-          final EmbeddedDatabase db =
-              new EmbeddedDatabaseBuilder()
-                  .generateUniqueName(true)
-                  .setScriptEncoding("UTF-8")
-                  .ignoreFailedDrops(true)
-                  .addScript(script)
-                  .build();
-
+          final EmbeddedDatabase db = newEmbeddedDatabase(script);
           final Connection connection = db.getConnection();
           return connection;
+        } else if (isParameterDatabaseConnectionSource(parameter)) {
+          final EmbeddedDatabase db = newEmbeddedDatabase(script);
+          return new DataSourceConnectionSource("<database connection url>", db);
         } else {
           throw new ParameterResolutionException("Could not resolve " + parameter);
         }
@@ -117,14 +127,13 @@ final class TestDatabaseConnectionParameterResolver
   public boolean supportsParameter(
       final ParameterContext parameterContext, final ExtensionContext extensionContext)
       throws ParameterResolutionException {
-    final boolean hasConnection;
-    final boolean hasDatabaseConnectionInfo;
     final Parameter parameter = parameterContext.getParameter();
 
-    hasConnection = isParameterConnection(parameter);
-    hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
+    final boolean hasConnection = isParameterConnection(parameter);
+    final boolean hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
+    final boolean hasDatabaseConnectionSource = isParameterDatabaseConnectionSource(parameter);
 
-    return hasConnection || hasDatabaseConnectionInfo;
+    return hasConnection || hasDatabaseConnectionInfo || hasDatabaseConnectionSource;
   }
 
   private WithTestDatabase locateAnnotation(final ExtensionContext extensionContext) {
@@ -142,5 +151,16 @@ final class TestDatabaseConnectionParameterResolver
       withTestDatabase = null;
     }
     return withTestDatabase;
+  }
+
+  private EmbeddedDatabase newEmbeddedDatabase(final String script) {
+    final EmbeddedDatabase db =
+        new EmbeddedDatabaseBuilder()
+            .generateUniqueName(true)
+            .setScriptEncoding("UTF-8")
+            .ignoreFailedDrops(true)
+            .addScript(script)
+            .build();
+    return db;
   }
 }

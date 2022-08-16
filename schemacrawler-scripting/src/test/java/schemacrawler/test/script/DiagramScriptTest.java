@@ -34,8 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
@@ -43,6 +41,7 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemOutOutput
 @ResolveTestContext
@@ -51,17 +50,19 @@ public class DiagramScriptTest {
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void dbml(final TestContext testContext, final Connection connection) throws Exception {
+  public void dbml(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
     assertThat(
-        outputOf(scriptExecution(connection, "/dbml.py")),
+        outputOf(scriptExecution(dataSource, "/dbml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void mermaid(final TestContext testContext, final Connection connection) throws Exception {
+  public void mermaid(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
     assertThat(
-        outputOf(scriptExecution(connection, "/mermaid.py")),
+        outputOf(scriptExecution(dataSource, "/mermaid.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }

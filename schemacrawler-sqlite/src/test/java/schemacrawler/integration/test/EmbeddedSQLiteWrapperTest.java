@@ -36,8 +36,6 @@ import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.t
 
 import java.nio.file.Path;
 
-import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseSqliteTest;
@@ -63,8 +61,7 @@ public class EmbeddedSQLiteWrapperTest extends BaseSqliteTest {
 
     // Create database from script, on disk
     final Path dbFile = IOUtility.createTempFilePath("test_sqlite_db", "");
-    final DataSource dataSource =
-        createDatabaseFromScript(createDataSourceFromFile(dbFile), databaseSqlResource);
+    createDatabaseFromScript(createDataSourceFromFile(dbFile), databaseSqlResource);
 
     final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
     sqLiteDatabaseLoader.setDatabasePath(dbFile);

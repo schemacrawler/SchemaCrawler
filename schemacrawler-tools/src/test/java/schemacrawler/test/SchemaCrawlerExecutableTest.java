@@ -44,7 +44,6 @@ import static us.fatehi.utility.IOUtility.readFully;
 
 import java.io.FileReader;
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -61,12 +60,13 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class SchemaCrawlerExecutableTest {
 
   @Test
-  public void executable(final Connection connection) throws Exception {
+  public void executable(final DatabaseConnectionSource dataSource) throws Exception {
 
     final Path testOutputFile = createTempFilePath("sc", "data");
 
@@ -80,7 +80,7 @@ public class SchemaCrawlerExecutableTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
     executable.execute();
 
     assertThat(
@@ -101,18 +101,18 @@ public class SchemaCrawlerExecutableTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void executable_bad_command(final Connection connection) throws Exception {
+  public void executable_bad_command(final DatabaseConnectionSource dataSource) throws Exception {
 
     final String command1 = "bad-command";
     final SchemaCrawlerExecutable executable1 = new SchemaCrawlerExecutable(command1);
-    executable1.setConnection(connection);
+    executable1.setDataSource(dataSource);
     final InternalRuntimeException ex1 =
         assertThrows(InternalRuntimeException.class, () -> executable1.execute());
     assertThat(ex1.getMessage(), is("Unknown command <" + command1 + ">"));
 
     final String command2 = "test-command";
     final SchemaCrawlerExecutable executable2 = new SchemaCrawlerExecutable(command2);
-    executable2.setConnection(connection);
+    executable2.setDataSource(dataSource);
     final Config config = new Config();
     config.put("return-null", "true");
     executable2.setAdditionalConfiguration(config);
@@ -122,7 +122,7 @@ public class SchemaCrawlerExecutableTest {
   }
 
   @Test
-  public void executable_options(final Connection connection) throws Exception {
+  public void executable_options() throws Exception {
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
 
@@ -175,7 +175,7 @@ public class SchemaCrawlerExecutableTest {
   }
 
   @Test
-  public void executable_with_settings(final Connection connection) throws Exception {
+  public void executable_with_settings(final DatabaseConnectionSource dataSource) throws Exception {
 
     final Path testOutputFile = createTempFilePath("sc", "data");
     final Catalog mockCatalog = mock(Catalog.class);
@@ -190,7 +190,7 @@ public class SchemaCrawlerExecutableTest {
         ExecutableTestUtility.newOutputOptions("text", testOutputFile);
 
     executable.setOutputOptions(outputOptions);
-    executable.setConnection(connection);
+    executable.setDataSource(dataSource);
     executable.setAdditionalConfiguration(config);
     executable.setCatalog(mockCatalog);
     executable.setSchemaRetrievalOptions(mockSchemaRetrievalOptions);
