@@ -76,6 +76,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 
 @HeavyDatabaseTest
 @Testcontainers
@@ -94,6 +95,12 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/sqlserver.scripts.txt");
+
+    createDataSource(
+        dbContainer.getJdbcUrl(),
+        dbContainer.getUsername(),
+        dbContainer.getPassword(),
+        "database=BOOKS");
   }
 
   @Test
@@ -128,7 +135,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     assertThat(serverInfo.get(0).getValue(), is(nullValue()));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
-    assertThat(databaseUsers, hasSize(13));
+    assertThat(databaseUsers, hasSize(12));
     assertThat(
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("dbo", "public", "db_datareader"));
@@ -164,10 +171,11 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executable.setAdditionalConfiguration(config);
 
     final String expectedResource =
         String.format("testSQLServerWithConnection.%s.txt", javaVersion());
