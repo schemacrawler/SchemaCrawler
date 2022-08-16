@@ -87,7 +87,8 @@ public final class Main {
   }
 
   private static boolean showVersionIfRequested(final String[] args) {
-    final SystemCommand systemCommand = new SystemCommand(new ShellState());
+    final ShellState state = new ShellState();
+    final SystemCommand systemCommand = new SystemCommand(state);
     final CommandLine commandLine = new CommandLine(systemCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);
