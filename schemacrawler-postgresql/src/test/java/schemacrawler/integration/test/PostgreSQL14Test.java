@@ -85,7 +85,7 @@ public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  public void testPostgreSQL12WithConnection() throws Exception {
+  public void testPostgreSQL14WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("books"))
