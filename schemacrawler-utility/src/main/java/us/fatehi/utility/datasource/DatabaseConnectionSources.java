@@ -28,11 +28,11 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.sql.DataSource;
 
 import us.fatehi.utility.PropertiesUtility;
 
@@ -40,14 +40,8 @@ public class DatabaseConnectionSources {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseConnectionSources.class.getName());
 
-  @Deprecated
-  public static DatabaseConnectionSource newDatabaseConnectionSource(final Connection connection)
-      throws SQLException {
-    Connection connectionInternal = connection;
-    if (connection.isWrapperFor(Connection.class)) {
-      connectionInternal = connection.unwrap(Connection.class);
-    }
-    return new SingleDatabaseConnectionSource("<no database connection URL>", connectionInternal);
+  public static DatabaseConnectionSource fromDataSource(final DataSource dataSource) {
+    return new DataSourceConnectionSource(dataSource);
   }
 
   public static DatabaseConnectionSource newDatabaseConnectionSource(

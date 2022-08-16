@@ -47,7 +47,6 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -174,7 +173,7 @@ public class DataTypeRetrieverTest {
   @Test
   @DisplayName("Override type info from data dictionary")
   public void overrideTypeInfoFromDataDictionary(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final int magicNumber = 99;
 
     final InformationSchemaViews informationSchemaViews =
@@ -191,8 +190,6 @@ public class DataTypeRetrieverTest {
             .with(typeInfoRetrievalStrategy, data_dictionary_all)
             .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
@@ -207,11 +204,9 @@ public class DataTypeRetrieverTest {
 
   @Test
   @DisplayName("System data types")
-  public void systemDataTypes(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void systemDataTypes(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptionsDefault);
 

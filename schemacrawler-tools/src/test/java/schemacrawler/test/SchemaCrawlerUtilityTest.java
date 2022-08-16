@@ -56,7 +56,7 @@ import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
 public class SchemaCrawlerUtilityTest {
@@ -75,7 +75,7 @@ public class SchemaCrawlerUtilityTest {
   @Test
   public void getCatalogClosedConnection(final Connection connection) throws Exception {
     final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
     connection.close();
     assertThrows(
         DatabaseAccessException.class,

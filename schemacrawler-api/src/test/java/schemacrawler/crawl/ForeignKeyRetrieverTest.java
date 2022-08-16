@@ -76,7 +76,6 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -137,7 +136,7 @@ public class ForeignKeyRetrieverTest {
 
   @Test
   @DisplayName("Retrieve foreign keys from data dictionary")
-  public void fkFromDataDictionary(final Connection connection) throws Exception {
+  public void fkFromDataDictionary(final DatabaseConnectionSource dataSource) throws Exception {
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
@@ -150,8 +149,6 @@ public class ForeignKeyRetrieverTest {
         .with(foreignKeysRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 

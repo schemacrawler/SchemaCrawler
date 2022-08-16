@@ -70,7 +70,6 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -128,7 +127,8 @@ public class PrimaryKeyRetrieverTest {
 
   @Test
   @DisplayName("Retrieve primary keys from data dictionary")
-  public void primaryKeysFromDataDictionary(final Connection connection) throws Exception {
+  public void primaryKeysFromDataDictionary(final DatabaseConnectionSource dataSource)
+      throws Exception {
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
@@ -141,8 +141,6 @@ public class PrimaryKeyRetrieverTest {
         .with(primaryKeysRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 

@@ -41,6 +41,7 @@ import schemacrawler.testdb.TestSchemaCreatorMain;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 public abstract class BaseSqliteTest {
 
@@ -106,6 +107,6 @@ public abstract class BaseSqliteTest {
     ds.setUsername(null);
     ds.setPassword(null);
 
-    return new DataSourceConnectionSource(connectionUrl, ds);
+    return DatabaseConnectionSources.fromDataSource(ds);
   }
 }

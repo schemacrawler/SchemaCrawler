@@ -47,7 +47,6 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.DataSourceConnectionSource;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
@@ -59,6 +58,7 @@ import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
 import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @DisableLogging
 @ResolveTestContext
@@ -113,7 +113,7 @@ public class DiffTest {
     dataSource.setUsername(null);
     dataSource.setPassword(null);
 
-    return new DataSourceConnectionSource(connectionUrl, dataSource);
+    return DatabaseConnectionSources.fromDataSource(dataSource);
   }
 
   private Catalog getCatalog(final String database) throws Exception {
@@ -128,8 +128,7 @@ public class DiffTest {
     final DatabaseConnectionSource dataSource =
         sqLiteDatabaseLoader.createDatabaseConnectionSource();
 
-    final Catalog catalog =
-        SchemaCrawlerUtility.getCatalog(dataSource, schemaCrawlerOptions);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource, schemaCrawlerOptions);
 
     return catalog;
   }

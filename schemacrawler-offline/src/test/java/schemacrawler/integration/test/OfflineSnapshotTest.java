@@ -80,7 +80,7 @@ import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
 public class OfflineSnapshotTest {
@@ -185,7 +185,7 @@ public class OfflineSnapshotTest {
 
     final Connection connection = newOfflineConnection(serializedCatalogFile);
     final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -237,7 +237,7 @@ public class OfflineSnapshotTest {
       final SchemaCrawlerExecutable executable, final String referenceFileName) throws Exception {
     final OfflineConnection connection = newOfflineConnection(serializedCatalogFile);
     final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);

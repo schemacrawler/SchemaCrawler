@@ -71,7 +71,6 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -108,7 +107,8 @@ public class IndexRetrieverTest {
 
   @Test
   @DisplayName("Retrieve indexes from data dictionary")
-  public void indexesFromDataDictionary(final Connection connection) throws Exception {
+  public void indexesFromDataDictionary(final DatabaseConnectionSource dataSource)
+      throws Exception {
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
@@ -120,8 +120,6 @@ public class IndexRetrieverTest {
         .with(indexesRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 

@@ -36,9 +36,6 @@ import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static us.fatehi.utility.datasource.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
-
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -52,15 +49,16 @@ import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @CaptureSystemStreams
 public class ConnectionShellCommandsTest {
 
   @Test
-  public void disconnect(final Connection connection) {
+  public void disconnect(final DatabaseConnectionSource dataSource) {
     final ShellState state = new ShellState();
-    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
+    state.setDataSource(dataSource); // is-connected
 
     final String[] args = new String[0];
 
@@ -89,9 +87,10 @@ public class ConnectionShellCommandsTest {
   }
 
   @Test
-  public void isConnected(final Connection connection, final CapturedSystemStreams streams) {
+  public void isConnected(
+      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
-    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
+    state.setDataSource(dataSource); // is-connected
 
     final String[] args = new String[] {"--is-connected"};
 

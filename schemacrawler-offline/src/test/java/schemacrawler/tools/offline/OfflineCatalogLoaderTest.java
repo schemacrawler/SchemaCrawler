@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 public class OfflineCatalogLoaderTest {
 
@@ -52,7 +52,7 @@ public class OfflineCatalogLoaderTest {
 
     final Connection connection = new TestDatabaseDriver().connect("jdbc:test-db:test", null);
     final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
     catalogLoader.setDataSource(dataSource);
 
     assertThat(catalogLoader.getDataSource(), is(not(nullValue())));

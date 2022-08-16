@@ -50,9 +50,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
-import schemacrawler.test.utility.DataSourceConnectionSource;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @TestInstance(PER_CLASS)
 @HeavyDatabaseTest
@@ -94,7 +94,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     final Connection connection = catalogUserDataSource.getConnection();
     final DatabaseConnectionSource dataSource =
-        new DataSourceConnectionSource("", catalogUserDataSource);
+        DatabaseConnectionSources.fromDataSource(catalogUserDataSource);
     final String expectedResource =
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33);
@@ -126,7 +126,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     final Connection connection = noAccessUserDataSource.getConnection();
     final DatabaseConnectionSource dataSource =
-        new DataSourceConnectionSource("", noAccessUserDataSource);
+        DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
     final String expectedResource =
         String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33);
@@ -148,7 +148,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     final Connection connection = schemaOwnerUserDataSource.getConnection();
     final DatabaseConnectionSource dataSource =
-        new DataSourceConnectionSource("", schemaOwnerUserDataSource);
+        DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource);
     final String expectedResource =
         String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33);
@@ -165,7 +165,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     final Connection connection = selectUserDataSource.getConnection();
     final DatabaseConnectionSource dataSource =
-        new DataSourceConnectionSource("", selectUserDataSource);
+        DatabaseConnectionSources.fromDataSource(selectUserDataSource);
 
     final String expectedResource =
         String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());

@@ -52,7 +52,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
@@ -81,7 +81,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
             .getResourceAsStream("teiid-vdb/stock-market-vdb.xml"));
 
     final Connection connection = server.getDriver().connect("jdbc:teiid:StockMarket", null);
-    dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
+    dataSource = DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
   }
 
   @Test

@@ -36,7 +36,6 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -44,7 +43,6 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +69,7 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
 public class HsqldbTest {
@@ -118,13 +116,8 @@ public class HsqldbTest {
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     requireNonNull(schemaRetrievalOptions, "No database specific override options provided");
 
-    final DatabaseConnectionSource dataSource;
-    try {
-      dataSource = DatabaseConnectionSources.newDatabaseConnectionSource(connection);
-    } catch (final SQLException e) {
-      fail(e);
-      return;
-    }
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
     final SchemaCrawler schemaCrawler =
         new SchemaCrawler(dataSource, schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();

@@ -25,22 +25,46 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility.datasource;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class TestConnectionDatabaseSources {
+final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
-  public static DatabaseConnectionSource newTestDatabaseConnectionSource(
-      final Connection connection) {
-    try {
-      return new SingleDatabaseConnectionSource("test-database-connection", connection);
-    } catch (final SQLException e) { // TODO Auto-generated catch block
-      fail(e);
-      return null;
+  private final Connection connection;
+
+  public TestDatabaseConnectionSource(final String connectionUrl, final Connection connection)
+      throws SQLException {
+    super(connectionUrl);
+    this.connection = requireNonNull(connection, "No connection provided");
+  }
+
+  @Override
+  public void close() throws Exception {
+    connection.close();
+  }
+
+  @Override
+  public Connection get() {
+    return PooledConnectionUtility.newPooledConnection(connection, this);
+  }
+
+  @Override
+  public boolean releaseConnection(final Connection connection) {
+    // No-op
+    return true;
+  }
+
+  @Override
+  protected void finalize() throws Throwable {
+    // Assert that all connections are closed
+    if (!connection.isClosed()) {
+      throw new RuntimeException("Connection pool is not closed");
     }
+    super.finalize();
   }
 }

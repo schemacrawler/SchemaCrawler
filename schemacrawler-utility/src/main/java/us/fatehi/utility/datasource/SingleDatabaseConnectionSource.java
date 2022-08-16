@@ -31,20 +31,12 @@ package us.fatehi.utility.datasource;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 
 final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private final Connection connection;
-
-  @Deprecated
-  public SingleDatabaseConnectionSource(final String connectionUrl, final Connection connection)
-      throws SQLException {
-    super(connectionUrl);
-    this.connection = requireNonNull(connection, "No connection provided");
-  }
 
   SingleDatabaseConnectionSource(
       final String connectionUrl,

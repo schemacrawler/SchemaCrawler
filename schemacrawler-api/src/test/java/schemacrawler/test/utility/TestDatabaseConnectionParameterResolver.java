@@ -48,6 +48,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import schemacrawler.testdb.TestDatabase;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 final class TestDatabaseConnectionParameterResolver
     implements ParameterResolver, BeforeAllCallback {
@@ -101,7 +102,7 @@ final class TestDatabaseConnectionParameterResolver
           dataSource.setUsername("sa");
           dataSource.setPassword("");
 
-          return new DataSourceConnectionSource(dataSource.getUrl(), dataSource);
+          return DatabaseConnectionSources.fromDataSource(dataSource);
 
         } else {
           throw new ParameterResolutionException("Could not resolve " + parameter);
@@ -113,7 +114,7 @@ final class TestDatabaseConnectionParameterResolver
           return connection;
         } else if (isParameterDatabaseConnectionSource(parameter)) {
           final EmbeddedDatabase db = newEmbeddedDatabase(script);
-          return new DataSourceConnectionSource("<database connection url>", db);
+          return DatabaseConnectionSources.fromDataSource(db);
         } else {
           throw new ParameterResolutionException("Could not resolve " + parameter);
         }

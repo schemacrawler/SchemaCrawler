@@ -68,7 +68,6 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -103,7 +102,7 @@ public class RoutineRetrieverProceduresTest {
   @Test
   @DisplayName("Retrieve procedures from data dictionary")
   public void proceduresFromDataDictionary(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
@@ -116,8 +115,6 @@ public class RoutineRetrieverProceduresTest {
         .with(proceduresRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 

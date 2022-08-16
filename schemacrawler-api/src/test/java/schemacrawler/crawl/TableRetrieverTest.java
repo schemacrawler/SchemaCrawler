@@ -71,7 +71,6 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -107,8 +106,8 @@ public class TableRetrieverTest {
 
   @Test
   @DisplayName("Retrieve tables from data dictionary")
-  public void tablesFromDataDictionary(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void tablesFromDataDictionary(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(InformationSchemaKey.TABLES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES")
@@ -119,8 +118,6 @@ public class TableRetrieverTest {
         .with(tablesRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 

@@ -84,7 +84,7 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -248,21 +248,21 @@ public class SchemaCrawlerCoverageTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final Connection connection2 = mock(Connection.class);
+    final Connection connection = mock(Connection.class);
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
-    when(connection2.isClosed()).thenReturn(false);
-    when(connection2.getMetaData()).thenReturn(databaseMetaData);
+    when(connection.isClosed()).thenReturn(false);
+    when(connection.getMetaData()).thenReturn(databaseMetaData);
     when(databaseMetaData.getDatabaseProductName()).thenReturn("databaseProductName");
     when(databaseMetaData.getDatabaseProductVersion()).thenReturn("databaseProductVersion");
     when(databaseMetaData.getURL()).thenReturn("connectionUrl");
     when(databaseMetaData.getDriverName()).thenReturn("driverName");
     when(databaseMetaData.getDriverVersion()).thenReturn("driverVersion");
 
-    final DatabaseConnectionSource dataSource2 =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection2);
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(dataSource2, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
+        new SchemaCrawler(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
     final RuntimeException ex = assertThrows(RuntimeException.class, () -> schemaCrawler.crawl());
     assertThat(ex.getMessage(), endsWith("Cannot use null results"));
   }

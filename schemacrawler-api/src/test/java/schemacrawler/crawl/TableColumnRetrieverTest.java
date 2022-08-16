@@ -76,7 +76,6 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -140,7 +139,7 @@ public class TableColumnRetrieverTest {
 
   @Test
   @DisplayName("Retrieve hidden table columns from data dictionary")
-  public void hiddenTableColumns(final Connection connection) throws Exception {
+  public void hiddenTableColumns(final DatabaseConnectionSource dataSource) throws Exception {
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
@@ -156,8 +155,6 @@ public class TableColumnRetrieverTest {
         .with(tableColumnsRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
@@ -214,7 +211,8 @@ public class TableColumnRetrieverTest {
 
   @Test
   @DisplayName("Retrieve table columns from data dictionary")
-  public void tableColumnsFromDataDictionary(final Connection connection) throws Exception {
+  public void tableColumnsFromDataDictionary(final DatabaseConnectionSource dataSource)
+      throws Exception {
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
@@ -227,8 +225,6 @@ public class TableColumnRetrieverTest {
         .with(tableColumnsRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 

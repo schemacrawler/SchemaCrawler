@@ -72,7 +72,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -83,7 +82,7 @@ public class TableExtRetrieverTest {
 
   @Test
   @DisplayName("Retrieve enum data types")
-  public void enumDataTypes(final Connection connection) throws Exception {
+  public void enumDataTypes(final DatabaseConnectionSource dataSource) throws Exception {
 
     final EnumDataTypeHelper enumDataTypeHelper =
         (column, columnDataType, databaseConnection) -> {
@@ -117,8 +116,6 @@ public class TableExtRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withEnumDataTypeHelper(enumDataTypeHelper);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
@@ -174,7 +171,7 @@ public class TableExtRetrieverTest {
 
   @Test
   @DisplayName("Retrieve index definitions from INFORMATION_SCHEMA")
-  public void indexInfo(final Connection connection) throws Exception {
+  public void indexInfo(final DatabaseConnectionSource dataSource) throws Exception {
 
     final String remarks = "TEST Index remarks";
     final String definition = "TEST Index definition";
@@ -193,8 +190,6 @@ public class TableExtRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
@@ -239,7 +234,7 @@ public class TableExtRetrieverTest {
 
   @Test
   @DisplayName("Retrieve table constraint definitions from INFORMATION_SCHEMA")
-  public void tableConstraintInfo(final Connection connection) throws Exception {
+  public void tableConstraintInfo(final DatabaseConnectionSource dataSource) throws Exception {
 
     final String remarks = "TEST Table Constraint remarks";
     final String definition = "TEST Table Constraint definition";
@@ -258,8 +253,6 @@ public class TableExtRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
@@ -288,7 +281,7 @@ public class TableExtRetrieverTest {
 
   @Test
   @DisplayName("Retrieve table definitions from INFORMATION_SCHEMA")
-  public void tableDefinitions(final Connection connection) throws Exception {
+  public void tableDefinitions(final DatabaseConnectionSource dataSource) throws Exception {
 
     final String definition = "TEST Table definition";
 
@@ -306,8 +299,6 @@ public class TableExtRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
@@ -326,7 +317,7 @@ public class TableExtRetrieverTest {
 
   @Test
   @DisplayName("Retrieve view table usage from INFORMATION_SCHEMA")
-  public void viewTableUsage(final Connection connection) throws Exception {
+  public void viewTableUsage(final DatabaseConnectionSource dataSource) throws Exception {
 
     int viewCount;
     final Collection<Table> tables = catalog.getTables();
@@ -355,8 +346,6 @@ public class TableExtRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connection);
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 

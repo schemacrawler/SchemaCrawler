@@ -41,6 +41,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import schemacrawler.testdb.TestSchemaCreator;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @DisableLogging
 public abstract class BaseAdditionalDatabaseTest {
@@ -108,7 +109,7 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected final DatabaseConnectionSource getDataSource() {
     final BasicDataSource basicDataSource = (BasicDataSource) dataSource;
-    return new DataSourceConnectionSource(basicDataSource.getUrl(), basicDataSource);
+    return DatabaseConnectionSources.fromDataSource(basicDataSource);
   }
 
   protected void runScript(final String databaseSqlResource) throws Exception {

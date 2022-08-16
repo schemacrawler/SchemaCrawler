@@ -13,7 +13,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static us.fatehi.utility.datasource.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
+import static us.fatehi.utility.datasource.DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.util.regex.Pattern;
@@ -29,6 +29,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
 @WithTestDatabase
@@ -73,11 +74,12 @@ public class SystemCommandTest {
   }
 
   @Test
-  public void showConnected(final Connection connection, final CapturedSystemStreams streams) {
+  public void showConnected(
+      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
     final String[] args = {"-C"};
 
     final ShellState state = new ShellState();
-    state.setDataSource(newTestDatabaseConnectionSource(connection));
+    state.setDataSource(dataSource);
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
