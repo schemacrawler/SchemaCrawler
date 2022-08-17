@@ -55,8 +55,6 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 final class TestDatabaseConnectionParameterResolver
     implements ParameterResolver, BeforeAllCallback, AfterAllCallback {
 
-  private static final TestDatabase testDatabase = TestDatabase.initialize();
-
   private static boolean isParameterConnection(final Parameter parameter) {
     return parameter.getType().isAssignableFrom(Connection.class);
   }
@@ -69,6 +67,7 @@ final class TestDatabaseConnectionParameterResolver
     return parameter.getType().isAssignableFrom(DatabaseConnectionSource.class);
   }
 
+  private TestDatabase testDatabase;
   private DatabaseConnectionSource dataSource;
 
   @Override
@@ -77,12 +76,16 @@ final class TestDatabaseConnectionParameterResolver
       dataSource.close();
       dataSource = null;
     }
+
+    testDatabase.stop();
   }
 
   @Override
   public void beforeAll(final ExtensionContext context) throws Exception {
     // Turn off logging
     new LoggingConfig();
+
+    testDatabase = TestDatabase.initialize();
   }
 
   @Override
