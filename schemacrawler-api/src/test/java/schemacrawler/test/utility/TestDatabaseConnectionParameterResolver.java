@@ -33,10 +33,12 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -51,7 +53,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 final class TestDatabaseConnectionParameterResolver
-    implements ParameterResolver, BeforeAllCallback {
+    implements ParameterResolver, BeforeAllCallback, AfterAllCallback {
 
   private static final TestDatabase testDatabase = TestDatabase.initialize();
 
@@ -67,6 +69,16 @@ final class TestDatabaseConnectionParameterResolver
     return parameter.getType().isAssignableFrom(DatabaseConnectionSource.class);
   }
 
+  private DatabaseConnectionSource dataSource;
+
+  @Override
+  public void afterAll(final ExtensionContext context) throws Exception {
+    if (dataSource != null) {
+      dataSource.close();
+      dataSource = null;
+    }
+  }
+
   @Override
   public void beforeAll(final ExtensionContext context) throws Exception {
     // Turn off logging
@@ -77,50 +89,44 @@ final class TestDatabaseConnectionParameterResolver
   public Object resolveParameter(
       final ParameterContext parameterContext, final ExtensionContext extensionContext)
       throws ParameterResolutionException {
-    try {
-      final WithTestDatabase withTestDatabase = locateAnnotation(extensionContext);
-      final String script;
-      if (withTestDatabase == null) {
-        script = "";
+
+    final WithTestDatabase withTestDatabase = locateAnnotation(extensionContext);
+    final String script;
+    if (withTestDatabase == null) {
+      script = "";
+    } else {
+      script = withTestDatabase.script();
+    }
+
+    final Parameter parameter = parameterContext.getParameter();
+    if (isBlank(script)) {
+      final DataSource ds = newDataSource();
+      this.dataSource = DatabaseConnectionSources.fromDataSource(ds);
+
+      if (isParameterConnection(parameter)) {
+        return dataSource.get();
+      } else if (isParameterDatabaseConnectionInfo(parameter)) {
+        return new DatabaseConnectionInfo(
+            testDatabase.getHost(),
+            testDatabase.getPort(),
+            testDatabase.getDatabase(),
+            testDatabase.getConnectionUrl());
+      } else if (isParameterDatabaseConnectionSource(parameter)) {
+        return dataSource;
       } else {
-        script = withTestDatabase.script();
+        throw new ParameterResolutionException("Could not resolve " + parameter);
       }
+    } else {
+      final DataSource ds = newEmbeddedDatabase(script);
+      this.dataSource = DatabaseConnectionSources.fromDataSource(ds);
 
-      final Parameter parameter = parameterContext.getParameter();
-      if (isBlank(script)) {
-        if (isParameterConnection(parameter)) {
-          return testDatabase.getConnection();
-        } else if (isParameterDatabaseConnectionInfo(parameter)) {
-          return new DatabaseConnectionInfo(
-              testDatabase.getHost(),
-              testDatabase.getPort(),
-              testDatabase.getDatabase(),
-              testDatabase.getConnectionUrl());
-        } else if (isParameterDatabaseConnectionSource(parameter)) {
-          final BasicDataSource dataSource = new BasicDataSource();
-          dataSource.setUrl(testDatabase.getConnectionUrl());
-          dataSource.setUsername("sa");
-          dataSource.setPassword("");
-
-          return DatabaseConnectionSources.fromDataSource(dataSource);
-
-        } else {
-          throw new ParameterResolutionException("Could not resolve " + parameter);
-        }
+      if (isParameterConnection(parameter)) {
+        return dataSource.get();
+      } else if (isParameterDatabaseConnectionSource(parameter)) {
+        return dataSource;
       } else {
-        if (isParameterConnection(parameter)) {
-          final EmbeddedDatabase db = newEmbeddedDatabase(script);
-          final Connection connection = db.getConnection();
-          return connection;
-        } else if (isParameterDatabaseConnectionSource(parameter)) {
-          final EmbeddedDatabase db = newEmbeddedDatabase(script);
-          return DatabaseConnectionSources.fromDataSource(db);
-        } else {
-          throw new ParameterResolutionException("Could not resolve " + parameter);
-        }
+        throw new ParameterResolutionException("Could not resolve " + parameter);
       }
-    } catch (final SQLException e) {
-      throw new ParameterResolutionException("", e);
     }
   }
 
@@ -152,6 +158,14 @@ final class TestDatabaseConnectionParameterResolver
       withTestDatabase = null;
     }
     return withTestDatabase;
+  }
+
+  private BasicDataSource newDataSource() {
+    final BasicDataSource ds = new BasicDataSource();
+    ds.setUrl(testDatabase.getConnectionUrl());
+    ds.setUsername("sa");
+    ds.setPassword("");
+    return ds;
   }
 
   private EmbeddedDatabase newEmbeddedDatabase(final String script) {

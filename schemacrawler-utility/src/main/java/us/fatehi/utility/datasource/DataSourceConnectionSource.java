@@ -3,6 +3,7 @@ package us.fatehi.utility.datasource;
 import static java.util.Objects.requireNonNull;
 
 import java.io.Closeable;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -35,6 +36,12 @@ final class DataSourceConnectionSource implements DatabaseConnectionSource {
   public void close() throws Exception {
     if (dataSource instanceof Closeable) {
       ((Closeable) dataSource).close();
+    } else {
+      final Method method = shutdownMethod();
+      if (method != null) {
+        method.setAccessible(true);
+        method.invoke(dataSource);
+      }
     }
   }
 
@@ -61,5 +68,17 @@ final class DataSourceConnectionSource implements DatabaseConnectionSource {
       return false;
     }
     return true;
+  }
+
+  private Method shutdownMethod() {
+    final Class<?> c = dataSource.getClass();
+    final Method[] methods = c.getDeclaredMethods();
+    for (final Method method : methods) {
+      final String methodName = method.getName();
+      if (methodName.equalsIgnoreCase("shutdown")) {
+        return method;
+      }
+    }
+    return null;
   }
 }
