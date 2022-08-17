@@ -186,10 +186,8 @@ final class TableColumnRetriever extends AbstractRetriever {
         columnDataTypeName = split[split.length - 1];
       }
     }
-    // PostgreSQL may quote column data type names, so "unquote" them
-    if (Identifiers.STANDARD.isQuotedName(columnDataTypeName)) {
-      columnDataTypeName = columnDataTypeName.substring(1, columnDataTypeName.length() - 1);
-    }
+    // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
+    columnDataTypeName = Identifiers.STANDARD.unquoteName(columnDataTypeName);
     if (isBlank(columnDataTypeName)) {
       columnDataTypeName = typeName;
     }

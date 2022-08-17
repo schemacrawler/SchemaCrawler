@@ -41,9 +41,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import java.util.logging.Logger;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
@@ -200,8 +200,7 @@ public final class Identifiers {
     }
   }
 
-  private static final Logger LOGGER =
-      Logger.getLogger(Identifiers.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(Identifiers.class.getName());
 
   public static final Identifiers STANDARD =
       Identifiers.identifiers().withIdentifierQuoteString("\"").build();
@@ -392,6 +391,21 @@ public final class Identifiers {
     quoteName(buffer, dependantObject.getName());
 
     return buffer.toString();
+  }
+
+  /**
+   * Unquotes an identifier name using the identifier quote string.
+   *
+   * @param name Identifier name to unquote
+   * @return Identifier name after unquoting it, or the original name if quoting is not required
+   */
+  public String unquoteName(final String name) {
+    if (isQuotedName(name)) {
+      final int quoteLength = identifierQuoteString.length();
+      return name.substring(quoteLength, name.length() - quoteLength);
+    } else {
+      return name;
+    }
   }
 
   private void quoteFullName(final StringBuilder buffer, final DatabaseObject databaseObject) {
