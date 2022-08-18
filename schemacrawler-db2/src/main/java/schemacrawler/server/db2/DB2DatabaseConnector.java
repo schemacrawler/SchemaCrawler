@@ -31,9 +31,9 @@ import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_diction
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class DB2DatabaseConnector extends DatabaseConnector {
 
@@ -47,7 +47,7 @@ public final class DB2DatabaseConnector extends DatabaseConnector {
             schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder -> {},
         () ->
-            DatabaseConnectionUrlBuilder.builder("jdbc:db2://${host}:${port}/${database}")
+            DatabaseConnectionSourceBuilder.builder("jdbc:db2://${host}:${port}/${database}")
                 .withDefaultPort(50000)
                 .withDefaultUrlx("retrieveMessagesFromServerOnGetMessage", true));
   }

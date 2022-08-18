@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class SQLiteDatabaseConnector extends DatabaseConnector {
 
@@ -44,7 +44,7 @@ public final class SQLiteDatabaseConnector extends DatabaseConnector {
             schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""),
         limitOptionsBuilder -> {},
         () ->
-            DatabaseConnectionUrlBuilder.builder("jdbc:sqlite:${database}")
+            DatabaseConnectionSourceBuilder.builder("jdbc:sqlite:${database}")
                 .withDefaultUrlx("application_id", "SchemaCrawler")
                 .withDefaultUrlx("open_mode", "2"));
   }

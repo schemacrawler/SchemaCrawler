@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class OfflineDatabaseConnector extends DatabaseConnector {
 
@@ -44,7 +44,7 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
         (informationSchemaViewsBuilder, connection) -> {},
         (schemaRetrievalOptionsBuilder, connection) -> {},
         limitOptionsBuilder -> {},
-        () -> DatabaseConnectionUrlBuilder.builder("jdbc:offline:${database}"));
+        () -> DatabaseConnectionSourceBuilder.builder("jdbc:offline:${database}"));
   }
 
   @Override

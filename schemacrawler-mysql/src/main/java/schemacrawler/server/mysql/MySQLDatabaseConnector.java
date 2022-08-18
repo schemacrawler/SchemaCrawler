@@ -31,9 +31,9 @@ import java.util.regex.Pattern;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class MySQLDatabaseConnector extends DatabaseConnector {
 
@@ -48,7 +48,7 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
         limitOptionsBuilder ->
             limitOptionsBuilder.includeSchemas(new RegularExpressionExclusionRule("sys|mysql")),
         () ->
-            DatabaseConnectionUrlBuilder.builder("jdbc:mysql://${host}:${port}/${database}")
+            DatabaseConnectionSourceBuilder.builder("jdbc:mysql://${host}:${port}/${database}")
                 .withDefaultPort(3306)
                 .withDefaultUrlx("nullNamePatternMatchesAll", true)
                 .withDefaultUrlx("noAccessToProcedureBodies", true)

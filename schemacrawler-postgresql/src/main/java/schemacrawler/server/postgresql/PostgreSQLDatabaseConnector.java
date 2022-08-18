@@ -29,9 +29,9 @@ package schemacrawler.server.postgresql;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
 
@@ -48,7 +48,7 @@ public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
             limitOptionsBuilder.includeSchemas(
                 new RegularExpressionExclusionRule("pg_catalog|information_schema")),
         () ->
-            DatabaseConnectionUrlBuilder.builder("jdbc:postgresql://${host}:${port}/${database}")
+            DatabaseConnectionSourceBuilder.builder("jdbc:postgresql://${host}:${port}/${database}")
                 .withDefaultPort(5432)
                 .withDefaultUrlx("ApplicationName", "SchemaCrawler")
                 .withDefaultUrlx("loggerLevel", "DEBUG"));
