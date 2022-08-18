@@ -1,4 +1,4 @@
-package schemacrawler.test;
+package us.fatehi.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,14 +8,14 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
-public class DatabaseConnectionUrlBuilderTest {
+public class DatabaseConnectionSourceBuilderTest {
 
   @Test
   public void database() {
-    final DatabaseConnectionUrlBuilder builder =
-        DatabaseConnectionUrlBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
 
     assertThat(builder.toURL(), is("jdbc:test-db:localhost:0/"));
 
@@ -31,8 +31,8 @@ public class DatabaseConnectionUrlBuilderTest {
 
   @Test
   public void port() {
-    final DatabaseConnectionUrlBuilder builder =
-        DatabaseConnectionUrlBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
 
     assertThat(builder.toURL(), is("jdbc:test-db:localhost:0/"));
 
@@ -51,8 +51,8 @@ public class DatabaseConnectionUrlBuilderTest {
 
   @Test
   public void host() {
-    final DatabaseConnectionUrlBuilder builder =
-        DatabaseConnectionUrlBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
 
     assertThat(builder.toURL(), is("jdbc:test-db:localhost:0/"));
 
@@ -75,8 +75,8 @@ public class DatabaseConnectionUrlBuilderTest {
     final Map<String, String> map = new HashMap<>();
     map.put("key", "value");
 
-    final DatabaseConnectionUrlBuilder builder =
-        DatabaseConnectionUrlBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
 
     assertThat(builder.toUrlx(), is(new HashMap<>()));
 

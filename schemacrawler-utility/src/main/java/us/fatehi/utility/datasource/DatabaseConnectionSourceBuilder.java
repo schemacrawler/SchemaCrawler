@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.databaseconnector;
+package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
@@ -35,10 +35,10 @@ import java.util.Map;
 
 import us.fatehi.utility.TemplatingUtility;
 
-public class DatabaseConnectionUrlBuilder {
+public class DatabaseConnectionSourceBuilder {
 
-  public static DatabaseConnectionUrlBuilder builder(final String connectionUrlTemplate) {
-    return new DatabaseConnectionUrlBuilder(connectionUrlTemplate);
+  public static DatabaseConnectionSourceBuilder builder(final String connectionUrlTemplate) {
+    return new DatabaseConnectionSourceBuilder(connectionUrlTemplate);
   }
 
   private final String connectionUrlTemplate;
@@ -52,7 +52,7 @@ public class DatabaseConnectionUrlBuilder {
   private Integer providedPort;
   private Map<String, String> providedUrlx;
 
-  private DatabaseConnectionUrlBuilder(final String connectionUrlTemplate) {
+  private DatabaseConnectionSourceBuilder(final String connectionUrlTemplate) {
     this.connectionUrlTemplate =
         requireNonNull(connectionUrlTemplate, "No database connection URL template provided");
 
@@ -104,36 +104,36 @@ public class DatabaseConnectionUrlBuilder {
     return urlx;
   }
 
-  public DatabaseConnectionUrlBuilder withDatabase(final String database) {
+  public DatabaseConnectionSourceBuilder withDatabase(final String database) {
     this.providedDatabase = database;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultDatabase(final String defaultDatabase) {
+  public DatabaseConnectionSourceBuilder withDefaultDatabase(final String defaultDatabase) {
     this.defaultDatabase = defaultDatabase;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultHost(final String defaultHost) {
+  public DatabaseConnectionSourceBuilder withDefaultHost(final String defaultHost) {
     this.defaultHost = defaultHost;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultPort(final int defaultPort) {
+  public DatabaseConnectionSourceBuilder withDefaultPort(final int defaultPort) {
     this.defaultPort = defaultPort;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultUrlx(final Map<String, String> defaultUrlx) {
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(final Map<String, String> defaultUrlx) {
     this.defaultUrlx = defaultUrlx;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultUrlx(final String property, final boolean value) {
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(final String property, final boolean value) {
     return withDefaultUrlx(property, String.valueOf(value));
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultUrlx(final String property, final String value) {
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(final String property, final String value) {
     if (defaultUrlx == null) {
       defaultUrlx = new HashMap<>();
     }
@@ -141,17 +141,17 @@ public class DatabaseConnectionUrlBuilder {
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withHost(final String host) {
+  public DatabaseConnectionSourceBuilder withHost(final String host) {
     this.providedHost = host;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withPort(final Integer port) {
+  public DatabaseConnectionSourceBuilder withPort(final Integer port) {
     this.providedPort = port;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withUrlx(final Map<String, String> urlx) {
+  public DatabaseConnectionSourceBuilder withUrlx(final Map<String, String> urlx) {
     this.providedUrlx = urlx;
     return this;
   }

@@ -1,4 +1,4 @@
-package schemacrawler.test.utility.database;
+package us.fatehi.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

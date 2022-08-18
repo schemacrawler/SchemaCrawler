@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 final class UnknownDatabaseConnector extends DatabaseConnector {
 
@@ -39,6 +40,6 @@ final class UnknownDatabaseConnector extends DatabaseConnector {
         (informationSchemaViewsBuilder, connection) -> {},
         (schemaRetrievalOptionsBuilder, connection) -> {},
         limitOptionsBuilder -> {},
-        () -> DatabaseConnectionUrlBuilder.builder(""));
+        () -> DatabaseConnectionSourceBuilder.builder(""));
   }
 }

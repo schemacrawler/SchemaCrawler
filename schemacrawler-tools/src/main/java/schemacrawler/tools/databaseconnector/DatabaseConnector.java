@@ -49,6 +49,7 @@ import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.UserCredentials;
 
 public abstract class DatabaseConnector implements Options {
@@ -62,7 +63,7 @@ public abstract class DatabaseConnector implements Options {
   private final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
       schemaRetrievalOptionsBuildProcess;
   private final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess;
-  private final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess;
+  private final Supplier<DatabaseConnectionSourceBuilder> urlBuildProcess;
 
   protected DatabaseConnector(
       final DatabaseServerType dbServerType,
@@ -72,7 +73,7 @@ public abstract class DatabaseConnector implements Options {
       final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
           schemaRetrievalOptionsBuildProcess,
       final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess,
-      final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess) {
+      final Supplier<DatabaseConnectionSourceBuilder> urlBuildProcess) {
     this.dbServerType = requireNonNull(dbServerType, "No database server type provided");
 
     this.supportsUrl = requireNonNull(supportsUrl, "No predicate for URL support provided");
@@ -157,7 +158,7 @@ public abstract class DatabaseConnector implements Options {
       final String database = serverHostConnectionOptions.getDatabase();
       final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
 
-      final DatabaseConnectionUrlBuilder databaseConnectionUrlBuilder = urlBuildProcess.get();
+      final DatabaseConnectionSourceBuilder databaseConnectionUrlBuilder = urlBuildProcess.get();
       databaseConnectionUrlBuilder.withHost(host);
       databaseConnectionUrlBuilder.withPort(port);
       databaseConnectionUrlBuilder.withDatabase(database);

@@ -31,9 +31,9 @@ import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_diction
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class HyperSQLDatabaseConnector extends DatabaseConnector {
 
@@ -48,7 +48,7 @@ public final class HyperSQLDatabaseConnector extends DatabaseConnector {
                 tableColumnPrivilegesRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder -> {},
         () ->
-            DatabaseConnectionUrlBuilder.builder("jdbc:hsqldb:hsql://${host}:${port}/${database}")
+            DatabaseConnectionSourceBuilder.builder("jdbc:hsqldb:hsql://${host}:${port}/${database}")
                 .withDefaultPort(9001)
                 .withDefaultUrlx("readonly", true)
                 .withDefaultUrlx("hsqldb.lock_file", false));
