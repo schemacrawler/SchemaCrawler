@@ -48,6 +48,7 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -184,6 +185,8 @@ final class TableColumnRetriever extends AbstractRetriever {
         columnDataTypeName = split[split.length - 1];
       }
     }
+    // PostgreSQL and DB2 may quote column data types, so "unquote" them
+    columnDataTypeName = Identifiers.STANDARD.unquoteName(columnDataTypeName);
     if (isBlank(columnDataTypeName)) {
       columnDataTypeName = typeName;
     }

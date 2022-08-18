@@ -40,9 +40,9 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class OracleDatabaseConnector extends DatabaseConnector {
 
@@ -68,7 +68,7 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
                 .with(functionParametersRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder -> limitOptionsBuilder.includeSchemas(new OracleSchemaExclusionRule()),
         () ->
-            DatabaseConnectionUrlBuilder.builder("jdbc:oracle:thin:@//${host}:${port}/${database}")
+            DatabaseConnectionSourceBuilder.builder("jdbc:oracle:thin:@//${host}:${port}/${database}")
                 .withDefaultPort(1521)
                 .withDefaultUrlx("remarksReporting", true)
                 .withDefaultUrlx("restrictGetTables", true)

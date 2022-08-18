@@ -1,9 +1,9 @@
 package schemacrawler.test.utility;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 /**
  * SchemaCrawler database support plug-in.
@@ -22,7 +22,7 @@ public final class TestDatabaseConnector extends DatabaseConnector {
             informationSchemaViewsBuilder.fromResourceFolder("/test-db.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) -> {},
         (limitOptionsBuilder) -> {},
-        () -> DatabaseConnectionUrlBuilder.builder("jdbc:test-db:${database}"));
+        () -> DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${database}"));
 
     Class.forName("schemacrawler.test.utility.TestDatabaseDriver");
   }

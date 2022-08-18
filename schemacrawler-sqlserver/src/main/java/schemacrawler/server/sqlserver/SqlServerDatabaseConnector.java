@@ -29,9 +29,9 @@ package schemacrawler.server.sqlserver;
 
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
 public final class SqlServerDatabaseConnector extends DatabaseConnector {
 
@@ -47,7 +47,7 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
                 new RegularExpressionRule(
                     ".*\\.dbo", "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")),
         () ->
-            DatabaseConnectionUrlBuilder.builder(
+            DatabaseConnectionSourceBuilder.builder(
                     "jdbc:sqlserver://${host}:${port};databaseName=${database}")
                 .withDefaultPort(1433)
                 .withDefaultUrlx("applicationName", "SchemaCrawler")
