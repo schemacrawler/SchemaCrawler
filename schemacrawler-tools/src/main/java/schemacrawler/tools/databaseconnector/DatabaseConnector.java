@@ -48,8 +48,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.datasource.UserCredentials;
 
 public abstract class DatabaseConnector implements Options {
@@ -163,12 +163,9 @@ public abstract class DatabaseConnector implements Options {
       databaseConnectionUrlBuilder.withPort(port);
       databaseConnectionUrlBuilder.withDatabase(database);
       databaseConnectionUrlBuilder.withUrlx(urlx);
+      databaseConnectionUrlBuilder.withUserCredentials(userCredentials);
 
-      final String connectionUrl = databaseConnectionUrlBuilder.toURL();
-      final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toUrlx();
-      databaseConnectionSource =
-          DatabaseConnectionSources.newDatabaseConnectionSource(
-              connectionUrl, connectionUrlx, userCredentials);
+      databaseConnectionSource = databaseConnectionUrlBuilder.build();
     } else {
       throw new ConfigurationException("Could not create new database connection source");
     }

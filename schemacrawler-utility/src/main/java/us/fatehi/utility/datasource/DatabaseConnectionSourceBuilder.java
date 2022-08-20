@@ -46,6 +46,7 @@ public class DatabaseConnectionSourceBuilder {
   private String defaultHost;
   private int defaultPort;
   private Map<String, String> defaultUrlx;
+  private UserCredentials userCredentials;
 
   private String providedDatabase;
   private String providedHost;
@@ -58,9 +59,83 @@ public class DatabaseConnectionSourceBuilder {
 
     this.defaultHost = "localhost";
     this.defaultDatabase = "";
+    userCredentials = new MultiUseUserCredentials();
   }
 
-  public String toURL() {
+  public DatabaseConnectionSource build() {
+    final String connectionUrl = toURL();
+    final Map<String, String> connectionUrlx = toUrlx();
+    final DatabaseConnectionSource databaseConnectionSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            connectionUrl, connectionUrlx, userCredentials);
+    return databaseConnectionSource;
+  }
+
+  public DatabaseConnectionSourceBuilder withDatabase(final String database) {
+    this.providedDatabase = database;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withDefaultDatabase(final String defaultDatabase) {
+    this.defaultDatabase = defaultDatabase;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withDefaultHost(final String defaultHost) {
+    this.defaultHost = defaultHost;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withDefaultPort(final int defaultPort) {
+    this.defaultPort = defaultPort;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(final Map<String, String> defaultUrlx) {
+    this.defaultUrlx = defaultUrlx;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(
+      final String property, final boolean value) {
+    return withDefaultUrlx(property, String.valueOf(value));
+  }
+
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(
+      final String property, final String value) {
+    if (defaultUrlx == null) {
+      defaultUrlx = new HashMap<>();
+    }
+    defaultUrlx.put(property, value);
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withHost(final String host) {
+    this.providedHost = host;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withPort(final Integer port) {
+    this.providedPort = port;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withUrlx(final Map<String, String> urlx) {
+    this.providedUrlx = urlx;
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withUserCredentials(
+      final UserCredentials userCredentials) {
+    if (userCredentials == null) {
+      this.userCredentials = new MultiUseUserCredentials();
+    } else {
+      this.userCredentials = userCredentials;
+    }
+    return this;
+  }
+
+  String toURL() {
 
     final String host;
     if (isBlank(providedHost)) {
@@ -93,7 +168,7 @@ public class DatabaseConnectionSourceBuilder {
     return url;
   }
 
-  public Map<String, String> toUrlx() {
+  Map<String, String> toUrlx() {
     final Map<String, String> urlx = new HashMap<>();
     if (defaultUrlx != null) {
       urlx.putAll(defaultUrlx);
@@ -102,57 +177,5 @@ public class DatabaseConnectionSourceBuilder {
       urlx.putAll(providedUrlx);
     }
     return urlx;
-  }
-
-  public DatabaseConnectionSourceBuilder withDatabase(final String database) {
-    this.providedDatabase = database;
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withDefaultDatabase(final String defaultDatabase) {
-    this.defaultDatabase = defaultDatabase;
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withDefaultHost(final String defaultHost) {
-    this.defaultHost = defaultHost;
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withDefaultPort(final int defaultPort) {
-    this.defaultPort = defaultPort;
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withDefaultUrlx(final Map<String, String> defaultUrlx) {
-    this.defaultUrlx = defaultUrlx;
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withDefaultUrlx(final String property, final boolean value) {
-    return withDefaultUrlx(property, String.valueOf(value));
-  }
-
-  public DatabaseConnectionSourceBuilder withDefaultUrlx(final String property, final String value) {
-    if (defaultUrlx == null) {
-      defaultUrlx = new HashMap<>();
-    }
-    defaultUrlx.put(property, value);
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withHost(final String host) {
-    this.providedHost = host;
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withPort(final Integer port) {
-    this.providedPort = port;
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withUrlx(final Map<String, String> urlx) {
-    this.providedUrlx = urlx;
-    return this;
   }
 }
