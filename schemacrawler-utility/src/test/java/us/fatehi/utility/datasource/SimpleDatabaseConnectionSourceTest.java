@@ -58,7 +58,7 @@ public class SimpleDatabaseConnectionSourceTest {
         RuntimeException.class,
         () ->
             new SimpleDatabaseConnectionSource(
-                "<bad-url>", null, new MultiUseUserCredentials("user", "!")));
+                "<bad-url>", null, new MultiUseUserCredentials("user", "!"), connection -> {}));
 
     final String connectionUrl = databaseConnectionSource.getConnectionUrl();
     assertThrows(
@@ -66,7 +66,7 @@ public class SimpleDatabaseConnectionSourceTest {
         () -> {
           final SimpleDatabaseConnectionSource badDatabaseConnectionSource =
               new SimpleDatabaseConnectionSource(
-                  connectionUrl, null, new MultiUseUserCredentials("user", "!"));
+                  connectionUrl, null, new MultiUseUserCredentials("user", "!"), connection -> {});
           final Connection connection = badDatabaseConnectionSource.get();
           badDatabaseConnectionSource.close();
         });
@@ -127,6 +127,9 @@ public class SimpleDatabaseConnectionSourceTest {
     final String password = "";
     databaseConnectionSource =
         new SimpleDatabaseConnectionSource(
-            connectionUrl, new HashMap<>(), new MultiUseUserCredentials(userName, password));
+            connectionUrl,
+            new HashMap<>(),
+            new MultiUseUserCredentials(userName, password),
+            connection -> {});
   }
 }

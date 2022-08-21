@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
@@ -40,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -95,7 +97,9 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
   }
 
   protected static Connection getConnection(
-      final String connectionUrl, final Properties jdbcConnectionProperties) {
+      final String connectionUrl,
+      final Properties jdbcConnectionProperties,
+      final Consumer<Connection> connectionInitializer) {
 
     final String username;
     final String user = jdbcConnectionProperties.getProperty("user");
@@ -122,8 +126,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
 
       LOGGER.log(Level.INFO, new StringFormat("Opened database connection <%s>", connection));
 
-      // Clear password
-      jdbcConnectionProperties.remove("password");
+      connectionInitializer.accept(connection);
 
       return connection;
     } catch (final SQLException e) {
@@ -154,9 +157,13 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
   }
 
   protected final String connectionUrl;
+  protected final Consumer<Connection> connectionInitializer;
 
-  AbstractDatabaseConnectionSource(final String connectionUrl) {
+  AbstractDatabaseConnectionSource(
+      final String connectionUrl, final Consumer<Connection> connectionInitializer) {
     this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
+    this.connectionInitializer =
+        requireNonNull(connectionInitializer, "No connection initializer provided");
   }
 
   @Override

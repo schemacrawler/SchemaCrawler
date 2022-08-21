@@ -39,7 +39,7 @@ final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSourc
 
   public TestDatabaseConnectionSource(final String connectionUrl, final Connection connection)
       throws SQLException {
-    super(connectionUrl);
+    super(connectionUrl, conn -> {});
     this.connection = requireNonNull(connection, "No connection provided");
   }
 

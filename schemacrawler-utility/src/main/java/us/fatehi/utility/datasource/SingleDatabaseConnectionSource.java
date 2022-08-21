@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Consumer;
 
 final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
@@ -41,8 +42,9 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   SingleDatabaseConnectionSource(
       final String connectionUrl,
       final Map<String, String> connectionProperties,
-      final UserCredentials userCredentials) {
-    super(connectionUrl);
+      final UserCredentials userCredentials,
+      final Consumer<Connection> connectionInitializer) {
+    super(connectionUrl, connectionInitializer);
     // Ensure that user credentials are not null
     requireNonNull(userCredentials, "No user credentials provided");
 
@@ -50,7 +52,7 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
     final String password = userCredentials.getPassword();
     final Properties jdbcConnectionProperties =
         createConnectionProperties(connectionUrl, connectionProperties, user, password);
-    connection = getConnection(connectionUrl, jdbcConnectionProperties);
+    connection = getConnection(connectionUrl, jdbcConnectionProperties, connectionInitializer);
   }
 
   @Override

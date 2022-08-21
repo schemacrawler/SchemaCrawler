@@ -38,6 +38,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,9 +57,10 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   SimpleDatabaseConnectionSource(
       final String connectionUrl,
       final Map<String, String> connectionProperties,
-      final UserCredentials userCredentials) {
+      final UserCredentials userCredentials,
+      final Consumer<Connection> connectionInitializer) {
 
-    super(connectionUrl);
+    super(connectionUrl, connectionInitializer);
 
     requireNonNull(userCredentials, "No user credentials provided");
 
@@ -105,7 +107,8 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   public Connection get() {
     // Create a connection if needed
     if (connectionPool.isEmpty()) {
-      final Connection connection = getConnection(connectionUrl, jdbcConnectionProperties);
+      final Connection connection =
+          getConnection(connectionUrl, jdbcConnectionProperties, connectionInitializer);
       connectionPool.add(connection);
     }
 

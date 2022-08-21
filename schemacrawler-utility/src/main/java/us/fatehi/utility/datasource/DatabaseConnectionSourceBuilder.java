@@ -27,39 +27,39 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.datasource;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import us.fatehi.utility.TemplatingUtility;
 
 public class DatabaseConnectionSourceBuilder {
 
   public static DatabaseConnectionSourceBuilder builder(final String connectionUrlTemplate) {
-    return new DatabaseConnectionSourceBuilder(connectionUrlTemplate);
+    return new DatabaseConnectionSourceBuilder().withConnectionUrl(connectionUrlTemplate);
   }
 
-  private final String connectionUrlTemplate;
+  private String connectionUrlTemplate;
   private String defaultDatabase;
   private String defaultHost;
   private int defaultPort;
   private Map<String, String> defaultUrlx;
   private UserCredentials userCredentials;
-
+  private Consumer<Connection> connectionInitializer;
   private String providedDatabase;
   private String providedHost;
   private Integer providedPort;
   private Map<String, String> providedUrlx;
 
-  private DatabaseConnectionSourceBuilder(final String connectionUrlTemplate) {
-    this.connectionUrlTemplate =
-        requireNonNull(connectionUrlTemplate, "No database connection URL template provided");
-
+  private DatabaseConnectionSourceBuilder() {
     this.defaultHost = "localhost";
     this.defaultDatabase = "";
     userCredentials = new MultiUseUserCredentials();
+    connectionInitializer = connection -> {};
   }
 
   public DatabaseConnectionSource build() {
@@ -67,8 +67,23 @@ public class DatabaseConnectionSourceBuilder {
     final Map<String, String> connectionUrlx = toUrlx();
     final DatabaseConnectionSource databaseConnectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, connectionUrlx, userCredentials);
+            connectionUrl, connectionUrlx, userCredentials, connectionInitializer);
     return databaseConnectionSource;
+  }
+
+  public DatabaseConnectionSourceBuilder withConnectionInitializer(
+      final Consumer<Connection> connectionInitializer) {
+    if (connectionInitializer == null) {
+      this.connectionInitializer = connection -> {};
+    } else {
+      this.connectionInitializer = connectionInitializer;
+    }
+    return this;
+  }
+
+  public DatabaseConnectionSourceBuilder withConnectionUrl(final String connectionUrlTemplate) {
+    this.connectionUrlTemplate = connectionUrlTemplate;
+    return this;
   }
 
   public DatabaseConnectionSourceBuilder withDatabase(final String database) {
@@ -136,6 +151,8 @@ public class DatabaseConnectionSourceBuilder {
   }
 
   String toURL() {
+
+    requireNotBlank(connectionUrlTemplate, "No database connection URL template provided");
 
     final String host;
     if (isBlank(providedHost)) {

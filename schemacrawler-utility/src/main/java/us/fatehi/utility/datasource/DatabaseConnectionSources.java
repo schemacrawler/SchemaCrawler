@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
+import java.sql.Connection;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +49,8 @@ public class DatabaseConnectionSources {
   public static DatabaseConnectionSource newDatabaseConnectionSource(
       final String connectionUrl,
       final Map<String, String> connectionProperties,
-      final UserCredentials userCredentials) {
+      final UserCredentials userCredentials,
+      final Consumer<Connection> connectionInitializer) {
 
     final String experimentalFlag =
         PropertiesUtility.getSystemConfigurationProperty(
@@ -56,17 +59,17 @@ public class DatabaseConnectionSources {
     if (isExperimental) {
       LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
       return new SimpleDatabaseConnectionSource(
-          connectionUrl, connectionProperties, userCredentials);
+          connectionUrl, connectionProperties, userCredentials, connectionInitializer);
     } else {
       LOGGER.log(Level.CONFIG, "Loading database schema using a single main thread");
       return new SingleDatabaseConnectionSource(
-          connectionUrl, connectionProperties, userCredentials);
+          connectionUrl, connectionProperties, userCredentials, connectionInitializer);
     }
   }
 
   public static DatabaseConnectionSource newDatabaseConnectionSource(
       final String connectionUrl, final UserCredentials userCredentials) {
-    return newDatabaseConnectionSource(connectionUrl, null, userCredentials);
+    return newDatabaseConnectionSource(connectionUrl, null, userCredentials, connection -> {});
   }
 
   private DatabaseConnectionSources() {
