@@ -107,12 +107,11 @@ final class TableColumnRetriever extends AbstractRetriever {
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
       final Set<NamedObjectKey> hiddenTableColumnsLookupKeys) {
-    // Get the "COLUMN_DEF" value first as it the Oracle drivers
+
+    // Get the "COLUMN_DEF" value first as it the Oracle driver
     // don't handle it properly otherwise.
-    // https://community.oracle.com/message/5940745#5940745
-    // NOTE: Still an issue with Oracle JDBC driver 11.2.0.3.0
+    // https://github.com/schemacrawler/SchemaCrawler/issues/835
     final String defaultValue = results.getString("COLUMN_DEF");
-    //
 
     final String columnCatalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
     final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));

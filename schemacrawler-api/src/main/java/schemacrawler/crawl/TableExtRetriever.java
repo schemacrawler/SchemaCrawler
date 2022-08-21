@@ -425,6 +425,12 @@ final class TableExtRetriever extends AbstractRetriever {
             new MetadataResultSet(viewInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
+
+        // Get the "VIEW_DEFINITION" value first as it the Oracle driver
+        // don't handle it properly otherwise.
+        // https://github.com/schemacrawler/SchemaCrawler/issues/835
+        final String definition = results.getString("VIEW_DEFINITION");
+
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String viewName = results.getString("TABLE_NAME");
@@ -439,7 +445,7 @@ final class TableExtRetriever extends AbstractRetriever {
 
         final MutableView view = (MutableView) viewOptional.get();
         LOGGER.log(Level.FINER, new StringFormat("Retrieving view information <%s>", viewName));
-        final String definition = results.getString("VIEW_DEFINITION");
+
         final CheckOptionType checkOption =
             results.getEnum("CHECK_OPTION", CheckOptionType.unknown);
         final boolean updatable = results.getBoolean("IS_UPDATABLE");
