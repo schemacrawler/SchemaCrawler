@@ -68,11 +68,13 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
                 .with(functionParametersRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder -> limitOptionsBuilder.includeSchemas(new OracleSchemaExclusionRule()),
         () ->
-            DatabaseConnectionSourceBuilder.builder("jdbc:oracle:thin:@//${host}:${port}/${database}")
+            DatabaseConnectionSourceBuilder.builder(
+                    "jdbc:oracle:thin:@//${host}:${port}/${database}")
                 .withDefaultPort(1521)
                 .withDefaultUrlx("remarksReporting", true)
                 .withDefaultUrlx("restrictGetTables", true)
-                .withDefaultUrlx("useFetchSizeWithLongColumn", true));
+                .withDefaultUrlx("useFetchSizeWithLongColumn", true)
+                .withConnectionInitializer(new OracleConnectionInitializer()));
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }

@@ -27,31 +27,15 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.oracle;
 
+import static us.fatehi.utility.database.SqlScript.executeScriptFromResource;
+
 import java.sql.Connection;
+import java.util.function.Consumer;
 
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.tools.catalogloader.BaseCatalogLoader;
-import schemacrawler.tools.executable.CommandDescription;
-import us.fatehi.utility.database.SqlScript;
-
-public final class OracleCatalogLoader extends BaseCatalogLoader {
-
-  public OracleCatalogLoader() {
-    super(new CommandDescription("oracleloader", "Loader for Oracle databases"), -1);
-  }
+public final class OracleConnectionInitializer implements Consumer<Connection> {
 
   @Override
-  public void loadCatalog() {
-
-    if (!isDatabaseSystemIdentifier(
-        OracleDatabaseConnector.DB_SERVER_TYPE.getDatabaseSystemIdentifier())) {
-      return;
-    }
-
-    try (final Connection connection = getDataSource().get(); ) {
-      SqlScript.executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
-    } catch (final Exception e) {
-      throw new ExecutionRuntimeException("Could not execute setup script for Oracle", e);
-    }
+  public void accept(final Connection connection) {
+    executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
   }
 }
