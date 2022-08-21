@@ -65,9 +65,6 @@ public class TestDatabase {
       return testDatabase;
     } catch (final Exception e) {
       throw new RuntimeException("Could not initialize test database", e);
-      //      e.printStackTrace();
-      //      System.exit(1);
-      //      return null;
     }
   }
 
@@ -82,9 +79,6 @@ public class TestDatabase {
       return testDatabase;
     } catch (final Exception e) {
       throw new RuntimeException("Could not initialize test database", e);
-      //      e.printStackTrace();
-      //      System.exit(1);
-      //      return null;
     }
   }
 

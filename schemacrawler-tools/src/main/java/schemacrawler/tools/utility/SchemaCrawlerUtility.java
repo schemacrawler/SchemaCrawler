@@ -125,6 +125,7 @@ public final class SchemaCrawlerUtility {
       throw new DatabaseAccessException("Could not retrieve result-set metadata", e);
     }
   }
+
   /**
    * Returns database specific options using an existing SchemaCrawler database plugin.
    *
@@ -146,6 +147,13 @@ public final class SchemaCrawlerUtility {
     }
   }
 
+  /**
+   * Updates the connection data source by attaching a connection initializer.
+   *
+   * @param dataSource Database connection source
+   * @param schemaRetrievalOptions SchemaCrawler retrieval options to convey the connection
+   *     initializer from the database plugin
+   */
   public static void updateConnectionDataSource(
       final DatabaseConnectionSource dataSource,
       final SchemaRetrievalOptions schemaRetrievalOptions) {
