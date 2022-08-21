@@ -15,19 +15,9 @@ final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource 
 
   private static final Logger LOGGER = Logger.getLogger(DataSourceConnectionSource.class.getName());
 
-  private static String buildConnectionUrl(final DataSource dataSource) {
-    try (final Connection connection = dataSource.getConnection(); ) {
-      return connection.getMetaData().getURL();
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not obtain database connection URL", e);
-      return null;
-    }
-  }
-
   private final DataSource dataSource;
 
   public DataSourceConnectionSource(final DataSource dataSource) {
-    super(buildConnectionUrl(dataSource), connection -> {});
     this.dataSource = requireNonNull(dataSource, "Data source not provided");
   }
 

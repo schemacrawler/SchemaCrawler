@@ -31,7 +31,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
@@ -60,14 +59,6 @@ public class DatabaseConnectionSourceTest {
         DatabaseConnectionSources.newDatabaseConnectionSource(
             "jdbc:test-db:test", new MultiUseUserCredentials());
 
-    assertThat(
-        connectionSource.toString(),
-        is(
-            "driver=schemacrawler.test.utility.TestDatabaseDriver"
-                + System.lineSeparator()
-                + "url=jdbc:test-db:test"
-                + System.lineSeparator()));
-
     final Connection connection = connectionSource.get();
 
     assertThat(connection, is(not(nullValue())));
@@ -81,8 +72,6 @@ public class DatabaseConnectionSourceTest {
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
             databaseConnectionInfo.getConnectionUrl(), new MultiUseUserCredentials("sa", ""));
-
-    assertThat(connectionSource.toString(), startsWith("driver=org.hsqldb.jdbc.JDBCDriver"));
 
     final Connection connection = connectionSource.get();
 

@@ -31,15 +31,12 @@ package us.fatehi.utility.datasource;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private final Connection connection;
 
-  public TestDatabaseConnectionSource(final String connectionUrl, final Connection connection)
-      throws SQLException {
-    super(connectionUrl, conn -> {});
+  public TestDatabaseConnectionSource(final Connection connection) {
     this.connection = requireNonNull(connection, "No connection provided");
   }
 
@@ -57,14 +54,5 @@ final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSourc
   public boolean releaseConnection(final Connection connection) {
     // No-op
     return true;
-  }
-
-  @Override
-  protected void finalize() throws Throwable {
-    // Assert that all connections are closed
-    if (!connection.isClosed()) {
-      throw new RuntimeException("Connection pool is not closed");
-    }
-    super.finalize();
   }
 }

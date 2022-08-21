@@ -30,6 +30,7 @@ package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -49,6 +50,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   private static final Logger LOGGER =
       Logger.getLogger(SimpleDatabaseConnectionSource.class.getName());
 
+  private final String connectionUrl;
   private final Properties jdbcConnectionProperties;
   private final LinkedList<Connection> connectionPool;
   private final LinkedList<Connection> usedConnections;
@@ -59,8 +61,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
       final UserCredentials userCredentials,
       final Consumer<Connection> connectionInitializer) {
 
-    super(connectionUrl, connectionInitializer);
-
+    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
     requireNonNull(userCredentials, "No user credentials provided");
 
     final String user = userCredentials.getUser();

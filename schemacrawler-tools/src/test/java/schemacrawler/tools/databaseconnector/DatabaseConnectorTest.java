@@ -57,19 +57,12 @@ public class DatabaseConnectorTest {
     DatabaseConnectionOptions connectionOptions;
     DatabaseConnectionSource connectionSource;
 
-    connectionOptions = new DatabaseUrlConnectionOptions("jdbc:test-db:some-database");
-    connectionSource =
-        databaseConnector.newDatabaseConnectionSource(
-            connectionOptions, new MultiUseUserCredentials());
-    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
-
     connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "test-db", "some-host", 2121, "some-database", null);
     connectionSource =
         databaseConnector.newDatabaseConnectionSource(
             connectionOptions, new MultiUseUserCredentials());
-    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
 
     assertThat(
         databaseConnector.getSchemaRetrievalOptionsBuilder(connectionSource.get()),

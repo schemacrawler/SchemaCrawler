@@ -28,9 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -156,19 +153,10 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
     return logProperties;
   }
 
-  protected final String connectionUrl;
   protected Consumer<Connection> connectionInitializer;
 
-  AbstractDatabaseConnectionSource(
-      final String connectionUrl, final Consumer<Connection> connectionInitializer) {
-    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
-    this.connectionInitializer =
-        requireNonNull(connectionInitializer, "No connection initializer provided");
-  }
-
-  @Override
-  public final String getConnectionUrl() {
-    return connectionUrl;
+  public AbstractDatabaseConnectionSource() {
+    connectionInitializer = connection -> {};
   }
 
   @Override
@@ -178,21 +166,5 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
     } else {
       this.connectionInitializer = connectionInitializer;
     }
-  }
-
-  @Override
-  public final String toString() {
-    String jdbcDriverClass = "<unknown>";
-    try {
-      final Driver jdbcDriver = getJdbcDriver(connectionUrl);
-      jdbcDriverClass = jdbcDriver.getClass().getName();
-    } catch (final SQLException e) {
-      jdbcDriverClass = "<unknown>";
-    }
-
-    final StringBuilder builder = new StringBuilder(1024);
-    builder.append("driver=").append(jdbcDriverClass).append(System.lineSeparator());
-    builder.append("url=").append(connectionUrl).append(System.lineSeparator());
-    return builder.toString();
   }
 }

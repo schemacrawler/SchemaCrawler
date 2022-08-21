@@ -28,32 +28,26 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
-import java.util.Map;
-import java.util.Properties;
+import java.sql.SQLException;
 import java.util.function.Consumer;
 
-final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
+@Deprecated
+final class WrappedDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private final Connection connection;
 
-  SingleDatabaseConnectionSource(
-      final String connectionUrl,
-      final Map<String, String> connectionProperties,
-      final UserCredentials userCredentials,
-      final Consumer<Connection> connectionInitializer) {
-
-    requireNotBlank(connectionUrl, "No database connection URL provided");
-    requireNonNull(userCredentials, "No user credentials provided");
-
-    final String user = userCredentials.getUser();
-    final String password = userCredentials.getPassword();
-    final Properties jdbcConnectionProperties =
-        createConnectionProperties(connectionUrl, connectionProperties, user, password);
-    connection = getConnection(connectionUrl, jdbcConnectionProperties, connectionInitializer);
+  public WrappedDatabaseConnectionSource(
+      final Connection connection, final Consumer<Connection> connectionInitializer) {
+    try {
+      this.connection = checkConnection(connection);
+      setConnectionInitializer(connectionInitializer);
+      this.connectionInitializer.accept(connection);
+    } catch (final SQLException e) {
+      throw new RuntimeException("Could not wrap provided database connection", e);
+    }
   }
 
   @Override

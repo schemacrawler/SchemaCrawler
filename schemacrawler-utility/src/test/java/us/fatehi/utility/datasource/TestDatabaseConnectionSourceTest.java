@@ -62,7 +62,6 @@ public class TestDatabaseConnectionSourceTest {
     assertThat(unwrappedConnection.getClass().getName(), endsWith("JDBCConnection"));
     assertThat(connection.isClosed(), is(false));
     assertThat(databaseConnectionSource.toString(), containsString("DataSourceConnectionSource"));
-    assertThat(databaseConnectionSource.getConnectionUrl(), is(connection.getMetaData().getURL()));
 
     connection.close();
     assertThat(connection.isClosed(), is(true));

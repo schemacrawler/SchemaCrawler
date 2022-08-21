@@ -27,20 +27,12 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.datasource;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class DatabaseConnectionSourceUtility {
 
   public static DatabaseConnectionSource newTestDatabaseConnectionSource(
       final Connection connection) {
-    try {
-      return new TestDatabaseConnectionSource("test-database-connection", connection);
-    } catch (final SQLException e) {
-      fail(e);
-      return null;
-    }
+    return new TestDatabaseConnectionSource(connection);
   }
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.datasource;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -59,17 +58,6 @@ public class SimpleDatabaseConnectionSourceTest {
         () ->
             new SimpleDatabaseConnectionSource(
                 "<bad-url>", null, new MultiUseUserCredentials("user", "!"), connection -> {}));
-
-    final String connectionUrl = databaseConnectionSource.getConnectionUrl();
-    assertThrows(
-        RuntimeException.class,
-        () -> {
-          final SimpleDatabaseConnectionSource badDatabaseConnectionSource =
-              new SimpleDatabaseConnectionSource(
-                  connectionUrl, null, new MultiUseUserCredentials("user", "!"), connection -> {});
-          final Connection connection = badDatabaseConnectionSource.get();
-          badDatabaseConnectionSource.close();
-        });
   }
 
   @Test
@@ -93,8 +81,6 @@ public class SimpleDatabaseConnectionSourceTest {
     final Connection unwrappedConnection = connection.unwrap(Connection.class);
     assertThat(unwrappedConnection.getClass().getName(), endsWith("JDBCConnection"));
     assertThat(connection.isClosed(), is(false));
-    assertThat(databaseConnectionSource.toString(), containsString("driver="));
-    assertThat(databaseConnectionSource.getConnectionUrl(), is(connection.getMetaData().getURL()));
 
     connection.close();
     assertThat(connection.isClosed(), is(true));
