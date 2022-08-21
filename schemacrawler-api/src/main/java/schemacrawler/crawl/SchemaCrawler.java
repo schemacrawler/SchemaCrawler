@@ -107,12 +107,11 @@ public final class SchemaCrawler {
   private MutableCatalog catalog;
 
   /**
-   * Constructs a SchemaCrawler object, from a connection.
+   * Constructs a SchemaCrawler object, from a database connection source.
    *
    * @param dataSource A database connection source.
    * @param schemaRetrievalOptions Database-specific schema retrieval overrides
    * @param options SchemaCrawler options
-   * @throws SQLException
    */
   public SchemaCrawler(
       final DatabaseConnectionSource dataSource,

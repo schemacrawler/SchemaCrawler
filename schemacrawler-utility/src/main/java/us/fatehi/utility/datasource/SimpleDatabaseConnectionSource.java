@@ -44,8 +44,7 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.database.DatabaseUtility;
 
-final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSource
-    implements DatabaseConnectionSource {
+final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private static final Logger LOGGER =
       Logger.getLogger(SimpleDatabaseConnectionSource.class.getName());
