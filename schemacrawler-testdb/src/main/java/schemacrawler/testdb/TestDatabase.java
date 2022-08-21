@@ -64,9 +64,10 @@ public class TestDatabase {
       testDatabase.start();
       return testDatabase;
     } catch (final Exception e) {
-      e.printStackTrace();
-      System.exit(1);
-      return null;
+      throw new RuntimeException("Could not initialize test database", e);
+      //      e.printStackTrace();
+      //      System.exit(1);
+      //      return null;
     }
   }
 
@@ -80,9 +81,10 @@ public class TestDatabase {
       testDatabase.start();
       return testDatabase;
     } catch (final Exception e) {
-      e.printStackTrace();
-      System.exit(1);
-      return null;
+      throw new RuntimeException("Could not initialize test database", e);
+      //      e.printStackTrace();
+      //      System.exit(1);
+      //      return null;
     }
   }
 
