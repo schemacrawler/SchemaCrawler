@@ -80,6 +80,7 @@ public final class SchemaCrawlerUtility {
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
 
     final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+    updateConnectionDataSource(dataSource, schemaRetrievalOptions);
 
     return getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
   }
@@ -143,6 +144,16 @@ public final class SchemaCrawlerUtility {
     } catch (final SQLException e) {
       throw new InternalRuntimeException("Could not obtain schema retrieval options", e);
     }
+  }
+
+  public static void updateConnectionDataSource(
+      final DatabaseConnectionSource dataSource,
+      final SchemaRetrievalOptions schemaRetrievalOptions) {
+
+    requireNonNull(dataSource, "No database connection source provided");
+    requireNonNull(schemaRetrievalOptions, "No schema retrieval options provided");
+
+    dataSource.setConnectionInitializer(schemaRetrievalOptions.getConnectionInitializer());
   }
 
   /**

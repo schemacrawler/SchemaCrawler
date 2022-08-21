@@ -157,7 +157,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
   }
 
   protected final String connectionUrl;
-  protected final Consumer<Connection> connectionInitializer;
+  protected Consumer<Connection> connectionInitializer;
 
   AbstractDatabaseConnectionSource(
       final String connectionUrl, final Consumer<Connection> connectionInitializer) {
@@ -169,6 +169,15 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
   @Override
   public final String getConnectionUrl() {
     return connectionUrl;
+  }
+
+  @Override
+  public void setConnectionInitializer(final Consumer<Connection> connectionInitializer) {
+    if (connectionInitializer == null) {
+      this.connectionInitializer = connection -> {};
+    } else {
+      this.connectionInitializer = connectionInitializer;
+    }
   }
 
   @Override

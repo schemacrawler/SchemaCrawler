@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-final class DataSourceConnectionSource implements DatabaseConnectionSource {
+final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource {
 
   private static final Logger LOGGER = Logger.getLogger(DataSourceConnectionSource.class.getName());
 
@@ -25,11 +25,10 @@ final class DataSourceConnectionSource implements DatabaseConnectionSource {
   }
 
   private final DataSource dataSource;
-  private final String connectionUrl;
 
   public DataSourceConnectionSource(final DataSource dataSource) {
+    super(buildConnectionUrl(dataSource), connection -> {});
     this.dataSource = requireNonNull(dataSource, "Data source not provided");
-    this.connectionUrl = buildConnectionUrl(dataSource);
   }
 
   @Override
@@ -48,15 +47,12 @@ final class DataSourceConnectionSource implements DatabaseConnectionSource {
   @Override
   public Connection get() {
     try {
-      return dataSource.getConnection();
+      final Connection connection = dataSource.getConnection();
+      connectionInitializer.accept(connection);
+      return connection;
     } catch (final SQLException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  @Override
-  public String getConnectionUrl() {
-    return connectionUrl;
   }
 
   @Override
