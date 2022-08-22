@@ -31,6 +31,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.updateConnectionDataSource;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.datasource.DatabaseConnectionSources.wrappedDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -144,6 +145,14 @@ public final class SchemaCrawlerExecutable {
 
   public void setCatalog(final Catalog catalog) {
     this.catalog = catalog;
+  }
+
+  /** @deprecated */
+  @Deprecated
+  public void setConnection(final Connection connection) {
+    final DatabaseConnectionSource dataSource =
+        wrappedDatabaseConnectionSource(connection, conn -> {});
+    this.dataSource = dataSource;
   }
 
   public void setDataSource(final DatabaseConnectionSource dataSource) {

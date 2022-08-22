@@ -32,14 +32,35 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.ConnectionInfo;
+import us.fatehi.utility.string.StringFormat;
 
 public final class ConnectionInfoBuilder {
 
+  private static final Logger LOGGER = Logger.getLogger(ConnectionInfoBuilder.class.getName());
+
   public static ConnectionInfoBuilder builder(final Connection connection) {
     return new ConnectionInfoBuilder(connection);
+  }
+
+  private static String getJdbcDriverClassName(final String connectionUrl) throws SQLException {
+    try {
+      final Driver jdbcDriver = DriverManager.getDriver(connectionUrl);
+      return jdbcDriver.getClass().getName();
+    } catch (final SQLException e) {
+      LOGGER.log(
+          Level.WARNING,
+          new StringFormat(
+              "Could not find a suitable JDBC driver for database connection URL <%s>",
+              connectionUrl, e));
+      return "";
+    }
   }
 
   private final Connection connection;
@@ -51,13 +72,16 @@ public final class ConnectionInfoBuilder {
   public ConnectionInfo build() throws SQLException {
 
     final DatabaseMetaData dbMetaData = connection.getMetaData();
+    final String connectionUrl = dbMetaData.getURL();
+    final String jdbcDriverClassName = getJdbcDriverClassName(connectionUrl);
 
     final ConnectionInfo connectionInfo =
         new ImmutableConnectionInfo(
             dbMetaData.getDatabaseProductName(),
             dbMetaData.getDatabaseProductVersion(),
-            dbMetaData.getURL(),
+            connectionUrl,
             dbMetaData.getUserName(),
+            jdbcDriverClassName,
             dbMetaData.getDriverName(),
             dbMetaData.getDriverVersion(),
             dbMetaData.getDriverMajorVersion(),

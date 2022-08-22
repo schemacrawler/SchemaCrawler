@@ -69,7 +69,8 @@ final class RetrieverConnection {
       this.schemaRetrievalOptions =
           requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
       connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-
+      LOGGER.log(
+          Level.CONFIG, new StringFormat("Making a database connection to:%n%s", connectionInfo));
       tableTypes = TableTypes.from(connection);
       LOGGER.log(Level.CONFIG, new StringFormat("Supported table types are <%s>", tableTypes));
     }

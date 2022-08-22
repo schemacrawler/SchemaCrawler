@@ -34,11 +34,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.function.Consumer;
 
+/** @deprecated */
 @Deprecated
 final class WrappedDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private final Connection connection;
 
+  /** @deprecated */
+  @Deprecated
   public WrappedDatabaseConnectionSource(
       final Connection connection, final Consumer<Connection> connectionInitializer) {
     try {

@@ -72,6 +72,7 @@ public class DatabaseConnectionSources {
     return newDatabaseConnectionSource(connectionUrl, null, userCredentials, connection -> {});
   }
 
+  /** @deprecated */
   @Deprecated
   public static DatabaseConnectionSource wrappedDatabaseConnectionSource(
       final Connection connection, final Consumer<Connection> connectionInitializer) {

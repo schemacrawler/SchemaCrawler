@@ -43,7 +43,6 @@ jobs:
       run: |
         # Build
         mvn \
-          -e \
           --no-transfer-progress \
           --batch-mode \
           -DSC_EXPERIMENTAL=true \

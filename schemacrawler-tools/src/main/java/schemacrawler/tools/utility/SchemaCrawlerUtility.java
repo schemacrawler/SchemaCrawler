@@ -30,6 +30,7 @@ package schemacrawler.tools.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.datasource.DatabaseConnectionSources.wrappedDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -73,23 +74,45 @@ public final class SchemaCrawlerUtility {
    * @param connection Live database connection.
    * @param schemaCrawlerOptions Options.
    * @return Database catalog.
+   * @deprecated
+   */
+  @Deprecated
+  public static Catalog getCatalog(
+      final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions) {
+    final DatabaseConnectionSource dataSource =
+        wrappedDatabaseConnectionSource(connection, conn -> {});
+    return getCatalog(dataSource, schemaCrawlerOptions);
+  }
+
+  /**
+   * Crawls a database, and returns a catalog.
+   *
+   * @param dataSource Database connection source.
+   * @param schemaCrawlerOptions Options.
+   * @return Database catalog.
    */
   public static Catalog getCatalog(
       final DatabaseConnectionSource dataSource, final SchemaCrawlerOptions schemaCrawlerOptions) {
-
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
-
     final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
-    updateConnectionDataSource(dataSource, schemaRetrievalOptions);
-
     return getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
   }
 
+  /**
+   * Crawls a database, and returns a catalog.
+   *
+   * @param dataSource Database connection source.
+   * @param schemaCrawlerOptions Options.
+   * @return Database catalog.
+   */
   public static Catalog getCatalog(
       final DatabaseConnectionSource dataSource,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions,
       final Config additionalConfig) {
+
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
+
+    updateConnectionDataSource(dataSource, schemaRetrievalOptions);
 
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();
@@ -158,8 +181,14 @@ public final class SchemaCrawlerUtility {
       final DatabaseConnectionSource dataSource,
       final SchemaRetrievalOptions schemaRetrievalOptions) {
 
-    requireNonNull(dataSource, "No database connection source provided");
-    requireNonNull(schemaRetrievalOptions, "No schema retrieval options provided");
+    if (dataSource == null) {
+      LOGGER.log(Level.CONFIG, "No database connection source provided");
+      return;
+    }
+    if (schemaRetrievalOptions == null) {
+      LOGGER.log(Level.CONFIG, "No schema retrieval options provided");
+      return;
+    }
 
     dataSource.setConnectionInitializer(schemaRetrievalOptions.getConnectionInitializer());
   }

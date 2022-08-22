@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import schemacrawler.schema.ConnectionInfo;
@@ -42,6 +43,7 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
   private final String connectionUrl;
   private final String userName;
   private final String driverName;
+  private final String driverClassName;
   private final String driverVersion;
   private final int driverMajorVersion;
   private final int driverMinorVersion;
@@ -53,6 +55,7 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
       final String databaseProductVersion,
       final String connectionUrl,
       final String userName,
+      final String driverClassName,
       final String driverName,
       final String driverVersion,
       final int driverMajorVersion,
@@ -69,6 +72,8 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
 
     this.userName = userName;
 
+    this.driverClassName =
+        requireNonNull(driverClassName, "No database driver Java class name provided");
     this.driverName = requireNotBlank(driverName, "No database driver name provided");
     this.driverVersion = requireNotBlank(driverVersion, "No database driver version provided");
     this.driverMajorVersion = driverMajorVersion;
@@ -84,55 +89,76 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
     return connectionUrl;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getDatabaseProductName() {
     return databaseProductName;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getDatabaseProductVersion() {
     return databaseProductVersion;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public String getDriverClassName() {
+    return driverClassName;
+  }
+
+  /** {@inheritDoc} */
   @Override
   public int getDriverMajorVersion() {
     return driverMajorVersion;
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getDriverMinorVersion() {
     return driverMinorVersion;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getDriverName() {
     return driverName;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getDriverVersion() {
     return driverVersion;
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getJdbcMajorVersion() {
     return jdbcMajorVersion;
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getJdbcMinorVersion() {
     return jdbcMinorVersion;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getUserName() {
     return userName;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String toString() {
     return String.format(
-        "Connected to %n%s %s %nusing JDBC driver %n%s %s%nwith %n\"%s\"",
-        databaseProductName, databaseProductVersion, driverName, driverVersion, connectionUrl);
+        "Connected to %n%s %s %nusing JDBC driver %n<%s> %s %s%nwith %n\"%s\"",
+        databaseProductName,
+        databaseProductVersion,
+        driverClassName,
+        driverName,
+        driverVersion,
+        connectionUrl);
   }
 }
