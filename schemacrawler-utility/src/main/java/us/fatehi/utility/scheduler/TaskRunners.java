@@ -27,20 +27,19 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.scheduler;
 
+import static us.fatehi.utility.PropertiesUtility.getSystemConfigurationProperty;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import us.fatehi.utility.PropertiesUtility;
 
 public class TaskRunners {
 
   private static final Logger LOGGER = Logger.getLogger(TaskRunners.class.getName());
 
   public static TaskRunner getTaskRunner(final String id, final int maxThreadsSuggested) {
-    final String experimentalFlag =
-        PropertiesUtility.getSystemConfigurationProperty(
-            "SC_EXPERIMENTAL", Boolean.FALSE.toString());
-    final Boolean isExperimental = Boolean.valueOf(experimentalFlag);
+    final boolean isExperimental =
+        Boolean.valueOf(
+            getSystemConfigurationProperty("SC_EXPERIMENTAL", Boolean.FALSE.toString()));
     if (isExperimental) {
       LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
       return new MultiThreadedTaskRunner(id, maxThreadsSuggested);

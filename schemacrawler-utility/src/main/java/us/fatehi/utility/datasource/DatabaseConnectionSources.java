@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
+import static us.fatehi.utility.PropertiesUtility.getSystemConfigurationProperty;
+
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -35,8 +37,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
-
-import us.fatehi.utility.PropertiesUtility;
 
 public class DatabaseConnectionSources {
 
@@ -52,10 +52,9 @@ public class DatabaseConnectionSources {
       final UserCredentials userCredentials,
       final Consumer<Connection> connectionInitializer) {
 
-    final String experimentalFlag =
-        PropertiesUtility.getSystemConfigurationProperty(
-            "SC_EXPERIMENTAL", Boolean.FALSE.toString());
-    final Boolean isExperimental = Boolean.valueOf(experimentalFlag);
+    final boolean isExperimental =
+        Boolean.valueOf(
+            getSystemConfigurationProperty("SC_EXPERIMENTAL", Boolean.FALSE.toString()));
     if (isExperimental) {
       LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
       return new SimpleDatabaseConnectionSource(
