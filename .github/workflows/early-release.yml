@@ -1,0 +1,69 @@
+name: Create Early Access Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.2.1
+      with:
+        java-version: 8
+    - id: install-packages
+      name: Install packages
+      shell: bash
+      run: |
+        # Install Graphviz
+        sudo apt-get -qq update
+        sudo apt-get -q install graphviz
+        dot -V
+
+# BUILD FOR DISTRIBUTION
+    - id: build
+      name: Build and test for distribution
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          clean install
+
+# CREATE GITHUB RELEASE AND ADD ASSETS
+    - id: upload-artifacts
+      name: Upload installers
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-artifacts-v16.17.4
+        path: |
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-bin.zip.SHA-512
+        retention-days: 1
+    - id: create-release
+      name: Create GitHub release
+      uses: softprops/action-gh-release@v1
+      if:  ${{ startsWith(github.ref, 'refs/tags/') != true }}
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: early-access-release
+        draft: false
+        prerelease: true
+        body: |
+          SchemaCrawler ${{ github.event.release.tag_name }} early access release at last commit ${{ github.sha }}
+        generate_release_notes: true
+        files: |
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.17.4-bin.zip.SHA-512
