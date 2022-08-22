@@ -55,6 +55,7 @@ import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class Issue496LintTest {
@@ -62,7 +63,7 @@ public class Issue496LintTest {
   private static final Config config = new Config();
 
   @Test
-  public void issue496(final Connection connection) throws Exception {
+  public void issue496(final DatabaseConnectionSource dataSource) throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -72,7 +73,7 @@ public class Issue496LintTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -86,20 +87,22 @@ public class Issue496LintTest {
 
     final Linters linters = new Linters(linterConfigs, false);
 
-    linters.lint(catalog, connection);
-    final LintCollector lintCollector = linters.getCollector();
+    try (final Connection connection = dataSource.get(); ) {
+      linters.lint(catalog, connection);
+      final LintCollector lintCollector = linters.getCollector();
 
-    assertThat(lintCollector.size(), is(0));
+      assertThat(lintCollector.size(), is(0));
+    }
   }
 
   @Test
-  public void issue496_withoutInclude(final Connection connection) throws Exception {
+  public void issue496_withoutInclude(final DatabaseConnectionSource dataSource) throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -113,13 +116,15 @@ public class Issue496LintTest {
 
     final Linters linters = new Linters(linterConfigs, false);
 
-    linters.lint(catalog, connection);
-    final LintCollector lintCollector = linters.getCollector();
+    try (final Connection connection = dataSource.get(); ) {
+      linters.lint(catalog, connection);
+      final LintCollector lintCollector = linters.getCollector();
 
-    assertThat(lintCollector.size(), is(1));
-    assertThat(
-        lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
-        containsInAnyOrder(
-            "[catalog] cycles in table relationships: PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"));
+      assertThat(lintCollector.size(), is(1));
+      assertThat(
+          lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
+          containsInAnyOrder(
+              "[catalog] cycles in table relationships: PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"));
+    }
   }
 }

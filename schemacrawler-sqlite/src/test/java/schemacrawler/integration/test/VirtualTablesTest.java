@@ -36,8 +36,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.inclusionrule.IncludeAll;
@@ -55,6 +53,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
 @ResolveTestContext
@@ -102,7 +101,9 @@ public class VirtualTablesTest extends BaseSqliteTest {
       final String command,
       final InclusionRule tableInclusionRule)
       throws Exception {
-    final DataSource dataSource = createDataSourceFromResource("with_spellfix1_tables.db");
+
+    final DatabaseConnectionSource dataSource =
+        createDataSourceFromResource("with_spellfix1_tables.db");
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeTables(tableInclusionRule);
@@ -120,7 +121,7 @@ public class VirtualTablesTest extends BaseSqliteTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(dataSource.getConnection(), executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

@@ -11,18 +11,17 @@ permissions: read-all
 jobs:
   build:
     name: Build, run database integration tests, with experimental features
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         java: [8, 17]
-    runs-on: ${{ matrix.os }}
     steps:
 
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@760475f02126626b9077db49728d81849463c9dc # pin@v1.2.1
+      uses: sualeh/prepare-maven-build@v1.2.1
       with:
         java-version: ${{ matrix.java }}
 
@@ -32,17 +31,7 @@ jobs:
       shell: bash
       run: |
         # Install Graphviz
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          sudo apt-get install graphviz
-        elif [ "$RUNNER_OS" == "Windows" ]; then
-          choco install graphviz
-        elif [ "$RUNNER_OS" == "macOS" ]; then
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install graphviz
-        else
-          echo "$RUNNER_OS not supported"
-          exit 1
-        fi
+        sudo apt-get install graphviz
         dot -V
 
 # BUILD AND TEST
@@ -58,5 +47,4 @@ jobs:
           --batch-mode \
           -DSC_EXPERIMENTAL=true \
           -Dheavydb \
-          -pl !schemacrawler-sqlserver,!schemacrawler-examplecode \
           clean package

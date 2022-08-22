@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class PooledConnectionUtility {
@@ -74,7 +75,9 @@ public class PooledConnectionUtility {
         case "unwrap":
           return connection;
         case "toString":
-          return String.format("Pooled connection <%s> - <%s>", connection.getClass(), connection);
+          return String.format(
+              "Pooled connection <%s@%d> for <%s>",
+              proxy.getClass().getName(), proxy.hashCode(), connection);
         default:
           try {
             return method.invoke(connection, args);
@@ -85,7 +88,7 @@ public class PooledConnectionUtility {
             if (cause instanceof Exception) {
               throw (Exception) cause;
             }
-            throw new RuntimeException(String.format("Could not delegate method <%s>", method), e);
+            throw new SQLException(String.format("Could not delegate method <%s>", method), e);
           }
       }
     }

@@ -34,6 +34,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -203,9 +204,10 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No procedure parameters SQL provided");
     }
     final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(procedureColumnsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(procedureColumnsSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         createProcedureParameter(results, allRoutines, parameterFilter);
       }
@@ -223,15 +225,17 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
 
       final MutableProcedure procedure = (MutableProcedure) routine;
       LOGGER.log(Level.FINE, "Retrieving procedure parameters for " + procedure);
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getProcedureColumns(
-                      procedure.getSchema().getCatalogName(),
-                      procedure.getSchema().getName(),
-                      procedure.getName(),
-                      null),
-              "DatabaseMetaData::getProcedureColumns")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getProcedureColumns(
+                          procedure.getSchema().getCatalogName(),
+                          procedure.getSchema().getName(),
+                          procedure.getName(),
+                          null),
+                  "DatabaseMetaData::getProcedureColumns"); ) {
         while (results.next()) {
           createProcedureParameter(results, allRoutines, parameterFilter);
         }

@@ -28,10 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.TypeMap;
@@ -52,8 +53,9 @@ public final class SchemaRetrievalOptions implements Options {
   private final boolean supportsSchemas;
   private final TypeMap typeMap;
   private final EnumDataTypeHelper enumDataTypeHelper;
-  EnumMap<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy>
+  private final EnumMap<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy>
       metadataRetrievalStrategyMap;
+  private final Consumer<Connection> connectionInitializer;
 
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder) {
     final SchemaRetrievalOptionsBuilder bldr =
@@ -68,6 +70,7 @@ public final class SchemaRetrievalOptions implements Options {
     typeMap = bldr.overridesTypeMap.orElse(new TypeMap());
     enumDataTypeHelper = bldr.enumDataTypeHelper;
     metadataRetrievalStrategyMap = new EnumMap<>(bldr.metadataRetrievalStrategyMap);
+    connectionInitializer = bldr.connectionInitializer;
   }
 
   public MetadataRetrievalStrategy get(
@@ -75,6 +78,10 @@ public final class SchemaRetrievalOptions implements Options {
     requireNonNull(
         schemaInfoMetadataRetrievalStrategy, "No schema info metadata retrieval strategy provided");
     return metadataRetrievalStrategyMap.get(schemaInfoMetadataRetrievalStrategy);
+  }
+
+  public Consumer<Connection> getConnectionInitializer() {
+    return connectionInitializer;
   }
 
   public DatabaseServerType getDatabaseServerType() {
@@ -86,9 +93,6 @@ public final class SchemaRetrievalOptions implements Options {
   }
 
   public String getIdentifierQuoteString() {
-    if (!hasOverrideForIdentifierQuoteString()) {
-      return "";
-    }
     return identifierQuoteString;
   }
 
@@ -102,14 +106,6 @@ public final class SchemaRetrievalOptions implements Options {
 
   public TypeMap getTypeMap() {
     return typeMap;
-  }
-
-  public boolean hasOverrideForIdentifierQuoteString() {
-    return !isBlank(identifierQuoteString);
-  }
-
-  public boolean hasOverrideForTypeMap() {
-    return typeMap != null;
   }
 
   public boolean isSupportsCatalogs() {

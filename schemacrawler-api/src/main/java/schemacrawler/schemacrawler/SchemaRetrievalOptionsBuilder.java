@@ -38,6 +38,7 @@ import java.sql.SQLException;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.TypeMap;
@@ -68,6 +69,7 @@ public final class SchemaRetrievalOptionsBuilder
   boolean supportsSchemas;
   EnumDataTypeHelper enumDataTypeHelper;
   Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> metadataRetrievalStrategyMap;
+  Consumer<Connection> connectionInitializer;
 
   private SchemaRetrievalOptionsBuilder() {
     dbServerType = DatabaseServerType.UNKNOWN;
@@ -80,6 +82,7 @@ public final class SchemaRetrievalOptionsBuilder
     identifiers = Identifiers.STANDARD;
     overridesTypeMap = Optional.empty();
     enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
+    connectionInitializer = connection -> {};
 
     metadataRetrievalStrategyMap = new EnumMap<>(SchemaInfoMetadataRetrievalStrategy.class);
     for (final SchemaInfoMetadataRetrievalStrategy key :
@@ -134,6 +137,7 @@ public final class SchemaRetrievalOptionsBuilder
     identifiers = options.getIdentifiers();
     overridesTypeMap = Optional.empty();
     metadataRetrievalStrategyMap = options.getMetadataRetrievalStrategyMap();
+    connectionInitializer = options.getConnectionInitializer();
 
     return this;
   }
@@ -170,6 +174,16 @@ public final class SchemaRetrievalOptionsBuilder
     } else {
       metadataRetrievalStrategyMap.put(
           schemaInfoMetadataRetrievalStrategy, metadataRetrievalStrategy);
+    }
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withConnectionInitializer(
+      final Consumer<Connection> connectionInitializer) {
+    if (connectionInitializer == null) {
+      this.connectionInitializer = connection -> {};
+    } else {
+      this.connectionInitializer = connectionInitializer;
     }
     return this;
   }

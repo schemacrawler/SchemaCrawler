@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -120,9 +121,10 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     }
 
     final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(pkSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(pkSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
@@ -149,12 +151,14 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         continue;
       }
       final Schema tableSchema = table.getSchema();
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getPrimaryKeys(
-                      tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
-              "DatabaseMetaData::getPrimaryKeys")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getPrimaryKeys(
+                          tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
+                  "DatabaseMetaData::getPrimaryKeys"); ) {
         while (results.next()) {
           createPrimaryKeyForTable(table, results);
         }

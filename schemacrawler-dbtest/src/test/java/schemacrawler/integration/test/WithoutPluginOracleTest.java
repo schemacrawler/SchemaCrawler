@@ -110,7 +110,8 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final RuntimeException executionRuntimeException =
-        assertThrows(RuntimeException.class, () -> getCatalog(connection, schemaCrawlerOptions));
+        assertThrows(
+            RuntimeException.class, () -> getCatalog(getDataSource(), schemaCrawlerOptions));
     final SQLException cause = (SQLException) executionRuntimeException.getCause().getCause();
     assertThat(
         cause.getSQLState(),
@@ -146,7 +147,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     // -- Schema output tests
     final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

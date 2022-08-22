@@ -27,26 +27,29 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.testdb.TestSchemaCreatorMain;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.database.SqlScript;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 public abstract class BaseSqliteTest {
 
-  protected DataSource createDatabaseFromScript(
-      final DataSource dataSource, final String databaseSqlResource) throws Exception {
+  protected DatabaseConnectionSource createDatabaseFromScript(
+      final DatabaseConnectionSource dataSource, final String databaseSqlResource)
+      throws Exception {
 
-    try (final Connection connection = dataSource.getConnection()) {
+    try (final Connection connection = dataSource.get()) {
 
       SqlScript.executeScriptFromResource(databaseSqlResource, connection);
 
@@ -61,38 +64,49 @@ public abstract class BaseSqliteTest {
     return dataSource;
   }
 
-  protected DataSource createDatabaseFromScriptInMemory(final String databaseSqlResource)
-      throws Exception {
+  protected DatabaseConnectionSource createDatabaseFromScriptInMemory(
+      final String databaseSqlResource) throws Exception {
 
-    final DataSource dataSource = createDataSourceInMemory();
+    final DatabaseConnectionSource dataSource = createDataSourceInMemory();
     return createDatabaseFromScript(dataSource, databaseSqlResource);
   }
 
-  protected DataSource createDataSourceFromFile(final Path sqliteDbFile) {
+  protected DatabaseConnectionSource createDataSourceFromFile(final Path sqliteDbFile) {
     return createDataSource("jdbc:sqlite:" + sqliteDbFile);
   }
 
-  protected DataSource createDataSourceFromResource(final String sqliteDbResource) {
+  protected DatabaseConnectionSource createDataSourceFromResource(final String sqliteDbResource) {
     return createDataSource(String.format("jdbc:sqlite::resource:%s", sqliteDbResource));
   }
 
-  protected DataSource createDataSourceInMemory() {
-    return createDataSource("jdbc:sqlite::memory:");
+  protected DatabaseConnectionSource createDataSourceInMemory() {
+    try {
+      final Path tempFilePath = IOUtility.createTempFilePath("sc", ".db");
+      return createDataSource("jdbc:sqlite:" + tempFilePath);
+    } catch (final IOException e) {
+      fail(e);
+      return null;
+    }
   }
 
-  protected Path createTestDatabase() throws Exception {
-    final Path sqliteDbFile =
-        IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
-    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
-    return sqliteDbFile;
+  protected Path createTestDatabase() {
+    try {
+      final Path sqliteDbFile =
+          IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
+      TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
+      return sqliteDbFile;
+    } catch (final IOException e) {
+      fail(e);
+      return null;
+    }
   }
 
-  private DataSource createDataSource(final String connectionUrl) {
+  private DatabaseConnectionSource createDataSource(final String connectionUrl) {
     final BasicDataSource ds = new BasicDataSource();
     ds.setUrl(connectionUrl);
     ds.setUsername(null);
     ds.setPassword(null);
 
-    return ds;
+    return DatabaseConnectionSources.fromDataSource(ds);
   }
 }

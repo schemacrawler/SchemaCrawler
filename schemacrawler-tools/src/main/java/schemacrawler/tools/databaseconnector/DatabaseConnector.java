@@ -63,7 +63,7 @@ public abstract class DatabaseConnector implements Options {
   private final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
       schemaRetrievalOptionsBuildProcess;
   private final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess;
-  private final Supplier<DatabaseConnectionSourceBuilder> urlBuildProcess;
+  private final Supplier<DatabaseConnectionSourceBuilder> dbConnectionSourceBuildProcess;
 
   protected DatabaseConnector(
       final DatabaseServerType dbServerType,
@@ -73,7 +73,7 @@ public abstract class DatabaseConnector implements Options {
       final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
           schemaRetrievalOptionsBuildProcess,
       final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess,
-      final Supplier<DatabaseConnectionSourceBuilder> urlBuildProcess) {
+      final Supplier<DatabaseConnectionSourceBuilder> connectionSourceBuildProcess) {
     this.dbServerType = requireNonNull(dbServerType, "No database server type provided");
 
     this.supportsUrl = requireNonNull(supportsUrl, "No predicate for URL support provided");
@@ -91,7 +91,9 @@ public abstract class DatabaseConnector implements Options {
     this.limitOptionsBuildProcess =
         requireNonNull(limitOptionsBuildProcess, "No limit options build process provided");
 
-    this.urlBuildProcess = requireNonNull(urlBuildProcess, "No URL builder provided");
+    this.dbConnectionSourceBuildProcess =
+        requireNonNull(
+            connectionSourceBuildProcess, "No database connection source builder provided");
   }
 
   public final DatabaseServerType getDatabaseServerType() {
@@ -115,6 +117,9 @@ public abstract class DatabaseConnector implements Options {
    */
   public final SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(
       final Connection connection) {
+
+    final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder =
+        dbConnectionSourceBuildProcess.get();
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withFunction(informationSchemaViewsBuildProcess, connection)
@@ -123,6 +128,7 @@ public abstract class DatabaseConnector implements Options {
         SchemaRetrievalOptionsBuilder.builder()
             .withDatabaseServerType(dbServerType)
             .withInformationSchemaViews(informationSchemaViews)
+            .withConnectionInitializer(dbConnectionSourceBuilder.getConnectionInitializer())
             .fromConnnection(connection);
 
     // Allow database plugins to intercept and do further customization
@@ -158,14 +164,15 @@ public abstract class DatabaseConnector implements Options {
       final String database = serverHostConnectionOptions.getDatabase();
       final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
 
-      final DatabaseConnectionSourceBuilder databaseConnectionSourceBuilder = urlBuildProcess.get();
-      databaseConnectionSourceBuilder.withHost(host);
-      databaseConnectionSourceBuilder.withPort(port);
-      databaseConnectionSourceBuilder.withDatabase(database);
-      databaseConnectionSourceBuilder.withUrlx(urlx);
-      databaseConnectionSourceBuilder.withUserCredentials(userCredentials);
+      final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder =
+          dbConnectionSourceBuildProcess.get();
+      dbConnectionSourceBuilder.withHost(host);
+      dbConnectionSourceBuilder.withPort(port);
+      dbConnectionSourceBuilder.withDatabase(database);
+      dbConnectionSourceBuilder.withUrlx(urlx);
+      dbConnectionSourceBuilder.withUserCredentials(userCredentials);
 
-      databaseConnectionSource = databaseConnectionSourceBuilder.build();
+      databaseConnectionSource = dbConnectionSourceBuilder.build();
     } else {
       throw new ConfigurationException("Could not create new database connection source");
     }

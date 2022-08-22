@@ -30,7 +30,6 @@ package schemacrawler.tools.commandline.command;
 
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.matchedOptionValues;
 
-import java.sql.Connection;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +53,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -99,16 +99,15 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
         throw new ExecutionException(spec.commandLine(), "Not able to make database connection");
       }
 
-      try (final Connection connection = state.getDataSource().get(); ) {
-        final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
-        final Catalog catalog = state.getCatalog();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
+      final DatabaseConnectionSource dataSource = state.getDataSource();
+      final Catalog catalog = state.getCatalog();
 
-        executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-        executable.setConnection(connection);
-        executable.setCatalog(catalog);
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+      executable.setDataSource(dataSource);
+      executable.setCatalog(catalog);
 
-        executable.execute();
-      }
+      executable.execute();
 
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot execute SchemaCrawler command", e);

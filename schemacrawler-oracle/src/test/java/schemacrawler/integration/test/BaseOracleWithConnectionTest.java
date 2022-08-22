@@ -40,7 +40,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -65,11 +64,14 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabaseTest {
 
   protected void testOracleWithConnection(
-      final Connection connection, final String expectedResource, final int numDatabaseUsers)
+      final DatabaseConnectionSource dataSource,
+      final String expectedResource,
+      final int numDatabaseUsers)
       throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -96,7 +98,7 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
 
     // -- Schema output tests
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
 
     // -- Additional catalog tests
@@ -134,14 +136,14 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
         hasItems("USER_ID", "CREATED"));
   }
 
-  protected void testSelectQuery(final Connection connection, final String expectedResource)
-      throws Exception {
+  protected void testSelectQuery(
+      final DatabaseConnectionSource dataSource, final String expectedResource) throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("authors");
     final Config additionalConfig = new Config();
     additionalConfig.put("authors", "SELECT * FROM BOOKS.AUTHORS");
     executable.setAdditionalConfiguration(additionalConfig);
     assertThat(
-        outputOf(executableExecution(connection, executable, TextOutputFormat.text.name())),
+        outputOf(executableExecution(dataSource, executable, TextOutputFormat.text.name())),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

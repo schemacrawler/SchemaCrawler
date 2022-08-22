@@ -37,9 +37,6 @@ import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static us.fatehi.utility.datasource.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
-
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +48,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @CaptureSystemStreams
@@ -58,8 +56,9 @@ public class LoadedShellCommandsTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void isLoaded(final Connection connection, final CapturedSystemStreams streams) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+  public void isLoaded(
+      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
 
     final String[] args = new String[] {"--is-loaded"};
 
@@ -72,9 +71,10 @@ public class LoadedShellCommandsTest {
   }
 
   @Test
-  public void isNotConnected(final Connection connection, final CapturedSystemStreams streams) {
+  public void isNotConnected(
+      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
-    state.setDataSource(newTestDatabaseConnectionSource(connection)); // is-connected
+    state.setDataSource(dataSource); // is-connected
 
     final String[] args = new String[] {"--is-loaded"};
 
@@ -88,8 +88,8 @@ public class LoadedShellCommandsTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void sweepCatalog(final Connection connection) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+  public void sweepCatalog(final DatabaseConnectionSource dataSource) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
 
     final String[] args = new String[0];
 

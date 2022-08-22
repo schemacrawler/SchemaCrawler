@@ -35,7 +35,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.newSchemaRetrievalOptions;
 
 import java.io.IOException;
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -53,6 +52,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -60,28 +60,30 @@ import schemacrawler.tools.utility.SchemaCrawlerUtility;
 public class AttributesCatalogLoaderTest {
 
   @Test
-  public void noRemarksForExternalColumn(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void noRemarksForExternalColumn(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final String attributesFile = "/attributes-external-column.yaml";
-    showRemarks(testContext, connection, attributesFile);
+    showRemarks(testContext, dataSource, attributesFile);
   }
 
   @Test
-  public void noRemarksForExternalTable(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void noRemarksForExternalTable(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final String attributesFile = "/attributes-external-table.yaml";
-    showRemarks(testContext, connection, attributesFile);
+    showRemarks(testContext, dataSource, attributesFile);
   }
 
   @Test
-  public void showRemarks(final TestContext testContext, final Connection connection)
+  public void showRemarks(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
     final String attributesFile = "/attributes.yaml";
-    showRemarks(testContext, connection, attributesFile);
+    showRemarks(testContext, dataSource, attributesFile);
   }
 
   private void showRemarks(
-      final TestContext testContext, final Connection connection, final String attributesFile)
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource,
+      final String attributesFile)
       throws IOException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -96,7 +98,7 @@ public class AttributesCatalogLoaderTest {
 
       final Catalog catalog =
           SchemaCrawlerUtility.getCatalog(
-              connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+              dataSource, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema : schemas) {

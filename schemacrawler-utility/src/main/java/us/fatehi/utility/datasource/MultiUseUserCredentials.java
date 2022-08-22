@@ -27,54 +27,28 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.datasource;
 
-import static us.fatehi.utility.Utility.isBlank;
+public class MultiUseUserCredentials implements UserCredentials {
 
-public final class SingleUseUserCredentials implements UserCredentials {
-
+  private final String password;
   private final String user;
-  private final char[] password;
-  private boolean isCleared;
 
-  public SingleUseUserCredentials() {
-    user = null;
-    password = null;
+  public MultiUseUserCredentials() {
+    this(null, null);
   }
 
-  public SingleUseUserCredentials(final String user, final String password) {
+  public MultiUseUserCredentials(final String user, final String password) {
+    this.password = password;
     this.user = user;
-    if (password == null) {
-      this.password = null;
-    } else {
-      this.password = password.toCharArray();
-    }
   }
 
   @Override
   public void clearPassword() {
-    isCleared = true;
-    if (hasPassword()) {
-      for (int i = 0; i < password.length; i++) {
-        password[i] = 0;
-      }
-    }
+    // No action
   }
 
   @Override
   public String getPassword() {
-    if (isCleared) {
-      throw new IllegalAccessError("Password has been cleared");
-    }
-
-    final String passwordString;
-    if (password == null) {
-      passwordString = null;
-    } else {
-      passwordString = new String(password);
-    }
-
-    clearPassword();
-
-    return passwordString;
+    return password;
   }
 
   @Override
@@ -84,16 +58,11 @@ public final class SingleUseUserCredentials implements UserCredentials {
 
   @Override
   public boolean hasPassword() {
-    return !isCleared && password != null;
+    return password != null;
   }
 
   @Override
   public boolean hasUser() {
-    return !isBlank(user);
-  }
-
-  @Override
-  public String toString() {
-    return "UserCredentials [user=\"" + user + "\", password=\"*****\"]";
+    return user != null;
   }
 }

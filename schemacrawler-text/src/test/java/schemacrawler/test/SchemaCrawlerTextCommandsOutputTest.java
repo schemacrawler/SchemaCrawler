@@ -35,8 +35,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +49,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class SchemaCrawlerTextCommandsOutputTest {
@@ -64,55 +63,56 @@ public class SchemaCrawlerTextCommandsOutputTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void operationOutput(final Connection connection) throws Exception {
+  public void operationOutput(final DatabaseConnectionSource dataSource) throws Exception {
     for (final OperationType operation : OperationType.values()) {
-      textOutputTest(operation.name(), connection, new Config());
+      textOutputTest(operation.name(), dataSource, new Config());
     }
   }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void queryOutput(final Connection connection) throws Exception {
+  public void queryOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "all_tables";
     final Config config = new Config();
     config.put(
         queryCommand,
         "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
 
-    textOutputTest(queryCommand, connection, config);
+    textOutputTest(queryCommand, dataSource, config);
   }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void queryOverOutput(final Connection connection) throws Exception {
+  public void queryOverOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "dump_tables";
     final Config config = new Config();
     config.put(queryCommand, "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
-    textOutputTest(queryCommand, connection, config);
+    textOutputTest(queryCommand, dataSource, config);
   }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void schemaTextOutput(final Connection connection) throws Exception {
+  public void schemaTextOutput(final DatabaseConnectionSource dataSource) throws Exception {
     for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values()) {
-      textOutputTest(schemaTextDetailType.name(), connection, new Config());
+      textOutputTest(schemaTextDetailType.name(), dataSource, new Config());
     }
   }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void sortedColumnsOutput(final Connection connection) throws Exception {
+  public void sortedColumnsOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "dump_tables_sorted_columns";
     final Config config = new Config();
     config.put("schemacrawler.format.sort_alphabetically.table_columns", Boolean.TRUE.toString());
     config.put(queryCommand, "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}");
 
-    textOutputTest(queryCommand, connection, config);
+    textOutputTest(queryCommand, dataSource, config);
   }
 
   private void textOutputTest(
-      final String command, final Connection connection, final Config config) throws Exception {
+      final String command, final DatabaseConnectionSource dataSource, final Config config)
+      throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
@@ -132,7 +132,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
     executable.setAdditionalConfiguration(config);
 
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(COMMAND_OUTPUT + command + ".txt")));
   }
 }

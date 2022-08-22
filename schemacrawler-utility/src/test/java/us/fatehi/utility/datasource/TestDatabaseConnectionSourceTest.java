@@ -33,13 +33,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -47,29 +47,21 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class SingleDatabaseConnectionSourceTest {
+public class TestDatabaseConnectionSourceTest {
 
   private DatabaseConnectionSource databaseConnectionSource;
   private Connection wrappedConnection;
 
-  @Test
-  public void closedConnectionTests() throws Exception {
-    wrappedConnection.close();
-    assertThrows(
-        RuntimeException.class,
-        () -> new SingleDatabaseConnectionSource("<none>", wrappedConnection));
-  }
-
+  @Disabled
   @Test
   public void connectionTests() throws Exception {
     final Connection connection = databaseConnectionSource.get();
     assertThat(connection, is(not(nullValue())));
-    assertThat(connection.getClass().getName(), not(endsWith("JDBCConnection")));
+    assertThat(connection.getClass().getName(), endsWith("JDBCConnection"));
     final Connection unwrappedConnection = connection.unwrap(Connection.class);
     assertThat(unwrappedConnection.getClass().getName(), endsWith("JDBCConnection"));
     assertThat(connection.isClosed(), is(false));
-    assertThat(databaseConnectionSource.toString(), containsString("driver="));
-    assertThat(databaseConnectionSource.getConnectionUrl(), is(connection.getMetaData().getURL()));
+    assertThat(databaseConnectionSource.toString(), containsString("DataSourceConnectionSource"));
 
     connection.close();
     assertThat(connection.isClosed(), is(true));
@@ -94,7 +86,10 @@ public class SingleDatabaseConnectionSourceTest {
     connectionProperties.put("key", "value");
     databaseConnectionSource =
         new SingleDatabaseConnectionSource(
-            connectionUrl, connectionProperties, new SingleUseUserCredentials(userName, password));
+            connectionUrl,
+            connectionProperties,
+            new MultiUseUserCredentials(userName, password),
+            connection -> {});
 
     final Connection connection = databaseConnectionSource.get();
     assertThat(connection, is(not(nullValue())));
@@ -112,10 +107,6 @@ public class SingleDatabaseConnectionSourceTest {
             .build();
 
     wrappedConnection = db.getConnection();
-    final DatabaseMetaData metaData = wrappedConnection.getMetaData();
-    final String connectionUrl = metaData.getURL();
-    final String userName = metaData.getUserName();
-    final String password = "";
-    databaseConnectionSource = new SingleDatabaseConnectionSource(connectionUrl, wrappedConnection);
+    databaseConnectionSource = DatabaseConnectionSources.fromDataSource(db);
   }
 }

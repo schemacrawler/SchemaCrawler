@@ -46,6 +46,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -172,7 +173,7 @@ public class DataTypeRetrieverTest {
   @Test
   @DisplayName("Override type info from data dictionary")
   public void overrideTypeInfoFromDataDictionary(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final int magicNumber = 99;
 
     final InformationSchemaViews informationSchemaViews =
@@ -190,7 +191,7 @@ public class DataTypeRetrieverTest {
             .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -203,11 +204,11 @@ public class DataTypeRetrieverTest {
 
   @Test
   @DisplayName("System data types")
-  public void systemDataTypes(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void systemDataTypes(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptionsDefault);
+        new RetrieverConnection(dataSource, schemaRetrievalOptionsDefault);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 

@@ -29,7 +29,9 @@ package schemacrawler.tools.executable;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.updateConnectionDataSource;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.datasource.DatabaseConnectionSources.wrappedDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -39,10 +41,13 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -59,7 +64,7 @@ public final class SchemaCrawlerExecutable {
   private final String command;
   private Config additionalConfig;
   private Catalog catalog;
-  private Connection connection;
+  private DatabaseConnectionSource dataSource;
   private OutputOptions outputOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
@@ -74,37 +79,47 @@ public final class SchemaCrawlerExecutable {
 
   public void execute() {
 
+    // Match schema retrieval options, and update data source before any connections are used
     if (schemaRetrievalOptions == null) {
-      schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
+      schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
     }
+    updateConnectionDataSource(dataSource, schemaRetrievalOptions);
 
-    // Load the command to see if it is available
-    // Fail early (before loading the catalog) if the command is not
-    // available
-    final SchemaCrawlerCommand<?> scCommand = loadCommand();
+    try (final Connection connection = dataSource.get(); ) {
 
-    // Set identifiers strategy
-    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
+      // Load the command to see if it is available
+      // Fail early (before loading the catalog) if the command is not
+      // available
+      final SchemaCrawlerCommand<?> scCommand = loadCommand();
 
-    // Initialize, and check if the command is available
-    scCommand.initialize();
-    scCommand.checkAvailability();
+      // Set identifiers strategy
+      scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
-    if (catalog == null) {
-      loadCatalog();
+      // Initialize, and check if the command is available
+      scCommand.initialize();
+      scCommand.checkAvailability();
+
+      if (catalog == null) {
+        loadCatalog();
+      }
+
+      // Prepare to execute
+      scCommand.setCatalog(catalog);
+
+      if (scCommand.usesConnection()) {
+        scCommand.setConnection(connection);
+      }
+
+      // Execute
+      LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getIdentifiers()));
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getCommandOptions()));
+      scCommand.execute();
+    } catch (final SchemaCrawlerException e) {
+      throw e;
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException(e);
     }
-
-    // Prepare to execute
-    scCommand.setCatalog(catalog);
-    if (scCommand.usesConnection()) {
-      scCommand.setConnection(connection);
-    }
-
-    // Execute
-    LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getIdentifiers()));
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getCommandOptions()));
-    scCommand.execute();
   }
 
   public Catalog getCatalog() {
@@ -132,8 +147,16 @@ public final class SchemaCrawlerExecutable {
     this.catalog = catalog;
   }
 
+  /** @deprecated */
+  @Deprecated
   public void setConnection(final Connection connection) {
-    this.connection = requireNonNull(connection, "No connection provided");
+    final DatabaseConnectionSource dataSource =
+        wrappedDatabaseConnectionSource(connection, conn -> {});
+    this.dataSource = dataSource;
+  }
+
+  public void setDataSource(final DatabaseConnectionSource dataSource) {
+    this.dataSource = requireNonNull(dataSource, "No data source provided");
   }
 
   public void setOutputOptions(final OutputOptions outputOptions) {
@@ -165,7 +188,7 @@ public final class SchemaCrawlerExecutable {
   private void loadCatalog() {
     catalog =
         SchemaCrawlerUtility.getCatalog(
-            connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+            dataSource, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 

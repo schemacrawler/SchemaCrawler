@@ -72,7 +72,6 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveUserDefine
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -93,6 +92,7 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
 /** SchemaCrawler uses database meta-data to get the details about the schema. */
@@ -107,19 +107,18 @@ public final class SchemaCrawler {
   private MutableCatalog catalog;
 
   /**
-   * Constructs a SchemaCrawler object, from a connection.
+   * Constructs a SchemaCrawler object, from a database connection source.
    *
-   * @param connection An database connection.
+   * @param dataSource A database connection source.
    * @param schemaRetrievalOptions Database-specific schema retrieval overrides
    * @param options SchemaCrawler options
-   * @throws SQLException
    */
   public SchemaCrawler(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions options) {
     try {
-      retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+      retrieverConnection = new RetrieverConnection(dataSource, schemaRetrievalOptions);
       this.options = requireNonNull(options, "No SchemaCrawler options provided");
 
       final LoadOptions loadOptions = options.getLoadOptions();

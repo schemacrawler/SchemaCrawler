@@ -54,18 +54,19 @@ import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class Issue419LintTest {
 
   @Test
-  public void issue419(final Connection connection) throws Exception {
+  public void issue419(final DatabaseConnectionSource dataSource) throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -79,13 +80,15 @@ public class Issue419LintTest {
 
     final Linters linters = new Linters(linterConfigs, false);
 
-    linters.lint(catalog, connection);
-    final LintCollector lintCollector = linters.getCollector();
+    try (final Connection connection = dataSource.get(); ) {
+      linters.lint(catalog, connection);
+      final LintCollector lintCollector = linters.getCollector();
 
-    assertThat(lintCollector.size(), is(1));
-    assertThat(
-        lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
-        containsInAnyOrder("[PUBLIC.\"PUBLISHER SALES\".REGIONS] primary key not first" /*,
+      assertThat(lintCollector.size(), is(1));
+      assertThat(
+          lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
+          containsInAnyOrder("[PUBLIC.\"PUBLISHER SALES\".REGIONS] primary key not first" /*,
             "[PUBLIC.FOR_LINT.EXTRA_PK] primary key not first" */));
+    }
   }
 }

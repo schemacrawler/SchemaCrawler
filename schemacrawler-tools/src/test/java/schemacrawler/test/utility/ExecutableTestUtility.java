@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 
 import org.hamcrest.Matcher;
 
@@ -41,24 +40,26 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public final class ExecutableTestUtility {
 
   public static Path executableExecution(
-      final Connection connection, final SchemaCrawlerExecutable executable) throws Exception {
-    return executableExecution(connection, executable, "text");
+      final DatabaseConnectionSource dataSource, final SchemaCrawlerExecutable executable)
+      throws Exception {
+    return executableExecution(dataSource, executable, "text");
   }
 
   public static Path executableExecution(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaCrawlerExecutable executable,
       final OutputFormat outputFormat)
       throws Exception {
-    return executableExecution(connection, executable, outputFormat.getFormat());
+    return executableExecution(dataSource, executable, outputFormat.getFormat());
   }
 
   public static Path executableExecution(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaCrawlerExecutable executable,
       final String outputFormatValue)
       throws Exception {
@@ -70,7 +71,7 @@ public final class ExecutableTestUtility {
               .withOutputWriter(out);
 
       executable.setOutputOptions(outputOptionsBuilder.toOptions());
-      executable.setConnection(connection);
+      executable.setDataSource(dataSource);
       executable.execute();
     }
     return testout.getFilePath();
@@ -99,15 +100,15 @@ public final class ExecutableTestUtility {
     return FileHasContent.hasSameContentAndTypeAs(classpathTestResource, outputFormat);
   }
 
-  private ExecutableTestUtility() {
-    // Prevent instantiation
-  }
-
-public static OutputOptions newOutputOptions(
+  public static OutputOptions newOutputOptions(
       final String outputFormatValue, final Path outputFile) {
     return OutputOptionsBuilder.builder()
         .withOutputFormatValue(outputFormatValue)
         .withOutputFile(outputFile)
         .toOptions();
+  }
+
+  private ExecutableTestUtility() {
+    // Prevent instantiation
   }
 }

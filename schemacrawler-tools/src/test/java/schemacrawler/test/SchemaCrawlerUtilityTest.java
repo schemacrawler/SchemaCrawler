@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-import static java.util.regex.Pattern.DOTALL;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
@@ -43,8 +42,6 @@ import static schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder.newSchemaC
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +55,8 @@ import schemacrawler.test.utility.CapturedLogs;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
 public class SchemaCrawlerUtilityTest {
@@ -65,29 +64,30 @@ public class SchemaCrawlerUtilityTest {
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   @CaptureLogs
-  public void getCatalog(final Connection connection, final CapturedLogs logs) throws Exception {
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions());
+  public void getCatalog(final DatabaseConnectionSource dataSource, final CapturedLogs logs)
+      throws Exception {
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource, newSchemaCrawlerOptions());
     assertThat(catalog, is(not(nullValue())));
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, arrayWithSize(6));
-    assertThat(
-        logs.contains(Level.INFO, Pattern.compile("Connected to.*HSQL.*", DOTALL)), is(true));
   }
 
   @Test
   public void getCatalogClosedConnection(final Connection connection) throws Exception {
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
     connection.close();
     assertThrows(
-        InternalRuntimeException.class,
-        () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
+        DatabaseAccessException.class,
+        () -> SchemaCrawlerUtility.getCatalog(dataSource, newSchemaCrawlerOptions()));
   }
 
   @Test
-  public void getCatalogMissingPlugin(final Connection connection) throws Exception {
+  public void getCatalogMissingPlugin(final DatabaseConnectionSource dataSource) throws Exception {
     final InternalRuntimeException exception =
         assertThrows(
             InternalRuntimeException.class,
-            () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
+            () -> SchemaCrawlerUtility.getCatalog(dataSource, newSchemaCrawlerOptions()));
     assertThat(exception.getMessage(), containsString("hsqldb"));
   }
 
@@ -101,8 +101,9 @@ public class SchemaCrawlerUtilityTest {
   }
 
   @Test
-  public void getResultsColumns(final Connection connection) throws Exception {
-    try (final ResultSet results = connection.getMetaData().getCatalogs()) {
+  public void getResultsColumns(final DatabaseConnectionSource dataSource) throws Exception {
+    try (final Connection connection = dataSource.get();
+        final ResultSet results = connection.getMetaData().getCatalogs()) {
       final ResultsColumns resultsColumns = SchemaCrawlerUtility.getResultsColumns(results);
       assertThat(resultsColumns, is(not(nullValue())));
       final String columnsListAsString = resultsColumns.getColumnsListAsString();
@@ -113,11 +114,14 @@ public class SchemaCrawlerUtilityTest {
   }
 
   @Test
-  public void getResultsColumnsClosedResults(final Connection connection) throws Exception {
-    final ResultSet results = connection.getMetaData().getCatalogs();
-    results.close();
+  public void getResultsColumnsClosedResults(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    try (final Connection connection = dataSource.get(); ) {
+      final ResultSet results = connection.getMetaData().getCatalogs();
+      results.close();
 
-    assertThrows(
-        DatabaseAccessException.class, () -> SchemaCrawlerUtility.getResultsColumns(results));
+      assertThrows(
+          DatabaseAccessException.class, () -> SchemaCrawlerUtility.getResultsColumns(results));
+    }
   }
 }

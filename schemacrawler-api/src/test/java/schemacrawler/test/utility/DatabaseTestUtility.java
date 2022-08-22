@@ -43,6 +43,8 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.PropertiesUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class DatabaseTestUtility {
@@ -61,8 +63,12 @@ public final class DatabaseTestUtility {
       final Connection connection,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions) {
+
+    final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
+
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(dataSource, schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
     return catalog;
   }

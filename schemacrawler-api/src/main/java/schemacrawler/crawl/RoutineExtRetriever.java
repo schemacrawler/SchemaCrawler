@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -74,9 +75,10 @@ final class RoutineExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving routine definitions");
 
     final Query routineDefinitionsSql = informationSchemaViews.getQuery(ROUTINES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(routineDefinitionsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(routineDefinitionsSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));

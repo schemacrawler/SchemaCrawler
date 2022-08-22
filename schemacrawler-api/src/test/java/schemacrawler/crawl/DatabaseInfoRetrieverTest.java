@@ -58,6 +58,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -78,8 +79,8 @@ public class DatabaseInfoRetrieverTest {
 
   @Test
   @DisplayName("Retrieve database users")
-  public void databaseUsers(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void databaseUsers(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     assertThat(catalog.getDatabaseUsers(), is(empty()));
 
     final InformationSchemaViews informationSchemaViews =
@@ -94,7 +95,7 @@ public class DatabaseInfoRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder().withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
@@ -131,7 +132,7 @@ public class DatabaseInfoRetrieverTest {
 
   @Test
   @DisplayName("Retrieve server info")
-  public void serverInfo(final TestContext testContext, final Connection connection)
+  public void serverInfo(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
     assertThat(catalog.getDatabaseInfo().getServerInfo(), is(empty()));
 
@@ -152,7 +153,7 @@ public class DatabaseInfoRetrieverTest {
         SchemaRetrievalOptionsBuilder.builder().withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 

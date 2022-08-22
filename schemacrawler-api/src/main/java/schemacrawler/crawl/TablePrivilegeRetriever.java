@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_PRIVILEGES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -163,18 +164,20 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table column privileges SQL provided");
     }
     final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_COLUMN_PRIVILEGES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule()); ) {
       createPrivileges(results, true);
     }
   }
 
   private void retrieveTableColumnPrivilegesFromMetadata() {
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData().getColumnPrivileges(null, null, null, null),
-            "DatabaseMetaData::getColumnPrivileges")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getColumnPrivileges(null, null, null, null),
+                "DatabaseMetaData::getColumnPrivileges"); ) {
       createPrivileges(results, true);
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:" + e.getMessage());
@@ -188,18 +191,20 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table privileges SQL provided");
     }
     final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_PRIVILEGES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule()); ) {
       createPrivileges(results, false);
     }
   }
 
   private void retrieveTablePrivilegesFromMetadata() {
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData().getTablePrivileges(null, null, null),
-            "DatabaseMetaData::getTablePrivileges")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getTablePrivileges(null, null, null),
+                "DatabaseMetaData::getTablePrivileges"); ) {
       createPrivileges(results, false);
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);

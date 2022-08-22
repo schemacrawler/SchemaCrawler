@@ -10,8 +10,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPlug
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
@@ -21,6 +19,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
 @WithTestDatabase
@@ -29,22 +28,23 @@ public class LoaderOptionsCommandTest {
   private final String COMMAND_HELP = "command_help/";
 
   @Test
-  public void dynamicOptionValue(final Connection connection) throws Exception {
+  public void dynamicOptionValue(final DatabaseConnectionSource dataSource) throws Exception {
     final String[] args = {
       "--test-load-option", "true",
     };
 
-    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
-    final CommandLine commandLine = createShellCommandLine(connection, state);
+    final ShellState state = createConnectedSchemaCrawlerShellState(dataSource);
+    final CommandLine commandLine = createShellCommandLine(dataSource, state);
 
     commandLine.parseArgs(args);
   }
 
   @Test
-  public void help(final TestContext testContext, final Connection connection) throws Exception {
+  public void help(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
 
-    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
-    final CommandLine commandLine = createShellCommandLine(connection, state);
+    final ShellState state = createConnectedSchemaCrawlerShellState(dataSource);
+    final CommandLine commandLine = createShellCommandLine(dataSource, state);
 
     final String helpMessage = commandLine.getSubcommands().get("load").getUsageMessage();
 
@@ -54,7 +54,8 @@ public class LoaderOptionsCommandTest {
             classpathResource(COMMAND_HELP + testContext.testMethodFullName() + ".txt")));
   }
 
-  private CommandLine createShellCommandLine(final Connection connection, final ShellState state) {
+  private CommandLine createShellCommandLine(
+      final DatabaseConnectionSource dataSource, final ShellState state) {
 
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));

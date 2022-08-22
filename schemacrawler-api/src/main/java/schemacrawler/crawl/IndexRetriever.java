@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -169,9 +170,10 @@ final class IndexRetriever extends AbstractRetriever {
     }
 
     final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(indexesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(indexesSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
@@ -203,16 +205,18 @@ final class IndexRetriever extends AbstractRetriever {
       throws SQLException {
 
     final Schema tableSchema = table.getSchema();
-    try (final MetadataResultSet results =
-        new MetadataResultSet(
-            getMetaData()
-                .getIndexInfo(
-                    tableSchema.getCatalogName(),
-                    tableSchema.getName(),
-                    table.getName(),
-                    unique,
-                    true /* approximate */),
-            "DatabaseMetaData::getIndexInfo")) {
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection
+                    .getMetaData()
+                    .getIndexInfo(
+                        tableSchema.getCatalogName(),
+                        tableSchema.getName(),
+                        table.getName(),
+                        unique,
+                        true /* approximate */),
+                "DatabaseMetaData::getIndexInfo"); ) {
       createIndexes(table, results);
     } catch (final SQLException e) {
       throw new WrappedSQLException(

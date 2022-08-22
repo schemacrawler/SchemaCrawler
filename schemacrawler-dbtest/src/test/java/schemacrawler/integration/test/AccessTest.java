@@ -84,7 +84,7 @@ public class AccessTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = String.format("testAccessWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

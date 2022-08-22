@@ -29,10 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TypeMap;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
 /** A connection for the retriever. Wraps a live database connection. */
@@ -53,25 +52,28 @@ final class RetrieverConnection {
 
   private static final Logger LOGGER = Logger.getLogger(RetrieverConnection.class.getName());
 
-  private final Connection connection;
+  private final DatabaseConnectionSource dataSource;
   private final JavaSqlTypes javaSqlTypes;
-  private final DatabaseMetaData metaData;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
   private final TableTypes tableTypes;
   private final ConnectionInfo connectionInfo;
 
   RetrieverConnection(
-      final Connection connection, final SchemaRetrievalOptions schemaRetrievalOptions)
+      final DatabaseConnectionSource dataSource,
+      final SchemaRetrievalOptions schemaRetrievalOptions)
       throws SQLException {
 
-    this.connection = checkConnection(connection);
-    metaData = requireNonNull(connection.getMetaData(), "No database metadata obtained");
-    this.schemaRetrievalOptions =
-        requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
-    connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    this.dataSource = requireNonNull(dataSource, "Database connection source not provided");
 
-    tableTypes = TableTypes.from(connection);
-    LOGGER.log(Level.CONFIG, new StringFormat("Supported table types are <%s>", tableTypes));
+    try (final Connection connection = dataSource.get(); ) {
+      this.schemaRetrievalOptions =
+          requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
+      connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+      LOGGER.log(
+          Level.CONFIG, new StringFormat("Making a database connection to:%n%s", connectionInfo));
+      tableTypes = TableTypes.from(connection);
+      LOGGER.log(Level.CONFIG, new StringFormat("Supported table types are <%s>", tableTypes));
+    }
 
     javaSqlTypes = new JavaSqlTypes();
   }
@@ -86,7 +88,7 @@ final class RetrieverConnection {
   }
 
   Connection getConnection() {
-    return connection;
+    return dataSource.get();
   }
 
   EnumDataTypeHelper getEnumDataTypeHelper() {
@@ -104,10 +106,6 @@ final class RetrieverConnection {
 
   JavaSqlTypes getJavaSqlTypes() {
     return javaSqlTypes;
-  }
-
-  DatabaseMetaData getMetaData() {
-    return metaData;
   }
 
   TableTypes getTableTypes() {

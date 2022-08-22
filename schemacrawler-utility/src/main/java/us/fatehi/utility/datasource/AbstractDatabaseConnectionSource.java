@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -40,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -95,7 +94,9 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
   }
 
   protected static Connection getConnection(
-      final String connectionUrl, final Properties jdbcConnectionProperties) {
+      final String connectionUrl,
+      final Properties jdbcConnectionProperties,
+      final Consumer<Connection> connectionInitializer) {
 
     final String username;
     final String user = jdbcConnectionProperties.getProperty("user");
@@ -122,8 +123,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
 
       LOGGER.log(Level.INFO, new StringFormat("Opened database connection <%s>", connection));
 
-      // Clear password
-      jdbcConnectionProperties.remove("password");
+      connectionInitializer.accept(connection);
 
       return connection;
     } catch (final SQLException e) {
@@ -153,30 +153,18 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
     return logProperties;
   }
 
-  protected final String connectionUrl;
+  protected Consumer<Connection> connectionInitializer;
 
-  AbstractDatabaseConnectionSource(final String connectionUrl) {
-    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
+  public AbstractDatabaseConnectionSource() {
+    connectionInitializer = connection -> {};
   }
 
   @Override
-  public final String getConnectionUrl() {
-    return connectionUrl;
-  }
-
-  @Override
-  public final String toString() {
-    String jdbcDriverClass = "<unknown>";
-    try {
-      final Driver jdbcDriver = getJdbcDriver(connectionUrl);
-      jdbcDriverClass = jdbcDriver.getClass().getName();
-    } catch (final SQLException e) {
-      jdbcDriverClass = "<unknown>";
+  public void setConnectionInitializer(final Consumer<Connection> connectionInitializer) {
+    if (connectionInitializer == null) {
+      this.connectionInitializer = connection -> {};
+    } else {
+      this.connectionInitializer = connectionInitializer;
     }
-
-    final StringBuilder builder = new StringBuilder(1024);
-    builder.append("driver=").append(jdbcDriverClass).append(System.lineSeparator());
-    builder.append("url=").append(connectionUrl).append(System.lineSeparator());
-    return builder.toString();
   }
 }

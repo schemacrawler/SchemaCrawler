@@ -51,10 +51,12 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
-  private Connection connection;
+  private DatabaseConnectionSource dataSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -78,7 +80,8 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
             .getClassLoader()
             .getResourceAsStream("teiid-vdb/stock-market-vdb.xml"));
 
-    connection = server.getDriver().connect("jdbc:teiid:StockMarket", null);
+    final Connection connection = server.getDriver().connect("jdbc:teiid:StockMarket", null);
+    dataSource = DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
   }
 
   @Test
@@ -93,7 +96,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testTeiidDump.txt";
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -115,7 +118,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = String.format("testTeiidWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

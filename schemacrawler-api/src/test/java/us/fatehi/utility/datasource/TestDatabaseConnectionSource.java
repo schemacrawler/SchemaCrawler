@@ -25,41 +25,34 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline.state;
 
-import us.fatehi.utility.datasource.UserCredentials;
+package us.fatehi.utility.datasource;
 
-public class MultiUseUserCredentials implements UserCredentials {
-  private final String password;
-  private final String user;
+import static java.util.Objects.requireNonNull;
 
-  public MultiUseUserCredentials(final String user, final String password) {
-    this.password = password;
-    this.user = user;
+import java.sql.Connection;
+
+final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
+
+  private final Connection connection;
+
+  public TestDatabaseConnectionSource(final Connection connection) {
+    this.connection = requireNonNull(connection, "No connection provided");
   }
 
   @Override
-  public void clearPassword() {
-    // No action
+  public void close() throws Exception {
+    connection.close();
   }
 
   @Override
-  public String getPassword() {
-    return password;
+  public Connection get() {
+    return PooledConnectionUtility.newPooledConnection(connection, this);
   }
 
   @Override
-  public String getUser() {
-    return user;
-  }
-
-  @Override
-  public boolean hasPassword() {
-    return password != null;
-  }
-
-  @Override
-  public boolean hasUser() {
-    return user != null;
+  public boolean releaseConnection(final Connection connection) {
+    // No-op
+    return true;
   }
 }

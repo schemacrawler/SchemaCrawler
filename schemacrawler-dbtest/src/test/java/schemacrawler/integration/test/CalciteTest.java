@@ -52,10 +52,12 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 public class CalciteTest extends BaseAdditionalDatabaseTest {
 
-  private Connection connection;
+  private DatabaseConnectionSource dataSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -66,7 +68,8 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
     // Create connection
     final Properties info = new Properties();
     info.put("model", directoryPath.toString());
-    connection = DriverManager.getConnection("jdbc:calcite:", info);
+    final Connection connection = DriverManager.getConnection("jdbc:calcite:", info);
+    dataSource = DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
   }
 
   @Test
@@ -82,7 +85,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testCalciteDump.txt";
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -105,7 +108,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
     final String expectedResource =
         String.format("testCalciteWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

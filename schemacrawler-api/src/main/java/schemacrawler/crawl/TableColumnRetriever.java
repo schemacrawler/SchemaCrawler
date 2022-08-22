@@ -35,6 +35,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -106,12 +107,11 @@ final class TableColumnRetriever extends AbstractRetriever {
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
       final Set<NamedObjectKey> hiddenTableColumnsLookupKeys) {
-    // Get the "COLUMN_DEF" value first as it the Oracle drivers
+
+    // Get the "COLUMN_DEF" value first as it the Oracle driver
     // don't handle it properly otherwise.
-    // https://community.oracle.com/message/5940745#5940745
-    // NOTE: Still an issue with Oracle JDBC driver 11.2.0.3.0
+    // https://github.com/schemacrawler/SchemaCrawler/issues/835
     final String defaultValue = results.getString("COLUMN_DEF");
-    //
 
     final String columnCatalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
     final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
@@ -185,7 +185,7 @@ final class TableColumnRetriever extends AbstractRetriever {
         columnDataTypeName = split[split.length - 1];
       }
     }
-    // PostgreSQL and DB2 may quote column data types, so "unquote" them
+    // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
     columnDataTypeName = Identifiers.STANDARD.unquoteName(columnDataTypeName);
     if (isBlank(columnDataTypeName)) {
       columnDataTypeName = typeName;
@@ -212,9 +212,10 @@ final class TableColumnRetriever extends AbstractRetriever {
       return hiddenTableColumnsLookupKeys;
     }
     final Query hiddenColumnsSql = informationSchemaViews.getQuery(EXT_HIDDEN_TABLE_COLUMNS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
@@ -249,9 +250,10 @@ final class TableColumnRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table columns SQL provided");
     }
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
       }
@@ -265,15 +267,17 @@ final class TableColumnRetriever extends AbstractRetriever {
       throws WrappedSQLException {
     for (final MutableTable table : allTables) {
       LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData()
-                  .getColumns(
-                      table.getSchema().getCatalogName(),
-                      table.getSchema().getName(),
-                      table.getName(),
-                      null),
-              "DatabaseMetaData::getColumns")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getColumns(
+                          table.getSchema().getCatalogName(),
+                          table.getSchema().getName(),
+                          table.getName(),
+                          null),
+                  "DatabaseMetaData::getColumns"); ) {
         while (results.next()) {
           createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
         }

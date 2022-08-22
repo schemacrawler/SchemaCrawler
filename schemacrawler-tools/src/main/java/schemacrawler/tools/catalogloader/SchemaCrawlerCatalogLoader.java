@@ -28,10 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-import static java.util.Objects.requireNonNull;
-
-import java.sql.Connection;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.CommandDescription;
@@ -50,11 +46,8 @@ public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final Connection connection = getConnection();
-    requireNonNull(connection, "No connection provided");
-
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection, getSchemaRetrievalOptions(), getSchemaCrawlerOptions());
+        new SchemaCrawler(getDataSource(), getSchemaRetrievalOptions(), getSchemaCrawlerOptions());
     final Catalog catalog = schemaCrawler.crawl();
     setCatalog(catalog);
   }

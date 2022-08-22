@@ -29,11 +29,12 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.datasource;
 
 import java.sql.Connection;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public interface DatabaseConnectionSource extends AutoCloseable, Supplier<Connection> {
 
-  String getConnectionUrl();
-
   boolean releaseConnection(Connection connection);
+
+  void setConnectionInitializer(Consumer<Connection> connectionInitializer);
 }

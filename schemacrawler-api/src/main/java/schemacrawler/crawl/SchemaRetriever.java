@@ -31,6 +31,7 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -124,7 +125,8 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> catalogNames = new HashSet<>();
 
     if (supportsCatalogs) {
-      try (final ResultSet catalogsResults = getMetaData().getCatalogs()) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final ResultSet catalogsResults = connection.getMetaData().getCatalogs(); ) {
         int numCatalogs = 0;
         final List<String> metaDataCatalogNames = readResultsVector(catalogsResults);
         for (final String catalogName : metaDataCatalogNames) {
@@ -148,8 +150,10 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas) {
       int numSchemas = 0;
-      try (final MetadataResultSet results =
-          new MetadataResultSet(getMetaData().getSchemas(), "DatabaseMetaData::getSchemas")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getSchemas(), "DatabaseMetaData::getSchemas"); ) {
         while (results.next()) {
           numSchemas = numSchemas + 1;
           final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -192,9 +196,10 @@ final class SchemaRetriever extends AbstractRetriever {
     }
     final Query schemataSql = informationSchemaViews.getQuery(SCHEMATA);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule()); ) {
       int numSchemas = 0;
       while (results.next()) {
         numSchemas = numSchemas + 1;

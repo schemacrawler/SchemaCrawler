@@ -86,19 +86,17 @@ public class MySQLDotNameTest extends BaseAdditionalDatabaseTest {
       // Auto-commited
     }
 
-    final Connection connection = getConnection();
-
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder()
-            .fromOptions(matchSchemaRetrievalOptions(connection))
+            .fromOptions(matchSchemaRetrievalOptions(getDataSource()))
             .with(tableColumnsRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
     final Schema schema = catalog.lookupSchema("test").orElse(null);

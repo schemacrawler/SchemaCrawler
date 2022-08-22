@@ -32,7 +32,7 @@ import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
-import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 import us.fatehi.utility.datasource.UserCredentials;
 
 /** Options for the command-line. */

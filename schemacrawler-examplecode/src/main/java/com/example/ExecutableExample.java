@@ -4,7 +4,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -20,7 +19,7 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 public final class ExecutableExample {
 
@@ -48,23 +47,23 @@ public final class ExecutableExample {
         OutputOptionsBuilder.newOutputOptions(TextOutputFormat.html, outputFile);
     final String command = "schema";
 
-    try (final Connection connection = getConnection()) {
+    try (final DatabaseConnectionSource dataSource = getDatabaseConnectionSource()) {
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(options);
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(connection);
+      executable.setDataSource(dataSource);
       executable.execute();
     }
 
     System.out.println("Created output file, " + outputFile);
   }
 
-  private static Connection getConnection() {
+  private static DatabaseConnectionSource getDatabaseConnectionSource() {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, new SingleUseUserCredentials("sa", ""));
-    return dataSource.get();
+            connectionUrl, new MultiUseUserCredentials("sa", ""));
+    return dataSource;
   }
 
   private static Path getOutputFile(final String[] args) {

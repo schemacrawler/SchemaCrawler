@@ -33,8 +33,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -45,6 +43,7 @@ import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -54,14 +53,14 @@ public class SpringIntegrationTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void springFrameworkTest(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void springFrameworkTest(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final String beanDefinitionName = "executableForSchema";
     final SchemaCrawlerExecutable executable =
         appContext.getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
 
     assertThat(
-        outputOf(executableExecution(connection, executable, TextOutputFormat.text)),
+        outputOf(executableExecution(dataSource, executable, TextOutputFormat.text)),
         hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 }

@@ -33,7 +33,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -49,12 +48,13 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class ProposedWeakAssociationsTestUtility {
 
   public static void weakAssociations(
       final TestContext testContext,
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final boolean inferExtensionTables)
       throws Exception {
 
@@ -79,7 +79,7 @@ public class ProposedWeakAssociationsTestUtility {
 
       final Catalog catalog =
           SchemaCrawlerUtility.getCatalog(
-              connection, schemaRetrievalOptions, schemaCrawlerOptions, config);
+              dataSource, schemaRetrievalOptions, schemaCrawlerOptions, config);
 
       final Schema schema = new SchemaReference("PUBLIC", "PUBLIC");
       final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);

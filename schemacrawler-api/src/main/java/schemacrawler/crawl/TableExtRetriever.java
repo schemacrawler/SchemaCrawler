@@ -36,6 +36,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -82,9 +83,10 @@ final class TableExtRetriever extends AbstractRetriever {
     }
     final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(columnAttributesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(columnAttributesSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -123,36 +125,41 @@ final class TableExtRetriever extends AbstractRetriever {
 
   /** Retrieves additional column metadata. */
   void retrieveAdditionalColumnMetadata() {
-    final EnumDataTypeHelper enumDataTypeHelper = getRetrieverConnection().getEnumDataTypeHelper();
 
-    final NamedObjectList<MutableTable> tables = catalog.getAllTables();
-    for (final MutableTable table : tables) {
-      final NamedObjectList<MutableColumn> columns = table.getAllColumns();
-      for (final MutableColumn column : columns) {
-        MutableColumnDataType columnDataType = (MutableColumnDataType) column.getColumnDataType();
+    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+      final EnumDataTypeHelper enumDataTypeHelper =
+          getRetrieverConnection().getEnumDataTypeHelper();
 
-        // Check for enumerated column data-types
-        final EnumDataTypeInfo enumDataTypeInfo =
-            enumDataTypeHelper.getEnumDataTypeInfo(
-                column, columnDataType, getRetrieverConnection().getConnection());
-        switch (enumDataTypeInfo.getType()) {
-          case enumerated_column:
-            // Create new column data-type with enumeration
-            final MutableColumnDataType copiedColumnDataType =
-                new MutableColumnDataType(columnDataType);
-            columnDataType = copiedColumnDataType; // overwrite with new column data-type
-            columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
-            break;
-          case enumerated_data_type:
-            // Update column data-type with enumeration
-            columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
-            break;
-          default:
-            break;
+      final NamedObjectList<MutableTable> tables = catalog.getAllTables();
+      for (final MutableTable table : tables) {
+        final NamedObjectList<MutableColumn> columns = table.getAllColumns();
+        for (final MutableColumn column : columns) {
+          MutableColumnDataType columnDataType = (MutableColumnDataType) column.getColumnDataType();
+
+          // Check for enumerated column data-types
+          final EnumDataTypeInfo enumDataTypeInfo =
+              enumDataTypeHelper.getEnumDataTypeInfo(column, columnDataType, connection);
+          switch (enumDataTypeInfo.getType()) {
+            case enumerated_column:
+              // Create new column data-type with enumeration
+              final MutableColumnDataType copiedColumnDataType =
+                  new MutableColumnDataType(columnDataType);
+              columnDataType = copiedColumnDataType; // overwrite with new column data-type
+              columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
+              break;
+            case enumerated_data_type:
+              // Update column data-type with enumeration
+              columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
+              break;
+            default:
+              break;
+          }
+
+          column.setColumnDataType(columnDataType);
         }
-
-        column.setColumnDataType(columnDataType);
       }
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve additional column metadata", e);
     }
   }
 
@@ -172,9 +179,10 @@ final class TableExtRetriever extends AbstractRetriever {
     }
     final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tableAttributesSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(tableAttributesSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -218,9 +226,11 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
     final Query extIndexesInformationSql = informationSchemaViews.getQuery(EXT_INDEXES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(extIndexesInformationSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(
+                extIndexesInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("INDEX_CATALOG"));
@@ -282,10 +292,11 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
     final Query tableDefinitionsInformationSql = informationSchemaViews.getQuery(EXT_TABLES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                tableDefinitionsInformationSql, statement, getSchemaInclusionRule())) {
+                tableDefinitionsInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -332,9 +343,10 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
     final Query triggerInformationSql = informationSchemaViews.getQuery(TRIGGERS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(triggerInformationSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(triggerInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TRIGGER_CATALOG"));
@@ -407,11 +419,18 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
     final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(viewInformationSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(viewInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
+
+        // Get the "VIEW_DEFINITION" value first as it the Oracle driver
+        // don't handle it properly otherwise.
+        // https://github.com/schemacrawler/SchemaCrawler/issues/835
+        final String definition = results.getString("VIEW_DEFINITION");
+
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String viewName = results.getString("TABLE_NAME");
@@ -426,7 +445,7 @@ final class TableExtRetriever extends AbstractRetriever {
 
         final MutableView view = (MutableView) viewOptional.get();
         LOGGER.log(Level.FINER, new StringFormat("Retrieving view information <%s>", viewName));
-        final String definition = results.getString("VIEW_DEFINITION");
+
         final CheckOptionType checkOption =
             results.getEnum("CHECK_OPTION", CheckOptionType.unknown);
         final boolean updatable = results.getBoolean("IS_UPDATABLE");
@@ -461,9 +480,10 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving view table usage");
 
     final Query viewTableUsageSql = informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(viewTableUsageSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(viewTableUsageSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("VIEW_CATALOG"));

@@ -114,7 +114,7 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodFullName();
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

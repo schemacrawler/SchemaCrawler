@@ -47,14 +47,16 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class MatchSchemaRetrievalOptionsTest {
 
   @DisplayName("Exception does not match URL + plugin found = use plugin")
   @Test
-  public void matchSchemaRetrievalOptions0A(final Connection connection) throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
+  public void matchSchemaRetrievalOptions0A(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
   }
@@ -62,8 +64,9 @@ public class MatchSchemaRetrievalOptionsTest {
   @DisplayName("Exception does not match URL correctly + plugin found = use plugin")
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "newdb")
-  public void matchSchemaRetrievalOptions0B(final Connection connection) throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
+  public void matchSchemaRetrievalOptions0B(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
   }
@@ -71,8 +74,9 @@ public class MatchSchemaRetrievalOptionsTest {
   @DisplayName("Exception matches URL + plugin found = use \"unknown\" plugin")
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void matchSchemaRetrievalOptions1(final Connection connection) throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
+  public void matchSchemaRetrievalOptions1(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
   }
@@ -83,10 +87,11 @@ public class MatchSchemaRetrievalOptionsTest {
 
     // Mock an Oracle connection - plugin is not found
     final String fakeOracleUrl = "jdbc:oracle:foo";
-    final Connection connection = mockConnectionForUrl(fakeOracleUrl, "Mock Oracle connection");
+    final DatabaseConnectionSource dataSource =
+        mockConnectionForUrl(fakeOracleUrl, "Mock Oracle connection");
 
     final InternalRuntimeException exception =
-        assertThrows(InternalRuntimeException.class, () -> matchSchemaRetrievalOptions(connection));
+        assertThrows(InternalRuntimeException.class, () -> matchSchemaRetrievalOptions(dataSource));
     assertThat(exception.getMessage(), containsString(fakeOracleUrl));
   }
 
@@ -97,21 +102,24 @@ public class MatchSchemaRetrievalOptionsTest {
 
     // Mock an Oracle connection - plugin is not found
     final String fakeOracleUrl = "jdbc:oracle:foo";
-    final Connection connection = mockConnectionForUrl(fakeOracleUrl, "Mock Oracle connection");
+    final DatabaseConnectionSource dataSource =
+        mockConnectionForUrl(fakeOracleUrl, "Mock Oracle connection");
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
+    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
   }
 
-  private Connection mockConnectionForUrl(final String fakeOracleUrl, final String toString)
-      throws SQLException {
+  private DatabaseConnectionSource mockConnectionForUrl(
+      final String fakeOracleUrl, final String toString) throws SQLException {
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
     when(databaseMetaData.getURL()).thenReturn(fakeOracleUrl);
     when(databaseMetaData.toString()).thenReturn(toString);
     final Connection connection = mock(Connection.class);
     when(connection.getMetaData()).thenReturn(databaseMetaData);
     when(connection.toString()).thenReturn(toString);
-    return connection;
+    final DatabaseConnectionSource dataSource = mock(DatabaseConnectionSource.class);
+    when(dataSource.get()).thenReturn(connection);
+    return dataSource;
   }
 }

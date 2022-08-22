@@ -85,7 +85,7 @@ public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  public void testPostgreSQL12WithConnection() throws Exception {
+  public void testPostgreSQL14WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("books"))
@@ -112,7 +112,7 @@ public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
     final String expectedResultsResource =
         String.format("testPostgreSQL14WithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));
 
     // -- Additional catalog tests

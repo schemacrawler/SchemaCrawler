@@ -31,7 +31,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
@@ -45,7 +44,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @WithTestDatabase
@@ -58,15 +57,7 @@ public class DatabaseConnectionSourceTest {
 
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            "jdbc:test-db:test", new SingleUseUserCredentials());
-
-    assertThat(
-        connectionSource.toString(),
-        is(
-            "driver=schemacrawler.test.utility.TestDatabaseDriver"
-                + System.lineSeparator()
-                + "url=jdbc:test-db:test"
-                + System.lineSeparator()));
+            "jdbc:test-db:test", new MultiUseUserCredentials());
 
     final Connection connection = connectionSource.get();
 
@@ -80,9 +71,7 @@ public class DatabaseConnectionSourceTest {
 
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            databaseConnectionInfo.getConnectionUrl(), new SingleUseUserCredentials("sa", ""));
-
-    assertThat(connectionSource.toString(), startsWith("driver=org.hsqldb.jdbc.JDBCDriver"));
+            databaseConnectionInfo.getConnectionUrl(), new MultiUseUserCredentials("sa", ""));
 
     final Connection connection = connectionSource.get();
 

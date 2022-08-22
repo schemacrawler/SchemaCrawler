@@ -69,6 +69,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -106,7 +107,7 @@ public class DiagramRendererTest {
   }
 
   public static Path commandExecution(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final SchemaCrawlerCommand<DiagramOptions> scCommand,
       final DiagramOutputFormat outputFormat)
       throws Exception {
@@ -116,18 +117,20 @@ public class DiagramRendererTest {
             .withOutputFormatValue(outputFormat.getFormat())
             .withOutputFile(tempFilePath);
 
-    scCommand.setOutputOptions(outputOptionsBuilder.toOptions());
-    scCommand.setConnection(connection);
+    try (final Connection connection = dataSource.get(); ) {
+      scCommand.setOutputOptions(outputOptionsBuilder.toOptions());
+      scCommand.setConnection(connection);
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
-    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);
+      scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
-    // Initialize, and check if the command is available
-    scCommand.initialize();
-    scCommand.checkAvailability();
+      // Initialize, and check if the command is available
+      scCommand.initialize();
+      scCommand.checkAvailability();
 
-    scCommand.execute();
+      scCommand.execute();
+    }
 
     return tempFilePath;
   }
@@ -143,7 +146,7 @@ public class DiagramRendererTest {
 
   private static void commandDiagram(
       final SchemaCrawlerCommand<DiagramOptions> scCommand,
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final Catalog catalog,
       final DiagramOptions diagramOptions,
       final DiagramOutputFormat diagramOutputFormat,
@@ -158,14 +161,14 @@ public class DiagramRendererTest {
     // Check output file
     final String referenceFileName = testMethodName;
     assertThat(
-        outputOf(commandExecution(connection, scCommand, diagramOutputFormat)),
+        outputOf(commandExecution(dataSource, scCommand, diagramOutputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(
                 DIAGRAM_OUTPUT + referenceFileName + "." + diagramOutputFormat.getFormat()),
             diagramOutputFormat));
   }
 
-  private static Catalog getCatalog(final Connection connection) {
+  private static Catalog getCatalog(final DatabaseConnectionSource dataSource) {
     SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -175,13 +178,13 @@ public class DiagramRendererTest {
     schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
     SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
+        SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);
     schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions).toOptions();
 
     final Catalog catalog =
         SchemaCrawlerUtility.getCatalog(
-            connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+            dataSource, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
     return catalog;
   }
 
@@ -203,17 +206,17 @@ public class DiagramRendererTest {
   @Test
   @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void diagramRenderer_graphviz(final TestContext testContext, final Connection connection)
-      throws Exception {
+  public void diagramRenderer_graphviz(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    final Catalog catalog = getCatalog(connection);
+    final Catalog catalog = getCatalog(dataSource);
 
     commandDiagram(
         new DiagramRenderer(SchemaTextDetailType.details.name(), new GraphExecutorFactory()),
-        connection,
+        dataSource,
         catalog,
         diagramOptions,
         DiagramOutputFormat.canon,
@@ -223,16 +226,16 @@ public class DiagramRendererTest {
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void diagramRenderer_graphviz_java(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    final Catalog catalog = getCatalog(connection);
+    final Catalog catalog = getCatalog(dataSource);
 
     commandDiagram(
         new DiagramRenderer(SchemaTextDetailType.details.name(), new GraphvizJavaExecutorFactory()),
-        connection,
+        dataSource,
         catalog,
         diagramOptions,
         DiagramOutputFormat.svg,
@@ -243,17 +246,17 @@ public class DiagramRendererTest {
   @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    final Catalog catalog = getCatalog(connection);
+    final Catalog catalog = getCatalog(dataSource);
 
     commandDiagram(
         new EmbeddedDiagramRenderer(
             SchemaTextDetailType.details.name(), new GraphExecutorFactory()),
-        connection,
+        dataSource,
         catalog,
         diagramOptions,
         DiagramOutputFormat.htmlx,
@@ -263,17 +266,17 @@ public class DiagramRendererTest {
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz_java(
-      final TestContext testContext, final Connection connection) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    final Catalog catalog = getCatalog(connection);
+    final Catalog catalog = getCatalog(dataSource);
 
     commandDiagram(
         new EmbeddedDiagramRenderer(
             SchemaTextDetailType.details.name(), new GraphvizJavaExecutorFactory()),
-        connection,
+        dataSource,
         catalog,
         diagramOptions,
         DiagramOutputFormat.htmlx,

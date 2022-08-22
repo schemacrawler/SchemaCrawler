@@ -56,6 +56,13 @@ public interface ConnectionInfo extends Serializable {
   String getDatabaseProductVersion();
 
   /**
+   * Gets the Java class name of the JDBC driver.
+   *
+   * @return Java class name of the JDBC driver
+   */
+  String getDriverClassName();
+
+  /**
    * Retrieves JDBC driver's major version number.
    *
    * @return JDBC driver's major version

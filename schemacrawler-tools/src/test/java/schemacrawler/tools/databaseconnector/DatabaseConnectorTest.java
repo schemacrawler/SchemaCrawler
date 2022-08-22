@@ -41,7 +41,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 public class DatabaseConnectorTest {
@@ -57,19 +57,12 @@ public class DatabaseConnectorTest {
     DatabaseConnectionOptions connectionOptions;
     DatabaseConnectionSource connectionSource;
 
-    connectionOptions = new DatabaseUrlConnectionOptions("jdbc:test-db:some-database");
-    connectionSource =
-        databaseConnector.newDatabaseConnectionSource(
-            connectionOptions, new SingleUseUserCredentials());
-    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
-
     connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "test-db", "some-host", 2121, "some-database", null);
     connectionSource =
         databaseConnector.newDatabaseConnectionSource(
-            connectionOptions, new SingleUseUserCredentials());
-    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
+            connectionOptions, new MultiUseUserCredentials());
 
     assertThat(
         databaseConnector.getSchemaRetrievalOptionsBuilder(connectionSource.get()),

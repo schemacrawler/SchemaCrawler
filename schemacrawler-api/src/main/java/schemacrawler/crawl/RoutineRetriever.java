@@ -35,6 +35,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.fu
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
@@ -199,9 +200,10 @@ final class RoutineRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No functions SQL provided");
     }
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(functionsSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(functionsSql, statement, getSchemaInclusionRule()); ) {
       int numFunctions = 0;
       while (results.next()) {
         numFunctions = numFunctions + 1;
@@ -220,10 +222,11 @@ final class RoutineRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData().getFunctions(catalogName, schemaName, null),
-              "DatabaseMetaData::getFunctions")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getFunctions(catalogName, schemaName, null),
+                  "DatabaseMetaData::getFunctions"); ) {
         int numFunctions = 0;
         while (results.next()) {
           numFunctions = numFunctions + 1;
@@ -275,9 +278,10 @@ final class RoutineRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No procedures SQL provided");
     }
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(proceduresSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(proceduresSql, statement, getSchemaInclusionRule()); ) {
       int numProcedures = 0;
       while (results.next()) {
         numProcedures = numProcedures + 1;
@@ -297,10 +301,11 @@ final class RoutineRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              getMetaData().getProcedures(catalogName, schemaName, null),
-              "DatabaseMetaData::getProcedures")) {
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getProcedures(catalogName, schemaName, null),
+                  "DatabaseMetaData::getProcedures"); ) {
         int numProcedures = 0;
         while (results.next()) {
           numProcedures = numProcedures + 1;

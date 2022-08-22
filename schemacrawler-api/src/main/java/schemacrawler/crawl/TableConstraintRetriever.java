@@ -34,6 +34,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
@@ -101,10 +102,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
         informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
 
     // Get check constraint definitions
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                extTableConstraintInformationSql, statement, getSchemaInclusionRule())) {
+                extTableConstraintInformationSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
@@ -154,10 +156,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
     final Query extTableConstraintsInformationSql =
         informationSchemaViews.getQuery(EXT_TABLE_CONSTRAINTS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                extTableConstraintsInformationSql, statement, getSchemaInclusionRule())) {
+                extTableConstraintsInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
@@ -268,10 +271,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
 
     final Query tableConstraintsInformationSql = informationSchemaViews.getQuery(TABLE_CONSTRAINTS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                tableConstraintsInformationSql, statement, getSchemaInclusionRule())) {
+                tableConstraintsInformationSql, statement, getSchemaInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
@@ -349,10 +353,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final Query tableConstraintsColumnsInformationSql =
         informationSchemaViews.getQuery(CONSTRAINT_COLUMN_USAGE);
 
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                tableConstraintsColumnsInformationSql, statement, getSchemaInclusionRule())) {
+                tableConstraintsColumnsInformationSql, statement, getSchemaInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));

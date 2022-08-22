@@ -34,7 +34,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -101,16 +100,8 @@ abstract class AbstractRetriever {
     return belongsToCatalog && belongsToSchema;
   }
 
-  final Statement createStatement() throws SQLException {
-    return retrieverConnection.getConnection().createStatement();
-  }
-
   final NamedObjectList<SchemaReference> getAllSchemas() {
     return catalog.getAllSchemas();
-  }
-
-  final DatabaseMetaData getMetaData() {
-    return retrieverConnection.getMetaData();
   }
 
   final RetrieverConnection getRetrieverConnection() {

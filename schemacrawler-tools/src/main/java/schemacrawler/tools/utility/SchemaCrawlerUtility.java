@@ -30,6 +30,7 @@ package schemacrawler.tools.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.datasource.DatabaseConnectionSources.wrappedDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -40,10 +41,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import schemacrawler.crawl.ConnectionInfoBuilder;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -59,6 +58,7 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -74,30 +74,52 @@ public final class SchemaCrawlerUtility {
    * @param connection Live database connection.
    * @param schemaCrawlerOptions Options.
    * @return Database catalog.
+   * @deprecated
    */
+  @Deprecated
   public static Catalog getCatalog(
       final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions) {
-    checkConnection(connection);
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
-
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
-
-    return getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+    final DatabaseConnectionSource dataSource =
+        wrappedDatabaseConnectionSource(connection, conn -> {});
+    return getCatalog(dataSource, schemaCrawlerOptions);
   }
 
+  /**
+   * Crawls a database, and returns a catalog.
+   *
+   * @param dataSource Database connection source.
+   * @param schemaCrawlerOptions Options.
+   * @return Database catalog.
+   */
   public static Catalog getCatalog(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource, final SchemaCrawlerOptions schemaCrawlerOptions) {
+    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+    return getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+  }
+
+  /**
+   * Crawls a database, and returns a catalog.
+   *
+   * @param dataSource Database connection source.
+   * @param schemaCrawlerOptions Options.
+   * @return Database catalog.
+   */
+  public static Catalog getCatalog(
+      final DatabaseConnectionSource dataSource,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions,
       final Config additionalConfig) {
+
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
+
+    updateConnectionDataSource(dataSource, schemaRetrievalOptions);
 
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();
 
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
-    logConnection(connection);
 
-    catalogLoader.setConnection(connection);
+    catalogLoader.setDataSource(dataSource);
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
     catalogLoader.setAdditionalConfiguration(additionalConfig);
@@ -126,18 +148,49 @@ public final class SchemaCrawlerUtility {
       throw new DatabaseAccessException("Could not retrieve result-set metadata", e);
     }
   }
+
   /**
    * Returns database specific options using an existing SchemaCrawler database plugin.
    *
    * @return SchemaRetrievalOptions
    */
-  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection) {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        buildSchemaRetrievalOptions(connection);
+  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(
+      final DatabaseConnectionSource dataSource) {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    try (final Connection connection = dataSource.get()) {
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+          buildSchemaRetrievalOptions(connection);
 
-    return schemaRetrievalOptions;
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          schemaRetrievalOptionsBuilder.toOptions();
+
+      return schemaRetrievalOptions;
+    } catch (final SQLException e) {
+      throw new InternalRuntimeException("Could not obtain schema retrieval options", e);
+    }
+  }
+
+  /**
+   * Updates the connection data source by attaching a connection initializer.
+   *
+   * @param dataSource Database connection source
+   * @param schemaRetrievalOptions SchemaCrawler retrieval options to convey the connection
+   *     initializer from the database plugin
+   */
+  public static void updateConnectionDataSource(
+      final DatabaseConnectionSource dataSource,
+      final SchemaRetrievalOptions schemaRetrievalOptions) {
+
+    if (dataSource == null) {
+      LOGGER.log(Level.CONFIG, "No database connection source provided");
+      return;
+    }
+    if (schemaRetrievalOptions == null) {
+      LOGGER.log(Level.CONFIG, "No schema retrieval options provided");
+      return;
+    }
+
+    dataSource.setConnectionInitializer(schemaRetrievalOptions.getConnectionInitializer());
   }
 
   /**
@@ -228,19 +281,6 @@ public final class SchemaCrawlerUtility {
       return "";
     }
     return url;
-  }
-
-  private static void logConnection(final Connection connection) {
-    if (connection == null || !LOGGER.isLoggable(Level.INFO)) {
-      return;
-    }
-    try {
-      final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-      LOGGER.log(Level.INFO, connectionInfo.toString());
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not log connection information");
-      LOGGER.log(Level.FINE, "Could not log connection information", e);
-    }
   }
 
   private static boolean useMatchedDatabasePlugin(

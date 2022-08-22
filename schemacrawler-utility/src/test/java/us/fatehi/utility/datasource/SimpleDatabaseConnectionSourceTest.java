@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.datasource;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,18 +57,7 @@ public class SimpleDatabaseConnectionSourceTest {
         RuntimeException.class,
         () ->
             new SimpleDatabaseConnectionSource(
-                "<bad-url>", null, new SingleUseUserCredentials("user", "!")));
-
-    final String connectionUrl = databaseConnectionSource.getConnectionUrl();
-    assertThrows(
-        RuntimeException.class,
-        () -> {
-          final SimpleDatabaseConnectionSource badDatabaseConnectionSource =
-              new SimpleDatabaseConnectionSource(
-                  connectionUrl, null, new SingleUseUserCredentials("user", "!"));
-          final Connection connection = badDatabaseConnectionSource.get();
-          badDatabaseConnectionSource.close();
-        });
+                "<bad-url>", null, new MultiUseUserCredentials("user", "!"), connection -> {}));
   }
 
   @Test
@@ -93,8 +81,6 @@ public class SimpleDatabaseConnectionSourceTest {
     final Connection unwrappedConnection = connection.unwrap(Connection.class);
     assertThat(unwrappedConnection.getClass().getName(), endsWith("JDBCConnection"));
     assertThat(connection.isClosed(), is(false));
-    assertThat(databaseConnectionSource.toString(), containsString("driver="));
-    assertThat(databaseConnectionSource.getConnectionUrl(), is(connection.getMetaData().getURL()));
 
     connection.close();
     assertThat(connection.isClosed(), is(true));
@@ -127,6 +113,9 @@ public class SimpleDatabaseConnectionSourceTest {
     final String password = "";
     databaseConnectionSource =
         new SimpleDatabaseConnectionSource(
-            connectionUrl, new HashMap<>(), new SingleUseUserCredentials(userName, password));
+            connectionUrl,
+            new HashMap<>(),
+            new MultiUseUserCredentials(userName, password),
+            connection -> {});
   }
 }

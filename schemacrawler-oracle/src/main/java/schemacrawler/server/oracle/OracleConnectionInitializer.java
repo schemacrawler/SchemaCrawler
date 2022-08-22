@@ -25,14 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package us.fatehi.utility.datasource;
+package schemacrawler.server.oracle;
+
+import static us.fatehi.utility.database.SqlScript.executeScriptFromResource;
 
 import java.sql.Connection;
+import java.util.function.Consumer;
 
-public class TestConnectionDatabaseSources {
+public final class OracleConnectionInitializer implements Consumer<Connection> {
 
-  public static DatabaseConnectionSource newTestDatabaseConnectionSource(
-      final Connection connection) {
-    return new SingleDatabaseConnectionSource("test-database-connection", connection);
+  @Override
+  public void accept(final Connection connection) {
+    executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
   }
 }

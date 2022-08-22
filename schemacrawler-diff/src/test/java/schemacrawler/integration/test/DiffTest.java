@@ -36,8 +36,6 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.Test;
 
@@ -60,6 +58,7 @@ import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
 import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @DisableLogging
 @ResolveTestContext
@@ -107,13 +106,14 @@ public class DiffTest {
     printSchema(testContext, "/test2.db");
   }
 
-  private DataSource createDataSource(final Path sqliteDbFile) {
+  private DatabaseConnectionSource createDataSource(final Path sqliteDbFile) {
+    final String connectionUrl = "jdbc:sqlite:" + sqliteDbFile;
     final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
+    dataSource.setUrl(connectionUrl);
     dataSource.setUsername(null);
     dataSource.setPassword(null);
 
-    return dataSource;
+    return DatabaseConnectionSources.fromDataSource(dataSource);
   }
 
   private Catalog getCatalog(final String database) throws Exception {
@@ -125,11 +125,10 @@ public class DiffTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final DatabaseConnectionSource connectionOptions =
+    final DatabaseConnectionSource dataSource =
         sqLiteDatabaseLoader.createDatabaseConnectionSource();
 
-    final Catalog catalog =
-        SchemaCrawlerUtility.getCatalog(connectionOptions.get(), schemaCrawlerOptions);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource, schemaCrawlerOptions);
 
     return catalog;
   }
@@ -140,9 +139,9 @@ public class DiffTest {
     executable.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
     final Path sqliteDbFile = TestUtility.copyResourceToTempFile(database);
-    final DataSource dataSource = createDataSource(sqliteDbFile);
+    final DatabaseConnectionSource dataSource = createDataSource(sqliteDbFile);
     assertThat(
-        outputOf(executableExecution(dataSource.getConnection(), executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

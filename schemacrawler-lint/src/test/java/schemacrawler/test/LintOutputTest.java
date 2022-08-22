@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +59,7 @@ import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @AssertNoSystemErrOutput
@@ -99,7 +99,8 @@ public class LintOutputTest {
   }
 
   @Test
-  public void executableLintReportOutput(final Connection connection) throws Exception {
+  public void executableLintReportOutput(final DatabaseConnectionSource dataSource)
+      throws Exception {
 
     final InfoLevel infoLevel = InfoLevel.standard;
 
@@ -132,7 +133,7 @@ public class LintOutputTest {
                       executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
                       assertThat(
-                          outputOf(executableExecution(connection, executable, outputFormat)),
+                          outputOf(executableExecution(dataSource, executable, outputFormat)),
                           hasSameContentAndTypeAs(
                               classpathResource(TEXT_OUTPUT + referenceFile), outputFormat));
                     }));

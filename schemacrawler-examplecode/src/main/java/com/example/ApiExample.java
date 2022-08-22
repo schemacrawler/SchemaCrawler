@@ -1,6 +1,5 @@
 package com.example;
 
-import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -18,7 +17,7 @@ import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
-import us.fatehi.utility.datasource.SingleUseUserCredentials;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 public final class ApiExample {
 
@@ -43,10 +42,8 @@ public final class ApiExample {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     // Get the schema definition
-    final Catalog catalog;
-    try (final Connection connection = getConnection()) {
-      catalog = SchemaCrawlerUtility.getCatalog(connection, options);
-    }
+    final DatabaseConnectionSource dataSource = getDataSource();
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource, options);
 
     for (final Schema schema : catalog.getSchemas()) {
       System.out.println(schema);
@@ -65,11 +62,11 @@ public final class ApiExample {
     }
   }
 
-  private static Connection getConnection() {
+  private static DatabaseConnectionSource getDataSource() {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, new SingleUseUserCredentials("sa", ""));
-    return dataSource.get();
+            connectionUrl, new MultiUseUserCredentials("sa", ""));
+    return dataSource;
   }
 }

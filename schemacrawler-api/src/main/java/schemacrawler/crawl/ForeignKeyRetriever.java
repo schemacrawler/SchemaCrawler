@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -196,9 +197,10 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
     final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
-    try (final Statement statement = createStatement();
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(fkSql, statement, getSchemaInclusionRule())) {
+            new MetadataResultSet(fkSql, statement, getSchemaInclusionRule()); ) {
       createForeignKeys(results, foreignKeys);
     } catch (final SQLException e) {
       throw new WrappedSQLException(
@@ -208,40 +210,48 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
   private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws WrappedSQLException {
-    final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
-    for (final MutableTable table : allTables) {
-      if (table instanceof View) {
-        continue;
-      }
+    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+      final DatabaseMetaData metaData = connection.getMetaData();
+      final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
+      for (final MutableTable table : allTables) {
+        if (table instanceof View) {
+          continue;
+        }
 
-      final DatabaseMetaData metaData = getMetaData();
+        // Get imported foreign keys
+        try (final MetadataResultSet results =
+            new MetadataResultSet(
+                metaData.getImportedKeys(
+                    table.getSchema().getCatalogName(),
+                    table.getSchema().getName(),
+                    table.getName()),
+                "DatabaseMetaData::getImportedKeys")) {
+          createForeignKeys(results, foreignKeys);
+        } catch (final SQLException e) {
+          throw new WrappedSQLException(
+              String.format("Could not retrieve foreign keys for table <%s>", table), e);
+        }
 
-      // Get imported foreign keys
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              metaData.getImportedKeys(
-                  table.getSchema().getCatalogName(), table.getSchema().getName(), table.getName()),
-              "DatabaseMetaData::getImportedKeys")) {
-        createForeignKeys(results, foreignKeys);
-      } catch (final SQLException e) {
-        throw new WrappedSQLException(
-            String.format("Could not retrieve foreign keys for table <%s>", table), e);
+        // We need to get exported keys as well, since if only a single
+        // table is selected, we have not retrieved it's keys that are
+        // imported by other tables.
+        try (final MetadataResultSet results =
+            new MetadataResultSet(
+                metaData.getExportedKeys(
+                    table.getSchema().getCatalogName(),
+                    table.getSchema().getName(),
+                    table.getName()),
+                "DatabaseMetaData::getExportedKeys")) {
+          createForeignKeys(results, foreignKeys);
+        } catch (final SQLException e) {
+          // Since not all database drivers may support exported keys, log a warning instead of
+          // throwing an error
+          LOGGER.log(
+              Level.WARNING, "Could not retrieve exported foreign keys for table " + table, e);
+        }
       }
-
-      // We need to get exported keys as well, since if only a single
-      // table is selected, we have not retrieved it's keys that are
-      // imported by other tables.
-      try (final MetadataResultSet results =
-          new MetadataResultSet(
-              metaData.getExportedKeys(
-                  table.getSchema().getCatalogName(), table.getSchema().getName(), table.getName()),
-              "DatabaseMetaData::getExportedKeys")) {
-        createForeignKeys(results, foreignKeys);
-      } catch (final SQLException e) {
-        // Since not all database drivers may support exported keys, log a warning instead of
-        // throwing an error
-        LOGGER.log(Level.WARNING, "Could not retrieve exported foreign keys for table " + table, e);
-      }
+    } catch (final SQLException e) {
+      throw new WrappedSQLException("Could not retrieve foreign keys", e);
     }
   }
 }

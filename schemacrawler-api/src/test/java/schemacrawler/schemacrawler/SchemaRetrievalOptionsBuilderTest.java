@@ -31,20 +31,52 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresent;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static java.util.Collections.emptyList;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.aMapWithSize;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
 
 public class SchemaRetrievalOptionsBuilderTest {
+
+  @Test
+  public void connectionInitializer() {
+    final Connection connection = mock(Connection.class);
+
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+
+    builder.connectionInitializer.accept(connection);
+    verifyNoInteractions(connection);
+
+    builder.withConnectionInitializer(
+        conn -> {
+          throw new RuntimeException("Test forced exception");
+        });
+    final RuntimeException runtimeException1 =
+        assertThrows(
+            RuntimeException.class, () -> builder.connectionInitializer.accept(connection));
+    assertThat(runtimeException1.getMessage(), is("Test forced exception"));
+
+    builder.withConnectionInitializer(null);
+    builder.connectionInitializer.accept(connection);
+    verifyNoInteractions(connection);
+  }
 
   @Test
   public void dbMetaData() throws SQLException {
@@ -319,16 +351,31 @@ public class SchemaRetrievalOptionsBuilderTest {
   }
 
   @Test
+  public void toOptions() {
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+    final SchemaRetrievalOptions schemaRetrievalOptions = builder.toOptions();
+    assertThat(
+        schemaRetrievalOptions.toString(),
+        containsString("\"@object\": \"" + schemaRetrievalOptions.getClass().getName() + "\""));
+  }
+
+  @Test
   public void typeMap() {
     final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
 
     assertThat(builder.overridesTypeMap, isEmpty());
+    assertThat(builder.toOptions().getTypeMap(), is(aMapWithSize(39)));
 
-    builder.withTypeMap(new HashMap<>());
+    final Map<String, Class<?>> typeMap = new HashMap<>();
+    typeMap.put(String.class.getSimpleName(), String.class);
+    builder.withTypeMap(typeMap);
     assertThat(builder.overridesTypeMap, isPresent());
-    assertThat(builder.overridesTypeMap.get().size(), is(0));
+    assertThat(builder.overridesTypeMap.get().size(), is(1));
+    assertThat(builder.toOptions().getTypeMap(), is(aMapWithSize(1)));
+    assertThat(builder.toOptions().getTypeMap(), hasKey("String"));
 
     builder.withTypeMap(null);
     assertThat(builder.overridesTypeMap, isEmpty());
+    assertThat(builder.toOptions().getTypeMap(), is(aMapWithSize(39)));
   }
 }

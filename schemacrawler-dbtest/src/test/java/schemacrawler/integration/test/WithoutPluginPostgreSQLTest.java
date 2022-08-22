@@ -108,7 +108,7 @@ public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
     final String expectedResource =
         String.format("testPostgreSQLWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

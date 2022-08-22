@@ -30,6 +30,7 @@ package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,17 +39,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import us.fatehi.utility.database.DatabaseUtility;
 
-final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSource
-    implements DatabaseConnectionSource {
+final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private static final Logger LOGGER =
       Logger.getLogger(SimpleDatabaseConnectionSource.class.getName());
 
+  private final String connectionUrl;
   private final Properties jdbcConnectionProperties;
   private final LinkedList<Connection> connectionPool;
   private final LinkedList<Connection> usedConnections;
@@ -56,10 +58,10 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   SimpleDatabaseConnectionSource(
       final String connectionUrl,
       final Map<String, String> connectionProperties,
-      final UserCredentials userCredentials) {
+      final UserCredentials userCredentials,
+      final Consumer<Connection> connectionInitializer) {
 
-    super(connectionUrl);
-
+    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
     requireNonNull(userCredentials, "No user credentials provided");
 
     final String user = userCredentials.getUser();
@@ -105,7 +107,8 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   public Connection get() {
     // Create a connection if needed
     if (connectionPool.isEmpty()) {
-      final Connection connection = getConnection(connectionUrl, jdbcConnectionProperties);
+      final Connection connection =
+          getConnection(connectionUrl, jdbcConnectionProperties, connectionInitializer);
       connectionPool.add(connection);
     }
 

@@ -73,6 +73,12 @@ public class Issue482Test extends BaseAdditionalDatabaseTest {
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/sqlserver.scripts.txt");
+
+    createDataSource(
+        dbContainer.getJdbcUrl(),
+        dbContainer.getUsername(),
+        dbContainer.getPassword(),
+        "database=BOOKS");
   }
 
   @Test
@@ -89,7 +95,7 @@ public class Issue482Test extends BaseAdditionalDatabaseTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(), schemaCrawlerOptions);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource(), schemaCrawlerOptions);
 
     assertThat(catalog.getTables(), hasSize(10));
     assertThat(catalog.getSynonyms(), hasSize(2));

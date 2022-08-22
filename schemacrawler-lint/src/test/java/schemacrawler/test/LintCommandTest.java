@@ -31,8 +31,6 @@ package schemacrawler.test;
 import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
@@ -41,6 +39,7 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @AssertNoSystemErrOutput
@@ -67,13 +66,14 @@ public class LintCommandTest {
   }
 
   @Test
-  public void executableLintReport(final Connection connection) throws Exception {
-    executableLint(connection, null, null, "executableForLint");
+  public void executableLintReport(final DatabaseConnectionSource dataSource) throws Exception {
+    executableLint(dataSource, null, null, "executableForLint");
   }
 
   @Test
-  public void executableLintReportWithConfig(final Connection connection) throws Exception {
+  public void executableLintReportWithConfig(final DatabaseConnectionSource dataSource)
+      throws Exception {
     executableLint(
-        connection, "/schemacrawler-linter-configs-test.yaml", null, "executableForLintWithConfig");
+        dataSource, "/schemacrawler-linter-configs-test.yaml", null, "executableForLintWithConfig");
   }
 }

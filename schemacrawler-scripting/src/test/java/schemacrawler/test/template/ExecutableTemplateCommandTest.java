@@ -34,14 +34,13 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemErrOutput
 @AssertNoSystemOutOutput
@@ -49,36 +48,36 @@ import schemacrawler.tools.command.template.options.TemplateLanguageType;
 public class ExecutableTemplateCommandTest {
 
   @Test
-  public void executableFreeMarker(final Connection connection) throws Exception {
+  public void executableFreeMarker(final DatabaseConnectionSource dataSource) throws Exception {
     assertThat(
         outputOf(
-            templateExecution(connection, TemplateLanguageType.freemarker, "/plaintextschema.ftl")),
+            templateExecution(dataSource, TemplateLanguageType.freemarker, "/plaintextschema.ftl")),
         hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
-  public void executableMustache(final Connection connection) throws Exception {
+  public void executableMustache(final DatabaseConnectionSource dataSource) throws Exception {
     assertThat(
         outputOf(
             templateExecution(
-                connection, TemplateLanguageType.mustache, "/plaintextschema.mustache")),
+                dataSource, TemplateLanguageType.mustache, "/plaintextschema.mustache")),
         hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
-  public void executableThymeleaf(final Connection connection) throws Exception {
+  public void executableThymeleaf(final DatabaseConnectionSource dataSource) throws Exception {
     assertThat(
         outputOf(
             templateExecution(
-                connection, TemplateLanguageType.thymeleaf, "/plaintextschema.thymeleaf")),
+                dataSource, TemplateLanguageType.thymeleaf, "/plaintextschema.thymeleaf")),
         hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
-  public void executableVelocity(final Connection connection) throws Exception {
+  public void executableVelocity(final DatabaseConnectionSource dataSource) throws Exception {
     assertThat(
         outputOf(
-            templateExecution(connection, TemplateLanguageType.velocity, "/plaintextschema.vm")),
+            templateExecution(dataSource, TemplateLanguageType.velocity, "/plaintextschema.vm")),
         hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 }

@@ -13,7 +13,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static us.fatehi.utility.datasource.TestConnectionDatabaseSources.newTestDatabaseConnectionSource;
+import static us.fatehi.utility.datasource.DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -34,6 +34,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
 @WithTestDatabase
@@ -42,12 +43,12 @@ public class LoadCommandTest {
   private final String COMMAND_HELP = "command_help/";
 
   @Test
-  public void execute(final Connection connection) {
+  public void execute(final DatabaseConnectionSource dataSource) {
     final String[] args = {"--info-level", "detailed", "--load-row-counts", "additional", "-extra"};
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setDataSource(newTestDatabaseConnectionSource(connection));
+    state.setDataSource(dataSource);
     assertThat(state.getCatalog(), is(nullValue()));
 
     final LoadCommand optionsParser = new LoadCommand(state);

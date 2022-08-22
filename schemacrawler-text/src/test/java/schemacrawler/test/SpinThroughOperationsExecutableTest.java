@@ -35,7 +35,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -56,6 +55,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemErrOutput
 @AssertNoSystemOutOutput
@@ -95,7 +95,8 @@ public class SpinThroughOperationsExecutableTest {
   }
 
   @Test
-  public void spinThroughOperationsExecutable(final Connection connection) throws Exception {
+  public void spinThroughOperationsExecutable(final DatabaseConnectionSource dataSource)
+      throws Exception {
 
     assertAll(
         infoLevels()
@@ -109,12 +110,12 @@ public class SpinThroughOperationsExecutableTest {
                                         operation ->
                                             () -> {
                                               assertOutput(
-                                                  connection, infoLevel, outputFormat, operation);
+                                                  dataSource, infoLevel, outputFormat, operation);
                                             }))));
   }
 
   private void assertOutput(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final InfoLevel infoLevel,
       final TextOutputFormat outputFormat,
       final OperationType operation)
@@ -148,7 +149,7 @@ public class SpinThroughOperationsExecutableTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     assertThat(
-        outputOf(executableExecution(connection, executable, outputFormat)),
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(SPIN_THROUGH_OPERATIONS_OUTPUT + referenceFile), outputFormat));
   }

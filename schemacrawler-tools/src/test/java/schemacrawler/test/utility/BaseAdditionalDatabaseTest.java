@@ -30,6 +30,7 @@ package schemacrawler.test.utility;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -39,11 +40,23 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.testdb.TestSchemaCreator;
 import us.fatehi.utility.database.SqlScript;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @DisableLogging
 public abstract class BaseAdditionalDatabaseTest {
 
   private DataSource dataSource;
+
+  protected void closeDataSource() {
+    try {
+      if (dataSource instanceof Closeable) {
+        ((Closeable) dataSource).close();
+      }
+    } catch (final Exception e) {
+      failTestSetup("Could not close data source", e);
+    }
+  }
 
   protected void createDatabase(final String scriptsResource) {
     try (final Connection connection = getConnection()) {
@@ -92,6 +105,11 @@ public abstract class BaseAdditionalDatabaseTest {
       fail("Could not get database connection", e);
       return null; // Appeasing the compiler - this line will never be executed.
     }
+  }
+
+  protected final DatabaseConnectionSource getDataSource() {
+    final BasicDataSource basicDataSource = (BasicDataSource) dataSource;
+    return DatabaseConnectionSources.fromDataSource(basicDataSource);
   }
 
   protected void runScript(final String databaseSqlResource) throws Exception {

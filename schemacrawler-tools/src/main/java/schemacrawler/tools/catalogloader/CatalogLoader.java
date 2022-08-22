@@ -28,14 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-import java.sql.Connection;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public interface CatalogLoader extends Comparable<CatalogLoader> {
 
@@ -45,7 +44,7 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   PluginCommand getCommandLineCommand();
 
-  Connection getConnection();
+  DatabaseConnectionSource getDataSource();
 
   default PluginCommand getHelpCommand() {
     return getCommandLineCommand();
@@ -63,7 +62,7 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   void setCatalog(Catalog catalog);
 
-  void setConnection(Connection connection);
+  void setDataSource(DatabaseConnectionSource dataSource);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 

@@ -40,7 +40,6 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,11 +47,12 @@ import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public final class LintTestUtility {
 
   public static void executableLint(
-      final Connection connection,
+      final DatabaseConnectionSource dataSource,
       final String linterConfigsResource,
       final Config additionalConfig,
       final String referenceFileName)
@@ -71,7 +71,7 @@ public final class LintTestUtility {
     }
 
     assertThat(
-        outputOf(executableExecution(connection, executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 

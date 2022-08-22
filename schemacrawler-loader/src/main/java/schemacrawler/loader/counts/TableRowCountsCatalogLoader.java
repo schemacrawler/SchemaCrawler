@@ -89,7 +89,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
     try {
       final Catalog catalog = getCatalog();
       final TableRowCountsRetriever rowCountsRetriever =
-          new TableRowCountsRetriever(getConnection(), catalog);
+          new TableRowCountsRetriever(getDataSource(), catalog);
       final Config config = getAdditionalConfiguration();
       taskRunner.run(
           new TaskDefinition(

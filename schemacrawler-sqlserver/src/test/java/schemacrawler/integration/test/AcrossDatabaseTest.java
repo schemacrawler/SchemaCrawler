@@ -102,7 +102,7 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodFullName();
     assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
+        outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -120,5 +120,11 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
     try (Connection connection = getConnection()) {
       SqlScript.executeScriptFromResource("/across-database.sql", connection);
     }
+
+    createDataSource(
+        dbContainer.getJdbcUrl(),
+        dbContainer.getUsername(),
+        dbContainer.getPassword(),
+        "database=DATABASE_A");
   }
 }

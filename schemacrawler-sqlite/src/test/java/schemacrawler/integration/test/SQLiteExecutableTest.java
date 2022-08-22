@@ -36,8 +36,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 
-import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.InfoLevel;
@@ -51,6 +49,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
 @ResolveTestContext
@@ -75,7 +74,7 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
       final String currentMethodFullName, final InfoLevel infoLevel, final String command)
       throws Exception {
     final Path sqliteDbFile = createTestDatabase();
-    final DataSource dataSource = createDataSourceFromFile(sqliteDbFile);
+    final DatabaseConnectionSource dataSource = createDataSourceFromFile(sqliteDbFile);
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
@@ -90,7 +89,7 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(dataSource.getConnection(), executable)),
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

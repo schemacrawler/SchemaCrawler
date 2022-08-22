@@ -8,8 +8,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
-
 public class DatabaseConnectionSourceBuilderTest {
 
   @Test
@@ -30,6 +28,23 @@ public class DatabaseConnectionSourceBuilderTest {
   }
 
   @Test
+  public void host() {
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+
+    assertThat(builder.toURL(), is("jdbc:test-db:localhost:0/"));
+
+    builder.withDefaultHost("default-host");
+    assertThat(builder.toURL(), is("jdbc:test-db:default-host:0/"));
+
+    builder.withHost("host");
+    assertThat(builder.toURL(), is("jdbc:test-db:host:0/"));
+
+    builder.withHost("  ");
+    assertThat(builder.toURL(), is("jdbc:test-db:default-host:0/"));
+  }
+
+  @Test
   public void port() {
     final DatabaseConnectionSourceBuilder builder =
         DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
@@ -47,23 +62,6 @@ public class DatabaseConnectionSourceBuilderTest {
 
     builder.withPort(65599);
     assertThat(builder.toURL(), is("jdbc:test-db:localhost:2121/"));
-  }
-
-  @Test
-  public void host() {
-    final DatabaseConnectionSourceBuilder builder =
-        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
-
-    assertThat(builder.toURL(), is("jdbc:test-db:localhost:0/"));
-
-    builder.withDefaultHost("default-host");
-    assertThat(builder.toURL(), is("jdbc:test-db:default-host:0/"));
-
-    builder.withHost("host");
-    assertThat(builder.toURL(), is("jdbc:test-db:host:0/"));
-
-    builder.withHost("  ");
-    assertThat(builder.toURL(), is("jdbc:test-db:default-host:0/"));
   }
 
   @Test

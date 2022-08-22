@@ -30,13 +30,12 @@ package schemacrawler.test;
 
 import static schemacrawler.test.utility.LintTestUtility.executableLint;
 
-import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @AssertNoSystemErrOutput
@@ -44,8 +43,8 @@ import schemacrawler.test.utility.WithTestDatabase;
 public class LintSqlTest {
 
   @Test
-  public void executableLintSQLReport(final Connection connection) throws Exception {
+  public void executableLintSQLReport(final DatabaseConnectionSource dataSource) throws Exception {
     executableLint(
-        connection, "/schemacrawler-linter-configs-sql.yaml", null, "executableLintSQLReport");
+        dataSource, "/schemacrawler-linter-configs-sql.yaml", null, "executableLintSQLReport");
   }
 }
