@@ -15,7 +15,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@760475f02126626b9077db49728d81849463c9dc # pin@v1.2.1
+      uses: sualeh/prepare-maven-build@v1.2.1
       with:
         java-version: 8
     - id: install-packages
@@ -36,4 +36,4 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          package
+          clean package
