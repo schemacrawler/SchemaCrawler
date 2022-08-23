@@ -3,6 +3,16 @@
 SchemaCrawler release notes.
 
 
+<a name="a16.18.1"></a>
+## Release 16.18.1 - 2022-08-23
+
+- Breaking change to APIs by using database connection sources instead of database connections  
+  to allow for true multi-threading with multiple connections
+- Allow multi-threading to be turned on with `SC_EXPERIMENTAL=true` either as an  
+  environmental variable or a Java system property
+- Fix #835 - Oracle SQLException when multi-threading turned on
+
+
 <a name="a16.17.4"></a>
 ## Release 16.17.4 - 2022-08-14
 
