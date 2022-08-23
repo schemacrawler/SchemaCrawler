@@ -46,7 +46,7 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   private static final Logger LOGGER = Logger.getLogger(MultiThreadedTaskRunner.class.getName());
 
   public static final int MIN_THREADS = 1;
-  public static final int MAX_THREADS = 5;
+  public static final int MAX_THREADS = 10;
 
   private final ExecutorService executorService;
 

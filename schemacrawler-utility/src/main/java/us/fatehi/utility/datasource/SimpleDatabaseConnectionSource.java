@@ -35,10 +35,10 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,8 +52,8 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
 
   private final String connectionUrl;
   private final Properties jdbcConnectionProperties;
-  private final LinkedList<Connection> connectionPool;
-  private final LinkedList<Connection> usedConnections;
+  private final LinkedBlockingDeque<Connection> connectionPool;
+  private final LinkedBlockingDeque<Connection> usedConnections;
 
   SimpleDatabaseConnectionSource(
       final String connectionUrl,
@@ -76,8 +76,8 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
     jdbcConnectionProperties =
         createConnectionProperties(connectionUrl, connectionProperties, user, password);
 
-    connectionPool = new LinkedList<>();
-    usedConnections = new LinkedList<>();
+    connectionPool = new LinkedBlockingDeque<>();
+    usedConnections = new LinkedBlockingDeque<>();
   }
 
   @Override
