@@ -40,23 +40,23 @@ jobs:
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
-    - id: upload-artifacts
-      name: Upload installers
-      uses: actions/upload-artifact@v3
-      with:
-        name: release-artifacts-v16.17.4
-        path: |
-          ./schemacrawler-distrib/target/schemacrawler-16.17.4-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.17.4-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-16.17.4-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.17.4-bin.zip.SHA-512
-        retention-days: 1
+    - id: tag
+      name: Move early-access-release tag
+      shell: bash
+      if: false
+      run: |
+        # Move tag
+        git tag -d early-access-release
+        git push --delete origin early-access-release
+        git tag -a early-access-release -m "SchemaCrawler Early Access Release"
+        git push --follow-tags
     - id: create-release
       name: Create GitHub release
       uses: softprops/action-gh-release@v1
       if:  ${{ startsWith(github.ref, 'refs/tags/') != true }}
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: early-access-release
         name: early-access-release
         draft: false
         prerelease: true
