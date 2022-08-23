@@ -76,7 +76,7 @@ public class DatabaseConnectionSources {
   public static DatabaseConnectionSource wrappedDatabaseConnectionSource(
       final Connection connection, final Consumer<Connection> connectionInitializer) {
     final DatabaseConnectionSource dbConnectionSource =
-        new WrappedDatabaseConnectionSource(connection, connectionInitializer);
+        new SingleDatabaseConnectionSource(connection, connectionInitializer);
     return dbConnectionSource;
   }
 

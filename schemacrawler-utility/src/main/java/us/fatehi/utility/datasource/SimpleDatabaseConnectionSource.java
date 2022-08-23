@@ -35,6 +35,7 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -52,8 +53,8 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
 
   private final String connectionUrl;
   private final Properties jdbcConnectionProperties;
-  private final LinkedBlockingDeque<Connection> connectionPool;
-  private final LinkedBlockingDeque<Connection> usedConnections;
+  private final Deque<Connection> connectionPool;
+  private final Deque<Connection> usedConnections;
 
   SimpleDatabaseConnectionSource(
       final String connectionUrl,
