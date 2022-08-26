@@ -91,7 +91,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
 
     LOGGER.log(Level.INFO, "Finding weak associations");
     try {
-      taskRunner.run(
+      taskRunner.add(
           new TaskDefinition(
               "retrieveWeakAssociations",
               () -> {
@@ -107,7 +107,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
                       Level.INFO, "Not retrieving weak associations, since this was not requested");
                 }
               }));
-
+      taskRunner.submit();
       taskRunner.stop();
       LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {

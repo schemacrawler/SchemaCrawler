@@ -29,7 +29,7 @@ package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -73,7 +73,21 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  public void run(final TaskDefinition... taskDefinitions) throws Exception {
+  public void stop() throws ExecutionException {
+    clear();
+    try {
+      executorService.shutdown();
+      if (!executorService.awaitTermination(1, TimeUnit.HOURS)) {
+        executorService.shutdownNow();
+      }
+    } catch (final InterruptedException ex) {
+      executorService.shutdownNow();
+      Thread.currentThread().interrupt();
+    }
+  }
+
+  @Override
+  void run(final List<TaskDefinition> taskDefinitions) throws Exception {
 
     if (executorService.isShutdown()) {
       throw new IllegalStateException("Task runner is stopped");
@@ -83,28 +97,14 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
 
     final CompletableFuture<Void> completableFuture =
         CompletableFuture.allOf(
-            Arrays.stream(taskDefinitions)
+            taskDefinitions.stream()
                 .map(
                     task ->
                         CompletableFuture.runAsync(
                             new TimedTask(getTasks(), task), executorService))
                 .collect(Collectors.toList())
-                .toArray(new CompletableFuture[taskDefinitions.length]));
+                .toArray(new CompletableFuture[taskDefinitions.size()]));
 
     completableFuture.join();
-  }
-
-  @Override
-  public void stop() throws ExecutionException {
-    executorService.shutdown();
-
-    try {
-      if (!executorService.awaitTermination(1, TimeUnit.HOURS)) {
-        executorService.shutdownNow();
-      }
-    } catch (final InterruptedException ex) {
-      executorService.shutdownNow();
-      Thread.currentThread().interrupt();
-    }
   }
 }

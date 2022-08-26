@@ -32,6 +32,8 @@ import java.util.function.Supplier;
 
 public interface TaskRunner {
 
+  void add(TaskDefinition taskDefinition) throws Exception;
+
   String getId();
 
   boolean isStopped();
@@ -44,7 +46,7 @@ public interface TaskRunner {
    */
   Supplier<String> report();
 
-  void run(TaskDefinition... taskDefinitions) throws Exception;
-
   void stop() throws ExecutionException;
+
+  void submit() throws Exception;
 }

@@ -38,6 +38,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiFunction;
@@ -46,21 +47,36 @@ import java.util.function.Supplier;
 abstract class AbstractTaskRunner implements TaskRunner {
 
   private final String id;
+  private final List<TaskDefinition> taskDefinitions;
   private final List<TaskInfo> tasks;
 
   public AbstractTaskRunner(final String id) {
     this.id = requireNotBlank(id, "No id provided");
 
+    taskDefinitions = new CopyOnWriteArrayList<>();
     tasks = new CopyOnWriteArrayList<>();
   }
 
   @Override
-public final String getId() {
+  public final void add(final TaskDefinition taskDefinition) throws Exception {
+
+    if (taskDefinition == null) {
+      return;
+    }
+    if (isStopped()) {
+      throw new IllegalStateException("Task runner is stopped");
+    }
+
+    taskDefinitions.add(taskDefinition);
+  }
+
+  @Override
+  public final String getId() {
     return id;
   }
 
   @Override
-public abstract boolean isStopped();
+  public abstract boolean isStopped();
 
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
@@ -69,7 +85,7 @@ public abstract boolean isStopped();
    * @throws Exception
    */
   @Override
-public final Supplier<String> report() {
+  public final Supplier<String> report() {
 
     return () -> {
       final BiFunction<Duration, Duration, Double> calculatePercentage =
@@ -111,17 +127,38 @@ public final Supplier<String> report() {
                 calculatePercentage.apply(task.getDuration(), totalDuration), task));
       }
 
+      tasks.clear();
+
       return buffer.toString();
     };
   }
 
   @Override
-public abstract void run(final TaskDefinition... taskDefinitions) throws Exception;
+  public abstract void stop() throws ExecutionException;
 
   @Override
-public abstract void stop() throws ExecutionException;
+  public final void submit() throws Exception {
+    try {
+      run(taskDefinitions);
+    } catch (final CompletionException e) {
+      final Throwable cause = e.getCause();
+      if (cause != null) {
+        throw new ExecutionException(cause);
+      } else {
+        throw e;
+      }
+    } finally {
+      clear();
+    }
+  }
+
+  void clear() {
+    taskDefinitions.clear();
+  }
 
   List<TaskInfo> getTasks() {
     return tasks;
   }
+
+  abstract void run(final List<TaskDefinition> taskDefinitions) throws Exception;
 }
