@@ -38,7 +38,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiFunction;
@@ -82,7 +81,6 @@ abstract class AbstractTaskRunner implements TaskRunner {
    * Allows for a deferred conversion to a string. Useful in logging.
    *
    * @return String supplier.
-   * @throws Exception
    */
   @Override
   public final Supplier<String> report() {
@@ -138,18 +136,8 @@ abstract class AbstractTaskRunner implements TaskRunner {
 
   @Override
   public final void submit() throws Exception {
-    try {
-      run(taskDefinitions);
-    } catch (final CompletionException e) {
-      final Throwable cause = e.getCause();
-      if (cause != null) {
-        throw new ExecutionException(cause);
-      } else {
-        throw e;
-      }
-    } finally {
-      clear();
-    }
+    run(taskDefinitions);
+    clear();
   }
 
   void clear() {

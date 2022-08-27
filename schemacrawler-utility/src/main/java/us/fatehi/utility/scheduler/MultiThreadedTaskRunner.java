@@ -37,7 +37,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import us.fatehi.utility.string.StringFormat;
 
@@ -61,10 +60,12 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
     } else {
       maxThreads = maxThreadsSuggested;
     }
-    LOGGER.log(
-        Level.INFO, new StringFormat("Configured to run loaders in <%d> threads", maxThreads));
-
     executorService = Executors.newFixedThreadPool(maxThreads);
+    LOGGER.log(
+        Level.INFO,
+        new StringFormat(
+            "Started thread pool <%s> for <%s> with <%d> threads",
+            executorService, id, maxThreads));
   }
 
   @Override
@@ -89,11 +90,10 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   @Override
   void run(final List<TaskDefinition> taskDefinitions) throws Exception {
 
-    if (executorService.isShutdown()) {
+    requireNonNull(taskDefinitions, "Tasks not provided");
+    if (isStopped()) {
       throw new IllegalStateException("Task runner is stopped");
     }
-
-    requireNonNull(taskDefinitions, "Tasks not provided");
 
     final CompletableFuture<Void> completableFuture =
         CompletableFuture.allOf(
@@ -102,8 +102,7 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
                     task ->
                         CompletableFuture.runAsync(
                             new TimedTask(getTasks(), task), executorService))
-                .collect(Collectors.toList())
-                .toArray(new CompletableFuture[taskDefinitions.size()]));
+                .toArray(size -> new CompletableFuture[size]));
 
     completableFuture.join();
   }

@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
-public class TaskDefinition implements Runnable {
+public final class TaskDefinition implements Runnable {
 
   /**
    * Not quite a Callable<Void> (no "return null;" required) and not quite a Runnable because it

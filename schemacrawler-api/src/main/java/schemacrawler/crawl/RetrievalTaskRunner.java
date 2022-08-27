@@ -78,10 +78,6 @@ public final class RetrievalTaskRunner {
     return this;
   }
 
-  public boolean isStopped() {
-    return taskRunner.isStopped();
-  }
-
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
@@ -118,11 +114,6 @@ public final class RetrievalTaskRunner {
       final boolean shouldRun,
       final TaskDefinition.TaskRunnable function)
       throws Exception {
-
-    if (taskRunner.isStopped()) {
-      throw new IllegalStateException("Task runner is stopped");
-    }
-
     if (shouldRun) {
       taskRunner.add(new TaskDefinition(retrievalName, function));
     } else {
