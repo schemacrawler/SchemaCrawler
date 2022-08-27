@@ -29,7 +29,7 @@ package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 final class MainThreadTaskRunner extends AbstractTaskRunner {
@@ -49,7 +49,7 @@ final class MainThreadTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  void run(final List<TaskDefinition> taskDefinitions) throws Exception {
+  void run(final Collection<TaskDefinition> taskDefinitions) throws Exception {
 
     requireNonNull(taskDefinitions, "Tasks not provided");
 

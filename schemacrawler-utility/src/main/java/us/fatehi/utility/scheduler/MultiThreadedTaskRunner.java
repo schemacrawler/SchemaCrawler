@@ -29,7 +29,7 @@ package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -87,7 +87,7 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  void run(final List<TaskDefinition> taskDefinitions) throws Exception {
+  void run(final Collection<TaskDefinition> taskDefinitions) throws Exception {
 
     requireNonNull(taskDefinitions, "Tasks not provided");
     if (isStopped()) {
@@ -100,7 +100,7 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
                 .map(
                     task ->
                         CompletableFuture.runAsync(
-                            new TimedTask(getTasks(), task), executorService))
+                            new TimedTask(addTaskResults(), task), executorService))
                 .toArray(size -> new CompletableFuture[size]));
 
     completableFuture.join();
