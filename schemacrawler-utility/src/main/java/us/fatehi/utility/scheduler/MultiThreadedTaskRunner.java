@@ -75,7 +75,6 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
 
   @Override
   public void stop() throws ExecutionException {
-    clear();
     try {
       executorService.shutdown();
       if (!executorService.awaitTermination(1, TimeUnit.HOURS)) {

@@ -137,11 +137,6 @@ abstract class AbstractTaskRunner implements TaskRunner {
   @Override
   public final void submit() throws Exception {
     run(taskDefinitions);
-    clear();
-  }
-
-  void clear() {
-    taskDefinitions.clear();
   }
 
   List<TaskInfo> getTasks() {

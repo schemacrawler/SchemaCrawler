@@ -45,7 +45,7 @@ final class MainThreadTaskRunner extends AbstractTaskRunner {
 
   @Override
   public void stop() throws ExecutionException {
-    clear();
+    // No-op
   }
 
   @Override
