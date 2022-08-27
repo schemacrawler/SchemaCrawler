@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - '**'
+  schedule:
+    - cron:  '16 8,16 * * *'
 
 permissions: read-all
 
