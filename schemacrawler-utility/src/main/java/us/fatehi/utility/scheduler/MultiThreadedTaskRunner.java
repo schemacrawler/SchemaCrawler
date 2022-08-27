@@ -40,12 +40,9 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
-public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
+final class MultiThreadedTaskRunner extends AbstractTaskRunner {
 
   private static final Logger LOGGER = Logger.getLogger(MultiThreadedTaskRunner.class.getName());
-
-  public static final int MIN_THREADS = 1;
-  public static final int MAX_THREADS = 10;
 
   private final ExecutorService executorService;
 
@@ -53,10 +50,10 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
     super(id);
 
     final int maxThreads;
-    if (maxThreadsSuggested < MIN_THREADS) {
-      maxThreads = MIN_THREADS;
-    } else if (maxThreadsSuggested > MAX_THREADS) {
-      maxThreads = MAX_THREADS;
+    if (maxThreadsSuggested < TaskRunner.MIN_THREADS) {
+      maxThreads = TaskRunner.MIN_THREADS;
+    } else if (maxThreadsSuggested > TaskRunner.MAX_THREADS) {
+      maxThreads = TaskRunner.MAX_THREADS;
     } else {
       maxThreads = maxThreadsSuggested;
     }

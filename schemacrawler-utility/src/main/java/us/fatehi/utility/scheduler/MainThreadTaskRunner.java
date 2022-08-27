@@ -34,7 +34,7 @@ import java.util.concurrent.ExecutionException;
 
 final class MainThreadTaskRunner extends AbstractTaskRunner {
 
-  public MainThreadTaskRunner(final String id) {
+  MainThreadTaskRunner(final String id) {
     super(id);
   }
 

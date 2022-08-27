@@ -30,9 +30,17 @@ package us.fatehi.utility.scheduler;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 
-public interface TaskRunner {
+public interface TaskRunner extends AutoCloseable {
+
+  int MIN_THREADS = 1;
+  int MAX_THREADS = 10;
 
   void add(TaskDefinition taskDefinition) throws Exception;
+
+  @Override
+  default void close() throws Exception {
+    stop();
+  }
 
   String getId();
 
