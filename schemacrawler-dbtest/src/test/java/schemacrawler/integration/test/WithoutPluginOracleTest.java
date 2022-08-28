@@ -57,6 +57,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.WithSystemProperty;
@@ -112,7 +113,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     final RuntimeException executionRuntimeException =
         assertThrows(
             RuntimeException.class, () -> getCatalog(getDataSource(), schemaCrawlerOptions));
-    final SQLException cause = (SQLException) executionRuntimeException.getCause().getCause();
+    final SQLException cause = getUnderlyingSQLException(executionRuntimeException);
     assertThat(
         cause.getSQLState(),
         is("22025")); // ORA-01424: missing or illegal character following the escape character
@@ -149,5 +150,18 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  private SQLException getUnderlyingSQLException(final Exception executionRuntimeException) {
+    SQLException underlyingSQLException = null;
+    Throwable cause = executionRuntimeException;
+    while (cause != null) {
+      cause = cause.getCause();
+      if (cause instanceof SQLException && !(cause instanceof WrappedSQLException)) {
+        underlyingSQLException = (SQLException) cause;
+        return underlyingSQLException;
+      }
+    }
+    return underlyingSQLException;
   }
 }
