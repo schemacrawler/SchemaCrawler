@@ -119,8 +119,8 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             loadAlternateKeys(catalog, catalogAttributes);
             loadWeakAssociations(catalog, catalogAttributes);
           };
-      taskRunner.run(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
-
+      taskRunner.add(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
+      taskRunner.submit();
       taskRunner.stop();
       LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {

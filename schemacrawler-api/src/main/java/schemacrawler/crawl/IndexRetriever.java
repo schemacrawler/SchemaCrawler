@@ -196,31 +196,24 @@ final class IndexRetriever extends AbstractRetriever {
   private void retrieveIndexesFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
     for (final MutableTable table : allTables) {
-      retrieveTableIndexesFromMetadata(table, false);
-      retrieveTableIndexesFromMetadata(table, true);
-    }
-  }
-
-  private void retrieveTableIndexesFromMetadata(final MutableTable table, final boolean unique)
-      throws SQLException {
-
-    final Schema tableSchema = table.getSchema();
-    try (final Connection connection = getRetrieverConnection().getConnection();
-        final MetadataResultSet results =
-            new MetadataResultSet(
-                connection
-                    .getMetaData()
-                    .getIndexInfo(
-                        tableSchema.getCatalogName(),
-                        tableSchema.getName(),
-                        table.getName(),
-                        unique,
-                        true /* approximate */),
-                "DatabaseMetaData::getIndexInfo"); ) {
-      createIndexes(table, results);
-    } catch (final SQLException e) {
-      throw new WrappedSQLException(
-          String.format("Could not retrieve indexes for table <%s>", table), e);
+      final Schema tableSchema = table.getSchema();
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getIndexInfo(
+                          tableSchema.getCatalogName(),
+                          tableSchema.getName(),
+                          table.getName(),
+                          false /* return indices regardless of whether unique or not */,
+                          true /* approximate - reflect approximate or out of data values */),
+                  "DatabaseMetaData::getIndexInfo"); ) {
+        createIndexes(table, results);
+      } catch (final SQLException e) {
+        throw new WrappedSQLException(
+            String.format("Could not retrieve indexes for table <%s>", table), e);
+      }
     }
   }
 }

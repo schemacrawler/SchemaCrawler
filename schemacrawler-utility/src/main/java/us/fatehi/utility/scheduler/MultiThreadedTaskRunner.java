@@ -29,7 +29,7 @@ package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -37,16 +37,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import us.fatehi.utility.string.StringFormat;
 
-public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
+final class MultiThreadedTaskRunner extends AbstractTaskRunner {
 
   private static final Logger LOGGER = Logger.getLogger(MultiThreadedTaskRunner.class.getName());
-
-  public static final int MIN_THREADS = 1;
-  public static final int MAX_THREADS = 10;
 
   private final ExecutorService executorService;
 
@@ -54,17 +50,19 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
     super(id);
 
     final int maxThreads;
-    if (maxThreadsSuggested < MIN_THREADS) {
-      maxThreads = MIN_THREADS;
-    } else if (maxThreadsSuggested > MAX_THREADS) {
-      maxThreads = MAX_THREADS;
+    if (maxThreadsSuggested < TaskRunner.MIN_THREADS) {
+      maxThreads = TaskRunner.MIN_THREADS;
+    } else if (maxThreadsSuggested > TaskRunner.MAX_THREADS) {
+      maxThreads = TaskRunner.MAX_THREADS;
     } else {
       maxThreads = maxThreadsSuggested;
     }
-    LOGGER.log(
-        Level.INFO, new StringFormat("Configured to run loaders in <%d> threads", maxThreads));
-
     executorService = Executors.newFixedThreadPool(maxThreads);
+    LOGGER.log(
+        Level.INFO,
+        new StringFormat(
+            "Started thread pool <%s> for <%s> with <%d> threads",
+            executorService, id, maxThreads));
   }
 
   @Override
@@ -73,32 +71,9 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  public void run(final TaskDefinition... taskDefinitions) throws Exception {
-
-    if (executorService.isShutdown()) {
-      throw new IllegalStateException("Task runner is stopped");
-    }
-
-    requireNonNull(taskDefinitions, "Tasks not provided");
-
-    final CompletableFuture<Void> completableFuture =
-        CompletableFuture.allOf(
-            Arrays.stream(taskDefinitions)
-                .map(
-                    task ->
-                        CompletableFuture.runAsync(
-                            new TimedTask(getTasks(), task), executorService))
-                .collect(Collectors.toList())
-                .toArray(new CompletableFuture[taskDefinitions.length]));
-
-    completableFuture.join();
-  }
-
-  @Override
   public void stop() throws ExecutionException {
-    executorService.shutdown();
-
     try {
+      executorService.shutdown();
       if (!executorService.awaitTermination(1, TimeUnit.HOURS)) {
         executorService.shutdownNow();
       }
@@ -106,5 +81,25 @@ public final class MultiThreadedTaskRunner extends AbstractTaskRunner {
       executorService.shutdownNow();
       Thread.currentThread().interrupt();
     }
+  }
+
+  @Override
+  void run(final Collection<TaskDefinition> taskDefinitions) throws Exception {
+
+    requireNonNull(taskDefinitions, "Tasks not provided");
+    if (isStopped()) {
+      throw new IllegalStateException("Task runner is stopped");
+    }
+
+    final CompletableFuture<Void> completableFuture =
+        CompletableFuture.allOf(
+            taskDefinitions.stream()
+                .map(
+                    task ->
+                        CompletableFuture.runAsync(
+                            new TimedTask(addTaskResults(), task), executorService))
+                .toArray(size -> new CompletableFuture[size]));
+
+    completableFuture.join();
   }
 }

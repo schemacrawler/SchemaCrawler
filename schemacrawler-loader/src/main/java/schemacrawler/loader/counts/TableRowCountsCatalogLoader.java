@@ -91,7 +91,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
       final TableRowCountsRetriever rowCountsRetriever =
           new TableRowCountsRetriever(getDataSource(), catalog);
       final Config config = getAdditionalConfiguration();
-      taskRunner.run(
+      taskRunner.add(
           new TaskDefinition(
               "retrieveTableRowCounts",
               () -> {
@@ -103,8 +103,9 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
                       Level.INFO, "Not retrieving table row counts, since this was not requested");
                 }
               }));
+      taskRunner.submit();
 
-      taskRunner.run(
+      taskRunner.add(
           new TaskDefinition(
               "filterEmptyTables",
               () -> {
@@ -112,6 +113,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
                 catalog.reduce(
                     Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
               }));
+      taskRunner.submit();
 
       taskRunner.stop();
       LOGGER.log(Level.INFO, taskRunner.report());

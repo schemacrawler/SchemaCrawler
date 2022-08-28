@@ -31,7 +31,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Wrapper around a task definition that runs the task and times it. It puts timing information on a
@@ -40,10 +40,10 @@ import java.util.List;
 class TimedTask implements Runnable {
 
   private final TaskDefinition task;
-  private final List<TaskInfo> taskResults;
+  private final Consumer<TaskInfo> addTaskResults;
 
-  TimedTask(final List<TaskInfo> taskResults, final TaskDefinition task) {
-    this.taskResults = requireNonNull(taskResults, "Tasks results list not provided");
+  TimedTask(final Consumer<TaskInfo> taskResults, final TaskDefinition task) {
+    this.addTaskResults = requireNonNull(taskResults, "Tasks results list not provided");
     this.task = requireNonNull(task, "Task not provided");
   }
 
@@ -63,7 +63,7 @@ class TimedTask implements Runnable {
     final Duration runTime = Duration.between(start, stop);
 
     final TaskInfo taskInfo = new TaskInfo(task.getTaskName(), runTime);
-    taskResults.add(taskInfo);
+    addTaskResults.accept(taskInfo);
 
     if (ex != null) {
       throw ex;

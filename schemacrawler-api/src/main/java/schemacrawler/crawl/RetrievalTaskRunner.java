@@ -29,9 +29,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
 import java.util.concurrent.CompletionException;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,13 +51,11 @@ public final class RetrievalTaskRunner {
 
   private final TaskRunner taskRunner;
   private final SchemaInfoLevel infoLevel;
-  private final List<TaskDefinition> taskDefinitions;
 
   public RetrievalTaskRunner(final SchemaInfoLevel infoLevel, final int maxThreads) {
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
 
     taskRunner = TaskRunners.getTaskRunner(infoLevel.getTag(), maxThreads);
-    taskDefinitions = new CopyOnWriteArrayList<>();
   }
 
   public RetrievalTaskRunner add(
@@ -82,10 +78,6 @@ public final class RetrievalTaskRunner {
     return this;
   }
 
-  public boolean isStopped() {
-    return taskRunner.isStopped();
-  }
-
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
@@ -106,7 +98,7 @@ public final class RetrievalTaskRunner {
 
   public void submit() throws Exception {
     try {
-      taskRunner.run(taskDefinitions.toArray(new TaskDefinition[taskDefinitions.size()]));
+      taskRunner.submit();
     } catch (final CompletionException e) {
       final Throwable cause = e.getCause();
       if (cause != null) {
@@ -114,8 +106,6 @@ public final class RetrievalTaskRunner {
       } else {
         throw e;
       }
-    } finally {
-      taskDefinitions.clear();
     }
   }
 
@@ -124,15 +114,10 @@ public final class RetrievalTaskRunner {
       final boolean shouldRun,
       final TaskDefinition.TaskRunnable function)
       throws Exception {
-
-    if (taskRunner.isStopped()) {
-      throw new IllegalStateException("Task runner is stopped");
-    }
-
     if (shouldRun) {
-      taskDefinitions.add(new TaskDefinition(retrievalName, function));
+      taskRunner.add(new TaskDefinition(retrievalName, function));
     } else {
-      taskDefinitions.add(new TaskDefinition(retrievalName));
+      taskRunner.add(new TaskDefinition(retrievalName));
     }
   }
 

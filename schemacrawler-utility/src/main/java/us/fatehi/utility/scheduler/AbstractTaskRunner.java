@@ -37,39 +37,55 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Collection;
+import java.util.Queue;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 abstract class AbstractTaskRunner implements TaskRunner {
 
   private final String id;
-  private final List<TaskInfo> tasks;
+  private final Queue<TaskDefinition> taskDefinitions;
+  private final Queue<TaskInfo> taskResults;
 
   public AbstractTaskRunner(final String id) {
     this.id = requireNotBlank(id, "No id provided");
 
-    tasks = new CopyOnWriteArrayList<>();
+    taskDefinitions = new LinkedBlockingDeque<>();
+    taskResults = new LinkedBlockingDeque<>();
   }
 
   @Override
-public final String getId() {
+  public final void add(final TaskDefinition taskDefinition) throws Exception {
+
+    if (taskDefinition == null) {
+      return;
+    }
+    if (isStopped()) {
+      throw new IllegalStateException("Task runner is stopped");
+    }
+
+    taskDefinitions.add(taskDefinition);
+  }
+
+  @Override
+  public final String getId() {
     return id;
   }
 
   @Override
-public abstract boolean isStopped();
+  public abstract boolean isStopped();
 
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
    * @return String supplier.
-   * @throws Exception
    */
   @Override
-public final Supplier<String> report() {
+  public final Supplier<String> report() {
 
     return () -> {
       final BiFunction<Duration, Duration, Double> calculatePercentage =
@@ -93,7 +109,7 @@ public final Supplier<String> report() {
               .toFormatter();
 
       Duration totalDuration = Duration.ofNanos(0);
-      for (final TaskInfo task : tasks) {
+      for (final TaskInfo task : taskResults) {
         totalDuration = totalDuration.plus(task.getDuration());
       }
 
@@ -104,24 +120,35 @@ public final Supplier<String> report() {
           String.format(
               "Total time taken for <%s> - %s hours%n", id, totalDurationLocal.format(df)));
 
-      for (final TaskInfo task : tasks) {
+      for (final TaskInfo task : taskResults) {
         buffer.append(
             String.format(
                 "-%5.1f%% - %s%n",
                 calculatePercentage.apply(task.getDuration(), totalDuration), task));
       }
 
+      taskResults.clear();
+
       return buffer.toString();
     };
   }
 
   @Override
-public abstract void run(final TaskDefinition... taskDefinitions) throws Exception;
+  public abstract void stop() throws ExecutionException;
 
   @Override
-public abstract void stop() throws ExecutionException;
-
-  List<TaskInfo> getTasks() {
-    return tasks;
+  public final void submit() throws Exception {
+    run(taskDefinitions);
+    taskDefinitions.clear();
   }
+
+  Consumer<TaskInfo> addTaskResults() {
+    return taskResult -> {
+      if (taskResult != null) {
+        taskResults.add(taskResult);
+      }
+    };
+  }
+
+  abstract void run(final Collection<TaskDefinition> taskDefinitions) throws Exception;
 }

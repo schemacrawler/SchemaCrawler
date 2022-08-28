@@ -29,11 +29,12 @@ package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 final class MainThreadTaskRunner extends AbstractTaskRunner {
 
-  public MainThreadTaskRunner(final String id) {
+  MainThreadTaskRunner(final String id) {
     super(id);
   }
 
@@ -43,17 +44,17 @@ final class MainThreadTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  public void run(final TaskDefinition... taskDefinitions) throws Exception {
+  public void stop() throws ExecutionException {
+    // No-op
+  }
+
+  @Override
+  void run(final Collection<TaskDefinition> taskDefinitions) throws Exception {
 
     requireNonNull(taskDefinitions, "Tasks not provided");
 
     for (final TaskDefinition taskDefinition : taskDefinitions) {
       taskDefinition.run();
     }
-  }
-
-  @Override
-  public void stop() throws ExecutionException {
-    // No-op
   }
 }
