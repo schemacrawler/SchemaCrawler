@@ -47,7 +47,11 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
+import us.fatehi.utility.scheduler.TaskDefinition;
+import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.TaskRunners;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database tables. */
@@ -195,25 +199,38 @@ final class IndexRetriever extends AbstractRetriever {
 
   private void retrieveIndexesFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
-    for (final MutableTable table : allTables) {
-      final Schema tableSchema = table.getSchema();
-      try (final Connection connection = getRetrieverConnection().getConnection();
-          final MetadataResultSet results =
-              new MetadataResultSet(
-                  connection
-                      .getMetaData()
-                      .getIndexInfo(
-                          tableSchema.getCatalogName(),
-                          tableSchema.getName(),
-                          table.getName(),
-                          false /* return indices regardless of whether unique or not */,
-                          true /* approximate - reflect approximate or out of data values */),
-                  "DatabaseMetaData::getIndexInfo"); ) {
-        createIndexes(table, results);
-      } catch (final SQLException e) {
-        throw new WrappedSQLException(
-            String.format("Could not retrieve indexes for table <%s>", table), e);
+    try (final TaskRunner taskRunner =
+        TaskRunners.getTaskRunner("retrieve-indexes-from-metadata", 5); ) {
+      for (final MutableTable table : allTables) {
+        taskRunner.add(
+            new TaskDefinition(
+                table.getFullName(),
+                () -> {
+                  final Schema tableSchema = table.getSchema();
+                  try (final Connection connection = getRetrieverConnection().getConnection();
+                      final MetadataResultSet results =
+                          new MetadataResultSet(
+                              connection
+                                  .getMetaData()
+                                  .getIndexInfo(
+                                      tableSchema.getCatalogName(),
+                                      tableSchema.getName(),
+                                      table.getName(),
+                                      false /* return indices regardless of whether unique or not */,
+                                      true /* approximate - reflect approximate or out of data values */),
+                              "DatabaseMetaData::getIndexInfo"); ) {
+                    createIndexes(table, results);
+                  } catch (final SQLException e) {
+                    throw new WrappedSQLException(
+                        String.format("Could not retrieve indexes for table <%s>", table), e);
+                  }
+                }));
       }
+      taskRunner.submit();
+    } catch (final SQLException | ExecutionRuntimeException e) {
+      throw e;
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException(e.getMessage(), e);
     }
   }
 }
