@@ -30,6 +30,7 @@ package us.fatehi.utility.scheduler;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
 final class MainThreadTaskRunner extends AbstractTaskRunner {
@@ -49,12 +50,16 @@ final class MainThreadTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  void run(final Collection<TaskDefinition> taskDefinitions) throws Exception {
+  Collection<TimedTaskResult> runTimed(final Collection<TaskDefinition> taskDefinitions)
+      throws Exception {
 
     requireNonNull(taskDefinitions, "Tasks not provided");
 
+    final Collection<TimedTaskResult> runTaskResults = new CopyOnWriteArrayList<>();
     for (final TaskDefinition taskDefinition : taskDefinitions) {
-      taskDefinition.run();
+      final TimedTaskResult taskResult = new TimedTask(taskDefinition).call();
+      runTaskResults.add(taskResult);
     }
+    return runTaskResults;
   }
 }

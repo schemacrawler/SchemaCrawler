@@ -42,14 +42,13 @@ import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 abstract class AbstractTaskRunner implements TaskRunner {
 
   private final String id;
   private final Queue<TaskDefinition> taskDefinitions;
-  private final Queue<TaskInfo> taskResults;
+  private final Queue<TimedTaskResult> taskResults;
 
   public AbstractTaskRunner(final String id) {
     this.id = requireNotBlank(id, "No id provided");
@@ -109,7 +108,7 @@ abstract class AbstractTaskRunner implements TaskRunner {
               .toFormatter();
 
       Duration totalDuration = Duration.ofNanos(0);
-      for (final TaskInfo task : taskResults) {
+      for (final TimedTaskResult task : taskResults) {
         totalDuration = totalDuration.plus(task.getDuration());
       }
 
@@ -120,7 +119,7 @@ abstract class AbstractTaskRunner implements TaskRunner {
           String.format(
               "Total time taken for <%s> - %s hours%n", id, totalDurationLocal.format(df)));
 
-      for (final TaskInfo task : taskResults) {
+      for (final TimedTaskResult task : taskResults) {
         buffer.append(
             String.format(
                 "-%5.1f%% - %s%n",
@@ -138,17 +137,11 @@ abstract class AbstractTaskRunner implements TaskRunner {
 
   @Override
   public final void submit() throws Exception {
-    run(taskDefinitions);
+    final Collection<TimedTaskResult> runTaskResults = runTimed(taskDefinitions);
+    taskResults.addAll(runTaskResults);
     taskDefinitions.clear();
   }
 
-  Consumer<TaskInfo> addTaskResults() {
-    return taskResult -> {
-      if (taskResult != null) {
-        taskResults.add(taskResult);
-      }
-    };
-  }
-
-  abstract void run(final Collection<TaskDefinition> taskDefinitions) throws Exception;
+  abstract Collection<TimedTaskResult> runTimed(final Collection<TaskDefinition> taskDefinitions)
+      throws Exception;
 }

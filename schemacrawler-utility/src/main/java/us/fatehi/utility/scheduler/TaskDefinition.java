@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
-public final class TaskDefinition implements Runnable {
+public final class TaskDefinition {
 
   /**
    * Not quite a Callable<Void> (no "return null;" required) and not quite a Runnable because it
@@ -64,32 +64,12 @@ public final class TaskDefinition implements Runnable {
     this.task = requireNonNull(task, "Task not provided");
   }
 
-  public String getTaskName() {
-    return taskName;
+  public TaskRunnable getTask() {
+    return task;
   }
 
-  @Override
-  public void run() {
-
-    LOGGER.log(
-        Level.INFO,
-        new StringFormat(
-            "Running <%s> on thread <%s>", taskName, Thread.currentThread().getName()));
-
-    Exception ex = null;
-    try {
-      task.run();
-    } catch (final Exception e) {
-      ex = e;
-    }
-
-    if (ex != null) {
-      throw new RuntimeException(
-          String.format(
-              "Exception running <%s> on thread <%s>: %s",
-              taskName, Thread.currentThread().getName(), ex.getMessage()),
-          ex);
-    }
+  public String getTaskName() {
+    return taskName;
   }
 
   @Override
