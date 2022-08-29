@@ -94,21 +94,30 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
       throw new IllegalStateException("Task runner is stopped");
     }
 
-    final Collection<TimedTask> timedTasks = new CopyOnWriteArrayList<>();
-    for (final TaskDefinition taskDefinition : taskDefinitions) {
-      final TimedTask timedTask = new TimedTask(taskDefinition);
-      timedTasks.add(timedTask);
+    try {
+      final Collection<TimedTask> timedTasks = new CopyOnWriteArrayList<>();
+      for (final TaskDefinition taskDefinition : taskDefinitions) {
+        final TimedTask timedTask = new TimedTask(taskDefinition);
+        timedTasks.add(timedTask);
+      }
+
+      final Collection<TimedTaskResult> runTaskResults = new CopyOnWriteArrayList<>();
+
+      final List<Future<TimedTaskResult>> futureResults =
+          executorService.invokeAll(timedTasks, 1, TimeUnit.HOURS);
+      for (final Future<TimedTaskResult> futureResult : futureResults) {
+        final TimedTaskResult timedTaskResult = futureResult.get();
+        runTaskResults.add(timedTaskResult);
+      }
+
+      return runTaskResults;
+    } catch (final ExecutionException e) {
+      final Throwable cause = e.getCause();
+      if (cause instanceof Exception) {
+        throw (Exception) cause;
+      } else {
+        throw new RuntimeException(cause);
+      }
     }
-
-    final Collection<TimedTaskResult> runTaskResults = new CopyOnWriteArrayList<>();
-
-    final List<Future<TimedTaskResult>> futureResults =
-        executorService.invokeAll(timedTasks, 1, TimeUnit.HOURS);
-    for (final Future<TimedTaskResult> futureResult : futureResults) {
-      final TimedTaskResult timedTaskResult = futureResult.get();
-      runTaskResults.add(timedTaskResult);
-    }
-
-    return runTaskResults;
   }
 }
