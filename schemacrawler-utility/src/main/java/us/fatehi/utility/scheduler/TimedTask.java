@@ -31,42 +31,58 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.function.Consumer;
+import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Wrapper around a task definition that runs the task and times it. It puts timing information on a
  * shared thread-safe list for reporting. Throws an exception if the task does not succeed.
  */
-class TimedTask implements Runnable {
+class TimedTask implements Callable<TimedTaskResult> {
 
-  private final TaskDefinition task;
-  private final Consumer<TaskInfo> addTaskResults;
+  private static final Logger LOGGER = Logger.getLogger(TimedTask.class.getName());
 
-  TimedTask(final Consumer<TaskInfo> taskResults, final TaskDefinition task) {
-    this.addTaskResults = requireNonNull(taskResults, "Tasks results list not provided");
-    this.task = requireNonNull(task, "Task not provided");
+  private final TaskDefinition taskDefinition;
+
+  TimedTask(final TaskDefinition task) {
+    this.taskDefinition = requireNonNull(task, "Task not provided");
   }
 
   @Override
-  public void run() {
+  public TimedTaskResult call() throws Exception {
+
+    LOGGER.log(
+        Level.INFO,
+        new StringFormat(
+            "Running <%s> on thread <%s>",
+            taskDefinition.getTaskName(), Thread.currentThread().getName()));
 
     final Instant start = Instant.now();
 
-    RuntimeException ex = null;
+    Exception ex = null;
     try {
-      task.run();
-    } catch (final RuntimeException e) {
+      taskDefinition.getTask().run();
+    } catch (final Exception e) {
       ex = e;
     }
 
     final Instant stop = Instant.now();
     final Duration runTime = Duration.between(start, stop);
-
-    final TaskInfo taskInfo = new TaskInfo(task.getTaskName(), runTime);
-    addTaskResults.accept(taskInfo);
+    final TimedTaskResult timedTaskResult = new TimedTaskResult(taskDefinition.getTaskName(), runTime);
 
     if (ex != null) {
+      LOGGER.log(
+          Level.WARNING,
+          String.format(
+              "Exception running <%s> on thread <%s>: %s",
+              timedTaskResult, Thread.currentThread().getName(), ex.getMessage()),
+          ex);
       throw ex;
+    } else {
+      return timedTaskResult;
     }
   }
 }

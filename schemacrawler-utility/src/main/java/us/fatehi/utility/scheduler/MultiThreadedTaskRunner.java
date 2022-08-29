@@ -30,10 +30,12 @@ package us.fatehi.utility.scheduler;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
-import java.util.concurrent.CompletableFuture;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,22 +86,29 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  void run(final Collection<TaskDefinition> taskDefinitions) throws Exception {
+  Collection<TimedTaskResult> runTimed(final Collection<TaskDefinition> taskDefinitions)
+      throws Exception {
 
     requireNonNull(taskDefinitions, "Tasks not provided");
     if (isStopped()) {
       throw new IllegalStateException("Task runner is stopped");
     }
 
-    final CompletableFuture<Void> completableFuture =
-        CompletableFuture.allOf(
-            taskDefinitions.stream()
-                .map(
-                    task ->
-                        CompletableFuture.runAsync(
-                            new TimedTask(addTaskResults(), task), executorService))
-                .toArray(size -> new CompletableFuture[size]));
+    final Collection<TimedTask> timedTasks = new CopyOnWriteArrayList<>();
+    for (final TaskDefinition taskDefinition : taskDefinitions) {
+      final TimedTask timedTask = new TimedTask(taskDefinition);
+      timedTasks.add(timedTask);
+    }
 
-    completableFuture.join();
+    final Collection<TimedTaskResult> runTaskResults = new CopyOnWriteArrayList<>();
+
+    final List<Future<TimedTaskResult>> futureResults =
+        executorService.invokeAll(timedTasks, 1, TimeUnit.HOURS);
+    for (final Future<TimedTaskResult> futureResult : futureResults) {
+      final TimedTaskResult timedTaskResult = futureResult.get();
+      runTaskResults.add(timedTaskResult);
+    }
+
+    return runTaskResults;
   }
 }
