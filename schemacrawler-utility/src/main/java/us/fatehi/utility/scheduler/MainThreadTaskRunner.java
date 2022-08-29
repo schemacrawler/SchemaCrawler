@@ -30,6 +30,7 @@ package us.fatehi.utility.scheduler;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -54,6 +55,9 @@ final class MainThreadTaskRunner extends AbstractTaskRunner {
       throws Exception {
 
     requireNonNull(taskDefinitions, "Tasks not provided");
+    if (taskDefinitions.isEmpty()) {
+      return Collections.emptyList();
+    }
 
     final Collection<TimedTaskResult> runTaskResults = new CopyOnWriteArrayList<>();
     for (final TaskDefinition taskDefinition : taskDefinitions) {

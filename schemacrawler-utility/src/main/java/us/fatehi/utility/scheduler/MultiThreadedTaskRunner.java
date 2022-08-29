@@ -30,6 +30,7 @@ package us.fatehi.utility.scheduler;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
@@ -90,6 +91,9 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
       throws Exception {
 
     requireNonNull(taskDefinitions, "Tasks not provided");
+    if (taskDefinitions.isEmpty()) {
+      return Collections.emptyList();
+    }
     if (isStopped()) {
       throw new IllegalStateException("Task runner is stopped");
     }
