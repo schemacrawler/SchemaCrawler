@@ -169,7 +169,7 @@ Id	Publisher
 
 X_EMPLOYEES                                                             
 ------------------------------------------------------------------------
-EMPLOYEEID	EMPLOYEE_NAME	START_DATE	END_DATE	ANNUAL_SALARY
+EMPLOYEEID	EMPLOYEE_NAME	START_DATE	END_DATE	ANNUAL_SALARY	HOURLY_RATE	ACTIVE
 
 
 
