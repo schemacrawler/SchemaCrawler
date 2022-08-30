@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,11 +82,11 @@ public final class RetrievalTaskRunner {
    *
    * @return String supplier.
    */
-  public void stopAndLogTime() throws ExecutionException {
-    ExecutionException exception = null;
+  public void stopAndLogTime() {
+    RuntimeException exception = null;
     try {
       taskRunner.stop();
-    } catch (final ExecutionException e) {
+    } catch (final RuntimeException e) {
       exception = e;
     }
     LOGGER.log(Level.INFO, taskRunner.report());

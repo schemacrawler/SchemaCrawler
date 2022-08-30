@@ -35,15 +35,27 @@ public interface TaskRunner extends AutoCloseable {
   int MIN_THREADS = 1;
   int MAX_THREADS = 10;
 
+  /** Add a task definition to the list of tasks to run. */
   void add(TaskDefinition taskDefinition) throws Exception;
 
+  /** Alias for stop for use in a try-catch block. */
   @Override
   default void close() throws Exception {
     stop();
   }
 
+  /**
+   * Id of this task runner.
+   *
+   * @return Id of task runner.
+   */
   String getId();
 
+  /**
+   * Returns true if the task runner is stopped and is not accepting any more tasks.
+   *
+   * @return True if stopped.
+   */
   boolean isStopped();
 
   /**
@@ -54,7 +66,19 @@ public interface TaskRunner extends AutoCloseable {
    */
   Supplier<String> report();
 
-  void stop() throws ExecutionException;
+  /**
+   * Stop the task runner after waiting for all the threads to finish executing. No more tasks will
+   * be accepted.
+   *
+   * @throws ExecutionException On an exception.
+   */
+  void stop();
 
+  /**
+   * Submit the current list of tasks for execution, and block until execution is complete. Then
+   * clears the task list.
+   *
+   * @throws Exception On an exception in any one of the tasks.
+   */
   void submit() throws Exception;
 }

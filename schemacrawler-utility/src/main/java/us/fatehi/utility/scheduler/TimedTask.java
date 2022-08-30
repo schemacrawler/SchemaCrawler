@@ -38,8 +38,8 @@ import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * Wrapper around a task definition that runs the task and times it. It puts timing information on a
- * shared thread-safe list for reporting. Throws an exception if the task does not succeed.
+ * Wrapper around a task definition that runs the task and times it. Throws an exception if the task
+ * does not succeed.
  */
 class TimedTask implements Callable<TimedTaskResult> {
 
@@ -71,7 +71,8 @@ class TimedTask implements Callable<TimedTaskResult> {
 
     final Instant stop = Instant.now();
     final Duration runTime = Duration.between(start, stop);
-    final TimedTaskResult timedTaskResult = new TimedTaskResult(taskDefinition.getTaskName(), runTime);
+    final TimedTaskResult timedTaskResult =
+        new TimedTaskResult(taskDefinition.getTaskName(), runTime);
 
     if (ex != null) {
       LOGGER.log(

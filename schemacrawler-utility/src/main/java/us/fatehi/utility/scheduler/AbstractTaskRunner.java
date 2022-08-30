@@ -39,7 +39,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Collection;
 import java.util.Queue;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
@@ -133,7 +132,7 @@ abstract class AbstractTaskRunner implements TaskRunner {
   }
 
   @Override
-  public abstract void stop() throws ExecutionException;
+  public abstract void stop();
 
   @Override
   public final void submit() throws Exception {

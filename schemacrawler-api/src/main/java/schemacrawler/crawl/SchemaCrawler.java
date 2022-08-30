@@ -149,13 +149,13 @@ public final class SchemaCrawler {
       crawlSynonyms();
       crawlSequences();
 
-      taskRunner.stopAndLogTime();
-
       return catalog;
     } catch (final RuntimeException e) {
       throw e;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e);
+    } finally {
+      taskRunner.stopAndLogTime();
     }
   }
 
