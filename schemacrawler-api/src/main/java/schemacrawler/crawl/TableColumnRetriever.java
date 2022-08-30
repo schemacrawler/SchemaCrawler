@@ -39,9 +39,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -203,7 +203,7 @@ final class TableColumnRetriever extends AbstractRetriever {
 
   private Set<NamedObjectKey> retrieveHiddenTableColumnsLookupKeys() throws SQLException {
 
-    final Set<NamedObjectKey> hiddenTableColumnsLookupKeys = new HashSet<>();
+    final Set<NamedObjectKey> hiddenTableColumnsLookupKeys = ConcurrentHashMap.newKeySet();
 
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
