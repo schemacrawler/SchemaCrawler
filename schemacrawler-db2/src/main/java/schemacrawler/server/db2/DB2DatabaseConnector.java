@@ -27,6 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.db2;
 
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -40,7 +43,8 @@ public final class DB2DatabaseConnector extends DatabaseConnector {
         url -> url != null && url.startsWith("jdbc:db2:"),
         (informationSchemaViewsBuilder, connection) ->
             informationSchemaViewsBuilder.fromResourceFolder("/db2.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) -> {},
+        (schemaRetrievalOptionsBuilder, connection) ->
+            schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder -> {},
         () ->
             DatabaseConnectionSourceBuilder.builder("jdbc:db2://${host}:${port}/${database}")
