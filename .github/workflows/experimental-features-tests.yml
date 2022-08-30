@@ -6,7 +6,7 @@ on:
     branches:
       - '**'
   schedule:
-    - cron: '20 0/4 * * *'
+    - cron: '15 0/3 * * *'
 
 permissions: read-all
 
