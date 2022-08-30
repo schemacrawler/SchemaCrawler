@@ -44,11 +44,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
-import us.fatehi.utility.scheduler.TaskDefinition;
-import us.fatehi.utility.scheduler.TaskRunner;
-import us.fatehi.utility.scheduler.TaskRunners;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database tables. */
@@ -150,41 +146,26 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
 
   private void retrievePrimaryKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
-    try (final TaskRunner taskRunner =
-        TaskRunners.getTaskRunner("retrieve-primary-keys-from-metadata", 5); ) {
-      for (final MutableTable table : allTables) {
-        if (table instanceof View) {
-          continue;
-        }
-        taskRunner.add(
-            new TaskDefinition(
-                table.getFullName(),
-                () -> {
-                  final Schema tableSchema = table.getSchema();
-                  try (final Connection connection = getRetrieverConnection().getConnection();
-                      final MetadataResultSet results =
-                          new MetadataResultSet(
-                              connection
-                                  .getMetaData()
-                                  .getPrimaryKeys(
-                                      tableSchema.getCatalogName(),
-                                      tableSchema.getName(),
-                                      table.getName()),
-                              "DatabaseMetaData::getPrimaryKeys"); ) {
-                    while (results.next()) {
-                      createPrimaryKeyForTable(table, results);
-                    }
-                  } catch (final SQLException e) {
-                    throw new WrappedSQLException(
-                        String.format("Could not retrieve primary keys for table <%s>", table), e);
-                  }
-                }));
+    for (final MutableTable table : allTables) {
+      if (table instanceof View) {
+        continue;
       }
-      taskRunner.submit();
-    } catch (final SQLException | ExecutionRuntimeException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new ExecutionRuntimeException(e.getMessage(), e);
+      final Schema tableSchema = table.getSchema();
+      try (final Connection connection = getRetrieverConnection().getConnection();
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection
+                      .getMetaData()
+                      .getPrimaryKeys(
+                          tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
+                  "DatabaseMetaData::getPrimaryKeys"); ) {
+        while (results.next()) {
+          createPrimaryKeyForTable(table, results);
+        }
+      } catch (final SQLException e) {
+        throw new WrappedSQLException(
+            String.format("Could not retrieve primary keys for table <%s>", table), e);
+      }
     }
   }
 }
