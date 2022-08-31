@@ -29,14 +29,11 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskRunners;
@@ -83,30 +80,16 @@ public final class RetrievalTaskRunner {
    *
    * @return String supplier.
    */
-  public void stopAndLogTime() throws ExecutionException {
-    ExecutionException exception = null;
+  public void stopAndLogTime() {
     try {
       taskRunner.stop();
-    } catch (final ExecutionException e) {
-      exception = e;
-    }
-    LOGGER.log(Level.INFO, taskRunner.report());
-    if (exception != null) {
-      throw exception;
+    } finally {
+      LOGGER.log(Level.INFO, taskRunner.report());
     }
   }
 
   public void submit() throws Exception {
-    try {
-      taskRunner.submit();
-    } catch (final CompletionException e) {
-      final Throwable cause = e.getCause();
-      if (cause != null) {
-        throw new ExecutionRuntimeException(cause);
-      } else {
-        throw e;
-      }
-    }
+    taskRunner.submit();
   }
 
   private void add(

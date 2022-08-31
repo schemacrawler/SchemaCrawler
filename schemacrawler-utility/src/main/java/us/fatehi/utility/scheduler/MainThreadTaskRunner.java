@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
 
 final class MainThreadTaskRunner extends AbstractTaskRunner {
 
@@ -46,7 +45,7 @@ final class MainThreadTaskRunner extends AbstractTaskRunner {
   }
 
   @Override
-  public void stop() throws ExecutionException {
+  public void stop() {
     // No-op
   }
 

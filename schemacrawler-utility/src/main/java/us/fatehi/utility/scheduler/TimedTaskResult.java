@@ -39,7 +39,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
-public final class TimedTaskResult implements Serializable {
+final class TimedTaskResult implements Serializable {
 
   private static final long serialVersionUID = -6572177882937039431L;
 
