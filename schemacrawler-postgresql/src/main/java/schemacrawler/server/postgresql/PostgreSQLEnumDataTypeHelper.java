@@ -37,9 +37,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -94,7 +94,7 @@ public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
   private final Set<ColumnDataType> visitedDataTypes;
 
   public PostgreSQLEnumDataTypeHelper() {
-    this.visitedDataTypes = new HashSet<>();
+    this.visitedDataTypes = ConcurrentHashMap.newKeySet();
   }
 
   @Override
