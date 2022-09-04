@@ -1,3 +1,4 @@
+-- NOTE: Not used by default
 SELECT
   IC.*,
   CASE WHEN C.IDENTITY ='Y' THEN 1 ELSE 0 END AS IS_AUTOINCREMENT,

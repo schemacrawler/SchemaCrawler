@@ -40,6 +40,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -212,7 +213,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       throws WrappedSQLException {
     try (final Connection connection = getRetrieverConnection().getConnection(); ) {
       final DatabaseMetaData metaData = connection.getMetaData();
-      final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
+      final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new ConcurrentHashMap<>();
       for (final MutableTable table : allTables) {
         if (table instanceof View) {
           continue;

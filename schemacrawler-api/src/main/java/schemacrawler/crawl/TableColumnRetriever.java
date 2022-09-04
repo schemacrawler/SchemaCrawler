@@ -39,9 +39,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,6 +55,9 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
+import us.fatehi.utility.scheduler.TaskDefinition;
+import us.fatehi.utility.scheduler.TaskRunner;
+import us.fatehi.utility.scheduler.TaskRunners;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database table columns. */
@@ -203,7 +206,7 @@ final class TableColumnRetriever extends AbstractRetriever {
 
   private Set<NamedObjectKey> retrieveHiddenTableColumnsLookupKeys() throws SQLException {
 
-    final Set<NamedObjectKey> hiddenTableColumnsLookupKeys = new HashSet<>();
+    final Set<NamedObjectKey> hiddenTableColumnsLookupKeys = ConcurrentHashMap.newKeySet();
 
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
@@ -264,29 +267,44 @@ final class TableColumnRetriever extends AbstractRetriever {
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
       final Set<NamedObjectKey> hiddenTableColumnsLookupKeys)
-      throws WrappedSQLException {
-    for (final MutableTable table : allTables) {
-      LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
-      try (final Connection connection = getRetrieverConnection().getConnection();
-          final MetadataResultSet results =
-              new MetadataResultSet(
-                  connection
-                      .getMetaData()
-                      .getColumns(
-                          table.getSchema().getCatalogName(),
-                          table.getSchema().getName(),
-                          table.getName(),
-                          null),
-                  "DatabaseMetaData::getColumns"); ) {
-        while (results.next()) {
-          createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
-        }
-      } catch (final SQLException e) {
-        throw new WrappedSQLException(
-            String.format(
-                "Could not retrieve table columns for %s <%s>", table.getTableType(), table),
-            e);
+      throws SQLException {
+    try (final TaskRunner taskRunner =
+        TaskRunners.getTaskRunner("retrieve-table-columns-from-metadata", 5); ) {
+      for (final MutableTable table : allTables) {
+        taskRunner.add(
+            new TaskDefinition(
+                table.getFullName(),
+                () -> {
+                  LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
+                  try (final Connection connection = getRetrieverConnection().getConnection();
+                      final MetadataResultSet results =
+                          new MetadataResultSet(
+                              connection
+                                  .getMetaData()
+                                  .getColumns(
+                                      table.getSchema().getCatalogName(),
+                                      table.getSchema().getName(),
+                                      table.getName(),
+                                      null),
+                              "DatabaseMetaData::getColumns"); ) {
+                    while (results.next()) {
+                      createTableColumn(
+                          results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
+                    }
+                  } catch (final SQLException e) {
+                    throw new WrappedSQLException(
+                        String.format(
+                            "Could not retrieve table columns for %s <%s>",
+                            table.getTableType(), table),
+                        e);
+                  }
+                }));
       }
+      taskRunner.submit();
+    } catch (final SQLException | ExecutionRuntimeException e) {
+      throw e;
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException(e.getMessage(), e);
     }
   }
 }
