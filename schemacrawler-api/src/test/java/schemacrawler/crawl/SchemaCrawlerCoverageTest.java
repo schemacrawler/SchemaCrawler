@@ -139,7 +139,6 @@ public class SchemaCrawlerCoverageTest {
 
     compareColumnFields(indexColumn, column);
 
-    assertThat(indexColumn.hasDefinition(), is(false));
     assertThat(indexColumn.getIndex(), is(index));
     assertThat(indexColumn.getIndexOrdinalPosition(), is(1));
     assertThat(indexColumn.getSortSequence(), is(IndexColumnSortSequence.ascending));

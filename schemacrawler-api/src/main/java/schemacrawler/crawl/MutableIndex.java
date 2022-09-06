@@ -48,7 +48,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   private static final long serialVersionUID = 4051326747138079028L;
 
   private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<>();
-  private final StringBuilder definition;
+  private final StringBuffer definition;
   private long cardinality;
   private IndexType indexType;
   private boolean isUnique;
@@ -58,7 +58,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
     super(new TablePointer(parent), name);
     // Default values
     indexType = IndexType.unknown;
-    definition = new StringBuilder();
+    definition = new StringBuffer();
   }
 
   /**

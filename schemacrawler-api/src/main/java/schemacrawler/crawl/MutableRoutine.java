@@ -46,7 +46,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
 
   private static final long serialVersionUID = 3906925686089134130L;
 
-  private final StringBuilder definition;
+  private final StringBuffer definition;
   private RoutineBodyType routineBodyType;
   private final String specificName;
   private transient NamedObjectKey key;
@@ -61,7 +61,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     super(schema, name);
     this.specificName = specificName;
     routineBodyType = RoutineBodyType.unknown;
-    definition = new StringBuilder();
+    definition = new StringBuffer();
   }
 
   /**

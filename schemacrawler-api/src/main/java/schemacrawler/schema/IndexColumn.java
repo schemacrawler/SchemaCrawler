@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-public interface IndexColumn extends Column, DefinedObject {
+public interface IndexColumn extends Column {
 
   /**
    * Gets the index this column belongs to.

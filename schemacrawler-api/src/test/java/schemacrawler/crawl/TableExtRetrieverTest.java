@@ -226,7 +226,6 @@ public class TableExtRetrieverTest {
         assertThat(columns, is(not(empty())));
         for (final IndexColumn column : columns) {
           assertThat(column.isGenerated(), is(false));
-          assertThat(column.getDefinition(), is(""));
         }
       }
     }

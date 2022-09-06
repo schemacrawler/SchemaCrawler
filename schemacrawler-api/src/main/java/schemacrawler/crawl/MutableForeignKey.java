@@ -39,7 +39,7 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final StringBuilder definition;
+  private final StringBuffer definition;
   private ForeignKeyDeferrability deferrability;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyUpdateRule updateRule;
@@ -47,7 +47,7 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
   MutableForeignKey(final String name, final ColumnReference columnReference) {
     super(name, columnReference);
 
-    definition = new StringBuilder();
+    definition = new StringBuffer();
 
     // Default values
     updateRule = ForeignKeyUpdateRule.unknown;
@@ -102,6 +102,7 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
     return deferrability == ForeignKeyDeferrability.initiallyDeferred;
   }
 
+  @Override
   void appendDefinition(final String definition) {
     if (definition != null) {
       this.definition.append(definition);

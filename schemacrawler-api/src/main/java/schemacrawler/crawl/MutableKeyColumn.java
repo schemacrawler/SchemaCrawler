@@ -32,23 +32,20 @@ import java.util.Optional;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
-class MutableKeyColumn extends AbstractDependantObject<Table> implements Column, DefinedObject {
+class MutableKeyColumn extends AbstractDependantObject<Table> implements Column {
 
   private static final long serialVersionUID = 6988029161945610279L;
 
   private final Column column;
-  private final StringBuilder definition;
   private int keyOrdinalPosition;
 
   MutableKeyColumn(final Column column) {
     super(new TablePointer(column.getParent()), column.getName());
     this.column = column;
-    definition = new StringBuilder();
   }
 
   /**
@@ -98,12 +95,6 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
 
   /** {@inheritDoc} */
   @Override
-  public String getDefinition() {
-    return definition.toString();
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public int getOrdinalPosition() {
     return column.getOrdinalPosition();
   }
@@ -136,11 +127,6 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
   @Override
   public String getWidth() {
     return column.getWidth();
-  }
-
-  @Override
-  public boolean hasDefinition() {
-    return definition.length() > 0;
   }
 
   /** {@inheritDoc} */
@@ -200,12 +186,6 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
   @Override
   public Optional<? extends Privilege<Column>> lookupPrivilege(final String name) {
     return column.lookupPrivilege(name);
-  }
-
-  void appendDefinition(final String definition) {
-    if (definition != null) {
-      this.definition.append(definition);
-    }
   }
 
   int getKeyOrdinalPosition() {
