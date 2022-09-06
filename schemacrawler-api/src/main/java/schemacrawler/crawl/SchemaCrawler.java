@@ -385,9 +385,6 @@ public final class SchemaCrawler {
             () -> pkRetriever.retrievePrimaryKeys(allTables),
             retrieveTableColumns)
         .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
-        .submit();
-
-    taskRunner
         .add(
             retrieveForeignKeys,
             () -> fkRetriever.retrieveForeignKeys(allTables),
