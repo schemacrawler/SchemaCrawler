@@ -70,7 +70,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<TableConstraint> constraints = new NamedObjectList<>();
-  private final StringBuilder definition;
+  private final StringBuffer definition;
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableWeakAssociation> weakAssociations = new NamedObjectList<>();
   private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
@@ -84,7 +84,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   MutableTable(final Schema schema, final String name) {
     super(schema, name);
-    definition = new StringBuilder();
+    definition = new StringBuffer();
   }
 
   /**

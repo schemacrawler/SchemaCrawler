@@ -38,8 +38,8 @@ import schemacrawler.schema.Trigger;
 class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
 
   private static final long serialVersionUID = -1619291073229701764L;
-  private final StringBuilder actionCondition;
-  private final StringBuilder actionStatement;
+  private final StringBuffer actionCondition;
+  private final StringBuffer actionStatement;
   private int actionOrder;
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
@@ -51,8 +51,8 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
     eventManipulationType = EventManipulationType.unknown;
     actionOrientation = ActionOrientationType.unknown;
     conditionTiming = ConditionTimingType.unknown;
-    actionCondition = new StringBuilder(1024);
-    actionStatement = new StringBuilder(1024);
+    actionCondition = new StringBuffer();
+    actionStatement = new StringBuffer();
   }
 
   /** {@inheritDoc} */

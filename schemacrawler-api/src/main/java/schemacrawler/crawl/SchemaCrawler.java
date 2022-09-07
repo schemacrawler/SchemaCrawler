@@ -384,11 +384,14 @@ public final class SchemaCrawler {
             retrievePrimaryKeys,
             () -> pkRetriever.retrievePrimaryKeys(allTables),
             retrieveTableColumns)
+        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
         .add(
             retrieveForeignKeys,
             () -> fkRetriever.retrieveForeignKeys(allTables),
             retrieveTableColumns)
-        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
+        .submit();
+
+    taskRunner
         .add(
             retrieveTableConstraints,
             constraintRetriever::retrieveTableConstraints,
