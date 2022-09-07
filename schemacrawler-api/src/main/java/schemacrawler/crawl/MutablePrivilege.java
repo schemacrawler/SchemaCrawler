@@ -34,10 +34,10 @@ import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Grant;
@@ -143,10 +143,11 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
 
   private static final long serialVersionUID = -1117664231494271886L;
 
-  private final Set<Grant<D>> grants = new HashSet<>();
+  private final Set<Grant<D>> grants;
 
   MutablePrivilege(final DatabaseObjectReference<D> parent, final String name) {
     super(parent, name);
+    grants = ConcurrentHashMap.newKeySet();
   }
 
   @Override

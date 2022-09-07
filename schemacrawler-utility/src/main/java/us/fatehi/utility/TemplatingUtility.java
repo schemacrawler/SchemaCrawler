@@ -31,6 +31,7 @@ package us.fatehi.utility;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -121,7 +122,7 @@ public final class TemplatingUtility {
   public static Set<String> extractTemplateVariables(final String template) {
 
     if (isBlank(template)) {
-      return new HashSet<>();
+      return Collections.emptySet();
     }
 
     String shrunkTemplate = template;
