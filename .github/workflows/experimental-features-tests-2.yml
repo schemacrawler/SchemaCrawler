@@ -6,7 +6,7 @@ on:
     branches:
       - '**'
   schedule:
-    - cron: '15 0/2 * * *'
+    - cron: '10 0/2 * * *'
 
 permissions: read-all
 
@@ -26,7 +26,7 @@ jobs:
       uses: sualeh/prepare-maven-build@v1.3.1
       with:
         java-version: ${{ matrix.java }}
-        checkout-branch: thread-table-columns
+        checkout-branch: threading
 
     - id: install-graphviz
       name: Install graphviz
