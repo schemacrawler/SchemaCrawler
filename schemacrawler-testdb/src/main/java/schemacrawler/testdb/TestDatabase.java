@@ -78,7 +78,7 @@ public class TestDatabase {
       testDatabase.start();
       return testDatabase;
     } catch (final Exception e) {
-      throw new RuntimeException("Could not initialize test database", e);
+      throw new RuntimeException("Could not initialize test database on default port", e);
     }
   }
 
