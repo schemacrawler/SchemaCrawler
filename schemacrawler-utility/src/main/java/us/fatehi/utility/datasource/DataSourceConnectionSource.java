@@ -2,7 +2,6 @@ package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.Closeable;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,8 +22,8 @@ final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource 
 
   @Override
   public void close() throws Exception {
-    if (dataSource instanceof Closeable) {
-      ((Closeable) dataSource).close();
+    if (dataSource instanceof AutoCloseable) {
+      ((AutoCloseable) dataSource).close();
     } else {
       final Method method = shutdownMethod();
       if (method != null) {
