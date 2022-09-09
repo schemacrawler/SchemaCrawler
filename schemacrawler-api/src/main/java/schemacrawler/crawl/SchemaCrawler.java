@@ -384,14 +384,11 @@ public final class SchemaCrawler {
             retrievePrimaryKeys,
             () -> pkRetriever.retrievePrimaryKeys(allTables),
             retrieveTableColumns)
-        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
         .add(
             retrieveForeignKeys,
             () -> fkRetriever.retrieveForeignKeys(allTables),
             retrieveTableColumns)
-        .submit();
-
-    taskRunner
+        .add(retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns)
         .add(
             retrieveTableConstraints,
             constraintRetriever::retrieveTableConstraints,
@@ -419,21 +416,6 @@ public final class SchemaCrawler {
 
     taskRunner
         .add(
-            retrieveTableDefinitionsInformation,
-            retrieverExtra::retrieveTableDefinitions,
-            retrieveTables)
-        .add(
-            retrieveAdditionalTableAttributes,
-            () -> retrieverExtra.retrieveAdditionalTableAttributes(),
-            retrieveTables)
-        .add(
-            retrieveTablePrivileges,
-            () -> retrieverPrivilege.retrieveTablePrivileges(),
-            retrieveTables)
-        .submit();
-
-    taskRunner
-        .add(
             retrieveTableConstraintDefinitions,
             constraintRetriever::retrieveTableConstraintDefinitions,
             retrieveTableConstraints)
@@ -444,9 +426,21 @@ public final class SchemaCrawler {
         .add(retrieveViewInformation, retrieverExtra::retrieveViewInformation, retrieveTables)
         .add(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage, retrieveTables)
         .add(
+            retrieveTableDefinitionsInformation,
+            retrieverExtra::retrieveTableDefinitions,
+            retrieveTables)
+        .add(
             retrieveIndexInformation,
             () -> retrieverExtra.retrieveIndexInformation(),
             retrieveIndexes)
+        .add(
+            retrieveAdditionalTableAttributes,
+            () -> retrieverExtra.retrieveAdditionalTableAttributes(),
+            retrieveTables)
+        .add(
+            retrieveTablePrivileges,
+            () -> retrieverPrivilege.retrieveTablePrivileges(),
+            retrieveTables)
         .add(
             retrieveTableColumnPrivileges,
             retrieverPrivilege::retrieveTableColumnPrivileges,
