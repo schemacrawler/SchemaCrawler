@@ -70,7 +70,10 @@ public final class Main {
       if (showVersionIfRequested(args)) {
         return;
       }
-      SchemaCrawlerCommandLine.execute(args);
+      final int exitCode = SchemaCrawlerCommandLine.execute(args);
+      if (exitCode != 0) {
+        System.exit(exitCode);
+      }
     }
   }
 

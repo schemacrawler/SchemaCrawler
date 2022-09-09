@@ -49,7 +49,13 @@ public final class SchemaCrawlerCommandLine {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
-  public static void execute(final String[] args) {
+  /**
+   * Returns a zero exit code on successful termination. Non-zero otherwise.
+   *
+   * @param args Command-line arguments
+   * @return System exit code
+   */
+  public static int execute(final String[] args) {
 
     final ShellState state = new ShellState();
     try {
@@ -65,6 +71,8 @@ public final class SchemaCrawlerCommandLine {
       commandLine.parseArgs(args);
 
       executeCommandLine(commandLine);
+
+      return 0;
     } catch (final Throwable throwable) {
       logSafeArguments(args, state);
       logFatalStackTrace(throwable);
@@ -83,7 +91,7 @@ public final class SchemaCrawlerCommandLine {
 
       printCommandLineErrorMessage(errorMessage, state);
 
-      System.exit(1);
+      return 1;
     } finally {
       state.close();
     }
