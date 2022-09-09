@@ -40,12 +40,12 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>11.2.0.jre8</version>
+      <version>11.2.1.jre8</version>
     </dependency>
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc_auth</artifactId>
-      <version>11.2.0.x86</version>
+      <version>11.2.1.x86</version>
       <type>dll</type>
     </dependency>
     <dependency>
@@ -76,7 +76,7 @@
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
-      <version>3.39.2.1</version>
+      <version>3.39.3.0</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.informix</groupId>
