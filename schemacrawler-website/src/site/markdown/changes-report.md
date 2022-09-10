@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.18.2"></a>
+## Release 16.18.2 - 2022-09-12
+
+- In experimental mode, use multi-threading for obtaining table columns
+
 
 <a name="a16.18.1"></a>
 ## Release 16.18.1 - 2022-08-23
