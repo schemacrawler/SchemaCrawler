@@ -87,10 +87,8 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final TaskRunner taskRunner = TaskRunners.getTaskRunner("loadWeakAssociations", 1);
-
     LOGGER.log(Level.INFO, "Finding weak associations");
-    try {
+    try (final TaskRunner taskRunner = TaskRunners.getTaskRunner("loadWeakAssociations", 1); ) {
       taskRunner.add(
           new TaskDefinition(
               "retrieveWeakAssociations",

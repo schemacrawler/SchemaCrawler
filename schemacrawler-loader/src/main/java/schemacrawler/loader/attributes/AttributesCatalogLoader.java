@@ -96,8 +96,8 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving catalog attributes");
-    final TaskRunner taskRunner = TaskRunners.getTaskRunner("loadAttributes", 1);
-    try {
+
+    try (final TaskRunner taskRunner = TaskRunners.getTaskRunner("loadAttributes", 1); ) {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();
       final TaskDefinition.TaskRunnable taskRunnable =
@@ -121,7 +121,6 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
           };
       taskRunner.add(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
       taskRunner.submit();
-      taskRunner.stop();
       LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception loading catalog attributes", e);

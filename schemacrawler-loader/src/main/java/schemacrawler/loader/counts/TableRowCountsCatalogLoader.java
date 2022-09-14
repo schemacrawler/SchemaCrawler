@@ -85,8 +85,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
     }
 
     LOGGER.log(Level.INFO, "Retrieving table row counts");
-    final TaskRunner taskRunner = TaskRunners.getTaskRunner("loadTableRowCounts", 1);
-    try {
+    try (final TaskRunner taskRunner = TaskRunners.getTaskRunner("loadTableRowCounts", 1); ) {
       final Catalog catalog = getCatalog();
       final TableRowCountsRetriever rowCountsRetriever =
           new TableRowCountsRetriever(getDataSource(), catalog);
