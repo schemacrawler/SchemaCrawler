@@ -114,7 +114,6 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
               }));
       taskRunner.submit();
 
-      taskRunner.stop();
       LOGGER.log(Level.INFO, taskRunner.report());
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception retrieving table row counts", e);
