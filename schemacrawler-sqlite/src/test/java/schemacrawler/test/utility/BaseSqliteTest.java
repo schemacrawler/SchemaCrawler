@@ -35,13 +35,12 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.commons.dbcp2.BasicDataSource;
-
 import schemacrawler.testdb.TestSchemaCreatorMain;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 public abstract class BaseSqliteTest {
 
@@ -102,11 +101,7 @@ public abstract class BaseSqliteTest {
   }
 
   private DatabaseConnectionSource createDataSource(final String connectionUrl) {
-    final BasicDataSource ds = new BasicDataSource();
-    ds.setUrl(connectionUrl);
-    ds.setUsername(null);
-    ds.setPassword(null);
-
-    return DatabaseConnectionSources.fromDataSource(ds);
+    return DatabaseConnectionSources.newDatabaseConnectionSource(
+        connectionUrl, new MultiUseUserCredentials());
   }
 }

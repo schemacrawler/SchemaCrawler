@@ -93,6 +93,8 @@ public class TestDatabaseConnectionSourceTest {
 
     final Connection connection = databaseConnectionSource.get();
     assertThat(connection, is(not(nullValue())));
+
+    connection.close();
   }
 
   @BeforeEach

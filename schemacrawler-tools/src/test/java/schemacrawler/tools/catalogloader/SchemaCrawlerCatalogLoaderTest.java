@@ -59,6 +59,8 @@ public class SchemaCrawlerCatalogLoaderTest {
     catalogLoader.setDataSource(dataSource);
 
     assertThat(catalogLoader.getDataSource(), is(not(nullValue())));
+
+    connection.close();
   }
 
   @Test

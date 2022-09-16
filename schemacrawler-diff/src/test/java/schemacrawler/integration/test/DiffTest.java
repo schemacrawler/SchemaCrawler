@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.Test;
 
 import de.danielbechler.diff.node.DiffNode;
@@ -59,6 +58,7 @@ import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @ResolveTestContext
@@ -108,12 +108,8 @@ public class DiffTest {
 
   private DatabaseConnectionSource createDataSource(final Path sqliteDbFile) {
     final String connectionUrl = "jdbc:sqlite:" + sqliteDbFile;
-    final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl(connectionUrl);
-    dataSource.setUsername(null);
-    dataSource.setPassword(null);
-
-    return DatabaseConnectionSources.fromDataSource(dataSource);
+    return DatabaseConnectionSources.newDatabaseConnectionSource(
+        connectionUrl, new MultiUseUserCredentials());
   }
 
   private Catalog getCatalog(final String database) throws Exception {

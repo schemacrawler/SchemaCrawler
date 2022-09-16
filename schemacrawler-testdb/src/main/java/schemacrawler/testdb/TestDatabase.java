@@ -170,10 +170,11 @@ public class TestDatabase {
   }
 
   private void createTestDatabase() throws SQLException {
-    final Connection connection = getConnection();
-    final TestSchemaCreator schemaCreator =
-        new TestSchemaCreator(connection, "/hsqldb.scripts.txt");
-    schemaCreator.run();
+    try (final Connection connection = getConnection(); ) {
+      final TestSchemaCreator schemaCreator =
+          new TestSchemaCreator(connection, "/hsqldb.scripts.txt");
+      schemaCreator.run();
+    }
   }
 
   private void startServer() throws IOException {
