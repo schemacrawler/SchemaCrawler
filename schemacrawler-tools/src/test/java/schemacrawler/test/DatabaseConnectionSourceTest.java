@@ -63,8 +63,6 @@ public class DatabaseConnectionSourceTest {
 
     assertThat(connection, is(not(nullValue())));
     assertThrows(SQLFeatureNotSupportedException.class, () -> connection.getMetaData());
-
-    connection.close();
   }
 
   @Test

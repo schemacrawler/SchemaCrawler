@@ -55,6 +55,29 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 final class TestDatabaseConnectionParameterResolver
     implements ParameterResolver, BeforeAllCallback, AfterAllCallback, AfterEachCallback {
+  private enum AnnotationType {
+    classAnnotation,
+    methodAnnotation
+  }
+
+  private static class AnnotationInfo {
+
+    private final String script;
+    private final AnnotationType annotationType;
+
+    public AnnotationInfo(final String script, final AnnotationType annotationType) {
+      this.script = script;
+      this.annotationType = annotationType;
+    }
+
+    public AnnotationType getAnnotationType() {
+      return annotationType;
+    }
+
+    public String getScript() {
+      return script;
+    }
+  }
 
   private static boolean isParameterConnection(final Parameter parameter) {
     return parameter.getType().isAssignableFrom(Connection.class);
@@ -83,8 +106,8 @@ final class TestDatabaseConnectionParameterResolver
 
   @Override
   public void afterEach(final ExtensionContext context) throws Exception {
-    final String script = getDatabaseScript(context);
-    if (!isBlank(script)) {
+    final AnnotationType annotationType = locateAnnotation(context).getAnnotationType();
+    if (annotationType == AnnotationType.methodAnnotation) {
       if (dataSource != null) {
         dataSource.close();
         dataSource = null;
@@ -105,8 +128,7 @@ final class TestDatabaseConnectionParameterResolver
       final ParameterContext parameterContext, final ExtensionContext extensionContext)
       throws ParameterResolutionException {
 
-    final String script = getDatabaseScript(extensionContext);
-
+    final String script = locateAnnotation(extensionContext).getScript();
     final Parameter parameter = parameterContext.getParameter();
     if (isBlank(script)) {
       final DataSource ds = newDataSource();
@@ -152,32 +174,31 @@ final class TestDatabaseConnectionParameterResolver
     return hasConnection || hasDatabaseConnectionInfo || hasDatabaseConnectionSource;
   }
 
-  private String getDatabaseScript(final ExtensionContext extensionContext) {
-    final WithTestDatabase withTestDatabase = locateAnnotation(extensionContext);
-    final String script;
-    if (withTestDatabase == null) {
-      script = "";
-    } else {
-      script = withTestDatabase.script();
-    }
-    return script;
-  }
-
-  private WithTestDatabase locateAnnotation(final ExtensionContext extensionContext) {
+  private AnnotationInfo locateAnnotation(final ExtensionContext extensionContext) {
     final Optional<WithTestDatabase> optionalMethodAnnotation =
         findAnnotation(extensionContext.getTestMethod(), WithTestDatabase.class);
     final Optional<WithTestDatabase> optionalClassAnnotation =
         findAnnotation(extensionContext.getTestClass(), WithTestDatabase.class);
 
+    final AnnotationType annotationType;
     final WithTestDatabase withTestDatabase;
     if (optionalMethodAnnotation.isPresent()) {
       withTestDatabase = optionalMethodAnnotation.get();
+      annotationType = AnnotationType.methodAnnotation;
     } else if (optionalClassAnnotation.isPresent()) {
       withTestDatabase = optionalClassAnnotation.get();
+      annotationType = AnnotationType.classAnnotation;
     } else {
       withTestDatabase = null;
+      annotationType = AnnotationType.classAnnotation;
     }
-    return withTestDatabase;
+    final String script;
+    if (withTestDatabase != null) {
+      script = withTestDatabase.script();
+    } else {
+      script = null;
+    }
+    return new AnnotationInfo(script, annotationType);
   }
 
   private BasicDataSource newDataSource() {
