@@ -39,6 +39,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -53,7 +54,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 final class TestDatabaseConnectionParameterResolver
-    implements ParameterResolver, BeforeAllCallback, AfterAllCallback {
+    implements ParameterResolver, BeforeAllCallback, AfterAllCallback, AfterEachCallback {
 
   private static boolean isParameterConnection(final Parameter parameter) {
     return parameter.getType().isAssignableFrom(Connection.class);
@@ -81,6 +82,17 @@ final class TestDatabaseConnectionParameterResolver
   }
 
   @Override
+  public void afterEach(final ExtensionContext context) throws Exception {
+    final String script = getDatabaseScript(context);
+    if (!isBlank(script)) {
+      if (dataSource != null) {
+        dataSource.close();
+        dataSource = null;
+      }
+    }
+  }
+
+  @Override
   public void beforeAll(final ExtensionContext context) throws Exception {
     // Turn off logging
     new LoggingConfig();
@@ -93,13 +105,7 @@ final class TestDatabaseConnectionParameterResolver
       final ParameterContext parameterContext, final ExtensionContext extensionContext)
       throws ParameterResolutionException {
 
-    final WithTestDatabase withTestDatabase = locateAnnotation(extensionContext);
-    final String script;
-    if (withTestDatabase == null) {
-      script = "";
-    } else {
-      script = withTestDatabase.script();
-    }
+    final String script = getDatabaseScript(extensionContext);
 
     final Parameter parameter = parameterContext.getParameter();
     if (isBlank(script)) {
@@ -144,6 +150,17 @@ final class TestDatabaseConnectionParameterResolver
     final boolean hasDatabaseConnectionSource = isParameterDatabaseConnectionSource(parameter);
 
     return hasConnection || hasDatabaseConnectionInfo || hasDatabaseConnectionSource;
+  }
+
+  private String getDatabaseScript(final ExtensionContext extensionContext) {
+    final WithTestDatabase withTestDatabase = locateAnnotation(extensionContext);
+    final String script;
+    if (withTestDatabase == null) {
+      script = "";
+    } else {
+      script = withTestDatabase.script();
+    }
+    return script;
   }
 
   private WithTestDatabase locateAnnotation(final ExtensionContext extensionContext) {
