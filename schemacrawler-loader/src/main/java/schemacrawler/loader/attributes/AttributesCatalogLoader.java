@@ -122,6 +122,8 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       taskRunner.add(new TaskDefinition("retrieveCatalogAttributes", taskRunnable));
       taskRunner.submit();
       LOGGER.log(Level.INFO, taskRunner.report());
+    } catch (final IORuntimeException e) {
+      throw e;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Exception loading catalog attributes", e);
     }

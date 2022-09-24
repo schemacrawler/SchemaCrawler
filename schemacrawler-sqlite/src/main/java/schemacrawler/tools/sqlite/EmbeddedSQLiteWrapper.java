@@ -106,9 +106,9 @@ public class EmbeddedSQLiteWrapper {
     try (final DatabaseConnectionSource dataSource = createDatabaseConnectionSource()) {
       return executeForOutput(dataSource, title, extension);
     } catch (final SQLException e) {
-      throw new DatabaseAccessException("Could not create database connection", e);
+      throw new DatabaseAccessException("Could not run against SQLite database", e);
     } catch (final Exception e) {
-      throw new ExecutionRuntimeException("Could not create database connection", e);
+      throw new ExecutionRuntimeException("Could not run against SQLite database", e);
     }
   }
 

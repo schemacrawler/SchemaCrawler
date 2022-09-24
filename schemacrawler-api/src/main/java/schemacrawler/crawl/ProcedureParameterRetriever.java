@@ -217,7 +217,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
   private void retrieveProcedureParametersFromMetadata(
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
-      throws WrappedSQLException {
+      throws SQLException {
     for (final MutableRoutine routine : allRoutines) {
       if (routine.getRoutineType() != RoutineType.procedure) {
         continue;

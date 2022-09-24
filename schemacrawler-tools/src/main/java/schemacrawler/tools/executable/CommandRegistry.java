@@ -43,6 +43,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
@@ -187,7 +188,7 @@ public final class CommandRegistry {
       }
     }
     if (executableCommandProviders.isEmpty()) {
-      throw new InternalRuntimeException(String.format("Unknown command <%s>", command));
+      throw new ExecutionRuntimeException(String.format("Unknown command <%s>", command));
     }
   }
 

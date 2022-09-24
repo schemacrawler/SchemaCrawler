@@ -11,12 +11,12 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.testcommand.TestCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
@@ -25,12 +25,10 @@ public class CommandRegistryTest {
   @Test
   public void configureNewCommand() {
 
-    final Config additionalConfig = new Config();
-
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
 
     assertThrows(
-        InternalRuntimeException.class,
+        ExecutionRuntimeException.class,
         () -> commandRegistry.configureNewCommand("bad-command", null, null, null));
     assertThrows(
         InternalRuntimeException.class,

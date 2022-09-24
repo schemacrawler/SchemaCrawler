@@ -210,7 +210,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
   }
 
   private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
-      throws WrappedSQLException {
+      throws SQLException {
     try (final Connection connection = getRetrieverConnection().getConnection(); ) {
       final DatabaseMetaData metaData = connection.getMetaData();
       final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new ConcurrentHashMap<>();
@@ -251,8 +251,6 @@ final class ForeignKeyRetriever extends AbstractRetriever {
               Level.WARNING, "Could not retrieve exported foreign keys for table " + table, e);
         }
       }
-    } catch (final SQLException e) {
-      throw new WrappedSQLException("Could not retrieve foreign keys", e);
     }
   }
 }

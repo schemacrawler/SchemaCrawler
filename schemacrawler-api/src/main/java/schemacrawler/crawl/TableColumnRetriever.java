@@ -54,6 +54,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
@@ -116,7 +117,7 @@ final class TableColumnRetriever extends AbstractRetriever {
     // https://github.com/schemacrawler/SchemaCrawler/issues/835
     final String defaultValue = results.getString("COLUMN_DEF");
 
-    final String columnCatalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
+    final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
     final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
     final String tableName = results.getString("TABLE_NAME");
     final String columnName = results.getString("COLUMN_NAME");
@@ -124,20 +125,20 @@ final class TableColumnRetriever extends AbstractRetriever {
         Level.FINE,
         new StringFormat(
             "Retrieving table column <%s.%s.%s.%s>",
-            columnCatalogName, schemaName, tableName, columnName));
+            catalogName, schemaName, tableName, columnName));
     if (isBlank(columnName)) {
       return;
     }
 
     final Optional<MutableTable> optionalTable =
-        allTables.lookup(new NamedObjectKey(columnCatalogName, schemaName, tableName));
+        allTables.lookup(new NamedObjectKey(catalogName, schemaName, tableName));
     if (!optionalTable.isPresent()) {
       return;
     }
 
     final MutableTable table = optionalTable.get();
     final MutableColumn column = lookupOrCreateTableColumn(table, columnName);
-    if (columnFilter.test(column) && belongsToSchema(table, columnCatalogName, schemaName)) {
+    if (columnFilter.test(column) && belongsToSchema(table, catalogName, schemaName)) {
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
       final String typeName = results.getString("TYPE_NAME");
@@ -275,7 +276,8 @@ final class TableColumnRetriever extends AbstractRetriever {
             new TaskDefinition(
                 table.getFullName(),
                 () -> {
-                  LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
+                  LOGGER.log(
+                      Level.FINE, new StringFormat("Retrieving table columns for <%s>", table));
                   try (final Connection connection = getRetrieverConnection().getConnection();
                       final MetadataResultSet results =
                           new MetadataResultSet(
@@ -301,7 +303,7 @@ final class TableColumnRetriever extends AbstractRetriever {
                 }));
       }
       taskRunner.submit();
-    } catch (final SQLException | ExecutionRuntimeException e) {
+    } catch (final SQLException | SchemaCrawlerException e) {
       throw e;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e.getMessage(), e);

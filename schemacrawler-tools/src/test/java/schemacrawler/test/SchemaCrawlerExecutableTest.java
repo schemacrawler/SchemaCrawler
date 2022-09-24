@@ -52,6 +52,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.WithSystemProperty;
@@ -106,8 +107,8 @@ public class SchemaCrawlerExecutableTest {
     final String command1 = "bad-command";
     final SchemaCrawlerExecutable executable1 = new SchemaCrawlerExecutable(command1);
     executable1.setDataSource(dataSource);
-    final InternalRuntimeException ex1 =
-        assertThrows(InternalRuntimeException.class, () -> executable1.execute());
+    final ExecutionRuntimeException ex1 =
+        assertThrows(ExecutionRuntimeException.class, () -> executable1.execute());
     assertThat(ex1.getMessage(), is("Unknown command <" + command1 + ">"));
 
     final String command2 = "test-command";
