@@ -52,7 +52,7 @@ class TimedTask implements Callable<TimedTaskResult> {
   }
 
   @Override
-  public TimedTaskResult call() throws Exception {
+  public TimedTaskResult call() {
 
     LOGGER.log(
         Level.INFO,
@@ -72,7 +72,7 @@ class TimedTask implements Callable<TimedTaskResult> {
     final Instant stop = Instant.now();
     final Duration runTime = Duration.between(start, stop);
     final TimedTaskResult timedTaskResult =
-        new TimedTaskResult(taskDefinition.getTaskName(), runTime);
+        new TimedTaskResult(taskDefinition.getTaskName(), runTime, ex);
 
     if (ex != null) {
       LOGGER.log(
@@ -81,9 +81,7 @@ class TimedTask implements Callable<TimedTaskResult> {
               "Exception running <%s> on thread <%s>: %s",
               timedTaskResult, Thread.currentThread().getName(), ex.getMessage()),
           ex);
-      throw ex;
-    } else {
-      return timedTaskResult;
     }
+    return timedTaskResult;
   }
 }

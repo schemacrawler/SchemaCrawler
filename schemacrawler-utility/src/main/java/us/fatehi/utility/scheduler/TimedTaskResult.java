@@ -55,16 +55,26 @@ final class TimedTaskResult implements Serializable {
 
   private final Duration duration;
   private final String taskName;
+  private final Exception exception;
 
-  TimedTaskResult(final String taskName, final Duration duration) {
+  TimedTaskResult(final String taskName, final Duration duration, final Exception exception) {
     requireNonNull(taskName, "Task name not provided");
     requireNonNull(duration, "Duration not provided");
     this.taskName = taskName;
     this.duration = duration;
+    this.exception = exception;
   }
 
   public Duration getDuration() {
     return duration;
+  }
+
+  public boolean hasException() {
+    return exception != null;
+  }
+
+  public void throwException() throws Exception {
+    throw exception;
   }
 
   @Override

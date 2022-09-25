@@ -42,8 +42,12 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 abstract class AbstractTaskRunner implements TaskRunner {
+
+  private static final Logger LOGGER = Logger.getLogger(AbstractTaskRunner.class.getName());
 
   private final String id;
   private final Queue<TaskDefinition> taskDefinitions;
@@ -139,6 +143,15 @@ abstract class AbstractTaskRunner implements TaskRunner {
     final Collection<TimedTaskResult> runTaskResults = runTimed(taskDefinitions);
     taskResults.addAll(runTaskResults);
     taskDefinitions.clear();
+
+    // Stop, report and throw on an exception
+    for (final TimedTaskResult runTaskResult : runTaskResults) {
+      if (runTaskResult.hasException()) {
+        stop();
+        LOGGER.log(Level.CONFIG, report());
+        runTaskResult.throwException();
+      }
+    }
   }
 
   abstract Collection<TimedTaskResult> runTimed(final Collection<TaskDefinition> taskDefinitions)
