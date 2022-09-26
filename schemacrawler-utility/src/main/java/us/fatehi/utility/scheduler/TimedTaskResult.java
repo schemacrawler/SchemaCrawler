@@ -69,12 +69,12 @@ final class TimedTaskResult implements Serializable {
     return duration;
   }
 
-  public boolean hasException() {
-    return exception != null;
+  public Exception getException() {
+    return exception;
   }
 
-  public void throwException() throws Exception {
-    throw exception;
+  public boolean hasException() {
+    return exception != null;
   }
 
   @Override

@@ -145,12 +145,23 @@ abstract class AbstractTaskRunner implements TaskRunner {
     taskDefinitions.clear();
 
     // Stop, report and throw on an exception
+    boolean hasException = false;
+    Exception exception = null;
     for (final TimedTaskResult runTaskResult : runTaskResults) {
       if (runTaskResult.hasException()) {
-        stop();
-        LOGGER.log(Level.CONFIG, report());
-        runTaskResult.throwException();
+        hasException = true;
+        final Exception runTaskException = runTaskResult.getException();
+        if (exception == null) {
+          exception = runTaskException;
+        } else {
+          exception.addSuppressed(runTaskException);
+        }
       }
+    }
+    if (hasException) {
+      stop();
+      LOGGER.log(Level.CONFIG, report());
+      throw exception;
     }
   }
 
