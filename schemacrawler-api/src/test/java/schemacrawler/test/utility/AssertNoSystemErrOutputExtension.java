@@ -46,13 +46,15 @@ final class AssertNoSystemErrOutputExtension
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+    System.err.flush();
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true));
     assertThat("Expected no System.err output", err.getContents(), is(emptyString()));
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
     err = new TestOutputStream();
+    System.err.flush();
     System.setErr(new PrintStream(err));
   }
 }

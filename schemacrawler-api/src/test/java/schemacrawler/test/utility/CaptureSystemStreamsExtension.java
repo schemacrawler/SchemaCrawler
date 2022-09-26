@@ -47,16 +47,21 @@ final class CaptureSystemStreamsExtension
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+    System.out.flush();
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
+
+    System.err.flush();
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true));
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
     out = new TestOutputStream();
+    System.out.flush();
     System.setOut(new PrintStream(out));
 
     err = new TestOutputStream();
+    System.err.flush();
     System.setErr(new PrintStream(err));
   }
 

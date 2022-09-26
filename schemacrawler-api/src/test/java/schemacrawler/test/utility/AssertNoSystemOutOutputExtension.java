@@ -46,13 +46,15 @@ final class AssertNoSystemOutOutputExtension
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.out.flush();
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
     assertThat("Expected no System.out output", out.getContents(), is(emptyString()));
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
     out = new TestOutputStream();
+    System.out.flush();
     System.setOut(new PrintStream(out));
   }
 }
