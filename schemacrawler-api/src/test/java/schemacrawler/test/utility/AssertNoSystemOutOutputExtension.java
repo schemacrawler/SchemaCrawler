@@ -31,8 +31,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -43,18 +41,20 @@ final class AssertNoSystemOutOutputExtension
     implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
   private TestOutputStream out;
+  private PrintStream systemOut;
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
+    System.setOut(systemOut);
     assertThat("Expected no System.out output", out.getContents(), is(emptyString()));
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
-    out = new TestOutputStream();
     System.out.flush();
+    systemOut = System.out;
+    out = new TestOutputStream();
     System.setOut(new PrintStream(out));
   }
 }

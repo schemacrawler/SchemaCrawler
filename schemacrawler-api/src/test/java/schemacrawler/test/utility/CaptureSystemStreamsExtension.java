@@ -27,8 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Parameter;
 
@@ -44,24 +42,28 @@ final class CaptureSystemStreamsExtension
 
   private TestOutputStream err;
   private TestOutputStream out;
+  private PrintStream systemErr;
+  private PrintStream systemOut;
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
+    System.setOut(systemOut);
 
     System.err.flush();
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true));
+    System.setErr(systemErr);
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
-    out = new TestOutputStream();
     System.out.flush();
+    systemOut = System.out;
+    out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
-    err = new TestOutputStream();
     System.err.flush();
+    systemErr = System.err;
+    err = new TestOutputStream();
     System.setErr(new PrintStream(err));
   }
 
