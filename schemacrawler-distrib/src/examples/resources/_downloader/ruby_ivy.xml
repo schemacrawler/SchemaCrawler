@@ -7,6 +7,6 @@
     <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
-    <dependency org="org.jruby" name="jruby" rev="9.3.7.0" conf="binaries->default" />
+    <dependency org="org.jruby" name="jruby" rev="9.3.8.0" conf="binaries->default" />
   </dependencies>
 </ivy-module>
