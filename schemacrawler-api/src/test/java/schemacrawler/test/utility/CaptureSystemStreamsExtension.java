@@ -32,27 +32,27 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Parameter;
 
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
 final class CaptureSystemStreamsExtension
-    implements ParameterResolver, BeforeEachCallback, AfterEachCallback {
+    implements ParameterResolver, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
   private TestOutputStream err;
   private TestOutputStream out;
 
   @Override
-  public void afterEach(final ExtensionContext context) throws Exception {
+  public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Override
-  public void beforeEach(final ExtensionContext context) throws Exception {
+  public void beforeTestExecution(final ExtensionContext context) throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
