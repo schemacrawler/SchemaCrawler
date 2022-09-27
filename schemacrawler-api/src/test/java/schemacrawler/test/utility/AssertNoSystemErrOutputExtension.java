@@ -47,11 +47,20 @@ final class AssertNoSystemErrOutputExtension
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.err.flush();
     System.setErr(systemErr);
-    assertThat("Expected no System.err output", err.getContents(), is(emptyString()));
+
+    final String output = err.getContents();
+
+    err = null;
+    systemErr = null;
+
+    assertThat("Expected no System.err output", output, is(emptyString()));
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
+    if (err != null) {
+      throw new RuntimeException("STDERR CORRUPTION");
+    }
     System.err.flush();
     systemErr = System.err;
     err = new TestOutputStream();

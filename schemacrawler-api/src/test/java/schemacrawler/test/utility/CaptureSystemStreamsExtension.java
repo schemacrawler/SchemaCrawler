@@ -49,13 +49,24 @@ final class CaptureSystemStreamsExtension
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
     System.setOut(systemOut);
+    out = null;
+    systemOut = null;
 
     System.err.flush();
     System.setErr(systemErr);
+    err = null;
+    systemErr = null;
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
+    if (err != null) {
+      throw new RuntimeException("STDERR CORRUPTION");
+    }
+    if (out != null) {
+      throw new RuntimeException("STDOUT CORRUPTION");
+    }
+
     System.out.flush();
     systemOut = System.out;
     out = new TestOutputStream();

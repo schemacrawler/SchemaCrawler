@@ -47,11 +47,20 @@ final class AssertNoSystemOutOutputExtension
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
     System.setOut(systemOut);
-    assertThat("Expected no System.out output", out.getContents(), is(emptyString()));
+
+    final String output = out.getContents();
+
+    out = null;
+    systemOut = null;
+
+    assertThat("Expected no System.out output", output, is(emptyString()));
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
+    if (out != null) {
+      throw new RuntimeException("STDOUT CORRUPTION");
+    }
     System.out.flush();
     systemOut = System.out;
     out = new TestOutputStream();
