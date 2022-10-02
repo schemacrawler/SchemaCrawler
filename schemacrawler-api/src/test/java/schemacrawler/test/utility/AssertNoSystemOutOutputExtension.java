@@ -30,7 +30,10 @@ package schemacrawler.test.utility;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -41,17 +44,15 @@ final class AssertNoSystemOutOutputExtension
     implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
   private TestOutputStream out;
-  private PrintStream systemOut;
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
-    System.setOut(systemOut);
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
 
     final String output = out.getContents();
 
     out = null;
-    systemOut = null;
 
     assertThat("Expected no System.out output", output, is(emptyString()));
   }
@@ -59,11 +60,12 @@ final class AssertNoSystemOutOutputExtension
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
     if (out != null) {
-      throw new RuntimeException("STDOUT CORRUPTION");
+      fail("STDOUT CORRUPTION");
     }
-    System.out.flush();
-    systemOut = System.out;
+
     out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
+
+    System.out.flush();
+    System.setOut(new PrintStream(out, true));
   }
 }

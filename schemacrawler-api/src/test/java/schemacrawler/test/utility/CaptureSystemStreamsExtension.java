@@ -27,6 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Parameter;
 
@@ -42,40 +46,35 @@ final class CaptureSystemStreamsExtension
 
   private TestOutputStream err;
   private TestOutputStream out;
-  private PrintStream systemErr;
-  private PrintStream systemOut;
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
-    System.setOut(systemOut);
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
     out = null;
-    systemOut = null;
 
     System.err.flush();
-    System.setErr(systemErr);
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true));
     err = null;
-    systemErr = null;
   }
 
   @Override
   public void beforeTestExecution(final ExtensionContext context) throws Exception {
     if (err != null) {
-      throw new RuntimeException("STDERR CORRUPTION");
+      fail("STDERR CORRUPTION");
     }
     if (out != null) {
-      throw new RuntimeException("STDOUT CORRUPTION");
+      fail("STDOUT CORRUPTION");
     }
 
-    System.out.flush();
-    systemOut = System.out;
     out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
+    err = new TestOutputStream();
+
+    System.out.flush();
+    System.setOut(new PrintStream(out, true));
 
     System.err.flush();
-    systemErr = System.err;
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
+    System.setErr(new PrintStream(err, true));
   }
 
   @Override
