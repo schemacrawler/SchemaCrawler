@@ -32,9 +32,11 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
@@ -43,14 +45,17 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 final class AssertNoSystemErrOutputExtension
     implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
-  private TestOutputStream err;
+  private static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
+
+  private ByteArrayOutputStream err;
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.err.flush();
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true, DEFAULT_CHARSET));
 
-    final String output = err.getContents();
+    err.close();
+    final String output = err.toString();
 
     err = null;
 
@@ -63,9 +68,9 @@ final class AssertNoSystemErrOutputExtension
       fail("STDERR CORRUPTION");
     }
 
-    err = new TestOutputStream();
+    err = new ByteArrayOutputStream();
 
     System.err.flush();
-    System.setErr(new PrintStream(err, true));
+    System.setErr(new PrintStream(err, true, DEFAULT_CHARSET));
   }
 }

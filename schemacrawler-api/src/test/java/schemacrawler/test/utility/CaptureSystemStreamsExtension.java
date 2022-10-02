@@ -33,6 +33,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Parameter;
+import java.nio.charset.Charset;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
@@ -44,17 +45,19 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 final class CaptureSystemStreamsExtension
     implements ParameterResolver, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
+  private static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
+
   private TestOutputStream err;
   private TestOutputStream out;
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, DEFAULT_CHARSET));
     out = null;
 
     System.err.flush();
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true, DEFAULT_CHARSET));
     err = null;
   }
 
@@ -71,10 +74,10 @@ final class CaptureSystemStreamsExtension
     err = new TestOutputStream();
 
     System.out.flush();
-    System.setOut(new PrintStream(out, true));
+    System.setOut(new PrintStream(out, true, DEFAULT_CHARSET));
 
     System.err.flush();
-    System.setErr(new PrintStream(err, true));
+    System.setErr(new PrintStream(err, true, DEFAULT_CHARSET));
   }
 
   @Override

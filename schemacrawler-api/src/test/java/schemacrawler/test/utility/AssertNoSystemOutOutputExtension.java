@@ -32,9 +32,11 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
@@ -43,14 +45,17 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 final class AssertNoSystemOutOutputExtension
     implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
-  private TestOutputStream out;
+  private static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
+
+  private ByteArrayOutputStream out;
 
   @Override
   public void afterTestExecution(final ExtensionContext context) throws Exception {
     System.out.flush();
-    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true));
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, DEFAULT_CHARSET));
 
-    final String output = out.getContents();
+    out.close();
+    final String output = out.toString();
 
     out = null;
 
@@ -63,9 +68,9 @@ final class AssertNoSystemOutOutputExtension
       fail("STDOUT CORRUPTION");
     }
 
-    out = new TestOutputStream();
+    out = new ByteArrayOutputStream();
 
     System.out.flush();
-    System.setOut(new PrintStream(out, true));
+    System.setOut(new PrintStream(out, true, DEFAULT_CHARSET));
   }
 }
