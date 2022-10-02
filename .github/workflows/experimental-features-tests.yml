@@ -29,7 +29,6 @@ jobs:
 
     - id: install-graphviz
       name: Install graphviz
-      if:
       shell: bash
       run: |
         # Install Graphviz
@@ -47,6 +46,7 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
+          --debug \
           -DSC_EXPERIMENTAL=true \
           -Dheavydb \
           clean package
