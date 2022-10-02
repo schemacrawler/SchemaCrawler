@@ -46,7 +46,6 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          --debug \
           -DSC_EXPERIMENTAL=true \
           -Dheavydb \
           clean package
