@@ -64,6 +64,12 @@
       <artifactId>thymeleaf</artifactId>
       <version>3.0.15.RELEASE</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>      
     </dependency>
     <dependency>
       <groupId>org.freemarker</groupId>
@@ -98,7 +104,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-jdk14</artifactId>
-      <version>2.0.2</version>
+      <version>2.0.3</version>
       <scope>provided</scope>
     </dependency>
 
@@ -109,6 +115,10 @@
       <version>${graphviz.java.version}</version>
       <scope>provided</scope>
       <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>      
         <exclusion>
           <groupId>org.slf4j</groupId>
           <artifactId>jcl-over-slf4j</artifactId>

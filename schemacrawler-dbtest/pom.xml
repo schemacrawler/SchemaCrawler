@@ -118,6 +118,12 @@
       <artifactId>teiid-runtime</artifactId>
       <version>16.0.0</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>      
     </dependency>
     <dependency>
       <groupId>org.teiid.connectors</groupId>
@@ -138,12 +144,24 @@
       <artifactId>avatica-core</artifactId>
       <version>1.22.0</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>      
     </dependency>
     <dependency>
       <groupId>org.apache.calcite</groupId>
       <artifactId>calcite-csv</artifactId>
       <version>1.32.0</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>      
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>

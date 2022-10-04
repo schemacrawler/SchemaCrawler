@@ -67,3 +67,4 @@ __init__.py
 /schemacrawler-docker-compose/*.pdf
 /schemacrawler-docker-compose/*.html
 
+tree.txt
