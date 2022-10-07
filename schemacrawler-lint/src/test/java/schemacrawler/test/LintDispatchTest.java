@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
@@ -59,6 +60,7 @@ public class LintDispatchTest {
     LintDispatch.none.dispatch();
   }
 
+  @Disabled
   @Test
   @AssertNoSystemErrOutput
   @AssertNoSystemOutOutput

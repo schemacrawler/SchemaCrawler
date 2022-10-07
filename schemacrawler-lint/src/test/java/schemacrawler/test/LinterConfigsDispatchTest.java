@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
@@ -108,6 +109,7 @@ public class LinterConfigsDispatchTest {
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
+  @Disabled
   @Test
   @CaptureSystemStreams
   @ExpectSystemExitWithStatus(1)
@@ -130,6 +132,7 @@ public class LinterConfigsDispatchTest {
     checkSystemErrLog(testContext, streams);
   }
 
+  @Disabled
   @Test
   @CaptureSystemStreams
   @ExpectSystemExitWithStatus(1)

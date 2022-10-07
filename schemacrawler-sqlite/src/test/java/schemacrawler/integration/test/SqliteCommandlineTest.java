@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
@@ -105,6 +106,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
     assertThat(outputOf(testout), hasSameContentAs(classpathResource("sqlite.main.list.txt")));
   }
 
+  @Disabled
   @Test
   @ExpectSystemExitWithStatus(1)
   public void testSqliteMainMissingDatabase(final CapturedSystemStreams streams) throws Exception {
