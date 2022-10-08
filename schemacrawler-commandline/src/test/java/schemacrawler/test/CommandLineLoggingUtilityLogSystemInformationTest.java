@@ -7,13 +7,11 @@ import static org.hamcrest.Matchers.matchesPattern;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import nl.altindag.log.LogCaptor;
 import schemacrawler.tools.commandline.utility.CommandLineLoggingUtility;
 
-@Disabled
 public class CommandLineLoggingUtilityLogSystemInformationTest {
 
   private LogCaptor logCaptor;

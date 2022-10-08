@@ -34,7 +34,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
@@ -94,7 +93,6 @@ public class ShellCommandsTest {
                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
   }
 
-  @Disabled
   @Test
   @ExpectSystemExitWithStatus(0)
   public void exit(final TestContext testContext, final CapturedSystemStreams streams) {

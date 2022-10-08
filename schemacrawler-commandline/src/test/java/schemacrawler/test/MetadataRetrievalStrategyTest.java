@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
@@ -70,7 +69,6 @@ public class MetadataRetrievalStrategyTest {
     TestUtility.clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
   }
 
-  @Disabled
   @Test
   @ExpectSystemExitWithStatus(1)
   public void overrideMetadataRetrievalStrategyDataDictionary(
