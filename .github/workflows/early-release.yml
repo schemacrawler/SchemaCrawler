@@ -3,8 +3,12 @@ name: Create Early Access Release
 on:
   workflow_dispatch:
   push:
-    branches: 
+    branches:
       - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
