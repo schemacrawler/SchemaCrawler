@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -92,6 +94,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
           }
           writer.serializeAsField(pojo, jgen, provider);
         } catch (final Exception e) {
+          LOGGER.log(Level.FINE, e.getMessage(), e);
           return;
         }
       } else if (!jgen.canOmitFields()) {
@@ -109,6 +112,9 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
       return true;
     }
   }
+
+  private static final Logger LOGGER =
+      Logger.getLogger(BaseJacksonSerializedCatalog.class.getName());
 
   private final Catalog catalog;
   private final SortedSet<Column> allTableColumns;

@@ -57,7 +57,8 @@ abstract class AbstractScriptExecutor implements ScriptExecutor {
 
     if (context == null) {
       this.context = Collections.emptyMap();
+    } else {
+      this.context = new HashMap<>(context);
     }
-    this.context = new HashMap<>(context);
   }
 }
