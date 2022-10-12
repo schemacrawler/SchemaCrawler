@@ -155,8 +155,8 @@ public class MetadataResultSetTest {
 
     final BiConsumer<String, ResultSet> assertAll =
         (dataType, resultSet) -> {
-          try {
-            final MetadataResultSet results = new MetadataResultSet(resultSet, "largeObjectValues");
+          try (final MetadataResultSet results =
+              new MetadataResultSet(resultSet, "largeObjectValues"); ) {
 
             final String stringValue = results.getString(columnName);
             if (dataType.equals("BLOB")) {

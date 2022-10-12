@@ -156,7 +156,7 @@ public final class TypeMap implements Map<String, Class<?>> {
 
   @Override
   public Set<Entry<String, Class<?>>> entrySet() {
-    return new HashSet<>(sqlTypeMap.entrySet());
+    return new HashMap<>(sqlTypeMap).entrySet();
   }
 
   @Override

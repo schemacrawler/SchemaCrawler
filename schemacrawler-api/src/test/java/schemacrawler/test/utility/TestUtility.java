@@ -216,7 +216,8 @@ public final class TestUtility {
   }
 
   public static String fileHeaderOf(final Path tempFile) throws IOException {
-    try (final FileChannel fc = new FileInputStream(tempFile.toFile()).getChannel()) {
+    try (final FileInputStream fileInputStream = new FileInputStream(tempFile.toFile());
+        final FileChannel fc = fileInputStream.getChannel()) {
       final ByteBuffer bb = ByteBuffer.allocate(2);
       fc.read(bb);
       final String hexValue = new BigInteger(1, bb.array()).toString(16);
