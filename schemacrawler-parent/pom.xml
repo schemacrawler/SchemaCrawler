@@ -382,6 +382,11 @@
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
+          </systemPropertyVariables>
+        </configuration>        
       </plugin>
       <plugin>
         <inherited>true</inherited>
