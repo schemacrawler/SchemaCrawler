@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFatalStackTrace;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
@@ -62,6 +60,7 @@ import picocli.shell.jline3.PicocliCommands;
 import picocli.shell.jline3.PicocliCommands.PicocliCommandsFactory;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.commandline.utility.CommandLineLogger;
 
 public final class SchemaCrawlerShell {
 
@@ -150,8 +149,10 @@ public final class SchemaCrawlerShell {
 
   private static void handleFatalError(
       final String[] args, final Throwable throwable, final ShellState state) {
-    logSafeArguments(args, state);
-    logFatalStackTrace(throwable);
+    final CommandLineLogger commandLineLogger = new CommandLineLogger(LOGGER);
+    commandLineLogger.logState(state);
+    commandLineLogger.logSafeArguments(args);
+    commandLineLogger.logFatalStackTrace(throwable);
 
     final String errorMessage;
     if (throwable instanceof picocli.CommandLine.PicocliException) {

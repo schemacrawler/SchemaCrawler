@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.utility;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.join;
 
 import java.io.File;
@@ -40,30 +41,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.tools.commandline.state.ShellState;
-import us.fatehi.utility.UtilityMarker;
-import us.fatehi.utility.string.StringFormat;
 
-@UtilityMarker
-public final class CommandLineLoggingUtility {
+public final class CommandLineLogger {
 
-  private static final Logger LOGGER = Logger.getLogger(CommandLineLoggingUtility.class.getName());
+  private final Logger logger;
 
-  public static void logFatalStackTrace(final Throwable t) {
-    if (t == null || !LOGGER.isLoggable(Level.SEVERE)) {
-      return;
-    }
-
-    LOGGER.log(Level.SEVERE, t.getMessage(), t);
+  public CommandLineLogger(final Logger logger) {
+    this.logger = requireNonNull(logger, "No logger provided");
   }
 
-  public static void logSafeArguments(final String[] args, final ShellState state) {
-    if (!LOGGER.isLoggable(Level.INFO)) {
+  public void logFatalStackTrace(final Throwable t) {
+    if (t == null || !logger.isLoggable(Level.SEVERE)) {
       return;
     }
 
-    LOGGER.log(Level.INFO, CommandLineUtility.getEnvironment(state));
+    logger.log(Level.SEVERE, t.getMessage(), t);
+  }
 
-    if (args == null) {
+  public void logSafeArguments(final String[] args) {
+    if (args == null || !logger.isLoggable(Level.INFO)) {
       return;
     }
 
@@ -88,24 +84,32 @@ public final class CommandLineLoggingUtility {
       }
     }
 
-    LOGGER.log(Level.INFO, new StringFormat("Command line: %n%s", argsList.toString()));
+    logger.log(Level.INFO, String.format("Command line: %n%s", argsList.toString()));
   }
 
-  public static void logSystemClasspath() {
-    if (!LOGGER.isLoggable(Level.CONFIG)) {
+  public void logState(final ShellState state) {
+    if (!logger.isLoggable(Level.INFO)) {
       return;
     }
 
-    LOGGER.log(
+    logger.log(Level.INFO, CommandLineUtility.getEnvironment(state));
+  }
+
+  public void logSystemClasspath() {
+    if (!logger.isLoggable(Level.CONFIG)) {
+      return;
+    }
+
+    logger.log(
         Level.CONFIG,
         String.format("Classpath: %n%s", printPath(System.getProperty("java.class.path"))));
-    LOGGER.log(
+    logger.log(
         Level.CONFIG,
         String.format("LD_LIBRARY_PATH: %n%s", printPath(System.getenv("LD_LIBRARY_PATH"))));
   }
 
-  public static void logSystemProperties() {
-    if (!LOGGER.isLoggable(Level.CONFIG)) {
+  public void logSystemProperties() {
+    if (!logger.isLoggable(Level.CONFIG)) {
       return;
     }
 
@@ -117,19 +121,15 @@ public final class CommandLineLoggingUtility {
       }
     }
 
-    LOGGER.log(
+    logger.log(
         Level.CONFIG,
         String.format("System properties: %n%s", join(systemProperties, System.lineSeparator())));
   }
 
-  private static String printPath(final String path) {
+  private String printPath(final String path) {
     if (path == null) {
       return "";
     }
     return String.join(System.lineSeparator(), path.split(File.pathSeparator));
-  }
-
-  private CommandLineLoggingUtility() {
-    // Prevent instantiation
   }
 }
