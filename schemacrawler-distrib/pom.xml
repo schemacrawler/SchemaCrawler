@@ -110,7 +110,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.13.4</version>
+      <version>2.13.4.2</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -166,13 +166,9 @@
             <id>download-ivy-for-ant</id>
             <phase>initialize</phase>
             <configuration>
-              <target name="download-ivy-for-ant"
-                description="Download Apache ivy, and make it available to Apache ant">
-                <mkdir dir="${user.home}/.ant/lib" />
-                <get
-                  src="https://repo.maven.apache.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
-                  dest="${user.home}/.ant/lib/ivy-2.5.0.jar"
-                  usetimestamp="true" />
+              <target name="download-ivy-for-ant" description="Download Apache ivy, and make it available to Apache ant">
+                <mkdir dir="${user.home}/.ant/lib"/>
+                <get src="https://repo.maven.apache.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar" dest="${user.home}/.ant/lib/ivy-2.5.0.jar" usetimestamp="true"/>
               </target>
             </configuration>
             <goals>
@@ -183,14 +179,10 @@
             <id>make-distribution</id>
             <phase>package</phase>
             <configuration>
-              <target name="make-distribution"
-                description="Package SchemaCrawler distributable">
-                <property name="SchemaCrawler.home"
-                  location=".." />
-                <property name="SchemaCrawler.version"
-                  value="${project.version}" />
-                <ant antfile="src\assembly\distribution.xml"
-                  target="make" />
+              <target name="make-distribution" description="Package SchemaCrawler distributable">
+                <property name="SchemaCrawler.home" location=".."/>
+                <property name="SchemaCrawler.version" value="${project.version}"/>
+                <ant antfile="src\assembly\distribution.xml" target="make"/>
               </target>
             </configuration>
             <goals>
@@ -201,14 +193,10 @@
             <id>make-main-distribution</id>
             <phase>package</phase>
             <configuration>
-              <target name="make-main-distribution"
-                description="Package SchemaCrawler, test database, and examples into the main distributable zip">
-                <property name="SchemaCrawler.home"
-                  location=".." />
-                <property name="SchemaCrawler.version"
-                  value="${project.version}" />
-                <ant antfile="src\assembly\main-distribution.xml"
-                  target="make" />
+              <target name="make-main-distribution" description="Package SchemaCrawler, test database, and examples into the main distributable zip">
+                <property name="SchemaCrawler.home" location=".."/>
+                <property name="SchemaCrawler.version" value="${project.version}"/>
+                <ant antfile="src\assembly\main-distribution.xml" target="make"/>
               </target>
             </configuration>
             <goals>
