@@ -14,7 +14,7 @@ permissions: read-all
 
 jobs:
   build:
-    name: Build, run database integration tests
+    name: Integration Tests
     strategy:
       fail-fast: false
       matrix:
