@@ -14,7 +14,7 @@ permissions: read-all
 
 jobs:
   build:
-    name: Build, run database integration tests
+    name: Integration Tests
     strategy:
       fail-fast: false
       matrix:
@@ -100,7 +100,7 @@ jobs:
 
 # BUILD AND TEST
     - id: build-test
-      name: Build and run coverage tests
+      name: Coverage tests
       shell: bash
       run: |
         # Build
@@ -109,7 +109,7 @@ jobs:
           --batch-mode \
           -Dtestcoverage \
           clean install \
-          org.jacoco:jacoco-maven-plugin:0.8.7:report-aggregate
+          org.jacoco:jacoco-maven-plugin:0.8.8:report-aggregate
 
 # GET TEST RESULTS
     - id: publish-test-results
@@ -150,7 +150,7 @@ jobs:
 
 # BUILD AND TEST
     - id: build-test
-      name: Build, run tests, and build Docker image
+      name: Build Docker image
       shell: bash
       run: |
         # Build

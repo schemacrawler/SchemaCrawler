@@ -30,9 +30,8 @@ package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSystemClasspath;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSystemProperties;
+
+import java.util.logging.Logger;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
@@ -42,9 +41,12 @@ import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.commandline.utility.CommandLineLogger;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {
+
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   public static void main(final String... args) throws Exception {
     requireNonNull(args, "No command-line arguments provided");
@@ -53,9 +55,10 @@ public final class Main {
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.execute(args);
 
-    logSafeArguments(args, null);
-    logSystemClasspath();
-    logSystemProperties();
+    final CommandLineLogger commandLineLogger = new CommandLineLogger(LOGGER);
+    commandLineLogger.logSafeArguments(args);
+    commandLineLogger.logSystemClasspath();
+    commandLineLogger.logSystemProperties();
 
     final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);
