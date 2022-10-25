@@ -1,6 +1,6 @@
 username=SA
 product name=HSQL Database Engine
-product version=2.7.0
+product version=2.7.1
 catalog=catalog
 all procedures are callable = true
 all tables are selectable = true
@@ -167,7 +167,7 @@ updates are detected for TYPE_SCROLL_INSENSITIVE result sets = false
 updates are detected for TYPE_SCROLL_SENSITIVE result sets = false
 uses local file per table = false
 uses local files = false
-connection url=jdbc:hsqldb:hsql://0.0.0.0:60346/schemacrawler60346
+connection url=jdbc:hsqldb:hsql://0.0.0.0:59951/schemacrawler59951
 driver class=org.hsqldb.jdbc.JDBCDriver
 default_schema = false
   is required? false
