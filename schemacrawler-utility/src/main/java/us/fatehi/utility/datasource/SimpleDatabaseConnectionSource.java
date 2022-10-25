@@ -105,7 +105,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   }
 
   @Override
-  public Connection get() {
+  public synchronized Connection get() {
     // Create a connection if needed
     if (connectionPool.isEmpty()) {
       final Connection connection =
@@ -121,7 +121,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   }
 
   @Override
-  public boolean releaseConnection(final Connection connection) {
+  public synchronized boolean releaseConnection(final Connection connection) {
 
     final boolean removed = usedConnections.remove(connection);
 
