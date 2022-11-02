@@ -56,7 +56,7 @@
     <dependency>
       <groupId>com.ibm.db2</groupId>
       <artifactId>jcc</artifactId>
-      <version>11.5.7.0</version>
+      <version>11.5.8.0</version>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
