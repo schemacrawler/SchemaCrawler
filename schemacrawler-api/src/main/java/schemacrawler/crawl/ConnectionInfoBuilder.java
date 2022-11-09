@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -49,7 +50,32 @@ public final class ConnectionInfoBuilder {
     return new ConnectionInfoBuilder(connection);
   }
 
-  private static String getJdbcDriverClassName(final String connectionUrl) throws SQLException {
+  /**
+   * Get database connection URL.
+   *
+   * <p>NOTE: Some databases such as Hive may throw an exception. See issue #910.
+   *
+   * @param dbMetaData Database metadata.
+   * @return Database connection URL
+   */
+  private static String getConnectionUrl(final DatabaseMetaData dbMetaData) {
+    if (dbMetaData == null) {
+      return "";
+    }
+    try {
+      final String connectionUrl = dbMetaData.getURL();
+      return connectionUrl;
+    } catch (final SQLException e) {
+      LOGGER.log(
+          Level.WARNING, new StringFormat("Could not obtain the database connection URL", e));
+      return "";
+    }
+  }
+
+  private static String getJdbcDriverClassName(final String connectionUrl) {
+    if (isBlank(connectionUrl)) {
+      return "";
+    }
     try {
       final Driver jdbcDriver = DriverManager.getDriver(connectionUrl);
       return jdbcDriver.getClass().getName();
@@ -72,7 +98,7 @@ public final class ConnectionInfoBuilder {
   public ConnectionInfo build() throws SQLException {
 
     final DatabaseMetaData dbMetaData = connection.getMetaData();
-    final String connectionUrl = dbMetaData.getURL();
+    final String connectionUrl = getConnectionUrl(dbMetaData);
     final String jdbcDriverClassName = getJdbcDriverClassName(connectionUrl);
 
     final ConnectionInfo connectionInfo =
