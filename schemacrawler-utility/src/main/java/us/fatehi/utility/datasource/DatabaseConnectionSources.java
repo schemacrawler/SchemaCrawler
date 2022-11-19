@@ -52,16 +52,16 @@ public class DatabaseConnectionSources {
       final UserCredentials userCredentials,
       final Consumer<Connection> connectionInitializer) {
 
-    final boolean isExperimental =
+    final boolean isSingleThreaded =
         Boolean.valueOf(
-            getSystemConfigurationProperty("SC_EXPERIMENTAL", Boolean.FALSE.toString()));
-    if (isExperimental) {
-      LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
-      return new SimpleDatabaseConnectionSource(
+            getSystemConfigurationProperty("SC_SINGLE_THREADED", Boolean.FALSE.toString()));
+    if (isSingleThreaded) {
+      LOGGER.log(Level.CONFIG, "Loading database schema in the main thread");
+      return new SingleDatabaseConnectionSource(
           connectionUrl, connectionProperties, userCredentials, connectionInitializer);
     } else {
-      LOGGER.log(Level.CONFIG, "Loading database schema using a single main thread");
-      return new SingleDatabaseConnectionSource(
+      LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
+      return new SimpleDatabaseConnectionSource(
           connectionUrl, connectionProperties, userCredentials, connectionInitializer);
     }
   }
