@@ -20,7 +20,7 @@
 ### Testing
 
 - Start SchemaCrawler bash with
-  `docker exec -it schemacrawler /bin/bash`
+  `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server postgresql --host postgresql --database schemacrawler --user schemacrawler --password schemacrawler --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
@@ -44,7 +44,7 @@
 ### Testing
 
 - Start SchemaCrawler bash with
-  `docker exec -it schemacrawler /bin/bash`
+  `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server oracle --host oracle --database xepdb1 --user "SYS AS SYSDBA" --password test --schemas BOOKS --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
@@ -68,7 +68,7 @@
 ### Testing
 
 - Start SchemaCrawler bash with
-  `docker exec -it schemacrawler /bin/bash`
+  `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server sqlserver --host sqlserver --database BOOKS --schemas BOOKS\.dbo --user SA --password Schem#Crawl3r --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
@@ -92,7 +92,7 @@
 ### Testing
 
 - Start SchemaCrawler bash with
-  `docker exec -it schemacrawler /bin/bash`
+  `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server mysql --host mysql --database books --user schemacrawler --password schemacrawler --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
@@ -117,13 +117,13 @@
 ### Testing
 
 - Start SchemaCrawler bash with
-  `docker exec -it schemacrawler /bin/bash`
+  `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server db2 --host db2 --database schcrwlr --schemas SCHCRWLR --user schcrwlr --password schemacrawler --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
 
 Connect to the IBM DB2 container if needed, run
-`docker exec -it db2 /bin/bash`
+`docker exec -it db2 bash`
 
 ### Tear Down
 
