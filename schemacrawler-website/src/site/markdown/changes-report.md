@@ -8,6 +8,7 @@ SchemaCrawler release notes.
 
 - SchemaCrawler runs multi-threaded by defualt, but you can force single-threading with `SC_SINGLE_THREADED`=`true`  
   as a environmental variable or Java system property
+- Fix for Hive does not support DatabaseMetaData.getURL() #910
 
 
 <a name="a16.18.2"></a>
