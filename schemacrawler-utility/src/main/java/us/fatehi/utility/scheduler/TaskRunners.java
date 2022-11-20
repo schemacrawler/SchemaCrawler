@@ -37,15 +37,15 @@ public class TaskRunners {
   private static final Logger LOGGER = Logger.getLogger(TaskRunners.class.getName());
 
   public static TaskRunner getTaskRunner(final String id, final int maxThreadsSuggested) {
-    final boolean isExperimental =
+    final boolean isSingleThreaded =
         Boolean.valueOf(
-            getSystemConfigurationProperty("SC_EXPERIMENTAL", Boolean.FALSE.toString()));
-    if (isExperimental) {
+            getSystemConfigurationProperty("SC_SINGLE_THREADED", Boolean.FALSE.toString()));
+    if (isSingleThreaded) {
+      LOGGER.log(Level.CONFIG, "Loading database schema in the main thread");
+      return new MainThreadTaskRunner(id);
+    } else {
       LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
       return new MultiThreadedTaskRunner(id, maxThreadsSuggested);
-    } else {
-      LOGGER.log(Level.CONFIG, "Loading database schema using a single main thread");
-      return new MainThreadTaskRunner(id);
     }
   }
 }
