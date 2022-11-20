@@ -16,7 +16,7 @@ permissions: read-all
 
 jobs:
   build:
-    name: Build, run database integration tests, with experimental features
+    name: Build, run single-threaded database integration tests
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -44,12 +44,12 @@ jobs:
       name: Build and run database integration tests
       env:
         TZ: GMT
+        SC_SINGLE_THREADED: true
       shell: bash
       run: |
         # Build
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -DSC_EXPERIMENTAL=true \
           -Dheavydb \
           clean package
