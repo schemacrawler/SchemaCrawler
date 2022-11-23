@@ -29,6 +29,7 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
@@ -36,12 +37,21 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class CoverageTest {
+
+  @Test
+  public void connectionInfoBuilder(final Connection connection) throws SQLException {
+    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    assertThat(
+        connectionInfo.getConnectionUrl(),
+        matchesPattern("jdbc:hsqldb:hsql://\\d*\\.\\d*\\.\\d*\\.\\d*:\\d*/schemacrawler\\d*"));
+  }
 
   @Test
   public void namedObjectList() {
