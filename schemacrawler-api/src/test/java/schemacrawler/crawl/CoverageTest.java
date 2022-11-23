@@ -52,13 +52,19 @@ public class CoverageTest {
     assertThat(
         connectionInfo.getConnectionUrl(),
         matchesPattern("jdbc:hsqldb:hsql://\\d*\\.\\d*\\.\\d*\\.\\d*:\\d*/schemacrawler\\d*"));
+
     assertThat(connectionInfo.getDatabaseProductName(), is("HSQL Database Engine"));
     assertThat(connectionInfo.getDatabaseProductVersion(), is("2.7.1"));
+
     assertThat(connectionInfo.getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
     assertThat(connectionInfo.getDriverMajorVersion(), is(2));
     assertThat(connectionInfo.getDriverMinorVersion(), is(7));
     assertThat(connectionInfo.getDriverName(), is("HSQL Database Engine Driver"));
     assertThat(connectionInfo.getDriverVersion(), is("2.7.1"));
+
+    assertThat(connectionInfo.getJdbcMajorVersion(), is(4));
+    assertThat(connectionInfo.getJdbcMinorVersion(), is(2));
+    assertThat(connectionInfo.getUserName(), is("SA"));
   }
 
   @Test
