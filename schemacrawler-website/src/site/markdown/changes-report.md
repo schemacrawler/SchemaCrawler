@@ -3,8 +3,8 @@
 SchemaCrawler release notes.
 
 
-<a name="a16.19.1"></a>
-## Release 16.19.1 - 2022-11-20
+<a name="a16.19.2"></a>
+## Release 16.19.2 - 2022-11-20
 
 - SchemaCrawler runs multi-threaded by defualt, but you can force single-threading with `SC_SINGLE_THREADED`=`true`  
   as a environmental variable or Java system property
