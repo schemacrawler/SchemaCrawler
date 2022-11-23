@@ -8,7 +8,7 @@
   </configurations>
   <dependencies>
     <dependency org="org.thymeleaf" name="thymeleaf"
-      rev="3.0.15.RELEASE" conf="binaries->default" />
+      rev="3.1.0.RELEASE" conf="binaries->default" />
     <dependency org="org.slf4j" name="slf4j-jdk14"
       rev="1.7.32" conf="binaries->default" />
 
