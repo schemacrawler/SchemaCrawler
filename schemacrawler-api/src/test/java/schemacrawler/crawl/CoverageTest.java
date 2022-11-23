@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.matchesPattern;
@@ -51,6 +52,13 @@ public class CoverageTest {
     assertThat(
         connectionInfo.getConnectionUrl(),
         matchesPattern("jdbc:hsqldb:hsql://\\d*\\.\\d*\\.\\d*\\.\\d*:\\d*/schemacrawler\\d*"));
+    assertThat(connectionInfo.getDatabaseProductName(), is("HSQL Database Engine"));
+    assertThat(connectionInfo.getDatabaseProductVersion(), is("2.7.1"));
+    assertThat(connectionInfo.getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
+    assertThat(connectionInfo.getDriverMajorVersion(), is(2));
+    assertThat(connectionInfo.getDriverMinorVersion(), is(7));
+    assertThat(connectionInfo.getDriverName(), is("HSQL Database Engine Driver"));
+    assertThat(connectionInfo.getDriverVersion(), is("2.7.1"));
   }
 
   @Test
