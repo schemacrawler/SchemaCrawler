@@ -138,8 +138,10 @@ public final class SchemaCrawler {
    */
   public Catalog crawl() {
     try {
-      taskRunner = new RetrievalTaskRunner(infoLevel, maxThreads);
       catalog = new MutableCatalog("catalog", retrieverConnection.getConnectionInfo());
+
+      final String runId = catalog.getCrawlInfo().getRunId();
+      taskRunner = new RetrievalTaskRunner(runId, infoLevel, maxThreads);
 
       crawlDatabaseInfo();
       LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));

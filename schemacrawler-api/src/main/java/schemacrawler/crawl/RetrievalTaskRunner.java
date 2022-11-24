@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,10 +50,13 @@ public final class RetrievalTaskRunner {
   private final TaskRunner taskRunner;
   private final SchemaInfoLevel infoLevel;
 
-  public RetrievalTaskRunner(final SchemaInfoLevel infoLevel, final int maxThreads) {
+  public RetrievalTaskRunner(
+      final String runId, final SchemaInfoLevel infoLevel, final int maxThreads) {
+
+    requireNotBlank(runId, "No SchemaCrawler run id provided");
     this.infoLevel = requireNonNull(infoLevel, "No info-level provided");
 
-    taskRunner = TaskRunners.getTaskRunner(infoLevel.getTag(), maxThreads);
+    taskRunner = TaskRunners.getTaskRunner(runId, maxThreads);
   }
 
   public RetrievalTaskRunner add(
