@@ -27,21 +27,69 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class CoverageTest {
+
+  @Test
+  public void connectionInfoBuilder(final Connection connection) throws SQLException {
+    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    assertThat(
+        connectionInfo.getConnectionUrl(),
+        matchesPattern("jdbc:hsqldb:hsql://\\d*\\.\\d*\\.\\d*\\.\\d*:\\d*/schemacrawler\\d*"));
+
+    assertThat(connectionInfo.getDatabaseProductName(), is("HSQL Database Engine"));
+    assertThat(connectionInfo.getDatabaseProductVersion(), is("2.7.1"));
+
+    assertThat(connectionInfo.getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
+    assertThat(connectionInfo.getDriverMajorVersion(), is(2));
+    assertThat(connectionInfo.getDriverMinorVersion(), is(7));
+    assertThat(connectionInfo.getDriverName(), is("HSQL Database Engine Driver"));
+    assertThat(connectionInfo.getDriverVersion(), is("2.7.1"));
+
+    assertThat(connectionInfo.getJdbcMajorVersion(), is(4));
+    assertThat(connectionInfo.getJdbcMinorVersion(), is(2));
+    assertThat(connectionInfo.getUserName(), is("SA"));
+  }
+
+  @Test
+  public void connectionInfoBuilderException(final Connection connection) throws SQLException {
+
+    final DatabaseMetaData dbMetaData2 = spy(connection.getMetaData());
+    // See issue #931
+    when(dbMetaData2.getUserName()).thenThrow(new SQLException("Cannot get user name"));
+
+    final Connection connection2 = spy(connection);
+    when(connection2.getMetaData()).thenReturn(dbMetaData2);
+
+    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection2).build();
+
+    assertThat(connectionInfo.getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
+    assertThat(connectionInfo.getDriverMajorVersion(), is(2));
+    assertThat(connectionInfo.getDriverMinorVersion(), is(7));
+    assertThat(connectionInfo.getDriverName(), is("HSQL Database Engine Driver"));
+    assertThat(connectionInfo.getDriverVersion(), is("2.7.1"));
+
+    assertThat(connectionInfo.getUserName(), is(""));
+  }
 
   @Test
   public void namedObjectList() {

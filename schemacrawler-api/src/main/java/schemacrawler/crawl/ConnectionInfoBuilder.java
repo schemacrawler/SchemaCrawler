@@ -36,6 +36,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +49,20 @@ public final class ConnectionInfoBuilder {
 
   public static ConnectionInfoBuilder builder(final Connection connection) {
     return new ConnectionInfoBuilder(connection);
+  }
+
+  private static <T> T getConnectionInfoProperty(
+      final Callable<T> propertyFunction, final T defaultValue) {
+    if (propertyFunction == null) {
+      return defaultValue;
+    }
+    try {
+      final T value = propertyFunction.call();
+      return value;
+    } catch (final Exception e) {
+      LOGGER.log(Level.FINE, "Could not get connection info property", e);
+      return defaultValue;
+    }
   }
 
   /**
@@ -103,17 +118,17 @@ public final class ConnectionInfoBuilder {
 
     final ConnectionInfo connectionInfo =
         new ImmutableConnectionInfo(
-            dbMetaData.getDatabaseProductName(),
-            dbMetaData.getDatabaseProductVersion(),
+            getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductName(), ""),
+            getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""),
             connectionUrl,
-            dbMetaData.getUserName(),
+            getConnectionInfoProperty(() -> dbMetaData.getUserName(), ""),
             jdbcDriverClassName,
-            dbMetaData.getDriverName(),
-            dbMetaData.getDriverVersion(),
-            dbMetaData.getDriverMajorVersion(),
-            dbMetaData.getDriverMinorVersion(),
-            dbMetaData.getJDBCMajorVersion(),
-            dbMetaData.getJDBCMinorVersion());
+            getConnectionInfoProperty(() -> dbMetaData.getDriverName(), ""),
+            getConnectionInfoProperty(() -> dbMetaData.getDriverVersion(), ""),
+            getConnectionInfoProperty(() -> dbMetaData.getDriverMajorVersion(), 0),
+            getConnectionInfoProperty(() -> dbMetaData.getDriverMinorVersion(), 0),
+            getConnectionInfoProperty(() -> dbMetaData.getJDBCMajorVersion(), 0),
+            getConnectionInfoProperty(() -> dbMetaData.getJDBCMinorVersion(), 0));
 
     return connectionInfo;
   }
