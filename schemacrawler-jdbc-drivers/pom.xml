@@ -115,6 +115,11 @@
       <artifactId>jaybird</artifactId>
       <version>4.0.7.java8</version>
     </dependency>
+    <dependency>
+      <groupId>io.trino</groupId>
+      <artifactId>trino-jdbc</artifactId>
+      <version>403</version>
+    </dependency>
   </dependencies>
 
   <build>
