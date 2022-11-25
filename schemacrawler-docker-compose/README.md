@@ -129,3 +129,4 @@ Connect to the IBM DB2 container if needed, run
 
 - To stop SchemaCrawler with IBM DB2, run
   `docker-compose -f schemacrawler.yml -f db2.yml down -t0`
+

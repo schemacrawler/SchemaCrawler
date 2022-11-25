@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.formatter.base;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
 
 import java.io.PrintWriter;
@@ -38,7 +37,6 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
-import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -147,10 +145,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     if (dbObject == null) {
       return "";
     } else {
-      final NamedObjectKey dbObjectLookupKey = dbObject.key();
-      return convertForComparison(dbObject.getName())
-          + "_"
-          + Integer.toHexString(dbObjectLookupKey.hashCode());
+      return dbObject.key().slug();
     }
   }
 
