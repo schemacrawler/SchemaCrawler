@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
+import static us.fatehi.utility.Utility.convertForComparison;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -59,6 +61,14 @@ public final class NamedObjectKey implements Serializable {
   @Override
   public int hashCode() {
     return Arrays.hashCode(key);
+  }
+
+  public String slug() {
+    if (key.length == 0) {
+      return "";
+    }
+    final String name = key[key.length - 1];
+    return convertForComparison(name) + "_" + Integer.toHexString(hashCode());
   }
 
   @Override
