@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
@@ -63,6 +64,16 @@ public class DiagramScriptTest {
       throws Exception {
     assertThat(
         outputOf(scriptExecution(dataSource, "/mermaid.py")),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+  }
+
+  @Disabled
+  @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
+  public void plantuml(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    assertThat(
+        outputOf(scriptExecution(dataSource, "/plantuml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }
