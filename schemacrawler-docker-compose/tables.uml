@@ -1,16 +1,16 @@
 @startuml
 
 hide empty methods
-!define schema(x) package x <<Rectangle>>
-!define table(x) entity x << (T, white) table >>
-!define view(x) entity x << (V, yellow) view >>
-!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
-!define foreign_key(x) <color:#aaaaaa><&key></color> x
-!define column(x) {field} <color:#efefef><&media-record></color> x
+!define schema(name, slug) package "name" as slug <<Rectangle>>
+!define table(name, slug) entity "name" as slug << (T, white) table >>
+!define view(name, slug) entity "name" as slug << (V, yellow) view >>
+!define primary_key(name) <b><color:#b8861b><&key></color> name</b>
+!define foreign_key(name) <color:#aaaaaa><&key></color> name
+!define column(name) {field} <color:#efefef><&media-record></color> name
 
-schema(books) {
+schema(books, books_599266b) {
 
-table(authors) {
+table(authors, authors_8702b73d) {
   primary_key(id): int4 NOT NULL
   column(firstname): varchar NOT NULL
   column(lastname): varchar NOT NULL
@@ -22,13 +22,13 @@ table(authors) {
   column(country): varchar NULL
 }
 
-note left of authors
+note left of authors_8702b73d
 Contact details for book authors
 end note
 
 
 
-table(books) {
+table(books, books_b324c99f) {
   primary_key(id): int4 NOT NULL
   column(title): varchar NOT NULL
   column(description): varchar NULL
@@ -38,133 +38,56 @@ table(books) {
   foreign_key(previouseditionid): int4 NULL
 }
 
-note left of books
+note left of books_b324c99f
 Details for published books
 end note
 
-note right of books::id #Aquamarine
+note right of books_b324c99f::id #Aquamarine
 Unique (internal) id for book
 end note
 
-note right of books::title #Aquamarine
+note right of books_b324c99f::title #Aquamarine
 Book title
 end note
 
-note right of books::description #Aquamarine
+note right of books_b324c99f::description #Aquamarine
 Book description
 (Usually the blurb from the book jacket or promotional materials)
 end note
 
-note right of books::publisherid #Aquamarine
+note right of books_b324c99f::publisherid #Aquamarine
 Foreign key to the book publisher
 end note
 
-note right of books::publicationdate #Aquamarine
+note right of books_b324c99f::publicationdate #Aquamarine
 Book publication date
 end note
 
-note right of books::price #Aquamarine
+note right of books_b324c99f::price #Aquamarine
 Current price for the book
 end note
 
 
 
-table(coupons) {
-  primary_key(id): int4 NOT NULL
-  column(data): text NULL
-  column(coupons): int4 NULL
-  column(books): varchar NULL
-}
-
-
-
-table(customerdata) {
-  primary_key(id): int4 NOT NULL
-  column(data): valid_string NULL
-}
-
-
-
-table(customers) {
-  primary_key(id): int4 NOT NULL
-  column(firstname): name_type NOT NULL
-  column(lastname): name_type NOT NULL
-  column(age): age_type NULL
-}
-
-
-
-table(Global Counts) {
-  column(Global Count): int4 NULL
-  column(UPDATE): varchar NULL
-}
-
-
-
-table(person) {
-  column(name): varchar NULL
-  column(tshirt): tshirt_type NULL
-  column(mood): mood_type NULL
-}
-
-
-
-table(publishers) {
-  primary_key(id): serial NOT NULL
-  column(publisher): varchar NULL
-}
-
-note left of publishers
-List of book publishers
-end note
-
-note right of publishers::id #Aquamarine
-Unique (internal) id for book publisher
-end note
-
-note right of publishers::publisher #Aquamarine
-Name of book publisher
-end note
-
-
-
-table(bookauthors) {
+table(bookauthors, bookauthors_27311434) {
   foreign_key(bookid): int4 NOT NULL
   foreign_key(authorid): int4 NOT NULL
   column(somedata): varchar NULL
 }
 
-note left of bookauthors
+note left of bookauthors_27311434
 Relationship between books and their authors, 
 along with the latest updated information
 end note
 
 
 
-table(Βιβλία) {
-  primary_key(Μοναδικός): int2 NOT NULL
-  column(Τίτλος): varchar NOT NULL
-  column(Περιγραφή): varchar NULL
-  foreign_key(Εκδότης): int2 NOT NULL
-}
-
-
-
-view(authorslist) {
-  column(id): int4 NULL
-  column(firstname): varchar NULL
-  column(lastname): varchar NULL
-}
-
-
-
 
 }
 
 
-books.authors::id  }|--o| books.bookauthors::authorid : < z_fk_author \n[update: no action, \ndelete: no action]
-books.books::id  }|--o| books.books::previouseditionid : < fk_previousedition \n[update: no action, \ndelete: no action]
-books.books::id  }|--o| books.bookauthors::bookid : < bookauthors_bookid_fkey \n[update: no action, \ndelete: no action]
-books.publishers::id  }|--o| books.Βιβλία::Εκδότης : < fk_βιβλία_publishers \n[update: no action, \ndelete: no action]
+books_599266b.authors_8702b73d::id  }|--o| books_599266b.bookauthors_27311434::authorid : < z_fk_author
+books_599266b.books_b324c99f::id  }|--o| books_599266b.books_b324c99f::previouseditionid : < fk_previousedition
+books_599266b.books_b324c99f::id  }|--o| books_599266b.bookauthors_27311434::bookid : < bookauthors_bookid_fkey
 
 @enduml

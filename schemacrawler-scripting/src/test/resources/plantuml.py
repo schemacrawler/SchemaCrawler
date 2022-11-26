@@ -67,21 +67,17 @@ for table in catalog.tables:
             pkColumn = columnReference.primaryKeyColumn
             fkColumn = columnReference.foreignKeyColumn
             print('' \
-                  + re.sub(r'\"', '', pkTable.schema.fullName) + '.'
+                  + pkTable.schema.key().slug() + '.'
                   + pkTable.key().slug() + '::'
                   + re.sub(r'\"', '', pkColumn.name)
                   + '  }|--o| ' \
-                  + re.sub(r'\"', '', fkTable.schema.fullName) + '.'
+                  + fkTable.schema.key().slug() + '.'
                   + fkTable.key().slug() + '::'
                   + re.sub(r'\"', '', fkColumn.name)
                   , end='')
-        print(' : < '
-              + fk.name, end='')
-        print(' ' \
-              + '\\n[update: ' + fk.updateRule.toString() + ', '
-              + '\\ndelete: ' + fk.deleteRule.toString() + ']'
-              , end='')
-        print('')
+            print(' : < '
+                  + fk.name, end='')
+            print('')
 print('')
 
 print("@enduml")

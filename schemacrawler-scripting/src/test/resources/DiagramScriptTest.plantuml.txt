@@ -1,0 +1,200 @@
+@startuml
+
+hide empty methods
+!define schema(name, slug) package "name" as slug <<Rectangle>>
+!define table(name, slug) entity "name" as slug << (T, white) table >>
+!define view(name, slug) entity "name" as slug << (V, yellow) view >>
+!define primary_key(name) <b><color:#b8861b><&key></color> name</b>
+!define foreign_key(name) <color:#aaaaaa><&key></color> name
+!define column(name) {field} <color:#efefef><&media-record></color> name
+
+schema(PUBLIC.BOOKS, books_208b5502) {
+
+table(AUTHORS, authors_f521e766) {
+  primary_key(ID): INTEGER NOT NULL
+  column(FIRSTNAME): VARCHAR NOT NULL
+  column(LASTNAME): VARCHAR NOT NULL
+  column(ADDRESS1): VARCHAR NULL
+  column(ADDRESS2): VARCHAR NULL
+  column(CITY): VARCHAR NULL
+  column(STATE): CHARACTER NULL
+  column(POSTALCODE): VARCHAR NULL
+  column(COUNTRY): VARCHAR NULL
+}
+
+note left of authors_f521e766
+Contact details for book authors
+end note
+
+
+
+table(BOOKS, books_f4a675c8) {
+  primary_key(ID): INTEGER NOT NULL
+  column(TITLE): VARCHAR NOT NULL
+  column(DESCRIPTION): VARCHAR NULL
+  column(PUBLISHERID): INTEGER NOT NULL
+  column(PUBLICATIONDATE): DATE NULL
+  column(PRICE): DOUBLE NULL
+  foreign_key(PREVIOUSEDITIONID): INTEGER NULL
+}
+
+note left of books_f4a675c8
+Details for published books
+end note
+
+note right of books_f4a675c8::ID #Aquamarine
+Unique (internal) id for book
+end note
+
+note right of books_f4a675c8::TITLE #Aquamarine
+Book title
+end note
+
+note right of books_f4a675c8::DESCRIPTION #Aquamarine
+Book description
+(Usually the blurb from the book jacket or promotional materials)
+end note
+
+note right of books_f4a675c8::PUBLISHERID #Aquamarine
+Foreign key to the book publisher
+end note
+
+note right of books_f4a675c8::PUBLICATIONDATE #Aquamarine
+Book publication date
+end note
+
+note right of books_f4a675c8::PRICE #Aquamarine
+Current price for the book
+end note
+
+
+
+table(COUPONS, coupons_54c3042b) {
+  primary_key(ID): INTEGER NOT NULL
+  column(DATA): CLOB NULL
+  column(COUPONS): INTEGER ARRAY NULL
+  column(BOOKS): VARCHAR(20) ARRAY[10] NULL
+}
+
+
+
+table(CUSTOMERDATA, customerdata_b0af83c6) {
+  primary_key(ID): INTEGER NOT NULL
+  column(DATA): VALID_STRING NULL
+}
+
+
+
+table(CUSTOMERS, customers_f705d773) {
+  primary_key(ID): INTEGER NOT NULL
+  column(FIRSTNAME): NAME_TYPE NOT NULL
+  column(LASTNAME): NAME_TYPE NOT NULL
+  column(AGE): AGE_TYPE NULL
+}
+
+
+
+table(Global Counts, globalcounts_7fcacf9f) {
+  column(Global Count): INTEGER NULL
+  column(UPDATE): VARCHAR NULL
+}
+
+
+
+table(PUBLISHERS, publishers_8037d535) {
+  primary_key(ID): INTEGER NOT NULL
+  column(PUBLISHER): VARCHAR NULL
+}
+
+note left of publishers_8037d535
+List of book publishers
+end note
+
+note right of publishers_8037d535::ID #Aquamarine
+Unique (internal) id for book publisher
+end note
+
+note right of publishers_8037d535::PUBLISHER #Aquamarine
+Name of book publisher
+end note
+
+
+
+table(BOOKAUTHORS, bookauthors_ead84c5d) {
+  foreign_key(BOOKID): INTEGER NOT NULL
+  foreign_key(AUTHORID): INTEGER NOT NULL
+  column(SOMEDATA): VARCHAR NULL
+}
+
+note left of bookauthors_ead84c5d
+Relationship between books and their authors, 
+along with the latest updated information
+end note
+
+
+
+table(ΒΙΒΛΊΑ, βιβλία_3cecb755) {
+  primary_key(ΜΟΝΑΔΙΚΌΣ): SMALLINT NOT NULL
+  column(ΤΊΤΛΟΣ): VARCHAR NOT NULL
+  column(ΠΕΡΙΓΡΑΦΉ): VARCHAR NULL
+  foreign_key(ΕΚΔΌΤΗΣ): SMALLINT NOT NULL
+}
+
+
+
+view(AUTHORSLIST, authorslist_9ccb3c04) {
+  column(ID): INTEGER NULL
+  column(FIRSTNAME): VARCHAR NULL
+  column(LASTNAME): VARCHAR NULL
+}
+
+
+
+
+}
+
+
+schema(PUBLIC.PUBLISHER SALES, publishersales_7f7f6c20) {
+
+table(REGIONS, regions_dbf65bbf) {
+  column(CITY): VARCHAR NOT NULL
+  column(STATE): VARCHAR NOT NULL
+  primary_key(POSTALCODE): VARCHAR NOT NULL
+  primary_key(COUNTRY): VARCHAR NOT NULL
+}
+
+
+
+table(SALESDATA, salesdata_1193fa76) {
+  column(SALESDATAID): INTEGER NULL
+  column(YEARLYAMOUNT): DOUBLE NULL
+}
+
+
+
+table(SALES, sales_751e68cc) {
+  foreign_key(POSTALCODE): VARCHAR NOT NULL
+  foreign_key(COUNTRY): VARCHAR NOT NULL
+  foreign_key(BOOKID): INTEGER NULL
+  column(COUPON_ID): INTEGER NULL
+  column(PERIODENDDATE): DATE NULL
+  column(TOTALAMOUNT): DOUBLE NULL
+  foreign_key(SALESDATAID): INTEGER NULL
+}
+
+
+
+
+}
+
+
+books_208b5502.authors_f521e766::ID  }|--o| books_208b5502.bookauthors_ead84c5d::AUTHORID : < Z_FK_AUTHOR
+books_208b5502.books_f4a675c8::ID  }|--o| books_208b5502.books_f4a675c8::PREVIOUSEDITIONID : < FK_PREVIOUSEDITION
+books_208b5502.books_f4a675c8::ID  }|--o| publishersales_7f7f6c20.sales_751e68cc::BOOKID : < FK_SALES_BOOK
+books_208b5502.books_f4a675c8::ID  }|--o| books_208b5502.bookauthors_ead84c5d::BOOKID : < SYS_FK_10120
+books_208b5502.publishers_8037d535::ID  }|--o| books_208b5502.βιβλία_3cecb755::ΕΚΔΌΤΗΣ : < FK_ΒΙΒΛΊΑ_PUBLISHERS
+publishersales_7f7f6c20.regions_dbf65bbf::POSTALCODE  }|--o| publishersales_7f7f6c20.sales_751e68cc::POSTALCODE : < FK_SALES_REGIONS
+publishersales_7f7f6c20.regions_dbf65bbf::COUNTRY  }|--o| publishersales_7f7f6c20.sales_751e68cc::COUNTRY : < FK_SALES_REGIONS
+publishersales_7f7f6c20.salesdata_1193fa76::SALESDATAID  }|--o| publishersales_7f7f6c20.sales_751e68cc::SALESDATAID : < FK_SALES_SALESDATA
+
+@enduml
