@@ -7,9 +7,10 @@ SchemaCrawler release notes.
 
 - Add a slug method to NamedObjectKey for readable unique ids
 - Release PlantUML diagram generator
+- Allow scripts and templates to use the title of the diagram or output
 
 
-<a name="a16.19.32"></a>
+<a name="a16.19.2"></a>
 ## Release 16.19.2 - 2022-11-24
 
 - Fix #933 - NullPointerException when using custom schema info level
