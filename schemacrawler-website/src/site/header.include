@@ -142,7 +142,6 @@
                     <a class="dropdown-item" href="https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin">SchemaCrawler Report Maven Plugin</a>
 
                     <a class="dropdown-item" href="https://github.com/schemacrawler/SchemaCrawler-Action">SchemaCrawler Action for GitHub Actions</a>
-                    <a class="dropdown-item" href="webapp.html">SchemaCrawler Web Application</a>
                     <a class="dropdown-item" href="security-considerations.html">Security Considerations</a>
                  </div>
               </li>
