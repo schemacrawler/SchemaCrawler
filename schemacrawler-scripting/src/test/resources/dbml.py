@@ -101,7 +101,7 @@ print('')
 
 # Table groups
 for schema in catalog.schemas:
-    print('TableGroup "' + re.sub(r'\"', '', schema.fullName) + '" {')
+    print('TableGroup "' + re.sub(r'\"', '', schema.fullName) + ' " {')
     for table in catalog.getTables(schema):
         print('  "' + re.sub(r'\"', '', table.fullName) + '"')
     print('}')
