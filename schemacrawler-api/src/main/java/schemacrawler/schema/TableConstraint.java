@@ -34,11 +34,6 @@ import java.util.List;
 public interface TableConstraint
     extends DependantObject<Table>, DefinedObject, TypedObject<TableConstraintType> {
 
-  @Deprecated
-  default List<TableConstraintColumn> getColumns() {
-    return getConstrainedColumns();
-  }
-
   /**
    * Gets the list of columns in ordinal order.
    *

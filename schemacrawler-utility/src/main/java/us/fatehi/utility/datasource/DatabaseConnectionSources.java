@@ -71,15 +71,6 @@ public class DatabaseConnectionSources {
     return newDatabaseConnectionSource(connectionUrl, null, userCredentials, connection -> {});
   }
 
-  /** @deprecated */
-  @Deprecated
-  public static DatabaseConnectionSource wrappedDatabaseConnectionSource(
-      final Connection connection, final Consumer<Connection> connectionInitializer) {
-    final DatabaseConnectionSource dbConnectionSource =
-        new SingleDatabaseConnectionSource(connection, connectionInitializer);
-    return dbConnectionSource;
-  }
-
   private DatabaseConnectionSources() {
     // Prevent instantiation
   }

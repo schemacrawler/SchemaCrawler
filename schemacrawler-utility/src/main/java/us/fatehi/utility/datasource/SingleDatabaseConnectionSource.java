@@ -30,10 +30,8 @@ package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
-import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Consumer;
@@ -41,19 +39,6 @@ import java.util.function.Consumer;
 final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
   private final Connection connection;
-
-  /** @deprecated */
-  @Deprecated
-  SingleDatabaseConnectionSource(
-      final Connection connection, final Consumer<Connection> connectionInitializer) {
-    try {
-      this.connection = checkConnection(connection);
-      setConnectionInitializer(connectionInitializer);
-      this.connectionInitializer.accept(connection);
-    } catch (final SQLException e) {
-      throw new RuntimeException("Could not wrap provided database connection", e);
-    }
-  }
 
   SingleDatabaseConnectionSource(
       final String connectionUrl,

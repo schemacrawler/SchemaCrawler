@@ -30,7 +30,6 @@ package schemacrawler.tools.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.datasource.DatabaseConnectionSources.wrappedDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -67,22 +66,6 @@ import us.fatehi.utility.string.StringFormat;
 public final class SchemaCrawlerUtility {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerUtility.class.getName());
-
-  /**
-   * Crawls a database, and returns a catalog.
-   *
-   * @param connection Live database connection.
-   * @param schemaCrawlerOptions Options.
-   * @return Database catalog.
-   * @deprecated
-   */
-  @Deprecated
-  public static Catalog getCatalog(
-      final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions) {
-    final DatabaseConnectionSource dataSource =
-        wrappedDatabaseConnectionSource(connection, conn -> {});
-    return getCatalog(dataSource, schemaCrawlerOptions);
-  }
 
   /**
    * Crawls a database, and returns a catalog.
