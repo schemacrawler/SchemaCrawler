@@ -65,6 +65,7 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOpti
     final TemplateRenderer templateRenderer = newTemplateRenderer(languageType);
 
     final Map<String, Object> context = new HashMap<>();
+    context.put("title", outputOptions.getTitle());
     context.put("catalog", catalog);
     context.put("identifiers", identifiers);
 

@@ -13,6 +13,10 @@ hide empty methods
 !define column(name) {field} <color:#White><&media-record></color> name
 """)
 
+print('title "' + title + '"')
+print('')
+print('')
+
 # Tables
 for schema in catalog.getSchemas():
     if not catalog.getTables(schema):

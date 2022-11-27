@@ -108,6 +108,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
       // Set up the context
       final Map<String, Object> context = new HashMap<>();
+      context.put("title", outputOptions.getTitle());
       context.put("catalog", catalog);
       context.put("connection", connection);
       context.put("chain", new CommandChain(this));

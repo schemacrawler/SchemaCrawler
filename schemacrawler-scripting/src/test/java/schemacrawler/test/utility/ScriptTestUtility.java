@@ -42,6 +42,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class ScriptTestUtility {
@@ -71,12 +73,16 @@ public class ScriptTestUtility {
     final SchemaRetrievalOptions schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
 
+    final OutputOptions outputOptions =
+        OutputOptionsBuilder.builder().title("FROM TEST: Database Schema Diagram").toOptions();
+
     final Config additionalConfig = new Config();
     additionalConfig.put("script", script);
 
     final SchemaCrawlerExecutable executable = executableOf("script");
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.setOutputOptions(outputOptions);
 
     return executableExecution(dataSource, executable, "text");
   }

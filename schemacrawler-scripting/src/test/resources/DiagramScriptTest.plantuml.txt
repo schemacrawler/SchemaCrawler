@@ -9,6 +9,9 @@ hide empty methods
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
 
+title "FROM TEST: Database Schema Diagram"
+
+
 schema(PUBLIC.BOOKS, books_208b5502) {
 
 table(AUTHORS, authors_f521e766) {

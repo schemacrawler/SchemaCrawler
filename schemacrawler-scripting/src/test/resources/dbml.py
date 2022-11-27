@@ -7,7 +7,7 @@ from schemacrawler.schemacrawler import \
 from schemacrawler.utility import \
     MetaDataUtility  # pylint: disable=import-error
 
-print('Project "' + catalog.crawlInfo.runId + '" {')
+print('Project "' + title + ' " {')
 print('  database_type: "' + re.sub(r'\"', '',
                                     catalog.crawlInfo.databaseVersion.toString()) + '"')
 print("  Note: '''")
