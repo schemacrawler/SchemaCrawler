@@ -5,14 +5,14 @@ hide empty methods
 !define schema(name, slug) package "name" as slug <<Rectangle>>
 !define table(name, slug) entity "name" as slug << (T, white) table >>
 !define view(name, slug) entity "name" as slug << (V, yellow) view >>
-!define primary_key(name) <b><color:#b8861b><&key></color> name</b>
-!define foreign_key(name) <color:#aaaaaa><&key></color> name
-!define column(name) {field} <color:#efefef><&media-record></color> name
+!define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
+!define fk(name) <color:#Silver><&key></color> name
+!define column(name) {field} <color:#White><&media-record></color> name
 
 schema(PUBLIC.BOOKS, books_208b5502) {
 
 table(AUTHORS, authors_f521e766) {
-  primary_key(ID): INTEGER NOT NULL
+  pk(ID): INTEGER NOT NULL
   column(FIRSTNAME): VARCHAR NOT NULL
   column(LASTNAME): VARCHAR NOT NULL
   column(ADDRESS1): VARCHAR 
@@ -30,13 +30,13 @@ end note
 
 
 table(BOOKS, books_f4a675c8) {
-  primary_key(ID): INTEGER NOT NULL
+  pk(ID): INTEGER NOT NULL
   column(TITLE): VARCHAR NOT NULL
   column(DESCRIPTION): VARCHAR 
   column(PUBLISHERID): INTEGER NOT NULL
   column(PUBLICATIONDATE): DATE 
   column(PRICE): DOUBLE 
-  foreign_key(PREVIOUSEDITIONID): INTEGER 
+  fk(PREVIOUSEDITIONID): INTEGER 
 }
 
 note left of books_f4a675c8 #LemonChiffon
@@ -71,7 +71,7 @@ end note
 
 
 table(COUPONS, coupons_54c3042b) {
-  primary_key(ID): INTEGER NOT NULL
+  pk(ID): INTEGER NOT NULL
   column(DATA): CLOB 
   column(COUPONS): INTEGER ARRAY 
   column(BOOKS): VARCHAR(20) ARRAY[10] 
@@ -80,14 +80,14 @@ table(COUPONS, coupons_54c3042b) {
 
 
 table(CUSTOMERDATA, customerdata_b0af83c6) {
-  primary_key(ID): INTEGER NOT NULL
+  pk(ID): INTEGER NOT NULL
   column(DATA): VALID_STRING 
 }
 
 
 
 table(CUSTOMERS, customers_f705d773) {
-  primary_key(ID): INTEGER NOT NULL
+  pk(ID): INTEGER NOT NULL
   column(FIRSTNAME): NAME_TYPE NOT NULL
   column(LASTNAME): NAME_TYPE NOT NULL
   column(AGE): AGE_TYPE 
@@ -103,7 +103,7 @@ table(Global Counts, globalcounts_7fcacf9f) {
 
 
 table(PUBLISHERS, publishers_8037d535) {
-  primary_key(ID): INTEGER NOT NULL
+  pk(ID): INTEGER NOT NULL
   column(PUBLISHER): VARCHAR 
 }
 
@@ -122,8 +122,8 @@ end note
 
 
 table(BOOKAUTHORS, bookauthors_ead84c5d) {
-  foreign_key(BOOKID): INTEGER NOT NULL
-  foreign_key(AUTHORID): INTEGER NOT NULL
+  fk(BOOKID): INTEGER NOT NULL
+  fk(AUTHORID): INTEGER NOT NULL
   column(SOMEDATA): VARCHAR 
 }
 
@@ -135,10 +135,10 @@ end note
 
 
 table(ΒΙΒΛΊΑ, βιβλία_3cecb755) {
-  primary_key(ΜΟΝΑΔΙΚΌΣ): SMALLINT NOT NULL
+  pk(ΜΟΝΑΔΙΚΌΣ): SMALLINT NOT NULL
   column(ΤΊΤΛΟΣ): VARCHAR NOT NULL
   column(ΠΕΡΙΓΡΑΦΉ): VARCHAR 
-  foreign_key(ΕΚΔΌΤΗΣ): SMALLINT NOT NULL
+  fk(ΕΚΔΌΤΗΣ): SMALLINT NOT NULL
 }
 
 
@@ -160,8 +160,8 @@ schema(PUBLIC.PUBLISHER SALES, publishersales_7f7f6c20) {
 table(REGIONS, regions_dbf65bbf) {
   column(CITY): VARCHAR NOT NULL
   column(STATE): VARCHAR NOT NULL
-  primary_key(POSTALCODE): VARCHAR NOT NULL
-  primary_key(COUNTRY): VARCHAR NOT NULL
+  pk(POSTALCODE): VARCHAR NOT NULL
+  pk(COUNTRY): VARCHAR NOT NULL
 }
 
 
@@ -174,13 +174,13 @@ table(SALESDATA, salesdata_1193fa76) {
 
 
 table(SALES, sales_751e68cc) {
-  foreign_key(POSTALCODE): VARCHAR NOT NULL
-  foreign_key(COUNTRY): VARCHAR NOT NULL
-  foreign_key(BOOKID): INTEGER 
+  fk(POSTALCODE): VARCHAR NOT NULL
+  fk(COUNTRY): VARCHAR NOT NULL
+  fk(BOOKID): INTEGER 
   column(COUPON_ID): INTEGER 
   column(PERIODENDDATE): DATE 
   column(TOTALAMOUNT): DOUBLE 
-  foreign_key(SALESDATAID): INTEGER 
+  fk(SALESDATAID): INTEGER 
 }
 
 

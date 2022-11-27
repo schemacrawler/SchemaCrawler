@@ -8,9 +8,9 @@ hide empty methods
 !define schema(name, slug) package "name" as slug <<Rectangle>>
 !define table(name, slug) entity "name" as slug << (T, white) table >>
 !define view(name, slug) entity "name" as slug << (V, yellow) view >>
-!define primary_key(name) <b><color:#b8861b><&key></color> name</b>
-!define foreign_key(name) <color:#aaaaaa><&key></color> name
-!define column(name) {field} <color:#efefef><&media-record></color> name
+!define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
+!define fk(name) <color:#Silver><&key></color> name
+!define column(name) {field} <color:#White><&media-record></color> name
 """)
 
 # Tables
@@ -27,9 +27,9 @@ for schema in catalog.getSchemas():
         print('(' + re.sub(r'\"', '', table.name) + ', ' + table.key().slug() + ') {')
         for column in table.columns:
             if column.isPartOfPrimaryKey():
-                print('  primary_key', end='')
+                print('  pk', end='')
             elif column.isPartOfForeignKey():
-                print('  foreign_key', end='')
+                print('  fk', end='')
             else:
                 print('  column', end='')
             print('(' + column.name + '): ' + column.columnDataType.name, end='')
