@@ -2,9 +2,9 @@
 
 !theme plain
 hide empty methods
-!define schema(name, slug) package "name" as slug <<Rectangle>>
-!define table(name, slug) entity "name" as slug << (T, white) table >>
-!define view(name, slug) entity "name" as slug << (V, yellow) view >>
+!define schema(name, slug) package "<b>name</b>" as slug <<Rectangle>>
+!define table(name, slug) entity "<b>name</b>" as slug << (T, white) table >>
+!define view(name, slug) entity "<b>name</b>" as slug << (V, yellow) view >>
 !define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
