@@ -3,6 +3,7 @@ import re
 
 print("@startuml")
 print("""
+!theme plain
 hide empty methods
 !define schema(name, slug) package "name" as slug <<Rectangle>>
 !define table(name, slug) entity "name" as slug << (T, white) table >>
@@ -34,20 +35,19 @@ for schema in catalog.getSchemas():
             print('(' + column.name + '): ' + column.columnDataType.name, end='')
             print(' ', end='')
             if not column.nullable:
-                print('NOT ', end='')
-            print('NULL', end='')
+                print('NOT NULL', end='')
             print('')
         print('}')
         print('')
         if table.remarks:
-            print('note left of ' + table.key().slug())
+            print('note left of ' + table.key().slug() + ' #LemonChiffon')
             print(table.remarks)
             print('end note')
             print('')
         for column in table.columns:
             if column.remarks:
                 print('note right of ' + table.key().slug() + '::' + column.name \
-                    + ' #Aquamarine')
+                    + ' #WhiteSmoke')
                 print(column.remarks)
                 print('end note')
                 print('')
