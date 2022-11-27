@@ -65,4 +65,13 @@ public class DiagramScriptTest {
         outputOf(scriptExecution(dataSource, "/mermaid.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
+
+  @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
+  public void plantuml(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    assertThat(
+        outputOf(scriptExecution(dataSource, "/plantuml.py")),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+  }
 }

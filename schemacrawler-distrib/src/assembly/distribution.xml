@@ -160,6 +160,7 @@
       <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
         <include name="**/mermaid.py" />
         <include name="**/dbml.py" />
+      	<include name="**/plantuml.py" />
       </fileset>
     </copy>
     <fixcrlf

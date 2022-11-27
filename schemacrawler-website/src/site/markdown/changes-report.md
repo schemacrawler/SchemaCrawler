@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.19.3"></a>
+## Release 16.19.3 - 2022-11-26
+
+- Add a slug method to NamedObjectKey for readable unique ids
+- Release PlantUML diagram generator
+
+
 <a name="a16.19.2"></a>
 ## Release 16.19.2 - 2022-11-24
 
