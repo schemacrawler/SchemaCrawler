@@ -209,13 +209,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.23</version>
+      <version>6.0.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>5.3.23</version>
+      <version>6.0.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
