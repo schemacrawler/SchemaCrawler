@@ -4,8 +4,8 @@
 hide empty methods
 
 !define schema(name, slug) package "name" as slug <<Rectangle>>
-!define table(name, slug) entity "<b>name</b>" as slug << (T, white) table >>
-!define view(name, slug) entity "<b>name</b>" as slug << (V, yellow) view >>
+!define table(name, slug) entity "<b>name</b>" as slug << (T, Pink) table >>
+!define view(name, slug) entity "<b>name</b>" as slug << (V, Yellow) view >>
 !define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
@@ -48,28 +48,28 @@ note left of books_f4a675c8 #LemonChiffon
 Details for published books
 end note
 
-note right of books_f4a675c8::ID #WhiteSmoke
+note right of books_f4a675c8::ID #LightCyan
 Unique (internal) id for book
 end note
 
-note right of books_f4a675c8::TITLE #WhiteSmoke
+note right of books_f4a675c8::TITLE #LightCyan
 Book title
 end note
 
-note right of books_f4a675c8::DESCRIPTION #WhiteSmoke
+note right of books_f4a675c8::DESCRIPTION #LightCyan
 Book description
 (Usually the blurb from the book jacket or promotional materials)
 end note
 
-note right of books_f4a675c8::PUBLISHERID #WhiteSmoke
+note right of books_f4a675c8::PUBLISHERID #LightCyan
 Foreign key to the book publisher
 end note
 
-note right of books_f4a675c8::PUBLICATIONDATE #WhiteSmoke
+note right of books_f4a675c8::PUBLICATIONDATE #LightCyan
 Book publication date
 end note
 
-note right of books_f4a675c8::PRICE #WhiteSmoke
+note right of books_f4a675c8::PRICE #LightCyan
 Current price for the book
 end note
 
@@ -116,11 +116,11 @@ note left of publishers_8037d535 #LemonChiffon
 List of book publishers
 end note
 
-note right of publishers_8037d535::ID #WhiteSmoke
+note right of publishers_8037d535::ID #LightCyan
 Unique (internal) id for book publisher
 end note
 
-note right of publishers_8037d535::PUBLISHER #WhiteSmoke
+note right of publishers_8037d535::PUBLISHER #LightCyan
 Name of book publisher
 end note
 

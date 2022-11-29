@@ -7,8 +7,8 @@ print("""
 hide empty methods
 
 !define schema(name, slug) package "name" as slug <<Rectangle>>
-!define table(name, slug) entity "<b>name</b>" as slug << (T, white) table >>
-!define view(name, slug) entity "<b>name</b>" as slug << (V, yellow) view >>
+!define table(name, slug) entity "<b>name</b>" as slug << (T, Pink) table >>
+!define view(name, slug) entity "<b>name</b>" as slug << (V, Yellow) view >>
 !define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
@@ -53,7 +53,7 @@ for schema in catalog.getSchemas():
         for column in table.columns:
             if column.remarks:
                 print('note right of ' + table.key().slug() + '::' + column.name \
-                    + ' #WhiteSmoke')
+                    + ' #LightCyan')
                 print(column.remarks)
                 print('end note')
                 print('')
