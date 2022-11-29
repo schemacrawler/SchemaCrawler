@@ -2,12 +2,14 @@
 
 !theme plain
 hide empty methods
-!define schema(name, slug) package "<b>name</b>" as slug <<Rectangle>>
+
+!define schema(name, slug) package "name" as slug <<Rectangle>>
 !define table(name, slug) entity "<b>name</b>" as slug << (T, white) table >>
 !define view(name, slug) entity "<b>name</b>" as slug << (V, yellow) view >>
 !define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
+
 
 title "FROM TEST: Database Schema Diagram"
 
@@ -192,13 +194,13 @@ table(SALES, sales_751e68cc) {
 }
 
 
-books_208b5502.authors_f521e766::ID  }|--o| books_208b5502.bookauthors_ead84c5d::AUTHORID : < Z_FK_AUTHOR
-books_208b5502.books_f4a675c8::ID  }|--o| books_208b5502.books_f4a675c8::PREVIOUSEDITIONID : < FK_PREVIOUSEDITION
-books_208b5502.books_f4a675c8::ID  }|--o| publishersales_7f7f6c20.sales_751e68cc::BOOKID : < FK_SALES_BOOK
-books_208b5502.books_f4a675c8::ID  }|--o| books_208b5502.bookauthors_ead84c5d::BOOKID : < SYS_FK_10120
-books_208b5502.publishers_8037d535::ID  }|--o| books_208b5502.βιβλία_3cecb755::ΕΚΔΌΤΗΣ : < FK_ΒΙΒΛΊΑ_PUBLISHERS
-publishersales_7f7f6c20.regions_dbf65bbf::POSTALCODE  }|--o| publishersales_7f7f6c20.sales_751e68cc::POSTALCODE : < FK_SALES_REGIONS
-publishersales_7f7f6c20.regions_dbf65bbf::COUNTRY  }|--o| publishersales_7f7f6c20.sales_751e68cc::COUNTRY : < FK_SALES_REGIONS
-publishersales_7f7f6c20.salesdata_1193fa76::SALESDATAID  }|--o| publishersales_7f7f6c20.sales_751e68cc::SALESDATAID : < FK_SALES_SALESDATA
+books_208b5502.authors_f521e766::ID  ||--o{ books_208b5502.bookauthors_ead84c5d::AUTHORID : Z_FK_AUTHOR <
+books_208b5502.books_f4a675c8::ID  ||--o{ books_208b5502.books_f4a675c8::PREVIOUSEDITIONID : FK_PREVIOUSEDITION <
+books_208b5502.books_f4a675c8::ID  ||--o{ publishersales_7f7f6c20.sales_751e68cc::BOOKID : FK_SALES_BOOK <
+books_208b5502.books_f4a675c8::ID  ||--o{ books_208b5502.bookauthors_ead84c5d::BOOKID : SYS_FK_10120 <
+books_208b5502.publishers_8037d535::ID  ||--o{ books_208b5502.βιβλία_3cecb755::ΕΚΔΌΤΗΣ : FK_ΒΙΒΛΊΑ_PUBLISHERS <
+publishersales_7f7f6c20.regions_dbf65bbf::POSTALCODE  ||--o{ publishersales_7f7f6c20.sales_751e68cc::POSTALCODE : FK_SALES_REGIONS <
+publishersales_7f7f6c20.regions_dbf65bbf::COUNTRY  ||--o{ publishersales_7f7f6c20.sales_751e68cc::COUNTRY : FK_SALES_REGIONS <
+publishersales_7f7f6c20.salesdata_1193fa76::SALESDATAID  ||--o{ publishersales_7f7f6c20.sales_751e68cc::SALESDATAID : FK_SALES_SALESDATA <
 
 @enduml

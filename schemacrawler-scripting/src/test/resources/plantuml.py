@@ -5,12 +5,14 @@ print("@startuml")
 print("""
 !theme plain
 hide empty methods
-!define schema(name, slug) package "<b>name</b>" as slug <<Rectangle>>
+
+!define schema(name, slug) package "name" as slug <<Rectangle>>
 !define table(name, slug) entity "<b>name</b>" as slug << (T, white) table >>
 !define view(name, slug) entity "<b>name</b>" as slug << (V, yellow) view >>
 !define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
+
 """)
 
 print('title "' + title + '"')
@@ -74,14 +76,15 @@ for table in catalog.tables:
                   + pkTable.schema.key().slug() + '.'
                   + pkTable.key().slug() + '::'
                   + re.sub(r'\"', '', pkColumn.name)
-                  + '  }|--o| ' \
+                  + '  ||--o{ ' \
                   + fkTable.schema.key().slug() + '.'
                   + fkTable.key().slug() + '::'
                   + re.sub(r'\"', '', fkColumn.name)
                   , end='')
-            print(' : < '
-                  + fk.name, end='')
-            print('')
+            if fk.name and not fk.name.startswith('SCHCRWLR_'):
+                print(' : '
+                      + fk.name, end='')
+            print(' <')
 print('')
 
 print("@enduml")
