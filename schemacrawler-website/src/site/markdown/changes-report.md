@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.19.4"></a>
+## Release 16.19.4 - 2022-11-30
+
+- Fix issues with generation of PlantUML diagram
+
+
 <a name="a16.19.3"></a>
 ## Release 16.19.3 - 2022-11-27
 
