@@ -33,7 +33,8 @@ download. An example of a SchemaCrawler database diagram is below.
 </a>
 
 SchemaCrawler allows editing diagram via third-party applications. See below for how to generate
-[Mermaid Entity Relationship Diagrams](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) and
+[Mermaid Entity Relationship Diagrams](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram), 
+[PlantUML diagrams](https://plantuml.com/) and
 [dbdiagram.io diagrams](https://dbdiagram.io/home) from your database, which can then be further edited.
 
 
@@ -165,42 +166,79 @@ configuration file, `schemacrawler.config.properties`, and edit the line with
 
 ## Mermaid Diagrams
 
-SchemaCrawler can generate [Mermaid Entity Relationship Diagrams](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) for your database. Create a Python script called "mermaid.py" with
-the contents from [the GitHub file](https://github.com/schemacrawler/SchemaCrawler/blob/master/schemacrawler-scripting/src/test/resources/mermaid.py).
-Then, run SchemaCrawler with a Docker command like:
+SchemaCrawler can generate [Mermaid Entity Relationship Diagrams](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) for your database. Run SchemaCrawler with a Docker command similar to:
+
 ```sh
 docker run \
---mount type=bind,source="$(pwd)",target=/home/schcrwlr \
+--mount type=bind,source="$(pwd)",target=/home/schcrwlr/share \
 --rm -it \
 schemacrawler/schemacrawler \
 /opt/schemacrawler/bin/schemacrawler.sh \
---server=sqlite \
---database=chinook-database-2.1.3.sqlite \
---info-level=standard \
+--server sqlite \
+--database sc.db \
+--info-level standard \
 --command script \
+--grep-tables BookAuthors \
+--parents 1 \
 --script-language python \
---script mermaid.py
+--script mermaid.py \
+--output-file share/sc.mmd
 ```
+
+(If you are using Windows PowerShell, replace the backslashes "\" with back-ticks "`".) 
+Generate a diagram by pasting the contents of "sc.mmd" into [mermaid.live](https://mermaid.live/).
+
+
+## PlantUML Diagrams
+
+SchemaCrawler can generate [PlantUML diagrams](https://plantuml.com/) for your database. 
+Run SchemaCrawler with a Docker command similar to:
+
+```sh
+docker run \
+--mount type=bind,source="$(pwd)",target=/home/schcrwlr/share \
+--rm -it \
+schemacrawler/schemacrawler \
+/opt/schemacrawler/bin/schemacrawler.sh \
+--server sqlite \
+--database sc.db \
+--info-level standard \
+--command script \
+--grep-tables BookAuthors \
+--parents 1 \
+--script-language python \
+--script plantuml.py \
+--output-file share/sc.puml
+```
+
+(If you are using Windows PowerShell, replace the backslashes "\" with back-ticks "`".) 
+Generate a diagram by pasting the contents of "sc.puml" into [PlantText](https://www.planttext.com/).
 
 
 ## dbdiagram.io Diagrams
 
-SchemaCrawler can generate [dbdiagram.io diagrams](https://dbdiagram.io/home) for your database. Create a Python script called "dbml.py" with
-the contents from [the GitHub file](https://github.com/schemacrawler/SchemaCrawler/blob/master/schemacrawler-scripting/src/test/resources/dbml.py).
-Then, run SchemaCrawler with a Docker command like:
+SchemaCrawler can generate [dbdiagram.io diagrams](https://dbdiagram.io/home) for your database. 
+Run SchemaCrawler with a Docker command similar to:
+
 ```sh
 docker run \
---mount type=bind,source="$(pwd)",target=/home/schcrwlr \
+--mount type=bind,source="$(pwd)",target=/home/schcrwlr/share \
 --rm -it \
 schemacrawler/schemacrawler \
 /opt/schemacrawler/bin/schemacrawler.sh \
---server=sqlite \
---database=chinook-database-2.1.3.sqlite \
---info-level=standard \
+--server sqlite \
+--database sc.db \
+--info-level standard \
 --command script \
+--grep-tables BookAuthors \
+--parents 1 \
 --script-language python \
---script dbml.py
+--script dbml.py \
+--output-file share/sc.dbml
 ```
+
+(If you are using Windows PowerShell, replace the backslashes "\" with back-ticks "`".) 
+Generate a diagram by pasting the contents of "sc.dbml" into [dbdiagram.io](https://dbdiagram.io/d).
 
 
 ## SchemaCrawler Diagrams in Use
