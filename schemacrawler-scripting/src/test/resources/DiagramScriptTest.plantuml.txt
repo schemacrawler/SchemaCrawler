@@ -4,8 +4,16 @@
 hide empty methods
 
 !define schema(name, slug) package "name" as slug <<Rectangle>>
-!define table(name, slug) entity "<b>name</b>" as slug << (T, Pink) table >>
-!define view(name, slug) entity "<b>name</b>" as slug << (V, Yellow) view >>
+
+!procedure $table($name, $slug)
+entity "<b>$name</b>" as $slug << (T, Orange) table >>
+!endprocedure
+
+!procedure $view($name, $slug)
+entity "<b>$name</b>" as $slug << (V, Aquamarine) table >>
+!endprocedure
+
+
 !define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
@@ -16,7 +24,7 @@ title "FROM TEST: Database Schema Diagram"
 
 schema(PUBLIC.BOOKS, books_208b5502) {
 
-table(AUTHORS, authors_f521e766) {
+$table("AUTHORS", "authors_f521e766") {
   pk(ID): INTEGER NOT NULL
   column(FIRSTNAME): VARCHAR NOT NULL
   column(LASTNAME): VARCHAR NOT NULL
@@ -34,7 +42,7 @@ end note
 
 
 
-table(BOOKS, books_f4a675c8) {
+$table("BOOKS", "books_f4a675c8") {
   pk(ID): INTEGER NOT NULL
   column(TITLE): VARCHAR NOT NULL
   column(DESCRIPTION): VARCHAR 
@@ -75,7 +83,7 @@ end note
 
 
 
-table(COUPONS, coupons_54c3042b) {
+$table("COUPONS", "coupons_54c3042b") {
   pk(ID): INTEGER NOT NULL
   column(DATA): CLOB 
   column(COUPONS): INTEGER ARRAY 
@@ -84,14 +92,14 @@ table(COUPONS, coupons_54c3042b) {
 
 
 
-table(CUSTOMERDATA, customerdata_b0af83c6) {
+$table("CUSTOMERDATA", "customerdata_b0af83c6") {
   pk(ID): INTEGER NOT NULL
   column(DATA): VALID_STRING 
 }
 
 
 
-table(CUSTOMERS, customers_f705d773) {
+$table("CUSTOMERS", "customers_f705d773") {
   pk(ID): INTEGER NOT NULL
   column(FIRSTNAME): NAME_TYPE NOT NULL
   column(LASTNAME): NAME_TYPE NOT NULL
@@ -100,14 +108,14 @@ table(CUSTOMERS, customers_f705d773) {
 
 
 
-table(Global Counts, globalcounts_7fcacf9f) {
+$table("Global Counts", "globalcounts_7fcacf9f") {
   column(Global Count): INTEGER 
   column(UPDATE): VARCHAR 
 }
 
 
 
-table(PUBLISHERS, publishers_8037d535) {
+$table("PUBLISHERS", "publishers_8037d535") {
   pk(ID): INTEGER NOT NULL
   column(PUBLISHER): VARCHAR 
 }
@@ -126,7 +134,7 @@ end note
 
 
 
-table(BOOKAUTHORS, bookauthors_ead84c5d) {
+$table("BOOKAUTHORS", "bookauthors_ead84c5d") {
   fk(BOOKID): INTEGER NOT NULL
   fk(AUTHORID): INTEGER NOT NULL
   column(SOMEDATA): VARCHAR 
@@ -139,7 +147,7 @@ end note
 
 
 
-table(ΒΙΒΛΊΑ, βιβλία_3cecb755) {
+$table("ΒΙΒΛΊΑ", "βιβλία_3cecb755") {
   pk(ΜΟΝΑΔΙΚΌΣ): SMALLINT NOT NULL
   column(ΤΊΤΛΟΣ): VARCHAR NOT NULL
   column(ΠΕΡΙΓΡΑΦΉ): VARCHAR 
@@ -148,7 +156,7 @@ table(ΒΙΒΛΊΑ, βιβλία_3cecb755) {
 
 
 
-view(AUTHORSLIST, authorslist_9ccb3c04) {
+$view("AUTHORSLIST", "authorslist_9ccb3c04") {
   column(ID): INTEGER 
   column(FIRSTNAME): VARCHAR 
   column(LASTNAME): VARCHAR 
@@ -162,7 +170,7 @@ view(AUTHORSLIST, authorslist_9ccb3c04) {
 
 schema(PUBLIC.PUBLISHER SALES, publishersales_7f7f6c20) {
 
-table(REGIONS, regions_dbf65bbf) {
+$table("REGIONS", "regions_dbf65bbf") {
   column(CITY): VARCHAR NOT NULL
   column(STATE): VARCHAR NOT NULL
   pk(POSTALCODE): VARCHAR NOT NULL
@@ -171,14 +179,14 @@ table(REGIONS, regions_dbf65bbf) {
 
 
 
-table(SALESDATA, salesdata_1193fa76) {
+$table("SALESDATA", "salesdata_1193fa76") {
   column(SALESDATAID): INTEGER 
   column(YEARLYAMOUNT): DOUBLE 
 }
 
 
 
-table(SALES, sales_751e68cc) {
+$table("SALES", "sales_751e68cc") {
   fk(POSTALCODE): VARCHAR NOT NULL
   fk(COUNTRY): VARCHAR NOT NULL
   fk(BOOKID): INTEGER 
@@ -194,13 +202,13 @@ table(SALES, sales_751e68cc) {
 }
 
 
-books_208b5502.authors_f521e766::ID  ||--o{ books_208b5502.bookauthors_ead84c5d::AUTHORID : Z_FK_AUTHOR <
-books_208b5502.books_f4a675c8::ID  ||--o{ books_208b5502.books_f4a675c8::PREVIOUSEDITIONID : FK_PREVIOUSEDITION <
-books_208b5502.books_f4a675c8::ID  ||--o{ publishersales_7f7f6c20.sales_751e68cc::BOOKID : FK_SALES_BOOK <
-books_208b5502.books_f4a675c8::ID  ||--o{ books_208b5502.bookauthors_ead84c5d::BOOKID : SYS_FK_10120 <
-books_208b5502.publishers_8037d535::ID  ||--o{ books_208b5502.βιβλία_3cecb755::ΕΚΔΌΤΗΣ : FK_ΒΙΒΛΊΑ_PUBLISHERS <
-publishersales_7f7f6c20.regions_dbf65bbf::POSTALCODE  ||--o{ publishersales_7f7f6c20.sales_751e68cc::POSTALCODE : FK_SALES_REGIONS <
-publishersales_7f7f6c20.regions_dbf65bbf::COUNTRY  ||--o{ publishersales_7f7f6c20.sales_751e68cc::COUNTRY : FK_SALES_REGIONS <
-publishersales_7f7f6c20.salesdata_1193fa76::SALESDATAID  ||--o{ publishersales_7f7f6c20.sales_751e68cc::SALESDATAID : FK_SALES_SALESDATA <
+books_208b5502.authors_f521e766::ID  ||--o{ books_208b5502.bookauthors_ead84c5d::AUTHORID : Z_FK_AUTHOR
+books_208b5502.books_f4a675c8::ID  ||--o{ books_208b5502.books_f4a675c8::PREVIOUSEDITIONID : FK_PREVIOUSEDITION
+books_208b5502.books_f4a675c8::ID  ||--o{ publishersales_7f7f6c20.sales_751e68cc::BOOKID : FK_SALES_BOOK
+books_208b5502.books_f4a675c8::ID  ||--o{ books_208b5502.bookauthors_ead84c5d::BOOKID : SYS_FK_10120
+books_208b5502.publishers_8037d535::ID  ||--o{ books_208b5502.βιβλία_3cecb755::ΕΚΔΌΤΗΣ : FK_ΒΙΒΛΊΑ_PUBLISHERS
+publishersales_7f7f6c20.regions_dbf65bbf::POSTALCODE  ||--o{ publishersales_7f7f6c20.sales_751e68cc::POSTALCODE : FK_SALES_REGIONS
+publishersales_7f7f6c20.regions_dbf65bbf::COUNTRY  ||--o{ publishersales_7f7f6c20.sales_751e68cc::COUNTRY : FK_SALES_REGIONS
+publishersales_7f7f6c20.salesdata_1193fa76::SALESDATAID  ||--o{ publishersales_7f7f6c20.sales_751e68cc::SALESDATAID : FK_SALES_SALESDATA
 
 @enduml

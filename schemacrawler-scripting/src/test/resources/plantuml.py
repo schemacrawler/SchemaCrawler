@@ -7,8 +7,16 @@ print("""
 hide empty methods
 
 !define schema(name, slug) package "name" as slug <<Rectangle>>
-!define table(name, slug) entity "<b>name</b>" as slug << (T, Pink) table >>
-!define view(name, slug) entity "<b>name</b>" as slug << (V, Yellow) view >>
+
+!procedure $table($name, $slug)
+entity "<b>$name</b>" as $slug << (T, Orange) table >>
+!endprocedure
+
+!procedure $view($name, $slug)
+entity "<b>$name</b>" as $slug << (V, Aquamarine) table >>
+!endprocedure
+
+
 !define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
 !define fk(name) <color:#Silver><&key></color> name
 !define column(name) {field} <color:#White><&media-record></color> name
@@ -27,10 +35,10 @@ for schema in catalog.getSchemas():
     print('')
     for table in catalog.getTables(schema):
         if not table.tableType.isView():
-            print('table', end='')
+            print('$table', end='')
         else:
-            print('view', end='')
-        print('(' + re.sub(r'\"', '', table.name) + ', ' + table.key().slug() + ') {')
+            print('$view', end='')
+        print('("' + re.sub(r'\"', '', table.name) + '", "' + table.key().slug() + '") {')
         for column in table.columns:
             if column.isPartOfPrimaryKey():
                 print('  pk', end='')
@@ -84,7 +92,7 @@ for table in catalog.tables:
             if fk.name and not fk.name.startswith('SCHCRWLR_'):
                 print(' : '
                       + fk.name, end='')
-            print(' <')
+            print('')
 print('')
 
 print("@enduml")
