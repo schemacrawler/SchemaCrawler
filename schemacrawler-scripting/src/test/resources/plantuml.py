@@ -5,12 +5,31 @@ print("@startuml")
 print("""
 !theme plain
 hide empty methods
-!define schema(name, slug) package "<b>name</b>" as slug <<Rectangle>>
-!define table(name, slug) entity "<b>name</b>" as slug << (T, white) table >>
-!define view(name, slug) entity "<b>name</b>" as slug << (V, yellow) view >>
-!define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
-!define fk(name) <color:#Silver><&key></color> name
-!define column(name) {field} <color:#White><&media-record></color> name
+
+!procedure $schema($name, $slug)
+package "$name" as $slug <<Rectangle>>
+!endprocedure
+
+!procedure $table($name, $slug)
+entity "<b>$name</b>" as $slug << (T, Orange) table >>
+!endprocedure
+
+!procedure $view($name, $slug)
+entity "<b>$name</b>" as $slug << (V, Aquamarine) view >>
+!endprocedure
+
+!procedure $pk($name)
+<color:#GoldenRod><&key></color> <b>$name</b>
+!endprocedure
+
+!procedure $fk($name)
+<color:#Silver><&key></color> $name
+!endprocedure
+
+!procedure $column($name)
+{field} <color:#White><&media-record></color> $name
+!endprocedure
+
 """)
 
 print('title "' + title + '"')
@@ -21,22 +40,22 @@ print('')
 for schema in catalog.getSchemas():
     if not catalog.getTables(schema):
         continue
-    print('schema(' + re.sub(r'\"', '', schema.fullName)  + ', ' + schema.key().slug() + ') {')
+    print('$schema("' + re.sub(r'\"', '', schema.fullName)  + '", "' + schema.key().slug() + '") {')
     print('')
     for table in catalog.getTables(schema):
         if not table.tableType.isView():
-            print('table', end='')
+            print('$table', end='')
         else:
-            print('view', end='')
-        print('(' + re.sub(r'\"', '', table.name) + ', ' + table.key().slug() + ') {')
+            print('$view', end='')
+        print('("' + re.sub(r'\"', '', table.name) + '", "' + table.key().slug() + '") {')
         for column in table.columns:
             if column.isPartOfPrimaryKey():
-                print('  pk', end='')
+                print('  $pk', end='')
             elif column.isPartOfForeignKey():
-                print('  fk', end='')
+                print('  $fk', end='')
             else:
-                print('  column', end='')
-            print('(' + column.name + '): ' + column.columnDataType.name, end='')
+                print('  $column', end='')
+            print('("' + column.name + '"): ' + column.columnDataType.name, end='')
             print(' ', end='')
             if not column.nullable:
                 print('NOT NULL', end='')
@@ -51,7 +70,7 @@ for schema in catalog.getSchemas():
         for column in table.columns:
             if column.remarks:
                 print('note right of ' + table.key().slug() + '::' + column.name \
-                    + ' #WhiteSmoke')
+                    + ' #LightCyan')
                 print(column.remarks)
                 print('end note')
                 print('')
@@ -74,13 +93,14 @@ for table in catalog.tables:
                   + pkTable.schema.key().slug() + '.'
                   + pkTable.key().slug() + '::'
                   + re.sub(r'\"', '', pkColumn.name)
-                  + '  }|--o| ' \
+                  + '  ||--o{ ' \
                   + fkTable.schema.key().slug() + '.'
                   + fkTable.key().slug() + '::'
                   + re.sub(r'\"', '', fkColumn.name)
                   , end='')
-            print(' : < '
-                  + fk.name, end='')
+            if fk.name and not fk.name.startswith('SCHCRWLR_'):
+                print(' : '
+                      + fk.name, end='')
             print('')
 print('')
 
