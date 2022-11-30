@@ -6,20 +6,29 @@ print("""
 !theme plain
 hide empty methods
 
-!define schema(name, slug) package "name" as slug <<Rectangle>>
+!procedure $schema($name, $slug)
+package "$name" as $slug <<Rectangle>>
+!endprocedure
 
 !procedure $table($name, $slug)
 entity "<b>$name</b>" as $slug << (T, Orange) table >>
 !endprocedure
 
 !procedure $view($name, $slug)
-entity "<b>$name</b>" as $slug << (V, Aquamarine) table >>
+entity "<b>$name</b>" as $slug << (V, Aquamarine) view >>
 !endprocedure
 
+!procedure $pk($name)
+<color:#GoldenRod><&key></color> <b>$name</b>
+!endprocedure
 
-!define pk(name) <color:#GoldenRod><&key></color> <b>name</b>
-!define fk(name) <color:#Silver><&key></color> name
-!define column(name) {field} <color:#White><&media-record></color> name
+!procedure $fk($name)
+<color:#Silver><&key></color> $name
+!endprocedure
+
+!procedure $column($name)
+{field} <color:#White><&media-record></color> $name
+!endprocedure
 
 """)
 
@@ -31,7 +40,7 @@ print('')
 for schema in catalog.getSchemas():
     if not catalog.getTables(schema):
         continue
-    print('schema(' + re.sub(r'\"', '', schema.fullName)  + ', ' + schema.key().slug() + ') {')
+    print('$schema("' + re.sub(r'\"', '', schema.fullName)  + '", "' + schema.key().slug() + '") {')
     print('')
     for table in catalog.getTables(schema):
         if not table.tableType.isView():
@@ -41,12 +50,12 @@ for schema in catalog.getSchemas():
         print('("' + re.sub(r'\"', '', table.name) + '", "' + table.key().slug() + '") {')
         for column in table.columns:
             if column.isPartOfPrimaryKey():
-                print('  pk', end='')
+                print('  $pk', end='')
             elif column.isPartOfForeignKey():
-                print('  fk', end='')
+                print('  $fk', end='')
             else:
-                print('  column', end='')
-            print('(' + column.name + '): ' + column.columnDataType.name, end='')
+                print('  $column', end='')
+            print('("' + column.name + '"): ' + column.columnDataType.name, end='')
             print(' ', end='')
             if not column.nullable:
                 print('NOT NULL', end='')
