@@ -398,6 +398,7 @@ public final class SchemaCrawler {
         .add(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation)
         .submit();
 
+    // Should be run independently, since filter and sort modifies the tables collection
     taskRunner
         .add(
             "filterAndSortTables",
@@ -410,6 +411,10 @@ public final class SchemaCrawler {
               final TablesGraph tablesGraph = new TablesGraph(allTables);
               tablesGraph.setTablesSortIndexes();
             })
+        .submit();
+
+    // Should be run independently, since table constraints are modified
+    taskRunner
         .add(
             "matchTableConstraints",
             () -> constraintRetriever.matchTableConstraints(allTables),
