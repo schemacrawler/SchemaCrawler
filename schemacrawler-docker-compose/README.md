@@ -130,3 +130,38 @@ Connect to the IBM DB2 container if needed, run
 - To stop SchemaCrawler with IBM DB2, run
   `docker-compose -f schemacrawler.yml -f db2.yml down -t0`
 
+
+
+# Diagrams
+
+## PlantUML
+
+Generate PlantUML from a database:
+
+```sh
+docker run \
+--mount type=bind,source="$(pwd)",target=/home/schcrwlr/share \
+--rm -it \
+schemacrawler/schemacrawler \
+/opt/schemacrawler/bin/schemacrawler.sh \
+--server=sqlite \
+--database=sc.db \
+--info-level=standard \
+--command script \
+--title "Database Schema" \
+--script-language python \
+--script plantuml.py \
+--output-file share/schema.puml
+```
+
+Generate a diagram:
+
+```sh
+docker run \
+--mount type=bind,source="$(pwd)",target=/data \
+--rm -it \
+plantuml/plantuml \
+-tpng \
+-v \
+/data/schema.puml
+```
