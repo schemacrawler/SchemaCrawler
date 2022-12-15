@@ -50,8 +50,8 @@ final class CatalogModelInputStream extends ObjectInputStream {
       Arrays.asList(
           Pattern.compile("schemacrawler\\.(schema(crawler)?|crawl)\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.[A-Z].*"),
-          Pattern.compile("(\\[L)?java.(lang|util)\\..*"),
-          Pattern.compile("java.(sql|math|time)\\..*"),
+          Pattern.compile("(\\[L)?java\\.(lang|util)\\..*"),
+          Pattern.compile("java\\.(sql|math|time|net)\\..*"),
           Pattern.compile("\\[[BC]"));
 
   CatalogModelInputStream(final InputStream input) throws IOException {
