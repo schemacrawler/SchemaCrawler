@@ -68,7 +68,7 @@ jobs:
           SchemaCrawler ${{ github.event.release.tag_name }} early access release at last commit ${{ github.sha }}
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-16.19.4-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.19.4-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-16.19.4-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.19.4-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.19.5-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.19.5-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.19.5-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.19.5-bin.zip.SHA-512
