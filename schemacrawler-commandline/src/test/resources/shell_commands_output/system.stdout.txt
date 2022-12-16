@@ -1,7 +1,7 @@
-SchemaCrawler 16.14.1
+SchemaCrawler 16.19.4
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
-Copyright (c) 2000-2022, Sualeh Fatehi <sualeh@hotmail.com>.
+Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>.
 
 You can search for database schema objects using regular expressions,
 and output the schema and data in a readable text format. You can find

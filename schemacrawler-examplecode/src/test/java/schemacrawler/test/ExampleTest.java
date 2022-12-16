@@ -2,7 +2,7 @@
  * ========================================================================
  * SchemaCrawler
  * http://www.schemacrawler.com
- * Copyright (c) 2000-2022, Sualeh Fatehi <sualeh@hotmail.com>. All rights reserved.
+ * Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>. All rights reserved.
  * ------------------------------------------------------------------------
  *
  * SchemaCrawler is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
