@@ -2,6 +2,14 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.19.5"></a>
+## Release 16.19.5 - 2023-12-16
+
+- Fix issues with running in multiple threads
+- Fix issue #961 - deserialization missing "java.net.*" as an allowed type
+- Update copyright notices
+
+
 <a name="a16.19.4"></a>
 ## Release 16.19.4 - 2023-11-30
 
