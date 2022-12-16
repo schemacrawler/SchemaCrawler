@@ -93,7 +93,7 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2000-2022 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright © 2000-2023 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
               <skip>false</skip>
             </configuration>
@@ -129,7 +129,7 @@
                     <Product>SchemaCrawler</Product>
                     <Version>${project.version}</Version>
                     <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
-                    <Copyright>Copyright (c) 2000-2022, Sualeh Fatehi</Copyright>
+                    <Copyright>Copyright (c) 2000-2023, Sualeh Fatehi</Copyright>
                     <Website>https://www.SchemaCrawler.com</Website>
                   </manifestEntries>
                 </transformer>
