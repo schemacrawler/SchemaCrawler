@@ -49,9 +49,10 @@ jobs:
 
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
     - id: install-graphviz
-      name: Install graphviz
-      if:
+      name: Install Graphviz
       shell: bash
+      env:
+        HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: true
       run: |
         # Install Graphviz
         if [ "$RUNNER_OS" == "Linux" ]; then
