@@ -61,7 +61,7 @@ jobs:
           choco install graphviz
         elif [ "$RUNNER_OS" == "macOS" ]; then
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install graphviz --ignore-dependencies python
+          brew install graphviz
         else
           echo "$RUNNER_OS not supported"
           exit 1
