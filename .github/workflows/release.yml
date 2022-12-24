@@ -25,14 +25,9 @@ jobs:
       uses: sualeh/prepare-maven-build@v1.3.2
       with:
         java-version: 8
-    - id: install-packages
-      name: Install packages
-      shell: bash
-      run: |
-        # Install Graphviz
-        sudo apt-get -qq update
-        sudo apt-get -q install graphviz
-        dot -V
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.1
 
 # BUILD FOR DISTRIBUTION
     - id: build

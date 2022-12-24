@@ -50,23 +50,7 @@ jobs:
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
     - id: install-graphviz
       name: Install Graphviz
-      shell: bash
-      env:
-        HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: true
-      run: |
-        # Install Graphviz
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          sudo apt-get install graphviz
-        elif [ "$RUNNER_OS" == "Windows" ]; then
-          choco install graphviz
-        elif [ "$RUNNER_OS" == "macOS" ]; then
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install graphviz
-        else
-          echo "$RUNNER_OS not supported"
-          exit 1
-        fi
-        dot -V
+      uses: sualeh/install-graphviz@v1.0.1
     - id: build-test-diagrams
       name: Build and run diagram tests
       shell: bash
