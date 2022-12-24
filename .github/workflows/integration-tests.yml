@@ -28,7 +28,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.3.1
+      uses: sualeh/prepare-maven-build@v1.3.2
       with:
         java-version: ${{ matrix.java }}
 
@@ -49,9 +49,10 @@ jobs:
 
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
     - id: install-graphviz
-      name: Install graphviz
-      if:
+      name: Install Graphviz
       shell: bash
+      env:
+        HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: true
       run: |
         # Install Graphviz
         if [ "$RUNNER_OS" == "Linux" ]; then
@@ -88,7 +89,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.3.1
+      uses: sualeh/prepare-maven-build@v1.3.2
       with:
         java-version: 8
     - id: install-packages
@@ -138,7 +139,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.3.1
+      uses: sualeh/prepare-maven-build@v1.3.2
       with:
         java-version: 8
     - id: install-packages
