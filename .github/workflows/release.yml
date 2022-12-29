@@ -42,18 +42,6 @@ jobs:
           -Ddocker.skip=false \
           clean install
 
-# PUBLISH WEBSITE TO GITHUB PAGES
-    - id: pubish-website
-      name: Publish website to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./schemacrawler-website/target/_website
-        force_orphan: true
-        user_name: 'Sualeh Fatehi'
-        user_email: 'sualeh@hotmail.com'
-        commit_message: 'SchemaCrawler Website ${{ github.sha }}'
-
 # PUBLISH DOCKER IMAGE
     - id: publish-docker-image
       name: Publish Docker image
