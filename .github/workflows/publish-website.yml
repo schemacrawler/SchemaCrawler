@@ -1,0 +1,70 @@
+name: Publish Website
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+      - 'main'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Publish Website
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.3.2
+      with:
+        java-version: 8
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.1
+
+# BUILD FOR DISTRIBUTION
+    - id: build
+      name: Build and test for distribution
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          clean install
+
+    - id: configure-pages
+      name: Setup Pages
+      uses: actions/configure-pages@v2
+
+    - id: upload-artifact
+      name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: ./schemacrawler-website/target/_website
+
+
+  deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy-pages.outputs.page_url }}
+    needs: build
+
+    steps:
+
+    - id: deploy-pages
+      name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v1
