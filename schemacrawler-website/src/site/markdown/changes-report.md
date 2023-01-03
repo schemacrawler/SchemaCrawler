@@ -3,7 +3,7 @@
 SchemaCrawler release notes.
 
 <a name="a16.19.5"></a>
-## Release 16.19.5 - 2023-12-16
+## Release 16.19.5 - 2022-12-16
 
 - Fix issues with running in multiple threads
 - Fix issue #961 - deserialization missing "java.net.*" as an allowed type
@@ -11,13 +11,13 @@ SchemaCrawler release notes.
 
 
 <a name="a16.19.4"></a>
-## Release 16.19.4 - 2023-11-30
+## Release 16.19.4 - 2022-11-30
 
 - Fix issues with generation of PlantUML diagram
 
 
 <a name="a16.19.3"></a>
-## Release 16.19.3 - 2023-11-27
+## Release 16.19.3 - 2022-11-27
 
 - Add a slug method to NamedObjectKey for readable unique ids
 - Release PlantUML diagram generator
@@ -25,14 +25,14 @@ SchemaCrawler release notes.
 
 
 <a name="a16.19.2"></a>
-## Release 16.19.2 - 2023-11-24
+## Release 16.19.2 - 2022-11-24
 
 - Fix #933 - NullPointerException when using custom schema info level
 - Fix #931 - Hive does not support DatabaseMetaData.getUserName()
   
   
 <a name="a16.19.1"></a>
-## Release 16.19.1 - 2023-11-20
+## Release 16.19.1 - 2022-11-20
 
 - SchemaCrawler runs multi-threaded by defualt, but you can force single-threading with `SC_SINGLE_THREADED`=`true`  
   as a environmental variable or Java system property
@@ -40,13 +40,13 @@ SchemaCrawler release notes.
 
 
 <a name="a16.18.2"></a>
-## Release 16.18.2 - 2023-09-12
+## Release 16.18.2 - 2022-09-12
 
 - In experimental mode, use multi-threading for obtaining table columns
 
 
 <a name="a16.18.1"></a>
-## Release 16.18.1 - 2023-08-23
+## Release 16.18.1 - 2022-08-23
 
 - Breaking change to APIs by using database connection sources instead of database connections  
   to allow for true multi-threading with multiple connections
@@ -56,27 +56,27 @@ SchemaCrawler release notes.
 
 
 <a name="a16.17.4"></a>
-## Release 16.17.4 - 2023-08-14
+## Release 16.17.4 - 2022-08-14
 
 - Proxy database connections, and close them by closing the datasource
 - Fix issue #826 - add attributes for tables when retrieving them
 
 
 <a name="a16.17.3"></a>
-## Release 16.17.3 - 2023-08-05
+## Release 16.17.3 - 2022-08-05
 
 - Allow more variations of output in tutorials
 
 
 <a name="a16.17.2"></a>
-## Release 16.17.2 - 2023-07-30
+## Release 16.17.2 - 2022-07-30
 
 - When determining weak associations, by default only match patterns similar to `table2.table1_id` -> `table1.id`
 - Introduce a `--infer-extension-tables` command-line switch to look for tables that share a primary key name
 
 
 <a name="a16.17.1"></a>
-## Release 16.17.1 - 2023-07-22
+## Release 16.17.1 - 2022-07-22
 
 - Experimental feature to run catalog loader with multiple threads
 - Fix weak associations algorithm to find common use cases - fixes #793
@@ -87,7 +87,7 @@ SchemaCrawler release notes.
 
 
 <a name="a16.16.18"></a>
-## Release 16.16.18 - 2023-06-20
+## Release 16.16.18 - 2022-06-20
 
 - Add support for updating remarks for foreign keys in diagrams and other output
 - Ensure that column privileges are being retrieved for databases that support them
@@ -95,13 +95,13 @@ SchemaCrawler release notes.
 
 
 <a name="a16.16.17"></a>
-## Release 16.16.17 - 2023-06-12
+## Release 16.16.17 - 2022-06-12
 
 - Fix issue #749 - Diagram shows hanging references when columns are not displayed by the "brief" command 
 
 
 <a name="a16.16.16"></a>
-## Release 16.16.16 - 2023-06-07
+## Release 16.16.16 - 2022-06-07
 
 - Add new diagram option to show or hide tables that are filtered out, which   
   can be set in the configuration properties file with  
@@ -109,14 +109,14 @@ SchemaCrawler release notes.
 
 
 <a name="a16.16.15"></a>
-## Release 16.16.15 - 2023-05-30
+## Release 16.16.15 - 2022-05-30
 
 - Exclude entity management framework metadata tables (from Liquibase, Flyway, django, EF Core, and so on) 
   by default from SQLLite schemas, when using `EmbeddedSQLiteWrapper`
 
 
 <a name="a16.16.14"></a>
-## Release 16.16.14 - 2023-03-27
+## Release 16.16.14 - 2022-03-27
 
 - Distribute Mermaid and DBML diagram creation scripts in Docker image
 - Drop support for Oracle 11g and rework Oracle plugin
@@ -124,7 +124,7 @@ SchemaCrawler release notes.
 
 
 <a name="a16.16.12"></a>
-## Release 16.16.12 - 2023-03-20
+## Release 16.16.12 - 2022-03-20
 
 - Add database plugin to support Teiid
 - Add support for hidden or invisible columns in MySQL and MariaDB
@@ -132,34 +132,34 @@ SchemaCrawler release notes.
 
 
 <a name="a16.16.11"></a>
-## Release 16.16.11 - 2023-02-05
+## Release 16.16.11 - 2022-02-05
 
 - Update dependencies
 - Release to Chocolatey and SDKMan from CI pipelines using JReleaser
 
 
 <a name="a16.16.10"></a>
-## Release 16.16.10 - 2023-01-25
+## Release 16.16.10 - 2022-01-25
 
 - Change foreign key "key" to be consistent with a constraint "key"
 - Create binary distribution, and move shell scripts into a bin/ folder
 
 
 <a name="a16.16.9"></a>
-## Release 16.16.9 - 2023-01-17
+## Release 16.16.9 - 2022-01-17
 
 - Fix issue #556, #559 - Could not commit with auto-commit set on error on Oracle
 - Update database drivers for MySQL and H2
 
 
 <a name="a16.16.8"></a>
-## Release 16.16.8 - 2023-01-14
+## Release 16.16.8 - 2022-01-14
 
 - Fix issue #556 - NoClassDefFoundError when crawling an Oracle schema
 
 
 <a name="a16.16.7"></a>
-## Release 16.16.7 - 2023-01-07
+## Release 16.16.7 - 2022-01-07
 
 - Show better error message with no command-line arguments
 - Update vulnerable version of H2
