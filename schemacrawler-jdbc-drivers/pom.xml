@@ -118,7 +118,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>403</version>
+      <version>405</version>
     </dependency>
   </dependencies>
 
