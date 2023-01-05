@@ -37,7 +37,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -234,7 +233,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
         while (results.next()) {
           createFunctionParameter(results, allRoutines, parameterFilter);
         }
-      } catch (final AbstractMethodError | SQLFeatureNotSupportedException e) {
+      } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(
             new StringFormat("Could not retrieve parameters for function %s", function), e);
       } catch (final SQLException e) {

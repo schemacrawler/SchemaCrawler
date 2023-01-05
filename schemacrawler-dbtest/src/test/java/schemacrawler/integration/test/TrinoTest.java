@@ -83,7 +83,8 @@ public class TrinoTest extends BaseAdditionalDatabaseTest {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeSchemas(Pattern.compile("tpch\\.tiny"));
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
-        SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.maximum).setRetrieveIndexes(false);
+        SchemaInfoLevelBuilder.builder()
+            .withInfoLevel(InfoLevel.maximum); // .setRetrieveIndexes(false);
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevelBuilder(schemaInfoLevelBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
