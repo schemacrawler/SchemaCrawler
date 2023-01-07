@@ -51,7 +51,7 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc_auth</artifactId>
-      <version>11.2.2.x64</version>
+      <version>11.2.2.x86</version>
       <type>dll</type>
     </dependency>
     <dependency>
