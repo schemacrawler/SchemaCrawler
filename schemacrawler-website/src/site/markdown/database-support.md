@@ -12,6 +12,8 @@ The JDBC drivers for database systems commonly used with SchemaCrawler are inclu
 - [IBM DB2](https://www.ibm.com/software/data/db2/) [JDBC driver](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads)
 - [MySQL](https://www.mysql.com/) [Connector/J JDBC driver](https://dev.mysql.com/downloads/connector/j/)
 - [PostgreSQL](https://www.postgresql.org/) [JDBC driver](https://jdbc.postgresql.org/)
+- [Trino](https://trino.io/) [JDBC driver](https://trino.io/docs/current/client/jdbc.html)
+- [Cassandra](https://cassandra.apache.org/_/index.html) [JDBC driver](https://github.com/ing-bank/cassandra-jdbc-wrapper)
 - Offline database support does not need any JDBC driver
 
 For any other database that includes a compliant JDBC driver, place the JDBC in the

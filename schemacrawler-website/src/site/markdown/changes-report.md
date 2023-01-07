@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.19.6"></a>
+## Release 16.19.6 - 2023-01-08
+
+- Add support for Cassandra
+
+
 <a name="a16.19.5"></a>
 ## Release 16.19.5 - 2022-12-16
 
