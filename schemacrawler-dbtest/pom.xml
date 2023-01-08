@@ -61,6 +61,14 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+    <!-- NOTE: Cassandra driver is repeated here to 
+         override dependencies from Testcontainters Cassandra container -->
+    <dependency>
+      <groupId>com.ing.data</groupId>
+      <artifactId>cassandra-jdbc-wrapper</artifactId>
+      <version>4.7.0</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
