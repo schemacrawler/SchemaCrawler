@@ -61,6 +61,14 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+    <!-- NOTE: Cassandra driver is repeated here to 
+         override dependencies from Testcontainters Cassandra container -->
+    <dependency>
+      <groupId>com.ing.data</groupId>
+      <artifactId>cassandra-jdbc-wrapper</artifactId>
+      <version>4.7.0</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
@@ -117,6 +125,12 @@
       <version>1.17.6</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>cassandra</artifactId>
+      <version>1.17.6</version>
+      <scope>test</scope>
+    </dependency>
     
     <!-- Teiid -->
     <dependency>
@@ -143,7 +157,7 @@
       <version>16.0.0</version>
       <scope>test</scope>
     </dependency>
-
+    
     <!-- Calcite -->
     <dependency>
       <groupId>org.apache.calcite.avatica</groupId>

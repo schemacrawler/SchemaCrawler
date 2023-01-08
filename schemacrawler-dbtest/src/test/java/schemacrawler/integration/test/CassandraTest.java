@@ -35,12 +35,12 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
+import java.net.InetSocketAddress;
 import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.TrinoContainer;
+import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
@@ -59,12 +59,13 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @HeavyDatabaseTest
 @Testcontainers
-public class TrinoTest extends BaseAdditionalDatabaseTest {
+public class CassandraTest extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse("trinodb/trino");
+  private final DockerImageName imageName = DockerImageName.parse("cassandra");
 
   @Container
-  private final JdbcDatabaseContainer<?> dbContainer = new TrinoContainer(imageName.withTag("403"));
+  private final CassandraContainer<?> dbContainer =
+      new CassandraContainer<>(imageName).withInitScript("create-cassandra-database.cql");
 
   @BeforeEach
   public void createDatabase() {
@@ -73,18 +74,22 @@ public class TrinoTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final InetSocketAddress contactPoint = dbContainer.getContactPoint();
+    final String host = contactPoint.getHostName();
+    final int port = contactPoint.getPort();
+    final String keyspace = "store";
+    final String connectionUrl = String.format("jdbc:cassandra://%s:%d/%s", host, port, keyspace);
+    System.out.printf("url=%s%n", connectionUrl);
+    createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
   }
 
   @Test
-  public void testTrinoWithConnection() throws Exception {
+  public void testCassandraWithConnection() throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().includeSchemas(Pattern.compile("tpch\\.tiny"));
+        LimitOptionsBuilder.builder().includeSchemas(Pattern.compile("books"));
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
-        SchemaInfoLevelBuilder.builder()
-            .withInfoLevel(InfoLevel.maximum); // .setRetrieveIndexes(false);
+        SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.maximum);
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevelBuilder(schemaInfoLevelBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -99,7 +104,8 @@ public class TrinoTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = String.format("testTrinoWithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+        String.format("testCassandraWithConnection.%s.txt", javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

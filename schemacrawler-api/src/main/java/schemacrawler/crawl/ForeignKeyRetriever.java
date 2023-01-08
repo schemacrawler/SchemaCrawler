@@ -229,8 +229,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
                 "DatabaseMetaData::getImportedKeys")) {
           createForeignKeys(results, foreignKeys);
         } catch (final SQLException e) {
-          throw new WrappedSQLException(
-              String.format("Could not retrieve foreign keys for table <%s>", table), e);
+          logPossiblyUnsupportedSQLFeature(
+              new StringFormat("Could not retrieve foreign keys for table <%s>", table), e);
         }
 
         // We need to get exported keys as well, since if only a single
@@ -245,10 +245,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
                 "DatabaseMetaData::getExportedKeys")) {
           createForeignKeys(results, foreignKeys);
         } catch (final SQLException e) {
-          // Since not all database drivers may support exported keys, log a warning instead of
-          // throwing an error
-          LOGGER.log(
-              Level.WARNING, "Could not retrieve exported foreign keys for table " + table, e);
+          logPossiblyUnsupportedSQLFeature(
+              new StringFormat("Could not retrieve exported foreign keys for table <%s>", table), e);
         }
       }
     }

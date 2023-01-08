@@ -37,7 +37,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.Optional;
@@ -233,7 +232,7 @@ final class RoutineRetriever extends AbstractRetriever {
           createFunction(results, schemas, functionFilter);
         }
         LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", numFunctions));
-      } catch (final AbstractMethodError | SQLFeatureNotSupportedException e) {
+      } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"), e);
       } catch (final SQLException e) {
         logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"), e);

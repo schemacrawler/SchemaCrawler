@@ -15,7 +15,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -25,7 +24,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -119,6 +117,11 @@
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
       <version>405</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ing.data</groupId>
+      <artifactId>cassandra-jdbc-wrapper</artifactId>
+      <version>4.7.0</version>
     </dependency>
   </dependencies>
 

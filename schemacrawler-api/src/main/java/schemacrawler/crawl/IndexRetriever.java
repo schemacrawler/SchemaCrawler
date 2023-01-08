@@ -211,8 +211,8 @@ final class IndexRetriever extends AbstractRetriever {
                   "DatabaseMetaData::getIndexInfo"); ) {
         createIndexes(table, results);
       } catch (final SQLException e) {
-        throw new WrappedSQLException(
-            String.format("Could not retrieve indexes for table <%s>", table), e);
+        logPossiblyUnsupportedSQLFeature(
+            new StringFormat("Could not retrieve indexes for table <%s>", table), e);
       }
     }
   }

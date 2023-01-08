@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -117,7 +118,9 @@ abstract class AbstractRetriever {
     // HY000 = General error
     // (HY000 is thrown by the Teradata JDBC driver for unsupported
     // functions)
-    if ("HYC00".equalsIgnoreCase(e.getSQLState()) || "HY000".equalsIgnoreCase(e.getSQLState())) {
+    if ("HYC00".equalsIgnoreCase(e.getSQLState())
+        || "HY000".equalsIgnoreCase(e.getSQLState())
+        || e instanceof SQLFeatureNotSupportedException) {
       logSQLFeatureNotSupported(message, e);
     } else {
       LOGGER.log(Level.WARNING, e, message);
