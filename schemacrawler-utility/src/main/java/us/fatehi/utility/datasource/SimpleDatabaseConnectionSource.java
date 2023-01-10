@@ -129,7 +129,10 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
       final Connection unwrappedConnection = connection.unwrap(Connection.class);
       DatabaseUtility.checkConnection(unwrappedConnection);
     } catch (final SQLException e) {
-      throw new RuntimeException("Cannot release connection from pool", e);
+      LOGGER.log(
+          Level.WARNING,
+          "Cannot check connection before returning to the pool - " + e.getMessage());
+      LOGGER.log(Level.FINE, "Cannot check connection before returning to the pool - ", e);
     }
 
     connectionPool.add(connection);

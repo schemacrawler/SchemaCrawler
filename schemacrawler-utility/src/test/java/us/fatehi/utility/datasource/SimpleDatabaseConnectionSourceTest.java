@@ -61,18 +61,6 @@ public class SimpleDatabaseConnectionSourceTest {
   }
 
   @Test
-  public void closedConnectionTests() throws Exception {
-
-    final Connection connection = databaseConnectionSource.get();
-    final Connection wrappedConnection = connection.unwrap(Connection.class);
-
-    wrappedConnection.close();
-
-    assertThrows(
-        RuntimeException.class, () -> databaseConnectionSource.releaseConnection(connection));
-  }
-
-  @Test
   public void connectionTests() throws Exception {
 
     final Connection connection = databaseConnectionSource.get();
