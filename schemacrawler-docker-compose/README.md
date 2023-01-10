@@ -132,6 +132,34 @@ Connect to the IBM DB2 container if needed, run
 
 
 
+## Cassandra
+
+
+### Setup
+
+- To start SchemaCrawler with Cassandra, run
+  `docker-compose -f schemacrawler.yml -f cassandra.yml up -d`
+- Create a test Cassandra database schema, run
+  `docker exec -it cassandra cqlsh -f /testdb/create-cassandra-database.cql`
+
+### Testing
+
+- Start SchemaCrawler bash with
+  `docker exec -it schemacrawler bash`
+- Run SchemaCrawler from Docker container bash
+  `schemacrawler --url jdbc:cassandra://cassandra:9042/books --info-level minimum -c list`
+- Output can be created with `--output-file share/out.txt`
+
+Connect to the Cassandra container if needed, run
+`docker exec -it cassandra bash`
+
+### Tear Down
+
+- To stop SchemaCrawler with Cassandra, run
+  `docker-compose -f schemacrawler.yml -f cassandra.yml down -t0`
+
+
+
 # Diagrams
 
 ## PlantUML
