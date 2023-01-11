@@ -160,6 +160,33 @@ Connect to the Cassandra container if needed, run
 
 
 
+## Trino
+
+
+### Setup
+
+- To start SchemaCrawler with Trino, run
+  `docker-compose -f schemacrawler.yml -f trino.yml up -d`
+- The test database is created in the Docker container
+
+### Testing
+
+- Start SchemaCrawler bash with
+  `docker exec -it schemacrawler bash`
+- Run SchemaCrawler from Docker container bash
+  `schemacrawler --url jdbc:trino://trino:8080/tpch --user test --schemas tpch.sf100 --info-level minimum -c list`
+- Output can be created with `--output-file share/out.txt`
+
+Connect to the Trino container if needed, run
+`docker exec -it trino bash`
+
+### Tear Down
+
+- To stop SchemaCrawler with Trino, run
+  `docker-compose -f schemacrawler.yml -f trino.yml down -t0`
+
+
+
 # Diagrams
 
 ## PlantUML
