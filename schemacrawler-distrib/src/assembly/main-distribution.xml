@@ -102,6 +102,9 @@
     <copy
       file="${schemacrawler.base-distribution}/sc.db"
       todir="${main-distribution.staging.dir}/_testdb" />
+    <copy
+      file="${SchemaCrawler.home}/schemacrawler-dbtest/src/test/resources/create-cassandra-database.cql"
+      todir="${main-distribution.staging.dir}/_testdb" />
 
   </target>
 
