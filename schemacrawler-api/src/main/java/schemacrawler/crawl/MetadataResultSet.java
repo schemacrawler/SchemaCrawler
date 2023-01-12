@@ -272,7 +272,7 @@ public final class MetadataResultSet implements AutoCloseable {
                   "NULL int value for column <%s>, so using default %d", columnName, defaultValue));
           value = defaultValue;
         }
-      } catch (final NumberFormatException | SQLException e) {
+      } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
             e,
@@ -303,7 +303,7 @@ public final class MetadataResultSet implements AutoCloseable {
                   columnName, defaultValue));
           value = defaultValue;
         }
-      } catch (final NumberFormatException | SQLException e) {
+      } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
             e,
@@ -334,7 +334,7 @@ public final class MetadataResultSet implements AutoCloseable {
                   columnName, defaultValue));
           value = defaultValue;
         }
-      } catch (final NumberFormatException | SQLException e) {
+      } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
             e,
