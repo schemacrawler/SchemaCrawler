@@ -252,7 +252,7 @@ In certain situations, it may not be possible to install Graphviz. SchemaCrawler
 
 ### <a name="api">How to use SchemaCrawler programmatically</a>
 
-Read [How to Get Database Metadata as Java POJOs](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li), and browse the [javadocs](apidocs/index.html).
+Read [How to Get Database Metadata as Java POJOs](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li), and browse the [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/).
 
 _See the api example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download._
 

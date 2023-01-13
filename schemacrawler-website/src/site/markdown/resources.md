@@ -13,12 +13,12 @@ To read more about SchemaCrawler, you can read:
 
 - Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](https://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)
 - Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](https://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
-- The SchemaCrawler API [javadocs](apidocs/index.html) .
+- The SchemaCrawler API [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/) .
 - Download the [SchemaCrawler
   examples](https://github.com/schemacrawler/SchemaCrawler/releases/)
   for an overview of all SchemaCrawler features and capabilities.
 - Read [How to Get Database Metadata as Java POJOs](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li), 
-  and browse the [javadocs](apidocs/index.html) for an introduction
+  and browse the [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/) for an introduction
   to the SchemaCrawler API.
 
 

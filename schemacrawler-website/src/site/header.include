@@ -156,7 +156,7 @@
                     <a class="dropdown-item" href="faq.html">FAQS</a>
                     <a class="dropdown-item" href="how-to.html">How-tos</a>
                     <a class="dropdown-item" href="consulting.html">Get Help</a>
-                    <a class="dropdown-item" href="apidocs/index.html">Javadocs</a>
+                    <a class="dropdown-item" href="https://javadoc.io/doc/us.fatehi/schemacrawler/">Javadocs</a>
                     <a class="dropdown-item" href="http://github.com/schemacrawler/SchemaCrawler">Project Page on GitHub</a>
                  </div>
               </li>

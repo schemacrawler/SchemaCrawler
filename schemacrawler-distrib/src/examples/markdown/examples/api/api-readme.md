@@ -14,6 +14,6 @@ alternative to using JDBC metadata.
 
 ## How to Experiment
 1. Try uncommenting the code block in `com.example.ApiExample.java` that modifies the default options. 
-2. Read the [SchemaCrawler javadoc](https://www.schemacrawler.com/apidocs/index.html), and 
+2. Read the [SchemaCrawler javadoc](https://javadoc.io/doc/us.fatehi/schemacrawler/), and 
    edit `com.example.ApiExample.java` to print more details. 
 3. Make changes to `com.example.ExecutableExample.java` to produce different types of output.

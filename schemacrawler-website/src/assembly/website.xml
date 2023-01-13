@@ -28,21 +28,12 @@
 
     <property name="website.source.resources.location"
       location="${SchemaCrawler.home}/schemacrawler-website/src/site/resources" />
-    <property name="website.source.javadoc.location"
-      location="${SchemaCrawler.home}/schemacrawler/target/apidocs" />
     <property name="website.source.config.location"
       location="${SchemaCrawler.home}/schemacrawler-docs/config" />
 
     <!-- No-op if the directories already exist, but do this so that downstream
       steps do not fail -->
     <mkdir dir="${website.staging.dir}" />
-    <mkdir dir="${website.source.javadoc.location}" />
-
-    <copy todir="${website.staging.dir}/apidocs">
-      <fileset dir="${website.source.javadoc.location}">
-        <include name="**/*.*" />
-      </fileset>
-    </copy>
 
     <copy todir="${website.staging.dir}/config">
       <fileset dir="${website.source.config.location}">

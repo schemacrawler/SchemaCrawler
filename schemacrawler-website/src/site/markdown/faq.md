@@ -204,7 +204,7 @@ _For more details, see scripting examples in the [SchemaCrawler examples](https:
 
 SchemaCrawler is an API that improves on the standard JDBC metadata facilities. SchemaCrawler provides an easy to use set of plain old Java objects (POJOs) that represent your database schema.
 
-Read [How to Get Database Metadata as Java POJOs](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li), and browse the [javadocs](apidocs/index.html).
+Read [How to Get Database Metadata as Java POJOs](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li), and browse the [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/).
 
 _For more details, see scripting example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\api` directory._
 
