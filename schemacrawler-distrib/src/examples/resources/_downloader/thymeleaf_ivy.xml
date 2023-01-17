@@ -9,14 +9,10 @@
   <dependencies>
     <dependency org="org.thymeleaf" name="thymeleaf"
       rev="3.1.1.RELEASE" conf="binaries->default" />
-    <dependency org="org.slf4j" name="slf4j-jdk14"
-      rev="1.7.32" conf="binaries->default" />
 
     <exclude org="javax.servlet" module="servlet-api" />
-    <exclude org="org.slf4j" module="slf4j-api" type="tests" ext="jar" />
-    <exclude org="com.fasterxml.jackson.core" module="jackson-databind" />
-    <exclude org="com.fasterxml.jackson.core" module="jackson-annotations" />
-    <exclude org="com.fasterxml.jackson.core" module="jackson-core" />
-    <exclude org="com.fasterxml.jackson.datatype" module="jackson-datatype-jsr310" />
+    <exclude org="org.slf4j" />
+    <exclude org="com.fasterxml.jackson.core" />
+    <exclude org="com.fasterxml.jackson.datatype" />
   </dependencies>
 </ivy-module>

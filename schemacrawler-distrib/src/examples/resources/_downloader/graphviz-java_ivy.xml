@@ -9,5 +9,7 @@
   <dependencies>
     <dependency org="guru.nidi" name="graphviz-java"
                 rev="0.18.1" conf="binaries->default" />
+                
+    <exclude org="org.slf4j" />
   </dependencies>
 </ivy-module>
