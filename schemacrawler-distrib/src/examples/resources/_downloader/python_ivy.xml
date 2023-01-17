@@ -11,5 +11,6 @@
                 rev="2.7.3" conf="binaries->default" />
 
     <exclude org="jline" module="jline" />
+    <exclude org="io.netty" />
   </dependencies>
 </ivy-module>
