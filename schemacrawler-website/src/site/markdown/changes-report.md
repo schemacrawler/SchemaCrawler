@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+
+<a name="a16.19.7"></a>
+## Release 16.19.7 - 2023-01-20
+
+- Clean up interdependencies in distributed libraries
+
+
 <a name="a16.19.6"></a>
 ## Release 16.19.6 - 2023-01-12
 
