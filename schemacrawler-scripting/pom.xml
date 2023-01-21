@@ -94,6 +94,16 @@
       <artifactId>jruby</artifactId>
       <version>9.4.0.0</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.github.jnr</groupId>
+          <artifactId>jnr-posix</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm-analysis</artifactId>
+        </exclusion> 
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.python</groupId>
@@ -141,6 +151,10 @@
           <groupId>com.github.jnr</groupId>
           <artifactId>jnr-posix</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm-analysis</artifactId>
+        </exclusion>        
       </exclusions>
     </dependency>
     <dependency>
@@ -149,6 +163,18 @@
       <version>2.2.13</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.jnr</groupId>
+      <artifactId>jnr-posix</artifactId>
+      <version>3.1.16</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ow2.asm</groupId>
+      <artifactId>asm-analysis</artifactId>
+      <version>9.3</version>
+      <scope>provided</scope>
+    </dependency>    
     <!-- graphviz-java dependencies -->
     <dependency>
       <groupId>guru.nidi</groupId>
