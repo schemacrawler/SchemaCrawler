@@ -16,3 +16,4 @@ FROM
 WHERE
   NAMESPACES.NSPNAME NOT IN ('pg_catalog', 'information_schema')
   AND NAMESPACES.NSPNAME !~ '^pg_toast'
+  AND TABLES.RELKIND IN ('r', 'v')
