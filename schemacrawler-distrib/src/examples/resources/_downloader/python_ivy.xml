@@ -10,7 +10,19 @@
     <dependency org="org.python" name="jython-slim"
                 rev="2.7.3" conf="binaries->default" />
 
-    <exclude org="jline" module="jline" />
-    <exclude org="io.netty" />
+    <exclude  org="jline" />
+    <exclude  org="io.netty" />
+    <exclude  org="javax.servlet" />
+    <exclude  org="com.google.code.findbugs" />
+    <exclude  org="org.checkerframework" />
+    <exclude  org="com.google.errorprone" />
+
+    <override org="com.github.jnr" module="jnr-ffi"
+              rev="2.2.13" />
+    <override org="com.github.jnr" module="jnr-posix"
+              rev="3.1.16" />
+    <override org="org.ow2.asm"
+              rev="9.3" />
+
   </dependencies>
 </ivy-module>
