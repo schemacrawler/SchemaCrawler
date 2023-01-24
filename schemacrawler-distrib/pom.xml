@@ -136,7 +136,7 @@
             <dependency>
               <groupId>org.apache.ant</groupId>
               <artifactId>ant</artifactId>
-              <version>1.10.12</version>
+              <version>1.10.13</version>
             </dependency>
             <dependency>
               <groupId>org.apache.ivy</groupId>
@@ -153,7 +153,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.5.0</version>
         </plugin>
       </plugins>
     </pluginManagement>

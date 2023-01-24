@@ -46,7 +46,7 @@ jobs:
 
     - id: configure-pages
       name: Setup Pages
-      uses: actions/configure-pages@v2
+      uses: actions/configure-pages@v3
 
     - id: upload-artifact
       name: Upload artifact
