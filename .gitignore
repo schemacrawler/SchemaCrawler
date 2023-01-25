@@ -29,6 +29,7 @@
 /schemacrawler-docker-compose/*.html
 
 tree.txt
+**/gpl*.*
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij+all,visualstudiocode,maven,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,intellij+all,visualstudiocode,maven,gradle
