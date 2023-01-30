@@ -22,7 +22,7 @@
     <override org="com.github.jnr" module="jnr-posix"
               rev="3.1.16" />
     <override org="org.ow2.asm"
-              rev="9.3" />
+              rev="9.4" />
 
   </dependencies>
 </ivy-module>
