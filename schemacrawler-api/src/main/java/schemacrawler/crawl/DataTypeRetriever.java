@@ -189,6 +189,9 @@ final class DataTypeRetriever extends AbstractRetriever {
       LOGGER.log(
           Level.INFO,
           new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
+    } catch (final SQLException e) {
+      logPossiblyUnsupportedSQLFeature(
+          new StringFormat("Could not retrieve system column data types"), e);
     }
   }
 
@@ -239,6 +242,9 @@ final class DataTypeRetriever extends AbstractRetriever {
 
         catalog.addColumnDataType(columnDataType);
       }
+    } catch (final SQLException e) {
+      logPossiblyUnsupportedSQLFeature(
+          new StringFormat("Could not retrieve user-defined column data types"), e);
     }
   }
 }

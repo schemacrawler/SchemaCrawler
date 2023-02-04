@@ -163,8 +163,8 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
           createPrimaryKeyForTable(table, results);
         }
       } catch (final SQLException e) {
-        throw new WrappedSQLException(
-            String.format("Could not retrieve primary keys for table <%s>", table), e);
+        logPossiblyUnsupportedSQLFeature(
+            new StringFormat("Could not retrieve primary keys for table <%s>", table), e);
       }
     }
   }
