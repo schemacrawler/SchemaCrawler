@@ -19,7 +19,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.5.1</version>
+      <version>42.5.3</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
@@ -98,7 +98,7 @@
     <dependency>
       <groupId>org.firebirdsql.jdbc</groupId>
       <artifactId>jaybird</artifactId>
-      <version>5.0.0.java8</version>
+      <version>5.0.1.java8</version>
     </dependency>
     <dependency>
       <groupId>io.trino</groupId>
