@@ -89,9 +89,9 @@ public class LinterConfigsDispatchTest {
       }
       if (linterConfig
           .getLinterId()
-          .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes")) {
+          .equals("schemacrawler.tools.linter.LinterTableWithNoPrimaryKey")) {
         assertThat(linterConfig.getSeverity(), is(LintSeverity.critical));
-        assertThat(linterConfig.getThreshold(), is(1));
+        assertThat(linterConfig.getThreshold(), is(2));
         assertThat(linterConfig.isRunLinter(), is(true));
         asserted = true;
       }

@@ -8,11 +8,11 @@
   "columnInclusionPattern": null,
   "config":   {
   },
-  "linterId": "schemacrawler.tools.linter.LinterTableWithNoIndexes",
+  "linterId": "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
   "runLinter": true,
   "severity": "critical",
   "tableExclusionPattern": null,
   "tableInclusionPattern": null,
-  "threshold": 1
+  "threshold": 2
 }"]
 }

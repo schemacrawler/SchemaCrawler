@@ -7,12 +7,12 @@ Database                                                      [database]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	column with same name but different data types	STATE [CHARACTER, VARCHAR]
 	column with same name but different data types	FIRSTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
 	column with same name but different data types	LASTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
-	column with same name but different data types	UPDATE [CLOB, VARCHAR]
 	column with same name but different data types	ID [BIGINT, INTEGER]
 	column with same name but different data types	DATA [CLOB, PUBLIC.BOOKS.VALID_STRING]
+	column with same name but different data types	STATE [CHARACTER, VARCHAR]
+	column with same name but different data types	UPDATE [CLOB, VARCHAR]
 	cycles in table relationships	PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS
 
 
@@ -61,6 +61,34 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 
 
 
+PUBLIC.BOOKS.Celebrities                                         [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	no non-nullable data columns	
+                                                             [lint, low]
+	should have remarks	
+	should have remarks	Id, NAME
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+	redundant index	PUBLIC.BOOKS."Celebrity Updates".SYS_FK_10127
+	redundant index	PUBLIC.BOOKS."Celebrity Updates"."PK Celebrity Updates"
+                                                          [lint, medium]
+	no non-nullable data columns	
+	spaces in name, or reserved word	
+	spaces in name, or reserved word	Celebrity Id
+	spaces in name, or reserved word	UPDATE
+                                                             [lint, low]
+	should have remarks	
+	should have remarks	Celebrity Id, UPDATE
+
+
+
 PUBLIC.BOOKS.COUPONS                                             [table]
 ------------------------------------------------------------------------
 
@@ -91,24 +119,6 @@ PUBLIC.BOOKS.CUSTOMERS                                           [table]
 	empty table	
 	should have remarks	
 	should have remarks	ID, FIRSTNAME, LASTNAME, AGE
-
-
-
-PUBLIC.BOOKS."Global Counts"                                     [table]
-------------------------------------------------------------------------
-
-                                                            [lint, high]
-	no primary key	
-	primary key may not be a surrogate	
-                                                          [lint, medium]
-	no non-nullable data columns	
-	no indexes	
-	spaces in name, or reserved word	
-	spaces in name, or reserved word	Global Count
-	spaces in name, or reserved word	UPDATE
-                                                             [lint, low]
-	should have remarks	
-	should have remarks	Global Count, UPDATE
 
 
 

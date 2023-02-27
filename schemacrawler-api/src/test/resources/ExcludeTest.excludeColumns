@@ -60,6 +60,20 @@ schema: PUBLIC.BOOKS
     column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
       database type: INTEGER
       type: INTEGER
+  table: PUBLIC.BOOKS.Celebrities
+    column: PUBLIC.BOOKS.Celebrities.Id
+      database type: INTEGER
+      type: INTEGER
+    column: PUBLIC.BOOKS.Celebrities.NAME
+      database type: VARCHAR
+      type: VARCHAR
+  table: PUBLIC.BOOKS."Celebrity Updates"
+    column: PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"
+      database type: INTEGER
+      type: INTEGER
+    column: PUBLIC.BOOKS."Celebrity Updates"."UPDATE"
+      database type: VARCHAR
+      type: VARCHAR
   table: PUBLIC.BOOKS.COUPONS
     column: PUBLIC.BOOKS.COUPONS.DATA
       database type: CLOB
@@ -84,13 +98,6 @@ schema: PUBLIC.BOOKS
     column: PUBLIC.BOOKS.CUSTOMERS.AGE
       database type: AGE_TYPE
       type: SMALLINT
-  table: PUBLIC.BOOKS."Global Counts"
-    column: PUBLIC.BOOKS."Global Counts"."Global Count"
-      database type: INTEGER
-      type: INTEGER
-    column: PUBLIC.BOOKS."Global Counts"."UPDATE"
-      database type: VARCHAR
-      type: VARCHAR
   table: PUBLIC.BOOKS.PUBLISHERS
     column: PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
       database type: VARCHAR

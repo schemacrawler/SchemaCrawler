@@ -377,7 +377,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_10126</td>
+		<td colspan='2' class='name'>SYS_FK_10120</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -454,7 +454,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_10126</td>
+		<td colspan='2' class='name'>SYS_FK_10120</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -472,6 +472,110 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID ←(0..1) <a href='#books_f4a675c8'>PREVIOUSEDITIONID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+	<caption style='background-color: #FFFF00;'>
+		<span id='celebrities_db1258df' class='caption_name'>PUBLIC.BOOKS.Celebrities</span>
+		<span class='caption_description'>[table]</span>
+	</caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'><b><i>Id</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_Celebrities</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>Id</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_FK_10127</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>Id ←(0..1) <a href='#celebrityupdates_f5088e8b'>PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"</a></td>
+		<td class='minwidth'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+	<caption style='background-color: #FFFF00;'>
+		<span id='celebrityupdates_f5088e8b' class='caption_name'>PUBLIC.BOOKS."Celebrity Updates"</span>
+		<span class='caption_description'>[table]</span>
+	</caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'><b><i>"Celebrity Id"</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>"PK Celebrity Updates"</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>"Celebrity Id"</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_FK_10127</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>"Celebrity Id" (0..1)→ <a href='#celebrities_db1258df'>PUBLIC.BOOKS.Celebrities.Id</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -583,17 +687,6 @@ along with the latest updated information</td>
 
 <table>
 	<caption style='background-color: #FFFF00;'>
-		<span id='globalcounts_7fcacf9f' class='caption_name'>PUBLIC.BOOKS."Global Counts"</span>
-		<span class='caption_description'>[table]</span>
-	</caption>
-
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-	<caption style='background-color: #FFFF00;'>
 		<span id='publishers_8037d535' class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span>
 		<span class='caption_description'>[table]</span>
 	</caption>
@@ -626,7 +719,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_PK_10134</td>
+		<td colspan='2' class='name'>SYS_PK_10126</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>

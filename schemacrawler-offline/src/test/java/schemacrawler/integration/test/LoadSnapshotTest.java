@@ -69,7 +69,7 @@ public class LoadSnapshotTest {
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
   }
 
   @BeforeEach
@@ -88,7 +88,7 @@ public class LoadSnapshotTest {
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
       assertThat("Could not obtain schema", schema, notNullValue());
       assertThat(
-          "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
+          "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
 
       serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
 

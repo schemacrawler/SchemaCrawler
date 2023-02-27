@@ -394,7 +394,7 @@ public class SchemaCrawlerTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
-      assertThat("Table count does not match", tables, arrayWithSize(13));
+      assertThat("Table count does not match", tables, arrayWithSize(14));
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table : tables) {
         out.println("  table: " + table.getFullName());
@@ -617,12 +617,13 @@ public class SchemaCrawlerTest {
     final String[] tableNames = {
       "AUTHORS",
       "BOOKS",
+      "Celebrities",
       "COUPONS",
       "CUSTOMERDATA",
       "CUSTOMERS",
-      "Global Counts",
       "PUBLISHERS",
       "BOOKAUTHORS",
+      "Celebrity Updates",
       "ΒΙΒΛΊΑ",
       "AUTHORSLIST"
     };

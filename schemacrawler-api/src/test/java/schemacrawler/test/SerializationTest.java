@@ -62,7 +62,7 @@ public class SerializationTest {
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
 
     final Catalog clonedCatalog = SerializationUtils.clone(catalog);
 
@@ -76,6 +76,6 @@ public class SerializationTest {
     assertThat(
         "Unexpected number of tables in the schema",
         clonedCatalog.getTables(clonedSchema),
-        hasSize(10));
+        hasSize(11));
   }
 }

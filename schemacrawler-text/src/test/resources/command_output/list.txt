@@ -11,10 +11,11 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 along with the latest updated information
 PUBLIC.BOOKS.BOOKS                                               [table]
   Details for published books
+PUBLIC.BOOKS.Celebrities                                         [table]
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 PUBLIC.BOOKS.COUPONS                                             [table]
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 PUBLIC.BOOKS.CUSTOMERS                                           [table]
-PUBLIC.BOOKS."Global Counts"                                     [table]
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
   List of book publishers
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]

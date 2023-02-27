@@ -175,7 +175,7 @@ public class TableColumnRetrieverTest {
         }
       }
     }
-    assertThat(columnCount, is(53));
+    assertThat(columnCount, is(55));
     assertThat(hiddenColumnCount, is(1));
   }
 
@@ -201,7 +201,7 @@ public class TableColumnRetrieverTest {
             getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(13));
+    assertThat(tables, hasSize(14));
     for (final Table table : tables) {
       assertThat(table.getColumns(), is(empty()));
       assertThat(table.getForeignKeys(), is(empty()));

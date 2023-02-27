@@ -160,6 +160,63 @@ SYS_CT_10113                                          [check constraint]
 
 
 
+PUBLIC.BOOKS.Celebrities                                         [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+  NAME                              VARCHAR(20)                 
+
+Primary Key
+
+PK_Celebrities                                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+SYS_FK_10130                               [foreign key, with no action]
+  Id <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+PK_Celebrities                                            [unique index]
+  Id                                ascending                   
+
+Table Constraints
+
+SYS_CT_10127                                          [check constraint]
+  Id                                                            
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+  "UPDATE"                          VARCHAR(20)                 
+
+Primary Key
+
+"PK Celebrity Updates"                                     [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+SYS_FK_10130                               [foreign key, with no action]
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS.Celebrities.Id                              
+
+Indexes
+
+"PK Celebrity Updates"                                    [unique index]
+  "Celebrity Id"                    ascending                   
+
+SYS_FK_10130                                          [non-unique index]
+  "Celebrity Id"                    ascending                   
+
+Table Constraints
+
+SYS_CT_10129                                          [check constraint]
+  "Celebrity Id"                                                
+
+
+
 PUBLIC.BOOKS.COUPONS                                             [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
@@ -236,13 +293,6 @@ SYS_CT_10097                                          [check constraint]
 
 
 
-PUBLIC.BOOKS."Global Counts"                                     [table]
-------------------------------------------------------------------------
-  "Global Count"                    INTEGER                     
-  "UPDATE"                          VARCHAR(20)                 
-
-
-
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
@@ -293,13 +343,13 @@ PK_ΒΙΒΛΊΑ                                                 [unique index]
 
 Table Constraints
 
-SYS_CT_10128                                          [check constraint]
+SYS_CT_10133                                          [check constraint]
   ΜΟΝΑΔΙΚΌΣ                                                     
 
-SYS_CT_10129                                          [check constraint]
+SYS_CT_10134                                          [check constraint]
   ΤΊΤΛΟΣ                                                        
 
-SYS_CT_10130                                          [check constraint]
+SYS_CT_10135                                          [check constraint]
   ΕΚΔΌΤΗΣ                                                       
 
 

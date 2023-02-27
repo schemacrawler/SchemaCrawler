@@ -14,6 +14,14 @@
     # columns: 7
     # child tables: [PUBLIC.BOOKS.BOOKAUTHORS, PUBLIC.BOOKS.BOOKS, PUBLIC."PUBLISHER SALES".SALES]
     # parent tables: [PUBLIC.BOOKS.BOOKS]
+  table: PUBLIC.BOOKS.Celebrities
+    # columns: 2
+    # child tables: [PUBLIC.BOOKS."Celebrity Updates"]
+    # parent tables: []
+  table: PUBLIC.BOOKS."Celebrity Updates"
+    # columns: 2
+    # child tables: []
+    # parent tables: [PUBLIC.BOOKS.Celebrities]
   table: PUBLIC.BOOKS.COUPONS
     # columns: 4
     # child tables: []
@@ -24,10 +32,6 @@
     # parent tables: []
   table: PUBLIC.BOOKS.CUSTOMERS
     # columns: 4
-    # child tables: []
-    # parent tables: []
-  table: PUBLIC.BOOKS."Global Counts"
-    # columns: 2
     # child tables: []
     # parent tables: []
   table: PUBLIC.BOOKS.PUBLISHERS

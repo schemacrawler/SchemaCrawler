@@ -97,7 +97,7 @@ public class Issue482Test extends BaseAdditionalDatabaseTest {
 
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource(), schemaCrawlerOptions);
 
-    assertThat(catalog.getTables(), hasSize(10));
+    assertThat(catalog.getTables(), hasSize(11));
     assertThat(catalog.getSynonyms(), hasSize(2));
 
     final Catalog clonedCatalog = SerializationUtils.clone(catalog);

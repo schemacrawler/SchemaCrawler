@@ -31,6 +31,22 @@ schema: PUBLIC.BOOKS
     # imported foreign keys: 3
     # exported: 1
     # privileges: 6
+  table: PUBLIC.BOOKS.Celebrities
+    # columns: 2
+    # constraints: 2
+    # indexes: 1
+    # foreign keys: 1
+    # imported foreign keys: 1
+    # exported: 0
+    # privileges: 6
+  table: PUBLIC.BOOKS."Celebrity Updates"
+    # columns: 2
+    # constraints: 3
+    # indexes: 2
+    # foreign keys: 1
+    # imported foreign keys: 0
+    # exported: 1
+    # privileges: 6
   table: PUBLIC.BOOKS.COUPONS
     # columns: 4
     # constraints: 2
@@ -51,14 +67,6 @@ schema: PUBLIC.BOOKS
     # columns: 4
     # constraints: 4
     # indexes: 1
-    # foreign keys: 0
-    # imported foreign keys: 0
-    # exported: 0
-    # privileges: 6
-  table: PUBLIC.BOOKS."Global Counts"
-    # columns: 2
-    # constraints: 0
-    # indexes: 0
     # foreign keys: 0
     # imported foreign keys: 0
     # exported: 0

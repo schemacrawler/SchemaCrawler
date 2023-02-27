@@ -45,7 +45,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-SYS_FK_10126                               [foreign key, with no action]
+SYS_FK_10120                               [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 
@@ -67,11 +67,43 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-SYS_FK_10126                               [foreign key, with no action]
+SYS_FK_10120                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
+
+
+
+PUBLIC.BOOKS.Celebrities                                         [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+
+Primary Key
+
+PK_Celebrities                                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+SYS_FK_10127                               [foreign key, with no action]
+  Id <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+
+Primary Key
+
+"PK Celebrity Updates"                                     [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+SYS_FK_10127                               [foreign key, with no action]
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS.Celebrities.Id                              
 
 
 
@@ -108,11 +140,6 @@ PK_CUSTOMERS                                               [primary key]
 
 
 
-PUBLIC.BOOKS."Global Counts"                                     [table]
-------------------------------------------------------------------------
-
-
-
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
 List of book publishers
@@ -122,7 +149,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10134                                               [primary key]
+SYS_PK_10126                                               [primary key]
   ID                                                            
 
 Foreign Keys

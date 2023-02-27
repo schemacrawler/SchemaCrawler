@@ -31,7 +31,6 @@ CREATE TABLE Books
 )
 ;
 
--- Table with a reserved word for a column name
 -- Contains unnamed foreign key
 -- Foreign keys have a different natural and alphabetical sort order
 CREATE TABLE BookAuthors

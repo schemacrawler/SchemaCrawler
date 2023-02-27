@@ -66,7 +66,7 @@ public class IdentifiersTest {
   @Test
   public void quotedIdentifiers() {
     final String[] words =
-        new String[] {"1234", "w@w", "e.e", "१२३४५६७८९०", "Global Counts", "Trail ", " leaD"};
+        new String[] {"1234", "w@w", "e.e", "१२३४५६७८९०", "Celebrity Updates", "Trail ", " leaD"};
     for (final String word : words) {
       assertThat(word, identifiers.isReservedWord(word), is(false));
       assertThat(word, identifiers.isToBeQuoted(word), is(true));

@@ -119,6 +119,53 @@ FK_PREVIOUSEDITION                                    [non-unique index]
 
 
 
+PUBLIC.BOOKS.Celebrities                                         [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+  NAME                              VARCHAR(20)                 
+
+Primary Key
+
+PK_Celebrities                                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+SYS_FK_10127                               [foreign key, with no action]
+  Id <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+PK_Celebrities                                            [unique index]
+  Id                                ascending                   
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+  UPDATE                            VARCHAR(20)                 
+
+Primary Key
+
+"PK Celebrity Updates"                                     [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+SYS_FK_10127                               [foreign key, with no action]
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS.Celebrities.Id                              
+
+Indexes
+
+"PK Celebrity Updates"                                    [unique index]
+  "Celebrity Id"                    ascending                   
+
+SYS_FK_10127                                          [non-unique index]
+  "Celebrity Id"                    ascending                   
+
+
+
 PUBLIC.BOOKS.COUPONS                                             [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
@@ -171,13 +218,6 @@ Indexes
 
 PK_CUSTOMERS                                              [unique index]
   ID                                ascending                   
-
-
-
-PUBLIC.BOOKS."Global Counts"                                     [table]
-------------------------------------------------------------------------
-  "Global Count"                    INTEGER                     
-  UPDATE                            VARCHAR(20)                 
 
 
 

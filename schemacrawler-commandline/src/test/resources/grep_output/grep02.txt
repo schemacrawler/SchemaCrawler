@@ -84,6 +84,34 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
 
 
 
+PUBLIC.BOOKS.Celebrities                                         [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+  NAME                              VARCHAR(20)                 
+
+Primary Key
+
+PK_Celebrities                                             [primary key]
+  Id                                                            
+
+Foreign Keys
+
+SYS_FK_10130                               [foreign key, with no action]
+  Id <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+PK_Celebrities                                            [unique index]
+  Id                                ascending                   
+
+Table Constraints
+
+SYS_CT_10127                                          [check constraint]
+  Id                                                            
+BOOKS."Celebrities"."Id" IS NOT NULL
+
+
+
 PUBLIC.BOOKS.CUSTOMERS                                           [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
@@ -189,23 +217,23 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10151                                          [check constraint]
+SYS_CT_10156                                          [check constraint]
   ID                                                            
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10152                                          [check constraint]
+SYS_CT_10157                                          [check constraint]
   FIRSTNAME                                                     
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10153                                          [check constraint]
+SYS_CT_10158                                          [check constraint]
   LASTNAME                                                      
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10154                                          [check constraint]
+SYS_CT_10159                                          [check constraint]
   ADDRESS2                                                      
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10155                                          [check constraint]
+SYS_CT_10160                                          [check constraint]
   PUBLICATION_ID                                                
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 

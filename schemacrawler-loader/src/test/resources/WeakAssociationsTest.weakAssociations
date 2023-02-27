@@ -5,6 +5,7 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
+  table: PUBLIC.BOOKS.Celebrities
   table: PUBLIC.BOOKS.COUPONS
     weak association: SCHCRWLR_20BE6F95_3B49BEC4
       column references: 
@@ -12,13 +13,13 @@ schema: PUBLIC.BOOKS
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
-  table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
     weak association: SCHCRWLR_AFD2BA21_B8DA20C0
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
   table: PUBLIC.BOOKS.BOOKAUTHORS
+  table: PUBLIC.BOOKS."Celebrity Updates"
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
   table: PUBLIC.BOOKS.AUTHORSLIST
 schema: PUBLIC.INFORMATION_SCHEMA

@@ -75,6 +75,38 @@ Foreign Keys
 
 
 
+Celebrities                                                      [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..1)--> Celebrities.Id                              
+
+
+
 COUPONS                                                          [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
@@ -105,11 +137,6 @@ Primary Key
 
                                                            [primary key]
   ID                                                            
-
-
-
-"Global Counts"                                                  [table]
-------------------------------------------------------------------------
 
 
 

@@ -127,7 +127,7 @@ public class TableExtRetrieverTest {
 
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     final Table table =
         catalog.lookupTable(schema, "CUSTOMERS").orElseThrow(IllegalAccessException::new);
 
@@ -200,7 +200,7 @@ public class TableExtRetrieverTest {
     tableExtRetriever.retrieveIndexInformation();
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       for (final Index index : table.getIndexes()) {
         assertThat(index.getRemarks(), is(remarks));
@@ -219,7 +219,7 @@ public class TableExtRetrieverTest {
                 SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       for (final Index index : table.getIndexes()) {
         final List<IndexColumn> columns = index.getColumns();
@@ -262,7 +262,7 @@ public class TableExtRetrieverTest {
     tableExtRetriever.retrieveTableConstraintInformation();
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       for (final TableConstraint constraint : table.getTableConstraints()) {
         if (constraint instanceof ForeignKey) {
@@ -308,7 +308,7 @@ public class TableExtRetrieverTest {
     tableExtRetriever.retrieveTableDefinitions();
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       assertThat(table.getDefinition(), is(definition));
     }
@@ -321,7 +321,7 @@ public class TableExtRetrieverTest {
     int viewCount;
     final Collection<Table> tables = catalog.getTables();
     viewCount = 0;
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       if (!(table instanceof View)) {
         continue;
@@ -355,7 +355,7 @@ public class TableExtRetrieverTest {
     tableExtRetriever.retrieveViewTableUsage();
 
     viewCount = 0;
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       if (!(table instanceof View)) {
         continue;

@@ -97,7 +97,7 @@ public class SchemaCrawlerExecutableTest {
 
     final Catalog catalog = executable.getCatalog();
     assertThat(catalog.getSchemas(), hasSize(6));
-    assertThat(catalog.getTables(), hasSize(19));
+    assertThat(catalog.getTables(), hasSize(20));
   }
 
   @Test

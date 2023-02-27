@@ -44,7 +44,7 @@ schema: PUBLIC.BOOKS
           PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       attributes: 
         PK_NAME: PK_BOOKS
-    foreign-key: SYS_FK_10126
+    foreign-key: SYS_FK_10120
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
@@ -75,6 +75,13 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
+  table: PUBLIC.BOOKS.Celebrities
+    foreign-key: SYS_FK_10127
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS.Celebrities.Id
+      attributes: 
+        PK_NAME: PK_Celebrities
   table: PUBLIC.BOOKS.COUPONS
     weak-association: SCHCRWLR_20BE6F95_3B49BEC4
       column references: 
@@ -82,14 +89,13 @@ schema: PUBLIC.BOOKS
           PUBLIC."PUBLISHER SALES".SALES.COUPON_ID --> PUBLIC.BOOKS.COUPONS.ID
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
-  table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
     foreign-key: FK_ΒΙΒΛΊΑ_PUBLISHERS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
       attributes: 
-        PK_NAME: SYS_PK_10134
+        PK_NAME: SYS_PK_10126
     weak-association: SCHCRWLR_AFD2BA21_B8DA20C0
       column references: 
         key sequence: 1
@@ -105,19 +111,26 @@ schema: PUBLIC.BOOKS
         REMARKS: Overwritten foreign key remarks line 1
         some tag 1: tagvalue1
         tag2: tag value 2
-    foreign-key: SYS_FK_10126
+    foreign-key: SYS_FK_10120
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       attributes: 
         PK_NAME: PK_BOOKS
+  table: PUBLIC.BOOKS."Celebrity Updates"
+    foreign-key: SYS_FK_10127
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS.Celebrities.Id
+      attributes: 
+        PK_NAME: PK_Celebrities
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     foreign-key: FK_ΒΙΒΛΊΑ_PUBLISHERS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
       attributes: 
-        PK_NAME: SYS_PK_10134
+        PK_NAME: SYS_PK_10126
   table: PUBLIC.BOOKS.AUTHORSLIST
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC

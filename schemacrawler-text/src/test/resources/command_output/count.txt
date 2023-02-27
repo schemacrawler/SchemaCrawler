@@ -9,10 +9,10 @@ PUBLIC.BOOKS.AUTHORS                                             20 rows
 PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
 PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
 PUBLIC.BOOKS.BOOKS                                               20 rows
+PUBLIC.BOOKS."Celebrity Updates"                                  5 rows
 PUBLIC.BOOKS.COUPONS                                             10 rows
 PUBLIC.BOOKS.CUSTOMERDATA                                          empty
 PUBLIC.BOOKS.CUSTOMERS                                             empty
-PUBLIC.BOOKS."Global Counts"                                     10 rows
 PUBLIC.BOOKS.PUBLISHERS                                          20 rows
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                                empty
 PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows

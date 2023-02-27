@@ -118,7 +118,7 @@ public class PrimaryKeyRetrieverTest {
             getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       assertThat(table.getIndexes(), is(empty()));
       assertThat(table.getPrimaryKey(), is(nullValue()));
@@ -151,12 +151,12 @@ public class PrimaryKeyRetrieverTest {
     primaryKeyRetriever.retrievePrimaryKeys(catalog.getAllTables());
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(20));
     for (final Table table : tables) {
       if (!Arrays.asList(
-              "Global Counts",
               "AUTHORSLIST",
               "BOOKAUTHORS",
+              "Global Counts",
               "PUBLICATIONWRITERS",
               "SALES",
               "SALESDATA")
