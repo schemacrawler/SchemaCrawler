@@ -9,8 +9,8 @@ Summary of schema lints:
 [medium]      2- column where NULL may be intended
 [medium]      3- unique index with nullable columns
 [medium]      6- column with same name but different data types
-[medium]      6- spaces in name, or reserved word
 [medium]      7- no non-nullable data columns
+[medium]      8- spaces in name, or reserved word
 [medium]     10- incrementing columns
   [high]      2- foreign key data type different from primary key
   [high]      6- primary key may not be a surrogate

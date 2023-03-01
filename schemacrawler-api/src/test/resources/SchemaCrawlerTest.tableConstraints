@@ -34,7 +34,7 @@ schema: PUBLIC.BOOKS
     constraint: SYS_CT_10113
       type: check
       on column: PUBLISHERID
-  table: PUBLIC.BOOKS.Celebrities
+  table: PUBLIC.BOOKS."Celebrities"
     constraint: PK_Celebrities
       type: primary_key
       on column: Id

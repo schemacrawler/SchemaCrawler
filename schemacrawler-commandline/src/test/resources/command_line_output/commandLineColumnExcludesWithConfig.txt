@@ -152,30 +152,30 @@ SYS_CT_10113                                          [check constraint]
 
 
 
-PUBLIC.BOOKS.Celebrities                                         [table]
+PUBLIC.BOOKS."Celebrities"                                       [table]
 ------------------------------------------------------------------------
-  Id                                INTEGER NOT NULL            
+  "Id"                              INTEGER NOT NULL            
   NAME                              VARCHAR(20)                 
 
 Primary Key
 
-PK_Celebrities                                             [primary key]
-  Id                                                            
+"PK_Celebrities"                                           [primary key]
+  "Id"                                                          
 
 Foreign Keys
 
 SYS_FK_10130                               [foreign key, with no action]
-  Id <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
-PK_Celebrities                                            [unique index]
-  Id                                ascending                   
+"PK_Celebrities"                                          [unique index]
+  "Id"                              ascending                   
 
 Table Constraints
 
 SYS_CT_10127                                          [check constraint]
-  Id                                                            
+  "Id"                                                          
 
 
 
@@ -192,7 +192,7 @@ Primary Key
 Foreign Keys
 
 SYS_FK_10130                               [foreign key, with no action]
-  "Celebrity Id" (0..1)--> PUBLIC.BOOKS.Celebrities.Id                              
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 Indexes
 

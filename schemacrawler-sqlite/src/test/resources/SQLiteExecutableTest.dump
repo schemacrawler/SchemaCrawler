@@ -5,7 +5,7 @@ Dump
 
 
 
-Authors                                                                 
+"Authors"                                                               
 ------------------------------------------------------------------------
 Id	FirstName	LastName	Address1	Address2	City	State	PostalCode	Country
 1	Oren	Shaffer	900-2273 Integer Avenue		Farmer City	MD	37032	Cook Islands
@@ -31,7 +31,7 @@ Id	FirstName	LastName	Address1	Address2	City	State	PostalCode	Country
 
 
 
-AuthorsList                                                             
+"AuthorsList"                                                           
 ------------------------------------------------------------------------
 Id	FirstName	LastName
 1	Oren	Shaffer
@@ -57,7 +57,7 @@ Id	FirstName	LastName
 
 
 
-BookAuthors                                                             
+"BookAuthors"                                                           
 ------------------------------------------------------------------------
 BookId	AuthorId	SomeData
 1	7	This is the latest update
@@ -83,7 +83,7 @@ BookId	AuthorId	SomeData
 
 
 
-Books                                                                   
+"Books"                                                                 
 ------------------------------------------------------------------------
 Id	Title	Description	PublisherId	PublicationDate	Price	PreviousEditionId
 1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99	1
@@ -109,7 +109,7 @@ Id	Title	Description	PublisherId	PublicationDate	Price	PreviousEditionId
 
 
 
-Celebrities                                                             
+"Celebrities"                                                           
 ------------------------------------------------------------------------
 Id	Name
 1	Hop Whitney
@@ -131,7 +131,7 @@ Celebrity Id	UPDATE
 
 
 
-Coupons                                                                 
+"Coupons"                                                               
 ------------------------------------------------------------------------
 Id	Data	Coupons	Books
 1	<binary>	NULL	NULL
@@ -147,7 +147,7 @@ Id	Data	Coupons	Books
 
 
 
-Publishers                                                              
+"Publishers"                                                            
 ------------------------------------------------------------------------
 Id	Publisher
 1	Dalton Lewis
@@ -179,7 +179,7 @@ EMPLOYEEID	EMPLOYEE_NAME	START_DATE	END_DATE	ANNUAL_SALARY	HOURLY_RATE	ACTIVE
 
 
 
-Βιβλία                                                                  
+"Βιβλία"                                                                
 ------------------------------------------------------------------------
 Μοναδικός	Τίτλος	Περιγραφή	Εκδότης
 

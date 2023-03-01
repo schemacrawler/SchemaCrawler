@@ -481,13 +481,13 @@ along with the latest updated information</td>
 
 <table>
 	<caption style='background-color: #FFFF00;'>
-		<span id='celebrities_db1258df' class='caption_name'>PUBLIC.BOOKS.Celebrities</span>
+		<span id='celebrities_db1258df' class='caption_name'>PUBLIC.BOOKS."Celebrities"</span>
 		<span class='caption_description'>[table]</span>
 	</caption>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'><b><i>Id</i></b></td>
+		<td class='minwidth'><b><i>"Id"</i></b></td>
 		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
@@ -500,12 +500,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PK_Celebrities</td>
+		<td colspan='2' class='name'>"PK_Celebrities"</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>Id</td>
+		<td class='minwidth'>"Id"</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -518,12 +518,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_10127</td>
+		<td colspan='2' class='name'>SYS_FK_10130</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>Id ←(0..1) <a href='#celebrityupdates_f5088e8b'>PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"</a></td>
+		<td class='minwidth'>"Id" ←(0..1) <a href='#celebrityupdates_f5088e8b'>PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -570,12 +570,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_10127</td>
+		<td colspan='2' class='name'>SYS_FK_10130</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>"Celebrity Id" (0..1)→ <a href='#celebrities_db1258df'>PUBLIC.BOOKS.Celebrities.Id</a></td>
+		<td class='minwidth'>"Celebrity Id" (0..1)→ <a href='#celebrities_db1258df'>PUBLIC.BOOKS."Celebrities"."Id"</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>

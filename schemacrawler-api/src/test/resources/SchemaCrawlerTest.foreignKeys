@@ -93,35 +93,35 @@ schema: PUBLIC.BOOKS
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
-  table: PUBLIC.BOOKS.Celebrities
-    foreign key: SYS_FK_10127
+  table: PUBLIC.BOOKS."Celebrities"
+    foreign key: SYS_FK_10130
       definition: 
-      specific name: SYS_FK_10127
+      specific name: SYS_FK_10130
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
       update rule: no action
       referencing table: PUBLIC.BOOKS."Celebrity Updates"
-      referenced table: PUBLIC.BOOKS.Celebrities
+      referenced table: PUBLIC.BOOKS."Celebrities"
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS.Celebrities.Id
+          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS."Celebrities"."Id"
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS."Celebrity Updates"
           constrained column: PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"
   table: PUBLIC.BOOKS."Celebrity Updates"
-    foreign key: SYS_FK_10127
+    foreign key: SYS_FK_10130
       definition: 
-      specific name: SYS_FK_10127
+      specific name: SYS_FK_10130
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
       update rule: no action
       referencing table: PUBLIC.BOOKS."Celebrity Updates"
-      referenced table: PUBLIC.BOOKS.Celebrities
+      referenced table: PUBLIC.BOOKS."Celebrities"
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS.Celebrities.Id
+          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS."Celebrities"."Id"
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS."Celebrity Updates"
           constrained column: PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"

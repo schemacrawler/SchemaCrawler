@@ -190,16 +190,16 @@ digraph "SchemaCrawler_Diagram" {
   "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10120> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
-  /* PUBLIC.BOOKS.Celebrities -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* PUBLIC.BOOKS."Celebrities" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "celebrities_db1258df" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.Celebrities</i></b></td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS."Celebrities"</i></b></td>
 		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_8738cc3c.start' align='left'><b><i>Id</i></b></td>
+		<td port='id_8738cc3c.start' align='left'><b><i>"Id"</i></b></td>
 		<td align='left'> </td>
 		<td port='id_8738cc3c.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
@@ -212,7 +212,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "celebrityupdates_f5088e8b":"celebrityid_83e278d.start":w -> "celebrities_db1258df":"id_8738cc3c.end":e [label=<SYS_FK_10127> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "celebrityupdates_f5088e8b":"celebrityid_83e278d.start":w -> "celebrities_db1258df":"id_8738cc3c.end":e [label=<SYS_FK_10130> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
   /* PUBLIC.BOOKS."Celebrity Updates" -=-=-=-=-=-=-=-=-=-=-=-=-=- */

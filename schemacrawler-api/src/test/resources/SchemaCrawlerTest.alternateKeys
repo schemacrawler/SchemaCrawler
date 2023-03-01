@@ -5,7 +5,7 @@ schema: PUBLIC.BOOKS
         ordinal: 1
           PUBLIC.BOOKS.AUTHORS.ID
   table: PUBLIC.BOOKS.BOOKS
-  table: PUBLIC.BOOKS.Celebrities
+  table: PUBLIC.BOOKS."Celebrities"
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS

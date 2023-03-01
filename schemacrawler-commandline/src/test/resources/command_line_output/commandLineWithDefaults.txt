@@ -75,19 +75,19 @@ Foreign Keys
 
 
 
-Celebrities                                                      [table]
+"Celebrities"                                                    [table]
 ------------------------------------------------------------------------
-  Id                                INTEGER NOT NULL            
+  "Id"                              INTEGER NOT NULL            
 
 Primary Key
 
                                                            [primary key]
-  Id                                                            
+  "Id"                                                          
 
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
 
 
 
@@ -103,7 +103,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Celebrity Id" (0..1)--> Celebrities.Id                              
+  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
 
 
 

@@ -475,8 +475,8 @@ PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
     ~ REMARKS=
     ~ SQL_DATA_TYPE=4
 
-PUBLIC.BOOKS.Celebrities.Id
-  - short name=Celebrities.Id
+PUBLIC.BOOKS."Celebrities"."Id"
+  - short name="Celebrities"."Id"
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -497,8 +497,8 @@ PUBLIC.BOOKS.Celebrities.Id
     ~ NUM_PREC_RADIX=2
     ~ REMARKS=
     ~ SQL_DATA_TYPE=4
-PUBLIC.BOOKS.Celebrities.NAME
-  - short name=Celebrities.NAME
+PUBLIC.BOOKS."Celebrities".NAME
+  - short name="Celebrities".NAME
   - data-type=VARCHAR
   - size=20
   - decimal digits=0

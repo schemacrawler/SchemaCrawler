@@ -39,7 +39,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -66,7 +65,6 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @WithTestDatabase
 @ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Disabled("Temporarily disabled for issue #1033")
 public class TableRowCountsTest {
 
   private Catalog catalog;

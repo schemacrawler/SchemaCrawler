@@ -75,11 +75,11 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
-  table: PUBLIC.BOOKS.Celebrities
-    foreign-key: SYS_FK_10127
+  table: PUBLIC.BOOKS."Celebrities"
+    foreign-key: SYS_FK_10130
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS.Celebrities.Id
+          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS."Celebrities"."Id"
       attributes: 
         PK_NAME: PK_Celebrities
   table: PUBLIC.BOOKS.COUPONS
@@ -118,10 +118,10 @@ schema: PUBLIC.BOOKS
       attributes: 
         PK_NAME: PK_BOOKS
   table: PUBLIC.BOOKS."Celebrity Updates"
-    foreign-key: SYS_FK_10127
+    foreign-key: SYS_FK_10130
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS.Celebrities.Id
+          PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS."Celebrities"."Id"
       attributes: 
         PK_NAME: PK_Celebrities
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ

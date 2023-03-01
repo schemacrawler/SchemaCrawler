@@ -22,7 +22,7 @@ erDiagram
     INTEGER PREVIOUSEDITIONID
   }
 
-  PUBLIC-BOOKS-Celebrities {
+  PUBLIC-BOOKS-"Celebrities" {
     INTEGER Id
     VARCHAR NAME
   }
@@ -101,7 +101,7 @@ erDiagram
   PUBLIC-BOOKS-BOOKS ||--o{ PUBLIC-BOOKS-BOOKAUTHORS : "foreign key"
   PUBLIC-BOOKS-BOOKS ||--o{ PUBLIC-BOOKS-BOOKS : "foreign key"
   PUBLIC-BOOKS-BOOKS ||--o{ PUBLIC-"PUBLISHER SALES"-SALES : "foreign key"
-  PUBLIC-BOOKS-Celebrities ||--o{ PUBLIC-BOOKS-"Celebrity Updates" : "foreign key"
+  PUBLIC-BOOKS-"Celebrities" ||--o{ PUBLIC-BOOKS-"Celebrity Updates" : "foreign key"
   PUBLIC-BOOKS-PUBLISHERS ||--o{ PUBLIC-BOOKS-ΒΙΒΛΊΑ : "foreign key"
   PUBLIC-"PUBLISHER SALES"-REGIONS ||--o{ PUBLIC-"PUBLISHER SALES"-SALES : "foreign key"
   PUBLIC-"PUBLISHER SALES"-SALESDATA ||--o{ PUBLIC-"PUBLISHER SALES"-SALES : "foreign key"

@@ -5,7 +5,7 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
-  table: PUBLIC.BOOKS.Celebrities
+  table: PUBLIC.BOOKS."Celebrities"
   table: PUBLIC.BOOKS.COUPONS
     weak association: SCHCRWLR_20BE6F95_3B49BEC4
       column references: 

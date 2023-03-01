@@ -8,7 +8,7 @@ digraph SchemaCrawler_Diagram {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2023-02-26 14:02:33</td>
+		<td align='left'>2023-02-28 01:17:25</td>
 	</tr>
       </table>
     >,
@@ -378,11 +378,11 @@ along with the latest updated information</td>
 	celebrities_db1258df	[label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.Celebrities</i></b></td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS."Celebrities"</i></b></td>
 		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_8738cc3c.start' align='left'><b><i>Id</i></b></td>
+		<td port='id_8738cc3c.start' align='left'><b><i>"Id"</i></b></td>
 		<td align='left'> </td>
 		<td port='id_8738cc3c.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
@@ -393,7 +393,7 @@ along with the latest updated information</td>
 	</tr>
 	<hr/>
 	<tr>
-		<td colspan='3' bgcolor='#F4F4F4' align='left'>• PK_Celebrities (Id) [unique index]</td>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• "PK_Celebrities" ("Id") [unique index]</td>
 	</tr>
       </table>
     >];
@@ -418,14 +418,14 @@ along with the latest updated information</td>
 		<td colspan='3' bgcolor='#F4F4F4' align='left'>• "PK Celebrity Updates" ("Celebrity Id") [unique index]</td>
 	</tr>
 	<tr>
-		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_FK_10127 ("Celebrity Id") [non-unique index]</td>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_FK_10130 ("Celebrity Id") [non-unique index]</td>
 	</tr>
       </table>
     >];
 	celebrityupdates_f5088e8b:"celebrityid_83e278d.start":w -> celebrities_db1258df:"id_8738cc3c.end":e	[arrowhead=teetee,
 		arrowtail=teeodot,
 		dir=both,
-		label=<SYS_FK_10127>,
+		label=<SYS_FK_10130>,
 		style=solid];
 	coupons_54c3042b	[label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">

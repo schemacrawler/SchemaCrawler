@@ -75,19 +75,19 @@ FK_SALES_BOOK                              [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS.Celebrities                                         [table]
+PUBLIC.BOOKS."Celebrities"                                       [table]
 ------------------------------------------------------------------------
-  Id                                INTEGER NOT NULL            
+  "Id"                              INTEGER NOT NULL            
 
 Primary Key
 
-PK_Celebrities                                             [primary key]
-  Id                                                            
+"PK_Celebrities"                                           [primary key]
+  "Id"                                                          
 
 Foreign Keys
 
-SYS_FK_10127                               [foreign key, with no action]
-  Id <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+SYS_FK_10130                               [foreign key, with no action]
+  "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 
 
@@ -102,8 +102,8 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10127                               [foreign key, with no action]
-  "Celebrity Id" (0..1)--> PUBLIC.BOOKS.Celebrities.Id                              
+SYS_FK_10130                               [foreign key, with no action]
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 
 

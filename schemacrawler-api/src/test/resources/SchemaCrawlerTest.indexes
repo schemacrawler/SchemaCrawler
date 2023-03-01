@@ -56,9 +56,9 @@ PUBLIC.BOOKS.BOOKS
     cardinality: 0
     pages: 0
     index type: other
-PUBLIC.BOOKS.Celebrities
+PUBLIC.BOOKS."Celebrities"
   index: PK_Celebrities
-    columns: [PUBLIC.BOOKS.Celebrities.Id]
+    columns: [PUBLIC.BOOKS."Celebrities"."Id"]
     is unique: true
     cardinality: 0
     pages: 0
@@ -70,7 +70,7 @@ PUBLIC.BOOKS."Celebrity Updates"
     cardinality: 0
     pages: 0
     index type: other
-  index: SYS_FK_10127
+  index: SYS_FK_10130
     columns: [PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"]
     is unique: false
     cardinality: 0

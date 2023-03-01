@@ -227,6 +227,31 @@ public final class Identifiers {
     }
   }
 
+  private static boolean isMixedCase(final String name) {
+    if (isBlank(name)) {
+      return false;
+    }
+
+    boolean hasUpperCase = false;
+    boolean hasLowerCase = false;
+
+    for (int i = 0; i < name.codePointCount(0, name.length()); i++) {
+      final int c = name.codePointAt(i);
+
+      if (Character.isUpperCase(c)) {
+        hasUpperCase = true;
+      } else if (Character.isLowerCase(c)) {
+        hasLowerCase = true;
+      }
+
+      if (hasUpperCase && hasLowerCase) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   private final String identifierQuoteString;
   private final IdentifierQuotingStrategy identifierQuotingStrategy;
   private final Collection<String> reservedWords;
@@ -312,10 +337,10 @@ public final class Identifiers {
       case quote_all:
         return true;
       case quote_if_special_characters:
-        return !isIdentifier(name);
+        return !isIdentifier(name) || isMixedCase(name);
       case quote_if_special_characters_and_reserved_words:
       default:
-        return !isIdentifier(name) || isReservedWord(name);
+        return !isIdentifier(name) || isMixedCase(name) || isReservedWord(name);
     }
   }
 

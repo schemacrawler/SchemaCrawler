@@ -60,11 +60,11 @@ schema: PUBLIC.BOOKS
     column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
       database type: INTEGER
       type: INTEGER
-  table: PUBLIC.BOOKS.Celebrities
-    column: PUBLIC.BOOKS.Celebrities.Id
+  table: PUBLIC.BOOKS."Celebrities"
+    column: PUBLIC.BOOKS."Celebrities"."Id"
       database type: INTEGER
       type: INTEGER
-    column: PUBLIC.BOOKS.Celebrities.NAME
+    column: PUBLIC.BOOKS."Celebrities".NAME
       database type: VARCHAR
       type: VARCHAR
   table: PUBLIC.BOOKS."Celebrity Updates"

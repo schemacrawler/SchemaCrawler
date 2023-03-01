@@ -12,9 +12,9 @@ PUBLIC.BOOKS.BOOKS
     constraint type: primary_key
     is deferrable: false
     is initially deferred: false
-PUBLIC.BOOKS.Celebrities
+PUBLIC.BOOKS."Celebrities"
   primary key: PK_Celebrities
-    columns: [PUBLIC.BOOKS.Celebrities.Id]
+    columns: [PUBLIC.BOOKS."Celebrities"."Id"]
     constraint type: primary_key
     is deferrable: false
     is initially deferred: false

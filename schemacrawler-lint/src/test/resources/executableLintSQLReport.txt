@@ -46,6 +46,17 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 
 
 
+PUBLIC.BOOKS."Celebrities"                                       [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+	spaces in name, or reserved word	
+	spaces in name, or reserved word	Id
+
+
+
 PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 ------------------------------------------------------------------------
 

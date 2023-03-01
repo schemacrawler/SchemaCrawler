@@ -11,7 +11,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 along with the latest updated information
 PUBLIC.BOOKS.BOOKS                                               [table]
   Details for published books
-PUBLIC.BOOKS.Celebrities                                         [table]
+PUBLIC.BOOKS."Celebrities"                                       [table]
 PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 PUBLIC.BOOKS.COUPONS                                             [table]
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]

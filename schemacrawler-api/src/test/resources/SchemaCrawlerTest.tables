@@ -18,7 +18,7 @@ PUBLIC.BOOKS.BOOKS [table]
   ~ HSQLDB_TYPE=MEMORY
   ~ READ_ONLY=false
   ~ REMARKS=Details for published books
-PUBLIC.BOOKS.Celebrities [table]
+PUBLIC.BOOKS."Celebrities" [table]
   ~ HSQLDB_TYPE=MEMORY
   ~ READ_ONLY=false
   ~ REMARKS=

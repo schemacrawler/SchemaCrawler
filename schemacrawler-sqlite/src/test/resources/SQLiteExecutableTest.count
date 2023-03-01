@@ -5,14 +5,14 @@ Row Count
 
 Row Count                                                               
 ------------------------------------------------------------------------
-Authors                                                          20 rows
-AuthorsList                                                      20 rows
-BookAuthors                                                      20 rows
-Books                                                            20 rows
-Celebrities                                                       5 rows
+"Authors"                                                        20 rows
+"AuthorsList"                                                    20 rows
+"BookAuthors"                                                    20 rows
+"Books"                                                          20 rows
+"Celebrities"                                                     5 rows
 "Celebrity Updates"                                               5 rows
-Coupons                                                          10 rows
-Publishers                                                       20 rows
+"Coupons"                                                        10 rows
+"Publishers"                                                     20 rows
 X_EMPLOYEES                                                        empty
-Βιβλία                                                             empty
+"Βιβλία"                                                           empty
 

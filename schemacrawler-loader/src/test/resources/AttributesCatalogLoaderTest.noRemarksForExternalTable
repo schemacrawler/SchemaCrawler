@@ -47,11 +47,11 @@ Current price for the book
 -- Column PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
 
 
-- Table PUBLIC.BOOKS.Celebrities
+- Table PUBLIC.BOOKS."Celebrities"
 
--- Column PUBLIC.BOOKS.Celebrities.Id
+-- Column PUBLIC.BOOKS."Celebrities"."Id"
 
--- Column PUBLIC.BOOKS.Celebrities.NAME
+-- Column PUBLIC.BOOKS."Celebrities".NAME
 
 
 - Table PUBLIC.BOOKS."Celebrity Updates"

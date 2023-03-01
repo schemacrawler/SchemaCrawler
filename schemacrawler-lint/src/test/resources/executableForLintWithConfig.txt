@@ -38,7 +38,7 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 
 
 
-PUBLIC.BOOKS.Celebrities                                         [table]
+PUBLIC.BOOKS."Celebrities"                                       [table]
 ------------------------------------------------------------------------
 
                                                              [lint, low]

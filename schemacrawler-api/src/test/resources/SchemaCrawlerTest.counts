@@ -31,7 +31,7 @@ schema: PUBLIC.BOOKS
     # imported foreign keys: 3
     # exported: 1
     # privileges: 6
-  table: PUBLIC.BOOKS.Celebrities
+  table: PUBLIC.BOOKS."Celebrities"
     # columns: 2
     # constraints: 2
     # indexes: 1

@@ -109,6 +109,17 @@ Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor,
 
 
 
+PUBLIC.BOOKS."Celebrities"                                              
+------------------------------------------------------------------------
+Id	NAME
+1	Hop Whitney
+2	Cherokee Cantrell
+3	Giselle Dillon
+4	Reuben Hood
+5	Amena Elliott
+
+
+
 PUBLIC.BOOKS."Celebrity Updates"                                        
 ------------------------------------------------------------------------
 Celebrity Id	UPDATE

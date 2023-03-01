@@ -109,6 +109,17 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
+PUBLIC.BOOKS."Celebrities"                                              
+------------------------------------------------------------------------
+Id	NAME
+1	Hop Whitney
+2	Cherokee Cantrell
+3	Giselle Dillon
+4	Reuben Hood
+5	Amena Elliott
+
+
+
 PUBLIC.BOOKS."Celebrity Updates"                                        
 ------------------------------------------------------------------------
 Celebrity Id	UPDATE
