@@ -7,138 +7,138 @@ Tables
 
 DATABASE_A.dbo.A_DBO_TABLE1                                      [table]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  Name                              varchar(40) not null        
+  "Id"                              int not null                
+  "Name"                            varchar(40) not null        
 
 Primary Key
 
-PK__A_DBO_TA__3214EC07EAAB1E89                             [primary key]
-  Id                                                            
+PK__A_DBO_TA__3214EC07C8D42179                             [primary key]
+  "Id"                                                          
 
 Foreign Keys
 
 FK_A_A_TO_DBO                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_DBO                              
+  "Id" <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_DBO                              
 
 FK_A_B_TO_DBO                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_DBO                              
+  "Id" <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_DBO                              
 
 FK_DBO_TO_DBO                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.dbo.A_DBO_TABLE2.FK_COL_TO_DBO                              
+  "Id" <--(0..many) DATABASE_A.dbo.A_DBO_TABLE2.FK_COL_TO_DBO                              
 
 Indexes
 
-PK__A_DBO_TA__3214EC07EAAB1E89                  [unique clustered index]
-  Id                                ascending                   
+PK__A_DBO_TA__3214EC07C8D42179                  [unique clustered index]
+  "Id"                              ascending                   
 
 
 
 DATABASE_A.dbo.A_DBO_TABLE2                                      [table]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  Name                              varchar(40) not null        
+  "Id"                              int not null                
+  "Name"                            varchar(40) not null        
   FK_COL_TO_DBO                     int not null                
 
 Primary Key
 
-PK__A_DBO_TA__3214EC0723ADFA6A                             [primary key]
-  Id                                                            
+PK__A_DBO_TA__3214EC07D38AE8B2                             [primary key]
+  "Id"                                                          
 
 Foreign Keys
 
 FK_DBO_TO_DBO                              [foreign key, with no action]
-  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1."Id"                              
 
 Indexes
 
-PK__A_DBO_TA__3214EC0723ADFA6A                  [unique clustered index]
-  Id                                ascending                   
+PK__A_DBO_TA__3214EC07D38AE8B2                  [unique clustered index]
+  "Id"                              ascending                   
 
 
 
 DATABASE_A.SCHEMA_A_A.A_A_TABLE1                                 [table]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  Name                              varchar(40) not null        
+  "Id"                              int not null                
+  "Name"                            varchar(40) not null        
 
 Primary Key
 
-PK__A_A_TABL__3214EC0752212D33                             [primary key]
-  Id                                                            
+PK__A_A_TABL__3214EC07713CB899                             [primary key]
+  "Id"                                                          
 
 Foreign Keys
 
 FK_A_A_TO_A_A                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_A_A                              
+  "Id" <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_A_A                              
 
 FK_A_B_TO_A_A                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_A_A                              
+  "Id" <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_A_A                              
 
 Indexes
 
-PK__A_A_TABL__3214EC0752212D33                  [unique clustered index]
-  Id                                ascending                   
+PK__A_A_TABL__3214EC07713CB899                  [unique clustered index]
+  "Id"                              ascending                   
 
 
 
 DATABASE_A.SCHEMA_A_A.A_A_TABLE2                                 [table]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  Name                              varchar(40) not null        
+  "Id"                              int not null                
+  "Name"                            varchar(40) not null        
   FK_COL_TO_DBO                     int not null                
   FK_COL_TO_A_A                     int not null                
 
 Primary Key
 
-PK__A_A_TABL__3214EC074076B0E0                             [primary key]
-  Id                                                            
+PK__A_A_TABL__3214EC0702871E15                             [primary key]
+  "Id"                                                          
 
 Foreign Keys
 
 FK_A_A_TO_A_A                              [foreign key, with no action]
-  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
+  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1."Id"                              
 
 FK_A_A_TO_DBO                              [foreign key, with no action]
-  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1."Id"                              
 
 Indexes
 
-PK__A_A_TABL__3214EC074076B0E0                  [unique clustered index]
-  Id                                ascending                   
+PK__A_A_TABL__3214EC0702871E15                  [unique clustered index]
+  "Id"                              ascending                   
 
 
 
 DATABASE_A.SCHEMA_A_B.A_B_TABLE2                                 [table]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  Name                              varchar(40) not null        
+  "Id"                              int not null                
+  "Name"                            varchar(40) not null        
   FK_COL_TO_DBO                     int not null                
   FK_COL_TO_A_A                     int not null                
 
 Primary Key
 
-PK__A_B_TABL__3214EC077BFD2A67                             [primary key]
-  Id                                                            
+PK__A_B_TABL__3214EC07D0EACAD5                             [primary key]
+  "Id"                                                          
 
 Foreign Keys
 
 FK_A_B_TO_A_A                              [foreign key, with no action]
-  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
+  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1."Id"                              
 
 FK_A_B_TO_DBO                              [foreign key, with no action]
-  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1."Id"                              
 
 Indexes
 
-PK__A_B_TABL__3214EC077BFD2A67                  [unique clustered index]
-  Id                                ascending                   
+PK__A_B_TABL__3214EC07D0EACAD5                  [unique clustered index]
+  "Id"                              ascending                   
 
 
 
 DATABASE_A.SCHEMA_A_B.A_B_VIEW1                                   [view]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  Name                              varchar(40) not null        
+  "Id"                              int not null                
+  "Name"                            varchar(40) not null        
   FK_COL_TO_DBO                     int not null                
   FK_COL_TO_A_A                     int not null                
 
