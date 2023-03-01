@@ -1,12 +1,11 @@
 digraph "SchemaCrawler_Diagram" {
 
   graph [
-    splines="ortho"
+    fontname="Courier"
 
   ];
   
   node [
-    shape="none"
 
   ];
   
@@ -25,7 +24,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2023-02-28 01:16:41</td>
+		<td align='left'>2023-03-01 21:12:47</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>

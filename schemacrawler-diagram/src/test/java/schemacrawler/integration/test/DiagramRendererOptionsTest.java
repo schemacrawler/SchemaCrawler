@@ -446,16 +446,13 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
-  @DisplayName("Diagram after setting Graphviz options such as ortho splines")
+  @DisplayName("Diagram after setting Graphviz options for the graph")
   public void executableForDiagram_13(
       final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
     final Map<String, String> graphvizAttributes = new HashMap<>();
 
     final String GRAPH = "graph.";
-    graphvizAttributes.put(GRAPH + "splines", "ortho");
-
-    final String NODE = "node.";
-    graphvizAttributes.put(NODE + "shape", "none");
+    graphvizAttributes.put(GRAPH + "fontname", "Courier");
 
     final DiagramOptionsBuilder diagramOptionsBuilder =
         builder().withGraphvizAttributes(graphvizAttributes);
