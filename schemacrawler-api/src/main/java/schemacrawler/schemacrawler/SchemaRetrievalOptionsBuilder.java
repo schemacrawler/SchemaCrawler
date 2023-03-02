@@ -107,7 +107,7 @@ public final class SchemaRetrievalOptionsBuilder
     identifierQuoteString = lookupIdentifierQuoteString(metaData);
     identifiers =
         Identifiers.identifiers()
-            .withConnectionIfPossible(connection)
+            .withConnection(connection)
             .withIdentifierQuoteString(identifierQuoteString)
             .build();
 
