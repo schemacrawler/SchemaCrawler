@@ -103,7 +103,7 @@ public class Issue482Test extends BaseAdditionalDatabaseTest {
     final Catalog clonedCatalog = SerializationUtils.clone(catalog);
 
     assertThat(catalog, equalTo(clonedCatalog));
-    assertThat(clonedCatalog.getTables(), hasSize(10));
+    assertThat(clonedCatalog.getTables(), hasSize(11));
     assertThat(clonedCatalog.getSynonyms(), hasSize(2));
   }
 }
