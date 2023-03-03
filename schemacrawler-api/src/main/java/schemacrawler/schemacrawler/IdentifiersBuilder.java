@@ -125,7 +125,7 @@ public class IdentifiersBuilder {
    */
   public IdentifiersBuilder withIdentifierQuoteString(final String identifierQuoteString) {
     if (isBlank(identifierQuoteString)) {
-      // The JDBC specification states that spaces are to treated as
+      // The JDBC specification states that spaces are to be treated as
       // if identifier quoting is not supported.
       this.identifierQuoteString = "";
     } else {

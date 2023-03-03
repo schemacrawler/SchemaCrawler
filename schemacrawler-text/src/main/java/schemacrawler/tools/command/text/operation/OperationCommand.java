@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.operation;
 
+import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.database.DatabaseUtility.createStatement;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
@@ -97,7 +98,10 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
       // name
       final String identifierQuoteString = identifiers.getIdentifierQuoteString();
       final Identifiers identifiers =
-          Identifiers.identifiers().withIdentifierQuoteString(identifierQuoteString).build();
+          Identifiers.identifiers()
+              .withIdentifierQuoteString(identifierQuoteString)
+              .withIdentifierQuotingStrategy(quote_all)
+              .build();
 
       try (final Statement statement = createStatement(connection)) {
         for (final Table table : getSortedTables(catalog)) {

@@ -289,11 +289,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         akName = "";
       }
 
-      String columnsList =
-          getColumnsListAsString(
-              alternateKey,
-              identifiers.getIdentifierQuotingStrategy(),
-              identifiers.getIdentifierQuoteString());
+      String columnsList = getColumnsListAsString(alternateKey, identifiers);
       if (!isBlank(columnsList)) {
         columnsList = " (" + columnsList + ")";
       }
@@ -479,11 +475,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       }
       final String indexDetails =
           (index.isUnique() ? "" : "non-") + "unique " + indexTypeString + "index";
-      String columnsList =
-          getColumnsListAsString(
-              index,
-              identifiers.getIdentifierQuotingStrategy(),
-              identifiers.getIdentifierQuoteString());
+      String columnsList = getColumnsListAsString(index, identifiers);
       if (!isBlank(columnsList)) {
         columnsList = " (" + columnsList + ")";
       }

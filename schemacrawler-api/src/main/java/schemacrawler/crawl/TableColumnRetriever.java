@@ -190,7 +190,8 @@ final class TableColumnRetriever extends AbstractRetriever {
       }
     }
     // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
-    columnDataTypeName = Identifiers.STANDARD.unquoteName(columnDataTypeName);
+    final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
+    columnDataTypeName = identifiers.unquoteName(columnDataTypeName);
     if (isBlank(columnDataTypeName)) {
       columnDataTypeName = typeName;
     }

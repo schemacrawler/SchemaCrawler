@@ -38,6 +38,7 @@ import java.util.logging.Logger;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.TableTypes;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
@@ -93,6 +94,10 @@ final class RetrieverConnection {
 
   EnumDataTypeHelper getEnumDataTypeHelper() {
     return schemaRetrievalOptions.getEnumDataTypeHelper();
+  }
+
+  Identifiers getIdentifiers() {
+    return schemaRetrievalOptions.getIdentifiers();
   }
 
   /**

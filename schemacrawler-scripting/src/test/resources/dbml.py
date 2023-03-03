@@ -3,6 +3,8 @@ import re
 from schemacrawler.schema import \
     TableRelationshipType  # pylint: disable=import-error
 from schemacrawler.schemacrawler import \
+    Identifiers  # pylint: disable=import-error
+from schemacrawler.schemacrawler import \
     IdentifierQuotingStrategy  # pylint: disable=import-error
 from schemacrawler.utility import \
     MetaDataUtility  # pylint: disable=import-error
@@ -19,6 +21,12 @@ print("  Note: '''")
 print(catalog.crawlInfo)
 print("  '''")
 print("}")
+
+identifiers = \
+      Identifiers.identifiers() \
+          .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all) \
+          .withIdentifierQuoteString('"') \
+          .build()
 
 # Columns
 for table in catalog.getTables():
@@ -47,24 +55,16 @@ for table in catalog.getTables():
         if table.hasPrimaryKey():
             primaryKey = table.primaryKey
             print('    ('
-                  + MetaDataUtility.getColumnsListAsString(primaryKey,
-                                                           IdentifierQuotingStrategy.quote_all,
-                                                           '"') + ') '
+                  + MetaDataUtility.getColumnsListAsString(primaryKey, identifiers) + ') '
                   + '[pk]')
         if not table.indexes.isEmpty():
             for index in table.indexes:
                 if table.hasPrimaryKey() and \
-                    MetaDataUtility.getColumnsListAsString(table.primaryKey,
-                                                           IdentifierQuotingStrategy.quote_all,
-                                                           '"') == \
-                    MetaDataUtility.getColumnsListAsString(index,
-                                                           IdentifierQuotingStrategy.quote_all,
-                                                           '"'):
+                    MetaDataUtility.getColumnsListAsString(table.primaryKey, identifiers) == \
+                    MetaDataUtility.getColumnsListAsString(index, identifiers):
                     continue
                 print('    ('
-                      + MetaDataUtility.getColumnsListAsString(index,
-                                                               IdentifierQuotingStrategy.quote_all,
-                                                               '"') + ')',
+                      + MetaDataUtility.getColumnsListAsString(index, identifiers) + ')',
                       end='')
                 print(' [name: "' + index.name + '"', end='')
                 if index.unique:
@@ -87,14 +87,12 @@ for table in catalog.tables:
               + re.sub(r'\"', '', pkTable.fullName) + '".('
               + MetaDataUtility.getColumnsListAsString(fk,
                                                        TableRelationshipType.parent,
-                                                       IdentifierQuotingStrategy.quote_all,
-                                                       '"')
+                                                       identifiers)
               + ') < "'
               + re.sub(r'\"', '', fkTable.fullName) + '".('
               + MetaDataUtility.getColumnsListAsString(fk,
                                                        TableRelationshipType.child,
-                                                       IdentifierQuotingStrategy.quote_all,
-                                                       '"')
+                                                       identifiers)
               + ')', end='')
         print(
             ' [update: ' + fk.updateRule.toString() + ', delete: ' + fk.deleteRule.toString() + ']',

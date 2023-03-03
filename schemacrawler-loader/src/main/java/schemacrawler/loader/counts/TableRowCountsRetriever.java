@@ -29,6 +29,7 @@ package schemacrawler.loader.counts;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.counts.TableRowCountsUtility.addRowCountToTable;
+import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 
 import java.sql.Connection;
@@ -64,7 +65,11 @@ public final class TableRowCountsRetriever {
 
     Identifiers identifiers;
     try (Connection connection = dataSource.get(); ) {
-      identifiers = Identifiers.identifiers().withConnection(connection).build();
+      identifiers =
+          Identifiers.identifiers()
+              .withConnection(connection)
+              .withIdentifierQuotingStrategy(quote_all)
+              .build();
     } catch (final SQLException e) {
       // The offline snapshot executable may not have a live connection,
       // so we cannot fail with an exception. Log and continue.

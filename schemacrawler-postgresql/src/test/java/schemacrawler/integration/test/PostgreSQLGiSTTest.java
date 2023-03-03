@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL14Container;
+import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
@@ -53,7 +54,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
@@ -63,6 +64,11 @@ import schemacrawler.test.utility.HeavyDatabaseTest;
 @DisplayName("Test for issue #458 - daterange index in Postgres results in NotLoadedException")
 public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
 
+  private static final Identifiers identifiers =
+      Identifiers.identifiers()
+          .withIdentifierQuotingStrategy(quote_all)
+          .withIdentifierQuoteString("\"")
+          .build();
   @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL14Container();
 
   @BeforeEach
@@ -110,8 +116,7 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
     assertThat(indexes.size(), is(1));
     for (final Index index : indexes) {
       assertThat(index, notNullValue());
-      final String columnsListAsString =
-          getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, "\"");
+      final String columnsListAsString = getColumnsListAsString(index, identifiers);
       assertThat(columnsListAsString, is(""));
     }
   }

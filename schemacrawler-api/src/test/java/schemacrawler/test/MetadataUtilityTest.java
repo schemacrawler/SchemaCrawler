@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
@@ -53,7 +54,7 @@ import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
-import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.MetaDataUtility;
@@ -63,6 +64,11 @@ import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 @TestInstance(Lifecycle.PER_CLASS)
 public class MetadataUtilityTest {
 
+  private static final Identifiers identifiers =
+      Identifiers.identifiers()
+          .withIdentifierQuotingStrategy(quote_all)
+          .withIdentifierQuoteString("'")
+          .build();
   private Catalog catalog;
 
   @Test
@@ -77,8 +83,7 @@ public class MetadataUtilityTest {
     final PrimaryKey pk = table.getPrimaryKey();
     assertThat("Index not found", pk, notNullValue());
 
-    final String columnsListAsStringChild =
-        MetaDataUtility.getColumnsListAsString(pk, IdentifierQuotingStrategy.quote_all, "'");
+    final String columnsListAsStringChild = MetaDataUtility.getColumnsListAsString(pk, identifiers);
     assertThat(columnsListAsStringChild, is("'ID'"));
   }
 
@@ -95,18 +100,15 @@ public class MetadataUtilityTest {
     assertThat("Foreign key not found", fk, notNullValue());
 
     final String columnsListAsStringChild =
-        MetaDataUtility.getColumnsListAsString(
-            fk, TableRelationshipType.child, IdentifierQuotingStrategy.quote_all, "'");
+        MetaDataUtility.getColumnsListAsString(fk, TableRelationshipType.child, identifiers);
     assertThat(columnsListAsStringChild, is("'PREVIOUSEDITIONID'"));
 
     final String columnsListAsStringParent =
-        MetaDataUtility.getColumnsListAsString(
-            fk, TableRelationshipType.parent, IdentifierQuotingStrategy.quote_all, "'");
+        MetaDataUtility.getColumnsListAsString(fk, TableRelationshipType.parent, identifiers);
     assertThat(columnsListAsStringParent, is("'ID'"));
 
     final String columnsListAsStringNone =
-        MetaDataUtility.getColumnsListAsString(
-            fk, TableRelationshipType.none, IdentifierQuotingStrategy.quote_all, "'");
+        MetaDataUtility.getColumnsListAsString(fk, TableRelationshipType.none, identifiers);
     assertThat(columnsListAsStringNone, is(""));
   }
 
@@ -123,7 +125,7 @@ public class MetadataUtilityTest {
     assertThat("Index not found", index, notNullValue());
 
     final String columnsListAsStringChild =
-        MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, "'");
+        MetaDataUtility.getColumnsListAsString(index, identifiers);
     assertThat(columnsListAsStringChild, is("'ID'"));
   }
 
@@ -137,7 +139,7 @@ public class MetadataUtilityTest {
     assertThat("BOOKS Table not found", table, notNullValue());
 
     final String columnsListAsStringChild =
-        MetaDataUtility.getColumnsListAsString(table, IdentifierQuotingStrategy.quote_all, "'");
+        MetaDataUtility.getColumnsListAsString(table, identifiers);
     assertThat(
         columnsListAsStringChild,
         is(
