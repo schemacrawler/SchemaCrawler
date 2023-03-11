@@ -3,6 +3,7 @@ package schemacrawler.schemacrawler;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -32,9 +34,7 @@ public class IdentifiersBuilder {
                 Identifiers.class.getResourceAsStream("/sql2003_reserved_words.txt")))) {
       String line;
       while ((line = reader.readLine()) != null) {
-        if (!isBlank(line)) {
-          reservedWords.add(line);
-        }
+        reservedWords.add(line);
       }
     } catch (final IOException e) {
       LOGGER.log(Level.WARNING, "Could not read list of SQL 2003 reserved words", e);
@@ -61,16 +61,24 @@ public class IdentifiersBuilder {
     return toUpperCase(Arrays.asList(sqlKeywords.split(",")));
   }
 
+  /**
+   * Remove mixed case duplicates and blanks, and return a light-weight serializable collection of
+   * upper-case words.
+   *
+   * @param words Collection of words
+   * @return Serializable collection of unique upper-case words.
+   */
   private static Collection<String> toUpperCase(final Iterable<String> words) {
     final Collection<String> upperCaseWords = new HashSet<>();
     if (words != null) {
       for (final String word : words) {
         if (!isBlank(word)) {
-          upperCaseWords.add(word.toUpperCase());
+          upperCaseWords.add(trimToEmpty(word.toUpperCase()));
         }
       }
     }
-    return upperCaseWords;
+    // Create a lighter-weight data structure that is serializable
+    return new ArrayList<>(upperCaseWords);
   }
 
   final Collection<String> reservedWords;
