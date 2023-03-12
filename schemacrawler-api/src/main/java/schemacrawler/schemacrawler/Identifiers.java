@@ -30,6 +30,7 @@ package schemacrawler.schemacrawler;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.regex.Pattern;
@@ -45,7 +46,9 @@ import schemacrawler.schema.Schema;
  * database server as well. Several utility methods for looking up and quoting and unquoting
  * identifiers are provided.
  */
-public final class Identifiers {
+public final class Identifiers implements Serializable {
+
+  private static final long serialVersionUID = -5108721215361312979L;
 
   public static final Identifiers STANDARD =
       Identifiers.identifiers().withIdentifierQuoteString("\"").build();
@@ -73,7 +76,6 @@ public final class Identifiers {
   }
 
   private final String identifierQuoteString;
-
   private final IdentifierQuotingStrategy identifierQuotingStrategy;
   private final boolean quoteMixedCaseIdentifiers;
   private final Collection<String> reservedWords;
