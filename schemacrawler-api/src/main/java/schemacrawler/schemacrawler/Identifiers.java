@@ -134,6 +134,10 @@ public final class Identifiers implements Serializable {
         && name.length() >= quoteLength * 2;
   }
 
+  public boolean isQuoteMixedCaseIdentifiers() {
+    return quoteMixedCaseIdentifiers;
+  }
+
   /**
    * Checks if a given word is a reserved word. Searches are case-insensitive.
    *

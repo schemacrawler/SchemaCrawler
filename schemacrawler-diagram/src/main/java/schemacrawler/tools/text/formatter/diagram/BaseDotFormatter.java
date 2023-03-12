@@ -39,6 +39,7 @@ import java.util.Map.Entry;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
@@ -53,12 +54,8 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
       final SchemaTextDetailType schemaTextDetailType,
       final DiagramOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString) {
-    super(
-        schemaTextDetailType,
-        options,
-        outputOptions,
-        identifierQuoteString);
+      final Identifiers identifiers) {
+    super(schemaTextDetailType, options, outputOptions, identifiers);
   }
 
   @Override

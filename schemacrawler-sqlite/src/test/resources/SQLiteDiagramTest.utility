@@ -32,7 +32,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2023-03-12 15:29:49</td>
+		<td align='left'>2023-03-12 18:09:57</td>
 	</tr>
       </table>
     >
@@ -43,51 +43,51 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"Authors"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>Authors</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_59537d94.start' align='left'><b><i>"Id"</i></b></td>
+		<td port='id_59537d94.start' align='left'><b><i>Id</i></b></td>
 		<td align='left'> </td>
 		<td port='id_59537d94.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='firstname_d8b07d94.start' align='left'>"FirstName"</td>
+		<td port='firstname_d8b07d94.start' align='left'>FirstName</td>
 		<td align='left'> </td>
 		<td port='firstname_d8b07d94.end' align='left'>VARCHAR(20)(20) NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='lastname_62e1eba.start' align='left'>"LastName"</td>
+		<td port='lastname_62e1eba.start' align='left'>LastName</td>
 		<td align='left'> </td>
 		<td port='lastname_62e1eba.end' align='left'>VARCHAR(20)(20) NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='address1_1489bb36.start' align='left'>"Address1"</td>
+		<td port='address1_1489bb36.start' align='left'>Address1</td>
 		<td align='left'> </td>
 		<td port='address1_1489bb36.end' align='left'>VARCHAR(255)(255)</td>
 	</tr>
 	<tr>
-		<td port='address2_1489bb37.start' align='left'>"Address2"</td>
+		<td port='address2_1489bb37.start' align='left'>Address2</td>
 		<td align='left'> </td>
 		<td port='address2_1489bb37.end' align='left'>VARCHAR(255)(255)</td>
 	</tr>
 	<tr>
-		<td port='city_597381e4.start' align='left'>"City"</td>
+		<td port='city_597381e4.start' align='left'>City</td>
 		<td align='left'> </td>
 		<td port='city_597381e4.end' align='left'>VARCHAR(50)(50)</td>
 	</tr>
 	<tr>
-		<td port='state_5e1b48ca.start' align='left'>"State"</td>
+		<td port='state_5e1b48ca.start' align='left'>State</td>
 		<td align='left'> </td>
 		<td port='state_5e1b48ca.end' align='left'>CHAR(2)(2)</td>
 	</tr>
 	<tr>
-		<td port='postalcode_480511d1.start' align='left'>"PostalCode"</td>
+		<td port='postalcode_480511d1.start' align='left'>PostalCode</td>
 		<td align='left'> </td>
 		<td port='postalcode_480511d1.end' align='left'>VARCHAR(10)(10)</td>
 	</tr>
 	<tr>
-		<td port='country_f5a363cf.start' align='left'>"Country"</td>
+		<td port='country_f5a363cf.start' align='left'>Country</td>
 		<td align='left'> </td>
 		<td port='country_f5a363cf.end' align='left'>VARCHAR(50)(50)</td>
 	</tr>
@@ -95,7 +95,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "bookauthors_4048215e":"authorid_22016288.start":w -> "authors_3cb01c87":"id_59537d94.end":e [label=<"Z_FK_Author"> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "bookauthors_4048215e":"authorid_22016288.start":w -> "authors_3cb01c87":"id_59537d94.end":e [label=<Z_FK_Author> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* AuthorsList -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -103,21 +103,21 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"AuthorsList"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>AuthorsList</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[view]</td>
 	</tr>
 	<tr>
-		<td port='id_4f89c496.start' align='left'>"Id"</td>
+		<td port='id_4f89c496.start' align='left'>Id</td>
 		<td align='left'> </td>
 		<td port='id_4f89c496.end' align='left'>INTEGER</td>
 	</tr>
 	<tr>
-		<td port='firstname_cee6c496.start' align='left'>"FirstName"</td>
+		<td port='firstname_cee6c496.start' align='left'>FirstName</td>
 		<td align='left'> </td>
 		<td port='firstname_cee6c496.end' align='left'>VARCHAR(20)(20)</td>
 	</tr>
 	<tr>
-		<td port='lastname_fc6465bc.start' align='left'>"LastName"</td>
+		<td port='lastname_fc6465bc.start' align='left'>LastName</td>
 		<td align='left'> </td>
 		<td port='lastname_fc6465bc.end' align='left'>VARCHAR(20)(20)</td>
 	</tr>
@@ -132,21 +132,21 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"BookAuthors"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>BookAuthors</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='bookid_3fac2466.start' align='left'>"BookId"</td>
+		<td port='bookid_3fac2466.start' align='left'>BookId</td>
 		<td align='left'> </td>
 		<td port='bookid_3fac2466.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='authorid_22016288.start' align='left'>"AuthorId"</td>
+		<td port='authorid_22016288.start' align='left'>AuthorId</td>
 		<td align='left'> </td>
 		<td port='authorid_22016288.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='somedata_26412d40.start' align='left'>"SomeData"</td>
+		<td port='somedata_26412d40.start' align='left'>SomeData</td>
 		<td align='left'> </td>
 		<td port='somedata_26412d40.end' align='left'>VARCHAR(30)(30)</td>
 	</tr>
@@ -161,41 +161,41 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"Books"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>Books</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_76fe3f72.start' align='left'><b><i>"Id"</i></b></td>
+		<td port='id_76fe3f72.start' align='left'><b><i>Id</i></b></td>
 		<td align='left'> </td>
 		<td port='id_76fe3f72.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='title_7bcf686f.start' align='left'>"Title"</td>
+		<td port='title_7bcf686f.start' align='left'>Title</td>
 		<td align='left'> </td>
 		<td port='title_7bcf686f.end' align='left'>VARCHAR(255)(255) NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='description_739d6213.start' align='left'>"Description"</td>
+		<td port='description_739d6213.start' align='left'>Description</td>
 		<td align='left'> </td>
 		<td port='description_739d6213.end' align='left'>VARCHAR(255)(255)</td>
 	</tr>
 	<tr>
-		<td port='publisherid_b5ccfa4e.start' align='left'>"PublisherId"</td>
+		<td port='publisherid_b5ccfa4e.start' align='left'>PublisherId</td>
 		<td align='left'> </td>
 		<td port='publisherid_b5ccfa4e.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='publicationdate_9337fe11.start' align='left'>"PublicationDate"</td>
+		<td port='publicationdate_9337fe11.start' align='left'>PublicationDate</td>
 		<td align='left'> </td>
 		<td port='publicationdate_9337fe11.end' align='left'>DATE</td>
 	</tr>
 	<tr>
-		<td port='price_7b9af760.start' align='left'>"Price"</td>
+		<td port='price_7b9af760.start' align='left'>Price</td>
 		<td align='left'> </td>
 		<td port='price_7b9af760.end' align='left'>FLOAT</td>
 	</tr>
 	<tr>
-		<td port='previouseditionid_aadfc859.start' align='left'>"PreviousEditionId"</td>
+		<td port='previouseditionid_aadfc859.start' align='left'>PreviousEditionId</td>
 		<td align='left'> </td>
 		<td port='previouseditionid_aadfc859.end' align='left'>INTEGER</td>
 	</tr>
@@ -203,7 +203,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "books_3d6a6e9":"previouseditionid_aadfc859.start":w -> "books_3d6a6e9":"id_76fe3f72.end":e [label=<"FK_PreviousEdition"> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "books_3d6a6e9":"previouseditionid_aadfc859.start":w -> "books_3d6a6e9":"id_76fe3f72.end":e [label=<FK_PreviousEdition> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
   "bookauthors_4048215e":"bookid_3fac2466.start":w -> "books_3d6a6e9":"id_76fe3f72.end":e [label=<SCHCRWLR_03D6328A_4047ACFF> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
@@ -212,16 +212,16 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"Celebrities"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>Celebrities</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_5c3cc73b.start' align='left'><b><i>"Id"</i></b></td>
+		<td port='id_5c3cc73b.start' align='left'><b><i>Id</i></b></td>
 		<td align='left'> </td>
 		<td port='id_5c3cc73b.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='name_5c61acab.start' align='left'>"Name"</td>
+		<td port='name_5c61acab.start' align='left'>Name</td>
 		<td align='left'> </td>
 		<td port='name_5c61acab.end' align='left'>VARCHAR(20)(20)</td>
 	</tr>
@@ -261,26 +261,26 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"Coupons"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>Coupons</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_edd5f96f.start' align='left'><b><i>"Id"</i></b></td>
+		<td port='id_edd5f96f.start' align='left'><b><i>Id</i></b></td>
 		<td align='left'> </td>
 		<td port='id_edd5f96f.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='data_edf653fe.start' align='left'>"Data"</td>
+		<td port='data_edf653fe.start' align='left'>Data</td>
 		<td align='left'> </td>
 		<td port='data_edf653fe.end' align='left'>CLOB</td>
 	</tr>
 	<tr>
-		<td port='coupons_8a26b521.start' align='left'>"Coupons"</td>
+		<td port='coupons_8a26b521.start' align='left'>Coupons</td>
 		<td align='left'> </td>
 		<td port='coupons_8a26b521.end' align='left'>INTEGER</td>
 	</tr>
 	<tr>
-		<td port='books_f1ac22be.start' align='left'>"Books"</td>
+		<td port='books_f1ac22be.start' align='left'>Books</td>
 		<td align='left'> </td>
 		<td port='books_f1ac22be.end' align='left'>VARCHAR(20)(20)</td>
 	</tr>
@@ -295,11 +295,11 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"Publishers"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>Publishers</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_3edce985.start' align='left'><b><i>"Id"</i></b></td>
+		<td port='id_3edce985.start' align='left'><b><i>Id</i></b></td>
 		<td align='left'> </td>
 		<td port='id_3edce985.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
@@ -309,7 +309,7 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'>auto-incremented</td>
 	</tr>
 	<tr>
-		<td port='publisher_c94a226.start' align='left'>"Publisher"</td>
+		<td port='publisher_c94a226.start' align='left'>Publisher</td>
 		<td align='left'> </td>
 		<td port='publisher_c94a226.end' align='left'>VARCHAR(255)(255)</td>
 	</tr>
@@ -384,26 +384,26 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>"Βιβλία"</i></b></td>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>Βιβλία</i></b></td>
 		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='μοναδικός_fcd0e6e3.start' align='left'><b><i>"Μοναδικός"</i></b></td>
+		<td port='μοναδικός_fcd0e6e3.start' align='left'><b><i>Μοναδικός</i></b></td>
 		<td align='left'> </td>
 		<td port='μοναδικός_fcd0e6e3.end' align='left'>SMALLINT NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='τίτλος_da2d3294.start' align='left'>"Τίτλος"</td>
+		<td port='τίτλος_da2d3294.start' align='left'>Τίτλος</td>
 		<td align='left'> </td>
 		<td port='τίτλος_da2d3294.end' align='left'>VARCHAR(255)(255) NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='περιγραφή_204bfd0d.start' align='left'>"Περιγραφή"</td>
+		<td port='περιγραφή_204bfd0d.start' align='left'>Περιγραφή</td>
 		<td align='left'> </td>
 		<td port='περιγραφή_204bfd0d.end' align='left'>VARCHAR(255)(255)</td>
 	</tr>
 	<tr>
-		<td port='εκδότης_7cb44961.start' align='left'>"Εκδότης"</td>
+		<td port='εκδότης_7cb44961.start' align='left'>Εκδότης</td>
 		<td align='left'> </td>
 		<td port='εκδότης_7cb44961.end' align='left'>SMALLINT NOT NULL</td>
 	</tr>

@@ -138,10 +138,9 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
 
   private DataTraversalHandler getDataTraversalHandler() {
     final Operation operation = commandOptions.getOperation();
-    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
     final DataTraversalHandler formatter =
-        new DataTextFormatter(operation, commandOptions, outputOptions, identifierQuoteString);
+        new DataTextFormatter(operation, commandOptions, outputOptions, identifiers);
     return formatter;
   }
 

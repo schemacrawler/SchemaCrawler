@@ -40,6 +40,7 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -66,7 +67,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
       final SchemaTextDetailType schemaTextDetailType,
       final O options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString) {
+      final Identifiers identifiers) {
 
     this.options = requireNonNull(options, "Options not provided");
     this.schemaTextDetailType =
@@ -74,11 +75,11 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
     colorMap = options.getColorMap();
 
-    identifiers =
+    final IdentifiersBuilder identifiersBuilder =
         Identifiers.identifiers()
-            .withIdentifierQuoteString(identifierQuoteString)
-            .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy())
-            .build();
+            .fromOptions(identifiers)
+            .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy());
+    this.identifiers = identifiersBuilder.build();
 
     out = outputOptions.openNewOutputWriter(false);
 

@@ -57,6 +57,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.WeakAssociation;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
@@ -84,8 +85,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final SchemaTextDetailType schemaTextDetailType,
       final DiagramOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString) {
-    super(schemaTextDetailType, options, outputOptions, identifierQuoteString);
+      final Identifiers identifiers) {
+    super(schemaTextDetailType, options, outputOptions, identifiers);
 
     tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
   }

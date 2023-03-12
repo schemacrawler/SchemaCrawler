@@ -126,8 +126,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
         break;
       default:
         lintReportBuilder =
-            new LintReportTextFormatter(
-                catalog, commandOptions, outputOptions, identifiers.getIdentifierQuoteString());
+            new LintReportTextFormatter(catalog, commandOptions, outputOptions, identifiers);
     }
 
     return lintReportBuilder;

@@ -38,6 +38,7 @@ import java.util.List;
 
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
@@ -80,8 +81,8 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       final Operation operation,
       final OperationOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString) {
-    super(schema, options, outputOptions, identifierQuoteString);
+      final Identifiers identifiers) {
+    super(schema, options, outputOptions, identifiers);
     this.operation = requireNonNull(operation, "No operation provided");
   }
 

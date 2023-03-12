@@ -160,10 +160,8 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
     final SchemaTraversalHandler formatter;
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
-    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
     formatter =
-        new SchemaDotFormatter(
-            schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
+        new SchemaDotFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
 
     return formatter;
   }

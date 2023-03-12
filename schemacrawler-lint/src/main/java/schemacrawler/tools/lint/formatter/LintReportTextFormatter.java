@@ -41,6 +41,7 @@ import java.util.List;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintReport;
@@ -75,8 +76,8 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
       final Catalog catalog,
       final LintOptions lintOptions,
       final OutputOptions outputOptions,
-      final String identifierQuoteString) {
-    super(schema, lintOptions, outputOptions, identifierQuoteString);
+      final Identifiers identifiers) {
+    super(schema, lintOptions, outputOptions, identifiers);
     this.catalog = requireNonNull(catalog, "No catalog provided");
     this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }

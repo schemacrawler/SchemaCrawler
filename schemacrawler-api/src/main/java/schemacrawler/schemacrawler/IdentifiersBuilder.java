@@ -102,6 +102,18 @@ public class IdentifiersBuilder {
     return this;
   }
 
+  public IdentifiersBuilder fromOptions(final Identifiers identifiers) {
+    if (identifiers == null) {
+      return this;
+    }
+
+    identifierQuoteString = identifiers.getIdentifierQuoteString();
+    identifierQuotingStrategy = identifiers.getIdentifierQuotingStrategy();
+    quoteMixedCaseIdentifiers = identifiers.isQuoteMixedCaseIdentifiers();
+
+    return this;
+  }
+
   public boolean isIdentifierQuoteStringSet() {
     return identifierQuoteString != null;
   }
