@@ -246,6 +246,14 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
     return unsigned;
   }
 
+  @Override
+  public void withQuoting(final Identifiers identifiers) {
+    if (identifiers == null) {
+      return;
+    }
+    buildFullName(identifiers);
+  }
+
   void setAutoIncrementable(final boolean autoIncrementable) {
     this.autoIncrementable = autoIncrementable;
   }
@@ -345,12 +353,19 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   }
 
   private void buildFullName() {
+    buildFullName(Identifiers.STANDARD);
+  }
+
+  private void buildFullName(final Identifiers identifiers) {
+    if (identifiers == null) {
+      return;
+    }
     if (fullName != null) {
       return;
     }
     final Schema schema = getSchema();
     if (!isBlank(schema.getFullName())) {
-      fullName = Identifiers.STANDARD.quoteFullName(this);
+      fullName = identifiers.quoteFullName(this);
     } else {
       // System data-types are reserved words, but should not be quoted
       fullName = getName();

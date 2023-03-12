@@ -122,6 +122,15 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
     return key;
   }
 
+  @Override
+  public void withQuoting(final Identifiers identifiers) {
+    if (identifiers == null) {
+      return;
+    }
+    super.withQuoting(identifiers);
+    shortName = identifiers.quoteShortName(this);
+  }
+
   private void buildFullName() {
     if (fullName != null) {
       return;

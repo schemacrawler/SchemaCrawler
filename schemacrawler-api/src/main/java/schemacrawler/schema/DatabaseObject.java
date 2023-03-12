@@ -28,8 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+import schemacrawler.schemacrawler.Identifiers;
+
 /** Represents a database object. */
 public interface DatabaseObject extends NamedObject, AttributedObject, DescribedObject {
 
   Schema getSchema();
+
+  void withQuoting(Identifiers identifiers);
 }

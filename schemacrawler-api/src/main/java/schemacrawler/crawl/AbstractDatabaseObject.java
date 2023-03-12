@@ -48,7 +48,6 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
 
   private final Schema schema;
   private transient NamedObjectKey key;
-
   private transient String fullName;
 
   /**
@@ -135,6 +134,14 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   public NamedObjectKey key() {
     buildKey();
     return key;
+  }
+
+  @Override
+  public void withQuoting(final Identifiers identifiers) {
+    if (identifiers == null) {
+      return;
+    }
+    fullName = identifiers.quoteFullName(this);
   }
 
   private void buildFullName() {
