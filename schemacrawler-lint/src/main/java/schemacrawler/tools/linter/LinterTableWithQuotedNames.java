@@ -36,6 +36,7 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableWithQuotedNames extends BaseLinter {
@@ -49,7 +50,8 @@ public class LinterTableWithQuotedNames extends BaseLinter {
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final Identifiers identifiers = Identifiers.identifiers().withConnection(connection).build();
+    final Identifiers identifiers =
+        IdentifiersBuilder.builder().fromConnection(connection).toOptions();
 
     final String tableName = table.getName();
     if (identifiers.isToBeQuoted(tableName)) {

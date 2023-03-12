@@ -76,10 +76,10 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     colorMap = options.getColorMap();
 
     final IdentifiersBuilder identifiersBuilder =
-        Identifiers.identifiers()
+        IdentifiersBuilder.builder()
             .fromOptions(identifiers)
             .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy());
-    this.identifiers = identifiersBuilder.build();
+    this.identifiers = identifiersBuilder.toOptions();
 
     out = outputOptions.openNewOutputWriter(false);
 

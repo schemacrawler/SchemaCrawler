@@ -55,6 +55,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
@@ -65,10 +66,10 @@ import schemacrawler.test.utility.HeavyDatabaseTest;
 public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
 
   private static final Identifiers identifiers =
-      Identifiers.identifiers()
+      IdentifiersBuilder.builder()
           .withIdentifierQuotingStrategy(quote_all)
           .withIdentifierQuoteString("\"")
-          .build();
+          .toOptions();
   @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL14Container();
 
   @BeforeEach

@@ -21,9 +21,13 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 
-public class IdentifiersBuilder {
+public class IdentifiersBuilder implements OptionsBuilder<IdentifiersBuilder, Identifiers> {
 
   private static final Logger LOGGER = Logger.getLogger(Identifiers.class.getName());
+
+  public static IdentifiersBuilder builder() {
+    return new IdentifiersBuilder();
+  }
 
   /** Load a list of SQL 2003 reserved words, and normalize them by converting to uppercase. */
   private static Collection<String> loadSql2003ReservedWords() {
@@ -84,17 +88,14 @@ public class IdentifiersBuilder {
   final Collection<String> reservedWords;
   String identifierQuoteString;
   boolean quoteMixedCaseIdentifiers;
+
   IdentifierQuotingStrategy identifierQuotingStrategy;
 
-  IdentifiersBuilder() {
+  private IdentifiersBuilder() {
     reservedWords = loadSql2003ReservedWords();
     identifierQuotingStrategy =
         IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
     quoteMixedCaseIdentifiers = true;
-  }
-
-  public Identifiers build() {
-    return new Identifiers(this);
   }
 
   public IdentifiersBuilder doNotQuoteMixedCaseIdentifiers() {
@@ -102,6 +103,7 @@ public class IdentifiersBuilder {
     return this;
   }
 
+  @Override
   public IdentifiersBuilder fromOptions(final Identifiers identifiers) {
     if (identifiers == null) {
       return this;
@@ -123,6 +125,11 @@ public class IdentifiersBuilder {
     return this;
   }
 
+  @Override
+  public Identifiers toOptions() {
+    return new Identifiers(this);
+  }
+
   /**
    * Constructs a list of database object identifiers from SQL 2003 keywords, and from the database
    * server. Also obtains the identifier quote string from the database server.
@@ -131,7 +138,7 @@ public class IdentifiersBuilder {
    * @return Builder
    * @throws SQLException
    */
-  public IdentifiersBuilder withConnection(final Connection connection) {
+  public IdentifiersBuilder fromConnection(final Connection connection) {
     if (connection == null) {
       return this;
     }

@@ -55,6 +55,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.MetaDataUtility;
@@ -65,10 +66,10 @@ import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 public class MetadataUtilityTest {
 
   private static final Identifiers identifiers =
-      Identifiers.identifiers()
+      IdentifiersBuilder.builder()
           .withIdentifierQuotingStrategy(quote_all)
           .withIdentifierQuoteString("'")
-          .build();
+          .toOptions();
   private Catalog catalog;
 
   @Test

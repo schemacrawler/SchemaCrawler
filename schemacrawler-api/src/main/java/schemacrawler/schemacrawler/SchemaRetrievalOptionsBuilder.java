@@ -106,10 +106,10 @@ public final class SchemaRetrievalOptionsBuilder
 
     identifierQuoteString = lookupIdentifierQuoteString(metaData);
     identifiers =
-        Identifiers.identifiers()
-            .withConnection(connection)
+        IdentifiersBuilder.builder()
+            .fromConnection(connection)
             .withIdentifierQuoteString(identifierQuoteString)
-            .build();
+            .toOptions();
 
     supportsCatalogs = lookupSupportsCatalogs(metaData);
     supportsSchemas = lookupSupportsSchemas(metaData);

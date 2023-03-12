@@ -46,19 +46,14 @@ import schemacrawler.schema.Schema;
  * database server as well. Several utility methods for looking up and quoting and unquoting
  * identifiers are provided.
  */
-public final class Identifiers implements Serializable {
+public final class Identifiers implements Options, Serializable {
 
   private static final long serialVersionUID = -5108721215361312979L;
 
-  public static final Identifiers STANDARD =
-      Identifiers.identifiers().withIdentifierQuoteString("\"").build();
+  public static final Identifiers STANDARD = IdentifiersBuilder.builder().toOptions();
 
   private static final Pattern isAllNumeric = Pattern.compile("^\\p{Nd}*$");
   private static final Pattern isIdentifier = Pattern.compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
-
-  public static IdentifiersBuilder identifiers() {
-    return new IdentifiersBuilder();
-  }
 
   /**
    * Checks if the name is valid database object identifier, according to the rules of most

@@ -3,7 +3,7 @@ import re
 from schemacrawler.schema import \
     TableRelationshipType  # pylint: disable=import-error
 from schemacrawler.schemacrawler import \
-    Identifiers  # pylint: disable=import-error
+    IdentifiersBuilder  # pylint: disable=import-error
 from schemacrawler.schemacrawler import \
     IdentifierQuotingStrategy  # pylint: disable=import-error
 from schemacrawler.utility import \
@@ -23,10 +23,9 @@ print("  '''")
 print("}")
 
 identifiers = \
-      Identifiers.identifiers() \
+      IdentifiersBuilder.builder() \
           .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all) \
-          .withIdentifierQuoteString('"') \
-          .build()
+          .toOptions()
 
 # Columns
 for table in catalog.getTables():

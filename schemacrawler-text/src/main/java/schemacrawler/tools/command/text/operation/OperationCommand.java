@@ -44,6 +44,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
@@ -98,10 +99,10 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
       // name
       final String identifierQuoteString = identifiers.getIdentifierQuoteString();
       final Identifiers identifiers =
-          Identifiers.identifiers()
+          IdentifiersBuilder.builder()
               .withIdentifierQuoteString(identifierQuoteString)
               .withIdentifierQuotingStrategy(quote_all)
-              .build();
+              .toOptions();
 
       try (final Statement statement = createStatement(connection)) {
         for (final Table table : getSortedTables(catalog)) {

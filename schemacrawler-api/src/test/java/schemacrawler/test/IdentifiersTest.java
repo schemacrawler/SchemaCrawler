@@ -37,7 +37,7 @@ import schemacrawler.schemacrawler.Identifiers;
 
 public class IdentifiersTest {
 
-  private final Identifiers identifiers = Identifiers.identifiers().build();
+  private final Identifiers identifiers = Identifiers.STANDARD;
 
   @Test
   public void blank() {

@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.Retriever;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -66,10 +67,10 @@ public final class TableRowCountsRetriever {
     Identifiers identifiers;
     try (Connection connection = dataSource.get(); ) {
       identifiers =
-          Identifiers.identifiers()
-              .withConnection(connection)
+          IdentifiersBuilder.builder()
+              .fromConnection(connection)
               .withIdentifierQuotingStrategy(quote_all)
-              .build();
+              .toOptions();
     } catch (final SQLException e) {
       // The offline snapshot executable may not have a live connection,
       // so we cannot fail with an exception. Log and continue.
