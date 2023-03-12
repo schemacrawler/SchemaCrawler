@@ -83,16 +83,32 @@ public class IdentifiersBuilder {
 
   final Collection<String> reservedWords;
   String identifierQuoteString;
+  boolean quoteMixedCaseIdentifiers;
   IdentifierQuotingStrategy identifierQuotingStrategy;
 
   IdentifiersBuilder() {
     reservedWords = loadSql2003ReservedWords();
     identifierQuotingStrategy =
         IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
+    quoteMixedCaseIdentifiers = true;
   }
 
   public Identifiers build() {
     return new Identifiers(this);
+  }
+
+  public IdentifiersBuilder doNotQuoteMixedCaseIdentifiers() {
+    quoteMixedCaseIdentifiers = false;
+    return this;
+  }
+
+  public boolean isIdentifierQuoteStringSet() {
+    return identifierQuoteString != null;
+  }
+
+  public IdentifiersBuilder quoteMixedCaseIdentifiers() {
+    quoteMixedCaseIdentifiers = true;
+    return this;
   }
 
   /**
@@ -119,6 +135,9 @@ public class IdentifiersBuilder {
           identifierQuoteString = metaDataIdentifierQuoteString;
         }
       }
+
+      quoteMixedCaseIdentifiers = !metaData.supportsMixedCaseIdentifiers();
+
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not obtain connection-specific information", e);
     }
@@ -156,9 +175,5 @@ public class IdentifiersBuilder {
       this.identifierQuotingStrategy = identifierQuotingStrategy;
     }
     return this;
-  }
-
-  boolean isIdentifierQuoteStringSet() {
-    return identifierQuoteString != null;
   }
 }

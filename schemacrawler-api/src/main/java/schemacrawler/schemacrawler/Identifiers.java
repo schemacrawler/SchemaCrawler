@@ -72,33 +72,10 @@ public final class Identifiers {
     }
   }
 
-  private static boolean isMixedCase(final String name) {
-    if (isBlank(name)) {
-      return false;
-    }
-
-    boolean hasUpperCase = false;
-    boolean hasLowerCase = false;
-
-    for (int i = 0; i < name.codePointCount(0, name.length()); i++) {
-      final int c = name.codePointAt(i);
-
-      if (Character.isUpperCase(c)) {
-        hasUpperCase = true;
-      } else if (Character.isLowerCase(c)) {
-        hasLowerCase = true;
-      }
-
-      if (hasUpperCase && hasLowerCase) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   private final String identifierQuoteString;
+
   private final IdentifierQuotingStrategy identifierQuotingStrategy;
+  private final boolean quoteMixedCaseIdentifiers;
   private final Collection<String> reservedWords;
 
   Identifiers(final IdentifiersBuilder builder) {
@@ -109,6 +86,7 @@ public final class Identifiers {
       identifierQuoteString = "\"";
     }
     identifierQuotingStrategy = builder.identifierQuotingStrategy;
+    quoteMixedCaseIdentifiers = builder.quoteMixedCaseIdentifiers;
     reservedWords = builder.reservedWords;
   }
 
@@ -272,6 +250,35 @@ public final class Identifiers {
     } else {
       return name;
     }
+  }
+
+  private boolean isMixedCase(final String name) {
+
+    if (!quoteMixedCaseIdentifiers) {
+      return false;
+    }
+    if (isBlank(name)) {
+      return false;
+    }
+
+    boolean hasUpperCase = false;
+    boolean hasLowerCase = false;
+
+    for (int i = 0; i < name.codePointCount(0, name.length()); i++) {
+      final int c = name.codePointAt(i);
+
+      if (Character.isUpperCase(c)) {
+        hasUpperCase = true;
+      } else if (Character.isLowerCase(c)) {
+        hasLowerCase = true;
+      }
+
+      if (hasUpperCase && hasLowerCase) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private void quoteFullName(final StringBuilder buffer, final DatabaseObject databaseObject) {
