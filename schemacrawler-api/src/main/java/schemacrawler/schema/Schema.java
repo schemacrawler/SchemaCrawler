@@ -35,5 +35,10 @@ public interface Schema extends NamedObject, AttributedObject, DescribedObject {
 
   String getCatalogName();
 
+  /**
+   * Allows a strategy for quoting identifiers to be considered.
+   *
+   * @param identifiers Identifier quoting strategy.
+   */
   void withQuoting(Identifiers identifiers);
 }

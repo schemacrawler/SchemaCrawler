@@ -139,6 +139,7 @@ public final class SchemaCrawler {
   public Catalog crawl() {
     try {
       catalog = new MutableCatalog("catalog", retrieverConnection.getConnectionInfo());
+      catalog.withQuoting(retrieverConnection.getIdentifiers());
 
       final String runId = catalog.getCrawlInfo().getRunId();
       taskRunner = new RetrievalTaskRunner(runId, infoLevel, maxThreads);

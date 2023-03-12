@@ -35,5 +35,10 @@ public interface DatabaseObject extends NamedObject, AttributedObject, Described
 
   Schema getSchema();
 
+  /**
+   * Allows a strategy for quoting identifiers to be considered.
+   *
+   * @param identifiers Identifier quoting strategy.
+   */
   void withQuoting(Identifiers identifiers);
 }

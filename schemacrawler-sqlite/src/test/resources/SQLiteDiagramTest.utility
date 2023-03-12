@@ -32,13 +32,13 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2023-03-01 00:37:38</td>
+		<td align='left'>2023-03-12 15:29:49</td>
 	</tr>
       </table>
     >
   ];
 
-  /* "Authors" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* Authors -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "authors_3cb01c87" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
@@ -98,7 +98,7 @@ digraph "SchemaCrawler_Diagram" {
   "bookauthors_4048215e":"authorid_22016288.start":w -> "authors_3cb01c87":"id_59537d94.end":e [label=<"Z_FK_Author"> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
-  /* "AuthorsList" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* AuthorsList -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "authorslist_8ef3ed45" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
@@ -127,7 +127,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
 
-  /* "BookAuthors" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* BookAuthors -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "bookauthors_4048215e" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
@@ -156,7 +156,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
 
-  /* "Books" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* Books -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "books_3d6a6e9" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
@@ -204,10 +204,10 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
   "books_3d6a6e9":"previouseditionid_aadfc859.start":w -> "books_3d6a6e9":"id_76fe3f72.end":e [label=<"FK_PreviousEdition"> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
-  "bookauthors_4048215e":"bookid_3fac2466.start":w -> "books_3d6a6e9":"id_76fe3f72.end":e [label=<SCHCRWLR_7D83FD7A_7614D025> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "bookauthors_4048215e":"bookid_3fac2466.start":w -> "books_3d6a6e9":"id_76fe3f72.end":e [label=<SCHCRWLR_03D6328A_4047ACFF> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
-  /* "Celebrities" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* Celebrities -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "celebrities_ea338200" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
@@ -229,7 +229,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "celebrityupdates_429b7ac":"celebrityid_dd42228c.start":w -> "celebrities_ea338200":"id_5c3cc73b.end":e [label=<SCHCRWLR_099583C3_D1A02217> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "celebrityupdates_429b7ac":"celebrityid_dd42228c.start":w -> "celebrities_ea338200":"id_5c3cc73b.end":e [label=<SCHCRWLR_EA330DA1_D1A02217> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* "Celebrity Updates" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -256,7 +256,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
 
-  /* "Coupons" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* Coupons -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "coupons_9c51394c" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
@@ -290,7 +290,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
 
-  /* "Publishers" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* Publishers -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "publishers_e940ee76" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
@@ -317,7 +317,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "βιβλία_4ddfd931":"εκδότης_7cb44961.start":w -> "publishers_e940ee76":"id_3edce985.end":e [label=<SCHCRWLR_4466BF89_39F52B2E> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "βιβλία_4ddfd931":"εκδότης_7cb44961.start":w -> "publishers_e940ee76":"id_3edce985.end":e [label=<SCHCRWLR_E9407A17_4DDF64D2> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* X_EMPLOYEES -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -379,7 +379,7 @@ digraph "SchemaCrawler_Diagram" {
 
 
 
-  /* "Βιβλία" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  /* Βιβλία -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "βιβλία_4ddfd931" [
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
