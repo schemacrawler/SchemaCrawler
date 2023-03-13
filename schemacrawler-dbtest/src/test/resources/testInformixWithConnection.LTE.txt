@@ -6846,7 +6846,7 @@ informix.datetime                               [user defined data type]
   not searchable
   based on                                                      
 
-informix."fixed udt"                            [user defined data type]
+informix.fixed udt                              [user defined data type]
   defined with no parameters
   not nullable
   not auto-incrementable
@@ -6881,7 +6881,7 @@ informix.longlvarchar                           [user defined data type]
   not searchable
   based on                                                      
 
-informix."multiset"                             [user defined data type]
+informix.multiset                               [user defined data type]
   defined with no parameters
   not nullable
   not auto-incrementable
@@ -6895,7 +6895,7 @@ informix.name_type                              [user defined data type]
   not searchable
   based on                                                      
 
-informix."row"                                  [user defined data type]
+informix.row                                    [user defined data type]
   defined with no parameters
   not nullable
   not auto-incrementable
@@ -6909,14 +6909,14 @@ informix.sendreceive                            [user defined data type]
   not searchable
   based on                                                      
 
-informix."set"                                  [user defined data type]
+informix.set                                    [user defined data type]
   defined with no parameters
   not nullable
   not auto-incrementable
   not searchable
   based on                                                      
 
-informix."variable udt"                         [user defined data type]
+informix.variable udt                           [user defined data type]
   defined with no parameters
   not nullable
   not auto-incrementable
