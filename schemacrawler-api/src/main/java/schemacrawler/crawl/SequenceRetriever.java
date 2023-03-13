@@ -119,6 +119,7 @@ final class SequenceRetriever extends AbstractRetriever {
         sequence.setCycle(cycle);
 
         sequence.addAttributes(results.getAttributes());
+        sequence.withQuoting(getRetrieverConnection().getIdentifiers());
 
         if (sequenceFilter.test(sequence)) {
           catalog.addSequence(sequence);

@@ -157,6 +157,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       foreignKey.setDeleteRule(deleteRule);
       foreignKey.setDeferrability(deferrability);
       foreignKey.addAttributes(results.getAttributes());
+      foreignKey.withQuoting(getRetrieverConnection().getIdentifiers());
 
       if (fkColumn instanceof MutableColumn) {
         ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
@@ -246,7 +247,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
           createForeignKeys(results, foreignKeys);
         } catch (final SQLException e) {
           logPossiblyUnsupportedSQLFeature(
-              new StringFormat("Could not retrieve exported foreign keys for table <%s>", table), e);
+              new StringFormat("Could not retrieve exported foreign keys for table <%s>", table),
+              e);
         }
       }
     }

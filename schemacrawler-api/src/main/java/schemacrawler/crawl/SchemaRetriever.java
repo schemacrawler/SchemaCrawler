@@ -104,6 +104,7 @@ final class SchemaRetriever extends AbstractRetriever {
     // Create schemas for the catalogs, as well as create the schema
     // reference cache
     for (final SchemaReference schemaRef : schemaRefs) {
+      schemaRef.withQuoting(getRetrieverConnection().getIdentifiers());
       catalog.addSchema(schemaRef);
     }
 

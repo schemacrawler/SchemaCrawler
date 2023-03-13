@@ -114,19 +114,30 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    // -- Schema output tests for "details" command
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("details");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(
+        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    // -- Schema output tests
     final String expectedResultsResource =
         String.format("testPostgreSQLWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResultsResource)));
 
+    // -- Schema output tests for "dump" command
+    final SchemaCrawlerExecutable executableDump = new SchemaCrawlerExecutable("dump");
+    executableDump.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDump.setAdditionalConfiguration(
+        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executableDump)),
+        hasSameContentAs(classpathResource("testPostgreSQLDump.txt")));
+
     // -- Additional catalog tests
-    final Catalog catalog = executable.getCatalog();
+    final Catalog catalog = executableDetails.getCatalog();
 
     final Table table = catalog.lookupTable(new SchemaReference(null, "books"), "authors").get();
 

@@ -142,6 +142,7 @@ final class TableRetriever extends AbstractRetriever {
       table.setTableType(tableType);
       table.setRemarks(remarks);
       table.addAttributes(results.getAttributes());
+      table.withQuoting(getRetrieverConnection().getIdentifiers());
 
       catalog.addTable(table);
     }

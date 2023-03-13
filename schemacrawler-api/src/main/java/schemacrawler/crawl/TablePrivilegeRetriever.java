@@ -148,6 +148,7 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       }
 
       privilege.addGrant(grantor, grantee, isGrantable);
+      privilege.withQuoting(getRetrieverConnection().getIdentifiers());
 
       if (privilegesForColumn) {
         column.addPrivilege((MutablePrivilege<Column>) privilege);

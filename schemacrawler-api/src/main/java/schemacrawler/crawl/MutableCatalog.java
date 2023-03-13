@@ -51,7 +51,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaReference;
 
 /**
@@ -86,7 +85,6 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
   private final NamedObjectList<ImmutableDatabaseUser> databaseUsers = new NamedObjectList<>();
   private final MutableCrawlInfo crawlInfo;
-  private transient Identifiers identifiers;
 
   MutableCatalog(final String name, final ConnectionInfo connectionInfo) {
     super(name);
@@ -95,8 +93,6 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     databaseInfo = new MutableDatabaseInfo(connectionInfo);
     jdbcDriverInfo = new MutableJdbcDriverInfo(connectionInfo);
     crawlInfo = new MutableCrawlInfo(connectionInfo);
-
-    identifiers = Identifiers.STANDARD;
   }
 
   /** {@inheritDoc} */
@@ -321,7 +317,6 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   void addColumnDataType(final MutableColumnDataType columnDataType) {
     if (columnDataType != null) {
-      quoteDatabaseObjectNames(columnDataType);
       columnDataTypes.add(columnDataType);
     }
   }
@@ -335,27 +330,19 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
   }
 
   Schema addSchema(final SchemaReference schema) {
-    quoteDatabaseObjectNames(schema);
     schemas.add(schema);
     return schema;
   }
 
-  Schema addSchema(final String catalogName, final String schemaName) {
-    return addSchema(new SchemaReference(catalogName, schemaName));
-  }
-
   void addSequence(final MutableSequence sequence) {
-    quoteDatabaseObjectNames(sequence);
     sequences.add(sequence);
   }
 
   void addSynonym(final MutableSynonym synonym) {
-    quoteDatabaseObjectNames(synonym);
     synonyms.add(synonym);
   }
 
   void addTable(final MutableTable table) {
-    quoteDatabaseObjectNames(table);
     tables.add(table);
   }
 
@@ -396,29 +383,5 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   Optional<MutableTable> lookupTable(final NamedObjectKey tableLookupKey) {
     return tables.lookup(tableLookupKey);
-  }
-
-  void withQuoting(final Identifiers identifiers) {
-    if (identifiers != null) {
-      this.identifiers = identifiers;
-    }
-  }
-
-  private void quoteDatabaseObjectNames(final DatabaseObject databaseObject) {
-    if (databaseObject != null) {
-      if (identifiers == null) {
-        identifiers = Identifiers.STANDARD;
-      }
-      databaseObject.withQuoting(identifiers);
-    }
-  }
-
-  private void quoteDatabaseObjectNames(final SchemaReference schema) {
-    if (schema != null) {
-      if (identifiers == null) {
-        identifiers = Identifiers.STANDARD;
-      }
-      schema.withQuoting(identifiers);
-    }
   }
 }

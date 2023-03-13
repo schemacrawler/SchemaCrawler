@@ -162,6 +162,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       parameter.setRemarks(remarks);
 
       parameter.addAttributes(results.getAttributes());
+      parameter.withQuoting(getRetrieverConnection().getIdentifiers());
 
       LOGGER.log(Level.FINER, new StringFormat("Adding parameter to procedure <%s>", parameter));
       procedure.addParameter(parameter);

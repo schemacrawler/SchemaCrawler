@@ -392,6 +392,7 @@ final class TableExtRetriever extends AbstractRetriever {
         trigger.setConditionTiming(conditionTiming);
 
         trigger.addAttributes(results.getAttributes());
+        trigger.withQuoting(getRetrieverConnection().getIdentifiers());
         // Add trigger to the table
         table.addTrigger(trigger);
       }

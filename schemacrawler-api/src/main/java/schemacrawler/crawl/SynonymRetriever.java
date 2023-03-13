@@ -150,6 +150,7 @@ final class SynonymRetriever extends AbstractRetriever {
         synonym.setReferencedObject(referencedObject);
 
         synonym.addAttributes(results.getAttributes());
+        synonym.withQuoting(getRetrieverConnection().getIdentifiers());
 
         if (synonymFilter.test(synonym)) {
           catalog.addSynonym(synonym);

@@ -168,6 +168,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       }
 
       column.addAttributes(results.getAttributes());
+      column.withQuoting(getRetrieverConnection().getIdentifiers());
 
       LOGGER.log(
           Level.FINER,

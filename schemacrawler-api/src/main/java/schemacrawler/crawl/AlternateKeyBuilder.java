@@ -36,8 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PrimaryKey;
@@ -91,8 +91,7 @@ public final class AlternateKeyBuilder {
     }
   }
 
-  private static final Logger LOGGER =
-      Logger.getLogger(AlternateKeyBuilder.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AlternateKeyBuilder.class.getName());
 
   public static AlternateKeyBuilder builder(final Catalog catalog) {
     return new AlternateKeyBuilder(catalog);

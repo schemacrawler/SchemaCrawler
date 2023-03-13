@@ -55,6 +55,7 @@ import schemacrawler.utility.TypeMap;
 abstract class AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractRetriever.class.getName());
+
   final MutableCatalog catalog;
   private final SchemaCrawlerOptions options;
   private final RetrieverConnection retrieverConnection;
@@ -186,6 +187,7 @@ abstract class AbstractRetriever {
       } else {
         columnDataType.setTypeMappedClass(mappedClassName);
       }
+      columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
       catalog.addColumnDataType(columnDataType);
     }
