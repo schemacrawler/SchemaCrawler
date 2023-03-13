@@ -7,7 +7,7 @@ Dump
 
 books.authors                                                           
 ------------------------------------------------------------------------
-Id	FirstName	LastName	Address1	Address2	City	State	PostalCode	Country
+`Id`	`FirstName`	`LastName`	`Address1`	`Address2`	`City`	`State`	`PostalCode`	`Country`
 1	Oren	Shaffer	900-2273 Integer Avenue		Farmer City	MD	37032	Cook Islands
 2	Octavia	Burke	955-7635 Natoque St.		Kalispell	MS	66863	Cape Verde
 3	Aiko	Stafford	Ap #554-7132 Dictum Street		Kankakee	ID	59675	Brunei Darussalam
@@ -33,7 +33,7 @@ Id	FirstName	LastName	Address1	Address2	City	State	PostalCode	Country
 
 books.authorslist                                                       
 ------------------------------------------------------------------------
-Id	FirstName	LastName
+`Id`	`FirstName`	`LastName`
 1	Oren	Shaffer
 2	Octavia	Burke
 3	Aiko	Stafford
@@ -59,7 +59,7 @@ Id	FirstName	LastName
 
 books.bookauthors                                                       
 ------------------------------------------------------------------------
-BookId	AuthorId	SomeData
+`BookId`	`AuthorId`	`SomeData`
 1	7	This is the latest update
 2	4	NULL
 2	6	Some update
@@ -85,7 +85,7 @@ BookId	AuthorId	SomeData
 
 books.books                                                             
 ------------------------------------------------------------------------
-Id	Title	Description	PublisherId	PublicationDate	Price	PreviousEditionId
+`Id`	`Title`	`Description`	`PublisherId`	`PublicationDate`	`Price`	`PreviousEditionId`
 1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99	1
 2	Duis Dignissim Tempor Arcu.	Eu, Euismod Ac, Fermentum Vel,	20	2002-05-09	27.99	2
 3	Lacinia Orci, Consectetuer Euismod Est	Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.	15	2006-04-14	37.99	3
@@ -111,7 +111,7 @@ Id	Title	Description	PublisherId	PublicationDate	Price	PreviousEditionId
 
 books.celebrities                                                       
 ------------------------------------------------------------------------
-Id	Name
+`Id`	`Name`
 1	Hop Whitney
 2	Cherokee Cantrell
 3	Giselle Dillon
@@ -122,7 +122,7 @@ Id	Name
 
 books.`celebrity updates`                                               
 ------------------------------------------------------------------------
-Celebrity Id	UPDATE
+`Celebrity Id`	`UPDATE`
 1	Abbot
 2	Alexis
 3	Jasmine
@@ -133,7 +133,7 @@ Celebrity Id	UPDATE
 
 books.coupons                                                           
 ------------------------------------------------------------------------
-Id	Data	Coupons	Books
+`Id`	`Data`	`Coupons`	`Books`
 1	<binary>	NULL	NULL
 2	<binary>	NULL	NULL
 3	<binary>	NULL	NULL
@@ -155,7 +155,7 @@ name	tshirt	mood
 
 books.publishers                                                        
 ------------------------------------------------------------------------
-Id	Publisher
+`Id`	`Publisher`
 1	Dalton Lewis
 2	Macaulay Bryant
 3	Nash Fox

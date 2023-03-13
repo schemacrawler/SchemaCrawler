@@ -117,7 +117,7 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 DB2INST1."Celebrities"                                                  
 ------------------------------------------------------------------------
-Id	NAME
+"Id"	NAME
 1	Hop Whitney
 2	Cherokee Cantrell
 3	Giselle Dillon
@@ -128,7 +128,7 @@ Id	NAME
 
 DB2INST1."Celebrity Updates"                                            
 ------------------------------------------------------------------------
-Celebrity Id	UPDATE
+"Celebrity Id"	"UPDATE"
 1	Abbot
 2	Alexis
 3	Jasmine
@@ -199,5 +199,5 @@ EMPLOYEEID	EMPLOYEE_NAME	START_DATE	END_DATE	ANNUAL_SALARY	HOURLY_RATE
 
 DB2INST1.ΒΙΒΛΊΑ                                                         
 ------------------------------------------------------------------------
-ΜΟΝΑΔΙΚΌς	ΤΊΤΛΟς	ΠΕΡΙΓΡΑΦΉ	ΕΚΔΌΤΗς
+"ΜΟΝΑΔΙΚΌς"	"ΤΊΤΛΟς"	ΠΕΡΙΓΡΑΦΉ	"ΕΚΔΌΤΗς"
 

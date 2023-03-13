@@ -117,7 +117,7 @@ id	title	description	publisherid	publicationdate	price	previouseditionid
 
 books."Celebrities"                                                     
 ------------------------------------------------------------------------
-Id	name
+"Id"	name
 1	Hop Whitney
 2	Cherokee Cantrell
 3	Giselle Dillon
@@ -128,7 +128,7 @@ Id	name
 
 books."Celebrity Updates"                                               
 ------------------------------------------------------------------------
-Celebrity Id	UPDATE
+"Celebrity Id"	"UPDATE"
 1	Abbot
 2	Alexis
 3	Jasmine
@@ -199,5 +199,5 @@ id	publisher
 
 books."Βιβλία"                                                          
 ------------------------------------------------------------------------
-Μοναδικός	Τίτλος	Περιγραφή	Εκδότης
+"Μοναδικός"	"Τίτλος"	"Περιγραφή"	"Εκδότης"
 

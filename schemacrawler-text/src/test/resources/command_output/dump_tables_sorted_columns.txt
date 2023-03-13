@@ -111,7 +111,7 @@ Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor,
 
 PUBLIC.BOOKS."Celebrities"                                              
 ------------------------------------------------------------------------
-Id	NAME
+"Id"	NAME
 1	Hop Whitney
 2	Cherokee Cantrell
 3	Giselle Dillon
@@ -122,7 +122,7 @@ Id	NAME
 
 PUBLIC.BOOKS."Celebrity Updates"                                        
 ------------------------------------------------------------------------
-Celebrity Id	UPDATE
+"Celebrity Id"	"UPDATE"
 1	Abbot
 2	Alexis
 3	Jasmine

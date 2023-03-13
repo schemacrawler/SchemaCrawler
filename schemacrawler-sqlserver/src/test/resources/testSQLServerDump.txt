@@ -148,7 +148,7 @@ Id	Name
 
 BOOKS.dbo."Celebrity Updates"                                           
 ------------------------------------------------------------------------
-Celebrity Id	UPDATE
+"Celebrity Id"	"UPDATE"
 1	Abbot
 2	Alexis
 3	Jasmine

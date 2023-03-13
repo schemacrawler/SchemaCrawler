@@ -34,6 +34,7 @@ import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailTy
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import schemacrawler.crawl.MetadataResultSet;
@@ -161,7 +162,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       try (final MetadataResultSet dataRows = new MetadataResultSet(rows, "Data")) {
         dataRows.setShowLobs(options.isShowLobs());
 
-        formattingHelper.writeRowHeader(dataRows.getColumnNames());
+        formattingHelper.writeRowHeader(quoteColumnNames(dataRows.getColumnNames()));
 
         iterateRows(dataRows);
       } catch (final SQLException e) {
@@ -188,5 +189,15 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       formattingHelper.writeObjectStart();
       formattingHelper.writeObjectNameRow("", operation.getTitle(), "", Color.white);
     }
+  }
+
+  private String[] quoteColumnNames(final String[] columnNames) {
+    final String[] quotedColumnNames = Arrays.copyOf(columnNames, columnNames.length);
+    for (int i = 0; i < columnNames.length; i++) {
+      final String columnName = columnNames[i];
+      final String quotedColumnName = identifiers.quoteName(columnName);
+      quotedColumnNames[i] = quotedColumnName;
+    }
+    return quotedColumnNames;
   }
 }
