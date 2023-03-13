@@ -189,6 +189,14 @@ public final class SchemaReference implements Schema {
     return getFullName();
   }
 
+  @Override
+  public void withQuoting(final Identifiers identifiers) {
+    if (identifiers == null) {
+      return;
+    }
+    fullName = identifiers.quoteFullName(this);
+  }
+
   private void buildFullName() {
     if (fullName != null) {
       return;

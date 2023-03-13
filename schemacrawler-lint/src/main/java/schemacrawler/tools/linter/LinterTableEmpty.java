@@ -33,11 +33,12 @@ import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
@@ -45,8 +46,7 @@ import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableEmpty extends BaseLinter {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(LinterTableEmpty.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(LinterTableEmpty.class.getName());
 
   public LinterTableEmpty() {
     setSeverity(LintSeverity.low);
@@ -65,7 +65,8 @@ public class LinterTableEmpty extends BaseLinter {
 
     final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
     try {
-      final Identifiers identifiers = Identifiers.identifiers().withConnection(connection).build();
+      final Identifiers identifiers =
+          IdentifiersBuilder.builder().fromConnection(connection).toOptions();
       final long count = executeForLong(query, connection, table, identifiers);
       if (count == 0) {
         addTableLint(table, getSummary());

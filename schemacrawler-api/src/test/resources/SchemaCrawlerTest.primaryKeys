@@ -12,6 +12,18 @@ PUBLIC.BOOKS.BOOKS
     constraint type: primary_key
     is deferrable: false
     is initially deferred: false
+PUBLIC.BOOKS."Celebrities"
+  primary key: PK_Celebrities
+    columns: [PUBLIC.BOOKS."Celebrities"."Id"]
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+PUBLIC.BOOKS."Celebrity Updates"
+  primary key: PK Celebrity Updates
+    columns: [PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"]
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
 PUBLIC.BOOKS.COUPONS
   primary key: PK_COUPONS
     columns: [PUBLIC.BOOKS.COUPONS.ID]
@@ -30,9 +42,8 @@ PUBLIC.BOOKS.CUSTOMERS
     constraint type: primary_key
     is deferrable: false
     is initially deferred: false
-PUBLIC.BOOKS."Global Counts"
 PUBLIC.BOOKS.PUBLISHERS
-  primary key: SYS_PK_10106
+  primary key: SYS_PK_10126
     columns: [PUBLIC.BOOKS.PUBLISHERS.ID]
     constraint type: primary_key
     is deferrable: false

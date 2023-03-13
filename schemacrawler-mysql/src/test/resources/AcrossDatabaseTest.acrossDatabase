@@ -7,44 +7,44 @@ Tables
 
 schema_a_a.a_a_table1                                            [table]
 ------------------------------------------------------------------------
-  Id                                INT NOT NULL                
-  Name                              VARCHAR(40) NOT NULL        
+  `Id`                              INT NOT NULL                
+  `Name`                            VARCHAR(40) NOT NULL        
 
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                                            
+  `Id`                                                          
 
 Foreign Keys
 
 FK_A_A_TO_A_A                               [foreign key, with restrict]
-  Id <--(0..many) schema_a_a.a_a_table2.FK_COL_TO_A_A                              
+  `Id` <--(0..many) schema_a_a.a_a_table2.FK_COL_TO_A_A                              
 
 FK_A_B_TO_A_A                               [foreign key, with restrict]
-  Id <--(0..many) schema_a_b.a_b_table2.FK_COL_TO_A_A                              
+  `Id` <--(0..many) schema_a_b.a_b_table2.FK_COL_TO_A_A                              
 
 Indexes
 
 `PRIMARY`                                                 [unique index]
-  Id                                ascending                   
+  `Id`                              ascending                   
 
 
 
 schema_a_a.a_a_table2                                            [table]
 ------------------------------------------------------------------------
-  Id                                INT NOT NULL                
-  Name                              VARCHAR(40) NOT NULL        
+  `Id`                              INT NOT NULL                
+  `Name`                            VARCHAR(40) NOT NULL        
   FK_COL_TO_A_A                     INT NOT NULL                
 
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                                            
+  `Id`                                                          
 
 Foreign Keys
 
 FK_A_A_TO_A_A                               [foreign key, with restrict]
-  FK_COL_TO_A_A (0..many)--> schema_a_a.a_a_table1.Id                              
+  FK_COL_TO_A_A (0..many)--> schema_a_a.a_a_table1.`Id`                              
 
 Indexes
 
@@ -52,25 +52,25 @@ FK_A_A_TO_A_A                                         [non-unique index]
   FK_COL_TO_A_A                     ascending                   
 
 `PRIMARY`                                                 [unique index]
-  Id                                ascending                   
+  `Id`                              ascending                   
 
 
 
 schema_a_b.a_b_table2                                            [table]
 ------------------------------------------------------------------------
-  Id                                INT NOT NULL                
-  Name                              VARCHAR(40) NOT NULL        
+  `Id`                              INT NOT NULL                
+  `Name`                            VARCHAR(40) NOT NULL        
   FK_COL_TO_A_A                     INT NOT NULL                
 
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                                            
+  `Id`                                                          
 
 Foreign Keys
 
 FK_A_B_TO_A_A                               [foreign key, with restrict]
-  FK_COL_TO_A_A (0..many)--> schema_a_a.a_a_table1.Id                              
+  FK_COL_TO_A_A (0..many)--> schema_a_a.a_a_table1.`Id`                              
 
 Indexes
 
@@ -78,15 +78,15 @@ FK_A_B_TO_A_A                                         [non-unique index]
   FK_COL_TO_A_A                     ascending                   
 
 `PRIMARY`                                                 [unique index]
-  Id                                ascending                   
+  `Id`                              ascending                   
 
 
 
 schema_a_b.a_b_view1                                              [view]
 ------------------------------------------------------------------------
 VIEW
-  Id                                INT NOT NULL                
-  Name                              VARCHAR(40) NOT NULL        
+  `Id`                              INT NOT NULL                
+  `Name`                            VARCHAR(40) NOT NULL        
   FK_COL_TO_A_A                     INT NOT NULL                
 
 Definition

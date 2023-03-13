@@ -37,7 +37,7 @@ import schemacrawler.schemacrawler.Identifiers;
 
 public class IdentifiersTest {
 
-  private final Identifiers identifiers = Identifiers.identifiers().build();
+  private final Identifiers identifiers = Identifiers.STANDARD;
 
   @Test
   public void blank() {
@@ -66,7 +66,9 @@ public class IdentifiersTest {
   @Test
   public void quotedIdentifiers() {
     final String[] words =
-        new String[] {"1234", "w@w", "e.e", "१२३४५६७८९०", "Global Counts", "Trail ", " leaD"};
+        new String[] {
+          "1234", "w@w", "e.e", "१२३४५६७८९०", "Celebrity Updates", "Trail ", " leaD", "q2W", "W_w"
+        };
     for (final String word : words) {
       assertThat(word, identifiers.isReservedWord(word), is(false));
       assertThat(word, identifiers.isToBeQuoted(word), is(true));
@@ -102,8 +104,8 @@ public class IdentifiersTest {
   public void unquotedIdentifiers() {
     final String[] words =
         new String[] {
-          "qwer", "Qwer", "qweR", "qwEr", "QWER", "Q2w", "q2W", "q2w", "w_w", "W_W", "_W", "W_",
-          "हम", "ह७म", "७म", "ह७", "हिंदी", "दी८दी"
+          "qwer", "QWER", "Q2W", "q2w", "w_w", "W_W", "_W", "W_", "हम", "ह७म", "७म", "ह७", "हिंदी",
+          "दी८दी"
         };
     for (final String word : words) {
       assertThat(word, identifiers.isReservedWord(word), is(false));

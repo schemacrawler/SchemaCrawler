@@ -45,7 +45,7 @@ public class CatalogLoaderRegistryTest {
   @Test
   public void helpCommands() throws Exception {
     final Collection<PluginCommand> helpCommands = new CatalogLoaderRegistry().getHelpCommands();
-    assertThat(helpCommands, hasSize(2));
+    assertThat(String.valueOf(helpCommands), helpCommands, hasSize(2));
     final List<String> names = helpCommands.stream().map(PluginCommand::getName).collect(toList());
     assertThat(names, containsInAnyOrder("loader:testloader", null));
 
@@ -54,8 +54,7 @@ public class CatalogLoaderRegistryTest {
           System.setProperty(
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
-              InternalRuntimeException.class,
-              () -> new CatalogLoaderRegistry().getHelpCommands());
+              InternalRuntimeException.class, () -> new CatalogLoaderRegistry().getHelpCommands());
         });
   }
 

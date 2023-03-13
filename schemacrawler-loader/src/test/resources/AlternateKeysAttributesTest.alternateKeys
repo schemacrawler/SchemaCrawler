@@ -6,12 +6,13 @@ schema: PUBLIC.BOOKS
       remarks: Overwritten remarks line 1
       attributes: {REMARKS=Overwritten remarks line 1, some tag 1=tagvalue1, tag2=tag value 2}
   table: PUBLIC.BOOKS.BOOKS
+  table: PUBLIC.BOOKS."Celebrities"
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
-  table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
   table: PUBLIC.BOOKS.BOOKAUTHORS
+  table: PUBLIC.BOOKS."Celebrity Updates"
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
   table: PUBLIC.BOOKS.AUTHORSLIST
 schema: PUBLIC.INFORMATION_SCHEMA

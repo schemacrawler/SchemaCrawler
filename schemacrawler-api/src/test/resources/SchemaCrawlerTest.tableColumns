@@ -475,6 +475,94 @@ PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
     ~ REMARKS=
     ~ SQL_DATA_TYPE=4
 
+PUBLIC.BOOKS."Celebrities"."Id"
+  - short name="Celebrities"."Id"
+  - data-type=INTEGER
+  - size=32
+  - decimal digits=0
+  - width=
+  - default value=null
+  - auto-incremented=false
+  - nullable=false
+  - generated=false
+  - hidden=false
+  - part of primary key=true
+  - part of foreign key=false
+  - ordinal position=1
+  - remarks=
+  - attibutes=
+    ~ CHAR_OCTET_LENGTH=0
+    ~ IS_GENERATED=NEVER
+    ~ IS_NULLABLE=NO
+    ~ NUM_PREC_RADIX=2
+    ~ REMARKS=
+    ~ SQL_DATA_TYPE=4
+PUBLIC.BOOKS."Celebrities".NAME
+  - short name="Celebrities".NAME
+  - data-type=VARCHAR
+  - size=20
+  - decimal digits=0
+  - width=(20)
+  - default value=null
+  - auto-incremented=false
+  - nullable=true
+  - generated=false
+  - hidden=false
+  - part of primary key=false
+  - part of foreign key=false
+  - ordinal position=2
+  - remarks=
+  - attibutes=
+    ~ CHAR_OCTET_LENGTH=20
+    ~ IS_GENERATED=NEVER
+    ~ IS_NULLABLE=YES
+    ~ REMARKS=
+    ~ SQL_DATA_TYPE=12
+
+PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"
+  - short name="Celebrity Updates"."Celebrity Id"
+  - data-type=INTEGER
+  - size=32
+  - decimal digits=0
+  - width=
+  - default value=null
+  - auto-incremented=false
+  - nullable=false
+  - generated=false
+  - hidden=false
+  - part of primary key=true
+  - part of foreign key=true
+  - ordinal position=1
+  - remarks=
+  - attibutes=
+    ~ CHAR_OCTET_LENGTH=0
+    ~ IS_GENERATED=NEVER
+    ~ IS_NULLABLE=NO
+    ~ NUM_PREC_RADIX=2
+    ~ REMARKS=
+    ~ SQL_DATA_TYPE=4
+PUBLIC.BOOKS."Celebrity Updates"."UPDATE"
+  - short name="Celebrity Updates"."UPDATE"
+  - data-type=VARCHAR
+  - size=20
+  - decimal digits=0
+  - width=(20)
+  - default value=null
+  - auto-incremented=false
+  - nullable=true
+  - generated=false
+  - hidden=false
+  - part of primary key=false
+  - part of foreign key=false
+  - ordinal position=2
+  - remarks=
+  - attibutes=
+    ~ CHAR_OCTET_LENGTH=20
+    ~ IS_GENERATED=NEVER
+    ~ IS_NULLABLE=YES
+    ~ REMARKS=
+    ~ SQL_DATA_TYPE=12
+
 PUBLIC.BOOKS.COUPONS.ID
   - short name=COUPONS.ID
   - data-type=INTEGER
@@ -695,50 +783,6 @@ PUBLIC.BOOKS.CUSTOMERS.AGE
     ~ REMARKS=
     ~ SOURCE_DATA_TYPE=5
     ~ SQL_DATA_TYPE=5
-
-PUBLIC.BOOKS."Global Counts"."Global Count"
-  - short name="Global Counts"."Global Count"
-  - data-type=INTEGER
-  - size=32
-  - decimal digits=0
-  - width=
-  - default value=null
-  - auto-incremented=false
-  - nullable=true
-  - generated=false
-  - hidden=false
-  - part of primary key=false
-  - part of foreign key=false
-  - ordinal position=1
-  - remarks=
-  - attibutes=
-    ~ CHAR_OCTET_LENGTH=0
-    ~ IS_GENERATED=NEVER
-    ~ IS_NULLABLE=YES
-    ~ NUM_PREC_RADIX=2
-    ~ REMARKS=
-    ~ SQL_DATA_TYPE=4
-PUBLIC.BOOKS."Global Counts"."UPDATE"
-  - short name="Global Counts"."UPDATE"
-  - data-type=VARCHAR
-  - size=20
-  - decimal digits=0
-  - width=(20)
-  - default value=null
-  - auto-incremented=false
-  - nullable=true
-  - generated=false
-  - hidden=false
-  - part of primary key=false
-  - part of foreign key=false
-  - ordinal position=2
-  - remarks=
-  - attibutes=
-    ~ CHAR_OCTET_LENGTH=20
-    ~ IS_GENERATED=NEVER
-    ~ IS_NULLABLE=YES
-    ~ REMARKS=
-    ~ SQL_DATA_TYPE=12
 
 PUBLIC.BOOKS.PUBLISHERS.ID
   - short name=PUBLISHERS.ID

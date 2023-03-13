@@ -109,6 +109,28 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
+PUBLIC.BOOKS."Celebrities"                                              
+------------------------------------------------------------------------
+"Id"	NAME
+1	Hop Whitney
+2	Cherokee Cantrell
+3	Giselle Dillon
+4	Reuben Hood
+5	Amena Elliott
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                        
+------------------------------------------------------------------------
+"Celebrity Id"	"UPDATE"
+1	Abbot
+2	Alexis
+3	Jasmine
+4	NULL
+5	Teagan
+
+
+
 PUBLIC.BOOKS.CUSTOMERDATA                                               
 ------------------------------------------------------------------------
 ID	DATA
@@ -118,22 +140,6 @@ ID	DATA
 PUBLIC.BOOKS.CUSTOMERS                                                  
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	AGE
-
-
-
-PUBLIC.BOOKS."Global Counts"                                            
-------------------------------------------------------------------------
-Global Count	UPDATE
-1	Abbot
-2	Alexis
-3	Jasmine
-4	NULL
-5	Teagan
-6	Stella
-7	Alden
-8	Daniel
-9	NULL
-10	Yetta
 
 
 

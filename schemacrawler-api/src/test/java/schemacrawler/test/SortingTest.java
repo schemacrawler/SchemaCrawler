@@ -149,7 +149,7 @@ public class SortingTest {
     assertThat("Schema not found", schema, notNullValue());
 
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertThat("Table count does not match", tables, arrayWithSize(10));
+    assertThat("Table count does not match", tables, arrayWithSize(11));
     for (final Table table : tables) {
       if (table.getName().equals(tableName)) {
         final ForeignKey[] foreignKeys = table.getForeignKeys().toArray(new ForeignKey[0]);
@@ -180,7 +180,7 @@ public class SortingTest {
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertThat("Table count does not match", tables, arrayWithSize(10));
+    assertThat("Table count does not match", tables, arrayWithSize(11));
     for (final Table table : tables) {
       if (table.getName().equals(tableName)) {
         final Index[] indexes = table.getIndexes().toArray(new Index[0]);

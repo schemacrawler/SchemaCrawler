@@ -33,14 +33,12 @@ import java.util.Optional;
 
 /** Database and connection information. */
 public interface Catalog extends NamedObject, AttributedObject, DescribedObject, Reducible {
-
   /**
    * Gets the column data types
    *
    * @return Column data types
    */
   Collection<ColumnDataType> getColumnDataTypes();
-
   /**
    * Gets the column data types defined in the schema, by name.
    *

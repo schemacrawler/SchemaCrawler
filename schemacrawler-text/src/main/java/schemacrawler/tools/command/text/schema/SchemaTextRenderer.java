@@ -85,15 +85,12 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
     final SchemaTraversalHandler formatter;
 
-    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
     if (schemaTextDetailType == SchemaTextDetailType.list) {
       formatter =
-          new SchemaListFormatter(
-              schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
+          new SchemaListFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
     } else {
       formatter =
-          new SchemaTextFormatter(
-              schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
+          new SchemaTextFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
     }
 
     return formatter;

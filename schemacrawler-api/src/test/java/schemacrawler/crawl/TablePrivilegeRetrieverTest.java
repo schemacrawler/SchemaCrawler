@@ -162,7 +162,7 @@ public class TablePrivilegeRetrieverTest {
                   SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
       final Collection<Table> tables = catalog.getTables();
-      assertThat(tables, hasSize(19));
+      assertThat(tables, hasSize(20));
       for (final Table table : tables) {
         for (final Index index : table.getIndexes()) {
           final List<IndexColumn> columns = index.getColumns();

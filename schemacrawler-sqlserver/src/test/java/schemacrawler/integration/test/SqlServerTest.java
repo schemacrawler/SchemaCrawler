@@ -173,18 +173,28 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
     final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(config);
+    // -- Schema output tests for "details" command
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("details");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(config);
 
     final String expectedResource =
         String.format("testSQLServerWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
 
+    // -- Schema output tests for "dump" command
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("dump");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
+
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource("testSQLServerDump.txt")));
+
     // -- Additional catalog tests
-    final Catalog catalog = executable.getCatalog();
+    final Catalog catalog = executableDetails.getCatalog();
 
     final Table table = catalog.lookupTable(new SchemaReference("BOOKS", "dbo"), "Authors").get();
     final Column column = table.lookupColumn("FirstName").get();

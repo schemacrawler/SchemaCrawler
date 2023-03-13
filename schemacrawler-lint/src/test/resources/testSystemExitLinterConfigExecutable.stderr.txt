@@ -2,19 +2,19 @@ Summary of schema lints:
    [low]      1- too many binary objects
    [low]      2- primary key not first
    [low]     10- empty table
-   [low]     32- should have remarks
+   [low]     34- should have remarks
 [medium]      1- cycles in table relationships
+[medium]      1- no indexes
 [medium]      1- single column
 [medium]      2- column where NULL may be intended
 [medium]      3- unique index with nullable columns
 [medium]      6- column with same name but different data types
-[medium]      6- no non-nullable data columns
-[medium]      6- spaces in name, or reserved word
+[medium]      7- no non-nullable data columns
+[medium]      8- spaces in name, or reserved word
 [medium]     10- incrementing columns
   [high]      2- foreign key data type different from primary key
-  [high]      5- no primary key
-  [high]      6- redundant index
-  [high]      7- primary key may not be a surrogate
+  [high]      6- primary key may not be a surrogate
+  [high]      8- redundant index
 [critical]      1- foreign key self-references primary key
-[critical]*     2- no indexes
+[critical]*     4- no primary key
 

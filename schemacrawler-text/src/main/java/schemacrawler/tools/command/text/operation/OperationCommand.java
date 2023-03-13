@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.operation;
 
+import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.database.DatabaseUtility.createStatement;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
@@ -43,6 +44,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
@@ -97,7 +99,10 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
       // name
       final String identifierQuoteString = identifiers.getIdentifierQuoteString();
       final Identifiers identifiers =
-          Identifiers.identifiers().withIdentifierQuoteString(identifierQuoteString).build();
+          IdentifiersBuilder.builder()
+              .withIdentifierQuoteString(identifierQuoteString)
+              .withIdentifierQuotingStrategy(quote_all)
+              .toOptions();
 
       try (final Statement statement = createStatement(connection)) {
         for (final Table table : getSortedTables(catalog)) {
@@ -134,10 +139,9 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
 
   private DataTraversalHandler getDataTraversalHandler() {
     final Operation operation = commandOptions.getOperation();
-    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
     final DataTraversalHandler formatter =
-        new DataTextFormatter(operation, commandOptions, outputOptions, identifierQuoteString);
+        new DataTextFormatter(operation, commandOptions, outputOptions, identifiers);
     return formatter;
   }
 

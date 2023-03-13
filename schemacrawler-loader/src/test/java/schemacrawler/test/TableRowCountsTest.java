@@ -115,7 +115,10 @@ public class TableRowCountsTest {
       for (final Schema schema : schemas) {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         for (final Table table : tables) {
-          assertThat(hasRowCount(table), is(true));
+          assertThat(
+              String.format("Table <%s> should have row counts", table),
+              hasRowCount(table),
+              is(true));
           out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
         }
       }
@@ -134,7 +137,10 @@ public class TableRowCountsTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
-          assertThat(hasRowCount(table), is(true));
+          assertThat(
+              String.format("Table <%s> should have row counts", table),
+              hasRowCount(table),
+              is(true));
           out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
         }
       }

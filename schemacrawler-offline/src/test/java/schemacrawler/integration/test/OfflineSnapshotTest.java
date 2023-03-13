@@ -220,7 +220,7 @@ public class OfflineSnapshotTest {
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
       assertThat("Could not obtain schema", schema, notNullValue());
       assertThat(
-          "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
+          "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
 
       serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
       final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);

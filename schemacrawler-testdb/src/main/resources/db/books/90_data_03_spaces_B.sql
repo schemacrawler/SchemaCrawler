@@ -1,10 +1,17 @@
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (1,'Abbot');
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (2,'Alexis');
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (3,'Jasmine');
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (4,NULL);
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (5,'Teagan');
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (6,'Stella');
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (7,'Alden');
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (8,'Daniel');
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (9,NULL);
-INSERT INTO `Global Counts` (`Global Count`,`UPDATE`) VALUES (10,'Yetta');
+INSERT INTO `Celebrities` (`Id`, Name)
+VALUES
+  (1, 'Hop Whitney'),
+  (2, 'Cherokee Cantrell'),
+  (3, 'Giselle Dillon'),
+  (4, 'Reuben Hood'),
+  (5, 'Amena Elliott')
+;
+
+INSERT INTO `Celebrity Updates` (`Celebrity Id`, `UPDATE`) 
+VALUES 
+  (1, 'Abbot'),
+  (2, 'Alexis'),
+  (3, 'Jasmine'),
+  (4, NULL),
+  (5, 'Teagan')
+;

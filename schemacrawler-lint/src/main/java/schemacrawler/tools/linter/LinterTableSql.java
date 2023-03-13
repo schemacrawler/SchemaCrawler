@@ -35,10 +35,11 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.options.Config;
@@ -46,8 +47,7 @@ import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableSql extends BaseLinter {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(LinterTableSql.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(LinterTableSql.class.getName());
 
   private String message;
   private String sql;
@@ -84,7 +84,8 @@ public class LinterTableSql extends BaseLinter {
 
     final Query query = new Query(message, sql);
     try {
-      final Identifiers identifiers = Identifiers.identifiers().withConnection(connection).build();
+      final Identifiers identifiers =
+          IdentifiersBuilder.builder().fromConnection(connection).toOptions();
       final Object queryResult = executeForScalar(query, connection, table, identifiers);
       if (queryResult != null) {
         addTableLint(table, getSummary() + " " + queryResult);

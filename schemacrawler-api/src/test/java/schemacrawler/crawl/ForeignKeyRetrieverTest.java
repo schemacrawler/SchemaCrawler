@@ -182,7 +182,7 @@ public class ForeignKeyRetrieverTest {
             getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(13));
+    assertThat(tables, hasSize(14));
     for (final Table table : tables) {
       assertThat(table.getColumns(), is(not(empty())));
       assertThat(table.getForeignKeys(), is(empty()));

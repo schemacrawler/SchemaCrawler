@@ -37,6 +37,7 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -108,7 +109,8 @@ public class DotFormatterCoverageTest {
 
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
       final SchemaDotFormatter formatter =
-          new SchemaDotFormatter(SchemaTextDetailType.details, diagramOptions, outputOptions, "\"");
+          new SchemaDotFormatter(
+              SchemaTextDetailType.details, diagramOptions, outputOptions, Identifiers.STANDARD);
 
       formatter.handle(table);
     }

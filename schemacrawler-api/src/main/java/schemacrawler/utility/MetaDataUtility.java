@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schemacrawler.Identifiers.identifiers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +46,6 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
-import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.Identifiers;
 import us.fatehi.utility.UtilityMarker;
 
@@ -126,16 +124,13 @@ public final class MetaDataUtility {
    * @param quoteString
    * @return Comma-separated list of columns
    */
-  public static String getColumnsListAsString(
-      final Index index,
-      final IdentifierQuotingStrategy quotingStrategy,
-      final String quoteString) {
+  public static String getColumnsListAsString(final Index index, final Identifiers identifiers) {
 
     requireNonNull(index, "No index provided");
-    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+    requireNonNull(identifiers, "No identifier quoting strategy provided");
 
     final List<IndexColumn> columns = index.getColumns();
-    return joinColumns(quotingStrategy, quoteString, columns);
+    return joinColumns(columns, false, identifiers);
   }
 
   /**
@@ -146,16 +141,13 @@ public final class MetaDataUtility {
    * @param quoteString
    * @return Comma-separated list of columns
    */
-  public static String getColumnsListAsString(
-      final Table table,
-      final IdentifierQuotingStrategy quotingStrategy,
-      final String quoteString) {
+  public static String getColumnsListAsString(final Table table, final Identifiers identifiers) {
 
     requireNonNull(table, "No table provided");
-    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+    requireNonNull(identifiers, "No identifier quoting strategy provided");
 
     final List<Column> columns = table.getColumns();
-    return joinColumns(quotingStrategy, quoteString, columns);
+    return joinColumns(columns, false, identifiers);
   }
 
   /**
@@ -167,15 +159,13 @@ public final class MetaDataUtility {
    * @return Comma-separated list of columns
    */
   public static String getColumnsListAsString(
-      final TableConstraint tableConstraint,
-      final IdentifierQuotingStrategy quotingStrategy,
-      final String quoteString) {
+      final TableConstraint tableConstraint, final Identifiers identifiers) {
 
     requireNonNull(tableConstraint, "No table constraint provided");
-    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+    requireNonNull(identifiers, "No identifier quoting strategy provided");
 
     final List<TableConstraintColumn> columns = tableConstraint.getConstrainedColumns();
-    return joinColumns(quotingStrategy, quoteString, columns);
+    return joinColumns(columns, false, identifiers);
   }
 
   /**
@@ -189,11 +179,10 @@ public final class MetaDataUtility {
   public static String getColumnsListAsString(
       final TableReference fk,
       final TableRelationshipType relationshipType,
-      final IdentifierQuotingStrategy quotingStrategy,
-      final String quoteString) {
+      final Identifiers identifiers) {
 
     requireNonNull(fk, "No foreign key provided");
-    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+    requireNonNull(identifiers, "No identifier quoting strategy provided");
     if (relationshipType == null || relationshipType == TableRelationshipType.none) {
       return "";
     }
@@ -210,7 +199,7 @@ public final class MetaDataUtility {
         default:
       }
     }
-    return joinColumns(quotingStrategy, quoteString, columns);
+    return joinColumns(columns, false, identifiers);
   }
 
   public static boolean isForeignKeyUnique(final TableReference tableRef) {
@@ -268,19 +257,6 @@ public final class MetaDataUtility {
       allIndexCoumns.add(indexColumns);
     }
     return allIndexCoumns;
-  }
-
-  private static String joinColumns(
-      final IdentifierQuotingStrategy quotingStrategy,
-      final String quoteString,
-      final List<? extends Column> columns) {
-    final Identifiers identifiers =
-        identifiers()
-            .withIdentifierQuotingStrategy(quotingStrategy)
-            .withIdentifierQuoteString(quoteString)
-            .build();
-
-    return joinColumns(columns, false, identifiers);
   }
 
   private MetaDataUtility() {

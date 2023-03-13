@@ -38,6 +38,24 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 
 
 
+PUBLIC.BOOKS."Celebrities"                                       [table]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	should have remarks	
+	should have remarks	Id, NAME
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	should have remarks	
+	should have remarks	Celebrity Id, UPDATE
+
+
+
 PUBLIC.BOOKS.COUPONS                                             [table]
 ------------------------------------------------------------------------
 
@@ -64,15 +82,6 @@ PUBLIC.BOOKS.CUSTOMERS                                           [table]
 	empty table	
 	should have remarks	
 	should have remarks	ID, FIRSTNAME, LASTNAME, AGE
-
-
-
-PUBLIC.BOOKS."Global Counts"                                     [table]
-------------------------------------------------------------------------
-
-                                                             [lint, low]
-	should have remarks	
-	should have remarks	Global Count, UPDATE
 
 
 

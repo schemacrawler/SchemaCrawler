@@ -148,6 +148,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     columnDataType.setNumPrecisionRadix(numPrecisionRadix);
 
     columnDataType.addAttributes(results.getAttributes());
+    columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
     catalog.addColumnDataType(columnDataType);
   }
@@ -239,6 +240,7 @@ final class DataTypeRetriever extends AbstractRetriever {
         columnDataType.setRemarks(remarks);
 
         columnDataType.addAttributes(results.getAttributes());
+        columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
         catalog.addColumnDataType(columnDataType);
       }

@@ -157,6 +157,7 @@ final class IndexRetriever extends AbstractRetriever {
     index.setCardinality(cardinality);
     index.setPages(pages);
     index.addAttributes(results.getAttributes());
+    index.withQuoting(getRetrieverConnection().getIdentifiers());
   }
 
   private void retrieveIndexesFromDataDictionary(final NamedObjectList<MutableTable> allTables)

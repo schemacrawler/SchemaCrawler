@@ -5,9 +5,9 @@ Dump
 
 
 
-StockPrices                                                             
+"StockPrices"                                                           
 ------------------------------------------------------------------------
-Symbol	Price
+"Symbol"	"Price"
 BA	42.75
 BTU	41.25
 DELL	10.75

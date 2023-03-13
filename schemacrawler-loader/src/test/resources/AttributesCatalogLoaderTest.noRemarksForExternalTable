@@ -47,6 +47,20 @@ Current price for the book
 -- Column PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
 
 
+- Table PUBLIC.BOOKS."Celebrities"
+
+-- Column PUBLIC.BOOKS."Celebrities"."Id"
+
+-- Column PUBLIC.BOOKS."Celebrities".NAME
+
+
+- Table PUBLIC.BOOKS."Celebrity Updates"
+
+-- Column PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"
+
+-- Column PUBLIC.BOOKS."Celebrity Updates"."UPDATE"
+
+
 - Table PUBLIC.BOOKS.COUPONS
 
 -- Column PUBLIC.BOOKS.COUPONS.ID
@@ -74,13 +88,6 @@ Current price for the book
 -- Column PUBLIC.BOOKS.CUSTOMERS.LASTNAME
 
 -- Column PUBLIC.BOOKS.CUSTOMERS.AGE
-
-
-- Table PUBLIC.BOOKS."Global Counts"
-
--- Column PUBLIC.BOOKS."Global Counts"."Global Count"
-
--- Column PUBLIC.BOOKS."Global Counts"."UPDATE"
 
 
 - Table PUBLIC.BOOKS.PUBLISHERS

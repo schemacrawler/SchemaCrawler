@@ -42,7 +42,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
  1  AUTHORID (0..many)--> AUTHORS.ID                              
 
-SYS_FK_10126                               [foreign key, with no action]
+SYS_FK_10120                               [foreign key, with no action]
  1  BOOKID (0..many)--> BOOKS.ID                                  
 
 
@@ -62,11 +62,43 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
  1  ID <--(0..many) SALES.BOOKID                                  
 
-SYS_FK_10126                               [foreign key, with no action]
+SYS_FK_10120                               [foreign key, with no action]
  1  ID <--(0..many) BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
  1  ID <--(0..1) PREVIOUSEDITIONID                                
+
+
+
+"Celebrities"                                                    [table]
+------------------------------------------------------------------------
+1   "Id"                              INTEGER NOT NULL            
+
+Primary Key
+
+"PK_Celebrities"                                           [primary key]
+1   "Id"                                                          
+
+Foreign Keys
+
+SYS_FK_10130                               [foreign key, with no action]
+ 1  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+1   "Celebrity Id"                    INTEGER NOT NULL            
+
+Primary Key
+
+"PK Celebrity Updates"                                     [primary key]
+1   "Celebrity Id"                                                
+
+Foreign Keys
+
+SYS_FK_10130                               [foreign key, with no action]
+ 1  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
 
 
 
@@ -103,11 +135,6 @@ PK_CUSTOMERS                                               [primary key]
 
 
 
-"Global Counts"                                                  [table]
-------------------------------------------------------------------------
-
-
-
 PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
 1   ID                                INTEGER NOT NULL            
@@ -115,7 +142,7 @@ PUBLISHERS                                                       [table]
 
 Primary Key
 
-SYS_PK_10134                                               [primary key]
+SYS_PK_10126                                               [primary key]
 1   ID                                                            
 
 Foreign Keys

@@ -47,6 +47,7 @@ import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
 
 public class LightColumn implements Column {
@@ -283,5 +284,10 @@ public class LightColumn implements Column {
   @Override
   public String toString() {
     return getFullName();
+  }
+
+  @Override
+  public void withQuoting(final Identifiers identifiers) {
+    // No-op
   }
 }

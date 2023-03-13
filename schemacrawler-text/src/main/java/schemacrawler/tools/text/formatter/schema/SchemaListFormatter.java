@@ -39,6 +39,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -63,12 +64,8 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
       final SchemaTextDetailType schemaTextDetailType,
       final SchemaTextOptions options,
       final OutputOptions outputOptions,
-      final String identifierQuoteString) {
-    super(
-        schemaTextDetailType,
-        options,
-        outputOptions,
-        identifierQuoteString);
+      final Identifiers identifiers) {
+    super(schemaTextDetailType, options, outputOptions, identifiers);
   }
 
   /** {@inheritDoc} */

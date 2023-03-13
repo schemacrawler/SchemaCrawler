@@ -6,13 +6,13 @@ schema: PUBLIC.BOOKS
     constraint: CHECK_UPPERCASE_STATE
       type: check
       on column: STATE
-    constraint: SYS_CT_10106
+    constraint: SYS_CT_10104
       type: check
       on column: ID
-    constraint: SYS_CT_10107
+    constraint: SYS_CT_10105
       type: check
       on column: FIRSTNAME
-    constraint: SYS_CT_10108
+    constraint: SYS_CT_10106
       type: check
       on column: LASTNAME
   table: PUBLIC.BOOKS.BOOKS
@@ -25,27 +25,34 @@ schema: PUBLIC.BOOKS
     constraint: U_PREVIOUSEDITION
       type: unique
       on column: PREVIOUSEDITIONID
-    constraint: SYS_CT_10114
+    constraint: SYS_CT_10111
       type: check
       on column: ID
-    constraint: SYS_CT_10115
+    constraint: SYS_CT_10112
       type: check
       on column: TITLE
-    constraint: SYS_CT_10116
+    constraint: SYS_CT_10113
       type: check
       on column: PUBLISHERID
+  table: PUBLIC.BOOKS."Celebrities"
+    constraint: PK_Celebrities
+      type: primary_key
+      on column: Id
+    constraint: SYS_CT_10127
+      type: check
+      on column: Id
   table: PUBLIC.BOOKS.COUPONS
     constraint: PK_COUPONS
       type: primary_key
       on column: ID
-    constraint: SYS_CT_10092
+    constraint: SYS_CT_10093
       type: check
       on column: ID
   table: PUBLIC.BOOKS.CUSTOMERDATA
     constraint: PK_CUSTOMERDATA
       type: primary_key
       on column: ID
-    constraint: SYS_CT_10103
+    constraint: SYS_CT_10102
       type: check
       on column: ID
   table: PUBLIC.BOOKS.CUSTOMERS
@@ -61,24 +68,33 @@ schema: PUBLIC.BOOKS
     constraint: SYS_CT_10097
       type: check
       on column: LASTNAME
-  table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
-    constraint: SYS_PK_10134
+    constraint: SYS_PK_10126
       type: primary_key
       on column: ID
   table: PUBLIC.BOOKS.BOOKAUTHORS
     constraint: Z_FK_AUTHOR
       type: foreign_key
       on column: AUTHORID
-    constraint: SYS_FK_10126
+    constraint: SYS_FK_10120
       type: foreign_key
       on column: BOOKID
-    constraint: SYS_CT_10124
+    constraint: SYS_CT_10118
       type: check
       on column: BOOKID
-    constraint: SYS_CT_10125
+    constraint: SYS_CT_10119
       type: check
       on column: AUTHORID
+  table: PUBLIC.BOOKS."Celebrity Updates"
+    constraint: PK Celebrity Updates
+      type: primary_key
+      on column: Celebrity Id
+    constraint: SYS_FK_10130
+      type: foreign_key
+      on column: Celebrity Id
+    constraint: SYS_CT_10129
+      type: check
+      on column: Celebrity Id
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     constraint: PK_ΒΙΒΛΊΑ
       type: primary_key
@@ -86,13 +102,13 @@ schema: PUBLIC.BOOKS
     constraint: FK_ΒΙΒΛΊΑ_PUBLISHERS
       type: foreign_key
       on column: ΕΚΔΌΤΗΣ
-    constraint: SYS_CT_10137
+    constraint: SYS_CT_10133
       type: check
       on column: ΜΟΝΑΔΙΚΌΣ
-    constraint: SYS_CT_10138
+    constraint: SYS_CT_10134
       type: check
       on column: ΤΊΤΛΟΣ
-    constraint: SYS_CT_10139
+    constraint: SYS_CT_10135
       type: check
       on column: ΕΚΔΌΤΗΣ
   table: PUBLIC.BOOKS.AUTHORSLIST
@@ -104,16 +120,16 @@ schema: PUBLIC."PUBLISHER SALES"
       type: primary_key
       on column: POSTALCODE
       on column: COUNTRY
-    constraint: SYS_CT_10223
+    constraint: SYS_CT_10204
       type: check
       on column: CITY
-    constraint: SYS_CT_10224
+    constraint: SYS_CT_10205
       type: check
       on column: STATE
-    constraint: SYS_CT_10225
+    constraint: SYS_CT_10206
       type: check
       on column: POSTALCODE
-    constraint: SYS_CT_10226
+    constraint: SYS_CT_10207
       type: check
       on column: COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALESDATA
@@ -131,10 +147,10 @@ schema: PUBLIC."PUBLISHER SALES"
       type: foreign_key
       on column: POSTALCODE
       on column: COUNTRY
-    constraint: SYS_CT_10234
+    constraint: SYS_CT_10213
       type: check
       on column: POSTALCODE
-    constraint: SYS_CT_10235
+    constraint: SYS_CT_10214
       type: check
       on column: COUNTRY
 schema: PUBLIC.SYSTEM_LOBS

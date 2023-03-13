@@ -75,6 +75,38 @@ Foreign Keys
 
 
 
+PUBLIC.BOOKS."Celebrities"                                       [table]
+------------------------------------------------------------------------
+  "Id"                              INTEGER NOT NULL            
+
+Primary Key
+
+"PK_Celebrities"                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+
+Primary Key
+
+"PK Celebrity Updates"                                     [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
+
+
+
 PUBLIC.BOOKS.COUPONS                                             [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
@@ -108,11 +140,6 @@ PK_CUSTOMERS                                               [primary key]
 
 
 
-PUBLIC.BOOKS."Global Counts"                                     [table]
-------------------------------------------------------------------------
-
-
-
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
 List of book publishers
@@ -122,7 +149,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10134                                               [primary key]
+SYS_PK_10126                                               [primary key]
   ID                                                            
 
 Foreign Keys

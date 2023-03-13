@@ -127,7 +127,7 @@ public class HsqldbTest {
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat(schema, notNullValue());
 
-    assertThat(catalog.getTables(schema), hasSize(10));
+    assertThat(catalog.getTables(schema), hasSize(11));
     final Table table = catalog.lookupTable(schema, "AUTHORS").orElse(null);
     assertThat(table, notNullValue());
 

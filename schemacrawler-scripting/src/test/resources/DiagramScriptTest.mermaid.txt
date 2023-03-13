@@ -22,6 +22,11 @@ erDiagram
     INTEGER PREVIOUSEDITIONID
   }
 
+  PUBLIC-BOOKS-"Celebrities" {
+    INTEGER Id
+    VARCHAR NAME
+  }
+
   PUBLIC-BOOKS-COUPONS {
     INTEGER ID
     CLOB DATA
@@ -39,11 +44,6 @@ erDiagram
     NAME_TYPE FIRSTNAME
     NAME_TYPE LASTNAME
     AGE_TYPE AGE
-  }
-
-  PUBLIC-BOOKS-"Global Counts" {
-    INTEGER Global Count
-    VARCHAR UPDATE
   }
 
   PUBLIC-BOOKS-PUBLISHERS {
@@ -67,6 +67,11 @@ erDiagram
     INTEGER BOOKID
     INTEGER AUTHORID
     VARCHAR SOMEDATA
+  }
+
+  PUBLIC-BOOKS-"Celebrity Updates" {
+    INTEGER Celebrity Id
+    VARCHAR UPDATE
   }
 
   PUBLIC-BOOKS-ΒΙΒΛΊΑ {
@@ -96,6 +101,7 @@ erDiagram
   PUBLIC-BOOKS-BOOKS ||--o{ PUBLIC-BOOKS-BOOKAUTHORS : "foreign key"
   PUBLIC-BOOKS-BOOKS ||--o{ PUBLIC-BOOKS-BOOKS : "foreign key"
   PUBLIC-BOOKS-BOOKS ||--o{ PUBLIC-"PUBLISHER SALES"-SALES : "foreign key"
+  PUBLIC-BOOKS-"Celebrities" ||--o{ PUBLIC-BOOKS-"Celebrity Updates" : "foreign key"
   PUBLIC-BOOKS-PUBLISHERS ||--o{ PUBLIC-BOOKS-ΒΙΒΛΊΑ : "foreign key"
   PUBLIC-"PUBLISHER SALES"-REGIONS ||--o{ PUBLIC-"PUBLISHER SALES"-SALES : "foreign key"
   PUBLIC-"PUBLISHER SALES"-SALESDATA ||--o{ PUBLIC-"PUBLISHER SALES"-SALES : "foreign key"

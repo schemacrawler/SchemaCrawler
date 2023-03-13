@@ -30,14 +30,13 @@ package schemacrawler.tools.linter;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableWithQuotedNames extends BaseLinter {
@@ -51,12 +50,8 @@ public class LinterTableWithQuotedNames extends BaseLinter {
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    Identifiers identifiers;
-    try {
-      identifiers = Identifiers.identifiers().withConnection(connection).build();
-    } catch (final SQLException e) {
-      throw new DatabaseAccessException(e);
-    }
+    final Identifiers identifiers =
+        IdentifiersBuilder.builder().fromConnection(connection).toOptions();
 
     final String tableName = table.getName();
     if (identifiers.isToBeQuoted(tableName)) {

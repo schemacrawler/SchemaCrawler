@@ -44,6 +44,7 @@ import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -151,7 +152,8 @@ public class TextFormatterCoverageTest {
 
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
       final SchemaTextFormatter formatter =
-          new SchemaTextFormatter(SchemaTextDetailType.details, textOptions, outputOptions, "\"");
+          new SchemaTextFormatter(
+              SchemaTextDetailType.details, textOptions, outputOptions, Identifiers.STANDARD);
 
       formatterMethod.accept(formatter);
     }

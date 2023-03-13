@@ -27,6 +27,7 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.WeakAssociation;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaReference;
 
 public final class LightTable implements Table {
@@ -296,5 +297,10 @@ public final class LightTable implements Table {
     }
     buffer.append(name);
     return buffer.toString();
+  }
+
+  @Override
+  public void withQuoting(final Identifiers identifiers) {
+    // No-op
   }
 }

@@ -30,25 +30,15 @@ package schemacrawler.schemacrawler;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-import java.util.Arrays;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 
 /**
  * Allows working with database object identifiers. All SQL 2003 keywords are considered
@@ -56,161 +46,14 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
  * database server as well. Several utility methods for looking up and quoting and unquoting
  * identifiers are provided.
  */
-public final class Identifiers {
+public final class Identifiers implements Options, Serializable {
 
-  public static class Builder {
+  private static final long serialVersionUID = -5108721215361312979L;
 
-    /** Load a list of SQL 2003 reserved words, and normalize them by converting to uppercase. */
-    private static Collection<String> loadSql2003ReservedWords() {
-      final Set<String> reservedWords = new HashSet<>();
-      try (final BufferedReader reader =
-          new BufferedReader(
-              new InputStreamReader(
-                  Identifiers.class.getResourceAsStream("/sql2003_reserved_words.txt")))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-          if (!isBlank(line)) {
-            reservedWords.add(line);
-          }
-        }
-      } catch (final IOException e) {
-        LOGGER.log(Level.WARNING, "Could not read list of SQL 2003 reserved words", e);
-      }
-      if (reservedWords.isEmpty()) {
-        throw new InternalRuntimeException("No SQL 2003 reserved words found");
-      }
-
-      return toUpperCase(reservedWords);
-    }
-
-    /** Lookup a list of reserved words for a database system, using database metadata. */
-    private static Collection<String> lookupReservedWords(final DatabaseMetaData metaData) {
-      String sqlKeywords = "";
-      try {
-        sqlKeywords = metaData.getSQLKeywords();
-      } catch (final Exception e) {
-        LOGGER.log(Level.WARNING, "Could not retrieve SQL keywords metadata", e);
-      }
-
-      return toUpperCase(Arrays.asList(sqlKeywords.split(",")));
-    }
-
-    private static Collection<String> toUpperCase(final Iterable<String> words) {
-      final Collection<String> upperCaseWords = new HashSet<>();
-      if (words != null) {
-        for (final String word : words) {
-          if (!isBlank(word)) {
-            upperCaseWords.add(word.toUpperCase());
-          }
-        }
-      }
-      return upperCaseWords;
-    }
-
-    private final Collection<String> reservedWords;
-    private String identifierQuoteString;
-    private IdentifierQuotingStrategy identifierQuotingStrategy;
-
-    private Builder() {
-      reservedWords = loadSql2003ReservedWords();
-      identifierQuotingStrategy =
-          IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
-    }
-
-    public Identifiers build() {
-      return new Identifiers(this);
-    }
-
-    /**
-     * Constructs a list of database object identifiers from SQL 2003 keywords, and from the
-     * database server. Also obtains the identifier quote string from the database server.
-     *
-     * @param connection Live database connection
-     * @return Builder
-     * @throws SQLException
-     */
-    public Builder withConnection(final Connection connection) throws SQLException {
-      requireNonNull(connection, "No connection provided");
-      final DatabaseMetaData metaData =
-          requireNonNull(connection.getMetaData(), "No database metadata obtained");
-
-      reservedWords.addAll(lookupReservedWords(metaData));
-
-      if (!isIdentifierQuoteStringSet()) {
-        final String metaDataIdentifierQuoteString = metaData.getIdentifierQuoteString();
-        if (metaDataIdentifierQuoteString != null) {
-          identifierQuoteString = metaDataIdentifierQuoteString;
-        }
-      }
-
-      return this;
-    }
-
-    /**
-     * Tries to use the connection, but does not throw any exceptions.
-     *
-     * @param connection Live database connection
-     * @return Builder
-     * @see #withConnection(Connection connection)
-     */
-    public Builder withConnectionIfPossible(final Connection connection) {
-      try {
-        withConnection(connection);
-      } catch (NullPointerException | SQLException e) {
-        // Ignore
-      }
-      return this;
-    }
-
-    /**
-     * Uses the string used to quote database object identifiers as provided.
-     *
-     * @param identifierQuoteString Identifier quote string override, or null if not overridden
-     * @return Builder
-     */
-    public Builder withIdentifierQuoteString(final String identifierQuoteString) {
-      if (isBlank(identifierQuoteString)) {
-        // The JDBC specification states that spaces are to treated as
-        // if identifier quoting is not supported.
-        this.identifierQuoteString = "";
-      } else {
-        this.identifierQuoteString = identifierQuoteString;
-      }
-      return this;
-    }
-
-    /**
-     * Specifies how to quote database object identifiers.
-     *
-     * @param identifierQuotingStrategy Set identifier quoting strategy, or turn off quoting if null
-     * @return Builder
-     */
-    public Builder withIdentifierQuotingStrategy(
-        final IdentifierQuotingStrategy identifierQuotingStrategy) {
-      if (identifierQuotingStrategy == null) {
-        this.identifierQuotingStrategy = IdentifierQuotingStrategy.quote_none;
-      } else {
-        this.identifierQuotingStrategy = identifierQuotingStrategy;
-      }
-      return this;
-    }
-
-    private boolean isIdentifierQuoteStringSet() {
-      return identifierQuoteString != null;
-    }
-  }
-
-  private static final Logger LOGGER = Logger.getLogger(Identifiers.class.getName());
-
-  public static final Identifiers STANDARD =
-      Identifiers.identifiers().withIdentifierQuoteString("\"").build();
+  public static final Identifiers STANDARD = IdentifiersBuilder.builder().toOptions();
 
   private static final Pattern isAllNumeric = Pattern.compile("^\\p{Nd}*$");
   private static final Pattern isIdentifier = Pattern.compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
-
-  public static Builder identifiers() {
-    return new Builder();
-  }
 
   /**
    * Checks if the name is valid database object identifier, according to the rules of most
@@ -229,9 +72,10 @@ public final class Identifiers {
 
   private final String identifierQuoteString;
   private final IdentifierQuotingStrategy identifierQuotingStrategy;
+  private final boolean quoteMixedCaseIdentifiers;
   private final Collection<String> reservedWords;
 
-  private Identifiers(final Builder builder) {
+  Identifiers(final IdentifiersBuilder builder) {
     if (builder.isIdentifierQuoteStringSet()) {
       identifierQuoteString = builder.identifierQuoteString;
     } else {
@@ -239,6 +83,7 @@ public final class Identifiers {
       identifierQuoteString = "\"";
     }
     identifierQuotingStrategy = builder.identifierQuotingStrategy;
+    quoteMixedCaseIdentifiers = builder.quoteMixedCaseIdentifiers;
     reservedWords = builder.reservedWords;
   }
 
@@ -284,6 +129,10 @@ public final class Identifiers {
         && name.length() >= quoteLength * 2;
   }
 
+  public boolean isQuoteMixedCaseIdentifiers() {
+    return quoteMixedCaseIdentifiers;
+  }
+
   /**
    * Checks if a given word is a reserved word. Searches are case-insensitive.
    *
@@ -312,10 +161,10 @@ public final class Identifiers {
       case quote_all:
         return true;
       case quote_if_special_characters:
-        return !isIdentifier(name);
+        return !isIdentifier(name) || isMixedCase(name);
       case quote_if_special_characters_and_reserved_words:
       default:
-        return !isIdentifier(name) || isReservedWord(name);
+        return !isIdentifier(name) || isMixedCase(name) || isReservedWord(name);
     }
   }
 
@@ -325,17 +174,13 @@ public final class Identifiers {
     return buffer.toString();
   }
 
-  public String quoteFullName(final DatabaseObject parent, final String name) {
-    final StringBuilder buffer = new StringBuilder(512);
-    quoteFullName(buffer, parent, name);
-    return buffer.toString();
-  }
-
   public <P extends DatabaseObject> String quoteFullName(final DependantObject<P> dependantObject) {
     if (dependantObject == null) {
       return "";
     }
-    return quoteFullName(dependantObject.getParent(), dependantObject.getName());
+    final StringBuilder buffer = new StringBuilder(512);
+    quoteFullName(buffer, dependantObject.getParent(), dependantObject.getName());
+    return buffer.toString();
   }
 
   public String quoteFullName(final Schema schema) {
@@ -406,6 +251,35 @@ public final class Identifiers {
     } else {
       return name;
     }
+  }
+
+  private boolean isMixedCase(final String name) {
+
+    if (!quoteMixedCaseIdentifiers) {
+      return false;
+    }
+    if (isBlank(name)) {
+      return false;
+    }
+
+    boolean hasUpperCase = false;
+    boolean hasLowerCase = false;
+
+    for (int i = 0; i < name.codePointCount(0, name.length()); i++) {
+      final int c = name.codePointAt(i);
+
+      if (Character.isUpperCase(c)) {
+        hasUpperCase = true;
+      } else if (Character.isLowerCase(c)) {
+        hasLowerCase = true;
+      }
+
+      if (hasUpperCase && hasLowerCase) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private void quoteFullName(final StringBuilder buffer, final DatabaseObject databaseObject) {

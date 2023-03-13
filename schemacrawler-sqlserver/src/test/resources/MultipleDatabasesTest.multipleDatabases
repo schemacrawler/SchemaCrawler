@@ -12,7 +12,7 @@ DATABASE_A.dbo.A_DBO_TABLE1                                      [table]
 
 Primary Key
 
-PK__A_DBO_TA__3214EC07A0BFF37E                             [primary key]
+PK__A_DBO_TA__3214EC07CB302354                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -22,7 +22,7 @@ FK_DBO_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__A_DBO_TA__3214EC07A0BFF37E                  [unique clustered index]
+PK__A_DBO_TA__3214EC07CB302354                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -35,7 +35,7 @@ DATABASE_A.dbo.A_DBO_TABLE2                                      [table]
 
 Primary Key
 
-PK__A_DBO_TA__3214EC071ED550BE                             [primary key]
+PK__A_DBO_TA__3214EC075B93E5AB                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -45,7 +45,7 @@ FK_DBO_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__A_DBO_TA__3214EC071ED550BE                  [unique clustered index]
+PK__A_DBO_TA__3214EC075B93E5AB                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -57,7 +57,7 @@ DATABASE_B.dbo.B_DBO_TABLE1                                      [table]
 
 Primary Key
 
-PK__B_DBO_TA__3214EC0784E38419                             [primary key]
+PK__B_DBO_TA__3214EC073B7628E1                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -67,7 +67,7 @@ FK_DBO_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__B_DBO_TA__3214EC0784E38419                  [unique clustered index]
+PK__B_DBO_TA__3214EC073B7628E1                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -80,7 +80,7 @@ DATABASE_B.dbo.B_DBO_TABLE2                                      [table]
 
 Primary Key
 
-PK__B_DBO_TA__3214EC076068D950                             [primary key]
+PK__B_DBO_TA__3214EC072B30C232                             [primary key]
   Id                                                            
 
 Foreign Keys
@@ -90,6 +90,6 @@ FK_DBO_TO_DBO                              [foreign key, with no action]
 
 Indexes
 
-PK__B_DBO_TA__3214EC076068D950                  [unique clustered index]
+PK__B_DBO_TA__3214EC072B30C232                  [unique clustered index]
   Id                                ascending                   
 

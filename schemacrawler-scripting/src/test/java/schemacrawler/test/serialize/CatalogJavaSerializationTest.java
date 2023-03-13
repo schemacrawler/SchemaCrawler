@@ -70,7 +70,7 @@ public class CatalogJavaSerializationTest {
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_java_serialization", "ser");
     final JavaSerializedCatalog javaSerializedCatalogForSave = new JavaSerializedCatalog(catalog);
@@ -87,6 +87,6 @@ public class CatalogJavaSerializationTest {
     assertThat(
         "Unexpected number of tables in the schema",
         catalogDeserialized.getTables(schemaDeserialized),
-        hasSize(10));
+        hasSize(11));
   }
 }

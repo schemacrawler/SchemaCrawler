@@ -334,10 +334,6 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     return schema;
   }
 
-  Schema addSchema(final String catalogName, final String schemaName) {
-    return addSchema(new SchemaReference(catalogName, schemaName));
-  }
-
   void addSequence(final MutableSequence sequence) {
     sequences.add(sequence);
   }
