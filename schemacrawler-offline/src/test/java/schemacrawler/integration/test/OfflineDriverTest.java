@@ -59,5 +59,11 @@ public class OfflineDriverTest {
     assertThat(
         offlineDriver.getPropertyInfo("jdbc:offline:test", new Properties()), is(arrayWithSize(0)));
     assertThrows(SQLFeatureNotSupportedException.class, () -> offlineDriver.getParentLogger());
+
+    assertThat(offlineDriver.acceptsURL(null), is(false));
+    assertThat(offlineDriver.acceptsURL("\t\t"), is(false));
+    assertThat(offlineDriver.acceptsURL("jdbc:test-db:something"), is(false));
+    assertThat(offlineDriver.acceptsURL("jdbc:offline:"), is(true));
+    assertThat(offlineDriver.acceptsURL("jdbc:offline:something"), is(true));
   }
 }

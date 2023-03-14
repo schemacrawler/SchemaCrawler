@@ -60,6 +60,9 @@ public class OfflineConnectionUtility {
         case "getOfflineDatabasePath":
           return offlineDatabasePath;
         case "isWrapperFor":
+          if (args[0] == null) {
+            return false;
+          }
           final Class<?> clazz = (Class<?>) args[0];
           return clazz.isAssignableFrom(Connection.class);
         case "unwrap":
