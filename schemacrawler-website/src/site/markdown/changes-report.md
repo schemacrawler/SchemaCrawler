@@ -9,8 +9,8 @@ SchemaCrawler release notes.
 - Quote mixed-case database object names for databases that support them - fixes #1033
 
 
-<a name="a16.19.7"></a>
-## Release 16.19.7 - 2023-01-20
+<a name="a16.19.8"></a>
+## Release 16.19.8 - 2023-01-20
 
 - Clean up interdependencies in distributed libraries
 
