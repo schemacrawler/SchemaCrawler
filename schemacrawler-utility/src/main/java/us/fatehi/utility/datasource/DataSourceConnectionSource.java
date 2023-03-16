@@ -16,7 +16,7 @@ final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource 
 
   private final DataSource dataSource;
 
-  public DataSourceConnectionSource(final DataSource dataSource) {
+  DataSourceConnectionSource(final DataSource dataSource) {
     this.dataSource = requireNonNull(dataSource, "Data source not provided");
   }
 
