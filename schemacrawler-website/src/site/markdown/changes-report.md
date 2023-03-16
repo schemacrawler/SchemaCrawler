@@ -7,6 +7,7 @@ SchemaCrawler release notes.
 ## Release 16.19.8 - 2023-03-20
 
 - Quote mixed-case database object names for databases that support them - fixes #1033
+- Support DuckDB JDBC driver
 
 
 <a name="a16.19.8"></a>
