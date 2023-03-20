@@ -180,7 +180,7 @@
     <dependency>
       <groupId>org.apache.calcite</groupId>
       <artifactId>calcite-csv</artifactId>
-      <version>1.32.0</version>
+      <version>1.34.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
