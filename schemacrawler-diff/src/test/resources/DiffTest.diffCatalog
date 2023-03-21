@@ -1,7 +1,5 @@
 /columnDataTypes[CLOB] (ADDED)
-/columnDataTypes[VARCHAR(512)] (REMOVED)
 /systemColumnDataTypes[CLOB] (ADDED)
-/systemColumnDataTypes[VARCHAR(512)] (REMOVED)
 /tables[Extra] (REMOVED)
 /tables[Authors] (CHANGED)
 /tables[Books] (CHANGED)

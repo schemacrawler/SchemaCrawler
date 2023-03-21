@@ -19,7 +19,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.5.3</version>
+      <version>42.6.0</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
@@ -67,12 +67,12 @@
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
-      <version>3.41.0.0</version>
+      <version>3.41.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.informix</groupId>
       <artifactId>jdbc</artifactId>
-      <version>4.50.9</version>
+      <version>4.50.10</version>
     </dependency>
     <dependency>
       <groupId>net.snowflake</groupId>
