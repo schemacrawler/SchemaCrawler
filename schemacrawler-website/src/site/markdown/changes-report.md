@@ -3,6 +3,12 @@
 SchemaCrawler release notes.
 
 
+<a name="a16.19.9"></a>
+## Release 16.19.9 - 2023-03-21
+
+- Update drivers
+
+
 <a name="a16.19.8"></a>
 ## Release 16.19.8 - 2023-03-18
 
