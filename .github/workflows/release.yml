@@ -52,7 +52,7 @@ jobs:
       run: |
         # Publish Docker image
         docker version
-        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v16.19.8
+        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v16.19.9
         docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         docker push --all-tags schemacrawler/schemacrawler
@@ -63,12 +63,12 @@ jobs:
       name: Upload installers
       uses: actions/upload-artifact@v3
       with:
-        name: release-artifacts-v16.19.8
+        name: release-artifacts-v16.19.9
         path: |
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-bin.zip.SHA-512
         retention-days: 1
     - id: create-release
       name: Create GitHub release
@@ -84,10 +84,10 @@ jobs:
           See the change history at https://www.schemacrawler.com/changes-report.html
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.19.8-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.19.9-bin.zip.SHA-512
 
 # PUBLISH TO CENTRAL REPOSITORY
     - id: install-secret-key
