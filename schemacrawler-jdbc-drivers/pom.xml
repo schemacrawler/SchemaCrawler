@@ -46,7 +46,7 @@
     <dependency>
       <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
-      <version>21.8.0.0</version>
+      <version>21.9.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.db2</groupId>
@@ -77,7 +77,7 @@
     <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
-      <version>3.13.28</version>
+      <version>3.13.29</version>
     </dependency>
     <dependency>
       <groupId>com.amazon.redshift</groupId>
