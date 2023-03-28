@@ -75,10 +75,6 @@ public class DatabaseConnectionSourceBuilder {
     return connectionInitializer;
   }
 
-  public void setConnectionInitializer(final Consumer<Connection> connectionInitializer) {
-    this.connectionInitializer = connectionInitializer;
-  }
-
   public DatabaseConnectionSourceBuilder withConnectionInitializer(
       final Consumer<Connection> connectionInitializer) {
     if (connectionInitializer == null) {
