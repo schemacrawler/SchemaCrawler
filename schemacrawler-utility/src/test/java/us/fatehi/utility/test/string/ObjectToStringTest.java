@@ -9,7 +9,7 @@ import java.nio.file.AccessMode;
 import org.junit.jupiter.api.Test;
 
 import us.fatehi.test.utility.TestObject;
-import us.fatehi.test.utility.TestUtility;
+import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.utility.ObjectToString;
 
 public class ObjectToStringTest {
@@ -37,14 +37,14 @@ public class ObjectToStringTest {
     assertThat(ObjectToString.listOrObjectToString(Boolean.TRUE), is("true"));
 
     assertThat(
-        ObjectToString.listOrObjectToString(TestUtility.makeTestObject()).replaceAll("\\R", ""),
+        ObjectToString.listOrObjectToString(TestObjectUtility.makeTestObject()).replaceAll("\\R", ""),
         containsString(TestObject.class.getName()));
   }
 
   @Test
   public void serialize() {
 
-    final TestObject testObject = TestUtility.makeTestObject();
+    final TestObject testObject = TestObjectUtility.makeTestObject();
 
     System.out.println(ObjectToString.toString(testObject));
   }
@@ -72,7 +72,7 @@ public class ObjectToStringTest {
     assertThat(ObjectToString.toString(Boolean.TRUE), is("true"));
 
     assertThat(
-        ObjectToString.toString(TestUtility.makeTestObject()).replaceAll("\\R", ""),
+        ObjectToString.toString(TestObjectUtility.makeTestObject()).replaceAll("\\R", ""),
         is(
             "{  \"@object\": \"us.fatehi.test.utility.TestObject\",  \"integerList\": [1, 1, 2, 3, 5, 8],  "
                 + "\"map\":   {    \"1\": \"a\",    \"2\": \"b\",    \"3\": \"c\"  },  \"nullValue\": null,  "
