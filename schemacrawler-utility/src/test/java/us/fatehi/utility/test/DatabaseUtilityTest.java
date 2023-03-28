@@ -34,6 +34,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -197,18 +198,29 @@ public class DatabaseUtilityTest {
     final Logger logger = mock(Logger.class);
     setFinalStatic(DatabaseUtility.class.getDeclaredField("LOGGER"), logger);
 
-
+    // Test with null argument
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     DatabaseUtility.logSQLWarnings((ResultSet) null);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
     final ResultSet results = mock(ResultSet.class);
 
+    // Test with INFO log level off
     when(logger.isLoggable(Level.INFO)).thenReturn(false);
     DatabaseUtility.logSQLWarnings(results);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
+    // Test error getting SQL warning
+    when(results.getWarnings()).thenThrow(SQLException.class);
+    when(logger.isLoggable(Level.INFO)).thenReturn(true);
+    DatabaseUtility.logSQLWarnings(results);
+    verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture());
+    assertThat(loggerMessageCaptor.getValue(),
+        startsWith("Could not log SQL warnings for result set"));
+
+    // Test logs are created with a SQL warning
     final String errorMessage = "TEST SQL warning";
+    reset(results);
     when(results.getWarnings()).thenReturn(new SQLWarning(errorMessage));
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     DatabaseUtility.logSQLWarnings(results);
@@ -223,17 +235,29 @@ public class DatabaseUtilityTest {
     setFinalStatic(DatabaseUtility.class.getDeclaredField("LOGGER"), logger);
 
 
+    // Test with null argument
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     DatabaseUtility.logSQLWarnings((Statement) null);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
     final Statement statement = mock(Statement.class);
 
+    // Test with INFO log level off
     when(logger.isLoggable(Level.INFO)).thenReturn(false);
     DatabaseUtility.logSQLWarnings(statement);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
+    // Test error getting SQL warning
+    when(statement.getWarnings()).thenThrow(SQLException.class);
+    when(logger.isLoggable(Level.INFO)).thenReturn(true);
+    DatabaseUtility.logSQLWarnings(statement);
+    verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture());
+    assertThat(loggerMessageCaptor.getValue(),
+        startsWith("Could not log SQL warnings for statement"));
+
+    // Test logs are created with a SQL warning
     final String errorMessage = "TEST SQL warning";
+    reset(statement);
     when(statement.getWarnings()).thenReturn(new SQLWarning(errorMessage));
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     DatabaseUtility.logSQLWarnings(statement);
@@ -246,6 +270,8 @@ public class DatabaseUtilityTest {
   public void readResultsVector() throws SQLException {
     final Statement statement = connection.createStatement();
 
+    // Null resultset
+    assertThat(DatabaseUtility.readResultsVector(null), is(emptyCollectionOf(String.class)));
     // Read no values
     assertThat(
         DatabaseUtility.readResultsVector(
