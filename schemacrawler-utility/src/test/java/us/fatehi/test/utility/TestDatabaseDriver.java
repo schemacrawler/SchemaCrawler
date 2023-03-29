@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.utility;
+package us.fatehi.test.utility;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static us.fatehi.utility.Utility.isBlank;
