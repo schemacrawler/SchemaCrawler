@@ -114,6 +114,14 @@ public class SqlScriptTest {
         () -> SqlScript.executeScriptFromResource("/sql-resource-table2.sql", null));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
+
+    // 3. Empty SQL resource
+    // Pre-condition - table does not exist
+    assertThat(doesTableExist(tableName), is(false));
+    // Test
+    SqlScript.executeScriptFromResource("/empty-resource.sql", connection);
+    // Post-condition - table exists
+    assertThat(doesTableExist(tableName), is(false));
   }
 
   private boolean doesTableExist(final String tableName) throws SQLException {
