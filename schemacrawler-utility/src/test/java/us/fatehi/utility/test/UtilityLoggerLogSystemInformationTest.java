@@ -1,4 +1,4 @@
-package schemacrawler.test;
+package us.fatehi.utility.test;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
@@ -11,16 +11,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import us.fatehi.utility.database.UtilityLogger;
 
-import schemacrawler.tools.commandline.utility.CommandLineLogger;
-
-public class CommandLineLoggerLogSystemInformationTest {
+public class UtilityLoggerLogSystemInformationTest {
 
   @Test
   public void logSystemClasspath_simple() {
@@ -28,7 +25,7 @@ public class CommandLineLoggerLogSystemInformationTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.CONFIG)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSystemClasspath();
 
@@ -39,8 +36,7 @@ public class CommandLineLoggerLogSystemInformationTest {
 
     assertThat(levelCaptor.getAllValues(), hasItem(Level.CONFIG));
     assertThat(messageCaptor.getAllValues().get(0), startsWith("Classpath:"));
-    assertThat(
-        messageCaptor.getAllValues().get(1).replaceAll("\\R", "\n"),
+    assertThat(messageCaptor.getAllValues().get(1).replaceAll("\\R", "\n"),
         matchesPattern("LD_LIBRARY_PATH: \n"));
   }
 
@@ -50,7 +46,7 @@ public class CommandLineLoggerLogSystemInformationTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.CONFIG)).thenReturn(false);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSystemClasspath();
 
@@ -63,7 +59,7 @@ public class CommandLineLoggerLogSystemInformationTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.CONFIG)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSystemProperties();
 
@@ -82,7 +78,7 @@ public class CommandLineLoggerLogSystemInformationTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.CONFIG)).thenReturn(false);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSystemProperties();
 
