@@ -1,4 +1,4 @@
-package schemacrawler.test;
+package us.fatehi.utility.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,16 +8,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import us.fatehi.utility.UtilityLogger;
 
-import schemacrawler.tools.commandline.utility.CommandLineLogger;
-
-public class CommandLineLoggerLogSafeArgumentsTest {
+public class UtilityLoggerLogSafeArgumentsTest {
 
   @Test
   public void logSafeArguments_empty() {
@@ -25,7 +22,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[0]);
 
@@ -44,7 +41,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(null);
 
@@ -55,12 +52,32 @@ public class CommandLineLoggerLogSafeArgumentsTest {
   }
 
   @Test
+  public void logSafeArguments_nullArgument() {
+
+    final Logger logger = mock(Logger.class);
+    when(logger.isLoggable(Level.INFO)).thenReturn(true);
+
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
+
+    commandLineLogger.logSafeArguments(new String[] {null, "an-argument"});
+
+    final ArgumentCaptor<Level> levelCaptor = ArgumentCaptor.forClass(Level.class);
+    final ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
+
+    verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
+
+    assertThat(levelCaptor.getValue(), is(Level.INFO));
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+        matchesPattern("Command line: \nan-argument"));
+  }
+
+  @Test
   public void logSafeArguments_password1() {
 
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "--password=pwd"});
 
@@ -70,8 +87,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -81,7 +97,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "--password", "hello"});
 
@@ -91,8 +107,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -102,7 +117,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "--password"});
 
@@ -112,8 +127,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -123,7 +137,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "--password:env", "hello"});
 
@@ -133,8 +147,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -144,7 +157,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "--password:env"});
 
@@ -154,8 +167,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -165,7 +177,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "--password="});
 
@@ -175,8 +187,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -186,7 +197,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "--password:env="});
 
@@ -196,8 +207,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -207,7 +217,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "arg2"});
 
@@ -217,8 +227,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(
-        messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\narg2"));
   }
 
@@ -228,7 +237,7 @@ public class CommandLineLoggerLogSafeArgumentsTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(false);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger commandLineLogger = new UtilityLogger(logger);
 
     commandLineLogger.logSafeArguments(new String[] {"arg1", "arg2"});
 

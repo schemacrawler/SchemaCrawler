@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class TestUtility {
+public class TestObjectUtility {
 
   public static Map<String, Object> fakeObjectMapFor(final Class<?> clazz) {
     final Map<String, Object> fakeObjectMap = new HashMap<>();
@@ -48,7 +48,7 @@ public class TestUtility {
     return testObjectMap;
   }
 
-  private TestUtility() {
+  private TestObjectUtility() {
     // Prevent instantiation
   }
 }

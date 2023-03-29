@@ -1,45 +1,36 @@
 /*
-========================================================================
-SchemaCrawler
-http://www.schemacrawler.com
-Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>.
-All rights reserved.
-------------------------------------------------------------------------
-
-SchemaCrawler is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-SchemaCrawler and the accompanying materials are made available under
-the terms of the Eclipse Public License v1.0, GNU General Public License
-v3 or GNU Lesser General Public License v3.
-
-You may elect to redistribute this code under any of these licenses.
-
-The Eclipse Public License is available at:
-http://www.eclipse.org/legal/epl-v10.html
-
-The GNU General Public License v3 and the GNU Lesser General Public
-License v3 are available at:
-http://www.gnu.org/licenses/
-
-========================================================================
-*/
+ * ======================================================================== SchemaCrawler
+ * http://www.schemacrawler.com Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>. All
+ * rights reserved. ------------------------------------------------------------------------
+ *
+ * SchemaCrawler is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * SchemaCrawler and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0, GNU General Public License v3 or GNU Lesser General Public License v3.
+ *
+ * You may elect to redistribute this code under any of these licenses.
+ *
+ * The Eclipse Public License is available at: http://www.eclipse.org/legal/epl-v10.html
+ *
+ * The GNU General Public License v3 and the GNU Lesser General Public License v3 are available at:
+ * http://www.gnu.org/licenses/
+ *
+ * ========================================================================
+ */
 package us.fatehi.utility.database;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
 
@@ -93,13 +84,12 @@ public final class DatabaseUtility {
       statement.clearWarnings();
 
       final boolean hasResults = statement.execute(sql);
-      logSQLWarnings(statement);
+      new UtilityLogger(LOGGER).logSQLWarnings(statement);
       if (hasResults) {
         return statement.getResultSet();
       } else {
         final int updateCount = statement.getUpdateCount();
-        LOGGER.log(
-            Level.FINE,
+        LOGGER.log(Level.FINE,
             new StringFormat("No results. Update count of %d for query: %s", updateCount, sql));
         return null;
       }
@@ -156,40 +146,6 @@ public final class DatabaseUtility {
     }
   }
 
-  public static void logSQLWarnings(final ResultSet resultSet) {
-    if (resultSet == null) {
-      return;
-    }
-    if (!LOGGER.isLoggable(Level.INFO)) {
-      return;
-    }
-
-    try {
-      logSQLWarnings(resultSet.getWarnings());
-      resultSet.clearWarnings();
-    } catch (final SQLException e) {
-      // NOTE: Do not show exception while logging warnings
-      LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set");
-    }
-  }
-
-  public static void logSQLWarnings(final Statement statement) {
-    if (statement == null) {
-      return;
-    }
-    if (!LOGGER.isLoggable(Level.INFO)) {
-      return;
-    }
-
-    try {
-      logSQLWarnings(statement.getWarnings());
-      statement.clearWarnings();
-    } catch (final SQLException e) {
-      // NOTE: Do not show exception while logging warnings
-      LOGGER.log(Level.WARNING, "Could not log SQL warnings for statement");
-    }
-  }
-
   /**
    * Reads a single column result set as a list.
    *
@@ -216,25 +172,7 @@ public final class DatabaseUtility {
     return values;
   }
 
-  private static void logSQLWarnings(final SQLWarning sqlWarning) {
-    final Level level = Level.FINER;
-    if (!LOGGER.isLoggable(level)) {
-      return;
-    }
-
-    SQLWarning currentSqlWarning = sqlWarning;
-    while (currentSqlWarning != null) {
-      final String message =
-          String.format(
-              "%s%nError code: %d, SQL state: %s",
-              currentSqlWarning.getMessage(),
-              currentSqlWarning.getErrorCode(),
-              currentSqlWarning.getSQLState());
-      LOGGER.log(level, message, currentSqlWarning);
-      currentSqlWarning = currentSqlWarning.getNextWarning();
-    }
-  }
-
-  private DatabaseUtility() { // Prevent instantiation
+  private DatabaseUtility() {
+    // Prevent instantiation
   }
 }

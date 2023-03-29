@@ -2,13 +2,57 @@ package us.fatehi.utility.datasource;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import static org.hamcrest.Matchers.anEmptyMap;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
+import us.fatehi.test.utility.TestConnection;
 
 public class DatabaseConnectionSourceBuilderTest {
+
+  @Test
+  public void connectionInitializer() throws SQLException {
+
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+
+    assertThat(builder.getConnectionInitializer(), is(not(nullValue())));
+
+    builder.withConnectionInitializer(null);
+    assertThat(builder.getConnectionInitializer(), is(not(nullValue())));
+
+    final Consumer<Connection> connectionInitializer = connection -> {
+    };
+
+    builder.withConnectionInitializer(connectionInitializer);
+    assertThat(builder.getConnectionInitializer(), is(connectionInitializer));
+  }
+
+
+  @Test
+  public void credentials() throws SQLException {
+
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+
+    TestConnection connection;
+
+    builder.withUserCredentials(null);
+    connection = builder.build().get().unwrap(TestConnection.class);
+    assertThat(connection.getUrl(), is("jdbc:test-db:localhost:0/"));
+    assertThat(connection.getConnectionProperties(), is(anEmptyMap()));
+
+    builder.withUserCredentials(new MultiUseUserCredentials("dbuser", "strongpassword"));
+    connection = builder.build().get().unwrap(TestConnection.class);
+    assertThat(connection.getConnectionProperties(), hasEntry("user", "dbuser"));
+    assertThat(connection.getConnectionProperties(), hasEntry("password", "strongpassword"));
+  }
 
   @Test
   public void database() {
@@ -65,7 +109,7 @@ public class DatabaseConnectionSourceBuilderTest {
   }
 
   @Test
-  public void urlx() {
+  public void urlx() throws SQLException {
 
     final Map<String, String> defaultMap = new HashMap<>();
     defaultMap.put("key", "default-value");
@@ -83,8 +127,17 @@ public class DatabaseConnectionSourceBuilderTest {
 
     builder.withUrlx(map);
     assertThat(builder.toUrlx(), is(map));
+    final TestConnection connection = builder.build().get().unwrap(TestConnection.class);
+    assertThat(connection.getConnectionProperties(), hasEntry("key", "value"));
 
     builder.withUrlx(null);
     assertThat(builder.toUrlx(), is(defaultMap));
+
+    builder.withDefaultUrlx(null);
+    assertThat(builder.toUrlx(), is(anEmptyMap()));
+
+    builder.withDefaultUrlx("newkey", true);
+    assertThat(builder.toUrlx(), hasEntry("newkey", "true"));
+
   }
 }

@@ -1,4 +1,4 @@
-package schemacrawler.test;
+package us.fatehi.utility.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,16 +8,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import us.fatehi.utility.UtilityLogger;
 
-import schemacrawler.tools.commandline.utility.CommandLineLogger;
-
-public class CommandLineLoggerLogFatalStackTraceTest {
+public class UtilityLoggerLogFatalStackTraceTest {
 
   @Test
   public void logFatalStackTrace_null() {
@@ -25,9 +22,9 @@ public class CommandLineLoggerLogFatalStackTraceTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.SEVERE)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger UtilityLogger = new UtilityLogger(logger);
 
-    commandLineLogger.logFatalStackTrace(null);
+    UtilityLogger.logFatalStackTrace(null);
 
     verify(logger, never()).isLoggable(any(Level.class));
   }
@@ -37,9 +34,9 @@ public class CommandLineLoggerLogFatalStackTraceTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.SEVERE)).thenReturn(true);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger UtilityLogger = new UtilityLogger(logger);
 
-    commandLineLogger.logFatalStackTrace(new NullPointerException("Bad bad exception"));
+    UtilityLogger.logFatalStackTrace(new NullPointerException("Bad bad exception"));
 
     final ArgumentCaptor<Level> levelCaptor = ArgumentCaptor.forClass(Level.class);
     final ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
@@ -49,8 +46,8 @@ public class CommandLineLoggerLogFatalStackTraceTest {
 
     assertThat(levelCaptor.getValue(), is(Level.SEVERE));
     assertThat(messageCaptor.getValue(), matchesPattern("Bad bad exception"));
-    assertThat(
-        exceptionCaptor.getValue().getClass().getName(), is("java.lang.NullPointerException"));
+    assertThat(exceptionCaptor.getValue().getClass().getName(),
+        is("java.lang.NullPointerException"));
   }
 
   @Test
@@ -58,9 +55,9 @@ public class CommandLineLoggerLogFatalStackTraceTest {
     final Logger logger = mock(Logger.class);
     when(logger.isLoggable(Level.SEVERE)).thenReturn(false);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(logger);
+    final UtilityLogger UtilityLogger = new UtilityLogger(logger);
 
-    commandLineLogger.logFatalStackTrace(new NullPointerException("Bad bad exception"));
+    UtilityLogger.logFatalStackTrace(new NullPointerException("Bad bad exception"));
 
     final ArgumentCaptor<Level> levelCaptor = ArgumentCaptor.forClass(Level.class);
 
