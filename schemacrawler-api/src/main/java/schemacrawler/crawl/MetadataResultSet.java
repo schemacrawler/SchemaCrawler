@@ -56,7 +56,7 @@ import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
-import us.fatehi.utility.database.UtilityLogger;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**

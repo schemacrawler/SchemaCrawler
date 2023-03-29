@@ -32,7 +32,7 @@ import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
-import us.fatehi.utility.database.UtilityLogger;
+import us.fatehi.utility.UtilityLogger;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {

@@ -57,8 +57,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import us.fatehi.utility.LoggingConfig;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.database.DatabaseUtility;
-import us.fatehi.utility.database.UtilityLogger;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)

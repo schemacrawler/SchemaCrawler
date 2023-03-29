@@ -18,7 +18,7 @@
  *
  * ========================================================================
  */
-package us.fatehi.utility.database;
+package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.join;
