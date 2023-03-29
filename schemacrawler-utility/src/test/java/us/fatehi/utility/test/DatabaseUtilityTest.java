@@ -38,7 +38,6 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static us.fatehi.test.utility.TestUtility.setFinalStatic;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -59,6 +58,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.database.UtilityLogger;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
@@ -196,24 +196,23 @@ public class DatabaseUtilityTest {
   @Test
   public void logSQLWarningsResultSet() throws Exception {
     final Logger logger = mock(Logger.class);
-    setFinalStatic(DatabaseUtility.class.getDeclaredField("LOGGER"), logger);
 
     // Test with null argument
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
-    DatabaseUtility.logSQLWarnings((ResultSet) null);
+    new UtilityLogger(logger).logSQLWarnings((ResultSet) null);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
     final ResultSet results = mock(ResultSet.class);
 
     // Test with INFO log level off
     when(logger.isLoggable(Level.INFO)).thenReturn(false);
-    DatabaseUtility.logSQLWarnings(results);
+    new UtilityLogger(logger).logSQLWarnings(results);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
     // Test error getting SQL warning
     when(results.getWarnings()).thenThrow(SQLException.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
-    DatabaseUtility.logSQLWarnings(results);
+    new UtilityLogger(logger).logSQLWarnings(results);
     verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture());
     assertThat(loggerMessageCaptor.getValue(),
         startsWith("Could not log SQL warnings for result set"));
@@ -223,7 +222,7 @@ public class DatabaseUtilityTest {
     reset(results);
     when(results.getWarnings()).thenReturn(new SQLWarning(errorMessage));
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
-    DatabaseUtility.logSQLWarnings(results);
+    new UtilityLogger(logger).logSQLWarnings(results);
     verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture(),
         any(SQLWarning.class));
     assertThat(loggerMessageCaptor.getValue(), startsWith(errorMessage));
@@ -232,25 +231,24 @@ public class DatabaseUtilityTest {
   @Test
   public void logSQLWarningsStatement() throws Exception {
     final Logger logger = mock(Logger.class);
-    setFinalStatic(DatabaseUtility.class.getDeclaredField("LOGGER"), logger);
 
 
     // Test with null argument
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
-    DatabaseUtility.logSQLWarnings((Statement) null);
+    new UtilityLogger(logger).logSQLWarnings((Statement) null);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
     final Statement statement = mock(Statement.class);
 
     // Test with INFO log level off
     when(logger.isLoggable(Level.INFO)).thenReturn(false);
-    DatabaseUtility.logSQLWarnings(statement);
+    new UtilityLogger(logger).logSQLWarnings(statement);
     verify(logger, never()).log(any(Level.class), anyString(), any(SQLWarning.class));
 
     // Test error getting SQL warning
     when(statement.getWarnings()).thenThrow(SQLException.class);
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
-    DatabaseUtility.logSQLWarnings(statement);
+    new UtilityLogger(logger).logSQLWarnings(statement);
     verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture());
     assertThat(loggerMessageCaptor.getValue(),
         startsWith("Could not log SQL warnings for statement"));
@@ -260,7 +258,7 @@ public class DatabaseUtilityTest {
     reset(statement);
     when(statement.getWarnings()).thenReturn(new SQLWarning(errorMessage));
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
-    DatabaseUtility.logSQLWarnings(statement);
+    new UtilityLogger(logger).logSQLWarnings(statement);
     verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture(),
         any(SQLWarning.class));
     assertThat(loggerMessageCaptor.getValue(), startsWith(errorMessage));

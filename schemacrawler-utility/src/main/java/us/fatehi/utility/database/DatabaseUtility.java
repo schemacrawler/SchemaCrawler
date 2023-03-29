@@ -25,7 +25,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +83,7 @@ public final class DatabaseUtility {
       statement.clearWarnings();
 
       final boolean hasResults = statement.execute(sql);
-      logSQLWarnings(statement);
+      new UtilityLogger(LOGGER).logSQLWarnings(statement);
       if (hasResults) {
         return statement.getResultSet();
       } else {
@@ -146,40 +145,6 @@ public final class DatabaseUtility {
     }
   }
 
-  public static void logSQLWarnings(final ResultSet resultSet) {
-    if (resultSet == null) {
-      return;
-    }
-    if (!LOGGER.isLoggable(Level.INFO)) {
-      return;
-    }
-
-    try {
-      logSQLWarnings(resultSet.getWarnings());
-      resultSet.clearWarnings();
-    } catch (final SQLException e) {
-      // NOTE: Do not show exception while logging warnings
-      LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set");
-    }
-  }
-
-  public static void logSQLWarnings(final Statement statement) {
-    if (statement == null) {
-      return;
-    }
-    if (!LOGGER.isLoggable(Level.INFO)) {
-      return;
-    }
-
-    try {
-      logSQLWarnings(statement.getWarnings());
-      statement.clearWarnings();
-    } catch (final SQLException e) {
-      // NOTE: Do not show exception while logging warnings
-      LOGGER.log(Level.WARNING, "Could not log SQL warnings for statement");
-    }
-  }
-
   /**
    * Reads a single column result set as a list.
    *
@@ -204,17 +169,6 @@ public final class DatabaseUtility {
       results.close();
     }
     return values;
-  }
-
-  private static void logSQLWarnings(final SQLWarning sqlWarning) {
-    SQLWarning currentSqlWarning = sqlWarning;
-    while (currentSqlWarning != null) {
-      final String message =
-          String.format("%s%nError code: %d, SQL state: %s", currentSqlWarning.getMessage(),
-              currentSqlWarning.getErrorCode(), currentSqlWarning.getSQLState());
-      LOGGER.log(Level.INFO, message, currentSqlWarning);
-      currentSqlWarning = currentSqlWarning.getNextWarning();
-    }
   }
 
   private DatabaseUtility() {

@@ -3,19 +3,16 @@ package us.fatehi.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-
 import us.fatehi.utility.database.SqlScript;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -26,15 +23,41 @@ public class SqlScriptTest {
   @BeforeAll
   public void createDatabase() throws Exception {
 
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("testdb.sql")
-            .build();
+    final EmbeddedDatabase db = new EmbeddedDatabaseBuilder().generateUniqueName(true)
+        .setScriptEncoding("UTF-8").ignoreFailedDrops(true).addScript("testdb.sql").build();
 
     connection = db.getConnection();
+  }
+
+  @Test
+  public void executeScriptEdgeCases() throws SQLException {
+
+    final String tableName = "TABLE3";
+
+    // 1. Too many delimiters
+    // Pre-condition - table does not exist
+    assertThat(doesTableExist(tableName), is(false));
+    // Test
+    assertThrows(RuntimeException.class, () -> SqlScript
+        .executeScriptFromResource("#,/sql-resource-table3.sql,hello-there", connection));
+    // Post-condition - table exists
+    assertThat(doesTableExist(tableName), is(false));
+
+    // 2. Do not execute script
+    // Pre-condition - table does not exist
+    assertThat(doesTableExist(tableName), is(false));
+    // Test
+    SqlScript.executeScriptFromResource("#,/sql-resource-table3.sql", connection);
+    // Post-condition - table exists
+    assertThat(doesTableExist(tableName), is(false));
+
+    // 3. Happy path
+    // Pre-condition - table does not exist
+    assertThat(doesTableExist(tableName), is(false));
+    // Test
+    SqlScript.executeScriptFromResource(";,/sql-resource-table3.sql", connection);
+    // Post-condition - table exists
+    assertThat(doesTableExist(tableName), is(true));
   }
 
   @Test
@@ -46,8 +69,7 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(
-        RuntimeException.class,
+    assertThrows(RuntimeException.class,
         () -> SqlScript.executeScriptFromResource("no-resource.sql", connection));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
@@ -56,17 +78,16 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(
-        RuntimeException.class,
+    assertThrows(RuntimeException.class,
         () -> SqlScript.executeScriptFromResource("/bad-resource-1.sql", connection));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
 
-    // 2. Happy path
+    // 3. Happy path
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    SqlScript.executeScriptFromResource("/sql-resource-1.sql", connection);
+    SqlScript.executeScriptFromResource("/sql-resource-table2.sql", connection);
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(true));
   }
@@ -80,8 +101,8 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(
-        RuntimeException.class, () -> SqlScript.executeScriptFromResource(null, connection));
+    assertThrows(RuntimeException.class,
+        () -> SqlScript.executeScriptFromResource(null, connection));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
 
@@ -89,9 +110,8 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(
-        RuntimeException.class,
-        () -> SqlScript.executeScriptFromResource("/sql-resource-1.sql", null));
+    assertThrows(RuntimeException.class,
+        () -> SqlScript.executeScriptFromResource("/sql-resource-table2.sql", null));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
   }
