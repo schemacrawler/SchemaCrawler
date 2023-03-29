@@ -2,13 +2,34 @@ package us.fatehi.utility.datasource;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import static org.hamcrest.Matchers.anEmptyMap;
+import static org.hamcrest.Matchers.hasEntry;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
+import us.fatehi.test.utility.TestConnection;
 
 public class DatabaseConnectionSourceBuilderTest {
+
+  @Test
+  public void credentials() throws SQLException {
+
+    final DatabaseConnectionSourceBuilder builder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${host}:${port}/${database}");
+
+    TestConnection connection;
+
+    builder.withUserCredentials(null);
+    connection = builder.build().get().unwrap(TestConnection.class);
+    assertThat(connection.getUrl(), is("jdbc:test-db:localhost:0/"));
+    assertThat(connection.getConnectionProperties(), is(anEmptyMap()));
+
+    builder.withUserCredentials(new MultiUseUserCredentials("dbuser", "strongpassword"));
+    connection = builder.build().get().unwrap(TestConnection.class);
+    assertThat(connection.getConnectionProperties(), hasEntry("user", "dbuser"));
+    assertThat(connection.getConnectionProperties(), hasEntry("password", "strongpassword"));
+  }
 
   @Test
   public void database() {
@@ -86,5 +107,12 @@ public class DatabaseConnectionSourceBuilderTest {
 
     builder.withUrlx(null);
     assertThat(builder.toUrlx(), is(defaultMap));
+
+    builder.withDefaultUrlx(null);
+    assertThat(builder.toUrlx(), is(anEmptyMap()));
+
+    builder.withDefaultUrlx("newkey", true);
+    assertThat(builder.toUrlx(), hasEntry("newkey", "true"));
+
   }
 }

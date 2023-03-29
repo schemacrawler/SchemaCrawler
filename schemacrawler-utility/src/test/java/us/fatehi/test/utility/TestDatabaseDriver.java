@@ -1,35 +1,27 @@
 /*
-========================================================================
-SchemaCrawler
-http://www.schemacrawler.com
-Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>.
-All rights reserved.
-------------------------------------------------------------------------
-
-SchemaCrawler is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-SchemaCrawler and the accompanying materials are made available under
-the terms of the Eclipse Public License v1.0, GNU General Public License
-v3 or GNU Lesser General Public License v3.
-
-You may elect to redistribute this code under any of these licenses.
-
-The Eclipse Public License is available at:
-http://www.eclipse.org/legal/epl-v10.html
-
-The GNU General Public License v3 and the GNU Lesser General Public
-License v3 are available at:
-http://www.gnu.org/licenses/
-
-========================================================================
-*/
+ * ======================================================================== SchemaCrawler
+ * http://www.schemacrawler.com Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>. All
+ * rights reserved. ------------------------------------------------------------------------
+ *
+ * SchemaCrawler is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * SchemaCrawler and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0, GNU General Public License v3 or GNU Lesser General Public License v3.
+ *
+ * You may elect to redistribute this code under any of these licenses.
+ *
+ * The Eclipse Public License is available at: http://www.eclipse.org/legal/epl-v10.html
+ *
+ * The GNU General Public License v3 and the GNU Lesser General Public License v3 are available at:
+ * http://www.gnu.org/licenses/
+ *
+ * ========================================================================
+ */
 package us.fatehi.test.utility;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -51,33 +43,34 @@ public class TestDatabaseDriver implements Driver {
     }
   }
 
-  private static Connection newConnection() {
-    return (Connection)
-        newProxyInstance(
-            TestDatabaseDriver.class.getClassLoader(),
-            new Class[] {Connection.class},
-            (proxy, method, args) -> {
-              final String methodName = method.getName();
-              switch (methodName) {
-                case "close":
-                case "setAutoCommit":
-                  // Do nothing
-                  return null;
-                case "isWrapperFor":
-                  return false;
-                case "isValid":
-                  return true;
-                case "getDatabaseProductName":
-                case "getDriverName":
-                case "toString":
-                  return "TestDatabaseDriver";
-                case "getDatabaseProductVersion":
-                case "getDriverVersion":
-                  return "0.0";
-                default:
-                  throw new SQLFeatureNotSupportedException(methodName);
-              }
-            });
+  private static TestConnection newConnection(final String url, final Properties info) {
+    return (TestConnection) newProxyInstance(TestDatabaseDriver.class.getClassLoader(),
+        new Class[] {TestConnection.class}, (proxy, method, args) -> {
+          final String methodName = method.getName();
+          switch (methodName) {
+            case "close":
+            case "setAutoCommit":
+              // Do nothing
+              return null;
+            case "isWrapperFor":
+              return false;
+            case "isValid":
+              return true;
+            case "getDatabaseProductName":
+            case "getDriverName":
+            case "toString":
+              return "TestDatabaseDriver";
+            case "getDatabaseProductVersion":
+            case "getDriverVersion":
+              return "0.0";
+            case "getConnectionProperties":
+              return info;
+            case "getUrl":
+              return url;
+            default:
+              throw new SQLFeatureNotSupportedException(methodName);
+          }
+        });
   }
 
   @Override
@@ -88,7 +81,7 @@ public class TestDatabaseDriver implements Driver {
   @Override
   public Connection connect(final String url, final Properties info) {
     if (acceptsURL(url)) {
-      return newConnection();
+      return newConnection(url, info);
     } else {
       return null;
     }
