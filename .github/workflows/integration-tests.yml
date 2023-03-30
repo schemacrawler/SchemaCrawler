@@ -101,7 +101,7 @@ jobs:
 # GET TEST RESULTS
     - id: publish-test-results
       name: Upload results and coverage
-      if: contains(github.ref, 'master')
+      if: contains(github.ref, 'main')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
