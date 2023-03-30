@@ -1,38 +1,29 @@
 /*
-========================================================================
-SchemaCrawler
-http://www.schemacrawler.com
-Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>.
-All rights reserved.
-------------------------------------------------------------------------
-
-SchemaCrawler is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-SchemaCrawler and the accompanying materials are made available under
-the terms of the Eclipse Public License v1.0, GNU General Public License
-v3 or GNU Lesser General Public License v3.
-
-You may elect to redistribute this code under any of these licenses.
-
-The Eclipse Public License is available at:
-http://www.eclipse.org/legal/epl-v10.html
-
-The GNU General Public License v3 and the GNU Lesser General Public
-License v3 are available at:
-http://www.gnu.org/licenses/
-
-========================================================================
-*/
+ * ======================================================================== SchemaCrawler
+ * http://www.schemacrawler.com Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>. All
+ * rights reserved. ------------------------------------------------------------------------
+ *
+ * SchemaCrawler is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * SchemaCrawler and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0, GNU General Public License v3 or GNU Lesser General Public License v3.
+ *
+ * You may elect to redistribute this code under any of these licenses.
+ *
+ * The Eclipse Public License is available at: http://www.eclipse.org/legal/epl-v10.html
+ *
+ * The GNU General Public License v3 and the GNU Lesser General Public License v3 are available at:
+ * http://www.gnu.org/licenses/
+ *
+ * ========================================================================
+ */
 
 package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
-
 import java.util.logging.Logger;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
@@ -41,7 +32,7 @@ import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.commandline.utility.CommandLineLogger;
+import us.fatehi.utility.UtilityLogger;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {
@@ -55,10 +46,10 @@ public final class Main {
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.execute(args);
 
-    final CommandLineLogger commandLineLogger = new CommandLineLogger(LOGGER);
-    commandLineLogger.logSafeArguments(args);
-    commandLineLogger.logSystemClasspath();
-    commandLineLogger.logSystemProperties();
+    final UtilityLogger logger = new UtilityLogger(LOGGER);
+    logger.logSafeArguments(args);
+    logger.logSystemClasspath();
+    logger.logSystemProperties();
 
     final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);

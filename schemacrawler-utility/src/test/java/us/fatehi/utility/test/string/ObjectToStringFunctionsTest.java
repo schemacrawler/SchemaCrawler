@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import us.fatehi.test.utility.TestUtility;
+import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.utility.ObjectToString;
 
 public class ObjectToStringFunctionsTest {
@@ -153,7 +153,7 @@ public class ObjectToStringFunctionsTest {
 
     assertThat(
         ObjectToString.objectMap(new Object()),
-        is(TestUtility.fakeObjectMapFor(Object.class)));
+        is(TestObjectUtility.fakeObjectMapFor(Object.class)));
     assertThat(ObjectToString.objectMap("hello, world"), is(Collections.EMPTY_MAP));
     assertThat(ObjectToString.objectMap(1), is(Collections.EMPTY_MAP));
     assertThat(ObjectToString.objectMap(Integer.valueOf(1)), is(Collections.EMPTY_MAP));
@@ -163,9 +163,9 @@ public class ObjectToStringFunctionsTest {
     map.put(AccessMode.READ, AccessMode.READ);
     assertThat(ObjectToString.objectMap(map), hasEntry("READ", AccessMode.READ));
 
-    final Map<String, Object> expectedMap = TestUtility.makeTestObjectMap();
+    final Map<String, Object> expectedMap = TestObjectUtility.makeTestObjectMap();
     final Map<String, Object> actualMap =
-        ObjectToString.objectMap(TestUtility.makeTestObject());
+        ObjectToString.objectMap(TestObjectUtility.makeTestObject());
 
     final Set<String> keySet = expectedMap.keySet();
     for (final String key : keySet) {
