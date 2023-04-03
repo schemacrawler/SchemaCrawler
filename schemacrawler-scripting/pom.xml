@@ -86,7 +86,7 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
-      <version>3.0.16</version>
+      <version>3.0.17</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
