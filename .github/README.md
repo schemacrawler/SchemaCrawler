@@ -2,7 +2,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
-[![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
+[![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
 [![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
@@ -11,7 +11,7 @@
 [![Scoop](https://img.shields.io/scoop/v/schemacrawler.svg)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
 
 
-<img src="https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/master/schemacrawler-website/src/site/resources/images/schemacrawler_logo.png" height="100px" width="100px" align="right" />
+<img src="https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/main/schemacrawler-website/src/site/resources/images/schemacrawler_logo.png" height="100px" width="100px" align="right" />
 
 # SchemaCrawler
 
