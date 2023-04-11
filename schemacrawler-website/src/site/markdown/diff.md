@@ -27,4 +27,4 @@ You will first need to connect to each database separately, and use
 SchemaCrawler to obtain database metadata in SchemaCrawler's object
 model. If you need an example on how to do this, please study the sample
 code in the [SchemaCrawler diff
-project](https://github.com/schemacrawler/SchemaCrawler/tree/master/schemacrawler-diff).
+project](https://github.com/schemacrawler/SchemaCrawler/tree/main/schemacrawler-diff).

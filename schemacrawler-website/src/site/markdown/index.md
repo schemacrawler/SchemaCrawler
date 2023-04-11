@@ -19,7 +19,7 @@ Java SE 8 or better.
 [![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)](https://github.com/schemacrawler/SchemaCrawler)
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
-[![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
+[![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
 [![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
@@ -130,7 +130,7 @@ SchemaCrawler provides metadata for the following database objects:
 * Privileges and grants
 
 The sample code below demonstrates just how easy it is to use SchemaCrawler.
-For more example code, take a look at the [examples project](https://github.com/schemacrawler/SchemaCrawler/tree/master/schemacrawler-examplecode).
+For more example code, take a look at the [examples project](https://github.com/schemacrawler/SchemaCrawler/tree/main/schemacrawler-examplecode).
 For more details, please refer to the [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/).
 
 <script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
