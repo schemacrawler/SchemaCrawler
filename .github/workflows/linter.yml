@@ -24,26 +24,15 @@ jobs:
         fetch-depth: 0
 
 # LINT CODE
+    - id: read-env
+      name: Use super-linter environmental variables
+      shell: bash
+      run: |
+        # Use super-linter environmental variables
+        cat .github/super-linter.env >> "$GITHUB_ENV"
     - id: lint-code-base
       name: Lint Code Base
       uses: github/super-linter/slim@v5.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BRANCH: main
-        ERROR_ON_MISSING_EXEC_BIT: true
-        IGNORE_GITIGNORED_FILES: true
-        VALIDATE_ALL_CODEBASE: true
-        VALIDATE_YAML: true
-        VALIDATE_JSON: true
-        VALIDATE_XML: true
-        VALIDATE_MARKDOWN: true
-        VALIDATE_BASH: true
-        VALIDATE_GOOGLE_JAVA_FORMAT: true
-        VALIDATE_EDITORCONFIG: trues
-        # VALIDATE_PYTHON: false
-        # VALIDATE_RUBY: false
-        VALIDATE_JAVASCRIPT_ES: true
-        VALIDATE_DOCKERFILE_HADOLINT: true
-        # VALIDATE_CSS: true
-        # VALIDATE_ENV: true
-        # VALIDATE_SQL: true

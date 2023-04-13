@@ -1,0 +1,8 @@
+ignored:
+  # Pin versions
+  - DL3008
+  - DL3018
+  - DL3013
+  - DL3016
+  - DL3028
+no-color: true

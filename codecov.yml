@@ -1,7 +1,7 @@
 coverage:
   round: nearest
   range: 75..90
-ignore: # ignore folders and all their contents
+ignore:  # ignore folders and all their contents
   - "schemacrawler-testdb"
   - "schemacrawler-diff"
   - "schemacrawler-examplecode"

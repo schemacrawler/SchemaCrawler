@@ -13,8 +13,7 @@ MD004: false                  # Unordered list style
 MD007:                        # Unordered list indentation
   indent: 2
 MD009: false                  # Trailing spaces
-MD013:
-  line_length: 808            # Line length
+MD013: false                  # Line length
 MD026:                        # List of not allowed
   punctuation: ".,;:!。，；:"
 MD029: false                  # Ordered list item prefix

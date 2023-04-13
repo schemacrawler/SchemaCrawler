@@ -3,7 +3,7 @@
 - id: schemacrawler.tools.linter.LinterTableWithSingleColumn
   run: false
 - id: schemacrawler.tools.linter.LinterForeignKeyMismatch
-  run: false  
+  run: false
 - id: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
   run: false
 - id: schemacrawler.tools.linter.LinterNullColumnsInIndex

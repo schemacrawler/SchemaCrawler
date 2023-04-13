@@ -2,14 +2,14 @@
   config:
     message: Lint message A
     sql: SELECT TOP 1 1 FROM ${table}
-# The same linter can be configured multiple times with different options    
+# The same linter can be configured multiple times with different options
 - id: schemacrawler.tools.linter.LinterTableSql
   table-exclusion-pattern: .*BOOKS
   config:
     message: Lint message A
     sql: SELECT TOP 1 2 FROM ${table}
- # Linters can be turned off with the "run" option   
 - id: schemacrawler.tools.linter.LinterTableSql
+  # Linters can be turned off with the "run" option
   run: false
   config:
     message: message D
@@ -18,11 +18,11 @@
   config:
     message: message for SQL catalog lint
     sql: SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES
-# All available linters run by default, so they need to be explicitly turned off
 - id: schemacrawler.tools.linter.LinterForeignKeyMismatch
+  # All available linters run by default, so they need to be explicitly turned off
   run: false
-# You can oerride severity and threshold (numer of allowed failures)  
 - id: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
+  # You can override severity and threshold (numer of allowed failures)
   severity: critical
   threshold: 0
 - id: schemacrawler.tools.linter.LinterNullColumnsInIndex
@@ -37,9 +37,9 @@
   run: false
 - id: schemacrawler.tools.linter.LinterTableWithNoIndexes
   run: false
-# Certain columns can be excluded from the linter  
 - id: schemacrawler.tools.linter.LinterTableWithQuotedNames
   run: true
+  # Certain columns can be excluded from the linter
   column-exclusion-pattern: .*\.\"UPDATE\"
 - id: schemacrawler.tools.linter.LinterTableWithSingleColumn
   run: true

@@ -1,11 +1,11 @@
 - id: schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst
   run: true
   severity: high
-  table-exclusion-pattern: .*\.([A-Z]{2,5}_PK) # .*\.(^[A-Z]{2,5}_DWH_)
+  table-exclusion-pattern: .*\.([A-Z]{2,5}_PK)  # .*\.(^[A-Z]{2,5}_DWH_)
 - id: schemacrawler.tools.linter.LinterTableWithSingleColumn
   run: false
 - id: schemacrawler.tools.linter.LinterForeignKeyMismatch
-  run: false  
+  run: false
 - id: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
   run: false
 - id: schemacrawler.tools.linter.LinterNullColumnsInIndex
