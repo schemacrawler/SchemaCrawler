@@ -10,6 +10,6 @@ services:
       - target: 1521
         published: 1521
         protocol: tcp
-        mode: host      
+        mode: host
     environment:
       ORACLE_PASSWORD: test

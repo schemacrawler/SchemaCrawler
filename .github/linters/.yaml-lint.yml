@@ -1,0 +1,58 @@
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - '.yamllint'
+
+ignore: |
+  .github/
+  **/target/
+  **/*bad-3*.yaml
+
+rules:
+  anchors: enable
+  braces:
+    forbid: true
+  brackets:
+    forbid: false
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+    min-spaces-inside-empty: -1
+    max-spaces-inside-empty: -1
+  colons:
+    max-spaces-before: 0
+    max-spaces-after: 1
+  commas: enable
+  comments:
+    require-starting-space: true
+    ignore-shebangs: true
+    min-spaces-from-content: 2
+    level: warning
+  comments-indentation:
+    level: warning
+  document-end: disable
+  document-start: disable
+  empty-lines:
+    max: 1
+    max-end: 1
+  empty-values: disable
+  float-values: disable
+  hyphens:
+    max-spaces-after: 1
+  indentation:
+    spaces: consistent
+    indent-sequences: consistent
+    # check-multi-line-strings: true
+  key-duplicates: enable
+  key-ordering: disable
+  line-length:
+    max: 200
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: false
+  new-line-at-end-of-file: disable
+  new-lines: disable
+  octal-values: disable
+  quoted-strings: disable
+  trailing-spaces: enable
+  truthy:
+    allowed-values: ['true', 'false']
+    level: warning

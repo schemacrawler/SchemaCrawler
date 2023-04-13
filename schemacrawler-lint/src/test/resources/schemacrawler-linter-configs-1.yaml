@@ -10,7 +10,7 @@
 - id: "linter.Linter2"
   severity: null
   config:
-    sql: > 
+    sql: >
       SELECT
         *
       FROM

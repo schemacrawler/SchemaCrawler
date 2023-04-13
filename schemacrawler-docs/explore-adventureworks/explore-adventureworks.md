@@ -1,6 +1,6 @@
 # Explore the AdventureWorks Database with SchemaCrawler
 
-### Setup
+## Setup
 
 - Start SchemaCrawler with the AdventureWorks Database on Microsoft SQL Server
   `docker-compose -f adventureworks.yaml up -d`
@@ -67,7 +67,7 @@
 
 
 
-### Tear Down
+## Tear Down
 
 - Stop the SchemaCrawler and database Docker containers
   `docker-compose -f schemacrawler.yml -f adventureworks.yml down -t0`

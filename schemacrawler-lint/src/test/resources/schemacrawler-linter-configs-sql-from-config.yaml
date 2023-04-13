@@ -1,9 +1,9 @@
 - id: schemacrawler.tools.linter.LinterCatalogSql
-  # Read config from SchemaCrawler config file
+# (Read LinterCatalogSql config from SchemaCrawler config file)
 - id: schemacrawler.tools.linter.LinterTableWithSingleColumn
   run: false
 - id: schemacrawler.tools.linter.LinterForeignKeyMismatch
-  run: false  
+  run: false
 - id: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
   run: false
 - id: schemacrawler.tools.linter.LinterNullColumnsInIndex

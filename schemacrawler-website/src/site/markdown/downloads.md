@@ -62,4 +62,4 @@ You can install SchemaCrawler on supported platforms using [SDKMan](https://sdkm
 3. Run  
    `sdk install schemacrawler`  
    from a command-prompt 
-4. Run SchemaCrawler with `schemacrawler.bat` on Windows, or `schemacrawler.sh` on other  platforms	
+4. Run SchemaCrawler with `schemacrawler.bat` on Windows, or `schemacrawler.sh` on other  platforms 
