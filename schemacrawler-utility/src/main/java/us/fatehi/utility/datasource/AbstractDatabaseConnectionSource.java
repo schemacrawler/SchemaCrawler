@@ -41,7 +41,7 @@ import java.util.Properties;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import us.fatehi.utility.SQLRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSource {
@@ -87,7 +87,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
         }
       }
     } catch (final SQLException e) {
-      throw new RuntimeException("Could not get connection properties", e);
+      throw new SQLRuntimeException("Could not get connection properties", e);
     }
 
     return jdbcConnectionProperties;
@@ -127,7 +127,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
 
       return connection;
     } catch (final SQLException e) {
-      throw new RuntimeException(
+      throw new SQLRuntimeException(
           String.format(
               "Could not connect to <%s>, for <%s>, with properties <%s>",
               connectionUrl, username, safeProperties(jdbcConnectionProperties)),

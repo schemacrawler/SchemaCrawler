@@ -30,11 +30,11 @@ package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Consumer;
+import us.fatehi.utility.SQLRuntimeException;
 
 final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
@@ -76,7 +76,7 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   protected void finalize() throws Throwable {
     // Assert that all connections are closed
     if (!connection.isClosed()) {
-      throw new RuntimeException("Connection pool is not closed");
+      throw new SQLRuntimeException("Connection pool is not closed");
     }
     super.finalize();
   }

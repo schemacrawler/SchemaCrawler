@@ -1,14 +1,13 @@
 package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
-
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.sql.DataSource;
+import us.fatehi.utility.SQLRuntimeException;
 
 final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource {
 
@@ -40,7 +39,7 @@ final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource 
       connectionInitializer.accept(connection);
       return connection;
     } catch (final SQLException e) {
-      throw new RuntimeException(e);
+      throw new SQLRuntimeException(e);
     }
   }
 

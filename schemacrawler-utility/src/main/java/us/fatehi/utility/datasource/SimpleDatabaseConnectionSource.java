@@ -31,7 +31,6 @@ package us.fatehi.utility.datasource;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import us.fatehi.utility.SQLRuntimeException;
 import us.fatehi.utility.database.DatabaseUtility;
 
 final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
@@ -144,7 +143,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   protected void finalize() throws Throwable {
     // Assert that all connections are closed
     if (!connectionPool.isEmpty() || !usedConnections.isEmpty()) {
-      throw new RuntimeException("Connection pool is not closed");
+      throw new SQLRuntimeException("Connection pool is not closed");
     }
     super.finalize();
   }

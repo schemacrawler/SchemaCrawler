@@ -34,13 +34,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import us.fatehi.utility.SQLRuntimeException;
 
 public class SqlScript implements Runnable {
 
   private static final Logger LOGGER = Logger.getLogger(SqlScript.class.getName());
 
   private static final boolean debug =
-      Boolean.valueOf(System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
+      Boolean.parseBoolean(
+          System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
   public static void executeScriptFromResource(
       final String scriptResource, final Connection connection) {
@@ -66,7 +68,7 @@ public class SqlScript implements Runnable {
       delimiter = split[0].trim();
       scriptResource = split[1].trim();
     } else {
-      throw new RuntimeException("Too many fields in " + scriptResourceLine);
+      throw new SQLRuntimeException("Too many fields in " + scriptResourceLine);
     }
 
     this.connection = requireNonNull(connection, "No database connection provided");
@@ -114,10 +116,8 @@ public class SqlScript implements Runnable {
           }
 
           final SQLWarning warnings = statement.getWarnings();
-          if (warnings != null) {
-            if (!warnings.getMessage().startsWith("Can't drop database")) {
-              throw warnings;
-            }
+          if (warnings != null && !warnings.getMessage().startsWith("Can't drop database")) {
+            throw warnings;
           }
 
           if (!connection.getAutoCommit()) {
@@ -131,7 +131,7 @@ public class SqlScript implements Runnable {
             continue;
           }
           final Throwable throwable = getCause(e);
-          throw new RuntimeException(throwable);
+          throw new SQLRuntimeException(throwable);
         }
       }
     } catch (final Exception e) {
@@ -141,7 +141,7 @@ public class SqlScript implements Runnable {
       System.err.println(message);
       System.err.println(sql);
       LOGGER.log(Level.WARNING, message, throwable);
-      throw new RuntimeException(e);
+      throw new SQLRuntimeException(e);
     }
   }
 
