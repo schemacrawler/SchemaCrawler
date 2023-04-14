@@ -32,10 +32,8 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readResourceFully;
-
 import java.io.IOException;
 import java.nio.file.Path;
-
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
@@ -123,15 +121,9 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
               dotFile, diagramOutputFormat, outputFile, commandOptions);
       graphExecutor.run();
     } catch (final Exception e) {
-      final String message;
-      final boolean isSchemaCrawlerException = e instanceof SchemaCrawlerException;
-      if (isSchemaCrawlerException) {
-        message = e.getMessage();
-      } else {
-        message = "Could not generate diagram" + e.getMessage();
-      }
+      final String errorMessage = extractErrorMessage(e);
       final String helpText = readResourceFully("/dot.error.txt");
-      throw new ExecutionRuntimeException(String.format("%s%n%n%s", message, helpText), e);
+      throw new ExecutionRuntimeException(String.format("%s%n%n%s", errorMessage, helpText), e);
     }
   }
 
@@ -144,6 +136,17 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
   @Override
   public boolean usesConnection() {
     return false;
+  }
+
+  private String extractErrorMessage(final Exception e) {
+    final String errorMessage;
+    final boolean isSchemaCrawlerException = e instanceof SchemaCrawlerException;
+    if (isSchemaCrawlerException) {
+      errorMessage = e.getMessage();
+    } else {
+      errorMessage = "Could not generate diagram" + e.getMessage();
+    }
+    return errorMessage;
   }
 
   private SchemaTextDetailType getSchemaTextDetailType() {
@@ -160,9 +163,6 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
     final SchemaTraversalHandler formatter;
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
-    formatter =
-        new SchemaDotFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
-
-    return formatter;
+    return new SchemaDotFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
   }
 }
