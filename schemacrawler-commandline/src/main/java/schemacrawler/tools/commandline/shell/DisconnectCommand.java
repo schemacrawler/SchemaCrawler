@@ -43,8 +43,7 @@ import schemacrawler.tools.commandline.state.ShellState;
     customSynopsis = {"disconnect"},
     optionListHeading = "Options:%n")
 public class DisconnectCommand extends BaseStateHolder implements Runnable {
-  private static final Logger LOGGER =
-      Logger.getLogger(DisconnectCommand.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DisconnectCommand.class.getName());
 
   public DisconnectCommand(final ShellState state) {
     super(state);

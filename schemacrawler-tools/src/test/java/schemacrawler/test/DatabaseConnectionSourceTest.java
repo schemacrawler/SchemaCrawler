@@ -43,8 +43,9 @@ public class DatabaseConnectionSourceTest {
   @Test
   public void databaseConnectionSource() throws SQLException, ClassNotFoundException {
 
-    final DatabaseConnectionSource connectionSource = DatabaseConnectionSources
-        .newDatabaseConnectionSource("jdbc:test-db:test", new MultiUseUserCredentials());
+    final DatabaseConnectionSource connectionSource =
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            "jdbc:test-db:test", new MultiUseUserCredentials());
 
     final Connection connection = connectionSource.get();
 

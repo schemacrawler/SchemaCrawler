@@ -46,8 +46,8 @@ public class UtilityLoggerLogFatalStackTraceTest {
 
     assertThat(levelCaptor.getValue(), is(Level.SEVERE));
     assertThat(messageCaptor.getValue(), matchesPattern("Bad bad exception"));
-    assertThat(exceptionCaptor.getValue().getClass().getName(),
-        is("java.lang.NullPointerException"));
+    assertThat(
+        exceptionCaptor.getValue().getClass().getName(), is("java.lang.NullPointerException"));
   }
 
   @Test

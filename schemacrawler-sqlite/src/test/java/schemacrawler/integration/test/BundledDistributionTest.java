@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -37,33 +36,29 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class BundledDistributionTest
-{
+public class BundledDistributionTest {
 
   @Test
-  public void testInformationSchema_sqlite()
-    throws Exception
-  {
+  public void testInformationSchema_sqlite() throws Exception {
 
     final Connection connection = null;
     final DatabaseConnectorRegistry registry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier =
-      registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
-    assertThat(databaseSystemIdentifier
-                 .getSchemaRetrievalOptionsBuilder(connection)
-                 .toOptions()
-                 .getInformationSchemaViews()
-                 .size(), is(3));
+        registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
+    assertThat(
+        databaseSystemIdentifier
+            .getSchemaRetrievalOptionsBuilder(connection)
+            .toOptions()
+            .getInformationSchemaViews()
+            .size(),
+        is(3));
   }
 
   @Test
-  public void testPlugin_sqlite()
-    throws Exception
-  {
+  public void testPlugin_sqlite() throws Exception {
     final DatabaseConnectorRegistry registry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("sqlite"), is(true));
   }
-
 }

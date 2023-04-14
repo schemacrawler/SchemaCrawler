@@ -81,7 +81,8 @@ public abstract class BaseSchemaTextOptionsBuilder<
         config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
     isAlphabeticalSortForIndexes = config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
 
-    for (final HideDatabaseObjectNamesType databaseObjectNamesType : HideDatabaseObjectNamesType.values()) {
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
       final boolean booleanValue = config.getBooleanValue(databaseObjectNamesType.getKey());
       hideNames.put(databaseObjectNamesType, booleanValue);
     }
@@ -108,7 +109,8 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isAlphabeticalSortForForeignKeys = options.isAlphabeticalSortForForeignKeys();
     isAlphabeticalSortForIndexes = options.isAlphabeticalSortForIndexes();
 
-    for (final HideDatabaseObjectNamesType databaseObjectNamesType : HideDatabaseObjectNamesType.values()) {
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
       hideNames.put(databaseObjectNamesType, options.get(databaseObjectNamesType));
     }
 
@@ -215,7 +217,8 @@ public abstract class BaseSchemaTextOptionsBuilder<
   /** Corresponds to the --portable-names=&lt;boolean&gt; command-line argument. */
   public final B portableNames(final boolean value) {
 
-    for (final HideDatabaseObjectNamesType databaseObjectNamesType : HideDatabaseObjectNamesType.values()) {
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
       hideNames.put(databaseObjectNamesType, value);
     }
     isShowUnqualifiedNames = value;
@@ -272,7 +275,8 @@ public abstract class BaseSchemaTextOptionsBuilder<
     config.put(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
     config.put(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
 
-    for (final HideDatabaseObjectNamesType databaseObjectNamesType : HideDatabaseObjectNamesType.values()) {
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
       config.put(
           databaseObjectNamesType.getKey(), hideNames.getOrDefault(databaseObjectNamesType, false));
     }

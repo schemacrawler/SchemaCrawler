@@ -44,8 +44,7 @@ public enum TextOutputFormat implements OutputFormat {
   html("HyperText Markup Language (HTML) format"),
   tsv("Tab-separated values (TSV) format");
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TextOutputFormat.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TextOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.

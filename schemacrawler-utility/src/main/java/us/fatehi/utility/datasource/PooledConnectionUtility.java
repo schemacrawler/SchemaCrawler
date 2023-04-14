@@ -30,7 +30,6 @@ package us.fatehi.utility.datasource;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Objects.requireNonNull;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -59,7 +58,7 @@ public class PooledConnectionUtility {
         throws Exception {
       final String methodName = method.getName();
       if (!Arrays.asList("isClosed", "unwrap").contains(methodName) && isClosed) {
-        throw new RuntimeException(
+        throw new SQLException(
             String.format("Cannot call <%s> since connection is closed", method));
       }
       switch (methodName) {

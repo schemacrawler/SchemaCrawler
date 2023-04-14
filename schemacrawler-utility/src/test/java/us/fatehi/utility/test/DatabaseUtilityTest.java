@@ -65,8 +65,7 @@ import us.fatehi.utility.database.DatabaseUtility;
 public class DatabaseUtilityTest {
 
   private Connection connection;
-  @Captor
-  private ArgumentCaptor<String> loggerMessageCaptor;
+  @Captor private ArgumentCaptor<String> loggerMessageCaptor;
 
   @Test
   public void checkConnection() throws SQLException {
@@ -76,12 +75,16 @@ public class DatabaseUtilityTest {
     final Connection mockConnection = mock(Connection.class);
     when(mockConnection.isClosed()).thenReturn(true);
 
-    final SQLException exception1 = assertThrows(SQLException.class,
-        () -> assertThat(DatabaseUtility.checkConnection(null), is(nullValue())));
+    final SQLException exception1 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkConnection(null), is(nullValue())));
     assertThat(exception1.getMessage(), endsWith("No database connection provided"));
 
-    final SQLException exception2 = assertThrows(SQLException.class,
-        () -> assertThat(DatabaseUtility.checkConnection(mockConnection), is(nullValue())));
+    final SQLException exception2 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkConnection(mockConnection), is(nullValue())));
     assertThat(exception2.getMessage(), endsWith("Connection is closed"));
   }
 
@@ -94,20 +97,29 @@ public class DatabaseUtilityTest {
 
     when(results.isClosed()).thenReturn(true);
 
-    final SQLException exception1 = assertThrows(SQLException.class,
-        () -> assertThat(DatabaseUtility.checkResultSet(null), is(nullValue())));
+    final SQLException exception1 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkResultSet(null), is(nullValue())));
     assertThat(exception1.getMessage(), endsWith("No result-set provided"));
 
-    final SQLException exception2 = assertThrows(SQLException.class,
-        () -> assertThat(DatabaseUtility.checkResultSet(results), is(nullValue())));
+    final SQLException exception2 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkResultSet(results), is(nullValue())));
     assertThat(exception2.getMessage(), endsWith("Result-set is closed"));
   }
 
   @BeforeAll
   public void createDatabase() throws Exception {
 
-    final EmbeddedDatabase db = new EmbeddedDatabaseBuilder().generateUniqueName(true)
-        .setScriptEncoding("UTF-8").ignoreFailedDrops(true).addScript("testdb.sql").build();
+    final EmbeddedDatabase db =
+        new EmbeddedDatabaseBuilder()
+            .generateUniqueName(true)
+            .setScriptEncoding("UTF-8")
+            .ignoreFailedDrops(true)
+            .addScript("testdb.sql")
+            .build();
 
     connection = db.getConnection();
   }
@@ -126,7 +138,8 @@ public class DatabaseUtilityTest {
     assertThat(DatabaseUtility.executeSql(null, "<some query>"), is(nullValue()));
     assertThat(DatabaseUtility.executeSql(statement, null), is(nullValue()));
 
-    assertThat(DatabaseUtility.executeSql(statement, "SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1"),
+    assertThat(
+        DatabaseUtility.executeSql(statement, "SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1"),
         is(not(nullValue())));
     assertThat(
         DatabaseUtility.executeSql(statement, "UPDATE TABLE1 SET COL2 = 'GHI' WHERE ENTITY_ID = 1"),
@@ -140,8 +153,11 @@ public class DatabaseUtilityTest {
     when(statement.execute(anyString()))
         .thenThrow(new SQLException("Exception executing SQL statement"));
 
-    final SQLException exception = assertThrows(SQLException.class,
-        () -> assertThat(DatabaseUtility.executeSql(statement, "<some query>"), is(nullValue())));
+    final SQLException exception =
+        assertThrows(
+            SQLException.class,
+            () ->
+                assertThat(DatabaseUtility.executeSql(statement, "<some query>"), is(nullValue())));
     assertThat(exception.getMessage(), is("Exception executing SQL statement"));
   }
 
@@ -149,22 +165,36 @@ public class DatabaseUtilityTest {
   public void executeSqlForLong() throws SQLException {
 
     // Happy path
-    assertThat(DatabaseUtility.executeSqlForLong(connection,
-        "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 1"), is(2L));
+    assertThat(
+        DatabaseUtility.executeSqlForLong(
+            connection, "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 1"),
+        is(2L));
 
     // Unhappy paths
     Exception exception;
     // NULL in database
-    exception = assertThrows(SQLException.class, () -> DatabaseUtility.executeSqlForLong(connection,
-        "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 2"));
+    exception =
+        assertThrows(
+            SQLException.class,
+            () ->
+                DatabaseUtility.executeSqlForLong(
+                    connection, "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 2"));
     assertThat(exception.getMessage(), startsWith("Cannot get a long value"));
     // No rows of data
-    exception = assertThrows(SQLException.class, () -> DatabaseUtility.executeSqlForLong(connection,
-        "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 3"));
+    exception =
+        assertThrows(
+            SQLException.class,
+            () ->
+                DatabaseUtility.executeSqlForLong(
+                    connection, "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 3"));
     assertThat(exception.getMessage(), startsWith("Cannot get a long value"));
     // Not a number
-    exception = assertThrows(SQLException.class, () -> DatabaseUtility.executeSqlForLong(connection,
-        "SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1"));
+    exception =
+        assertThrows(
+            SQLException.class,
+            () ->
+                DatabaseUtility.executeSqlForLong(
+                    connection, "SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1"));
     assertThat(exception.getMessage(), startsWith("Cannot get a long value"));
   }
 
@@ -172,24 +202,34 @@ public class DatabaseUtilityTest {
   public void executeSqlForScalar() throws SQLException {
 
     // Happy path
-    assertThat(DatabaseUtility.executeSqlForScalar(connection,
-        "SELECT COL3 FROM TABLE1 WHERE COL1 = 'ABC'"), is(new BigDecimal(2)));
+    assertThat(
+        DatabaseUtility.executeSqlForScalar(
+            connection, "SELECT COL3 FROM TABLE1 WHERE COL1 = 'ABC'"),
+        is(new BigDecimal(2)));
     // Happy path - NULL in database
-    assertThat(DatabaseUtility.executeSqlForScalar(connection,
-        "SELECT COL3 FROM TABLE1 WHERE COL1 = 'XYZ'"), is(nullValue()));
+    assertThat(
+        DatabaseUtility.executeSqlForScalar(
+            connection, "SELECT COL3 FROM TABLE1 WHERE COL1 = 'XYZ'"),
+        is(nullValue()));
     // Happy path - no rows of data
-    assertThat(DatabaseUtility.executeSqlForScalar(connection,
-        "SELECT COL3 FROM TABLE1 WHERE COL1 = 'ZZZ'"), is(nullValue()));
+    assertThat(
+        DatabaseUtility.executeSqlForScalar(
+            connection, "SELECT COL3 FROM TABLE1 WHERE COL1 = 'ZZZ'"),
+        is(nullValue()));
 
     // Unhappy paths
     Exception exception;
     // Too many rows
-    exception = assertThrows(SQLException.class,
-        () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL3 FROM TABLE1"));
+    exception =
+        assertThrows(
+            SQLException.class,
+            () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL3 FROM TABLE1"));
     assertThat(exception.getMessage(), startsWith("Too many rows"));
     // Too many columns
-    exception = assertThrows(SQLException.class,
-        () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL2, COL3 FROM TABLE1"));
+    exception =
+        assertThrows(
+            SQLException.class,
+            () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL2, COL3 FROM TABLE1"));
     assertThat(exception.getMessage(), startsWith("Too many columns"));
   }
 
@@ -214,8 +254,8 @@ public class DatabaseUtilityTest {
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     new UtilityLogger(logger).logSQLWarnings(results);
     verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture());
-    assertThat(loggerMessageCaptor.getValue(),
-        startsWith("Could not log SQL warnings for result set"));
+    assertThat(
+        loggerMessageCaptor.getValue(), startsWith("Could not log SQL warnings for result set"));
 
     // Test logs are created with a SQL warning
     final String errorMessage = "TEST SQL warning";
@@ -223,15 +263,14 @@ public class DatabaseUtilityTest {
     when(results.getWarnings()).thenReturn(new SQLWarning(errorMessage));
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     new UtilityLogger(logger).logSQLWarnings(results);
-    verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture(),
-        any(SQLWarning.class));
+    verify(logger, times(1))
+        .log(any(Level.class), loggerMessageCaptor.capture(), any(SQLWarning.class));
     assertThat(loggerMessageCaptor.getValue(), startsWith(errorMessage));
   }
 
   @Test
   public void logSQLWarningsStatement() throws Exception {
     final Logger logger = mock(Logger.class);
-
 
     // Test with null argument
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
@@ -250,8 +289,8 @@ public class DatabaseUtilityTest {
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     new UtilityLogger(logger).logSQLWarnings(statement);
     verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture());
-    assertThat(loggerMessageCaptor.getValue(),
-        startsWith("Could not log SQL warnings for statement"));
+    assertThat(
+        loggerMessageCaptor.getValue(), startsWith("Could not log SQL warnings for statement"));
 
     // Test logs are created with a SQL warning
     final String errorMessage = "TEST SQL warning";
@@ -259,8 +298,8 @@ public class DatabaseUtilityTest {
     when(statement.getWarnings()).thenReturn(new SQLWarning(errorMessage));
     when(logger.isLoggable(Level.INFO)).thenReturn(true);
     new UtilityLogger(logger).logSQLWarnings(statement);
-    verify(logger, times(1)).log(any(Level.class), loggerMessageCaptor.capture(),
-        any(SQLWarning.class));
+    verify(logger, times(1))
+        .log(any(Level.class), loggerMessageCaptor.capture(), any(SQLWarning.class));
     assertThat(loggerMessageCaptor.getValue(), startsWith(errorMessage));
   }
 
@@ -281,10 +320,12 @@ public class DatabaseUtilityTest {
             statement.executeQuery("SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1")),
         containsInAnyOrder("ABC"));
     // Read more than value, including nulls (ignoring nulls)
-    assertThat(DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL1 FROM TABLE1")),
+    assertThat(
+        DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL1 FROM TABLE1")),
         containsInAnyOrder("ABC", "XYZ"));
     // Read other data types as strings, including nulls (ignoring nulls)
-    assertThat(DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL3 FROM TABLE1")),
+    assertThat(
+        DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL3 FROM TABLE1")),
         containsInAnyOrder("2"));
   }
 }

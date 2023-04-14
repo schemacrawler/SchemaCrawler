@@ -8,5 +8,4 @@ public interface TestConnection extends Connection {
   Properties getConnectionProperties();
 
   String getUrl();
-
 }

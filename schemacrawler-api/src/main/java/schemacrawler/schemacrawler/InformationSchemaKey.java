@@ -75,7 +75,9 @@ public enum InformationSchemaKey {
     return type + "." + name();
   }
 
-  /** @return the type */
+  /**
+   * @return the type
+   */
   public InformationSchemaKeyType getType() {
     return type;
   }

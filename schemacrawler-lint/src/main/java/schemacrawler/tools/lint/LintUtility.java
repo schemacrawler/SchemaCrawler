@@ -35,8 +35,7 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public final class LintUtility {
 
-  public static final Logger LOGGER =
-      Logger.getLogger(LintUtility.class.getName());
+  public static final Logger LOGGER = Logger.getLogger(LintUtility.class.getName());
 
   public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
     if (main == null || sub == null) {

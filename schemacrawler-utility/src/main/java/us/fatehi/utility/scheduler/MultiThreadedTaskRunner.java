@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +39,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import us.fatehi.utility.string.StringFormat;
 
 final class MultiThreadedTaskRunner extends AbstractTaskRunner {
@@ -120,7 +118,7 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
       if (cause instanceof Exception) {
         throw (Exception) cause;
       } else {
-        throw new RuntimeException(cause);
+        throw new RunnerException(cause);
       }
     }
   }

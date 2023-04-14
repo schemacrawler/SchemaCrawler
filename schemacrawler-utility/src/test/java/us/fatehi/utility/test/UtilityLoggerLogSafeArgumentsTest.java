@@ -67,7 +67,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \nan-argument"));
   }
 
@@ -87,7 +88,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -107,7 +109,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -127,7 +130,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -147,7 +151,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -167,7 +172,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -187,7 +193,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -207,7 +214,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\n<password provided>"));
   }
 
@@ -227,7 +235,8 @@ public class UtilityLoggerLogSafeArgumentsTest {
     verify(logger).log(levelCaptor.capture(), messageCaptor.capture());
 
     assertThat(levelCaptor.getValue(), is(Level.INFO));
-    assertThat(messageCaptor.getValue().replaceAll("\r", ""),
+    assertThat(
+        messageCaptor.getValue().replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\narg2"));
   }
 

@@ -2,20 +2,20 @@
  * ======================================================================== SchemaCrawler
  * http://www.schemacrawler.com Copyright (c) 2000-2023, Sualeh Fatehi <sualeh@hotmail.com>. All
  * rights reserved. ------------------------------------------------------------------------
- * 
+ *
  * SchemaCrawler is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * 
+ *
  * SchemaCrawler and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0, GNU General Public License v3 or GNU Lesser General Public License v3.
- * 
+ *
  * You may elect to redistribute this code under any of these licenses.
- * 
+ *
  * The Eclipse Public License is available at: http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * The GNU General Public License v3 and the GNU Lesser General Public License v3 are available at:
  * http://www.gnu.org/licenses/
- * 
+ *
  * ========================================================================
  */
 
@@ -77,8 +77,9 @@ public final class MetadataResultSet implements AutoCloseable {
   private int rowCount;
   private boolean showLobs;
 
-  public MetadataResultSet(final Query query, final Statement statement,
-      final InclusionRule schemaInclusionRule) throws SQLException {
+  public MetadataResultSet(
+      final Query query, final Statement statement, final InclusionRule schemaInclusionRule)
+      throws SQLException {
     this(executeAgainstSchema(query, statement, schemaInclusionRule), query.getName());
   }
 
@@ -129,7 +130,9 @@ public final class MetadataResultSet implements AutoCloseable {
            * reason (tested with connector 5.1.26 and server version 5.0.95). Ignoring the
            * exception, we can still get some useful data out of the database.
            */
-          LOGGER.log(Level.WARNING, e,
+          LOGGER.log(
+              Level.WARNING,
+              e,
               new StringFormat("Could not read value for column <%s>", resultsColumn));
         }
       }
@@ -165,7 +168,8 @@ public final class MetadataResultSet implements AutoCloseable {
         final Object booleanValue = results.getObject(columnName);
         final String stringBooleanValue;
         if (results.wasNull() || booleanValue == null) {
-          LOGGER.log(Level.FINER,
+          LOGGER.log(
+              Level.FINER,
               new StringFormat("NULL value for column <%s>, so evaluating to 'false'", columnName));
           return false;
         } else {
@@ -179,7 +183,9 @@ public final class MetadataResultSet implements AutoCloseable {
               || stringBooleanValue.equalsIgnoreCase("true");
         }
       } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, e,
+        LOGGER.log(
+            Level.WARNING,
+            e,
             new StringFormat("Could not read boolean value for column <%s>", columnName));
       }
     }
@@ -214,8 +220,8 @@ public final class MetadataResultSet implements AutoCloseable {
    * @param defaultValue Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(final String columnName,
-      final E defaultValue) {
+  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(
+      final String columnName, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     final int value = getInt(columnName, defaultValue.id());
     return enumValueFromId(value, defaultValue);
@@ -228,8 +234,8 @@ public final class MetadataResultSet implements AutoCloseable {
    * @param defaultValue Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(final String columnName,
-      final E defaultValue) {
+  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(
+      final String columnName, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     final int value = getShort(columnName, (short) defaultValue.id());
     return enumValueFromId(value, defaultValue);
@@ -249,12 +255,16 @@ public final class MetadataResultSet implements AutoCloseable {
       try {
         value = results.getInt(columnName);
         if (results.wasNull()) {
-          LOGGER.log(Level.FINER, new StringFormat(
-              "NULL int value for column <%s>, so using default %d", columnName, defaultValue));
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat(
+                  "NULL int value for column <%s>, so using default %d", columnName, defaultValue));
           value = defaultValue;
         }
       } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, e,
+        LOGGER.log(
+            Level.WARNING,
+            e,
             new StringFormat("Could not read integer value for column <%s>", columnName));
       }
     }
@@ -275,12 +285,17 @@ public final class MetadataResultSet implements AutoCloseable {
       try {
         value = results.getLong(columnName);
         if (results.wasNull()) {
-          LOGGER.log(Level.FINER, new StringFormat(
-              "NULL long value for column <%s>, so using default %d", columnName, defaultValue));
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat(
+                  "NULL long value for column <%s>, so using default %d",
+                  columnName, defaultValue));
           value = defaultValue;
         }
       } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, e,
+        LOGGER.log(
+            Level.WARNING,
+            e,
             new StringFormat("Could not read long value for column <%s>", columnName));
       }
     }
@@ -301,12 +316,17 @@ public final class MetadataResultSet implements AutoCloseable {
       try {
         value = results.getShort(columnName);
         if (results.wasNull()) {
-          LOGGER.log(Level.FINER, new StringFormat(
-              "NULL short value for column <%s>, so using default %d", columnName, defaultValue));
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat(
+                  "NULL short value for column <%s>, so using default %d",
+                  columnName, defaultValue));
           value = defaultValue;
         }
       } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, e,
+        LOGGER.log(
+            Level.WARNING,
+            e,
             new StringFormat("Could not read short value for column <%s>", columnName));
       }
     }
@@ -332,7 +352,9 @@ public final class MetadataResultSet implements AutoCloseable {
           value = value.trim();
         }
       } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, e,
+        LOGGER.log(
+            Level.WARNING,
+            e,
             new StringFormat("Could not read string value for column <%s>", columnName));
       }
     }
@@ -345,7 +367,7 @@ public final class MetadataResultSet implements AutoCloseable {
    * the first row the current row; the second call makes the second row the current row, and so on.
    *
    * @return <code>true</code> if the new current row is valid; <code>false</code> if there are no
-   *         more rows
+   *     more rows
    * @throws SQLException On a database access error
    */
   public boolean next() throws SQLException {

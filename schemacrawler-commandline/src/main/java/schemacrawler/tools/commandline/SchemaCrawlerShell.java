@@ -80,12 +80,13 @@ public final class SchemaCrawlerShell {
         addPluginCommands(executeCommandLine, commandPluginCommands);
         commandLine.addSubcommand(executeCommandLine);
       }
-      commandLine.setExecutionExceptionHandler((ex, cmdLine, parseResult) -> {
-        if (ex != null && ex.getMessage() != null) {
-          cmdLine.getErr().printf("ERROR: %s%n", ex.getMessage());
-        }
-        return 0;
-      });
+      commandLine.setExecutionExceptionHandler(
+          (ex, cmdLine, parseResult) -> {
+            if (ex != null && ex.getMessage() != null) {
+              cmdLine.getErr().printf("ERROR: %s%n", ex.getMessage());
+            }
+            return 0;
+          });
 
       final Supplier<Path> workingDir = () -> Paths.get(".");
       final PicocliCommands picocliCommands = new PicocliCommands(commandLine);
@@ -96,12 +97,16 @@ public final class SchemaCrawlerShell {
       systemRegistry.setCommandRegistries(picocliCommands);
       systemRegistry.register("help", picocliCommands);
 
-      final LineReader reader = LineReaderBuilder.builder().terminal(terminal)
-          .completer(systemRegistry.completer()).parser(parser).variable(LineReader.LIST_MAX, 3) // max
-                                                                                                 // tab
-                                                                                                 // completion
-                                                                                                 // candidates
-          .build();
+      final LineReader reader =
+          LineReaderBuilder.builder()
+              .terminal(terminal)
+              .completer(systemRegistry.completer())
+              .parser(parser)
+              .variable(LineReader.LIST_MAX, 3) // max
+              // tab
+              // completion
+              // candidates
+              .build();
       factory.setTerminal(terminal);
 
       while (true) {
@@ -136,8 +141,8 @@ public final class SchemaCrawlerShell {
     }
   }
 
-  private static void handleFatalError(final String[] args, final Throwable throwable,
-      final ShellState state) {
+  private static void handleFatalError(
+      final String[] args, final Throwable throwable, final ShellState state) {
 
     final UtilityLogger logger = new UtilityLogger(LOGGER);
     logger.logSafeArguments(args);

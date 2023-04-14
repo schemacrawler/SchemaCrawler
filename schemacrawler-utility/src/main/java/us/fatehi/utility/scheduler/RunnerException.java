@@ -25,38 +25,14 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.integration.test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+package us.fatehi.utility.scheduler;
 
-import java.sql.Connection;
+public class RunnerException extends Exception {
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+  private static final long serialVersionUID = -8904255341894856632L;
 
-public class OracleDistributionTest {
-
-  private DatabaseConnector dbConnector;
-
-  @BeforeEach
-  public void setup() {
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("oracle");
-  }
-
-  @Test
-  public void testIdentifierQuoteString() {
-
-    final Connection connection = null;
-    assertThat(
-        dbConnector
-            .getSchemaRetrievalOptionsBuilder(connection)
-            .toOptions()
-            .getIdentifierQuoteString(),
-        is(""));
+  public RunnerException(final Throwable cause) {
+    super(cause);
   }
 }

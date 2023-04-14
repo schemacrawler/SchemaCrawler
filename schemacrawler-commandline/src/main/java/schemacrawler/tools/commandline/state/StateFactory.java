@@ -51,8 +51,7 @@ public class StateFactory extends BaseStateHolder implements IFactory {
         return defaultPicocliFactory.create(cls);
       }
     } catch (final Exception e) {
-      throw new InternalRuntimeException(
-          String.format("Could not instantiate class <%s>", cls), e);
+      throw new InternalRuntimeException(String.format("Could not instantiate class <%s>", cls), e);
     }
   }
 }

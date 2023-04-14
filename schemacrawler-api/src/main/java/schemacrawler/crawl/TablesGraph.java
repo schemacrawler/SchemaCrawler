@@ -42,8 +42,7 @@ import us.fatehi.utility.graph.SimpleTopologicalSort;
 
 final class TablesGraph extends DirectedGraph<Table> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TablesGraph.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TablesGraph.class.getName());
 
   TablesGraph(final NamedObjectList<MutableTable> tables) {
     super("catalog");

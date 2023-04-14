@@ -39,8 +39,7 @@ import us.fatehi.utility.string.StringFormat;
 
 class RoutineGrepFilter implements Predicate<Routine> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(RoutineGrepFilter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(RoutineGrepFilter.class.getName());
 
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;

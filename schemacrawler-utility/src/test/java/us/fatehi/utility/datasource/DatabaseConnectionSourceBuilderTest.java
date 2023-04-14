@@ -27,13 +27,11 @@ public class DatabaseConnectionSourceBuilderTest {
     builder.withConnectionInitializer(null);
     assertThat(builder.getConnectionInitializer(), is(not(nullValue())));
 
-    final Consumer<Connection> connectionInitializer = connection -> {
-    };
+    final Consumer<Connection> connectionInitializer = connection -> {};
 
     builder.withConnectionInitializer(connectionInitializer);
     assertThat(builder.getConnectionInitializer(), is(connectionInitializer));
   }
-
 
   @Test
   public void credentials() throws SQLException {
@@ -138,6 +136,5 @@ public class DatabaseConnectionSourceBuilderTest {
 
     builder.withDefaultUrlx("newkey", true);
     assertThat(builder.toUrlx(), hasEntry("newkey", "true"));
-
   }
 }
