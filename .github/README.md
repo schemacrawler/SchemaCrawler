@@ -3,6 +3,7 @@
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
 [![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
 [![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
