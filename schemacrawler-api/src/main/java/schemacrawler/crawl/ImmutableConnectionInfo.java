@@ -38,15 +38,10 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
   private static final long serialVersionUID = 6996782514772490150L;
 
   private final String databaseProductName;
-
   private final String databaseProductVersion;
-
   private final String connectionUrl;
-
   private final String userName;
-
   private final int jdbcMajorVersion;
-
   private final int jdbcMinorVersion;
   private final ImmutableDriverInfo driverInfo;
 

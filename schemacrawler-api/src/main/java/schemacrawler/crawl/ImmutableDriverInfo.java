@@ -80,8 +80,6 @@ final class ImmutableDriverInfo implements Serializable {
 
   @Override
   public String toString() {
-    return String.format(
-        "Connected to %n%s %s %nusing JDBC driver %n<%s> %s %s%nwith %n\"%s\"",
-        driverClassName, driverName, driverVersion);
+    return String.format("JDBC driver <%s> %s %s", driverClassName, driverName, driverVersion);
   }
 }
