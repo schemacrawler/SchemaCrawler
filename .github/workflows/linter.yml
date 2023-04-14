@@ -36,3 +36,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BRANCH: main
+    - id: persist-log
+      name: Persist linter logs
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: super-linter-log
+        path: super-linter.log
+        retention-days: 9

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -38,28 +37,26 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class OracleDistributionTest
-{
+public class OracleDistributionTest {
 
   private DatabaseConnector dbConnector;
 
   @BeforeEach
-  public void setup()
-  {
+  public void setup() {
     final DatabaseConnectorRegistry registry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("oracle");
   }
 
   @Test
-  public void testIdentifierQuoteString()
-  {
+  public void testIdentifierQuoteString() {
 
     final Connection connection = null;
-    assertThat(dbConnector
-                 .getSchemaRetrievalOptionsBuilder(connection)
-                 .toOptions()
-                 .getIdentifierQuoteString(), is(""));
+    assertThat(
+        dbConnector
+            .getSchemaRetrievalOptionsBuilder(connection)
+            .toOptions()
+            .getIdentifierQuoteString(),
+        is(""));
   }
-
 }

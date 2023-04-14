@@ -36,7 +36,8 @@ public class UtilityLoggerLogSystemInformationTest {
 
     assertThat(levelCaptor.getAllValues(), hasItem(Level.CONFIG));
     assertThat(messageCaptor.getAllValues().get(0), startsWith("Classpath:"));
-    assertThat(messageCaptor.getAllValues().get(1).replaceAll("\\R", "\n"),
+    assertThat(
+        messageCaptor.getAllValues().get(1).replaceAll("\\R", "\n"),
         matchesPattern("LD_LIBRARY_PATH: \n"));
   }
 

@@ -94,8 +94,10 @@ public final class SchemaCrawlerCommandLine {
   private static void executeCommandLine(final CommandLine commandLine) {
     final Map<String, Object> subcommands = commandLine.getMixins();
 
-    for (final String commandName : new String[] {"log", "configfile", "connect", "limit", "grep",
-        "filter", "showstate", "load", "execute"}) {
+    for (final String commandName :
+        new String[] {
+          "log", "configfile", "connect", "limit", "grep", "filter", "showstate", "load", "execute"
+        }) {
       final Runnable command = (Runnable) subcommands.get(commandName);
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
       command.run();

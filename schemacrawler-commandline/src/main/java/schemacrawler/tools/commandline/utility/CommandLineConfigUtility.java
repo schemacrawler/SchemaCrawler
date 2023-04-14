@@ -46,8 +46,7 @@ import java.util.logging.Logger;
 
 public class CommandLineConfigUtility {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(CommandLineConfigUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(CommandLineConfigUtility.class.getName());
 
   public static Map<String, Object> loadConfig() {
 
@@ -65,9 +64,7 @@ public class CommandLineConfigUtility {
     LOGGER.log(Level.FINE, () -> totalConfig.root().render());
 
     final Map<String, Object> configMap =
-        totalConfig
-            .entrySet()
-            .stream()
+        totalConfig.entrySet().stream()
             .filter(entry -> entry.getValue() != null)
             .collect(toMap(Entry::getKey, entry -> entry.getValue().unwrapped()));
 

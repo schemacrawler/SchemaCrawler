@@ -37,7 +37,8 @@ public class ObjectToStringTest {
     assertThat(ObjectToString.listOrObjectToString(Boolean.TRUE), is("true"));
 
     assertThat(
-        ObjectToString.listOrObjectToString(TestObjectUtility.makeTestObject()).replaceAll("\\R", ""),
+        ObjectToString.listOrObjectToString(TestObjectUtility.makeTestObject())
+            .replaceAll("\\R", ""),
         containsString(TestObject.class.getName()));
   }
 

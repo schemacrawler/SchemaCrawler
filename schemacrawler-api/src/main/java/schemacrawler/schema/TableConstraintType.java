@@ -45,8 +45,7 @@ public enum TableConstraintType {
   alternate_key("ALTERNATE KEY"),
   weak_association("WEAK ASSOCIATION");
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableConstraintType.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TableConstraintType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.

@@ -43,8 +43,7 @@ import us.fatehi.utility.string.StringFormat;
 
 class TableGrepFilter implements Predicate<Table> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableGrepFilter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TableGrepFilter.class.getName());
 
   private final InclusionRule grepTableInclusionRule;
   private final InclusionRule grepColumnInclusionRule;

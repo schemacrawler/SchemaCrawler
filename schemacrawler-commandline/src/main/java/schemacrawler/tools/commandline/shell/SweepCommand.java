@@ -44,8 +44,7 @@ import schemacrawler.tools.commandline.state.ShellState;
     customSynopsis = {"sweep"},
     optionListHeading = "Options:%n")
 public class SweepCommand extends BaseStateHolder implements Runnable {
-  private static final Logger LOGGER =
-      Logger.getLogger(SweepCommand.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SweepCommand.class.getName());
 
   public SweepCommand(final ShellState state) {
     super(state);

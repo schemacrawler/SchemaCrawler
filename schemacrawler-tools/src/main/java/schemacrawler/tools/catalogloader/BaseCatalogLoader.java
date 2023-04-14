@@ -112,7 +112,9 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
     }
   }
 
-  /** @param additionalConfig the additionalConfig to set */
+  /**
+   * @param additionalConfig the additionalConfig to set
+   */
   @Override
   public void setAdditionalConfiguration(final Config additionalConfig) {
     this.additionalConfig = additionalConfig;

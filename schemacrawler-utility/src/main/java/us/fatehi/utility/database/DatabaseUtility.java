@@ -89,7 +89,8 @@ public final class DatabaseUtility {
         return statement.getResultSet();
       } else {
         final int updateCount = statement.getUpdateCount();
-        LOGGER.log(Level.FINE,
+        LOGGER.log(
+            Level.FINE,
             new StringFormat("No results. Update count of %d for query: %s", updateCount, sql));
         return null;
       }

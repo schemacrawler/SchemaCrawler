@@ -27,14 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.offline.jdbc;
 
-
 import java.nio.file.Path;
 import java.sql.Connection;
 
-public interface OfflineConnection
-  extends Connection
-{
+public interface OfflineConnection extends Connection {
 
   Path getOfflineDatabasePath();
-
 }

@@ -23,8 +23,13 @@ public class SqlScriptTest {
   @BeforeAll
   public void createDatabase() throws Exception {
 
-    final EmbeddedDatabase db = new EmbeddedDatabaseBuilder().generateUniqueName(true)
-        .setScriptEncoding("UTF-8").ignoreFailedDrops(true).addScript("testdb.sql").build();
+    final EmbeddedDatabase db =
+        new EmbeddedDatabaseBuilder()
+            .generateUniqueName(true)
+            .setScriptEncoding("UTF-8")
+            .ignoreFailedDrops(true)
+            .addScript("testdb.sql")
+            .build();
 
     connection = db.getConnection();
   }
@@ -38,8 +43,11 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(RuntimeException.class, () -> SqlScript
-        .executeScriptFromResource("#,/sql-resource-table3.sql,hello-there", connection));
+    assertThrows(
+        RuntimeException.class,
+        () ->
+            SqlScript.executeScriptFromResource(
+                "#,/sql-resource-table3.sql,hello-there", connection));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
 
@@ -69,7 +77,8 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(RuntimeException.class,
+    assertThrows(
+        RuntimeException.class,
         () -> SqlScript.executeScriptFromResource("no-resource.sql", connection));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
@@ -78,7 +87,8 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(RuntimeException.class,
+    assertThrows(
+        RuntimeException.class,
         () -> SqlScript.executeScriptFromResource("/bad-resource-1.sql", connection));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
@@ -101,8 +111,8 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(RuntimeException.class,
-        () -> SqlScript.executeScriptFromResource(null, connection));
+    assertThrows(
+        RuntimeException.class, () -> SqlScript.executeScriptFromResource(null, connection));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));
 
@@ -110,7 +120,8 @@ public class SqlScriptTest {
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(RuntimeException.class,
+    assertThrows(
+        RuntimeException.class,
         () -> SqlScript.executeScriptFromResource("/sql-resource-table2.sql", null));
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(false));

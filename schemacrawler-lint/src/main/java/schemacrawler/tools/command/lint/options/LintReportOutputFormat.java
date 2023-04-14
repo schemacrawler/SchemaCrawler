@@ -45,8 +45,7 @@ public enum LintReportOutputFormat implements OutputFormat {
   json("JavaScript Object Notation (JSON) format"),
   yaml("YAML Ain't Markup Language (YAML) format");
 
-  private static final Logger LOGGER =
-      Logger.getLogger(LintReportOutputFormat.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(LintReportOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.

@@ -81,8 +81,7 @@ public enum DiagramOutputFormat implements OutputFormat {
   xlib("Xlib canvas", "x11"),
   ;
 
-  private static final Logger LOGGER =
-      Logger.getLogger(DiagramOutputFormat.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DiagramOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.

@@ -79,7 +79,9 @@ public class DirectedGraph<T extends Comparable<? super T>> {
     return new LinkedHashSet<>(edges);
   }
 
-  /** @return the name */
+  /**
+   * @return the name
+   */
   public String getName() {
     return name;
   }

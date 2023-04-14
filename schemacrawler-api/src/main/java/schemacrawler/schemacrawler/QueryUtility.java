@@ -57,8 +57,7 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class QueryUtility {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(QueryUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(QueryUtility.class.getName());
 
   public static ResultSet executeAgainstSchema(
       final Query query, final Statement statement, final InclusionRule schemaInclusionRule)

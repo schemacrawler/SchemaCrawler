@@ -38,8 +38,7 @@ import us.fatehi.utility.string.ObjectToStringFormat;
 
 public final class StateUtility {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(StateUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(StateUtility.class.getName());
 
   public static void logState(final ShellState state, final boolean showlog) {
     if (state == null) {

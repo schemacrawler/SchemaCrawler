@@ -42,8 +42,7 @@ import java.util.logging.Logger;
     customSynopsis = {"exit"},
     optionListHeading = "Options:%n")
 public class ExitCommand implements Runnable {
-  private static final Logger LOGGER =
-      Logger.getLogger(ExitCommand.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ExitCommand.class.getName());
 
   @Override
   public void run() {

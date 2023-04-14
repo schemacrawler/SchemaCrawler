@@ -44,33 +44,36 @@ public class TestDatabaseDriver implements Driver {
   }
 
   private static TestConnection newConnection(final String url, final Properties info) {
-    return (TestConnection) newProxyInstance(TestDatabaseDriver.class.getClassLoader(),
-        new Class[] {TestConnection.class}, (proxy, method, args) -> {
-          final String methodName = method.getName();
-          switch (methodName) {
-            case "close":
-            case "setAutoCommit":
-              // Do nothing
-              return null;
-            case "isWrapperFor":
-              return false;
-            case "isValid":
-              return true;
-            case "getDatabaseProductName":
-            case "getDriverName":
-            case "toString":
-              return "TestDatabaseDriver";
-            case "getDatabaseProductVersion":
-            case "getDriverVersion":
-              return "0.0";
-            case "getConnectionProperties":
-              return info;
-            case "getUrl":
-              return url;
-            default:
-              throw new SQLFeatureNotSupportedException(methodName);
-          }
-        });
+    return (TestConnection)
+        newProxyInstance(
+            TestDatabaseDriver.class.getClassLoader(),
+            new Class[] {TestConnection.class},
+            (proxy, method, args) -> {
+              final String methodName = method.getName();
+              switch (methodName) {
+                case "close":
+                case "setAutoCommit":
+                  // Do nothing
+                  return null;
+                case "isWrapperFor":
+                  return false;
+                case "isValid":
+                  return true;
+                case "getDatabaseProductName":
+                case "getDriverName":
+                case "toString":
+                  return "TestDatabaseDriver";
+                case "getDatabaseProductVersion":
+                case "getDriverVersion":
+                  return "0.0";
+                case "getConnectionProperties":
+                  return info;
+                case "getUrl":
+                  return url;
+                default:
+                  throw new SQLFeatureNotSupportedException(methodName);
+              }
+            });
   }
 
   @Override

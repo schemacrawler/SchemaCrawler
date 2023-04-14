@@ -48,8 +48,7 @@ public enum SerializationFormat implements OutputFormat {
       "schemacrawler.tools.formatter.serialize.YamlSerializedCatalog",
       false);
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SerializationFormat.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SerializationFormat.class.getName());
 
   /**
    * Gets the value from the format.
