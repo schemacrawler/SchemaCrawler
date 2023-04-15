@@ -10,7 +10,7 @@ if ! find . -type d -name "$dir_name" -exec cp -r {} "$temp_dir" \; ; then
   touch "$zip_file"
 else
   # If there are matching directories, create a zip file containing the directories.
-  cd "$temp_dir"
+  cd "$temp_dir" || exit
   zip -r "$zip_file" .
   mv "$zip_file" ..
 fi
