@@ -13,7 +13,7 @@
 ### Setup
 
 - To start SchemaCrawler with PostgreSQL, run
-  `docker-compose -f schemacrawler.yml -f postgresql.yml up -d`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f postgresql.yaml up -d`
 - Create a test PostgreSQL database schema, run
   `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:postgresql://postgresql:5432/schemacrawler?ApplicationName=SchemaCrawler;loggerLevel=DEBUG" --user schemacrawler --password schemacrawler --debug`
 
@@ -28,7 +28,7 @@
 ### Tear Down
 
 - To stop SchemaCrawler with PostgreSQL, run
-  `docker-compose -f schemacrawler.yml -f postgresql.yml down -t0`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f postgresql.yaml down -t0`
 
 
 
@@ -37,7 +37,7 @@
 ### Setup
 
 - To start SchemaCrawler with Oracle, run
-  `docker-compose -f schemacrawler.yml -f oracle.yml up -d`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f oracle.yaml up -d`
 - Create a test Oracle database schema, run
   `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xepdb1" --user "SYS AS SYSDBA" --password test --scripts-resource /oracle.scripts.txt --debug`
 
@@ -52,7 +52,7 @@
 ### Tear Down
 
 - To stop SchemaCrawler with Oracle, run
-  `docker-compose -f schemacrawler.yml -f oracle.yml down -t0`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f oracle.yaml down -t0`
 
 
 
@@ -61,7 +61,7 @@
 ### Setup
 
 - To start SchemaCrawler with Microsoft SQL Server, run
-  `docker-compose -f schemacrawler.yml -f sqlserver.yml up -d`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f sqlserver.yaml up -d`
 - Create a test Microsoft SQL Server database schema, run
   `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:sqlserver://sqlserver:1433;databaseName=master;encrypt=false" --user SA --password Schem#Crawl3r --debug`
 
@@ -76,7 +76,7 @@
 ### Tear Down
 
 - To stop SchemaCrawler with Microsoft SQL Server, run
-  `docker-compose -f schemacrawler.yml -f sqlserver.yml down -t0`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f sqlserver.yaml down -t0`
 
 
 
@@ -85,7 +85,7 @@
 ### Setup
 
 - To start SchemaCrawler with MySQL, run
-  `docker-compose -f schemacrawler.yml -f mysql.yml up -d`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f mysql.yaml up -d`
 - Create a test MySQL database schema, run
   `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:mysql://mysql:3306/books?disableMariaDbDriver&useInformationSchema=true" --user root --password schemacrawler --debug`
 
@@ -100,7 +100,7 @@
 ### Tear Down
 
 - To stop SchemaCrawler with MySQL, run
-  `docker-compose -f schemacrawler.yml -f mysql.yml down -t0`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f mysql.yaml down -t0`
 
 
 
@@ -110,7 +110,7 @@
 ### Setup
 
 - To start SchemaCrawler with IBM DB2, run
-  `docker-compose -f schemacrawler.yml -f db2.yml up -d`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f db2.yaml up -d`
 - Create a test IBM DB2 database schema, run
   `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:db2://db2:50000/schcrwlr:retrieveMessagesFromServerOnGetMessage=true;" --user schcrwlr --password schemacrawler --debug`
 
@@ -128,7 +128,7 @@ Connect to the IBM DB2 container if needed, run
 ### Tear Down
 
 - To stop SchemaCrawler with IBM DB2, run
-  `docker-compose -f schemacrawler.yml -f db2.yml down -t0`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f db2.yaml down -t0`
 
 
 
@@ -138,7 +138,7 @@ Connect to the IBM DB2 container if needed, run
 ### Setup
 
 - To start SchemaCrawler with Cassandra, run
-  `docker-compose -f schemacrawler.yml -f cassandra.yml up -d`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f cassandra.yaml up -d`
 - Create a test Cassandra database schema, run
   `docker exec -it cassandra cqlsh -f /testdb/create-cassandra-database.cql`
 
@@ -156,7 +156,7 @@ Connect to the Cassandra container if needed, run
 ### Tear Down
 
 - To stop SchemaCrawler with Cassandra, run
-  `docker-compose -f schemacrawler.yml -f cassandra.yml down -t0`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f cassandra.yaml down -t0`
 
 
 
@@ -166,7 +166,7 @@ Connect to the Cassandra container if needed, run
 ### Setup
 
 - To start SchemaCrawler with Trino, run
-  `docker-compose -f schemacrawler.yml -f trino.yml up -d`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f trino.yaml up -d`
 - The test database is created in the Docker container
 
 ### Testing
@@ -183,7 +183,7 @@ Connect to the Trino container if needed, run
 ### Tear Down
 
 - To stop SchemaCrawler with Trino, run
-  `docker-compose -f schemacrawler.yml -f trino.yml down -t0`
+  `docker-compose -f schemacrawler.yaml -f dbeaver.yaml -f trino.yaml down -t0`
 
 
 
