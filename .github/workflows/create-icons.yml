@@ -67,3 +67,4 @@ jobs:
       with:
         name: icons
         path: ./schemacrawler-website/src/site/resources/images/schemacrawler_*.*
+        retention-days: 5

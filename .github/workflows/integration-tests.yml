@@ -63,6 +63,16 @@ jobs:
           schemacrawler-diagram,schemacrawler-scripting \
           --also-make \
           package
+        # Save expected results files
+        ./scripts/unit-tests-results-output.sh
+    - id: upload-unit-tests-results-output
+      name: Upload expected results files
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: unit-tests-results-output
+        path: ./unit-tests-results-output.zip
+        retention-days: 5
 
 
   build-test-docker:
