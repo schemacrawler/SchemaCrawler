@@ -21,7 +21,7 @@ jobs:
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.3
       with:
-        java-version: 8
+        java-version: 11
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.1
@@ -50,7 +50,7 @@ jobs:
     - id: publish-coverage-codacy
       name: Upload coverage report to Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
-      if: contains(github.ref, 'main')
+      if: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CODACY_ORGANIZATION_PROVIDER: gh
@@ -63,6 +63,8 @@ jobs:
     - id: upload-coverage-test-results
       name: Upload coverage test results
       uses: actions/upload-artifact@v3
+      if: contains(github.ref, 'main')
       with:
-        name: coverage-test-results
+        name: jacoco-coverage-test-results
         path: ./target/schemacrawler-jacoco.exec
+        retention-days: 5
