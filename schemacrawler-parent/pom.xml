@@ -224,6 +224,7 @@
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <maven.javadoc.skip>true</maven.javadoc.skip>
     <graphviz.java.version>0.18.1</graphviz.java.version>
+	<jacoco.version>0.8.8</jacoco.version>
   </properties>
   <build>
     <pluginManagement>
@@ -454,7 +455,7 @@
             <plugin>
               <groupId>org.jacoco</groupId>
               <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.9</version>
+              <version>${jacoco.version}</version>
             </plugin>
           </plugins>
         </pluginManagement>

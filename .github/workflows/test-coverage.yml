@@ -21,7 +21,7 @@ jobs:
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.3
       with:
-        java-version: 11
+        java-version: 8
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.1
@@ -31,7 +31,7 @@ jobs:
       name: Coverage tests
       shell: bash
       run: |
-        # Build
+        # Run coverage tests
         mvn \
           --no-transfer-progress \
           --batch-mode \
@@ -42,10 +42,11 @@ jobs:
     - id: publish-coverage-codecov
       name: Upload coverage report to Codecov
       if: contains(github.ref, 'main')
-      shell: bash
-      run: |
-        # Upload results and coverage
-        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./target/schemacrawler-jacoco.exec
+        verbose: true
     - id: publish-coverage-codacy
       name: Upload coverage report to Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
