@@ -1,0 +1,31 @@
+{
+	"folders": {},
+	"connections": {
+		"postgres-jdbc-187861ecf1f-3efbf8840bb4d3b8": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "PostgreSQL",
+			"save-password": true,
+			"configuration": {
+				"url": "jdbc:postgresql://postgresql:5432/schemacrawler?ApplicationName\u003dSchemaCrawler;loggerLevel\u003dDEBUG",
+				"configurationType": "URL",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "true"
+				},
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}

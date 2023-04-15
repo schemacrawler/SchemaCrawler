@@ -1,0 +1,6 @@
+2023-04-15 17:40:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CB_SCHEMA_INFO" not found (this database is empty); SQL statement:
+SELECT VERSION FROM CB_SCHEMA_INFO [42104-214]
+2023-04-15 17:40:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CB_SERVER" not found (this database is empty); SQL statement:
+SELECT SCHEMA_VERSION FROM CB_SERVER [42104-214]
