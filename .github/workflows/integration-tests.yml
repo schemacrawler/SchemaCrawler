@@ -65,60 +65,6 @@ jobs:
           package
 
 
-  build-test-coverage:
-    name: Build, run coverage tests, and publish results
-    runs-on: ubuntu-latest
-    steps:
-
-# SETUP BUILD ENVIRONMENT
-    - id: prepare-maven-build
-      name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.3.3
-      with:
-        java-version: 11
-    - id: install-graphviz
-      name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.1
-
-# BUILD AND TEST
-    - id: build-test
-      name: Coverage tests
-      shell: bash
-      run: |
-        # Build
-        mvn \
-          --no-transfer-progress \
-          --batch-mode \
-          -Dtestcoverage \
-          clean install \
-          org.jacoco:jacoco-maven-plugin:0.8.9:report-aggregate
-
-# GET TEST RESULTS
-    - id: publish-test-results
-      name: Upload results and coverage
-      if: contains(github.ref, 'main')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CODACY_ORGANIZATION_PROVIDER: gh
-        CODACY_USERNAME: schemacrawler
-        CODACY_PROJECT_NAME: SchemaCrawler
-        CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
-      shell: bash
-      run: |
-        # Upload results and coverage
-        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
-        bash <(curl -Ls https://coverage.codacy.com/get.sh) \
-          report \
-          --language Java \
-          --force-coverage-parser jacoco \
-          $(find . -name 'jacoco*.xml' -printf '-r %p ')
-    - id: upload-coverage-test-results
-      name: Upload coverage test results
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-test-results
-        path: ./schemacrawler/target/site/jacoco-aggregate
-
   build-test-docker:
     name: Build, run tests, and build Docker image
     runs-on: ubuntu-latest
@@ -130,14 +76,9 @@ jobs:
       uses: sualeh/prepare-maven-build@v1.3.3
       with:
         java-version: 8
-    - id: install-packages
-      name: Install packages
-      shell: bash
-      run: |
-        # Install Graphviz
-        sudo apt-get -qq update
-        sudo apt-get -q install graphviz
-        dot -V
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.1
 
 # BUILD AND TEST
     - id: build-test
@@ -151,20 +92,3 @@ jobs:
           -Ddistrib \
           -Ddocker.skip=false \
           clean package
-
-# CHECK WEBSITE LINKS
-    - id: check-links
-      name: Check website links
-      uses: lycheeverse/lychee-action@v1.6.1
-      with:
-        args: --verbose --accept 200,999 --no-progress ./schemacrawler-website/target/_website/**/*
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-    - id: upload-link-check-report
-      name: Upload website link check report
-      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
-      with:
-        path: ./lychee/out.md
-        name: website-link-check-report.md
-        retention-days: 15

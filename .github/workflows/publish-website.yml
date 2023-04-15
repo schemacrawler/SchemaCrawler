@@ -43,6 +43,24 @@ jobs:
           -Ddistrib \
           clean install
 
+# CHECK WEBSITE LINKS
+    - id: check-links
+      name: Check website links
+      uses: lycheeverse/lychee-action@v1.6.1
+      with:
+        args: --verbose --accept 200,999 --no-progress ./schemacrawler-website/target/_website/**/*
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - id: upload-link-check-report
+      name: Upload website link check report
+      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
+      with:
+        path: ./lychee/out.md
+        name: website-link-check-report.md
+        retention-days: 15
+
+# UPLOAD WEBSITE
     - id: configure-pages
       name: Setup Pages
       uses: actions/configure-pages@v3

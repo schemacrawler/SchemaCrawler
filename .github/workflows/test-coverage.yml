@@ -1,0 +1,68 @@
+name: Test Coverage
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: read-all
+
+jobs:
+  build-test-coverage:
+    name: Build, run coverage tests, and publish results
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.3.3
+      with:
+        java-version: 11
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.1
+
+# BUILD AND TEST
+    - id: build-test
+      name: Coverage tests
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Dtestcoverage \
+          clean install \
+          org.jacoco:jacoco-maven-plugin:0.8.9:report-aggregate
+
+# GET TEST RESULTS
+    - id: publish-test-results
+      name: Upload results and coverage
+      if: contains(github.ref, 'main')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CODACY_ORGANIZATION_PROVIDER: gh
+        CODACY_USERNAME: schemacrawler
+        CODACY_PROJECT_NAME: SchemaCrawler
+        CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
+      shell: bash
+      run: |
+        # Upload results and coverage
+        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
+        bash <(curl -Ls https://coverage.codacy.com/get.sh) \
+          report \
+          --language Java \
+          --force-coverage-parser jacoco \
+          $(find . -name 'jacoco*.xml' -printf '-r %p ')
+    - id: upload-coverage-test-results
+      name: Upload coverage test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-test-results
+        path: ./schemacrawler/target/site/jacoco-aggregate
