@@ -15,3 +15,4 @@ buildNumber.properties
 .bash_history
 .sdb/
 .cache/
+dbeaver-workspace/
