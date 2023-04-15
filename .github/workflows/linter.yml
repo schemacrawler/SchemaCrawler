@@ -38,9 +38,11 @@ jobs:
         DEFAULT_BRANCH: main
     - id: strip-ansi-codes
       name: Strip ANSI codes from log
+      if: always()
       shell: bash
       run: |
         # Strip ANSI codes from log
+        touch super-linter.log
         mv super-linter.log original-super-linter.log
         sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" original-super-linter.log > super-linter.log   
     - id: persist-log
