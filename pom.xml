@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
@@ -12,16 +12,11 @@
   </parent>
   <artifactId>schemacrawler-aggregator</artifactId>
   <packaging>pom</packaging>
-
   <name>SchemaCrawler [Aggregator]</name>
-
   <modules>
-
     <module>schemacrawler-parent</module>
-
     <module>schemacrawler-jdbc-drivers</module>
     <module>schemacrawler-testdb</module>
-
     <!-- SchemaCrawler jar -->
     <module>schemacrawler-utility</module>
     <module>schemacrawler-api</module>
@@ -30,12 +25,9 @@
     <module>schemacrawler-text</module>
     <module>schemacrawler-diagram</module>
     <module>schemacrawler</module>
-
     <module>schemacrawler-commandline</module>
-
     <module>schemacrawler-scripting</module>
     <module>schemacrawler-lint</module>
-
     <!-- Database plugins -->
     <module>schemacrawler-dbtest</module>
     <module>schemacrawler-db2</module>
@@ -46,9 +38,7 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-offline</module>
-
     <module>schemacrawler-examplecode</module>
-
   </modules>
   <profiles>
     <profile>
@@ -59,17 +49,69 @@
         </property>
       </activation>
       <modules>
-
         <module>schemacrawler-diff</module>
-
         <module>schemacrawler-docs</module>
         <module>schemacrawler-distrib</module>
         <module>schemacrawler-docker</module>
         <module>schemacrawler-docker-compose</module>
         <module>schemacrawler-website</module>
-
       </modules>
     </profile>
+    <profile>
+      <id>test-coverage-build</id>
+      <activation>
+        <property>
+          <name>testcoverage</name>
+        </property>
+      </activation>
+      <properties>
+        <code.coverage.project.folder>${basedir}</code.coverage.project.folder>
+        <code.coverage.overall.data.folder>${basedir}/target/</code.coverage.overall.data.folder>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.9</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>report-aggregate</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>report-aggregate</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>merge-results</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>merge</goal>
+                </goals>
+                <configuration>
+                  <fileSets>
+                    <fileSet>
+                      <directory>${code.coverage.project.folder}</directory>
+                      <includes>
+                        <include>**/target/jacoco.exec</include>
+                      </includes>
+                    </fileSet>
+                  </fileSets>
+                  <destFile>${code.coverage.overall.data.folder}/schemacrawler-jacoco.exec</destFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
-
 </project>
