@@ -36,6 +36,13 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BRANCH: main
+    - id: strip-ansi-codes
+      name: Strip ANSI codes from log
+      shell: bash
+      run: |
+        # Strip ANSI codes from log
+        mv super-linter.log original-super-linter.log
+        sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" original-super-linter.log > super-linter.log   
     - id: persist-log
       name: Persist linter logs
       uses: actions/upload-artifact@v3
