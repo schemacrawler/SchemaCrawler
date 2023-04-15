@@ -44,6 +44,8 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile("\\s+<product(Name|Version)>.*"),
     Pattern.compile(".*[A-Za-z]+ \\d+, 20[12]\\d \\d+:\\d+ [AP]M.*"), // date and time
     Pattern.compile(".*20[12]\\d-\\d\\d-\\d\\d[ T]\\d\\d:\\d\\d.*"), // date and time
+    // ANSI color sequences
+    Pattern.compile("\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]"),
     // JSON and YAML output
     Pattern.compile("- column @uuid: .*"),
     Pattern.compile("\\s+\"?run-id\"?\\s?: .*"),
