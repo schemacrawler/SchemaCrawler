@@ -107,7 +107,11 @@ jobs:
       run: |
         # Upload results and coverage
         bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
-        bash <(curl -Ls https://coverage.codacy.com/get.sh)
+        bash <(curl -Ls https://coverage.codacy.com/get.sh) \
+          report \
+          --language Java \
+          --force-coverage-parser jacoco \
+          $(find . -name 'jacoco*.xml' -printf '-r %p ')
     - id: upload-coverage-test-results
       name: Upload coverage test results
       uses: actions/upload-artifact@v3
