@@ -31,14 +31,13 @@ package schemacrawler.crawl;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-
+import static us.fatehi.utility.Utility.requireNotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import schemacrawler.schema.ConnectionInfo;
+import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
@@ -46,38 +45,40 @@ import schemacrawler.schema.JdbcDriverProperty;
  * JDBC driver information. Created from metadata returned by a JDBC call, and other sources of
  * information.
  */
-final class MutableJdbcDriverInfo implements JdbcDriverInfo {
+final class MutableJdbcDriverInfo extends BaseProductVersion implements JdbcDriverInfo {
 
   private static final long serialVersionUID = 8030156654422512161L;
 
   private final String connectionUrl;
-  private final String driverName;
-  private final String driverVersion;
   private final int driverMajorVersion;
   private final int driverMinorVersion;
   private final int jdbcMajorVersion;
   private final int jdbcMinorVersion;
-
-  private String driverClassName;
-  private boolean jdbcCompliant;
-
+  private final String driverClassName;
+  private final boolean jdbcCompliant;
+  // Mutable properties collection
   private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties;
 
-  public MutableJdbcDriverInfo(final ConnectionInfo connectionInfo) {
-    requireNonNull(connectionInfo, "No connection information provided");
-
-    connectionUrl = connectionInfo.getConnectionUrl();
-    driverName = connectionInfo.getDriverName();
-    driverVersion = connectionInfo.getDriverVersion();
-    driverMajorVersion = connectionInfo.getDriverMajorVersion();
-    driverMinorVersion = connectionInfo.getDriverMinorVersion();
-    jdbcMajorVersion = connectionInfo.getJdbcMajorVersion();
-    jdbcMinorVersion = connectionInfo.getJdbcMinorVersion();
-
-    jdbcDriverProperties = new HashSet<>();
-
-    driverClassName = "";
-    jdbcCompliant = false;
+  public MutableJdbcDriverInfo(
+      final String driverName,
+      final String driverClassName,
+      final String driverVersion,
+      final int driverMajorVersion,
+      final int driverMinorVersion,
+      final int jdbcMajorVersion,
+      final int jdbcMinorVersion,
+      final boolean jdbcCompliant,
+      final String connectionUrl) {
+    super(driverName, driverVersion);
+    this.driverClassName =
+        requireNonNull(driverClassName, "No database driver Java class name provided");
+    this.driverMajorVersion = driverMajorVersion;
+    this.driverMinorVersion = driverMinorVersion;
+    this.jdbcMajorVersion = jdbcMajorVersion;
+    this.jdbcMinorVersion = jdbcMinorVersion;
+    this.jdbcCompliant = jdbcCompliant;
+    this.jdbcDriverProperties = new HashSet<>();
+    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
   }
 
   /** {@inheritDoc} */
@@ -120,18 +121,6 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
     return jdbcMinorVersion;
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public String getProductName() {
-    return driverName;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getProductVersion() {
-    return driverVersion;
-  }
-
   @Override
   public boolean hasDriverClassName() {
     return !isBlank(driverClassName);
@@ -154,7 +143,6 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
         .append(System.lineSeparator());
     info.append("-- driver class: ").append(getDriverClassName()).append(System.lineSeparator());
     info.append("-- url: ").append(getConnectionUrl()).append(System.lineSeparator());
-    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
     return info.toString();
   }
 
@@ -165,13 +153,5 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
    */
   void addJdbcDriverProperty(final ImmutableJdbcDriverProperty jdbcDriverProperty) {
     jdbcDriverProperties.add(jdbcDriverProperty);
-  }
-
-  void setJdbcCompliant(final boolean jdbcCompliant) {
-    this.jdbcCompliant = jdbcCompliant;
-  }
-
-  void setJdbcDriverClassName(final String jdbcDriverClassName) {
-    driverClassName = jdbcDriverClassName;
   }
 }

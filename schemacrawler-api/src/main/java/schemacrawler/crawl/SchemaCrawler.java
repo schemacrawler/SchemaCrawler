@@ -71,13 +71,14 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTriggerInf
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
-
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -138,7 +139,21 @@ public final class SchemaCrawler {
    */
   public Catalog crawl() {
     try {
-      catalog = new MutableCatalog("catalog", retrieverConnection.getConnectionInfo());
+      try (final Connection connection = retrieverConnection.getConnection(); ) {
+        final ConnectionInfoBuilder connectionInfoBuilder =
+            ConnectionInfoBuilder.builder(connection);
+        final DatabaseInfo databaseInfo = connectionInfoBuilder.buildDatabaseInfo();
+        final JdbcDriverInfo jdbcDriverInfo = connectionInfoBuilder.buildJdbcDriverInfo();
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat(
+                "Making a database connection to:%n%s%s", databaseInfo, jdbcDriverInfo));
+        catalog =
+            new MutableCatalog(
+                "catalog",
+                (MutableDatabaseInfo) databaseInfo,
+                (MutableJdbcDriverInfo) jdbcDriverInfo);
+      }
 
       final String runId = catalog.getCrawlInfo().getRunId();
       taskRunner = new RetrievalTaskRunner(runId, infoLevel, maxThreads);
@@ -156,10 +171,14 @@ public final class SchemaCrawler {
       return catalog;
     } catch (final RuntimeException e) {
       throw e;
+    } catch (final SQLException e) {
+      throw new DatabaseAccessException(e);
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e);
     } finally {
-      taskRunner.stopAndLogTime();
+      if (taskRunner != null) {
+        taskRunner.stopAndLogTime();
+      }
     }
   }
 

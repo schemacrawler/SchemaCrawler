@@ -31,16 +31,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -55,23 +51,26 @@ public class JdbcDriverInfoRetrieverTest {
 
   @Test
   public void jdbcDriverInfo(final Connection connection) throws Exception {
-    final DatabaseServerType databaseServerType = new DatabaseServerType("hsqldb-1", "HyperSQL");
-    verifyJdbcDriverInfoRetrieval(connection, databaseServerType);
+    new DatabaseServerType("hsqldb-1", "HyperSQL");
+    verifyJdbcDriverInfoRetrieval();
   }
 
   @BeforeEach
   public void loadBaseCatalog(final Connection connection) throws SQLException {
-    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-    catalog = new MutableCatalog("database_info_test", connectionInfo);
+    final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+    final MutableDatabaseInfo databaseInfo =
+        (MutableDatabaseInfo) connectionInfoBuilder.buildDatabaseInfo();
+    final MutableJdbcDriverInfo jdbcDriverInfo =
+        (MutableJdbcDriverInfo) connectionInfoBuilder.buildJdbcDriverInfo();
+
+    catalog = new MutableCatalog("database_info_test", databaseInfo, jdbcDriverInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
-    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is(""));
+    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
   }
 
-  private void verifyJdbcDriverInfoRetrieval(
-      final Connection connection, final DatabaseServerType databaseServerType)
-      throws SQLException {
-    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is(""));
+  private void verifyJdbcDriverInfoRetrieval() throws SQLException {
+    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
 
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
     assertThat(jdbcDriverInfo.getProductName(), is("HSQL Database Engine Driver"));

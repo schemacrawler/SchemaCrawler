@@ -38,20 +38,17 @@ import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 import static java.util.Objects.requireNonNull;
-
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.util.UUID;
-
 import schemacrawler.BaseProductVersion;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.ProductVersion;
 import schemacrawler.Version;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
 
 /** SchemaCrawler crawl information. */
@@ -86,18 +83,17 @@ final class MutableCrawlInfo implements CrawlInfo {
   private final ProductVersion databaseVersion;
   private final ProductVersion jdbcDriverVersion;
 
-  MutableCrawlInfo(final ConnectionInfo connectionInfo) {
-    requireNonNull(connectionInfo, "No connection information provided");
+  MutableCrawlInfo(
+      final MutableDatabaseInfo databaseInfo, final MutableJdbcDriverInfo jdbcDriverInfo) {
+    requireNonNull(databaseInfo, "No database information provided");
+    requireNonNull(jdbcDriverInfo, "No JDBC driver information provided");
 
     schemaCrawlerVersion = Version.version();
     operatingSystemVersion = OperatingSystemInfo.operatingSystemInfo();
     jvmVersion = JvmSystemInfo.jvmSystemInfo();
 
-    this.jdbcDriverVersion =
-        new BaseProductVersion(connectionInfo.getDriverName(), connectionInfo.getDriverVersion());
-    this.databaseVersion =
-        new BaseProductVersion(
-            connectionInfo.getDatabaseProductName(), connectionInfo.getDatabaseProductVersion());
+    this.databaseVersion = new BaseProductVersion(databaseInfo);
+    this.jdbcDriverVersion = new BaseProductVersion(jdbcDriverInfo);
 
     crawlTimestamp = Instant.now();
     runId = UUID.randomUUID();

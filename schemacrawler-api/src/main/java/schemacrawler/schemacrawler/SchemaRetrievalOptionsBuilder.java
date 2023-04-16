@@ -31,7 +31,6 @@ import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPE
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -39,8 +38,8 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
-
 import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
 
 public final class SchemaRetrievalOptionsBuilder
@@ -65,6 +64,7 @@ public final class SchemaRetrievalOptionsBuilder
   Optional<Boolean> overridesSupportsSchemas;
   Optional<Boolean> overridesSupportsCatalogs;
   Optional<TypeMap> overridesTypeMap;
+  TableTypes tableTypes;
   boolean supportsCatalogs;
   boolean supportsSchemas;
   EnumDataTypeHelper enumDataTypeHelper;
@@ -81,6 +81,8 @@ public final class SchemaRetrievalOptionsBuilder
     identifierQuoteString = "";
     identifiers = Identifiers.STANDARD;
     overridesTypeMap = Optional.empty();
+    tableTypes =
+        TableTypes.from("TABLE", "VIEW", "SYSTEM TABLE", "GLOBAL TEMPORARY", "LOCAL TEMPORARY");
     enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
     connectionInitializer = connection -> {};
 
@@ -117,6 +119,8 @@ public final class SchemaRetrievalOptionsBuilder
     if (!overridesTypeMap.isPresent()) {
       overridesTypeMap = Optional.of(new TypeMap(connection));
     }
+
+    tableTypes = TableTypes.from(connection);
 
     return this;
   }
@@ -297,9 +301,7 @@ public final class SchemaRetrievalOptionsBuilder
       }
     }
 
-    identifierQuoteString = trimToEmpty(identifierQuoteString);
-
-    return identifierQuoteString;
+    return trimToEmpty(identifierQuoteString);
   }
 
   private boolean lookupSupportsCatalogs(final DatabaseMetaData metaData) {

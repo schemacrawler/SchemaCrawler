@@ -30,14 +30,12 @@ package schemacrawler.tools.commandline.utility;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
@@ -50,13 +48,13 @@ import schemacrawler.OperatingSystemInfo;
 import schemacrawler.ProductVersion;
 import schemacrawler.Version;
 import schemacrawler.crawl.ConnectionInfoBuilder;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class CommandLineUtility {
 
@@ -94,33 +92,35 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static String getEnvironment(final ShellState state) {
-    String environmentInfoString =
-        String.format(
-            "Environment:%n  %s%n  %s%n  %s%n",
-            Version.version(),
-            OperatingSystemInfo.operatingSystemInfo(),
-            JvmSystemInfo.jvmSystemInfo());
-
-    if (state != null && state.isConnected()) {
-      try (final Connection connection = state.getDataSource().get(); ) {
-        final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-        final ProductVersion databaseInfo =
-            new BaseProductVersion(
-                connectionInfo.getDatabaseProductName(),
-                connectionInfo.getDatabaseProductVersion());
-        final ProductVersion jdbcDriverInfo =
-            new BaseProductVersion(
-                connectionInfo.getDriverName(), connectionInfo.getDriverVersion());
-        final String connectionInfoString =
-            String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
-        environmentInfoString = environmentInfoString + connectionInfoString;
-      } catch (final Exception e) {
-        // Ignore - do not log
-      }
+  public static String getConnectionInfo(final DatabaseConnectionSource dbConnectionSource) {
+    final String connectionInfoString = "";
+    if (dbConnectionSource == null) {
+      return connectionInfoString;
     }
+    try (final Connection connection = dbConnectionSource.get(); ) {
+      final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
 
-    return environmentInfoString;
+      final ProductVersion databaseInfo =
+          new BaseProductVersion(connectionInfoBuilder.buildDatabaseInfo());
+      final ProductVersion jdbcDriverInfo =
+          new BaseProductVersion(connectionInfoBuilder.buildJdbcDriverInfo());
+      return String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
+    } catch (final Exception e) {
+      // Ignore - do not log
+    }
+    return connectionInfoString;
+  }
+
+  public static String getEnvironment(final ShellState state) {
+    if (state == null) {
+      return "";
+    }
+    return String.format(
+        "Environment:%n  %s%n  %s%n  %s%n%s",
+        Version.version(),
+        OperatingSystemInfo.operatingSystemInfo(),
+        JvmSystemInfo.jvmSystemInfo(),
+        getConnectionInfo(state.getDataSource()));
   }
 
   /**
@@ -246,13 +246,11 @@ public class CommandLineUtility {
     } else {
       helpText = option.getHelpText();
     }
-    final OptionSpec optionSpec =
-        OptionSpec.builder("--" + optionName)
-            .description(helpText)
-            .paramLabel(paramName)
-            .type(option.getValueClass())
-            .build();
-    return optionSpec;
+    return OptionSpec.builder("--" + optionName)
+        .description(helpText)
+        .paramLabel(paramName)
+        .type(option.getValueClass())
+        .build();
   }
 
   private CommandLineUtility() {

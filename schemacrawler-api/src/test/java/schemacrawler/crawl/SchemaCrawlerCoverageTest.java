@@ -45,17 +45,14 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -189,16 +186,13 @@ public class SchemaCrawlerCoverageTest {
   public void jdbcDriverInfoProperties() throws Exception {
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
 
-    checkBooleanProperties(jdbcDriverInfo, "jdbcCompliant");
-
     assertThat(
         jdbcDriverInfo.toString(),
         matchesPattern(
             Pattern.compile(
                 "-- driver: HSQL Database Engine Driver 2.7.1\\R"
                     + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
-                    + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R"
-                    + "-- jdbc compliant: false",
+                    + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R",
                 Pattern.DOTALL)));
   }
 

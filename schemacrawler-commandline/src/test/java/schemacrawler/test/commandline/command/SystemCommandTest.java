@@ -14,12 +14,9 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.utility.datasource.DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource;
-
 import java.sql.Connection;
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.schema.Catalog;
 import schemacrawler.test.utility.CaptureSystemStreams;
@@ -55,7 +52,7 @@ public class SystemCommandTest {
 
   @Test
   public void noArgs(final CapturedSystemStreams streams) {
-    final String[] args = new String[0];
+    final String[] args = {};
 
     final ShellState state = new ShellState();
     final SystemCommand optionsParser = new SystemCommand(state);
@@ -97,8 +94,8 @@ public class SystemCommandTest {
     state.setDataSource(newTestDatabaseConnectionSource(connection));
     executeSystemCommand(state, args);
 
-    assertThat(contentsOf(streams.err()), startsWith("Could not log connection information"));
-    assertThat(outputOf(streams.out()), hasNoContent());
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(contentsOf(streams.out()), startsWith("Connected to"));
   }
 
   @Test

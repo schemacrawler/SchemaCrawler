@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -51,7 +50,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -81,9 +79,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
    */
   private static boolean isDatabasePropertiesResultSetMethod(final Method method) {
     final Class<?> returnType = method.getReturnType();
-    final boolean isPropertiesResultSetMethod =
-        returnType.equals(ResultSet.class) && method.getParameterTypes().length == 0;
-    return isPropertiesResultSetMethod;
+    return returnType.equals(ResultSet.class) && method.getParameterTypes().length == 0;
   }
 
   /**
@@ -94,11 +90,9 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
    */
   private static boolean isDatabasePropertyListMethod(final Method method) {
     final Class<?> returnType = method.getReturnType();
-    final boolean isDatabasePropertyListMethod =
-        returnType.equals(String.class)
-            && method.getName().endsWith("s")
-            && method.getParameterTypes().length == 0;
-    return isDatabasePropertyListMethod;
+    return returnType.equals(String.class)
+        && method.getName().endsWith("s")
+        && method.getParameterTypes().length == 0;
   }
 
   /**
@@ -217,9 +211,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
         throw new SQLException("No JDBC driver found");
       }
 
-      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
-      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
-
       final DriverPropertyInfo[] propertyInfo = jdbcDriver.getPropertyInfo(url, new Properties());
       for (final DriverPropertyInfo driverPropertyInfo : propertyInfo) {
         driverInfo.addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
@@ -306,19 +297,18 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
   private Collection<ImmutableDatabaseProperty> retrieveResultSetTypesProperties(
       final DatabaseMetaData dbMetaData) {
     final Collection<ImmutableDatabaseProperty> dbProperties = new ArrayList<>();
-    final String[] resultSetTypesMethods =
-        new String[] {
-          "deletesAreDetected",
-          "insertsAreDetected",
-          "updatesAreDetected",
-          "othersInsertsAreVisible",
-          "othersDeletesAreVisible",
-          "othersUpdatesAreVisible",
-          "ownDeletesAreVisible",
-          "ownInsertsAreVisible",
-          "ownUpdatesAreVisible",
-          "supportsResultSetType"
-        };
+    final String[] resultSetTypesMethods = {
+      "deletesAreDetected",
+      "insertsAreDetected",
+      "updatesAreDetected",
+      "othersInsertsAreVisible",
+      "othersDeletesAreVisible",
+      "othersUpdatesAreVisible",
+      "ownDeletesAreVisible",
+      "ownInsertsAreVisible",
+      "ownUpdatesAreVisible",
+      "supportsResultSetType"
+    };
     for (final String methodName : resultSetTypesMethods) {
       try {
         final Method method = DatabaseMetaData.class.getMethod(methodName, int.class);

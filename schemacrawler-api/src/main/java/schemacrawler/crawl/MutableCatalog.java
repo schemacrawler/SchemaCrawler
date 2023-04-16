@@ -30,16 +30,13 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Predicate;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DatabaseUser;
@@ -86,13 +83,15 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
   private final NamedObjectList<ImmutableDatabaseUser> databaseUsers = new NamedObjectList<>();
   private final MutableCrawlInfo crawlInfo;
 
-  MutableCatalog(final String name, final ConnectionInfo connectionInfo) {
+  MutableCatalog(
+      final String name,
+      final MutableDatabaseInfo databaseInfo,
+      final MutableJdbcDriverInfo jdbcDriverInfo) {
     super(name);
-    requireNonNull(connectionInfo, "No connection information provided");
 
-    databaseInfo = new MutableDatabaseInfo(connectionInfo);
-    jdbcDriverInfo = new MutableJdbcDriverInfo(connectionInfo);
-    crawlInfo = new MutableCrawlInfo(connectionInfo);
+    this.databaseInfo = requireNonNull(databaseInfo, "No database information provided");
+    this.jdbcDriverInfo = requireNonNull(jdbcDriverInfo, "No JDBC driver information provided");
+    crawlInfo = new MutableCrawlInfo(databaseInfo, jdbcDriverInfo);
   }
 
   /** {@inheritDoc} */
@@ -363,11 +362,10 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     MutableColumnDataType columnDataType = null;
     int count = 0;
     for (final MutableColumnDataType currentColumnDataType : columnDataTypes) {
-      if (baseType == currentColumnDataType.getJavaSqlType().getVendorTypeNumber()) {
-        if (currentColumnDataType.getSchema().equals(systemSchema)) {
-          columnDataType = currentColumnDataType;
-          count = count + 1;
-        }
+      if (baseType == currentColumnDataType.getJavaSqlType().getVendorTypeNumber()
+          && currentColumnDataType.getSchema().equals(systemSchema)) {
+        columnDataType = currentColumnDataType;
+        count = count + 1;
       }
     }
     if (count == 1) {
