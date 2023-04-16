@@ -30,14 +30,12 @@ package schemacrawler.tools.commandline.utility;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
@@ -106,12 +104,9 @@ public class CommandLineUtility {
       try (final Connection connection = state.getDataSource().get(); ) {
         final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
         final ProductVersion databaseInfo =
-            new BaseProductVersion(
-                connectionInfo.getDatabaseProductName(),
-                connectionInfo.getDatabaseProductVersion());
+            new BaseProductVersion(connectionInfo.getDatabaseInfo());
         final ProductVersion jdbcDriverInfo =
-            new BaseProductVersion(
-                connectionInfo.getDriverName(), connectionInfo.getDriverVersion());
+            new BaseProductVersion(connectionInfo.getJdbcDriverInfo());
         final String connectionInfoString =
             String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
         environmentInfoString = environmentInfoString + connectionInfoString;
@@ -246,13 +241,11 @@ public class CommandLineUtility {
     } else {
       helpText = option.getHelpText();
     }
-    final OptionSpec optionSpec =
-        OptionSpec.builder("--" + optionName)
-            .description(helpText)
-            .paramLabel(paramName)
-            .type(option.getValueClass())
-            .build();
-    return optionSpec;
+    return OptionSpec.builder("--" + optionName)
+        .description(helpText)
+        .paramLabel(paramName)
+        .type(option.getValueClass())
+        .build();
   }
 
   private CommandLineUtility() {

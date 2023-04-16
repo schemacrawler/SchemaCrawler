@@ -88,7 +88,7 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     super(name);
     requireNonNull(connectionInfo, "No connection information provided");
 
-    databaseInfo = new MutableDatabaseInfo(connectionInfo);
+    databaseInfo = (MutableDatabaseInfo) connectionInfo.getDatabaseInfo();
     jdbcDriverInfo = (MutableJdbcDriverInfo) connectionInfo.getJdbcDriverInfo();
     crawlInfo = new MutableCrawlInfo(connectionInfo);
   }

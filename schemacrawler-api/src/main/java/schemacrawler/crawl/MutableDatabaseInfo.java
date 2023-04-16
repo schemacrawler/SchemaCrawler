@@ -29,16 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
-import static java.util.Objects.requireNonNull;
-
+import static us.fatehi.utility.Utility.requireNotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
@@ -54,15 +51,19 @@ final class MutableDatabaseInfo implements DatabaseInfo {
   private final String databaseProductName;
   private final String databaseProductVersion;
   private final String userName;
+  // Mutable properties collection
   private final Set<Property> serverInfo;
   private final Set<DatabaseProperty> databaseProperties;
 
-  public MutableDatabaseInfo(final ConnectionInfo connectionInfo) {
-    requireNonNull(connectionInfo, "No connection information provided");
-
-    databaseProductName = connectionInfo.getDatabaseProductName();
-    databaseProductVersion = connectionInfo.getDatabaseProductVersion();
-    userName = connectionInfo.getUserName();
+  public MutableDatabaseInfo(
+      final String databaseProductName,
+      final String databaseProductVersion,
+      final String userName) {
+    this.databaseProductName =
+        requireNotBlank(databaseProductName, "No database product name provided");
+    this.databaseProductVersion =
+        requireNotBlank(databaseProductVersion, "No database product version provided");
+    this.userName = userName;
 
     serverInfo = new HashSet<>();
     databaseProperties = new HashSet<>();

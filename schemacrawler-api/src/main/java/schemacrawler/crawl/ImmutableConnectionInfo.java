@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.ConnectionInfo;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 
 /** Connection information. */
@@ -38,109 +38,28 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
 
   private static final long serialVersionUID = 6996782514772490150L;
 
-  private final String databaseProductName;
-  private final String databaseProductVersion;
-  private final String connectionUrl;
-  private final String userName;
-  private final int jdbcMajorVersion;
-  private final int jdbcMinorVersion;
-  private final JdbcDriverInfo driverInfo;
+  private final DatabaseInfo databaseInfo;
+  private final JdbcDriverInfo jdbcDriverInfo;
 
-  ImmutableConnectionInfo(
-      final String databaseProductName,
-      final String databaseProductVersion,
-      final String connectionUrl,
-      final String userName,
-      final int jdbcMajorVersion,
-      final int jdbcMinorVersion,
-      final JdbcDriverInfo driverInfo) {
-
-    this.databaseProductName =
-        requireNotBlank(databaseProductName, "No database product name provided");
-    this.databaseProductVersion =
-        requireNotBlank(databaseProductVersion, "No database product version provided");
-
-    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
-
-    this.userName = userName;
-
-    this.jdbcMajorVersion = jdbcMajorVersion;
-    this.jdbcMinorVersion = jdbcMinorVersion;
-
-    this.driverInfo = requireNonNull(driverInfo, "No database driver information provided");
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getConnectionUrl() {
-    return connectionUrl;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getDatabaseProductName() {
-    return databaseProductName;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getDatabaseProductVersion() {
-    return databaseProductVersion;
+  ImmutableConnectionInfo(final DatabaseInfo databaseInfo, final JdbcDriverInfo jdbcDriverInfo) {
+    this.databaseInfo = requireNonNull(databaseInfo, "No database information provided");
+    this.jdbcDriverInfo = requireNonNull(jdbcDriverInfo, "No database driver information provided");
   }
 
   @Override
-  public String getDriverClassName() {
-    return driverInfo.getDriverClassName();
-  }
-
-  @Override
-  public int getDriverMajorVersion() {
-    return driverInfo.getDriverMajorVersion();
-  }
-
-  @Override
-  public int getDriverMinorVersion() {
-    return driverInfo.getDriverMinorVersion();
-  }
-
-  @Override
-  public String getDriverName() {
-    return driverInfo.getDriverName();
-  }
-
-  @Override
-  public String getDriverVersion() {
-    return driverInfo.getDriverVersion();
+  public DatabaseInfo getDatabaseInfo() {
+    return databaseInfo;
   }
 
   @Override
   public JdbcDriverInfo getJdbcDriverInfo() {
-    return driverInfo;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public int getJdbcMajorVersion() {
-    return jdbcMajorVersion;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public int getJdbcMinorVersion() {
-    return jdbcMinorVersion;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getUserName() {
-    return userName;
+    return jdbcDriverInfo;
   }
 
   /** {@inheritDoc} */
   @Override
   public String toString() {
     return String.format(
-        "Connected to %n%s %s%nusing JDBC driver %n%s%nwith %n\"%s\"",
-        databaseProductName, databaseProductVersion, driverInfo, connectionUrl);
+        "Connected to %n%s%nusing JDBC driver %n%s%n", databaseInfo, jdbcDriverInfo);
   }
 }

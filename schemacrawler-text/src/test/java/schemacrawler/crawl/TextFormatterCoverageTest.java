@@ -33,13 +33,9 @@ import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.util.Arrays;
 import java.util.function.Consumer;
-
 import org.junit.jupiter.api.Test;
-
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
@@ -132,7 +128,7 @@ public class TextFormatterCoverageTest {
   @Test
   public void serverInfo(final TestContext testContext) throws Exception {
 
-    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo(mock(ConnectionInfo.class));
+    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo("FakeDB", "v0.0", "nouser");
     dbInfo.addServerInfo(
         new ImmutableServerInfoProperty("PROP1", "VALUE1", "Server info property"));
 

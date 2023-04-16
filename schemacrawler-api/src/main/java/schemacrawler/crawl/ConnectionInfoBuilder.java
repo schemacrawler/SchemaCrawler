@@ -39,6 +39,7 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.ConnectionInfo;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import us.fatehi.utility.string.StringFormat;
 
@@ -133,13 +134,12 @@ public final class ConnectionInfoBuilder {
             isJdbcCompliant,
             connectionUrl);
 
-    return new ImmutableConnectionInfo(
-        getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductName(), ""),
-        getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""),
-        connectionUrl,
-        getConnectionInfoProperty(() -> dbMetaData.getUserName(), ""),
-        getConnectionInfoProperty(() -> dbMetaData.getJDBCMajorVersion(), 0),
-        getConnectionInfoProperty(() -> dbMetaData.getJDBCMinorVersion(), 0),
-        jdbcDriverInfo);
+    final DatabaseInfo databaseInfo =
+        new MutableDatabaseInfo(
+            getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductName(), ""),
+            getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""),
+            getConnectionInfoProperty(() -> dbMetaData.getUserName(), ""));
+
+    return new ImmutableConnectionInfo(databaseInfo, jdbcDriverInfo);
   }
 }

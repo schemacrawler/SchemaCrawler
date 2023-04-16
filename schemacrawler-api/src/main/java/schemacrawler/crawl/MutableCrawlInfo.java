@@ -38,14 +38,12 @@ import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 import static java.util.Objects.requireNonNull;
-
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.util.UUID;
-
 import schemacrawler.BaseProductVersion;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
@@ -93,11 +91,8 @@ final class MutableCrawlInfo implements CrawlInfo {
     operatingSystemVersion = OperatingSystemInfo.operatingSystemInfo();
     jvmVersion = JvmSystemInfo.jvmSystemInfo();
 
-    this.jdbcDriverVersion =
-        new BaseProductVersion(connectionInfo.getDriverName(), connectionInfo.getDriverVersion());
-    this.databaseVersion =
-        new BaseProductVersion(
-            connectionInfo.getDatabaseProductName(), connectionInfo.getDatabaseProductVersion());
+    this.jdbcDriverVersion = new BaseProductVersion(connectionInfo.getJdbcDriverInfo());
+    this.databaseVersion = new BaseProductVersion(connectionInfo.getDatabaseInfo());
 
     crawlTimestamp = Instant.now();
     runId = UUID.randomUUID();
