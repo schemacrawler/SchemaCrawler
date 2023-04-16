@@ -60,9 +60,15 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
   // Mutable properties collection
   private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties;
 
-  public MutableJdbcDriverInfo(final String driverName, final String driverClassName,
-      final String driverVersion, final int driverMajorVersion, final int driverMinorVersion,
-      final int jdbcMajorVersion, final int jdbcMinorVersion, final boolean jdbcCompliant,
+  public MutableJdbcDriverInfo(
+      final String driverName,
+      final String driverClassName,
+      final String driverVersion,
+      final int driverMajorVersion,
+      final int driverMinorVersion,
+      final int jdbcMajorVersion,
+      final int jdbcMinorVersion,
+      final boolean jdbcCompliant,
       final String connectionUrl) {
     this.driverName = requireNotBlank(driverName, "No database driver name provided");
     this.driverClassName =
@@ -144,7 +150,10 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
   @Override
   public String toString() {
     final StringBuilder info = new StringBuilder(1024);
-    info.append("-- driver: ").append(getProductName()).append(' ').append(getProductVersion())
+    info.append("-- driver: ")
+        .append(getProductName())
+        .append(' ')
+        .append(getProductVersion())
         .append(System.lineSeparator());
     info.append("-- driver class: ").append(getDriverClassName()).append(System.lineSeparator());
     info.append("-- url: ").append(getConnectionUrl()).append(System.lineSeparator());

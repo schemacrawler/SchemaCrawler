@@ -233,8 +233,8 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   /** {@inheritDoc} */
   @Override
-  public Optional<Column> lookupColumn(final Schema schemaRef, final String tableName,
-      final String name) {
+  public Optional<Column> lookupColumn(
+      final Schema schemaRef, final String tableName, final String name) {
 
     final Optional<MutableTable> tableOptional = lookupTable(schemaRef, tableName);
     if (tableOptional.isPresent()) {
@@ -247,8 +247,8 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   /** {@inheritDoc} */
   @Override
-  public Optional<MutableColumnDataType> lookupColumnDataType(final Schema schema,
-      final String name) {
+  public Optional<MutableColumnDataType> lookupColumnDataType(
+      final Schema schema, final String name) {
     return columnDataTypes.lookup(schema, name);
   }
 

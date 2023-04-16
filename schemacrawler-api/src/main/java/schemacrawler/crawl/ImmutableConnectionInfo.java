@@ -46,9 +46,14 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
   private final int jdbcMinorVersion;
   private final JdbcDriverInfo driverInfo;
 
-  ImmutableConnectionInfo(final String databaseProductName, final String databaseProductVersion,
-      final String connectionUrl, final String userName, final int jdbcMajorVersion,
-      final int jdbcMinorVersion, final JdbcDriverInfo driverInfo) {
+  ImmutableConnectionInfo(
+      final String databaseProductName,
+      final String databaseProductVersion,
+      final String connectionUrl,
+      final String userName,
+      final int jdbcMajorVersion,
+      final int jdbcMinorVersion,
+      final JdbcDriverInfo driverInfo) {
 
     this.databaseProductName =
         requireNotBlank(databaseProductName, "No database product name provided");
@@ -134,7 +139,8 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return String.format("Connected to %n%s %s%nusing JDBC driver %n%s%nwith %n\"%s\"",
+    return String.format(
+        "Connected to %n%s %s%nusing JDBC driver %n%s%nwith %n\"%s\"",
         databaseProductName, databaseProductVersion, driverInfo, connectionUrl);
   }
 }
