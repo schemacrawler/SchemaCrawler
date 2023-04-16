@@ -55,6 +55,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class CommandLineUtility {
 
@@ -92,30 +93,33 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static String getConnectionInfo(final ShellState state) {
+  public static String getConnectionInfo(final DatabaseConnectionSource dbConnectionSource) {
     final String connectionInfoString = "";
-    if (state != null && state.isConnected()) {
-      try (final Connection connection = state.getDataSource().get(); ) {
-        final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-        final ProductVersion databaseInfo =
-            new BaseProductVersion(connectionInfo.getDatabaseInfo());
-        final ProductVersion jdbcDriverInfo =
-            new BaseProductVersion(connectionInfo.getJdbcDriverInfo());
-        return String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
-      } catch (final Exception e) {
-        // Ignore - do not log
-      }
+    if (dbConnectionSource == null) {
+      return connectionInfoString;
+    }
+    try (final Connection connection = dbConnectionSource.get(); ) {
+      final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+      final ProductVersion databaseInfo = new BaseProductVersion(connectionInfo.getDatabaseInfo());
+      final ProductVersion jdbcDriverInfo =
+          new BaseProductVersion(connectionInfo.getJdbcDriverInfo());
+      return String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
+    } catch (final Exception e) {
+      // Ignore - do not log
     }
     return connectionInfoString;
   }
 
   public static String getEnvironment(final ShellState state) {
+    if (state == null) {
+      return "";
+    }
     return String.format(
         "Environment:%n  %s%n  %s%n  %s%n%s",
         Version.version(),
         OperatingSystemInfo.operatingSystemInfo(),
         JvmSystemInfo.jvmSystemInfo(),
-        getConnectionInfo(state));
+        getConnectionInfo(state.getDataSource()));
   }
 
   /**

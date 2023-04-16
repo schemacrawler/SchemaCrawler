@@ -119,7 +119,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
     final boolean isConnectedState = state.isConnected();
     if (isConnectedState) {
       System.out.println("Connected to database");
-      System.out.println(getConnectionInfo(state));
+      System.out.println(getConnectionInfo(state.getDataSource()));
     } else {
       System.out.println("Not connected to a database");
     }
