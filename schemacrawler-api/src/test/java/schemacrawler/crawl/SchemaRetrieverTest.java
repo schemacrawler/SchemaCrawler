@@ -35,18 +35,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schemacrawler.InformationSchemaKey;
@@ -72,14 +68,9 @@ public class SchemaRetrieverTest {
   @DisplayName("Verify that schemas can be obtained from INFORMATION_SCHEMA")
   public void schemataView(final Connection connection) throws SQLException {
     // Mock database metadata, so we can check if it is being used over the INFORMATION_SCHEMA
-    final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
+    // final Connection spyConnection = connection;
     final Connection spyConnection = spy(connection);
-    when(spyConnection.getMetaData()).thenReturn(databaseMetaData);
-    when(databaseMetaData.getDatabaseProductName()).thenReturn("databaseProductName");
-    when(databaseMetaData.getDatabaseProductVersion()).thenReturn("databaseProductVersion");
-    when(databaseMetaData.getURL()).thenReturn("connectionUrl");
-    when(databaseMetaData.getDriverName()).thenReturn("driverName");
-    when(databaseMetaData.getDriverVersion()).thenReturn("driverVersion");
+    final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
 
     final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
     final MutableCatalog catalog = new MutableCatalog("test_catalog", connectionInfo);

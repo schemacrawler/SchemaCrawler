@@ -71,13 +71,13 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTriggerInf
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
-
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -138,7 +138,12 @@ public final class SchemaCrawler {
    */
   public Catalog crawl() {
     try {
-      catalog = new MutableCatalog("catalog", retrieverConnection.getConnectionInfo());
+      try (final Connection connection = retrieverConnection.getConnection(); ) {
+        final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+        LOGGER.log(
+            Level.CONFIG, new StringFormat("Making a database connection to:%n%s", connectionInfo));
+        catalog = new MutableCatalog("catalog", connectionInfo);
+      }
 
       final String runId = catalog.getCrawlInfo().getRunId();
       taskRunner = new RetrievalTaskRunner(runId, infoLevel, maxThreads);
