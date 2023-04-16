@@ -45,17 +45,14 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -111,13 +108,8 @@ public class SchemaCrawlerCoverageTest {
     final Column column = table.lookupColumn("FIRSTNAME").get();
     final ColumnDataType columnDataType = column.getColumnDataType();
 
-    checkBooleanProperties(
-        columnDataType,
-        "autoIncrementable",
-        "caseSensitive",
-        "fixedPrecisionScale",
-        "nullable",
-        "unsigned");
+    checkBooleanProperties(columnDataType, "autoIncrementable", "caseSensitive",
+        "fixedPrecisionScale", "nullable", "unsigned");
   }
 
   @Test
@@ -167,8 +159,8 @@ public class SchemaCrawlerCoverageTest {
         new MutableFunction(schema, "NEW_PUBLISHER", "NEW_PUBLISHER_FORCE_VALUE");
     final Routine routine2 = new MutableFunction(schema, "NEW_PUBLISHER", "NEW_PUBLISHER_10160");
 
-    assertThat(
-        catalog.getRoutines(schema, "NEW_PUBLISHER"), containsInAnyOrder(routine1, routine2));
+    assertThat(catalog.getRoutines(schema, "NEW_PUBLISHER"),
+        containsInAnyOrder(routine1, routine2));
     assertThat(catalog.getRoutines(schema), hasItem(routine1));
     assertThat(catalog.getRoutines(schema), hasItem(routine2));
     assertThat(catalog.getRoutines(), hasItem(routine1));
@@ -189,17 +181,11 @@ public class SchemaCrawlerCoverageTest {
   public void jdbcDriverInfoProperties() throws Exception {
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
 
-    checkBooleanProperties(jdbcDriverInfo, "jdbcCompliant");
-
-    assertThat(
-        jdbcDriverInfo.toString(),
-        matchesPattern(
-            Pattern.compile(
-                "-- driver: HSQL Database Engine Driver 2.7.1\\R"
-                    + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
-                    + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R"
-                    + "-- jdbc compliant: false",
-                Pattern.DOTALL)));
+    assertThat(jdbcDriverInfo.toString(),
+        matchesPattern(Pattern.compile("-- driver: HSQL Database Engine Driver 2.7.1\\R"
+            + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
+            + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R"
+            + "-- jdbc compliant: true", Pattern.DOTALL)));
   }
 
   @BeforeAll
@@ -207,18 +193,14 @@ public class SchemaCrawlerCoverageTest {
 
     final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
 
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-            .includeAllSynonyms()
-            .includeAllSequences()
-            .includeAllRoutines();
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT")).includeAllSynonyms()
+        .includeAllSequences().includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .newSchemaCrawlerOptions().withLimitOptions(limitOptionsBuilder.toOptions())
+        .withLoadOptions(loadOptionsBuilder.toOptions());
 
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }

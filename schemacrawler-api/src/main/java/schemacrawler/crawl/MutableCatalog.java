@@ -30,12 +30,10 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Predicate;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -91,7 +89,7 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     requireNonNull(connectionInfo, "No connection information provided");
 
     databaseInfo = new MutableDatabaseInfo(connectionInfo);
-    jdbcDriverInfo = new MutableJdbcDriverInfo(connectionInfo);
+    jdbcDriverInfo = (MutableJdbcDriverInfo) connectionInfo.getJdbcDriverInfo();
     crawlInfo = new MutableCrawlInfo(connectionInfo);
   }
 
@@ -235,8 +233,8 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   /** {@inheritDoc} */
   @Override
-  public Optional<Column> lookupColumn(
-      final Schema schemaRef, final String tableName, final String name) {
+  public Optional<Column> lookupColumn(final Schema schemaRef, final String tableName,
+      final String name) {
 
     final Optional<MutableTable> tableOptional = lookupTable(schemaRef, tableName);
     if (tableOptional.isPresent()) {
@@ -249,8 +247,8 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   /** {@inheritDoc} */
   @Override
-  public Optional<MutableColumnDataType> lookupColumnDataType(
-      final Schema schema, final String name) {
+  public Optional<MutableColumnDataType> lookupColumnDataType(final Schema schema,
+      final String name) {
     return columnDataTypes.lookup(schema, name);
   }
 
@@ -363,11 +361,10 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     MutableColumnDataType columnDataType = null;
     int count = 0;
     for (final MutableColumnDataType currentColumnDataType : columnDataTypes) {
-      if (baseType == currentColumnDataType.getJavaSqlType().getVendorTypeNumber()) {
-        if (currentColumnDataType.getSchema().equals(systemSchema)) {
-          columnDataType = currentColumnDataType;
-          count = count + 1;
-        }
+      if (baseType == currentColumnDataType.getJavaSqlType().getVendorTypeNumber()
+          && currentColumnDataType.getSchema().equals(systemSchema)) {
+        columnDataType = currentColumnDataType;
+        count = count + 1;
       }
     }
     if (count == 1) {

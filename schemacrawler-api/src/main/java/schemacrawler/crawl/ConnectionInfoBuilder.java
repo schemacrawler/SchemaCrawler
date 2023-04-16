@@ -39,6 +39,7 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.ConnectionInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import us.fatehi.utility.string.StringFormat;
 
 public final class ConnectionInfoBuilder {
@@ -49,8 +50,8 @@ public final class ConnectionInfoBuilder {
     return new ConnectionInfoBuilder(connection);
   }
 
-  private static <T> T getConnectionInfoProperty(
-      final Callable<T> propertyFunction, final T defaultValue) {
+  private static <T> T getConnectionInfoProperty(final Callable<T> propertyFunction,
+      final T defaultValue) {
     if (propertyFunction == null) {
       return defaultValue;
     }
@@ -65,7 +66,8 @@ public final class ConnectionInfoBuilder {
   /**
    * Get database connection URL.
    *
-   * <p>NOTE: Some databases such as Hive may throw an exception. See issue #910.
+   * <p>
+   * NOTE: Some databases such as Hive may throw an exception. See issue #910.
    *
    * @param dbMetaData Database metadata.
    * @return Database connection URL
@@ -77,26 +79,23 @@ public final class ConnectionInfoBuilder {
     try {
       return dbMetaData.getURL();
     } catch (final SQLException e) {
-      LOGGER.log(
-          Level.WARNING, new StringFormat("Could not obtain the database connection URL", e));
+      LOGGER.log(Level.WARNING,
+          new StringFormat("Could not obtain the database connection URL", e));
       return "";
     }
   }
 
-  private static String getJdbcDriverClassName(final String connectionUrl) {
+  private static Driver getJdbcDriver(final String connectionUrl) {
     if (isBlank(connectionUrl)) {
-      return "";
+      return null;
     }
     try {
-      final Driver jdbcDriver = DriverManager.getDriver(connectionUrl);
-      return jdbcDriver.getClass().getName();
+      return DriverManager.getDriver(connectionUrl);
     } catch (final SQLException e) {
-      LOGGER.log(
-          Level.WARNING,
-          new StringFormat(
-              "Could not find a suitable JDBC driver for database connection URL <%s>",
+      LOGGER.log(Level.WARNING,
+          new StringFormat("Could not find a suitable JDBC driver for database connection URL <%s>",
               connectionUrl, e));
-      return "";
+      return null;
     }
   }
 
@@ -110,23 +109,31 @@ public final class ConnectionInfoBuilder {
 
     final DatabaseMetaData dbMetaData = connection.getMetaData();
     final String connectionUrl = getConnectionUrl(dbMetaData);
-    final String jdbcDriverClassName = getJdbcDriverClassName(connectionUrl);
+    final Driver jdbcDriver = getJdbcDriver(connectionUrl);
+    final String jdbcDriverClassName;
+    final boolean isJdbcCompliant;
+    if (jdbcDriver != null) {
+      jdbcDriverClassName = jdbcDriver.getClass().getName();
+      isJdbcCompliant = jdbcDriver.jdbcCompliant();
+    } else {
+      jdbcDriverClassName = "";
+      isJdbcCompliant = false;
+    }
 
-    final ImmutableDriverInfo immutableDriverInfo =
-        new ImmutableDriverInfo(
-            jdbcDriverClassName,
-            getConnectionInfoProperty(() -> dbMetaData.getDriverName(), ""),
-            getConnectionInfoProperty(() -> dbMetaData.getDriverVersion(), ""),
+    final JdbcDriverInfo jdbcDriverInfo =
+        new MutableJdbcDriverInfo(getConnectionInfoProperty(() -> dbMetaData.getDriverName(), ""),
+            jdbcDriverClassName, getConnectionInfoProperty(() -> dbMetaData.getDriverVersion(), ""),
             getConnectionInfoProperty(() -> dbMetaData.getDriverMajorVersion(), 0),
-            getConnectionInfoProperty(() -> dbMetaData.getDriverMinorVersion(), 0));
+            getConnectionInfoProperty(() -> dbMetaData.getDriverMinorVersion(), 0),
+            getConnectionInfoProperty(() -> dbMetaData.getJDBCMajorVersion(), 0),
+            getConnectionInfoProperty(() -> dbMetaData.getJDBCMinorVersion(), 0), isJdbcCompliant,
+            connectionUrl);
 
     return new ImmutableConnectionInfo(
         getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductName(), ""),
-        getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""),
-        connectionUrl,
+        getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""), connectionUrl,
         getConnectionInfoProperty(() -> dbMetaData.getUserName(), ""),
         getConnectionInfoProperty(() -> dbMetaData.getJDBCMajorVersion(), 0),
-        getConnectionInfoProperty(() -> dbMetaData.getJDBCMinorVersion(), 0),
-        immutableDriverInfo);
+        getConnectionInfoProperty(() -> dbMetaData.getJDBCMinorVersion(), 0), jdbcDriverInfo);
   }
 }

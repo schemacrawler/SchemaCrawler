@@ -90,6 +90,8 @@ public interface ConnectionInfo extends Serializable {
    */
   String getDriverVersion();
 
+  JdbcDriverInfo getJdbcDriverInfo();
+
   /**
    * Gets the major JDBC version number supported by JDBC driver.
    *

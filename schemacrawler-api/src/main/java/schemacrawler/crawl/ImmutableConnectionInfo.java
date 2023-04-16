@@ -31,6 +31,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.ConnectionInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 
 /** Connection information. */
 final class ImmutableConnectionInfo implements ConnectionInfo {
@@ -43,16 +44,11 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
   private final String userName;
   private final int jdbcMajorVersion;
   private final int jdbcMinorVersion;
-  private final ImmutableDriverInfo driverInfo;
+  private final JdbcDriverInfo driverInfo;
 
-  ImmutableConnectionInfo(
-      final String databaseProductName,
-      final String databaseProductVersion,
-      final String connectionUrl,
-      final String userName,
-      final int jdbcMajorVersion,
-      final int jdbcMinorVersion,
-      final ImmutableDriverInfo driverInfo) {
+  ImmutableConnectionInfo(final String databaseProductName, final String databaseProductVersion,
+      final String connectionUrl, final String userName, final int jdbcMajorVersion,
+      final int jdbcMinorVersion, final JdbcDriverInfo driverInfo) {
 
     this.databaseProductName =
         requireNotBlank(databaseProductName, "No database product name provided");
@@ -92,10 +88,6 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
     return driverInfo.getDriverClassName();
   }
 
-  public ImmutableDriverInfo getDriverInfo() {
-    return driverInfo;
-  }
-
   @Override
   public int getDriverMajorVersion() {
     return driverInfo.getDriverMajorVersion();
@@ -114,6 +106,11 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
   @Override
   public String getDriverVersion() {
     return driverInfo.getDriverVersion();
+  }
+
+  @Override
+  public JdbcDriverInfo getJdbcDriverInfo() {
+    return driverInfo;
   }
 
   /** {@inheritDoc} */
@@ -137,8 +134,7 @@ final class ImmutableConnectionInfo implements ConnectionInfo {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return String.format(
-        "Connected to %n%s %s%nusing JDBC driver %n%s%nwith %n\"%s\"",
+    return String.format("Connected to %n%s %s%nusing JDBC driver %n%s%nwith %n\"%s\"",
         databaseProductName, databaseProductVersion, driverInfo, connectionUrl);
   }
 }
