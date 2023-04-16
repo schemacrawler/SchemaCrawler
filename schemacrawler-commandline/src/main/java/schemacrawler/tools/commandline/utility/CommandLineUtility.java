@@ -92,14 +92,8 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static String getEnvironment(final ShellState state) {
-    String environmentInfoString =
-        String.format(
-            "Environment:%n  %s%n  %s%n  %s%n",
-            Version.version(),
-            OperatingSystemInfo.operatingSystemInfo(),
-            JvmSystemInfo.jvmSystemInfo());
-
+  public static String getConnectionInfo(final ShellState state) {
+    final String connectionInfoString = "";
     if (state != null && state.isConnected()) {
       try (final Connection connection = state.getDataSource().get(); ) {
         final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
@@ -107,15 +101,21 @@ public class CommandLineUtility {
             new BaseProductVersion(connectionInfo.getDatabaseInfo());
         final ProductVersion jdbcDriverInfo =
             new BaseProductVersion(connectionInfo.getJdbcDriverInfo());
-        final String connectionInfoString =
-            String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
-        environmentInfoString = environmentInfoString + connectionInfoString;
+        return String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
       } catch (final Exception e) {
         // Ignore - do not log
       }
     }
+    return connectionInfoString;
+  }
 
-    return environmentInfoString;
+  public static String getEnvironment(final ShellState state) {
+    return String.format(
+        "Environment:%n  %s%n  %s%n  %s%n%s",
+        Version.version(),
+        OperatingSystemInfo.operatingSystemInfo(),
+        JvmSystemInfo.jvmSystemInfo(),
+        getConnectionInfo(state));
   }
 
   /**
