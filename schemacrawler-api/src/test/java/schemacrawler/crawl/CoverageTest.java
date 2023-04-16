@@ -38,7 +38,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
-import schemacrawler.schema.ConnectionInfo;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -48,26 +49,26 @@ public class CoverageTest {
 
   @Test
   public void connectionInfoBuilder(final Connection connection) throws SQLException {
-    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+    final DatabaseInfo databaseInfo = connectionInfoBuilder.buildDatabaseInfo();
+    final JdbcDriverInfo jdbcDriverInfo = connectionInfoBuilder.buildJdbcDriverInfo();
+
     assertThat(
-        connectionInfo.getJdbcDriverInfo().getConnectionUrl(),
+        jdbcDriverInfo.getConnectionUrl(),
         matchesPattern("jdbc:hsqldb:hsql://\\d*\\.\\d*\\.\\d*\\.\\d*:\\d*/schemacrawler\\d*"));
 
-    assertThat(
-        connectionInfo.getDatabaseInfo().getDatabaseProductName(), is("HSQL Database Engine"));
-    assertThat(connectionInfo.getDatabaseInfo().getDatabaseProductVersion(), is("2.7.1"));
+    assertThat(databaseInfo.getDatabaseProductName(), is("HSQL Database Engine"));
+    assertThat(databaseInfo.getDatabaseProductVersion(), is("2.7.1"));
 
-    assertThat(
-        connectionInfo.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
-    assertThat(connectionInfo.getJdbcDriverInfo().getDriverMajorVersion(), is(2));
-    assertThat(connectionInfo.getJdbcDriverInfo().getDriverMinorVersion(), is(7));
-    assertThat(
-        connectionInfo.getJdbcDriverInfo().getDriverName(), is("HSQL Database Engine Driver"));
-    assertThat(connectionInfo.getJdbcDriverInfo().getDriverVersion(), is("2.7.1"));
+    assertThat(jdbcDriverInfo.getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
+    assertThat(jdbcDriverInfo.getDriverMajorVersion(), is(2));
+    assertThat(jdbcDriverInfo.getDriverMinorVersion(), is(7));
+    assertThat(jdbcDriverInfo.getDriverName(), is("HSQL Database Engine Driver"));
+    assertThat(jdbcDriverInfo.getDriverVersion(), is("2.7.1"));
 
-    assertThat(connectionInfo.getJdbcDriverInfo().getJdbcMajorVersion(), is(4));
-    assertThat(connectionInfo.getJdbcDriverInfo().getJdbcMinorVersion(), is(2));
-    assertThat(connectionInfo.getDatabaseInfo().getUserName(), is("SA"));
+    assertThat(jdbcDriverInfo.getJdbcMajorVersion(), is(4));
+    assertThat(jdbcDriverInfo.getJdbcMinorVersion(), is(2));
+    assertThat(databaseInfo.getUserName(), is("SA"));
   }
 
   @Test
@@ -80,17 +81,17 @@ public class CoverageTest {
     final Connection connection2 = spy(connection);
     when(connection2.getMetaData()).thenReturn(dbMetaData2);
 
-    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection2).build();
+    final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection2);
+    final DatabaseInfo databaseInfo = connectionInfoBuilder.buildDatabaseInfo();
+    final JdbcDriverInfo jdbcDriverInfo = connectionInfoBuilder.buildJdbcDriverInfo();
 
-    assertThat(
-        connectionInfo.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
-    assertThat(connectionInfo.getJdbcDriverInfo().getDriverMajorVersion(), is(2));
-    assertThat(connectionInfo.getJdbcDriverInfo().getDriverMinorVersion(), is(7));
-    assertThat(
-        connectionInfo.getJdbcDriverInfo().getDriverName(), is("HSQL Database Engine Driver"));
-    assertThat(connectionInfo.getJdbcDriverInfo().getDriverVersion(), is("2.7.1"));
+    assertThat(jdbcDriverInfo.getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
+    assertThat(jdbcDriverInfo.getDriverMajorVersion(), is(2));
+    assertThat(jdbcDriverInfo.getDriverMinorVersion(), is(7));
+    assertThat(jdbcDriverInfo.getDriverName(), is("HSQL Database Engine Driver"));
+    assertThat(jdbcDriverInfo.getDriverVersion(), is("2.7.1"));
 
-    assertThat(connectionInfo.getDatabaseInfo().getUserName(), is(""));
+    assertThat(databaseInfo.getUserName(), is(""));
   }
 
   @Test

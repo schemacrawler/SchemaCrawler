@@ -38,7 +38,6 @@ import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import us.fatehi.utility.string.StringFormat;
@@ -47,7 +46,7 @@ public final class ConnectionInfoBuilder {
 
   private static final Logger LOGGER = Logger.getLogger(ConnectionInfoBuilder.class.getName());
 
-  public static ConnectionInfoBuilder builder(final Connection connection) {
+  public static ConnectionInfoBuilder builder(final Connection connection) throws SQLException {
     return new ConnectionInfoBuilder(connection);
   }
 
@@ -101,15 +100,21 @@ public final class ConnectionInfoBuilder {
     }
   }
 
-  private final Connection connection;
+  private final DatabaseMetaData dbMetaData;
 
-  private ConnectionInfoBuilder(final Connection connection) {
-    this.connection = requireNonNull(connection, "No connection provided");
+  private ConnectionInfoBuilder(final Connection connection) throws SQLException {
+    requireNonNull(connection, "No connection provided");
+    dbMetaData = connection.getMetaData();
   }
 
-  public ConnectionInfo build() throws SQLException {
+  public DatabaseInfo buildDatabaseInfo() throws SQLException {
+    return new MutableDatabaseInfo(
+        getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductName(), ""),
+        getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""),
+        getConnectionInfoProperty(() -> dbMetaData.getUserName(), ""));
+  }
 
-    final DatabaseMetaData dbMetaData = connection.getMetaData();
+  public JdbcDriverInfo buildJdbcDriverInfo() throws SQLException {
     final String connectionUrl = getConnectionUrl(dbMetaData);
     final Driver jdbcDriver = getJdbcDriver(connectionUrl);
     final String jdbcDriverClassName;
@@ -122,24 +127,15 @@ public final class ConnectionInfoBuilder {
       isJdbcCompliant = false;
     }
 
-    final JdbcDriverInfo jdbcDriverInfo =
-        new MutableJdbcDriverInfo(
-            getConnectionInfoProperty(() -> dbMetaData.getDriverName(), ""),
-            jdbcDriverClassName,
-            getConnectionInfoProperty(() -> dbMetaData.getDriverVersion(), ""),
-            getConnectionInfoProperty(() -> dbMetaData.getDriverMajorVersion(), 0),
-            getConnectionInfoProperty(() -> dbMetaData.getDriverMinorVersion(), 0),
-            getConnectionInfoProperty(() -> dbMetaData.getJDBCMajorVersion(), 0),
-            getConnectionInfoProperty(() -> dbMetaData.getJDBCMinorVersion(), 0),
-            isJdbcCompliant,
-            connectionUrl);
-
-    final DatabaseInfo databaseInfo =
-        new MutableDatabaseInfo(
-            getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductName(), ""),
-            getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""),
-            getConnectionInfoProperty(() -> dbMetaData.getUserName(), ""));
-
-    return new ImmutableConnectionInfo(databaseInfo, jdbcDriverInfo);
+    return new MutableJdbcDriverInfo(
+        getConnectionInfoProperty(() -> dbMetaData.getDriverName(), ""),
+        jdbcDriverClassName,
+        getConnectionInfoProperty(() -> dbMetaData.getDriverVersion(), ""),
+        getConnectionInfoProperty(() -> dbMetaData.getDriverMajorVersion(), 0),
+        getConnectionInfoProperty(() -> dbMetaData.getDriverMinorVersion(), 0),
+        getConnectionInfoProperty(() -> dbMetaData.getJDBCMajorVersion(), 0),
+        getConnectionInfoProperty(() -> dbMetaData.getJDBCMinorVersion(), 0),
+        isJdbcCompliant,
+        connectionUrl);
   }
 }

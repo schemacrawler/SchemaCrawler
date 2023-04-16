@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,15 +23,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -163,8 +159,13 @@ public class DataTypeRetrieverTest {
 
   @BeforeAll
   public void loadBaseCatalog(final Connection connection) throws SQLException {
-    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-    catalog = new MutableCatalog("datatype_test", connectionInfo);
+    final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+    final MutableDatabaseInfo databaseInfo =
+        (MutableDatabaseInfo) connectionInfoBuilder.buildDatabaseInfo();
+    final MutableJdbcDriverInfo jdbcDriverInfo =
+        (MutableJdbcDriverInfo) connectionInfoBuilder.buildJdbcDriverInfo();
+
+    catalog = new MutableCatalog("datatype_test", databaseInfo, jdbcDriverInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
     assertThat(catalog.getDatabaseInfo().getServerInfo(), is(empty()));

@@ -32,20 +32,16 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaKey;
@@ -123,8 +119,13 @@ public class DatabaseInfoRetrieverTest {
 
   @BeforeAll
   public void loadBaseCatalog(final Connection connection) throws SQLException {
-    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-    catalog = new MutableCatalog("database_info_test", connectionInfo);
+    final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+    final MutableDatabaseInfo databaseInfo =
+        (MutableDatabaseInfo) connectionInfoBuilder.buildDatabaseInfo();
+    final MutableJdbcDriverInfo jdbcDriverInfo =
+        (MutableJdbcDriverInfo) connectionInfoBuilder.buildJdbcDriverInfo();
+
+    catalog = new MutableCatalog("database_info_test", databaseInfo, jdbcDriverInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
     assertThat(catalog.getDatabaseInfo().getServerInfo(), is(empty()));

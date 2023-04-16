@@ -44,7 +44,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -72,8 +71,13 @@ public class SchemaRetrieverTest {
     final Connection spyConnection = spy(connection);
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
 
-    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-    final MutableCatalog catalog = new MutableCatalog("test_catalog", connectionInfo);
+    final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+    final MutableDatabaseInfo databaseInfo =
+        (MutableDatabaseInfo) connectionInfoBuilder.buildDatabaseInfo();
+    final MutableJdbcDriverInfo jdbcDriverInfo =
+        (MutableJdbcDriverInfo) connectionInfoBuilder.buildJdbcDriverInfo();
+
+    final MutableCatalog catalog = new MutableCatalog("test_catalog", databaseInfo, jdbcDriverInfo);
 
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()

@@ -81,7 +81,8 @@ public final class SchemaRetrievalOptionsBuilder
     identifierQuoteString = "";
     identifiers = Identifiers.STANDARD;
     overridesTypeMap = Optional.empty();
-    tableTypes = TableTypes.from("TABLE", "VIEW");
+    tableTypes =
+        TableTypes.from("TABLE", "VIEW", "SYSTEM TABLE", "GLOBAL TEMPORARY", "LOCAL TEMPORARY");
     enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
     connectionInitializer = connection -> {};
 

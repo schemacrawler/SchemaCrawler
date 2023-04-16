@@ -48,7 +48,6 @@ import schemacrawler.OperatingSystemInfo;
 import schemacrawler.ProductVersion;
 import schemacrawler.Version;
 import schemacrawler.crawl.ConnectionInfoBuilder;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -99,10 +98,12 @@ public class CommandLineUtility {
       return connectionInfoString;
     }
     try (final Connection connection = dbConnectionSource.get(); ) {
-      final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-      final ProductVersion databaseInfo = new BaseProductVersion(connectionInfo.getDatabaseInfo());
+      final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+
+      final ProductVersion databaseInfo =
+          new BaseProductVersion(connectionInfoBuilder.buildDatabaseInfo());
       final ProductVersion jdbcDriverInfo =
-          new BaseProductVersion(connectionInfo.getJdbcDriverInfo());
+          new BaseProductVersion(connectionInfoBuilder.buildJdbcDriverInfo());
       return String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
     } catch (final Exception e) {
       // Ignore - do not log
