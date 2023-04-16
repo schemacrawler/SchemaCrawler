@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
@@ -44,12 +44,10 @@ import schemacrawler.schema.Property;
  * Database and connection information. Created from metadata returned by a JDBC call, and other
  * sources of information.
  */
-final class MutableDatabaseInfo implements DatabaseInfo {
+final class MutableDatabaseInfo extends BaseProductVersion implements DatabaseInfo {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private final String databaseProductName;
-  private final String databaseProductVersion;
   private final String userName;
   // Mutable properties collection
   private final Set<Property> serverInfo;
@@ -59,26 +57,11 @@ final class MutableDatabaseInfo implements DatabaseInfo {
       final String databaseProductName,
       final String databaseProductVersion,
       final String userName) {
-    this.databaseProductName =
-        requireNotBlank(databaseProductName, "No database product name provided");
-    this.databaseProductVersion =
-        requireNotBlank(databaseProductVersion, "No database product version provided");
+    super(databaseProductName, databaseProductVersion);
     this.userName = userName;
 
     serverInfo = new HashSet<>();
     databaseProperties = new HashSet<>();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getProductName() {
-    return databaseProductName;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getProductVersion() {
-    return databaseProductVersion;
   }
 
   /** {@inheritDoc} */

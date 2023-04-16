@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
@@ -44,13 +45,11 @@ import schemacrawler.schema.JdbcDriverProperty;
  * JDBC driver information. Created from metadata returned by a JDBC call, and other sources of
  * information.
  */
-final class MutableJdbcDriverInfo implements JdbcDriverInfo {
+final class MutableJdbcDriverInfo extends BaseProductVersion implements JdbcDriverInfo {
 
   private static final long serialVersionUID = 8030156654422512161L;
 
   private final String connectionUrl;
-  private final String driverName;
-  private final String driverVersion;
   private final int driverMajorVersion;
   private final int driverMinorVersion;
   private final int jdbcMajorVersion;
@@ -70,10 +69,9 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
       final int jdbcMinorVersion,
       final boolean jdbcCompliant,
       final String connectionUrl) {
-    this.driverName = requireNotBlank(driverName, "No database driver name provided");
+    super(driverName, driverVersion);
     this.driverClassName =
         requireNonNull(driverClassName, "No database driver Java class name provided");
-    this.driverVersion = requireNotBlank(driverVersion, "No database driver version provided");
     this.driverMajorVersion = driverMajorVersion;
     this.driverMinorVersion = driverMinorVersion;
     this.jdbcMajorVersion = jdbcMajorVersion;
@@ -121,18 +119,6 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
   @Override
   public int getJdbcMinorVersion() {
     return jdbcMinorVersion;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getProductName() {
-    return driverName;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getProductVersion() {
-    return driverVersion;
   }
 
   @Override

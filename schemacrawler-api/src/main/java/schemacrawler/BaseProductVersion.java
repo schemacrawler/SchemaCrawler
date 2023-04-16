@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
-
+import static us.fatehi.utility.Utility.requireNotBlank;
 import java.util.Objects;
 
 public class BaseProductVersion implements ProductVersion {
@@ -46,8 +46,8 @@ public class BaseProductVersion implements ProductVersion {
   }
 
   public BaseProductVersion(final String productName, final String productVersion) {
-    this.productName = requireNonNull(productName, "No product name provided");
-    this.productVersion = requireNonNull(productVersion, "No product version provided");
+    this.productName = requireNotBlank(productName, "No product name provided");
+    this.productVersion = requireNotBlank(productVersion, "No product version provided");
   }
 
   @Override
@@ -55,10 +55,7 @@ public class BaseProductVersion implements ProductVersion {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof BaseProductVersion)) {
+    if (obj == null || !(obj instanceof BaseProductVersion)) {
       return false;
     }
     final ProductVersion other = (ProductVersion) obj;
