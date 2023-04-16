@@ -29,12 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.TableTypes;
@@ -56,7 +54,6 @@ final class RetrieverConnection {
   private final DatabaseConnectionSource dataSource;
   private final JavaSqlTypes javaSqlTypes;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
-  private final TableTypes tableTypes;
   private final ConnectionInfo connectionInfo;
 
   RetrieverConnection(
@@ -66,14 +63,13 @@ final class RetrieverConnection {
 
     this.dataSource = requireNonNull(dataSource, "Database connection source not provided");
 
+    this.schemaRetrievalOptions =
+        requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
+
     try (final Connection connection = dataSource.get(); ) {
-      this.schemaRetrievalOptions =
-          requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
       connectionInfo = ConnectionInfoBuilder.builder(connection).build();
       LOGGER.log(
           Level.CONFIG, new StringFormat("Making a database connection to:%n%s", connectionInfo));
-      tableTypes = TableTypes.from(connection);
-      LOGGER.log(Level.CONFIG, new StringFormat("Supported table types are <%s>", tableTypes));
     }
 
     javaSqlTypes = new JavaSqlTypes();
@@ -114,7 +110,7 @@ final class RetrieverConnection {
   }
 
   TableTypes getTableTypes() {
-    return tableTypes;
+    return schemaRetrievalOptions.getTableTypes();
   }
 
   TypeMap getTypeMap() {

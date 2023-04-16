@@ -34,12 +34,9 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -48,6 +45,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
@@ -117,7 +116,10 @@ public class TableTypesTest {
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
               .withLimitOptions(limitOptionsBuilder.toOptions());
 
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          SchemaRetrievalOptionsBuilder.builder().fromConnnection(connection).toOptions();
+
+      final Catalog catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas) {

@@ -28,13 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
 import us.fatehi.utility.ObjectToString;
 
@@ -52,6 +51,7 @@ public final class SchemaRetrievalOptions implements Options {
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
   private final TypeMap typeMap;
+  private final TableTypes tableTypes;
   private final EnumDataTypeHelper enumDataTypeHelper;
   private final EnumMap<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy>
       metadataRetrievalStrategyMap;
@@ -68,6 +68,7 @@ public final class SchemaRetrievalOptions implements Options {
     informationSchemaViews = bldr.informationSchemaViews;
     identifiers = bldr.identifiers;
     typeMap = bldr.overridesTypeMap.orElse(new TypeMap());
+    tableTypes = bldr.tableTypes;
     enumDataTypeHelper = bldr.enumDataTypeHelper;
     metadataRetrievalStrategyMap = new EnumMap<>(bldr.metadataRetrievalStrategyMap);
     connectionInitializer = bldr.connectionInitializer;
@@ -102,6 +103,10 @@ public final class SchemaRetrievalOptions implements Options {
 
   public InformationSchemaViews getInformationSchemaViews() {
     return informationSchemaViews;
+  }
+
+  public TableTypes getTableTypes() {
+    return tableTypes;
   }
 
   public TypeMap getTypeMap() {
