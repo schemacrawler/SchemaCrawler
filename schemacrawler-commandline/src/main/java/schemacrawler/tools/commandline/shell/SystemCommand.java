@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 import java.sql.Connection;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.Version;
@@ -121,7 +120,9 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   private void printConnectionInfo() {
     try (final Connection connection = state.getDataSource().get(); ) {
       final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-      System.out.println(connectionInfo);
+      System.out.println("Connected to database");
+      System.out.println(connectionInfo.getDatabaseInfo());
+      System.out.println(connectionInfo.getJdbcDriverInfo());
     } catch (final Exception e) {
       System.err.println("Could not log connection information");
       e.printStackTrace();

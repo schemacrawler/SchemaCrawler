@@ -157,7 +157,6 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
         .append(System.lineSeparator());
     info.append("-- driver class: ").append(getDriverClassName()).append(System.lineSeparator());
     info.append("-- url: ").append(getConnectionUrl()).append(System.lineSeparator());
-    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
     return info.toString();
   }
 

@@ -192,8 +192,7 @@ public class SchemaCrawlerCoverageTest {
             Pattern.compile(
                 "-- driver: HSQL Database Engine Driver 2.7.1\\R"
                     + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
-                    + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R"
-                    + "-- jdbc compliant: true",
+                    + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R",
                 Pattern.DOTALL)));
   }
 
