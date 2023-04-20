@@ -49,7 +49,7 @@ jobs:
     - id: publish-coverage-codacy
       name: Upload coverage report to Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
-      if: false
+      if: contains(github.ref, 'main')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CODACY_ORGANIZATION_PROVIDER: gh
@@ -57,8 +57,7 @@ jobs:
         CODACY_PROJECT_NAME: SchemaCrawler
         CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
       with:
-        api-token: ${{ secrets.CODACY_API_TOKEN }}
-        coverage-reports: ./target/schemacrawler-jacoco.exec
+        api-token: ${{ secrets.CODACY_API_TOKEN }
     - id: upload-coverage-test-results
       name: Upload coverage test results
       uses: actions/upload-artifact@v3
