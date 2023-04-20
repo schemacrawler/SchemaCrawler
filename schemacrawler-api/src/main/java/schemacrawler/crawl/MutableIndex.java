@@ -29,12 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
@@ -48,7 +46,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   private static final long serialVersionUID = 4051326747138079028L;
 
   private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<>();
-  private final StringBuffer definition;
+  private final StringBuilder definition;
   private long cardinality;
   private IndexType indexType;
   private boolean isUnique;
@@ -58,7 +56,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
     super(new TablePointer(parent), name);
     // Default values
     indexType = IndexType.unknown;
-    definition = new StringBuffer();
+    definition = new StringBuilder();
   }
 
   /**
@@ -88,10 +86,8 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
       compareTo = CompareUtility.compareLists(thisColumns, thatColumns);
     }
 
-    if (compareTo == 0) {
-      if (isUnique != that.isUnique()) {
-        compareTo = isUnique ? -1 : 1;
-      }
+    if (compareTo == 0 && isUnique != that.isUnique()) {
+      compareTo = isUnique ? -1 : 1;
     }
 
     if (compareTo == 0) {

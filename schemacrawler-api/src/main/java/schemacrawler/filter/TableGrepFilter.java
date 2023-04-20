@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.filter;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -82,10 +80,8 @@ class TableGrepFilter implements Predicate<Table> {
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
 
-    if (checkIncludeForTables) {
-      if (grepTableInclusionRule.test(table.getFullName())) {
-        includeForTables = true;
-      }
+    if (checkIncludeForTables && grepTableInclusionRule.test(table.getFullName())) {
+      includeForTables = true;
     }
 
     final List<Column> columns = table.getColumns();
@@ -95,17 +91,13 @@ class TableGrepFilter implements Predicate<Table> {
       includeForDefinitions = true;
     }
     for (final Column column : columns) {
-      if (checkIncludeForColumns) {
-        if (grepColumnInclusionRule.test(column.getFullName())) {
-          includeForColumns = true;
-          break;
-        }
+      if (checkIncludeForColumns && grepColumnInclusionRule.test(column.getFullName())) {
+        includeForColumns = true;
+        break;
       }
-      if (checkIncludeForDefinitions) {
-        if (grepDefinitionInclusionRule.test(column.getRemarks())) {
-          includeForDefinitions = true;
-          break;
-        }
+      if (checkIncludeForDefinitions && grepDefinitionInclusionRule.test(column.getRemarks())) {
+        includeForDefinitions = true;
+        break;
       }
     }
     // Additional include checks for definitions

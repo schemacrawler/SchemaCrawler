@@ -29,7 +29,6 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
-
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
@@ -82,10 +80,9 @@ public class LinterRedundantIndexes extends BaseLinter {
 
     for (final Entry<Index, List<String>> indexColumnEntry1 : indexColumns.entrySet()) {
       for (final Entry<Index, List<String>> indexColumnEntry2 : indexColumns.entrySet()) {
-        if (!indexColumnEntry1.equals(indexColumnEntry2)) {
-          if (listStartsWith(indexColumnEntry1.getValue(), indexColumnEntry2.getValue())) {
-            redundantIndexes.add(indexColumnEntry2.getKey());
-          }
+        if (!indexColumnEntry1.equals(indexColumnEntry2)
+            && listStartsWith(indexColumnEntry1.getValue(), indexColumnEntry2.getValue())) {
+          redundantIndexes.add(indexColumnEntry2.getKey());
         }
       }
     }

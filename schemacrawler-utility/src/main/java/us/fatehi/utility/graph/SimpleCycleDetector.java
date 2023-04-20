@@ -65,10 +65,9 @@ public class SimpleCycleDetector<T extends Comparable<? super T>> {
   public boolean containsCycle() {
     final Collection<Vertex<T>> vertices = clearTraversalStates();
     for (final Vertex<T> vertex : vertices) {
-      if (vertex.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted) {
-        if (visitForCyles(vertex)) {
-          return true;
-        }
+      if ((vertex.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted)
+          && visitForCyles(vertex)) {
+        return true;
       }
     }
 
@@ -92,10 +91,9 @@ public class SimpleCycleDetector<T extends Comparable<? super T>> {
         if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.inProgress) {
           to.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.marked);
           return true;
-        } else if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted) {
-          if (visitForCyles(to)) {
-            return true;
-          }
+        } else if ((to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted)
+            && visitForCyles(to)) {
+          return true;
         }
       }
     }
