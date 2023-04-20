@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.loader.counts;
 
 import java.util.function.Predicate;
-
 import schemacrawler.schema.Table;
 
 public class TableRowCountsFilter implements Predicate<Table> {

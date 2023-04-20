@@ -25,11 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.schema;
 
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.io.Serializable;
 
 /**
@@ -90,10 +90,7 @@ public final class TableType implements Serializable, Comparable<TableType> {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof TableType)) {
+    if ((obj == null) || !(obj instanceof TableType)) {
       return false;
     }
     final TableType other = (TableType) obj;
@@ -118,8 +115,7 @@ public final class TableType implements Serializable, Comparable<TableType> {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (tableType == null ? 0 : tableType.toLowerCase().hashCode());
-    return result;
+    return prime * result + (tableType == null ? 0 : tableType.toLowerCase().hashCode());
   }
 
   /**

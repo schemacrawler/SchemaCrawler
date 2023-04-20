@@ -25,11 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility.ioresource;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.io.FilterReader;
 import java.io.FilterWriter;
 import java.io.IOException;
@@ -40,7 +40,6 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import us.fatehi.utility.string.StringFormat;
 
 public class InputResourceUtility {

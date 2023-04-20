@@ -25,11 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.crawl;
 
 import java.util.Collection;
 import java.util.Optional;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.NamedObject;

@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.commandline.utility;
 
 import schemacrawler.schemacrawler.InformationSchemaKey;

@@ -25,12 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
-
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;

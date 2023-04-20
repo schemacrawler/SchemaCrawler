@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.loader.attributes.model;
 
 import java.beans.ConstructorProperties;

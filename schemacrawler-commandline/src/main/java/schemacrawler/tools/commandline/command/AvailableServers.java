@@ -25,12 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.commandline.command;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 

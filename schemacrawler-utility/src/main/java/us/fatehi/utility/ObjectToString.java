@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility;
 
 import static java.lang.System.lineSeparator;
-
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -48,11 +49,7 @@ import java.util.TreeMap;
 public class ObjectToString {
 
   public static List<?> arrayToList(final Object array) {
-    if (array == null) {
-      return null;
-    }
-
-    if (!array.getClass().isArray()) {
+    if (array == null || !array.getClass().isArray()) {
       return null;
     }
 
@@ -85,7 +82,6 @@ public class ObjectToString {
       return new ArrayList<>();
     }
 
-    final Class<?> objectClass = object.getClass();
     if (object instanceof List) {
       return (List<?>) object;
     } else if (object instanceof Collection) {
@@ -107,7 +103,7 @@ public class ObjectToString {
           || String.class.isAssignableFrom(clazz)) {
         break;
       }
-      Field[] fields = new Field[0];
+      Field[] fields = {};
       try {
         fields = clazz.getDeclaredFields();
         AccessibleObject.setAccessible(fields, true);
@@ -126,7 +122,7 @@ public class ObjectToString {
       }
     }
     // Sort fields
-    Collections.sort(allFields, (field1, field2) -> field1.getName().compareTo(field2.getName()));
+    Collections.sort(allFields, Comparator.comparing(Field::getName));
 
     return allFields;
   }
@@ -138,9 +134,7 @@ public class ObjectToString {
     }
 
     final Class<?> objectClass = object.getClass();
-    if (Collection.class.isAssignableFrom(objectClass)) {
-      return true;
-    } else if (objectClass.isArray()) {
+    if (Collection.class.isAssignableFrom(objectClass) || objectClass.isArray()) {
       return true;
     } else {
       return false;
@@ -245,7 +239,7 @@ public class ObjectToString {
   private static String printList(final List<?> list) {
     // assert list != null;
 
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append('[');
     for (final Iterator<?> iterator = list.iterator(); iterator.hasNext(); ) {
       final Object object = iterator.next();

@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.integration.objectdiffer;
 
 import de.danielbechler.diff.ObjectDiffer;

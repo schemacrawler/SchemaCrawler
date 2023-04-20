@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.traversal;
 
 import java.sql.ResultSet;
-
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
 

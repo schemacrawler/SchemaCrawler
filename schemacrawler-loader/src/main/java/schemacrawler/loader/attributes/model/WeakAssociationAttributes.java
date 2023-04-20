@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.loader.attributes.model;
 
 import static java.util.Objects.requireNonNull;
-
 import java.beans.ConstructorProperties;
 import java.util.List;
 import java.util.Map;

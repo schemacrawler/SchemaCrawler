@@ -25,13 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.loader.weakassociations;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.List;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import us.fatehi.utility.Multimap;

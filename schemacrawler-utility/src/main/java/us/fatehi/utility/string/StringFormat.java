@@ -25,13 +25,13 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility.string;
 
 import java.util.Formatter;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import us.fatehi.utility.Utility;
 
 public final class StringFormat implements Supplier<String> {

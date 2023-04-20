@@ -25,11 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.offline.jdbc;
 
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -40,7 +40,6 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.Version;
 
 public class OfflineDriver implements Driver {
@@ -74,12 +73,12 @@ public class OfflineDriver implements Driver {
 
   @Override
   public int getMajorVersion() {
-    return Integer.valueOf(Version.version().getProductVersion().split("\\.")[0]);
+    return Integer.parseInt(Version.version().getProductVersion().split("\\.")[0]);
   }
 
   @Override
   public int getMinorVersion() {
-    return Integer.valueOf(Version.version().getProductVersion().split("\\.")[1]);
+    return Integer.parseInt(Version.version().getProductVersion().split("\\.")[1]);
   }
 
   @Override

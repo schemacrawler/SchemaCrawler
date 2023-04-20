@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.loader.counts;
 
 import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schema.Table;
 import us.fatehi.utility.UtilityMarker;
 
@@ -43,8 +43,7 @@ public final class TableRowCountsUtility {
       return UNKNOWN_TABLE_ROW_COUNT;
     }
 
-    final long tableCount = table.getAttribute(TABLE_ROW_COUNT_KEY, (long) UNKNOWN_TABLE_ROW_COUNT);
-    return tableCount;
+    return table.getAttribute(TABLE_ROW_COUNT_KEY, (long) UNKNOWN_TABLE_ROW_COUNT);
   }
 
   /**

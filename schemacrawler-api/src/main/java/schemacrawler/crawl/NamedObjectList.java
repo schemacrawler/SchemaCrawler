@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,7 +40,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
-
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
@@ -125,6 +123,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
         throw new UnsupportedOperationException();
       }
     }
+
     return new UnmodifiableIterator(values().iterator());
   }
 

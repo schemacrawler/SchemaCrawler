@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
@@ -33,7 +34,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForLong;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForScalar;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +42,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
@@ -129,8 +128,7 @@ public final class QueryUtility {
     final Map<String, String> properties = new HashMap<>();
 
     properties.put("schemas", ".*");
-    if (schemaInclusionRule != null
-        && schemaInclusionRule instanceof InclusionRuleWithRegularExpression) {
+    if (schemaInclusionRule instanceof InclusionRuleWithRegularExpression) {
       final String schemaInclusionPattern =
           ((InclusionRuleWithRegularExpression) schemaInclusionRule)
               .getInclusionPattern()
@@ -142,9 +140,7 @@ public final class QueryUtility {
 
     String sql = query.getQuery();
     sql = expandTemplate(sql, properties);
-    sql = expandTemplate(sql);
-
-    return sql;
+    return expandTemplate(sql);
   }
 
   private static String getQuery(
@@ -174,9 +170,7 @@ public final class QueryUtility {
 
     String sql = query.getQuery();
     sql = expandTemplate(sql, tableProperties);
-    sql = expandTemplate(sql);
-
-    return sql;
+    return expandTemplate(sql);
   }
 
   private QueryUtility() {

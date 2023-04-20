@@ -25,11 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.filter;
 
 import java.util.Collection;
 import java.util.function.Predicate;
-
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.LimitOptions;

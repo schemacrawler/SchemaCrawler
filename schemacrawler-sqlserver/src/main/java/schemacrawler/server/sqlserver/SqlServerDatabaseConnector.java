@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.server.sqlserver;
 
 import schemacrawler.inclusionrule.RegularExpressionRule;

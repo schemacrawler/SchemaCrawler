@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility.ioresource;
 
 import static java.nio.file.Files.exists;
@@ -32,7 +33,6 @@ import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -40,7 +40,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import us.fatehi.utility.string.StringFormat;
 
 public class FileInputResource implements InputResource {
@@ -50,10 +49,6 @@ public class FileInputResource implements InputResource {
   private final Path inputFile;
 
   public FileInputResource(final Path filePath) throws IOException {
-    this(filePath, false);
-  }
-
-  private FileInputResource(final Path filePath, final boolean allowEmptyFile) throws IOException {
     inputFile = requireNonNull(filePath, "No file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(inputFile)) {
       final IOException e = new IOException("Cannot read file, " + inputFile);

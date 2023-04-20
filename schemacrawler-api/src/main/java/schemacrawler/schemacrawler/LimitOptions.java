@@ -25,14 +25,13 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
-
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;

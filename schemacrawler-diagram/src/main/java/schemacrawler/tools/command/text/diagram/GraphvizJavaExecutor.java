@@ -25,14 +25,13 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.text.diagram;
 
 import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizJavaAvailable;
-
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.string.StringFormat;
 

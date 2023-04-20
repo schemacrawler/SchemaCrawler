@@ -25,12 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.filter;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.function.Predicate;
-
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.LimitOptions;

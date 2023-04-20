@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.commandline.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 

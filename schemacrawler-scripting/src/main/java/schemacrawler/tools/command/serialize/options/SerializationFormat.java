@@ -25,13 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.serialize.options;
 
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;

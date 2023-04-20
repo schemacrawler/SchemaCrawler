@@ -25,13 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;

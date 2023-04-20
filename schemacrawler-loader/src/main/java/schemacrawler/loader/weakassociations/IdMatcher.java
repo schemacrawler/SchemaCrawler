@@ -25,11 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.loader.weakassociations;
 
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
 import schemacrawler.schema.Column;
 
 public final class IdMatcher implements Predicate<ProposedWeakAssociation> {

@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.lint;
 
 import java.util.List;
-
 import java.util.logging.Logger;
 import us.fatehi.utility.UtilityMarker;
 
@@ -38,10 +38,7 @@ public final class LintUtility {
   public static final Logger LOGGER = Logger.getLogger(LintUtility.class.getName());
 
   public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
-    if (main == null || sub == null) {
-      return false;
-    }
-    if (main.size() < sub.size()) {
+    if (main == null || sub == null || (main.size() < sub.size())) {
       return false;
     }
     if (main.isEmpty()) {
