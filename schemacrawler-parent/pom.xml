@@ -224,7 +224,7 @@
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <maven.javadoc.skip>true</maven.javadoc.skip>
     <graphviz.java.version>0.18.1</graphviz.java.version>
-	<jacoco.version>0.8.9</jacoco.version>
+    <jacoco.version>0.8.9</jacoco.version>
   </properties>
   <build>
     <pluginManagement>
@@ -377,7 +377,7 @@
           <systemPropertyVariables>
             <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
           </systemPropertyVariables>
-        </configuration>        
+        </configuration>
       </plugin>
       <plugin>
         <inherited>true</inherited>
@@ -465,8 +465,10 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <executions>
               <execution>
+                <id>prepare-agent</id>
                 <goals>
                   <goal>prepare-agent</goal>
+                  <goal>report</goal>
                 </goals>
               </execution>
             </executions>
