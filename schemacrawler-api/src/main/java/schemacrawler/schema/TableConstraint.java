@@ -40,6 +40,7 @@ public interface TableConstraint
    * @return Columns of the table constraint.
    */
   List<TableConstraintColumn> getConstrainedColumns();
+
   /**
    * Whether the constraint is deferrable.
    *

@@ -29,9 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.formatter.base;
 
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.Collection;
-
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
@@ -62,6 +60,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   public void begin() {
     formattingHelper.writeDocumentStart();
   }
+
   /** {@inheritDoc} */
   @Override
   public void end() {

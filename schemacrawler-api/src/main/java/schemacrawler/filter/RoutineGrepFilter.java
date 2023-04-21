@@ -30,7 +30,6 @@ package schemacrawler.filter;
 
 import java.util.function.Predicate;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Routine;
@@ -72,17 +71,13 @@ class RoutineGrepFilter implements Predicate<Routine> {
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
     for (final RoutineParameter<?> parameter : routine.getParameters()) {
-      if (checkIncludeForColumns) {
-        if (grepColumnInclusionRule.test(parameter.getFullName())) {
-          includeForColumns = true;
-          break;
-        }
+      if (checkIncludeForColumns && grepColumnInclusionRule.test(parameter.getFullName())) {
+        includeForColumns = true;
+        break;
       }
-      if (checkIncludeForDefinitions) {
-        if (grepDefinitionInclusionRule.test(parameter.getRemarks())) {
-          includeForDefinitions = true;
-          break;
-        }
+      if (checkIncludeForDefinitions && grepDefinitionInclusionRule.test(parameter.getRemarks())) {
+        includeForDefinitions = true;
+        break;
       }
     }
     // Additional include checks for definitions

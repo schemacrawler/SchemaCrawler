@@ -53,6 +53,7 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
     super(new TablePointer(parent), name);
     this.label = label;
   }
+
   /** {@inheritDoc} */
   @Override
   public int getDisplaySize() {

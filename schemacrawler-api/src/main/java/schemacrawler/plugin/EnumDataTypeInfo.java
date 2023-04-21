@@ -1,4 +1,3 @@
-package schemacrawler.plugin;
 /*
 ========================================================================
 SchemaCrawler
@@ -27,12 +26,12 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
+package schemacrawler.plugin;
+
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
 import schemacrawler.schema.TypedObject;
 

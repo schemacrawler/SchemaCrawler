@@ -30,7 +30,6 @@ package schemacrawler.schema;
 
 import static schemacrawler.schema.TableRelationshipType.child;
 import static schemacrawler.schema.TableRelationshipType.parent;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -220,6 +219,7 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
    * @return Table constraint.
    */
   <C extends TableConstraint> Optional<C> lookupTableConstraint(String name);
+
   /**
    * Gets a trigger by unqualified name.
    *
