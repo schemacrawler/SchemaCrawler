@@ -45,8 +45,16 @@ command-line options:
 - `--port` - specifies the database server port; it is optional, and defaults to the default port for the server type
 
 For example, typical command-line options for SchemaCrawler for Microsoft SQL Server looks like:
-`--server=sqlserver --host=localhost --port=1433 --database=schemacrawler --schemas=schemacrawler.dbo
---user=schemacrawler --password=schemacrawler`
+
+```
+--server=sqlserver \
+--host=db.example.com \
+--port=1433 \
+--database=schemacrawler \
+--schemas=schemacrawler.dbo \
+--user=schemacrawler \
+--password=schemacrawler
+```
 
 You should always use the `--schemas` command-line switch for databases that support it. The value
 for the `--schemas` switch is a regular expression that determines which schemas SchemaCrawler will
@@ -64,9 +72,19 @@ are interested in, for Microsoft SQL Server.
 
 
 Typical command-line arguments will look like:
+
 ```
---server=sqlserver --host=db.example.com --port=1433 --database=schemacrawler --schemas=schemacrawler.dbo --user=xxxxx --password=xxxxx --info-level=standard -command=schema
+--server=sqlserver \
+--host=db.example.com \
+--port=1433 \
+--database=schemacrawler \
+--schemas=schemacrawler.dbo \
+--user=xxxxx \
+--password=xxxxx \
+--info-level=standard \
+-command=schema
 ```
+
 You can also pass connection properties using the `--urlx` command-line switch.
 
 If your Microsoft SQL Server instance is set up with instance names, named pipes, or Windows authentication, you
@@ -76,12 +94,30 @@ for details. If you are using the URL version of the command-line, it may be a g
 the connection URL property (`databaseName`).
 
 Typical command-line arguments for connecting to SQL Server with Windows authentication will look like:
+
 ```
---server=sqlserver --url=<url> --schemas=schemacrawler.dbo --user= --password= --info-level=standard --command=schema
+--server=sqlserver \
+--url=<url> \
+--schemas=schemacrawler.dbo \
+--user= \
+--password= \
+--info-level=standard \
+--command=schema
 ```
+
 or
+
 ```
---server=sqlserver --host=db.example.com --port=1433 --urlx=integratedSecurity=true --database=schemacrawler --schemas=schemacrawler.dbo --user=xxxxx --password=xxxxx --info-level=standard -command=schema
+--server=sqlserver \
+--host=db.example.com \
+--port=1433 \
+--urlx=integratedSecurity=true \
+--database=schemacrawler \
+--schemas=schemacrawler.dbo \
+--user=xxxxx \
+--password=xxxxx \
+--info-level=standard \
+-command=schema
 ```
 
 Please make sure that you use the `--schemas` option to reduce the number of schemas in the output. In the
@@ -96,8 +132,17 @@ You can use a query similar to `SELECT GLOBAL_NAME FROM GLOBAL_NAME`
 to find the Oracle Service Name.
     
 Typical command-line arguments will look like:
+
 ```
---server=oracle --host=db.example.com --port=1521 --database=ORCL --schemas=SCHEMACRAWLER --user=xxxxx --password=xxxxx --info-level=standard --command=schema
+--server=oracle \
+--host=db.example.com \
+--port=1521 \
+--database=ORCL \
+--schemas=SCHEMACRAWLER \
+--user=xxxxx \
+--password=xxxxx \
+--info-level=standard \
+--command=schema
 ```
 
 In the example above, "ORCL" is the Oracle Service Name.
@@ -110,8 +155,17 @@ are interested in, for MySQL.
 
 
 Typical command-line arguments will look like:
+
 ```
---server=mysql --host=db.example.com --port=3306 --database=schemacrawler --schemas=schemacrawler --user=xxxxx --password=xxxxx --info-level=standard --command=schema
+--server=mysql \
+--host=db.example.com \
+--port=3306 \
+--database=schemacrawler \
+--schemas=schemacrawler \
+--user=xxxxx \
+--password=xxxxx \
+--info-level=standard \
+--command=schema
 ```
 
 ### PostgreSQL
@@ -121,12 +175,23 @@ are interested in, for PostgreSQL.
 
 
 Typical command-line arguments will look like:
+
 ```
---server=postgresql --host=db.example.com --port=5432 --database=schemacrawler --schemas=public --user=xxxxx --password=xxxxx --info-level=standard --command=schema
+--server=postgresql \
+--host=db.example.com \
+--port=5432 \
+--database=schemacrawler \
+--schemas=public \
+--user=xxxxx \
+--password=xxxxx \
+--info-level=standard \
+--command=schema
 ```
-* `--host`  is optional if the `PGHOSTADDR` or `PGHOST` environmental variables are set
-* `--port`  is optional if the `PGPORT` environmental variables is set
-* `--database`  is optional if the `PGDATABASE`  environmental variables is set
+
+- `--host`  is optional if the `PGHOSTADDR` or `PGHOST` environmental variables are set
+- `--port`  is optional if the `PGPORT` environmental variables is set
+- `--database`  is optional if the `PGDATABASE`  environmental variables is set
+
 
 ### MariaDB
 
@@ -136,9 +201,17 @@ in the `lib/` folder.
 
 
 Typical command-line arguments will look like:
+
 ```
---url=jdbc:mariadb://scmariadb.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler --schemas=schemacrawler --user=schemacrawler --password=schemacrawler --table-types=UNKNOWN,VIEW --info-level=standard --command=schema
+--url=jdbc:mariadb://db.example.com:3306/schemacrawler \
+--schemas=schemacrawler \
+--user=schemacrawler \
+--password=schemacrawler \
+--table-types=UNKNOWN,VIEW \
+--info-level=standard \
+--command=schema
 ```
+
 
 ## Unconventional Data Sources
 

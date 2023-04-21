@@ -14,6 +14,7 @@ docker run \
 --entrypoint=/bin/bash \
 schemacrawler/schemacrawler
 ```
+
 The SchemaCrawler Docker container starts with a non-privileged user `schcrwlr` in group `users`. Please ensure that the mount point for the SchemaCrawler Docker container is writable by user 1000 in group 100 on the host.
 
 ## Use the SchemaCrawler Interactive Shell
@@ -27,6 +28,7 @@ schemacrawler --shell
 From within the shell, type `help` for a list of commands. See [information on how to use SchemaCrawler Interactive Shell](schemacrawler-shell.html).
 
 Use the following script from within the shell to create a sample diagram
+
 ```
 connect --server=sqlite --database=sc.db
 load --info-level=minimum
@@ -46,6 +48,7 @@ schemacrawler \
 --server=sqlite --database=sc.db \
 --info-level=maximum --command=schema
 ```
+
 The easiest way to learn how to use the SchemaCrawler command-line is by doing the 
 [live online tutorial](https://killercoda.com/schemacrawler/scenario/schemacrawler). The tutorial works from within 
 any browser with no software or plugins needed.
