@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.commandline.command;
 
 import static java.util.Collections.list;

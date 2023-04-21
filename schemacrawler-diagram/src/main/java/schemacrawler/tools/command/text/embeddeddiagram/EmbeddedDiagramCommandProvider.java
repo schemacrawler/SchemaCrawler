@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.text.embeddeddiagram;
 
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;

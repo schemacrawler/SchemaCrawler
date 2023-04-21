@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.commandline.state;
 
 import static picocli.CommandLine.defaultFactory;

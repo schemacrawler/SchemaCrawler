@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.integration.test;
 
 import static java.nio.file.Files.lines;

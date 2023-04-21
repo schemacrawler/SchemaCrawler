@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.test.utility.testcommand;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;

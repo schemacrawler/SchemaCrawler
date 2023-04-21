@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.schema;
 
 public interface TypedObject<T extends Comparable<? super T>> {

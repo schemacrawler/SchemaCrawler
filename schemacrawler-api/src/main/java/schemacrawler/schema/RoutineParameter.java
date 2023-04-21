@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.schema;
 
 public interface RoutineParameter<R extends Routine> extends BaseColumn<R> {

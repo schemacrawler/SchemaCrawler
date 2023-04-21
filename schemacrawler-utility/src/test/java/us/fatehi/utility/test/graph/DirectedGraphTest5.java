@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility.test.graph;
 
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.test.script;
 
 import static org.hamcrest.MatcherAssert.assertThat;

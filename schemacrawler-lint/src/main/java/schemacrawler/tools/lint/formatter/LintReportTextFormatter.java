@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.lint.formatter;
 
 import static java.util.Comparator.naturalOrder;

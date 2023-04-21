@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.text.diagram;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

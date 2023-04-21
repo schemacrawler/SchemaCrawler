@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.crawl;
 
 import schemacrawler.schema.DatabaseUser;

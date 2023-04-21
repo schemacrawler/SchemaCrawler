@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.lint.options;
 
 import static us.fatehi.utility.Utility.isBlank;

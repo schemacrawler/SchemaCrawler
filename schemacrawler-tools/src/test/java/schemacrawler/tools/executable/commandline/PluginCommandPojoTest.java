@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.executable.commandline;
 
 import static org.hamcrest.CoreMatchers.is;

@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.text.formatter.base;
 
 import static java.util.Objects.requireNonNull;

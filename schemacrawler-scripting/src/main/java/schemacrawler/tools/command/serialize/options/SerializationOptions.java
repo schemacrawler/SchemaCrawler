@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.serialize.options;
 
 import schemacrawler.tools.executable.CommandOptions;

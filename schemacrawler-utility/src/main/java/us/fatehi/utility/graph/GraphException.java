@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility.graph;
 
 public class GraphException extends Exception {

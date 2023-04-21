@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.test;
 
 import static org.junit.jupiter.api.Assertions.fail;

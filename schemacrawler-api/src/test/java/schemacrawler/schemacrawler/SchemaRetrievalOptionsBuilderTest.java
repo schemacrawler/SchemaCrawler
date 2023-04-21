@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.schemacrawler;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;

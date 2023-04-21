@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.command.serialize;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;

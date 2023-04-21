@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility;
 
 import static java.lang.Math.abs;

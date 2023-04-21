@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.tools.formatter.serialize;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;

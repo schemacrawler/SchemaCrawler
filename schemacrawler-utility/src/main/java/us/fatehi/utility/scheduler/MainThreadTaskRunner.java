@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;
