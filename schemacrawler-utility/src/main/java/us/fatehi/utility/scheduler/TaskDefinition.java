@@ -31,17 +31,15 @@ package us.fatehi.utility.scheduler;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.Utility.toSnakeCase;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import us.fatehi.utility.string.StringFormat;
 
 public final class TaskDefinition {
 
   /**
-   * Not quite a Callable<Void> (no "return null;" required) and not quite a Runnable because it
-   * allows throwing checked exceptions.
+   * Not quite a {@code Callable<Void>} (no "return null;" required) and not quite a Runnable
+   * because it allows throwing checked exceptions.
    */
   @FunctionalInterface
   public interface TaskRunnable {

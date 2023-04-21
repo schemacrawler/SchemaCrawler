@@ -31,14 +31,12 @@ package schemacrawler.tools.options;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.Options;
@@ -179,9 +177,11 @@ public final class Config implements Options {
   }
 
   /**
-   * @param key
-   * @param value
-   * @return
+   * Put an key-value pair into the config.
+   *
+   * @param key Key of the config map.
+   * @param value Value of the config map.
+   * @return Object that was put into the config, or null.
    * @see java.util.Map#put(java.lang.Object, java.lang.Object)
    */
   public Object put(final String key, final Object value) {
