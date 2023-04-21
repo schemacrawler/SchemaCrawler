@@ -54,6 +54,7 @@ import org.jline.reader.impl.LineReaderImpl;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
+import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliCommands;
 import picocli.shell.jline3.PicocliCommands.PicocliCommandsFactory;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -159,7 +160,7 @@ public final class SchemaCrawlerShell {
     commandLineLogger.logState(state);
 
     final String errorMessage;
-    if (throwable instanceof picocli.CommandLine.PicocliException) {
+    if (throwable instanceof PicocliException) {
       final Throwable cause = throwable.getCause();
       if (cause != null && !isBlank(cause.getMessage())) {
         errorMessage = cause.getMessage();

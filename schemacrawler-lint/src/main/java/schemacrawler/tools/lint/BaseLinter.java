@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import static java.util.Objects.requireNonNull;
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -38,7 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -87,7 +85,9 @@ public abstract class BaseLinter extends Linter {
     addLint(LintObjectType.table, table, message, value);
   }
 
-  protected void end(final Connection connection) {}
+  protected void end(final Connection connection) {
+    // Default implementation - NO-OP
+  }
 
   protected final List<Column> getColumns(final Table table) {
     if (table == null) {
@@ -130,7 +130,9 @@ public abstract class BaseLinter extends Linter {
     }
   }
 
-  protected void start(final Connection connection) {}
+  protected void start(final Connection connection) {
+    // Default implementation - NO-OP
+  }
 
   @Override
   final void configure(final LinterConfig linterConfig) {

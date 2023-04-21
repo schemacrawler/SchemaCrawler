@@ -34,7 +34,6 @@ import static schemacrawler.tools.executable.commandline.PluginCommandType.loade
 import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.unknown;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -154,7 +153,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public boolean hasHelpFooter() {
-    return helpFooter != null || type != PluginCommandType.unknown;
+    return helpFooter != null || type != unknown;
   }
 
   public boolean isEmpty() {

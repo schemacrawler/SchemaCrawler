@@ -30,9 +30,7 @@ package schemacrawler.loader.attributes.model;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
-
 import java.beans.ConstructorProperties;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +59,7 @@ public final class CatalogAttributes extends ObjectAttributes {
       final List<AlternateKeyAttributes> alternateKeys) {
     super(name, remarks, attributes);
     if (tables == null) {
-      this.tables = Collections.emptyList();
+      this.tables = emptyList();
     } else {
       this.tables = unmodifiableList(tables);
     }

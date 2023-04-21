@@ -79,7 +79,7 @@ public final class TypeMap implements Map<String, Class<?>> {
     defaultTypeMap.put(JDBCType.OTHER, Object.class);
     defaultTypeMap.put(JDBCType.REAL, Float.class);
     defaultTypeMap.put(JDBCType.REF, java.sql.Ref.class);
-    defaultTypeMap.put(JDBCType.REF_CURSOR, java.lang.Object.class);
+    defaultTypeMap.put(JDBCType.REF_CURSOR, Object.class);
     defaultTypeMap.put(JDBCType.ROWID, java.sql.RowId.class);
     defaultTypeMap.put(JDBCType.SMALLINT, Integer.class);
     defaultTypeMap.put(JDBCType.SQLXML, java.sql.SQLXML.class);

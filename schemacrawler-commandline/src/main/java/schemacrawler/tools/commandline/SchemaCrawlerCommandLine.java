@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import picocli.CommandLine;
+import picocli.CommandLine.PicocliException;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineLogger;
@@ -103,7 +104,7 @@ public final class SchemaCrawlerCommandLine {
 
   private static String extractErrorMessage(final Throwable throwable) {
     final String errorMessage;
-    if (throwable instanceof picocli.CommandLine.PicocliException) {
+    if (throwable instanceof PicocliException) {
       final Throwable cause = throwable.getCause();
       if (cause != null && !isBlank(cause.getMessage())) {
         errorMessage = cause.getMessage();

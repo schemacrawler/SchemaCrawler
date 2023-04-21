@@ -31,7 +31,6 @@ package schemacrawler.tools.linter;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.convertForComparison;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,17 +40,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import us.fatehi.utility.Multimap;
-import us.fatehi.utility.Utility;
 
 public class LinterTableWithIncrementingColumns extends BaseLinter {
 
-  private class IncrementingColumn {
+  private static class IncrementingColumn {
     private final int columnIncrement;
     private final Column column;
 
@@ -162,7 +159,7 @@ public class LinterTableWithIncrementingColumns extends BaseLinter {
     final Multimap<String, IncrementingColumn> incrementingColumns = new Multimap<>();
 
     for (final Column column : columns) {
-      final String columnName = Utility.convertForComparison(column.getName());
+      final String columnName = convertForComparison(column.getName());
       if (incrementingColumnsMap.containsKey(columnName)) {
         incrementingColumns.add(columnName, new IncrementingColumn("0", column));
       }

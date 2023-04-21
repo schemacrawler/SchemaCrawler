@@ -174,8 +174,7 @@ public final class SchemaRetrievalOptionsBuilder
 
     if (metadataRetrievalStrategy == null) {
       // Reset to default
-      metadataRetrievalStrategyMap.put(
-          schemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy.metadata);
+      metadataRetrievalStrategyMap.put(schemaInfoMetadataRetrievalStrategy, metadata);
     } else {
       metadataRetrievalStrategyMap.put(
           schemaInfoMetadataRetrievalStrategy, metadataRetrievalStrategy);
