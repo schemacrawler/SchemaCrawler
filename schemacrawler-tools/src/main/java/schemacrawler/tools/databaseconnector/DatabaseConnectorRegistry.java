@@ -31,7 +31,6 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Comparator.naturalOrder;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -44,7 +43,6 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -121,7 +119,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
           buffer.append(String.format("%2d %50s", index, driver.getClass().getName()));
           try {
             buffer.append(
-                String.format(" %2d.%d", driver.getMajorVersion(), driver.getMinorVersion()));
+                String.format(" %3d.%d", driver.getMajorVersion(), driver.getMinorVersion()));
           } catch (final Exception e) {
             // Ignore exceptions from badly behaved drivers
           }
