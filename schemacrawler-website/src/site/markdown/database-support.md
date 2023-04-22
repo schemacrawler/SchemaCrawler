@@ -6,7 +6,7 @@ SchemaCrawler is bundled with JDBC drivers for some commonly used relational dat
 
 The JDBC drivers for database systems commonly used with SchemaCrawler are included with the SchemaCrawler download:
 
-- [SQLite](https://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) 
+- [SQLite](https://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc)
 - [Oracle](https://www.oracle.com/) [JDBC driver](https://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html)
 - [Microsoft SQL Server](https://www.microsoft.com/sqlserver/) [JDBC driver](https://github.com/Microsoft/mssql-jdbc)
 - [IBM DB2](https://www.ibm.com/software/data/db2/) [JDBC driver](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads)
@@ -17,7 +17,7 @@ The JDBC drivers for database systems commonly used with SchemaCrawler are inclu
 - Offline database support does not need any JDBC driver
 
 For any other database that includes a compliant JDBC driver, place the JDBC in the
-SchemaCrawler `lib` directory. [Amazon Aurora](https://aws.amazon.com/rds/aurora/) is supported 
+SchemaCrawler `lib` directory. [Amazon Aurora](https://aws.amazon.com/rds/aurora/) is supported
 in MySQL and PostgreSQL modes.
 
 
@@ -90,14 +90,14 @@ You can also pass connection properties using the `--urlx` command-line switch.
 If your Microsoft SQL Server instance is set up with instance names, named pipes, or Windows authentication, you
 will need to use a database connection URL. See the
 [documentation for the Microsoft JDBC Driver for SQL Server](https://docs.microsoft.com/sql/connect/jdbc/connecting-to-sql-server-with-the-jdbc-driver)
-for details. If you are using the URL version of the command-line, it may be a good idea to include the database name as one of 
+for details. If you are using the URL version of the command-line, it may be a good idea to include the database name as one of
 the connection URL property (`databaseName`).
 
 Typical command-line arguments for connecting to SQL Server with Windows authentication will look like:
 
 ```
 --server=sqlserver \
---url=<url> \
+--url=jdbc:sqlserver://db.example.com:1433;databaseName=master;encrypt=false \
 --schemas=schemacrawler.dbo \
 --user= \
 --password= \
@@ -130,7 +130,7 @@ are interested in, for Oracle.
 
 You can use a query similar to `SELECT GLOBAL_NAME FROM GLOBAL_NAME`
 to find the Oracle Service Name.
-    
+
 Typical command-line arguments will look like:
 
 ```
