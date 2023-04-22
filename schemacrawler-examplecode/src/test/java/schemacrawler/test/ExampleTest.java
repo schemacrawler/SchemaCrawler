@@ -30,19 +30,16 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import com.example.ApiExample;
+import com.example.ConnectionCheck;
 import com.example.ExecutableExample;
 import com.example.ResultSetExample;
-
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.testdb.TestDatabase;
@@ -69,6 +66,14 @@ public class ExampleTest {
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(outputOf(streams.out()), hasSameContentAs(classpathResource("ApiExample.txt")));
+  }
+
+  @Test
+  public void connectionCheck(final CapturedSystemStreams streams) throws Exception {
+    ConnectionCheck.main(new String[0]);
+
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(outputOf(streams.out()), hasSameContentAs(classpathResource("ConnectionCheck.txt")));
   }
 
   @Test
