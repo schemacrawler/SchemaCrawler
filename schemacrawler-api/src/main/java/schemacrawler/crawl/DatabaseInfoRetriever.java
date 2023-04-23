@@ -330,7 +330,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
             Level.FINE,
             e.getCause(),
             new StringFormat("Could not execute method <%s>", methodName));
-        continue;
       }
     }
 

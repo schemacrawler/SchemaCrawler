@@ -35,14 +35,12 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.ActionOrientationType;
@@ -112,7 +110,6 @@ final class TableExtRetriever extends AbstractRetriever {
               new StringFormat(
                   "Cannot find column <%s.%s.%s.%s>",
                   catalogName, schemaName, tableName, columnName));
-          continue;
         } else {
           final MutableColumn column = columnOptional.get();
           column.addAttributes(results.getAttributes());

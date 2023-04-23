@@ -30,11 +30,9 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -52,11 +50,9 @@ public final class RetrieverUtility {
     requireNonNull(pkTable, "No referenced table provided");
     requireNonNull(fkTable, "No referencing table provided");
 
-    final String foreignKeyName =
-        String.format(
-            "SCHCRWLR_%1$08X_%2$08X",
-            fkTable.getFullName().hashCode(), pkTable.getFullName().hashCode());
-    return foreignKeyName;
+    return String.format(
+        "SCHCRWLR_%1$08X_%2$08X",
+        fkTable.getFullName().hashCode(), pkTable.getFullName().hashCode());
   }
 
   static Column lookupOrCreateColumn(
@@ -78,9 +74,9 @@ public final class RetrieverUtility {
 
     if (column == null) {
       // Create the table and column, but do not add it to the schema
-      final Table table = new TablePartial(schema, tableName);
+      final TablePartial table = new TablePartial(schema, tableName);
       column = new ColumnPartial(table, columnName);
-      ((TablePartial) table).addColumn(column);
+      table.addColumn(column);
 
       LOGGER.log(
           Level.FINER,
