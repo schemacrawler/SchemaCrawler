@@ -34,6 +34,7 @@ connect --server=sqlite --database=sc.db
 load --info-level=minimum
 execute --command list
 ```
+
 The easiest way to learn how to use the SchemaCrawler Interactive Shell is by doing the
 [live online tutorial](https://killercoda.com/schemacrawler/scenario/schemacrawler-shell). The tutorial works from within
 any browser with no software or plugins needed.
