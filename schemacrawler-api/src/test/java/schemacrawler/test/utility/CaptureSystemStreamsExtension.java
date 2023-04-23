@@ -29,13 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Parameter;
 import java.nio.charset.Charset;
-
+import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -47,6 +46,7 @@ final class CaptureSystemStreamsExtension
     implements ParameterResolver, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
   private static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
+  private static final String UTF_8_CHARSET = StandardCharsets.UTF_8.toString();
 
   private TestOutputStream err;
   private TestOutputStream out;
@@ -75,10 +75,10 @@ final class CaptureSystemStreamsExtension
     err = new TestOutputStream();
 
     System.out.flush();
-    System.setOut(new PrintStream(out, true, DEFAULT_CHARSET));
+    System.setOut(new PrintStream(out, true, UTF_8_CHARSET));
 
     System.err.flush();
-    System.setErr(new PrintStream(err, true, DEFAULT_CHARSET));
+    System.setErr(new PrintStream(err, true, UTF_8_CHARSET));
   }
 
   @Override
