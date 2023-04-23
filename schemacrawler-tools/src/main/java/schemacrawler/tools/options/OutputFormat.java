@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.options;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface OutputFormat {
+public interface OutputFormat extends Serializable {
 
   String getDescription();
 

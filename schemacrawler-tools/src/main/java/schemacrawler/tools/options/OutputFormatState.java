@@ -35,6 +35,8 @@ import java.util.List;
 
 public final class OutputFormatState implements OutputFormat {
 
+  private static final long serialVersionUID = -5715099922209080457L;
+
   private final List<String> formatSpecifiers;
   private final String description;
 

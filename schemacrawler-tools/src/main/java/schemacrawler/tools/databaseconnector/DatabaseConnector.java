@@ -55,8 +55,6 @@ import us.fatehi.utility.datasource.UserCredentials;
 
 public abstract class DatabaseConnector implements Options {
 
-  public static final DatabaseConnector UNKNOWN = new UnknownDatabaseConnector();
-
   private final DatabaseServerType dbServerType;
   private final Predicate<String> supportsUrl;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>

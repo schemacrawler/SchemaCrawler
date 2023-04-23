@@ -137,7 +137,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
 
   private void showLoaded() {
     final boolean isLoadedState = state.isLoaded();
-    System.out.println(String.format("Database metadata is %sloaded", isLoadedState ? "" : "not "));
+    System.out.printf("Database metadata is %sloaded%n", isLoadedState ? "" : "not ");
   }
 
   private void showStackTrace() {

@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 import static java.util.Comparator.naturalOrder;
+import static schemacrawler.tools.databaseconnector.UnknownDatabaseConnector.UNKNOWN;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 import java.sql.Connection;
@@ -147,7 +148,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
       final String url = connection.getMetaData().getURL();
       return findDatabaseConnectorFromUrl(url);
     } catch (final SQLException e) {
-      return DatabaseConnector.UNKNOWN;
+      return UNKNOWN;
     }
   }
 
@@ -156,13 +157,13 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return databaseConnectorRegistry.get(databaseSystemIdentifier);
     } else {
-      return DatabaseConnector.UNKNOWN;
+      return UNKNOWN;
     }
   }
 
   public DatabaseConnector findDatabaseConnectorFromUrl(final String url) {
     if (isBlank(url)) {
-      return DatabaseConnector.UNKNOWN;
+      return UNKNOWN;
     }
 
     for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
@@ -171,7 +172,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
       }
     }
 
-    return DatabaseConnector.UNKNOWN;
+    return UNKNOWN;
   }
 
   public Collection<PluginCommand> getHelpCommands() {

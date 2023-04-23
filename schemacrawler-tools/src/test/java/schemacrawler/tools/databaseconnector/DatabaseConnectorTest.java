@@ -102,7 +102,7 @@ public class DatabaseConnectorTest {
 
   @Test
   public void unknownDatabaseConnector() {
-    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
+    final DatabaseConnector databaseConnector = UnknownDatabaseConnector.UNKNOWN;
 
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     assertThat(helpCommand, is(notNullValue()));

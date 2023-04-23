@@ -51,14 +51,7 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   MultiThreadedTaskRunner(final String id, final int maxThreadsSuggested) {
     super(id);
 
-    final int maxThreads;
-    if (maxThreadsSuggested < TaskRunner.MIN_THREADS) {
-      maxThreads = TaskRunner.MIN_THREADS;
-    } else if (maxThreadsSuggested > TaskRunner.MAX_THREADS) {
-      maxThreads = TaskRunner.MAX_THREADS;
-    } else {
-      maxThreads = maxThreadsSuggested;
-    }
+    final int maxThreads = Math.min(Math.max(maxThreadsSuggested, MIN_THREADS), MAX_THREADS);
     executorService = Executors.newFixedThreadPool(maxThreads);
     LOGGER.log(
         Level.INFO,

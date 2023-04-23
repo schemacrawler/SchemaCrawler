@@ -32,7 +32,6 @@ import static java.nio.file.Files.createTempDirectory;
 import static java.util.Objects.requireNonNull;
 import static org.hsqldb.server.ServerConstants.SC_DEFAULT_ADDRESS;
 import static org.hsqldb.server.ServerConstants.SC_DEFAULT_HSQL_SERVER_PORT;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -43,7 +42,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.hsqldb.server.Server;
 
 /** Sets up a database schema for tests and examples. */
@@ -161,10 +159,8 @@ public class TestDatabase {
   /** Shut down the database server. */
   public void stop() {
     if (trace) {
-      System.out.println(
-          String.format(
-              "Stopping HyperSQL server for database %s:%d/%s",
-              getHost(), getPort(), getDatabase()));
+      System.out.printf(
+          "Stopping HyperSQL server for database %s:%d/%s%n", getHost(), getPort(), getDatabase());
     }
     stopServer();
   }
@@ -208,13 +204,12 @@ public class TestDatabase {
     server.setDatabasePath(0, String.format("file:%s", tempDirectory));
 
     if (trace) {
-      System.out.println(
-          String.format(
-              "Starting HyperSQL server for database %s:%d/%s at %s",
-              server.getAddress(),
-              server.getPort(),
-              server.getDatabaseName(0, true),
-              server.getDatabasePath(0, true)));
+      System.out.printf(
+          "Starting HyperSQL server for database %s:%d/%s at %s%n",
+          server.getAddress(),
+          server.getPort(),
+          server.getDatabaseName(0, true),
+          server.getDatabasePath(0, true));
     }
 
     // Blocked server start

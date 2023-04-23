@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsLast;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +40,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -70,7 +68,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<TableConstraint> constraints = new NamedObjectList<>();
-  private final StringBuffer definition;
+  private final StringBuilder definition;
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableWeakAssociation> weakAssociations = new NamedObjectList<>();
   private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
@@ -84,7 +82,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   MutableTable(final Schema schema, final String name) {
     super(schema, name);
-    definition = new StringBuffer();
+    definition = new StringBuilder();
   }
 
   /**
@@ -353,9 +351,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   }
 
   final void setPrimaryKey(final MutablePrimaryKey primaryKey) {
-    if (primaryKey == null) {
-      return;
-    } else {
+    if (primaryKey != null) {
       this.primaryKey = primaryKey;
     }
   }

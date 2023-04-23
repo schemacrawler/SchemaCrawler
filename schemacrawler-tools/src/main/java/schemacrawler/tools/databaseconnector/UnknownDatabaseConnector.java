@@ -31,10 +31,12 @@ package schemacrawler.tools.databaseconnector;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 
-final class UnknownDatabaseConnector extends DatabaseConnector {
+public final class UnknownDatabaseConnector extends DatabaseConnector {
+
+  public static final DatabaseConnector UNKNOWN = new UnknownDatabaseConnector();
 
   /** Constructor for unknown databases. Bypass the null-checks of the main constructor */
-  UnknownDatabaseConnector() {
+  private UnknownDatabaseConnector() {
     super(
         DatabaseServerType.UNKNOWN,
         url -> false,

@@ -31,14 +31,12 @@ package schemacrawler.tools.lint;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import us.fatehi.utility.ObjectToString;
@@ -94,7 +92,7 @@ public final class Lint<V extends Serializable>
       return -1;
     }
 
-    int compareTo = 0;
+    int compareTo;
     compareTo = objectType.compareTo(lint.getObjectType());
     if (compareTo != 0) {
       return compareTo;
@@ -112,9 +110,7 @@ public final class Lint<V extends Serializable>
     if (compareTo != 0) {
       return compareTo;
     }
-    compareTo = message.compareTo(lint.getMessage());
-
-    return compareTo;
+    return message.compareTo(lint.getMessage());
   }
 
   @Override
@@ -190,8 +186,6 @@ public final class Lint<V extends Serializable>
           }
         }
         valueObject = list;
-      } else {
-        valueObject = value;
       }
       return ObjectToString.listOrObjectToString(valueObject);
     } else {

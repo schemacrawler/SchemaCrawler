@@ -72,17 +72,17 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
 
       jdbcConnectionProperties = new Properties();
       if (user != null) {
-        jdbcConnectionProperties.put("user", user);
+        jdbcConnectionProperties.setProperty("user", user);
       }
       if (password != null) {
-        jdbcConnectionProperties.put("password", password);
+        jdbcConnectionProperties.setProperty("password", password);
       }
       if (connectionProperties != null) {
         for (final Map.Entry<String, String> connectionProperty : connectionProperties.entrySet()) {
           final String property = connectionProperty.getKey();
           final String value = connectionProperty.getValue();
           if (jdbcDriverProperties.containsKey(property.toLowerCase()) && value != null) {
-            jdbcConnectionProperties.put(property, value);
+            jdbcConnectionProperties.setProperty(property, value);
           }
         }
       }
@@ -101,7 +101,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
     final String username;
     final String user = jdbcConnectionProperties.getProperty("user");
     if (user != null) {
-      username = String.format("user \'%s\'", user);
+      username = String.format("user '%s'", user);
     } else {
       username = "unspecified user";
     }
@@ -110,7 +110,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
       LOGGER.log(
           Level.INFO,
           new StringFormat(
-              "Making connection to %s%nfor user \'%s\', with properties %s",
+              "Making connection to %s%nfor user '%s', with properties %s",
               connectionUrl, username, safeProperties(jdbcConnectionProperties)));
       // (Using java.sql.DriverManager.getConnection(String, Properties)
       // to make a connection is not the best idea,

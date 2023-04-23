@@ -37,12 +37,10 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -240,15 +238,13 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
   private String arrowhead(final ForeignKeyCardinality connectivity) {
     switch (connectivity) {
-      case unknown:
-        return "box";
       case zero_one:
         return "teeodot";
       case zero_many:
         return "crowodot";
       case one_one:
         return "teetee";
-      default:
+      default: // Including "unknown"
         return "box";
     }
   }
@@ -555,13 +551,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printTableColumnEnumValues(final Column column) {
-    if (column == null) {
-      return;
-    }
-    if (!column.isColumnDataTypeKnown()) {
-      return;
-    }
-    if (!column.getColumnDataType().isEnumerated()) {
+    if ((column == null)
+        || !column.isColumnDataTypeKnown()
+        || !column.getColumnDataType().isEnumerated()) {
       return;
     }
 

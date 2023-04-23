@@ -53,6 +53,7 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.UnknownDatabaseConnector;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
@@ -202,7 +203,7 @@ public final class SchemaCrawlerUtility {
     final boolean useMatchedDatabasePlugin =
         useMatchedDatabasePlugin(connection, databaseServerType);
     if (!useMatchedDatabasePlugin) {
-      dbConnector = DatabaseConnector.UNKNOWN;
+      dbConnector = UnknownDatabaseConnector.UNKNOWN;
     }
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =

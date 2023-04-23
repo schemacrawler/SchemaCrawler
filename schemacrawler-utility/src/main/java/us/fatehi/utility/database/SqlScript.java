@@ -154,7 +154,7 @@ public class SqlScript implements Runnable {
   }
 
   private Throwable getCause(final Throwable e) {
-    Throwable cause = null;
+    Throwable cause;
     Throwable result = e;
 
     while (null != (cause = result.getCause()) && result != cause) {
