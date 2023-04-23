@@ -58,6 +58,12 @@ jobs:
         CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
       with:
         api-token: ${{ secrets.CODACY_API_TOKEN }}
+    - id: qodana-scan
+      name: Qodana Scan
+      uses: JetBrains/qodana-action@main
+      if: contains(github.ref, 'main')
+      env:
+        QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
     - id: upload-coverage-test-results
       name: Upload coverage test results
       uses: actions/upload-artifact@v3
