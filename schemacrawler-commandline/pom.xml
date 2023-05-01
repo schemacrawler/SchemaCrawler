@@ -63,12 +63,12 @@
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
-      <version>4.7.2</version>
+      <version>4.7.3</version>
     </dependency>
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli-shell-jline3</artifactId>
-      <version>4.7.2</version>
+      <version>4.7.3</version>
     </dependency>
 
     <!-- graphviz-java dependencies -->
