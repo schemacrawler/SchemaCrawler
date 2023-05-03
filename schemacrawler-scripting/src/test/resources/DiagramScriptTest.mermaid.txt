@@ -13,12 +13,12 @@ erDiagram
   }
 
   PUBLIC-BOOKS-BOOKS {
-    INTEGER ID
-    VARCHAR TITLE
-    VARCHAR DESCRIPTION
-    INTEGER PUBLISHERID
-    DATE PUBLICATIONDATE
-    DOUBLE PRICE
+    INTEGER ID "Unique (internal) id for book"
+    VARCHAR TITLE "Book title"
+    VARCHAR DESCRIPTION "Book description (Usually the blurb from the book jacket or promotional materials)"
+    INTEGER PUBLISHERID "Foreign key to the book publisher"
+    DATE PUBLICATIONDATE "Book publication date"
+    DOUBLE PRICE "Current price for the book"
     INTEGER PREVIOUSEDITIONID
   }
 
@@ -47,8 +47,8 @@ erDiagram
   }
 
   PUBLIC-BOOKS-PUBLISHERS {
-    INTEGER ID
-    VARCHAR PUBLISHER
+    INTEGER ID "Unique (internal) id for book publisher"
+    VARCHAR PUBLISHER "Name of book publisher"
   }
 
   PUBLIC-"PUBLISHER SALES"-REGIONS {
