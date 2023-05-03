@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+
+  sybase:
+    image: jaschweder/sybase
+    container_name: sybase
+    ports:
+      - target: 2638
+        published: 2638
+        protocol: tcp
+        mode: host
