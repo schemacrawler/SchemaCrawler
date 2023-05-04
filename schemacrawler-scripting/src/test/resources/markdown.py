@@ -9,6 +9,7 @@ from schemacrawler.schemacrawler import \
 from schemacrawler.utility import \
     MetaDataUtility  # pylint: disable=import-error
 
+
 if title:
     print('# ' + title)
 else:
@@ -16,46 +17,79 @@ else:
 
 identifiers = \
     IdentifiersBuilder.builder() \
-        .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all) \
         .toOptions()
 
 print('')
-for table in catalog.tables:
-    print('##  ' + table.fullName)
-
+for schema in catalog.getSchemas():
+    
+    tables = catalog.getTables(schema)
+    if not tables:
+        continue
+        
+    print('## ' + schema.fullName)
+    
     print('')
-    print('## Columns')
-    for column in table.columns:
-        print('- ' + column.name + ' (' + column.columnDataType.toString() + ')')
-
-    if table.hasPrimaryKey():
+    for table in tables:
+        print('### ' + table.name, end="")
+        if not table.tableType.isView():
+            print(' (table)', end='')
+        else:
+            print(' (view)', end='')
         print('')
-        print('## Primary Key')
-        primaryKey = table.primaryKey
-        print('('
-              + MetaDataUtility.getColumnsListAsString(primaryKey, identifiers) + ') ')
+        table_remarks = table.remarks
+        if table_remarks:
+            print(table_remarks)
 
-    if not table.indexes.isEmpty():
         print('')
-        print('## Indexes')
-        for index in table.indexes:
-            if table.hasPrimaryKey() and \
-                    MetaDataUtility.getColumnsListAsString(table.primaryKey, identifiers) == \
-                    MetaDataUtility.getColumnsListAsString(index, identifiers):
-                continue
-            print('- ' + index.name + ' ('
-                  + MetaDataUtility.getColumnsListAsString(index, identifiers) + ')',
-                  end='')
-            if index.unique:
-                print(', unique index', end='')
+        print('### Columns')
+        for column in table.columns:
+            print('- ', end='')
+            part_of_primary_key = column.isPartOfPrimaryKey()
+            part_of_foreign_key = column.isPartOfForeignKey()
+            if part_of_primary_key:
+                print('**', end='')
+            elif part_of_foreign_key:
+                print('*', end='')
+            print(column.name, end='')
+            if part_of_primary_key:
+                print('**', end='')
+            elif part_of_foreign_key:
+                print('*', end='')
+            print(' (' + column.columnDataType.toString() + ')', end='')
+            column_remarks = column.remarks
+            if column_remarks:
+                print('    ')
+                print('\n    '.join(column_remarks.splitlines()), end='')
+            print()
+
+        if table.hasPrimaryKey():
             print('')
+            print('### Primary Key')
+            primaryKey = table.primaryKey
+            print('- ' + primaryKey.name + ' ('
+                  + MetaDataUtility.getColumnsListAsString(primaryKey, identifiers) + ') ')
 
-    if not table.referencingTables.isEmpty():
+        if not table.indexes.isEmpty():
+            print('')
+            print('### Indexes')
+            for index in table.indexes:
+                if table.hasPrimaryKey() and \
+                        MetaDataUtility.getColumnsListAsString(table.primaryKey, identifiers) == \
+                        MetaDataUtility.getColumnsListAsString(index, identifiers):
+                    continue
+                print('- ' + index.name + ' ('
+                      + MetaDataUtility.getColumnsListAsString(index, identifiers) + ')',
+                      end='')
+                if index.unique:
+                    print(' (unique index)', end='')
+                print('')
+
+        if not table.referencingTables.isEmpty():
+            print('')
+            print('### Foreign Keys')
+            for childTable in table.referencingTables:
+                print('-  ' + table.fullName + ' --> ' + childTable.fullName)
+
         print('')
-        print('## Foreign Keys')
-        for childTable in table.referencingTables:
-            print('-  ' + table.fullName + ' --> ' + childTable.fullName)
-
-    print('')
-    print('')
-    print('')
+        print('')
+        print('')
