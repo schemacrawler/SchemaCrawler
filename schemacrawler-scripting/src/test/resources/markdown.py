@@ -69,10 +69,11 @@ for schema in catalog.getSchemas():
             print('- ' + primaryKey.name + ' ('
                   + MetaDataUtility.getColumnsListAsString(primaryKey, identifiers) + ') ')
 
-        if not table.indexes.isEmpty():
+        indexes = table.indexes
+        if not indexes.isEmpty():
             print('')
             print('### Indexes')
-            for index in table.indexes:
+            for index in indexes:
                 if table.hasPrimaryKey() and \
                         MetaDataUtility.getColumnsListAsString(table.primaryKey, identifiers) == \
                         MetaDataUtility.getColumnsListAsString(index, identifiers):
@@ -84,11 +85,21 @@ for schema in catalog.getSchemas():
                     print(' (unique index)', end='')
                 print('')
 
-        if not table.referencingTables.isEmpty():
+        foreign_keys = table.importedForeignKeys
+        if not foreign_keys.isEmpty():
             print('')
             print('### Foreign Keys')
-            for childTable in table.referencingTables:
-                print('-  ' + table.fullName + ' --> ' + childTable.fullName)
+            for fk in foreign_keys:
+                pkTable = fk.primaryKeyTable
+                fkTable = fk.foreignKeyTable
+                for columnReference in fk.columnReferences:
+                    print('- ', end='')
+                    if fk.name and not fk.name.startswith('SCHCRWLR_'):
+                        print(fk.name, end='')
+                    pkColumn = columnReference.primaryKeyColumn
+                    fkColumn = columnReference.foreignKeyColumn
+                    print(' (*' + fkColumn.name + '* --> **' + pkColumn.shortName + "**)", end='')
+                    print('')
 
         print('')
         print('')

@@ -23,9 +23,6 @@ Contact details for book authors
 - IDX_B_AUTHORS (LASTNAME, FIRSTNAME)
 - IDX_A_AUTHORS (CITY, STATE, POSTALCODE, COUNTRY)
 
-### Foreign Keys
--  PUBLIC.BOOKS.AUTHORS --> PUBLIC.BOOKS.BOOKAUTHORS
-
 
 
 ### BOOKS (table)
@@ -55,9 +52,7 @@ Current price for the book
 - FK_PREVIOUSEDITION (PREVIOUSEDITIONID)
 
 ### Foreign Keys
--  PUBLIC.BOOKS.BOOKS --> PUBLIC.BOOKS.BOOKAUTHORS
--  PUBLIC.BOOKS.BOOKS --> PUBLIC.BOOKS.BOOKS
--  PUBLIC.BOOKS.BOOKS --> PUBLIC."PUBLISHER SALES".SALES
+- FK_PREVIOUSEDITION (*PREVIOUSEDITIONID* --> **BOOKS.ID**)
 
 
 
@@ -71,9 +66,6 @@ Current price for the book
 - PK_Celebrities ("Id") 
 
 ### Indexes
-
-### Foreign Keys
--  PUBLIC.BOOKS."Celebrities" --> PUBLIC.BOOKS."Celebrity Updates"
 
 
 
@@ -134,9 +126,6 @@ Name of book publisher
 
 ### Indexes
 
-### Foreign Keys
--  PUBLIC.BOOKS.PUBLISHERS --> PUBLIC.BOOKS.ΒΙΒΛΊΑ
-
 
 
 ### BOOKAUTHORS (table)
@@ -153,6 +142,10 @@ along with the latest updated information
 - SYS_FK_10120 (BOOKID)
 - UIDX_BOOKAUTHORS (BOOKID, AUTHORID) (unique index)
 
+### Foreign Keys
+- Z_FK_AUTHOR (*AUTHORID* --> **AUTHORS.ID**)
+- SYS_FK_10120 (*BOOKID* --> **BOOKS.ID**)
+
 
 
 ### Celebrity Updates (table)
@@ -165,6 +158,9 @@ along with the latest updated information
 - PK Celebrity Updates ("Celebrity Id") 
 
 ### Indexes
+
+### Foreign Keys
+- SYS_FK_10130 (*Celebrity Id* --> **"Celebrities"."Id"**)
 
 
 
@@ -181,6 +177,9 @@ along with the latest updated information
 
 ### Indexes
 - FK_ΒΙΒΛΊΑ_PUBLISHERS (ΕΚΔΌΤΗΣ)
+
+### Foreign Keys
+- FK_ΒΙΒΛΊΑ_PUBLISHERS (*ΕΚΔΌΤΗΣ* --> **PUBLISHERS.ID**)
 
 
 
@@ -208,9 +207,6 @@ along with the latest updated information
 
 ### Indexes
 
-### Foreign Keys
--  PUBLIC."PUBLISHER SALES".REGIONS --> PUBLIC."PUBLISHER SALES".SALES
-
 
 
 ### SALESDATA (table)
@@ -221,9 +217,6 @@ along with the latest updated information
 
 ### Indexes
 - UQ_CUSTOMERS (SALESDATAID) (unique index)
-
-### Foreign Keys
--  PUBLIC."PUBLISHER SALES".SALESDATA --> PUBLIC."PUBLISHER SALES".SALES
 
 
 
@@ -242,6 +235,12 @@ along with the latest updated information
 - FK_SALES_BOOK (BOOKID)
 - FK_SALES_SALESDATA (SALESDATAID)
 - FK_SALES_REGIONS (POSTALCODE, COUNTRY)
+
+### Foreign Keys
+- FK_SALES_BOOK (*BOOKID* --> **BOOKS.ID**)
+- FK_SALES_SALESDATA (*SALESDATAID* --> **SALESDATA.SALESDATAID**)
+- FK_SALES_REGIONS (*POSTALCODE* --> **REGIONS.POSTALCODE**)
+- FK_SALES_REGIONS (*COUNTRY* --> **REGIONS.COUNTRY**)
 
 
 
