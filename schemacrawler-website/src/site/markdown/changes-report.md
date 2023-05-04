@@ -6,6 +6,7 @@ SchemaCrawler release notes.
 ## Release 16.19.10 - 2023-05-21
 
 - Enhance Mermaid diagram generation with remarks and primary and foreign key designations
+- Distribute Python script to generate Markdown output
 
 
 <a name="a16.19.9"></a>

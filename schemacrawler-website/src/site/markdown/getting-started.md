@@ -38,6 +38,7 @@ And finally, here are some other quick getting started articles:
 - [How to Visualize Your MySql Database with One Command (and Nothing to Install)](https://dev.to/sualeh/how-to-visualize-your-mysql-database-with-one-command-and-nothing-to-install-21cp)
 - [How to Visualize Your PostgreSQL Database with One Command (and Nothing to Install)](https://dev.to/sualeh/how-to-visualize-your-postgresql-database-with-one-command-and-nothing-to-install-3e3j)
 - [How to Visualize Your SQLite Database with One Command (and Nothing to Install)](https://dev.to/sualeh/how-to-visualize-your-sqlite-database-with-one-command-and-nothing-to-install-1f4m)
+- [Automatically Document Your Database in Markdown](https://dev.to/sualeh/automatically-document-your-database-in-markdown-elf)
 
 
 ### Explore the Command-Line
