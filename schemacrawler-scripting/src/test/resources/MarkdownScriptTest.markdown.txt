@@ -1,9 +1,12 @@
 # FROM TEST: Database Schema Diagram
 
-##  PUBLIC.BOOKS.AUTHORS
+## PUBLIC.BOOKS
 
-## Columns
-- ID (INTEGER)
+### AUTHORS (table)
+Contact details for book authors
+
+### Columns
+- **ID** (INTEGER)
 - FIRSTNAME (VARCHAR)
 - LASTNAME (VARCHAR)
 - ADDRESS1 (VARCHAR)
@@ -13,217 +16,231 @@
 - POSTALCODE (VARCHAR)
 - COUNTRY (VARCHAR)
 
-## Primary Key
-("ID") 
+### Primary Key
+- PK_AUTHORS (ID) 
 
-## Indexes
-- IDX_B_AUTHORS ("LASTNAME", "FIRSTNAME")
-- IDX_A_AUTHORS ("CITY", "STATE", "POSTALCODE", "COUNTRY")
-
-## Foreign Keys
--  PUBLIC.BOOKS.AUTHORS --> PUBLIC.BOOKS.BOOKAUTHORS
+### Indexes
+- IDX_B_AUTHORS (LASTNAME, FIRSTNAME)
+- IDX_A_AUTHORS (CITY, STATE, POSTALCODE, COUNTRY)
 
 
 
-##  PUBLIC.BOOKS.BOOKS
+### BOOKS (table)
+Details for published books
 
-## Columns
-- ID (INTEGER)
-- TITLE (VARCHAR)
-- DESCRIPTION (VARCHAR)
-- PUBLISHERID (INTEGER)
-- PUBLICATIONDATE (DATE)
-- PRICE (DOUBLE)
-- PREVIOUSEDITIONID (INTEGER)
+### Columns
+- **ID** (INTEGER)    
+Unique (internal) id for book
+- TITLE (VARCHAR)    
+Book title
+- DESCRIPTION (VARCHAR)    
+Book description
+    (Usually the blurb from the book jacket or promotional materials)
+- PUBLISHERID (INTEGER)    
+Foreign key to the book publisher
+- PUBLICATIONDATE (DATE)    
+Book publication date
+- PRICE (DOUBLE)    
+Current price for the book
+- *PREVIOUSEDITIONID* (INTEGER)
 
-## Primary Key
-("ID") 
+### Primary Key
+- PK_BOOKS (ID) 
 
-## Indexes
-- U_PREVIOUSEDITION ("PREVIOUSEDITIONID"), unique index
-- FK_PREVIOUSEDITION ("PREVIOUSEDITIONID")
+### Indexes
+- U_PREVIOUSEDITION (PREVIOUSEDITIONID) (unique index)
+- FK_PREVIOUSEDITION (PREVIOUSEDITIONID)
 
-## Foreign Keys
--  PUBLIC.BOOKS.BOOKS --> PUBLIC.BOOKS.BOOKAUTHORS
--  PUBLIC.BOOKS.BOOKS --> PUBLIC.BOOKS.BOOKS
--  PUBLIC.BOOKS.BOOKS --> PUBLIC."PUBLISHER SALES".SALES
+### Foreign Keys
+- FK_PREVIOUSEDITION (*PREVIOUSEDITIONID* --> **BOOKS.ID**)
 
 
 
-##  PUBLIC.BOOKS."Celebrities"
+### Celebrities (table)
 
-## Columns
-- Id (INTEGER)
+### Columns
+- **Id** (INTEGER)
 - NAME (VARCHAR)
 
-## Primary Key
-("Id") 
+### Primary Key
+- PK_Celebrities ("Id") 
 
-## Indexes
-
-## Foreign Keys
--  PUBLIC.BOOKS."Celebrities" --> PUBLIC.BOOKS."Celebrity Updates"
+### Indexes
 
 
 
-##  PUBLIC.BOOKS.COUPONS
+### COUPONS (table)
 
-## Columns
-- ID (INTEGER)
+### Columns
+- **ID** (INTEGER)
 - DATA (CLOB)
 - COUPONS (PUBLIC.BOOKS."INTEGER ARRAY")
 - BOOKS (PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]")
 
-## Primary Key
-("ID") 
+### Primary Key
+- PK_COUPONS (ID) 
 
-## Indexes
+### Indexes
 
 
 
-##  PUBLIC.BOOKS.CUSTOMERDATA
+### CUSTOMERDATA (table)
 
-## Columns
-- ID (INTEGER)
+### Columns
+- **ID** (INTEGER)
 - DATA (PUBLIC.BOOKS.VALID_STRING)
 
-## Primary Key
-("ID") 
+### Primary Key
+- PK_CUSTOMERDATA (ID) 
 
-## Indexes
+### Indexes
 
 
 
-##  PUBLIC.BOOKS.CUSTOMERS
+### CUSTOMERS (table)
 
-## Columns
-- ID (INTEGER)
+### Columns
+- **ID** (INTEGER)
 - FIRSTNAME (PUBLIC.BOOKS.NAME_TYPE)
 - LASTNAME (PUBLIC.BOOKS.NAME_TYPE)
 - AGE (PUBLIC.BOOKS.AGE_TYPE)
 
-## Primary Key
-("ID") 
+### Primary Key
+- PK_CUSTOMERS (ID) 
 
-## Indexes
-
-
-
-##  PUBLIC.BOOKS.PUBLISHERS
-
-## Columns
-- ID (INTEGER)
-- PUBLISHER (VARCHAR)
-
-## Primary Key
-("ID") 
-
-## Indexes
-
-## Foreign Keys
--  PUBLIC.BOOKS.PUBLISHERS --> PUBLIC.BOOKS.ΒΙΒΛΊΑ
+### Indexes
 
 
 
-##  PUBLIC."PUBLISHER SALES".REGIONS
+### PUBLISHERS (table)
+List of book publishers
 
-## Columns
-- CITY (VARCHAR)
-- STATE (VARCHAR)
-- POSTALCODE (VARCHAR)
-- COUNTRY (VARCHAR)
+### Columns
+- **ID** (INTEGER)    
+Unique (internal) id for book publisher
+- PUBLISHER (VARCHAR)    
+Name of book publisher
 
-## Primary Key
-("POSTALCODE", "COUNTRY") 
+### Primary Key
+- SYS_PK_10126 (ID) 
 
-## Indexes
-
-## Foreign Keys
--  PUBLIC."PUBLISHER SALES".REGIONS --> PUBLIC."PUBLISHER SALES".SALES
+### Indexes
 
 
 
-##  PUBLIC."PUBLISHER SALES".SALESDATA
+### BOOKAUTHORS (table)
+Relationship between books and their authors, 
+along with the latest updated information
 
-## Columns
-- SALESDATAID (INTEGER)
-- YEARLYAMOUNT (DOUBLE)
-
-## Indexes
-- UQ_CUSTOMERS ("SALESDATAID"), unique index
-
-## Foreign Keys
--  PUBLIC."PUBLISHER SALES".SALESDATA --> PUBLIC."PUBLISHER SALES".SALES
-
-
-
-##  PUBLIC.BOOKS.BOOKAUTHORS
-
-## Columns
-- BOOKID (INTEGER)
-- AUTHORID (INTEGER)
+### Columns
+- *BOOKID* (INTEGER)
+- *AUTHORID* (INTEGER)
 - SOMEDATA (VARCHAR)
 
-## Indexes
-- Z_FK_AUTHOR ("AUTHORID")
-- SYS_FK_10120 ("BOOKID")
-- UIDX_BOOKAUTHORS ("BOOKID", "AUTHORID"), unique index
+### Indexes
+- Z_FK_AUTHOR (AUTHORID)
+- SYS_FK_10120 (BOOKID)
+- UIDX_BOOKAUTHORS (BOOKID, AUTHORID) (unique index)
+
+### Foreign Keys
+- Z_FK_AUTHOR (*AUTHORID* --> **AUTHORS.ID**)
+- SYS_FK_10120 (*BOOKID* --> **BOOKS.ID**)
 
 
 
-##  PUBLIC.BOOKS."Celebrity Updates"
+### Celebrity Updates (table)
 
-## Columns
-- Celebrity Id (INTEGER)
+### Columns
+- **Celebrity Id** (INTEGER)
 - UPDATE (VARCHAR)
 
-## Primary Key
-("Celebrity Id") 
+### Primary Key
+- PK Celebrity Updates ("Celebrity Id") 
 
-## Indexes
+### Indexes
+
+### Foreign Keys
+- SYS_FK_10130 (*Celebrity Id* --> **"Celebrities"."Id"**)
 
 
 
-##  PUBLIC.BOOKS.ΒΙΒΛΊΑ
+### ΒΙΒΛΊΑ (table)
 
-## Columns
-- ΜΟΝΑΔΙΚΌΣ (SMALLINT)
+### Columns
+- **ΜΟΝΑΔΙΚΌΣ** (SMALLINT)
 - ΤΊΤΛΟΣ (VARCHAR)
 - ΠΕΡΙΓΡΑΦΉ (VARCHAR)
-- ΕΚΔΌΤΗΣ (SMALLINT)
+- *ΕΚΔΌΤΗΣ* (SMALLINT)
 
-## Primary Key
-("ΜΟΝΑΔΙΚΌΣ") 
+### Primary Key
+- PK_ΒΙΒΛΊΑ (ΜΟΝΑΔΙΚΌΣ) 
 
-## Indexes
-- FK_ΒΙΒΛΊΑ_PUBLISHERS ("ΕΚΔΌΤΗΣ")
+### Indexes
+- FK_ΒΙΒΛΊΑ_PUBLISHERS (ΕΚΔΌΤΗΣ)
 
-
-
-##  PUBLIC."PUBLISHER SALES".SALES
-
-## Columns
-- POSTALCODE (VARCHAR)
-- COUNTRY (VARCHAR)
-- BOOKID (INTEGER)
-- COUPON_ID (INTEGER)
-- PERIODENDDATE (DATE)
-- TOTALAMOUNT (DOUBLE)
-- SALESDATAID (INTEGER)
-
-## Indexes
-- FK_SALES_BOOK ("BOOKID")
-- FK_SALES_SALESDATA ("SALESDATAID")
-- FK_SALES_REGIONS ("POSTALCODE", "COUNTRY")
+### Foreign Keys
+- FK_ΒΙΒΛΊΑ_PUBLISHERS (*ΕΚΔΌΤΗΣ* --> **PUBLISHERS.ID**)
 
 
 
-##  PUBLIC.BOOKS.AUTHORSLIST
+### AUTHORSLIST (view)
 
-## Columns
+### Columns
 - ID (INTEGER)
 - FIRSTNAME (VARCHAR)
 - LASTNAME (VARCHAR)
+
+
+
+## PUBLIC."PUBLISHER SALES"
+
+### REGIONS (table)
+
+### Columns
+- CITY (VARCHAR)
+- STATE (VARCHAR)
+- **POSTALCODE** (VARCHAR)
+- **COUNTRY** (VARCHAR)
+
+### Primary Key
+- PK_CUSTOMERS (POSTALCODE, COUNTRY) 
+
+### Indexes
+
+
+
+### SALESDATA (table)
+
+### Columns
+- SALESDATAID (INTEGER)
+- YEARLYAMOUNT (DOUBLE)
+
+### Indexes
+- UQ_CUSTOMERS (SALESDATAID) (unique index)
+
+
+
+### SALES (table)
+
+### Columns
+- *POSTALCODE* (VARCHAR)
+- *COUNTRY* (VARCHAR)
+- *BOOKID* (INTEGER)
+- COUPON_ID (INTEGER)
+- PERIODENDDATE (DATE)
+- TOTALAMOUNT (DOUBLE)
+- *SALESDATAID* (INTEGER)
+
+### Indexes
+- FK_SALES_BOOK (BOOKID)
+- FK_SALES_SALESDATA (SALESDATAID)
+- FK_SALES_REGIONS (POSTALCODE, COUNTRY)
+
+### Foreign Keys
+- FK_SALES_BOOK (*BOOKID* --> **BOOKS.ID**)
+- FK_SALES_SALESDATA (*SALESDATAID* --> **SALESDATA.SALESDATAID**)
+- FK_SALES_REGIONS (*POSTALCODE* --> **REGIONS.POSTALCODE**)
+- FK_SALES_REGIONS (*COUNTRY* --> **REGIONS.COUNTRY**)
 
 
 
