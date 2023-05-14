@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -43,7 +42,6 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
@@ -105,6 +103,14 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       final String fkTableSchemaName = normalizeSchemaName(results.getString("FKTABLE_SCHEM"));
       final String fkTableName = results.getString("FKTABLE_NAME");
       final String fkColumnName = results.getString("FKCOLUMN_NAME");
+
+      final Optional<MutableTable> pkTableOptional =
+          lookupTable(pkTableCatalogName, pkTableSchemaName, pkTableName);
+      final Optional<MutableTable> fkTableOptional =
+          lookupTable(fkTableCatalogName, fkTableSchemaName, fkTableName);
+      if (!pkTableOptional.isPresent() && !fkTableOptional.isPresent()) {
+        continue;
+      }
 
       final int keySequence = results.getInt("KEY_SEQ", 0);
       final ForeignKeyUpdateRule updateRule =
