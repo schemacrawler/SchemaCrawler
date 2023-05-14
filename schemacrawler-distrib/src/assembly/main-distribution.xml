@@ -64,10 +64,10 @@
       </fileset>
     </copy>
     <copy todir="${main-distribution.staging.dir}/examples/other-diagrams">
-      <fileset
-        dir="${SchemaCrawler.home}/schemacrawler-scripting/src/test/resources">
-        <include name="dbml.py" />
-        <include name="mermaid.py" />
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
+        <include name="**/mermaid.py" />
+        <include name="**/dbml.py" />
+        <include name="**/plantuml.py" />
       </fileset>
     </copy>
 

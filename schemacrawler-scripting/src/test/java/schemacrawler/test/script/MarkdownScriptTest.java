@@ -51,7 +51,7 @@ public class MarkdownScriptTest {
   public void markdown(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/markdown.py")),
+        outputOf(scriptExecution(dataSource, "/scripts/markdown.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }

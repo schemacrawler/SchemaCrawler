@@ -33,9 +33,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -53,7 +51,7 @@ public class DiagramScriptTest {
   public void dbml(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/dbml.py")),
+        outputOf(scriptExecution(dataSource, "/scripts/dbml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
@@ -62,7 +60,7 @@ public class DiagramScriptTest {
   public void mermaid(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/mermaid.py")),
+        outputOf(scriptExecution(dataSource, "/scripts/mermaid.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
@@ -71,7 +69,7 @@ public class DiagramScriptTest {
   public void plantuml(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/plantuml.py")),
+        outputOf(scriptExecution(dataSource, "/scripts/plantuml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }
