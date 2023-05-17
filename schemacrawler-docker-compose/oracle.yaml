@@ -4,7 +4,7 @@ services:
 
   oracle:
     # https://hub.docker.com/r/gvenzl/oracle-xe
-    image: gvenzl/oracle-xe:18-slim
+    image: gvenzl/oracle-xe:21-slim-faststart
     container_name: oracle
     ports:
       - target: 1521

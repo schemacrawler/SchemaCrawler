@@ -36,7 +36,7 @@ public final class OracleTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newOracle21Container() {
-    return newOracleContainer("21-slim");
+    return newOracleContainer("21-slim-faststart");
   }
 
   @SuppressWarnings("resource")
