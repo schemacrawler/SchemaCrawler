@@ -7,6 +7,7 @@ SchemaCrawler release notes.
 
 - Enhance Mermaid diagram generation with remarks and primary and foreign key designations
 - Distribute Python script to generate Markdown output
+- Fix issue #1130 with filtering quoted names
 
 
 <a name="a16.19.9"></a>
