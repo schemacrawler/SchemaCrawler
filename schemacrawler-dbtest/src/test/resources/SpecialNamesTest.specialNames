@@ -5,18 +5,18 @@ Tables
 
 
 
-#some-new-database#.#some-people#                                [table]
+`some-new-database`.`some-people`                                [table]
 ------------------------------------------------------------------------
-  #Id#                              INT NOT NULL                
-  #some-name#                       VARCHAR(40) NOT NULL        
+  `Id`                              INT NOT NULL                
+  `some-name`                       VARCHAR(40) NOT NULL        
 
 Primary Key
 
-#PRIMARY#                                                  [primary key]
-  #Id#                                                          
+`PRIMARY`                                                  [primary key]
+  `Id`                                                          
 
 Indexes
 
-#PRIMARY#                                                 [unique index]
-  #Id#                              ascending                   
+`PRIMARY`                                                 [unique index]
+  `Id`                              ascending                   
 

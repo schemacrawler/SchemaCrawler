@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,10 +40,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -92,8 +91,10 @@ final class SchemaRetriever extends AbstractRetriever {
     }
 
     // Filter out schemas
+    final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
     for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator.hasNext(); ) {
       final SchemaReference schemaRef = iterator.next();
+      schemaRef.withQuoting(identifiers);
       if (!schemaFilter.test(schemaRef)) {
         LOGGER.log(Level.FINER, new StringFormat("Excluding schema <%s>", schemaRef));
         iterator.remove();
@@ -104,7 +105,6 @@ final class SchemaRetriever extends AbstractRetriever {
     // Create schemas for the catalogs, as well as create the schema
     // reference cache
     for (final SchemaReference schemaRef : schemaRefs) {
-      schemaRef.withQuoting(getRetrieverConnection().getIdentifiers());
       catalog.addSchema(schemaRef);
     }
 
