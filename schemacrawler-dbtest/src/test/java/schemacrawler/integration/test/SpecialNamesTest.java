@@ -44,6 +44,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -102,13 +103,15 @@ public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
   @Test
   public void specialNames(final TestContext testContext) throws Exception {
 
-    final String catalog =
-        IdentifiersBuilder.builder()
-            .withIdentifierQuoteString("`")
-            .toOptions()
-            .quoteName("some-new-database");
+    final Identifiers identifiers =
+        IdentifiersBuilder.builder().withIdentifierQuoteString("`").toOptions();
+    final String catalogName = identifiers.quoteName("some-new-database");
+    final String tableName = identifiers.quoteName("some-people");
+
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().includeSchemas(new RegularExpressionInclusionRule(catalog));
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(catalogName))
+            .includeTables(new RegularExpressionInclusionRule(".*\\." + tableName));
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
         SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard);
     final LoadOptionsBuilder loadOptionsBuilder =
