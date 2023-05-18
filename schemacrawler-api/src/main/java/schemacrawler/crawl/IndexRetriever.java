@@ -32,14 +32,12 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -68,7 +66,7 @@ final class IndexRetriever extends AbstractRetriever {
     switch (getRetrieverConnection().get(indexesRetrievalStrategy)) {
       case data_dictionary_all:
         LOGGER.log(Level.INFO, "Retrieving indexes, using fast data dictionary retrieval");
-        retrieveIndexesFromDataDictionary(allTables);
+        retrieveIndexesFromDataDictionary();
         break;
 
       case metadata:
@@ -146,6 +144,7 @@ final class IndexRetriever extends AbstractRetriever {
       index = new MutableIndex(table, indexName);
       table.addIndex(index);
     }
+    index.withQuoting(getRetrieverConnection().getIdentifiers());
 
     final MutableIndexColumn indexColumn = new MutableIndexColumn(index, column);
     indexColumn.setKeyOrdinalPosition(ordinalPosition);
@@ -157,11 +156,9 @@ final class IndexRetriever extends AbstractRetriever {
     index.setCardinality(cardinality);
     index.setPages(pages);
     index.addAttributes(results.getAttributes());
-    index.withQuoting(getRetrieverConnection().getIdentifiers());
   }
 
-  private void retrieveIndexesFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-      throws WrappedSQLException {
+  private void retrieveIndexesFromDataDictionary() throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 

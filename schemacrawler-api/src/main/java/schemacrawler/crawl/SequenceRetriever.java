@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
-
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -37,7 +36,6 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -112,6 +110,12 @@ final class SequenceRetriever extends AbstractRetriever {
         final Schema schema = optionalSchema.get();
 
         final MutableSequence sequence = new MutableSequence(schema, sequenceName);
+        sequence.withQuoting(getRetrieverConnection().getIdentifiers());
+
+        if (sequenceFilter.test(sequence)) {
+          catalog.addSequence(sequence);
+        }
+
         sequence.setStartValue(startValue);
         sequence.setMaximumValue(maximumValue);
         sequence.setMinimumValue(minimumValue);
@@ -119,11 +123,6 @@ final class SequenceRetriever extends AbstractRetriever {
         sequence.setCycle(cycle);
 
         sequence.addAttributes(results.getAttributes());
-        sequence.withQuoting(getRetrieverConnection().getIdentifiers());
-
-        if (sequenceFilter.test(sequence)) {
-          catalog.addSequence(sequence);
-        }
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve sequences", e);

@@ -158,12 +158,12 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         foreignKey = new MutableForeignKey(foreignKeyName, columnReference);
         foreignKeys.put(fkLookupKey, foreignKey);
       }
+      foreignKey.withQuoting(getRetrieverConnection().getIdentifiers());
 
       foreignKey.setUpdateRule(updateRule);
       foreignKey.setDeleteRule(deleteRule);
       foreignKey.setDeferrability(deferrability);
       foreignKey.addAttributes(results.getAttributes());
-      foreignKey.withQuoting(getRetrieverConnection().getIdentifiers());
 
       if (fkColumn instanceof MutableColumn) {
         ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);

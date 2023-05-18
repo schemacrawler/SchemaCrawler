@@ -381,6 +381,8 @@ final class TableExtRetriever extends AbstractRetriever {
 
         final MutableTrigger trigger =
             table.lookupTrigger(triggerName).orElse(new MutableTrigger(table, triggerName));
+        trigger.withQuoting(getRetrieverConnection().getIdentifiers());
+
         trigger.setEventManipulationType(eventManipulationType);
         trigger.setActionOrder(actionOrder);
         trigger.appendActionCondition(actionCondition);
@@ -389,7 +391,7 @@ final class TableExtRetriever extends AbstractRetriever {
         trigger.setConditionTiming(conditionTiming);
 
         trigger.addAttributes(results.getAttributes());
-        trigger.withQuoting(getRetrieverConnection().getIdentifiers());
+
         // Add trigger to the table
         table.addTrigger(trigger);
       }

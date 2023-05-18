@@ -34,7 +34,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -44,7 +43,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -138,6 +136,8 @@ final class TableColumnRetriever extends AbstractRetriever {
 
     final MutableTable table = optionalTable.get();
     final MutableColumn column = lookupOrCreateTableColumn(table, columnName);
+    column.withQuoting(getRetrieverConnection().getIdentifiers());
+
     if (columnFilter.test(column) && belongsToSchema(table, catalogName, schemaName)) {
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
@@ -168,7 +168,6 @@ final class TableColumnRetriever extends AbstractRetriever {
       }
 
       column.addAttributes(results.getAttributes());
-      column.withQuoting(getRetrieverConnection().getIdentifiers());
 
       LOGGER.log(
           Level.FINER,
@@ -202,9 +201,7 @@ final class TableColumnRetriever extends AbstractRetriever {
   private MutableColumn lookupOrCreateTableColumn(
       final MutableTable table, final String columnName) {
     final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-    final MutableColumn column =
-        columnOptional.orElseGet(() -> new MutableColumn(table, columnName));
-    return column;
+    return columnOptional.orElseGet(() -> new MutableColumn(table, columnName));
   }
 
   private Set<NamedObjectKey> retrieveHiddenTableColumnsLookupKeys() throws SQLException {

@@ -30,14 +30,12 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
@@ -147,14 +145,15 @@ final class SynonymRetriever extends AbstractRetriever {
         }
 
         final MutableSynonym synonym = new MutableSynonym(schema, synonymName);
-        synonym.setReferencedObject(referencedObject);
-
-        synonym.addAttributes(results.getAttributes());
         synonym.withQuoting(getRetrieverConnection().getIdentifiers());
 
         if (synonymFilter.test(synonym)) {
           catalog.addSynonym(synonym);
         }
+
+        synonym.setReferencedObject(referencedObject);
+
+        synonym.addAttributes(results.getAttributes());
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve synonyms", e);

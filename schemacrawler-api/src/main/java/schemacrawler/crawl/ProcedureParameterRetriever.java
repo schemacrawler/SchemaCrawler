@@ -33,7 +33,6 @@ import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -41,7 +40,6 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -141,6 +139,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     final MutableProcedure procedure = (MutableProcedure) routine;
     final MutableProcedureParameter parameter =
         lookupOrCreateProcedureParameter(procedure, columnName);
+    parameter.withQuoting(getRetrieverConnection().getIdentifiers());
     if (parameterFilter.test(parameter)
         && belongsToSchema(procedure, columnCatalogName, schemaName)) {
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
@@ -162,7 +161,6 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       parameter.setRemarks(remarks);
 
       parameter.addAttributes(results.getAttributes());
-      parameter.withQuoting(getRetrieverConnection().getIdentifiers());
 
       LOGGER.log(Level.FINER, new StringFormat("Adding parameter to procedure <%s>", parameter));
       procedure.addParameter(parameter);
@@ -190,9 +188,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       final MutableProcedure procedure, final String columnName) {
     final Optional<MutableProcedureParameter> parameterOptional =
         procedure.lookupParameter(columnName);
-    final MutableProcedureParameter parameter =
-        parameterOptional.orElseGet(() -> new MutableProcedureParameter(procedure, columnName));
-    return parameter;
+    return parameterOptional.orElseGet(() -> new MutableProcedureParameter(procedure, columnName));
   }
 
   private void retrieveProcedureParametersFromDataDictionary(

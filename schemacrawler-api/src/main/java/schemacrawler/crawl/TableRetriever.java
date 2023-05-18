@@ -31,14 +31,12 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -85,7 +83,7 @@ final class TableRetriever extends AbstractRetriever {
     switch (getRetrieverConnection().get(tablesRetrievalStrategy)) {
       case data_dictionary_all:
         LOGGER.log(Level.INFO, "Retrieving tables, using fast data dictionary retrieval");
-        retrieveTablesFromDataDictionary(schemas, tableNamePattern, tableTypes, tableFilter);
+        retrieveTablesFromDataDictionary(schemas, tableTypes, tableFilter);
         break;
 
       case metadata:
@@ -137,12 +135,12 @@ final class TableRetriever extends AbstractRetriever {
     } else {
       table = new MutableTable(schema, tableName);
     }
+    table.withQuoting(getRetrieverConnection().getIdentifiers());
 
     if (tableFilter.test(table)) {
       table.setTableType(tableType);
       table.setRemarks(remarks);
       table.addAttributes(results.getAttributes());
-      table.withQuoting(getRetrieverConnection().getIdentifiers());
 
       catalog.addTable(table);
     }
@@ -150,7 +148,6 @@ final class TableRetriever extends AbstractRetriever {
 
   private void retrieveTablesFromDataDictionary(
       final NamedObjectList<SchemaReference> schemas,
-      final String tableNamePattern,
       final TableTypes tableTypes,
       final InclusionRuleFilter<Table> tableFilter)
       throws SQLException {

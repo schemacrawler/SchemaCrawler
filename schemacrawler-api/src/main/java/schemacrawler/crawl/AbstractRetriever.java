@@ -31,14 +31,12 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;

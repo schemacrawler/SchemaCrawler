@@ -33,7 +33,6 @@ import static schemacrawler.schema.DataTypeType.system;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -41,7 +40,6 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -130,6 +128,7 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     final MutableColumnDataType columnDataType =
         lookupOrCreateColumnDataType(system, systemSchema, dataType, typeName);
+    columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
     // Set the Java SQL type code, but no mapped Java class is
     // available, so use the defaults
     columnDataType.setPrecision(precision);
@@ -148,7 +147,6 @@ final class DataTypeRetriever extends AbstractRetriever {
     columnDataType.setNumPrecisionRadix(numPrecisionRadix);
 
     columnDataType.addAttributes(results.getAttributes());
-    columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
     catalog.addColumnDataType(columnDataType);
   }
@@ -236,11 +234,12 @@ final class DataTypeRetriever extends AbstractRetriever {
         }
         final MutableColumnDataType columnDataType =
             lookupOrCreateColumnDataType(user_defined, schema, dataType, typeName, className);
+        columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
+
         columnDataType.setBaseType(baseType);
         columnDataType.setRemarks(remarks);
 
         columnDataType.addAttributes(results.getAttributes());
-        columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
         catalog.addColumnDataType(columnDataType);
       }
