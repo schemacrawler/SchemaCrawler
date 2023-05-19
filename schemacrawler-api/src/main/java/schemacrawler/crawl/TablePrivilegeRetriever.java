@@ -32,14 +32,12 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMN_PRIV
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_PRIVILEGES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -146,9 +144,9 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
             privilegeOptional.orElse(
                 new MutablePrivilege<>(new TablePointer(table), privilegeName));
       }
+      privilege.withQuoting(getRetrieverConnection().getIdentifiers());
 
       privilege.addGrant(grantor, grantee, isGrantable);
-      privilege.withQuoting(getRetrieverConnection().getIdentifiers());
 
       if (privilegesForColumn) {
         column.addPrivilege((MutablePrivilege<Column>) privilege);

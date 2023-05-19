@@ -1,0 +1,22 @@
+
+
+Tables
+========================================================================
+
+
+
+`some-new-database`.`some-people`                                [table]
+------------------------------------------------------------------------
+  `Id`                              INT NOT NULL                
+  `some-name`                       VARCHAR(40) NOT NULL        
+
+Primary Key
+
+`PRIMARY`                                                  [primary key]
+  `Id`                                                          
+
+Indexes
+
+`PRIMARY`                                                 [unique index]
+  `Id`                              ascending                   
+

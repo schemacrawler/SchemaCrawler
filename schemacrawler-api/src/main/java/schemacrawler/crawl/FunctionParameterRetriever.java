@@ -33,7 +33,6 @@ import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -41,7 +40,6 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
@@ -137,6 +135,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     final MutableFunction function = (MutableFunction) routine;
     final MutableFunctionParameter parameter =
         lookupOrCreateFunctionParameter(function, columnName);
+    parameter.withQuoting(getRetrieverConnection().getIdentifiers());
     if (parameterFilter.test(parameter)
         && belongsToSchema(function, columnCatalogName, schemaName)) {
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
@@ -158,7 +157,6 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       parameter.setRemarks(remarks);
 
       parameter.addAttributes(results.getAttributes());
-      parameter.withQuoting(getRetrieverConnection().getIdentifiers());
 
       LOGGER.log(Level.FINER, new StringFormat("Adding parameter to function <%s>", parameter));
       function.addParameter(parameter);
@@ -185,9 +183,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
   private MutableFunctionParameter lookupOrCreateFunctionParameter(
       final MutableFunction function, final String columnName) {
     final Optional<MutableFunctionParameter> columnOptional = function.lookupParameter(columnName);
-    final MutableFunctionParameter column =
-        columnOptional.orElseGet(() -> new MutableFunctionParameter(function, columnName));
-    return column;
+    return columnOptional.orElseGet(() -> new MutableFunctionParameter(function, columnName));
   }
 
   private void retrieveFunctionParametersFromDataDictionary(
