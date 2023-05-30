@@ -47,7 +47,16 @@ public class PooledConnectionUtility {
 
     PooledConnectionInvocationHandler(
         final Connection connection, final DatabaseConnectionSource databaseConnectionSource) {
-      this.connection = requireNonNull(connection, "No database connnection provided");
+      requireNonNull(connection, "No database connnection provided");
+      if (connection instanceof DatabaseConnectionSourceConnection) {
+        try {
+          this.connection = connection.unwrap(Connection.class);
+        } catch (final SQLException e) {
+          throw new RuntimeException("Could not unwrap proxy connection");
+        }
+      } else {
+        this.connection = connection;
+      }
       this.databaseConnectionSource =
           requireNonNull(databaseConnectionSource, "No database connection source provided");
       isClosed = false;
@@ -99,7 +108,7 @@ public class PooledConnectionUtility {
     return (Connection)
         newProxyInstance(
             PooledConnectionUtility.class.getClassLoader(),
-            new Class[] {Connection.class},
+            new Class[] {Connection.class, DatabaseConnectionSourceConnection.class},
             new PooledConnectionInvocationHandler(connection, databaseConnectionSource));
   }
 
