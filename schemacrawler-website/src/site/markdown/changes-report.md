@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+
+<a name="a16.19.11"></a>
+## Release 16.19.11 - 2023-06-03
+
+- Fix issue #1139 with allowing overrides of connection initializers in data sources
+
+
 <a name="a16.19.10"></a>
 ## Release 16.19.10 - 2023-05-21
 
