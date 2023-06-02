@@ -174,7 +174,7 @@ public final class SchemaCrawlerUtility {
       return;
     }
 
-    dataSource.setConnectionInitializer(schemaRetrievalOptions.getConnectionInitializer());
+    dataSource.setFirstConnectionInitializer(schemaRetrievalOptions.getConnectionInitializer());
   }
 
   /**
