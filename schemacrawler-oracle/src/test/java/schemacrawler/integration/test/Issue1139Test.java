@@ -65,7 +65,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @HeavyDatabaseTest
 @Testcontainers
 @ResolveTestContext
-public class Issue3119Test extends BaseOracleWithConnectionTest {
+public class Issue1139Test extends BaseOracleWithConnectionTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
@@ -81,7 +81,7 @@ public class Issue3119Test extends BaseOracleWithConnectionTest {
   }
 
   @Test
-  @DisplayName("Issue #3119 - override connection initializer")
+  @DisplayName("Issue #1139 - override connection initializer")
   public void showSchemaInDDL(final TestContext testContext) throws Exception {
 
     final DatabaseConnectionSource dataSource = getDataSource();
