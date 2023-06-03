@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>16.19.10</version>
+    <version>16.19.11</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-postgresql</artifactId>
