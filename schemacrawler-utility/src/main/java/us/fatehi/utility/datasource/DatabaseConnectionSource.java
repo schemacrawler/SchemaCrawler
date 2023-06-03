@@ -36,5 +36,5 @@ public interface DatabaseConnectionSource extends AutoCloseable, Supplier<Connec
 
   boolean releaseConnection(Connection connection);
 
-  void setConnectionInitializer(Consumer<Connection> connectionInitializer);
+  void setFirstConnectionInitializer(Consumer<Connection> connectionInitializer);
 }

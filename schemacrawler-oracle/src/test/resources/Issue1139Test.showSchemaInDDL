@@ -1,0 +1,24 @@
+
+
+Routines
+========================================================================
+
+
+
+BOOKS.CUSTOMADD                      [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               NUMBER(22, 38), in          
+
+                                                         [specific name]
+CUSTOMADD
+
+Definition
+                                                            [definition]
+CREATE OR REPLACE EDITIONABLE FUNCTION "BOOKS"."CUSTOMADD" (One IN INTEGER) 
+RETURN INTEGER 
+AS 
+BEGIN
+  RETURN One + 1; 
+END;
+/
+

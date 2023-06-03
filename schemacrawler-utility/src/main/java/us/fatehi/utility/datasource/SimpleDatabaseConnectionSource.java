@@ -44,6 +44,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import us.fatehi.utility.SQLRuntimeException;
 import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.string.StringFormat;
 
 final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
 
@@ -90,6 +91,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
     for (final Connection connection : connections) {
       try {
         connection.close();
+        LOGGER.log(Level.INFO, new StringFormat("Closed database connection <%s>", connection));
       } catch (final Exception e) {
         LOGGER.log(Level.WARNING, "Cannot close connection", e);
       }
