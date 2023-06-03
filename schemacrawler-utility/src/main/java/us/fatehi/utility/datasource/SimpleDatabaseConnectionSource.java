@@ -62,6 +62,7 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
       final UserCredentials userCredentials,
       final Consumer<Connection> connectionInitializer) {
 
+    super(connectionInitializer);
     this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
     requireNonNull(userCredentials, "No user credentials provided");
 
@@ -109,14 +110,19 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
   public synchronized Connection get() {
     // Create a connection if needed
     if (connectionPool.isEmpty()) {
-      final Connection connection =
-          getConnection(connectionUrl, jdbcConnectionProperties, connectionInitializer);
+      final Connection connection = getConnection(connectionUrl, jdbcConnectionProperties);
       connectionPool.add(connection);
     }
 
     // Mark connection as in-use
     final Connection connection = connectionPool.removeFirst();
     usedConnections.add(connection);
+
+    connectionInitializer.accept(connection);
+    LOGGER.log(
+        Level.FINE,
+        new StringFormat(
+            "Initialized database connection <%s> with <%s>", connection, connectionInitializer));
 
     return PooledConnectionUtility.newPooledConnection(connection, this);
   }

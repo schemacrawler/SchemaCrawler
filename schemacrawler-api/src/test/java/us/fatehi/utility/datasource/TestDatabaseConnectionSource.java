@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 
 final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
@@ -37,6 +36,7 @@ final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSourc
   private final Connection connection;
 
   public TestDatabaseConnectionSource(final Connection connection) {
+    super(conn -> {});
     this.connection = requireNonNull(connection, "No connection provided");
   }
 
