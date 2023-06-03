@@ -34,9 +34,15 @@ import java.sql.Connection;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import us.fatehi.utility.SQLRuntimeException;
+import us.fatehi.utility.string.StringFormat;
 
 final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(SingleDatabaseConnectionSource.class.getName());
 
   private final Connection connection;
 
@@ -45,7 +51,7 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
       final Map<String, String> connectionProperties,
       final UserCredentials userCredentials,
       final Consumer<Connection> connectionInitializer) {
-
+    super(connectionInitializer);
     requireNotBlank(connectionUrl, "No database connection URL provided");
     requireNonNull(userCredentials, "No user credentials provided");
 
@@ -53,7 +59,7 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
     final String password = userCredentials.getPassword();
     final Properties jdbcConnectionProperties =
         createConnectionProperties(connectionUrl, connectionProperties, user, password);
-    connection = getConnection(connectionUrl, jdbcConnectionProperties, connectionInitializer);
+    connection = getConnection(connectionUrl, jdbcConnectionProperties);
   }
 
   @Override
@@ -63,6 +69,12 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
 
   @Override
   public Connection get() {
+    connectionInitializer.accept(connection);
+    LOGGER.log(
+        Level.FINE,
+        new StringFormat(
+            "Initialized database connection <%s> with <%s>", connection, connectionInitializer));
+
     return PooledConnectionUtility.newPooledConnection(connection, this);
   }
 

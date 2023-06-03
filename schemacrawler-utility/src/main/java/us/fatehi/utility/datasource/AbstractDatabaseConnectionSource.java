@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
+import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -94,9 +95,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
   }
 
   protected static Connection getConnection(
-      final String connectionUrl,
-      final Properties jdbcConnectionProperties,
-      final Consumer<Connection> connectionInitializer) {
+      final String connectionUrl, final Properties jdbcConnectionProperties) {
 
     final String username;
     final String user = jdbcConnectionProperties.getProperty("user");
@@ -120,11 +119,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
       // SQLException in this case.)
       final Driver driver = getJdbcDriver(connectionUrl);
       final Connection connection = driver.connect(connectionUrl, jdbcConnectionProperties);
-
       LOGGER.log(Level.INFO, new StringFormat("Opened database connection <%s>", connection));
-
-      connectionInitializer.accept(connection);
-
       return connection;
     } catch (final SQLException e) {
       throw new SQLRuntimeException(
@@ -155,8 +150,9 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
 
   protected Consumer<Connection> connectionInitializer;
 
-  public AbstractDatabaseConnectionSource() {
-    connectionInitializer = connection -> {};
+  public AbstractDatabaseConnectionSource(final Consumer<Connection> connectionInitializer) {
+    this.connectionInitializer =
+        requireNonNull(connectionInitializer, "No connection initializer provided");
   }
 
   @Override
