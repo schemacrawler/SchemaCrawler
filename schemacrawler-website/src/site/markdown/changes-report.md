@@ -6,6 +6,7 @@ SchemaCrawler release notes.
 <a name="a16.19.11"></a>
 ## Release 16.19.11 - 2023-06-03
 
+- Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
 
 
