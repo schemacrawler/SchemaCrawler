@@ -19,6 +19,7 @@
 
 ### Testing
 
+- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
@@ -43,6 +44,7 @@
 
 ### Testing
 
+- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
@@ -67,6 +69,7 @@
 
 ### Testing
 
+- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
@@ -91,6 +94,7 @@
 
 ### Testing
 
+- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
@@ -116,6 +120,7 @@
 
 ### Testing
 
+- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
@@ -144,6 +149,7 @@ Connect to the IBM DB2 container if needed, run
 
 ### Testing
 
+- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
@@ -171,6 +177,7 @@ Connect to the Cassandra container if needed, run
 
 ### Testing
 
+- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash

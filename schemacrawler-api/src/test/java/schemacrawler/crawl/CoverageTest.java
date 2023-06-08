@@ -59,13 +59,13 @@ public class CoverageTest {
         matchesPattern("jdbc:hsqldb:hsql://\\d*\\.\\d*\\.\\d*\\.\\d*:\\d*/schemacrawler\\d*"));
 
     assertThat(databaseInfo.getDatabaseProductName(), is("HSQL Database Engine"));
-    assertThat(databaseInfo.getDatabaseProductVersion(), is("2.7.1"));
+    assertThat(databaseInfo.getDatabaseProductVersion(), is("2.7.2"));
 
     assertThat(jdbcDriverInfo.getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
     assertThat(jdbcDriverInfo.getDriverMajorVersion(), is(2));
     assertThat(jdbcDriverInfo.getDriverMinorVersion(), is(7));
     assertThat(jdbcDriverInfo.getDriverName(), is("HSQL Database Engine Driver"));
-    assertThat(jdbcDriverInfo.getDriverVersion(), is("2.7.1"));
+    assertThat(jdbcDriverInfo.getDriverVersion(), is("2.7.2"));
 
     assertThat(jdbcDriverInfo.getJdbcMajorVersion(), is(4));
     assertThat(jdbcDriverInfo.getJdbcMinorVersion(), is(2));
@@ -90,7 +90,7 @@ public class CoverageTest {
     assertThat(jdbcDriverInfo.getDriverMajorVersion(), is(2));
     assertThat(jdbcDriverInfo.getDriverMinorVersion(), is(7));
     assertThat(jdbcDriverInfo.getDriverName(), is("HSQL Database Engine Driver"));
-    assertThat(jdbcDriverInfo.getDriverVersion(), is("2.7.1"));
+    assertThat(jdbcDriverInfo.getDriverVersion(), is("2.7.2"));
 
     assertThat(databaseInfo.getUserName(), is(""));
   }
