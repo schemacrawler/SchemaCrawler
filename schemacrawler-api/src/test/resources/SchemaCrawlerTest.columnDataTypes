@@ -226,6 +226,30 @@ TIMESTAMP
   minimum scale 0
   maximum scale 0
   java.sql.Types: TIMESTAMP
+TIMESTAMP WITH TIME ZONE
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable except with where .. like
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: TIMESTAMP_WITH_TIMEZONE
+TIME WITH TIME ZONE
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable except with where .. like
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: TIME_WITH_TIMEZONE
 TINYINT
   column data-type
   defined with no parameters

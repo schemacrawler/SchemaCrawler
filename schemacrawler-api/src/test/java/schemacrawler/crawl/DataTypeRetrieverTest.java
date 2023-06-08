@@ -145,7 +145,7 @@ public class DataTypeRetrieverTest {
     try (final TestWriter out = testout) {
       final List<ColumnDataType> columnDataTypes =
           (List<ColumnDataType>) catalog.getColumnDataTypes();
-      assertThat("ColumnDataType count does not match", columnDataTypes, hasSize(23));
+      assertThat("ColumnDataType count does not match", columnDataTypes, hasSize(25));
       Collections.sort(columnDataTypes, NamedObjectSort.alphabetical);
       for (final ColumnDataType columnDataType : columnDataTypes) {
         assertThat(columnDataType, notNullValue());
@@ -218,7 +218,7 @@ public class DataTypeRetrieverTest {
     dataTypeRetriever.retrieveSystemColumnDataTypes();
 
     final Collection<ColumnDataType> systemColumnDataTypes = catalog.getSystemColumnDataTypes();
-    assertThat(systemColumnDataTypes, hasSize(23));
+    assertThat(systemColumnDataTypes, hasSize(25));
 
     // Additional catalog tests
     assertThat(

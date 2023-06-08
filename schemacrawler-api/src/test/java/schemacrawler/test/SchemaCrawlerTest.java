@@ -49,7 +49,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,11 +58,9 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
@@ -245,7 +242,7 @@ public class SchemaCrawlerTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Collection<ColumnDataType> columnDataTypes = catalog.getColumnDataTypes();
-      assertThat("ColumnDataType count does not match", columnDataTypes, hasSize(30));
+      assertThat("ColumnDataType count does not match", columnDataTypes, hasSize(32));
       for (final ColumnDataType columnDataType : columnDataTypes) {
         assertThat(columnDataType, notNullValue());
         out.println(printColumnDataType(columnDataType));

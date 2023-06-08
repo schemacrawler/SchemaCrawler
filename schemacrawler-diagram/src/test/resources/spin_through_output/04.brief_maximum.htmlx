@@ -248,11 +248,11 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
-		<td class='property_value'>HSQL Database Engine 2.7.1</td>
+		<td class='property_value'>HSQL Database Engine 2.7.2</td>
 	</tr>
 	<tr>
 		<td class='property_name'>driver version</td>
-		<td class='property_value'>HSQL Database Engine Driver 2.7.1</td>
+		<td class='property_value'>HSQL Database Engine Driver 2.7.2</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -269,7 +269,7 @@ td.section {
 <text text-anchor="start" x="1594.5" y="-29.3" font-family="Helvetica,sans-Serif" font-size="14.00">generated on</text>
 <text text-anchor="start" x="1683.5" y="-29.3" font-family="Helvetica,sans-Serif" font-size="14.00">2023&#45;02&#45;28 01:08:44</text>
 <text text-anchor="start" x="1570.5" y="-10.3" font-family="Helvetica,sans-Serif" font-size="14.00">database version</text>
-<text text-anchor="start" x="1683.5" y="-10.3" font-family="Helvetica,sans-Serif" font-size="14.00">HSQL Database Engine 2.7.1</text>
+<text text-anchor="start" x="1683.5" y="-10.3" font-family="Helvetica,sans-Serif" font-size="14.00">HSQL Database Engine 2.7.2</text>
 <polygon fill="none" stroke="#888888" points="1567,-4 1567,-63 1874,-63 1874,-4 1567,-4"/>
 <!-- authors_f521e766 -->
 <g id="node1" class="node">
