@@ -103,7 +103,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>418</version>
+      <version>419</version>
     </dependency>
     <dependency>
       <groupId>com.ing.data</groupId>
