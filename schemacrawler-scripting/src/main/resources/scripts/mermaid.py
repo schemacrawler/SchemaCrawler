@@ -4,7 +4,7 @@ import re
 
 # Mermaid only allows alphanumeric identifiers
 def cleanname(name):
-    namepattern = r'[^0-9a-zA-Z]'
+    namepattern = r'[^-\d\w]'
     cleanedname = re.sub(namepattern, '', name)
     if not cleanedname:
         cleanedname = "UNKNOWN"
