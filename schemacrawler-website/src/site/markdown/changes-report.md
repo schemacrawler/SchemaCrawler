@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.19.12"></a>
+## Release 16.19.12 - 2023-07-03
+
+- Fix issue #1179 for Mermaid diagram generation
+
 
 <a name="a16.19.11"></a>
 ## Release 16.19.11 - 2023-06-03
