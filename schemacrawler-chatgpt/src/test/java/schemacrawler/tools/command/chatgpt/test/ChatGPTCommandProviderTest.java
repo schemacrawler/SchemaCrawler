@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.ChatGPTCommand;
 import schemacrawler.tools.command.chatgpt.ChatGPTCommandProvider;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
@@ -19,7 +20,7 @@ public class ChatGPTCommandProviderTest {
         () -> commandProvider.newSchemaCrawlerCommand("bad-command", new Config()));
 
     assertThrows(
-        IllegalArgumentException.class,
+        ExecutionRuntimeException.class,
         () -> commandProvider.newSchemaCrawlerCommand("chatgpt", new Config()));
 
     final Config config = new Config();
