@@ -16,5 +16,5 @@ Once you have this running, you will have an interactive chat shell with ChatGPT
 
 To quit the console, you can type something like:
 
-- "I think I have everything I need, and I am done"
+- "I think I have everything I need"
 or simply, "done", "exit" or "quit".
