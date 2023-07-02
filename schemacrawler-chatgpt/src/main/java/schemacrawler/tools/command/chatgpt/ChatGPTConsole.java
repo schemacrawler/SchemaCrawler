@@ -41,15 +41,24 @@ public final class ChatGPTConsole {
 
   public void console() {
     try (final Scanner scanner = new Scanner(System.in)) {
-      String prompt = "";
-      while (!prompt.equalsIgnoreCase("exit")) {
+      while (true) {
         System.out.print(PROMPT);
-        prompt = scanner.nextLine();
+        final String prompt = scanner.nextLine();
         final List<ChatMessage> completions = complete(prompt);
         printResponse(completions);
-        endLoop(completions);
+        checkEndLoop(completions);
       }
     }
+  }
+
+  private void checkEndLoop(final List<ChatMessage> completions) {
+    completions.stream()
+        .forEach(
+            c -> {
+              if (c.getFunctionCall() != null && c.getName().equals("exit")) {
+                System.exit(0);
+              }
+            });
   }
 
   /**
@@ -100,16 +109,6 @@ public final class ChatGPTConsole {
     }
 
     return completions;
-  }
-
-  private void endLoop(final List<ChatMessage> completions) {
-    completions.stream()
-        .forEach(
-            c -> {
-              if (c.getFunctionCall() != null && c.getName().equals("exit")) {
-                System.exit(0);
-              }
-            });
   }
 
   /**
