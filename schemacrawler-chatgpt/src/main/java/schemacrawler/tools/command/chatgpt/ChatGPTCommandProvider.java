@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptionsBuilder;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -64,12 +65,16 @@ public class ChatGPTCommandProvider extends BaseCommandProvider {
       throw new IllegalArgumentException("Cannot support command, " + command);
     }
 
-    final ChatGPTCommandOptions options =
-        ChatGPTCommandOptionsBuilder.builder().fromConfig(config).toOptions();
+    try {
+      final ChatGPTCommandOptions options =
+          ChatGPTCommandOptionsBuilder.builder().fromConfig(config).toOptions();
 
-    final ChatGPTCommand scCommand = new ChatGPTCommand();
-    scCommand.setCommandOptions(options);
-    return scCommand;
+      final ChatGPTCommand scCommand = new ChatGPTCommand();
+      scCommand.setCommandOptions(options);
+      return scCommand;
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException(e);
+    }
   }
 
   @Override

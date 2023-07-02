@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 import static java.util.Comparator.naturalOrder;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +39,6 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
@@ -67,14 +65,12 @@ public final class CommandRegistry {
         final String typeName2 = commandProvider2.getClass().getSimpleName();
         if (typeName1.equals(typeName2)) {
           return 0;
+        } else if (typeName1.equals(fallbackProviderTypeName)) {
+          return 1;
+        } else if (typeName2.equals(fallbackProviderTypeName)) {
+          return -1;
         } else {
-          if (typeName1.equals(fallbackProviderTypeName)) {
-            return 1;
-          } else if (typeName2.equals(fallbackProviderTypeName)) {
-            return -1;
-          } else {
-            return typeName1.compareTo(typeName2);
-          }
+          return typeName1.compareTo(typeName2);
         }
       };
 
@@ -136,6 +132,9 @@ public final class CommandRegistry {
       }
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
+    } catch (final ExecutionRuntimeException e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      throw e;
     } catch (final Throwable e) {
       // Mainly catch NoClassDefFoundError, which is a Throwable, for
       // missing third-party jars
