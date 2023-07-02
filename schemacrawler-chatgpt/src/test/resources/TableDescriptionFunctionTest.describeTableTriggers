@@ -1,0 +1,2 @@
+Table "PUBLIC"."BOOKS"."AUTHORS" has the following triggers:
+- "TRG_AUTHORS" after delete on row

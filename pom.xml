@@ -28,6 +28,7 @@
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-scripting</module>
     <module>schemacrawler-lint</module>
+	<module>schemacrawler-chatgpt</module>
     <!-- Database plugins -->
     <module>schemacrawler-dbtest</module>
     <module>schemacrawler-db2</module>

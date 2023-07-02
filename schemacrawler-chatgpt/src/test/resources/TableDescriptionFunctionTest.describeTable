@@ -1,0 +1,22 @@
+Table "PUBLIC"."BOOKS"."BOOKS" has the following columns:
+ 1. "ID" of type INTEGER and is not nullable
+ 2. "TITLE" of type VARCHAR(255) and is not nullable
+ 3. "DESCRIPTION" of type VARCHAR(255)
+ 4. "PUBLISHERID" of type INTEGER and is not nullable
+ 5. "PUBLICATIONDATE" of type DATE
+ 6. "PRICE" of type DOUBLE(64, 0)
+ 7. "PREVIOUSEDITIONID" of type INTEGER
+
+Table "PUBLIC"."BOOKS"."BOOKS" has the following primary key:
+"PK_BOOKS" on columns "ID"
+
+Table "PUBLIC"."BOOKS"."BOOKS" has the following indexes:
+- "PK_BOOKS" on columns "ID"
+- "U_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
+- "FK_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
+
+Table "PUBLIC"."BOOKS"."BOOKS" has the following foreign keys:
+- "FK_PREVIOUSEDITION" with references
+    "PREVIOUSEDITIONID" to "PUBLIC"."BOOKS"."BOOKS"."ID"
+
+Table "PUBLIC"."BOOKS"."BOOKS" has no triggers.

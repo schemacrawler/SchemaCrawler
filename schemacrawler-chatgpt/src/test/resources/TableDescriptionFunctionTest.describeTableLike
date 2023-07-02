@@ -1,0 +1,23 @@
+Table "PUBLIC"."BOOKS"."AUTHORS" has the following columns:
+ 1. "ID" of type INTEGER and is not nullable
+ 2. "FIRSTNAME" of type VARCHAR(20) and is not nullable
+ 3. "LASTNAME" of type VARCHAR(20) and is not nullable
+ 4. "ADDRESS1" of type VARCHAR(255)
+ 5. "ADDRESS2" of type VARCHAR(255)
+ 6. "CITY" of type VARCHAR(50)
+ 7. "STATE" of type CHARACTER(2)
+ 8. "POSTALCODE" of type VARCHAR(10)
+ 9. "COUNTRY" of type VARCHAR(50)
+
+Table "PUBLIC"."BOOKS"."AUTHORS" has the following primary key:
+"PK_AUTHORS" on columns "ID"
+
+Table "PUBLIC"."BOOKS"."AUTHORS" has the following indexes:
+- "PK_AUTHORS" on columns "ID"
+- "IDX_B_AUTHORS" on columns "LASTNAME", "FIRSTNAME"
+- "IDX_A_AUTHORS" on columns "CITY", "STATE", "POSTALCODE", "COUNTRY"
+
+Table "PUBLIC"."BOOKS"."AUTHORS" has no foreign keys.
+
+Table "PUBLIC"."BOOKS"."AUTHORS" has the following triggers:
+- "TRG_AUTHORS" after delete on row

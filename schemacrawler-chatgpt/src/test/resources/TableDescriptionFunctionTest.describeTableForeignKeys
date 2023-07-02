@@ -1,0 +1,5 @@
+Table "PUBLIC"."BOOKS"."BOOKAUTHORS" has the following foreign keys:
+- "Z_FK_AUTHOR" with references
+    "AUTHORID" to "PUBLIC"."BOOKS"."AUTHORS"."ID"
+- "SYS_FK_10120" with references
+    "BOOKID" to "PUBLIC"."BOOKS"."BOOKS"."ID"
