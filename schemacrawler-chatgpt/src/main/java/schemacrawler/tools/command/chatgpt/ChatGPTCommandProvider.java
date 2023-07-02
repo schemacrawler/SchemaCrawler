@@ -52,9 +52,9 @@ public class ChatGPTCommandProvider extends BaseCommandProvider {
     final PluginCommand pluginCommand =
         newPluginCommand(ChatGPTCommand.COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand
-        .addOption("api-key", String.class, "ChatGPT API key")
+        .addOption("api-key", String.class, "OpenAI API key")
         .addOption(
-            "api-key:env", String.class, "ChatGPT API key, from an environmental variable value")
+            "api-key:env", String.class, "OpenAI API key, from an environmental variable value")
         .addOption("model", String.class, "ChatGPT model");
     return pluginCommand;
   }

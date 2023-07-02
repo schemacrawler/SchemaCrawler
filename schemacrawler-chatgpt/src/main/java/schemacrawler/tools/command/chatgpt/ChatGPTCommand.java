@@ -48,7 +48,7 @@ public class ChatGPTCommand extends BaseSchemaCrawlerCommand<ChatGPTCommandOptio
 
   @Override
   public void checkAvailability() throws RuntimeException {
-    // Check that ChatGPT API key works, and the model is available
+    // Check that OpenAI API key works, and the model is available
     final OpenAiService service = new OpenAiService(commandOptions.getApiKey());
     final Model model = service.getModel(commandOptions.getModel());
     LOGGER.log(Level.CONFIG, String.format("Using ChatGPT model:%n%s", model));

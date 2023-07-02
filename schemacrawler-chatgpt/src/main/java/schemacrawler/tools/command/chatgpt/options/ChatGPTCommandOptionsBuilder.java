@@ -80,9 +80,9 @@ public final class ChatGPTCommandOptionsBuilder
   }
 
   /**
-   * Use the provided ChatGPT API key is it is not blank.
+   * Use the provided OpenAI API key is it is not blank.
    *
-   * @param apiKey ChatGPT API key.
+   * @param apiKey OpenAI API key.
    * @return Self.
    */
   public ChatGPTCommandOptionsBuilder withApiKey(final String apiKey) {

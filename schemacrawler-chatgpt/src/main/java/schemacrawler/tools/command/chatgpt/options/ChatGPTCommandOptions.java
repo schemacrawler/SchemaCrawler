@@ -37,7 +37,7 @@ public class ChatGPTCommandOptions implements CommandOptions {
   private final String model;
 
   public ChatGPTCommandOptions(final String apiKey, final String model) {
-    this.apiKey = requireNotBlank(apiKey, "No ChatGPT API key provided");
+    this.apiKey = requireNotBlank(apiKey, "No OpenAI API key provided");
     this.model = requireNotBlank(model, "No ChatGPT model provided");
   }
 
