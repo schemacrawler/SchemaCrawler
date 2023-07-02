@@ -5,7 +5,7 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>16.19.11</version>
+    <version>16.20.1</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -33,12 +33,6 @@
       <version>${schemacrawler.version}</version>
     </dependency>
 
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.13.0</version>
-    </dependency>
     <dependency>
       <groupId>com.theokanning.openai-gpt3-java</groupId>
       <artifactId>api</artifactId>
@@ -151,7 +145,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <schemacrawler.version>16.19.11</schemacrawler.version>
+    <schemacrawler.version>16.20.1</schemacrawler.version>
   </properties>
 
 </project>
