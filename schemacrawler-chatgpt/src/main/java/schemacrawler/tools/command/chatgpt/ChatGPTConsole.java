@@ -76,7 +76,6 @@ public final class ChatGPTConsole {
           .forEach(
               c -> {
                 LOGGER.log(Level.CONFIG, String.valueOf(c));
-                System.err.println(c);
                 final ChatMessage message = c.getMessage();
                 final ChatFunctionCall functionCall = message.getFunctionCall();
                 if (functionCall != null) {
@@ -105,7 +104,7 @@ public final class ChatGPTConsole {
     completions.stream()
         .forEach(
             c -> {
-              if (c.getName().equals("exit")) {
+              if (c.getFunctionCall() != null && c.getName().equals("exit")) {
                 System.exit(0);
               }
             });
