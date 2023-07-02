@@ -24,6 +24,8 @@ public final class ChatGPTConsole {
 
   private static final Logger LOGGER = Logger.getLogger(ChatGPTConsole.class.getCanonicalName());
 
+  private static final String PROMPT = String.format("%nPrompt: ");
+
   private final ChatGPTCommandOptions commandOptions;
 
   private final FunctionExecutor functionExecutor;
@@ -41,7 +43,7 @@ public final class ChatGPTConsole {
     try (final Scanner scanner = new Scanner(System.in)) {
       String prompt = "";
       while (!prompt.equalsIgnoreCase("exit")) {
-        System.out.print("Prompt: ");
+        System.out.print(PROMPT);
         prompt = scanner.nextLine();
         final List<ChatMessage> completions = complete(prompt);
         printResponse(completions);
