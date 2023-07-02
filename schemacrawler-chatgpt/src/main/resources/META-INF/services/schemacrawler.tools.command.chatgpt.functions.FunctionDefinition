@@ -1,0 +1,3 @@
+schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionDefinition
+schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionDefinition
+schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition

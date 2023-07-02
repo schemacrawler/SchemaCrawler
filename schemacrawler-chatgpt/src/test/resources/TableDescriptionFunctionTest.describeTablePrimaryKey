@@ -1,0 +1,2 @@
+Table "PUBLIC"."BOOKS"."BOOKS" has the following primary key:
+"PK_BOOKS" on columns "ID"

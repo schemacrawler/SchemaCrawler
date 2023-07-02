@@ -1,0 +1,4 @@
+Table "PUBLIC"."BOOKS"."BOOKS" has the following indexes:
+- "PK_BOOKS" on columns "ID"
+- "U_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
+- "FK_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"

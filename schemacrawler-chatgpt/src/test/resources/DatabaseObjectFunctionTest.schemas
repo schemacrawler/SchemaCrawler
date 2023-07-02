@@ -1,0 +1,6 @@
+These are the schemas in the database catalog:
+- "PUBLIC"."BOOKS"
+- "PUBLIC"."INFORMATION_SCHEMA"
+- "PUBLIC"."PUBLIC"
+- "PUBLIC"."PUBLISHER SALES"
+- "PUBLIC"."SYSTEM_LOBS"
