@@ -13,8 +13,15 @@ Once you have this running, you will have an interactive chat shell with ChatGPT
 - "What is the AUTHORS primary key?"
 - "Describe the AuthorsList view"
 - "Show me the triggers on AUTHORS"
+- "Find the parents of BOOKAUTHORS"
+- "What are the children of BOOKS?"
 
 To quit the console, you can type something like:
 
 - "I think I have everything I need"
 or simply, "done", "exit" or "quit".
+
+
+## Extensions
+
+SchemaCrawler allows you to extend the functionality with your own functions that work against the database catalog. Your functions should implement `schemacrawler.tools.command.chatgpt.functions.FunctionDefinition<P extends FunctionParameters>`. Package your functions in a jar, with a service provider file called `META-INF/services/schemacrawler.tools.command.chatgpt.functions.FunctionDefinition`. Put this jar on the SchemaCrawler classpath, and your functions will be provided to ChatGPT for processing.
