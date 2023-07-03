@@ -27,7 +27,7 @@ public class TableReferencesFunctionParameters implements FunctionParameters {
     return tableNameContains;
   }
 
-  public TableReferenceType getTableRelationshipType() {
+  public TableReferenceType getTableReferenceType() {
     if (tableReferenceType == null) {
       return TableReferenceType.all;
     }
@@ -38,7 +38,7 @@ public class TableReferencesFunctionParameters implements FunctionParameters {
     this.tableNameContains = tableNameContains;
   }
 
-  public void setTableRelationshipType(final TableReferenceType tableReferenceType) {
+  public void setTableReferenceType(final TableReferenceType tableReferenceType) {
     this.tableReferenceType = tableReferenceType;
   }
 }

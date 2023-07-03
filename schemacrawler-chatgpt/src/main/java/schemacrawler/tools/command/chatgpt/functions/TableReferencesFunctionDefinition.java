@@ -53,7 +53,7 @@ public final class TableReferencesFunctionDefinition
 
       if (firstMatchedTable.isPresent()) {
         final Table table = firstMatchedTable.get();
-        return new TableReferencesFunctionReturn(table, args.getTableRelationshipType());
+        return new TableReferencesFunctionReturn(table, args.getTableReferenceType());
       } else {
         return new NoResultsReturn();
       }
