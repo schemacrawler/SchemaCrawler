@@ -1,3 +1,4 @@
 schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionDefinition
 schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionDefinition
+schemacrawler.tools.command.chatgpt.functions.TableReferencesFunctionDefinition
 schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition
