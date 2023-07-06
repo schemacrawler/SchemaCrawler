@@ -2,7 +2,6 @@ package schemacrawler.tools.command.chatgpt;
 
 import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -19,6 +18,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility;
+import us.fatehi.utility.collections.CircularBoundedList;
 
 public final class ChatGPTConsole {
 
@@ -27,16 +27,18 @@ public final class ChatGPTConsole {
   private static final String PROMPT = String.format("%nPrompt: ");
 
   private final ChatGPTCommandOptions commandOptions;
-
   private final FunctionExecutor functionExecutor;
   private final OpenAiService service;
+  private final CircularBoundedList<ChatMessage> chatHistory;
 
   public ChatGPTConsole(final ChatGPTCommandOptions commandOptions, final Catalog catalog) {
+
     this.commandOptions = requireNonNull(commandOptions, "ChatGPT options not provided");
     requireNonNull(catalog, "No catalog provided");
 
     functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog);
     service = new OpenAiService(commandOptions.getApiKey());
+    chatHistory = new CircularBoundedList<>(commandOptions.getContext());
   }
 
   public void console() {
@@ -71,10 +73,11 @@ public final class ChatGPTConsole {
     final List<ChatMessage> completions = new ArrayList<>();
 
     try {
+      final ChatMessage userMessage = new ChatMessage(ChatMessageRole.USER.value(), prompt);
+      chatHistory.add(userMessage);
       final ChatCompletionRequest completionRequest =
           ChatCompletionRequest.builder()
-              .messages(
-                  Collections.singletonList(new ChatMessage(ChatMessageRole.USER.value(), prompt)))
+              .messages(chatHistory.convertToList())
               .functions(functionExecutor.getFunctions())
               .functionCall(new ChatCompletionRequestFunctionCall("auto"))
               .model(commandOptions.getModel())
@@ -88,6 +91,7 @@ public final class ChatGPTConsole {
               c -> {
                 LOGGER.log(Level.CONFIG, String.valueOf(c));
                 final ChatMessage message = c.getMessage();
+                chatHistory.add(message);
                 final ChatFunctionCall functionCall = message.getFunctionCall();
                 if (functionCall != null) {
                   final FunctionReturn functionReturn = functionExecutor.execute(functionCall);

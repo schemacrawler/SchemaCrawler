@@ -55,7 +55,13 @@ public class ChatGPTCommandProvider extends BaseCommandProvider {
         .addOption("api-key", String.class, "OpenAI API key")
         .addOption(
             "api-key:env", String.class, "OpenAI API key, from an environmental variable value")
-        .addOption("model", String.class, "ChatGPT model");
+        .addOption(
+            "model", String.class, "ChatGPT model", "Optional, defaults to 'chatgpt-3.5-turbo'")
+        .addOption(
+            "context",
+            Integer.class,
+            "Number of chat messages (not tokens) to maintain as chat context",
+            "Optional, defaults to 10");
     return pluginCommand;
   }
 
