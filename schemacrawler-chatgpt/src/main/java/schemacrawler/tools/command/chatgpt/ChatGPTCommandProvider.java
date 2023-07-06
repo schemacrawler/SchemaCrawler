@@ -60,7 +60,8 @@ public class ChatGPTCommandProvider extends BaseCommandProvider {
         .addOption(
             "context",
             Integer.class,
-            "Number of chat messages (not tokens) to maintain as chat context");
+            "Number of chat messages (not tokens) to maintain as chat context",
+            "Optional, defaults to 10");
     return pluginCommand;
   }
 
