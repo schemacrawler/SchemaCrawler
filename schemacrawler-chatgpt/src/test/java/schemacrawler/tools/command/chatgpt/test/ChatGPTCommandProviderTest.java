@@ -37,9 +37,12 @@ public class ChatGPTCommandProviderTest {
     assertThat(
         commandProvider.getCommandLineCommand().toString(),
         is(
-            "PluginCommand[name='chatgpt', options=[PluginCommandOption[name='api-key', valueClass=java.lang.String], "
+            "PluginCommand[name='chatgpt', options=["
+                + "PluginCommandOption[name='api-key', valueClass=java.lang.String], "
                 + "PluginCommandOption[name='api-key:env', valueClass=java.lang.String], "
-                + "PluginCommandOption[name='model', valueClass=java.lang.String]]]"));
+                + "PluginCommandOption[name='model', valueClass=java.lang.String], "
+                + "PluginCommandOption[name='context', valueClass=java.lang.Integer]"
+                + "]]"));
   }
 
   @Test

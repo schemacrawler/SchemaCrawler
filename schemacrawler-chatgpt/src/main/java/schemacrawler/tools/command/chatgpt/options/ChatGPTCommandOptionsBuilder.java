@@ -38,15 +38,19 @@ public final class ChatGPTCommandOptionsBuilder
     implements OptionsBuilder<ChatGPTCommandOptionsBuilder, ChatGPTCommandOptions>,
         ConfigOptionsBuilder<ChatGPTCommandOptionsBuilder, ChatGPTCommandOptions> {
 
+  private static final int DEFAULT_CONTEXT = 10;
+
   public static ChatGPTCommandOptionsBuilder builder() {
     return new ChatGPTCommandOptionsBuilder();
   }
 
   private String apiKey;
   private String model;
+  private int context;
 
   private ChatGPTCommandOptionsBuilder() {
     model = "gpt-3.5-turbo";
+    context = DEFAULT_CONTEXT;
   }
 
   @Override
@@ -54,6 +58,7 @@ public final class ChatGPTCommandOptionsBuilder
     if (config != null) {
       apiKey = getApiKey(config);
       model = config.getStringValue("model", model);
+      context = config.getIntegerValue("context", DEFAULT_CONTEXT);
     }
 
     return this;
@@ -76,7 +81,7 @@ public final class ChatGPTCommandOptionsBuilder
 
   @Override
   public ChatGPTCommandOptions toOptions() {
-    return new ChatGPTCommandOptions(apiKey, model);
+    return new ChatGPTCommandOptions(apiKey, model, context);
   }
 
   /**
@@ -89,6 +94,17 @@ public final class ChatGPTCommandOptionsBuilder
     if (!isBlank(apiKey)) {
       this.apiKey = apiKey;
     }
+    return this;
+  }
+
+  /**
+   * Use the provided OpenAI API key is it is not blank.
+   *
+   * @param apiKey OpenAI API key.
+   * @return Self.
+   */
+  public ChatGPTCommandOptionsBuilder withContext(final int context) {
+    this.context = context;
     return this;
   }
 

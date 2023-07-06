@@ -38,7 +38,7 @@ public final class ChatGPTConsole {
 
     functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog);
     service = new OpenAiService(commandOptions.getApiKey());
-    chatHistory = new CircularBoundedList<>(6);
+    chatHistory = new CircularBoundedList<>(commandOptions.getContext());
   }
 
   public void console() {
