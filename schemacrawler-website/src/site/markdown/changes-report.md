@@ -3,7 +3,13 @@
 SchemaCrawler release notes.
 
 <a name="a16.20.2"></a>
-## Release 16.20.2 - 2023-07-03
+## Release 16.20.2 - 2023-07-07
+
+- Add chat context for ChatGPT
+
+
+<a name="a16.20.1"></a>
+## Release 16.20.1 - 2023-07-03
 
 - Add plugin for ChatGPT
 - Fix issue #1179 for Mermaid diagram generation
