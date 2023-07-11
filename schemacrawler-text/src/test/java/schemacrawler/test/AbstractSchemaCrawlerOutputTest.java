@@ -36,15 +36,12 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -77,6 +74,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   private static final String TABLE_ROW_COUNT_OUTPUT = "table_row_count_output/";
   private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT = "show_weak_associations_output/";
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
+  private static final String HIDE_DATABASE_OBJECTS_OUTPUT = "hide_database_objects_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
@@ -110,6 +108,33 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                 outputFormat ->
                     () -> {
                       compareHideConstraintNamesOutput(dataSource, textOptions, outputFormat);
+                    }));
+  }
+
+  @Test
+  public void compareHideDatabaseObjectsOutput(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    clean(HIDE_DATABASE_OBJECTS_OUTPUT);
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+        .noSchemaCrawlerInfo(false)
+        .showDatabaseInfo(true)
+        .showJdbcDriverInfo(true)
+        .noPrimaryKeys()
+        .noForeignKeys()
+        .noTableColumns()
+        .noIndexes()
+        .noConstraintNames();
+    textOptionsBuilder.noConstraintNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    assertAll(
+        outputFormats()
+            .map(
+                outputFormat ->
+                    () -> {
+                      compareHideDatabaseObjectsOutput(dataSource, textOptions, outputFormat);
                     }));
   }
 
@@ -342,6 +367,41 @@ public abstract class AbstractSchemaCrawlerOutputTest {
         outputOf(executableExecution(dataSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void compareHideDatabaseObjectsOutput(
+      final DatabaseConnectionSource dataSource,
+      final SchemaTextOptions textOptions,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final String referenceFile = "hidden_database_objects." + outputFormat.getFormat();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeAllSequences()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
+    schemaTextOptionsBuilder.sortTables(true);
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    assertThat(
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(HIDE_DATABASE_OBJECTS_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareIdentifierQuotingOutput(

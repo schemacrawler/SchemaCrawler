@@ -32,9 +32,16 @@ import static java.util.Comparator.naturalOrder;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideAlternateKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hidePrimaryKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutineParameters;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTableColumns;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTableConstraints;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTriggers;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideWeakAssociations;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,7 +49,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -224,9 +230,11 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         nodeId(table), tableName, tableType, colorMap.getColor(table));
     printRemarks(table);
 
-    printTableColumns(table.getColumns(), true);
-    if (isVerbose()) {
-      printTableColumns(new ArrayList<>(table.getHiddenColumns()), true);
+    if (!options.get(hideTableColumns)) {
+      printTableColumns(table.getColumns(), true);
+      if (isVerbose()) {
+        printTableColumns(new ArrayList<>(table.getHiddenColumns()), true);
+      }
     }
 
     printPrimaryKey(table.getPrimaryKey());
@@ -313,6 +321,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printAlternateKeys(final Table table) {
+    if (table == null || options.get(hideAlternateKeys)) {
+      return;
+    }
+
     final Collection<PrimaryKey> alternateKeys = table.getAlternateKeys();
     if (alternateKeys == null || alternateKeys.isEmpty()) {
       return;
@@ -372,12 +384,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final ColumnDataType baseColumnDataType = columnDataType.getBaseType();
       if (baseColumnDataType == null) {
         baseTypeName = "";
+      } else if (options.isShowUnqualifiedNames()) {
+        baseTypeName = baseColumnDataType.getName();
       } else {
-        if (options.isShowUnqualifiedNames()) {
-          baseTypeName = baseColumnDataType.getName();
-        } else {
-          baseTypeName = baseColumnDataType.getFullName();
-        }
+        baseTypeName = baseColumnDataType.getFullName();
       }
       formattingHelper.writeDetailRow("", "based on", baseTypeName);
 
@@ -461,10 +471,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printDefinition(final DefinedObject definedObject) {
-    if (definedObject == null || !definedObject.hasDefinition()) {
-      return;
-    }
-    if (!isVerbose()) {
+    if (definedObject == null || !definedObject.hasDefinition() || !isVerbose()) {
       return;
     }
 
@@ -476,10 +483,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printDependantObjectDefinition(final DefinedObject definedObject) {
-    if (definedObject == null || !definedObject.hasDefinition()) {
-      return;
-    }
-    if (!isVerbose()) {
+    if (definedObject == null || !definedObject.hasDefinition() || !isVerbose()) {
       return;
     }
 
@@ -487,6 +491,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printForeignKeys(final Table table) {
+    if (table == null || options.get(hideForeignKeys)) {
+      return;
+    }
+
     final Collection<ForeignKey> foreignKeysCollection = table.getForeignKeys();
     if (foreignKeysCollection.isEmpty()) {
       return;
@@ -580,23 +588,25 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printPrimaryKey(final PrimaryKey primaryKey) {
-    if (primaryKey != null) {
-      formattingHelper.writeEmptyRow();
-      formattingHelper.writeWideRow("Primary Key", "section");
-
-      formattingHelper.writeEmptyRow();
-
-      final String name = identifiers.quoteName(primaryKey);
-      String pkName = "";
-      if (!options.isHidePrimaryKeyNames()) {
-        pkName = name;
-      }
-      pkName = trimToEmpty(pkName);
-      formattingHelper.writeNameRow(pkName, "[primary key]");
-      printRemarks(primaryKey);
-      printTableColumns(primaryKey.getConstrainedColumns(), false);
-      printDependantObjectDefinition(primaryKey);
+    if (primaryKey == null || options.get(hidePrimaryKeys)) {
+      return;
     }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Primary Key", "section");
+
+    formattingHelper.writeEmptyRow();
+
+    final String name = identifiers.quoteName(primaryKey);
+    String pkName = "";
+    if (!options.isHidePrimaryKeyNames()) {
+      pkName = name;
+    }
+    pkName = trimToEmpty(pkName);
+    formattingHelper.writeNameRow(pkName, "[primary key]");
+    printRemarks(primaryKey);
+    printTableColumns(primaryKey.getConstrainedColumns(), false);
+    printDependantObjectDefinition(primaryKey);
   }
 
   private void printPrivileges(final Collection<Privilege<Table>> privileges) {
@@ -640,7 +650,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printRoutineParameters(final List<? extends RoutineParameter<?>> parameters) {
-    if (parameters.isEmpty()) {
+    if (parameters.isEmpty() || options.get(hideRoutineParameters)) {
       return;
     }
 
@@ -685,13 +695,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printTableColumnEnumValues(final Column column) {
-    if (column == null) {
-      return;
-    }
-    if (!column.isColumnDataTypeKnown()) {
-      return;
-    }
-    if (!column.getColumnDataType().isEnumerated()) {
+    if (column == null
+        || !column.isColumnDataTypeKnown()
+        || !column.getColumnDataType().isEnumerated()) {
       return;
     }
     final String enumValues =
@@ -793,6 +799,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection) {
+    if (options.get(hideTableConstraints)) {
+      return;
+    }
 
     final EnumSet<TableConstraintType> printableConstraints =
         EnumSet.of(TableConstraintType.check, TableConstraintType.unique);
@@ -846,7 +855,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printTriggers(final Collection<Trigger> triggers) {
-    if (triggers.isEmpty()) {
+    if (triggers.isEmpty() || options.get(hideTriggers)) {
       return;
     }
 
@@ -916,6 +925,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printWeakAssociations(final Table table) {
+    if (table == null || options.get(hideWeakAssociations)) {
+      return;
+    }
 
     final Collection<WeakAssociation> weakAssociationsCollection = table.getWeakAssociations();
     if (weakAssociationsCollection == null || weakAssociationsCollection.isEmpty()) {

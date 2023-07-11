@@ -31,6 +31,11 @@ package schemacrawler.tools.text.formatter.diagram;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideAlternateKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideIndexes;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTableColumns;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
 import static us.fatehi.utility.Utility.isBlank;
@@ -166,9 +171,13 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
     printTableRemarks(table);
 
-    printTableColumns(table.getColumns());
+    if (!options.get(hideTableColumns)) {
+      printTableColumns(table.getColumns());
+      if (isVerbose()) {
+        printTableColumns(new ArrayList<>(table.getHiddenColumns()));
+      }
+    }
     if (isVerbose()) {
-      printTableColumns(new ArrayList<>(table.getHiddenColumns()));
       printIndexes(table);
     }
     printAlternateKeys(table);
@@ -266,7 +275,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printAlternateKeys(final Table table) {
-    if (table == null) {
+    if (table == null || options.get(hideAlternateKeys)) {
       return;
     }
 
@@ -341,12 +350,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     final boolean isFkColumnSignificant = isColumnSignificant(foreignKeyColumn);
 
     // Primary key column in a weak association is not a significant column
-    if (!isPkColumnSignificant) {
-      return "";
-    }
-
     // Hide hanging foreign keys when filtered tables are not shown
-    if (!options.isShowFilteredTables() && !isFkColumnSignificant) {
+    if (!isPkColumnSignificant || !options.isShowFilteredTables() && !isFkColumnSignificant) {
       return "";
     }
 
@@ -398,6 +403,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printForeignKeys(final Table table) {
+    if (table == null || options.get(hideForeignKeys)) {
+      return;
+    }
     printForeignKeys(table, table.getForeignKeys());
   }
 
@@ -445,7 +453,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printIndexes(final Table table) {
-    if (table == null) {
+    if (table == null || options.get(hideIndexes)) {
       return;
     }
 
@@ -551,7 +559,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printTableColumnEnumValues(final Column column) {
-    if ((column == null)
+    if (column == null
         || !column.isColumnDataTypeKnown()
         || !column.getColumnDataType().isEnumerated()) {
       return;
@@ -724,6 +732,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printWeakAssociations(final Table table) {
+    if (table == null || options.get(hideWeakAssociations)) {
+      return;
+    }
     final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
     printForeignKeys(table, weakFks);
   }
