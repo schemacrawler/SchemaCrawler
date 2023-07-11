@@ -34,6 +34,7 @@ import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hidePrimaryKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutineParameters;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTableColumns;
@@ -549,7 +550,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printIndexes(final Collection<Index> indexesCollection) {
-    if (indexesCollection.isEmpty()) {
+    if (indexesCollection.isEmpty() || options.get(hideIndexes)) {
       return;
     }
 

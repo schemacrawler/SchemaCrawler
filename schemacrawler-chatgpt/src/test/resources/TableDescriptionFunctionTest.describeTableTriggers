@@ -1,2 +1,28 @@
-Table "PUBLIC"."BOOKS"."AUTHORS" has the following triggers:
-- "TRG_AUTHORS" after delete on row
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+Contact details for book authors
+
+Triggers
+
+TRG_AUTHORS                             [trigger, after delete, per row]
+UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+

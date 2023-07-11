@@ -1,4 +1,22 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following indexes:
-- "PK_BOOKS" on columns "ID"
-- "U_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
-- "FK_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+Details for published books
+
+Indexes
+
+PK_BOOKS                                                  [unique index]
+  ID                                ascending                   
+
+U_PREVIOUSEDITION                                         [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+FK_PREVIOUSEDITION                                    [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
+

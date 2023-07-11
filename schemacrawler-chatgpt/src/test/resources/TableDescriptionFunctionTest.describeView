@@ -1,12 +1,13 @@
-View "PUBLIC"."BOOKS"."AUTHORSLIST" has the following columns:
- 1. "ID" of type INTEGER
- 2. "FIRSTNAME" of type VARCHAR(20)
- 3. "LASTNAME" of type VARCHAR(20)
 
-View "PUBLIC"."BOOKS"."AUTHORSLIST" has no primary key.
 
-View "PUBLIC"."BOOKS"."AUTHORSLIST" has no indexes.
+Tables
+========================================================================
 
-View "PUBLIC"."BOOKS"."AUTHORSLIST" has no foreign keys.
 
-View "PUBLIC"."BOOKS"."AUTHORSLIST" has no triggers.
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
+

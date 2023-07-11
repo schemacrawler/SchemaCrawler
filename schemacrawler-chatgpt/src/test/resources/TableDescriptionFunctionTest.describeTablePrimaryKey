@@ -1,2 +1,16 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following primary key:
-"PK_BOOKS" on columns "ID"
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+Details for published books
+
+Primary Key
+
+PK_BOOKS                                                   [primary key]
+  ID                                                            
+

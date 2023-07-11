@@ -1,5 +1,20 @@
-Table "PUBLIC"."BOOKS"."BOOKAUTHORS" has the following foreign keys:
-- "Z_FK_AUTHOR" with references
-    "AUTHORID" to "PUBLIC"."BOOKS"."AUTHORS"."ID"
-- "SYS_FK_10120" with references
-    "BOOKID" to "PUBLIC"."BOOKS"."BOOKS"."ID"
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+
+Foreign Keys
+
+Z_FK_AUTHOR                                [foreign key, with no action]
+  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+
+SYS_FK_10120                               [foreign key, with no action]
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+

@@ -28,8 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.functions;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import schemacrawler.schema.Table;
 
 public final class TableDecriptionFunctionDefinition
@@ -37,24 +39,24 @@ public final class TableDecriptionFunctionDefinition
 
   public TableDecriptionFunctionDefinition() {
     super(
-        "get-table-decription",
-        "Gets the details and description of a database table, including columns, foreign keys, indexes and triggers.",
+        "describe-tables",
+        "Gets the details and description of database tables, including columns, foreign keys, indexes and triggers.",
         TableDecriptionFunctionParameters.class);
   }
 
   @Override
   public Function<TableDecriptionFunctionParameters, FunctionReturn> getExecutor() {
     return args -> {
-      final String regex = String.format("(?i).*%s.*", args.getTableNameContains());
-      final Optional<Table> firstMatchedTable =
-          catalog.getTables().stream().filter(table -> table.getName().matches(regex)).findFirst();
-
-      if (firstMatchedTable.isPresent()) {
-        final Table table = firstMatchedTable.get();
-        return new TableDescriptionFunctionReturn(table, args.getDescriptionScope());
-      } else {
+      final Pattern pattern =
+          Pattern.compile(String.format("(?i).*%s.*", args.getTableNameContains()));
+      final List<Table> tables =
+          catalog.getTables().stream()
+              .filter(table -> pattern.matcher(table.getName()).matches())
+              .collect(Collectors.toList());
+      if (tables.isEmpty()) {
         return new NoResultsReturn();
       }
+      return new TableDescriptionFunctionReturn(tables, args.getDescriptionScope());
     };
   }
 }

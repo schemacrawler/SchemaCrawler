@@ -1,22 +1,52 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following columns:
- 1. "ID" of type INTEGER and is not nullable
- 2. "TITLE" of type VARCHAR(255) and is not nullable
- 3. "DESCRIPTION" of type VARCHAR(255)
- 4. "PUBLISHERID" of type INTEGER and is not nullable
- 5. "PUBLICATIONDATE" of type DATE
- 6. "PRICE" of type DOUBLE(64, 0)
- 7. "PREVIOUSEDITIONID" of type INTEGER
 
-Table "PUBLIC"."BOOKS"."BOOKS" has the following primary key:
-"PK_BOOKS" on columns "ID"
 
-Table "PUBLIC"."BOOKS"."BOOKS" has the following indexes:
-- "PK_BOOKS" on columns "ID"
-- "U_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
-- "FK_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
+Tables
+========================================================================
 
-Table "PUBLIC"."BOOKS"."BOOKS" has the following foreign keys:
-- "FK_PREVIOUSEDITION" with references
-    "PREVIOUSEDITIONID" to "PUBLIC"."BOOKS"."BOOKS"."ID"
 
-Table "PUBLIC"."BOOKS"."BOOKS" has no triggers.
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
+  TITLE                             VARCHAR(255) NOT NULL       
+                                    Book title                  
+  DESCRIPTION                       VARCHAR(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  PUBLISHERID                       INTEGER NOT NULL            
+                                    Foreign key to the book publisher
+  PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
+  PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
+  PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+PK_BOOKS                                                   [primary key]
+  ID                                                            
+
+Foreign Keys
+
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+
+SYS_FK_10120                               [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indexes
+
+PK_BOOKS                                                  [unique index]
+  ID                                ascending                   
+
+U_PREVIOUSEDITION                                         [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+FK_PREVIOUSEDITION                                    [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
