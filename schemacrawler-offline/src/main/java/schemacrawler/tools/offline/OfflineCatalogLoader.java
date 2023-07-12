@@ -6,14 +6,12 @@ import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
 import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.zip.GZIPInputStream;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
@@ -39,11 +37,6 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
   public void loadCatalog() {
 
     if (isLoaded()) {
-      return;
-    }
-
-    if (!isDatabaseSystemIdentifier(
-        OfflineDatabaseConnector.DB_SERVER_TYPE.getDatabaseSystemIdentifier())) {
       return;
     }
 

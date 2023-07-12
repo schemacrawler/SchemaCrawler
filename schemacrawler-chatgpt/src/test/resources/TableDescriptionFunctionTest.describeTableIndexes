@@ -5,18 +5,20 @@ Tables
 
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-Details for published books
+Relationship between books and their authors, 
+along with the latest updated information
 
 Indexes
 
-PK_BOOKS                                                  [unique index]
-  ID                                ascending                   
+Z_FK_AUTHOR                                           [non-unique index]
+  AUTHORID                          ascending                   
 
-U_PREVIOUSEDITION                                         [unique index]
-  PREVIOUSEDITIONID                 ascending                   
+SYS_FK_10120                                          [non-unique index]
+  BOOKID                            ascending                   
 
-FK_PREVIOUSEDITION                                    [non-unique index]
-  PREVIOUSEDITIONID                 ascending                   
+UIDX_BOOKAUTHORS                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
 

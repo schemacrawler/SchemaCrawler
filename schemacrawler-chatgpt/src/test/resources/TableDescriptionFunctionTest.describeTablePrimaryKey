@@ -5,12 +5,24 @@ Tables
 
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
-Details for published books
+Contact details for book authors
 
 Primary Key
 
-PK_BOOKS                                                   [primary key]
+PK_AUTHORS                                                 [primary key]
   ID                                                            
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
 

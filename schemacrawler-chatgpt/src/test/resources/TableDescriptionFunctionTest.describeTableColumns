@@ -5,21 +5,12 @@ Tables
 
 
 
-PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
-Details for published books
+List of book publishers
   ID                                INTEGER NOT NULL            
-                                    Unique (internal) id for book
-  TITLE                             VARCHAR(255) NOT NULL       
-                                    Book title                  
-  DESCRIPTION                       VARCHAR(255)                
-                                    Book description
-(Usually the blurb from the book jacket or promotional materials)
-  PUBLISHERID                       INTEGER NOT NULL            
-                                    Foreign key to the book publisher
-  PUBLICATIONDATE                   DATE                        
-                                    Book publication date       
-  PRICE                             DOUBLE(64, 0)               
-                                    Current price for the book  
-  PREVIOUSEDITIONID                 INTEGER                     
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+  PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
 

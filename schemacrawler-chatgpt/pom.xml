@@ -20,7 +20,17 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-scripting</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-offline</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+        
     <dependency>
       <groupId>com.theokanning.openai-gpt3-java</groupId>
       <artifactId>api</artifactId>

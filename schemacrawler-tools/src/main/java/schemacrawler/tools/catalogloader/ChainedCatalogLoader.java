@@ -29,19 +29,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.catalogloader;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.string.StringFormat;
 
 public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<CatalogLoader> {
+
+  private static final Logger LOGGER = Logger.getLogger(ChainedCatalogLoader.class.getName());
 
   private final List<CatalogLoader> chainedCatalogLoaders;
 
@@ -67,6 +70,9 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
     final SchemaRetrievalOptions schemaRetrievalOptions = getSchemaRetrievalOptions();
     final Config additionalConfig = getAdditionalConfiguration();
     for (final CatalogLoader nextCatalogLoader : chainedCatalogLoaders) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat("Loading catalog with <%s>", nextCatalogLoader.getClass()));
       nextCatalogLoader.setCatalog(catalog);
       nextCatalogLoader.setDataSource(dataSource);
       nextCatalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);

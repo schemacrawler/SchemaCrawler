@@ -29,85 +29,32 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.functions;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.COLUMNS;
-import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.DEFAULT;
-import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.FOREIGN_KEYS;
-import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.INDEXES;
-import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.PRIMARY_KEY;
-import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.TRIGGERS;
 import java.io.StringWriter;
-import java.util.Collection;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class TableDescriptionFunctionReturn implements FunctionReturn {
 
-  private final Collection<Table> tables;
-  private final TableDescriptionScope scope;
+  private final SchemaCrawlerExecutable executable;
 
-  protected TableDescriptionFunctionReturn(
-      final Collection<Table> tables, final TableDescriptionScope scope) {
-    this.tables = requireNonNull(tables, "Table not provided");
-    this.scope = requireNonNull(scope, "Table description scope not provided");
+  protected TableDescriptionFunctionReturn(final SchemaCrawlerExecutable executable) {
+    this.executable = requireNonNull(executable, "SchemaCrawler executable not provided");
   }
 
   @Override
   public String render() {
-    final Catalog catalog = new CatalogWrapper(tables);
-
-    // Create the options
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder();
-    final SchemaCrawlerOptions options =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    if (scope != DEFAULT) {
-      if (scope != COLUMNS) {
-        schemaTextOptionsBuilder.noTableColumns();
-      }
-      if (scope != PRIMARY_KEY) {
-        schemaTextOptionsBuilder.noPrimaryKeys();
-      }
-      if (scope != FOREIGN_KEYS) {
-        schemaTextOptionsBuilder.noForeignKeys();
-        schemaTextOptionsBuilder.noWeakAssociations();
-      }
-      if (scope != INDEXES) {
-        schemaTextOptionsBuilder.noIndexes();
-      }
-      if (scope != TRIGGERS) {
-        schemaTextOptionsBuilder.noTriggers();
-      }
-    }
-    schemaTextOptionsBuilder.noTableConstraints();
-    schemaTextOptionsBuilder.noAlternateKeys();
-    final Config config = schemaTextOptionsBuilder.toConfig();
 
     final StringWriter writer = new StringWriter();
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder().withOutputWriter(writer).toOptions();
 
-    final String command = "schema";
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
-    executable.setAdditionalConfiguration(config);
-    executable.setCatalog(catalog);
     executable.execute();
+
+    if (executable.getCatalog().getTables().isEmpty()) {
+      return "There were no matching results for your query.";
+    }
 
     return writer.toString();
   }
