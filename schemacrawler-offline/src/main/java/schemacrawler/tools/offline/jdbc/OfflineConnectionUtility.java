@@ -30,13 +30,13 @@ package schemacrawler.tools.offline.jdbc;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Objects.requireNonNull;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Collections;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class OfflineConnectionUtility {
 
@@ -94,15 +94,18 @@ public class OfflineConnectionUtility {
     }
   }
 
-  public static OfflineConnection newOfflineConnection(final Path offlineDatabasePath) {
+  public static DatabaseConnectionSource newOfflineDatabaseConnectionSource(
+      final Path offlineDatabasePath) {
     requireNonNull(offlineDatabasePath, "No offline catalog snapshot path provided");
 
     final Path absoluteOfflineDatabasePath = offlineDatabasePath.toAbsolutePath();
-    return (OfflineConnection)
-        newProxyInstance(
-            OfflineConnectionUtility.class.getClassLoader(),
-            new Class[] {OfflineConnection.class},
-            new OfflineConnectionInvocationHandler(absoluteOfflineDatabasePath));
+    final OfflineConnection offlineConnection =
+        (OfflineConnection)
+            newProxyInstance(
+                OfflineConnectionUtility.class.getClassLoader(),
+                new Class[] {OfflineConnection.class},
+                new OfflineConnectionInvocationHandler(absoluteOfflineDatabasePath));
+    return new OfflineDatabaseConnectionSource(offlineConnection);
   }
 
   private OfflineConnectionUtility() {

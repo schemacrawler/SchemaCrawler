@@ -5,21 +5,18 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
-
+import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 
 public class TestWrappers {
 
   @Test
   public void createStatement() {
-    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
+    final Connection connection = newOfflineDatabaseConnectionSource(Paths.get(".")).get();
 
     assertThrows(
         InvocationTargetException.class,
@@ -37,7 +34,7 @@ public class TestWrappers {
 
   @Test
   public void prepareCall() {
-    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
+    final Connection connection = newOfflineDatabaseConnectionSource(Paths.get(".")).get();
 
     assertThrows(
         InvocationTargetException.class,
@@ -55,7 +52,7 @@ public class TestWrappers {
 
   @Test
   public void prepareStatement() {
-    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
+    final Connection connection = newOfflineDatabaseConnectionSource(Paths.get(".")).get();
 
     assertThrows(
         InvocationTargetException.class,
@@ -77,7 +74,7 @@ public class TestWrappers {
 
   @Test
   public void testConnectionMethodsForCoverage() throws Exception {
-    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
+    final Connection connection = newOfflineDatabaseConnectionSource(Paths.get(".")).get();
 
     String methodName;
 
@@ -112,7 +109,7 @@ public class TestWrappers {
 
   @Test
   public void testConnectionMethodsNoArguments() {
-    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
+    final Connection connection = newOfflineDatabaseConnectionSource(Paths.get(".")).get();
 
     for (final String methodName :
         new String[] {

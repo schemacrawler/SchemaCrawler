@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.offline.jdbc;
 
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
+import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import static us.fatehi.utility.Utility.isBlank;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -65,7 +65,7 @@ public class OfflineDriver implements Driver {
   public Connection connect(final String url, final Properties info) throws SQLException {
     if (acceptsURL(url)) {
       final String path = url.substring(JDBC_URL_PREFIX.length());
-      return newOfflineConnection(Paths.get(path));
+      return newOfflineDatabaseConnectionSource(Paths.get(path)).get();
     } else {
       return null;
     }
