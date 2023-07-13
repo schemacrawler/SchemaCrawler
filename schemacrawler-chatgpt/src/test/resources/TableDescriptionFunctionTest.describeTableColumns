@@ -5,12 +5,10 @@ Tables
 
 
 
-PUBLIC.BOOKS.PUBLISHERS                                          [table]
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
-List of book publishers
-  ID                                INTEGER NOT NULL            
-                                    auto-incremented            
-                                    Unique (internal) id for book publisher
-  PUBLISHER                         VARCHAR(255)                
-                                    Name of book publisher      
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
+  ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
 

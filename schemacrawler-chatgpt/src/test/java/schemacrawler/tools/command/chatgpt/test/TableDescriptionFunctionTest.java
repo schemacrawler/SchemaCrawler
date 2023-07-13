@@ -72,7 +72,7 @@ public class TableDescriptionFunctionTest {
   @Test
   public void describeTableColumns(final TestContext testContext) throws Exception {
     final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
-    args.setTableNameContains("PUBLISHERS");
+    args.setTableNameContains("ΒΙΒΛΊΑ");
     args.setDescriptionScope(TableDescriptionScope.COLUMNS);
     describeTable(testContext, args);
   }

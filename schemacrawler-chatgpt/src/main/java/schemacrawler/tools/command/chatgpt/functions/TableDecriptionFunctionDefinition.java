@@ -107,7 +107,7 @@ public final class TableDecriptionFunctionDefinition
             .includeSequences(new ExcludeAll())
             .includeRoutines(new ExcludeAll());
     final Pattern grepTablesPattern =
-        Pattern.compile(String.format("(?i).*%s.*", args.getTableNameContains()));
+        Pattern.compile(String.format(".*(?i)%s(?-i).*", args.getTableNameContains()));
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder().includeGreppedTables(grepTablesPattern);
     final SchemaCrawlerOptions options =
