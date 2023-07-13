@@ -32,15 +32,15 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.updateConnectionDataSource;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
@@ -79,13 +79,30 @@ public final class SchemaCrawlerExecutable {
 
   public void execute() {
 
-    // Match schema retrieval options, and update data source before any connections are used
-    if (schemaRetrievalOptions == null) {
-      schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+    if (dataSource == null && catalog == null) {
+      throw new ExecutionRuntimeException("Cannot execute command");
     }
-    updateConnectionDataSource(dataSource, schemaRetrievalOptions);
 
-    try (final Connection connection = dataSource.get(); ) {
+    if (dataSource == null) {
+      if (schemaRetrievalOptions == null) {
+        schemaRetrievalOptions = SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+      }
+    } else {
+      // Match schema retrieval options, and update data source before any connections are used
+      if (schemaRetrievalOptions == null) {
+        schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+      }
+      updateConnectionDataSource(dataSource, schemaRetrievalOptions);
+    }
+
+    final Connection connection;
+
+    if (dataSource == null) {
+      connection = null;
+    } else {
+      connection = dataSource.get();
+    }
+    try {
 
       // Load the command to see if it is available
       // Fail early (before loading the catalog) if the command is not
@@ -107,6 +124,9 @@ public final class SchemaCrawlerExecutable {
       scCommand.setCatalog(catalog);
 
       if (scCommand.usesConnection()) {
+        if (connection == null) {
+          throw new SchemaCrawlerException("No database connection provided");
+        }
         scCommand.setConnection(connection);
       }
 
@@ -119,6 +139,14 @@ public final class SchemaCrawlerExecutable {
       throw e;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e);
+    } finally {
+      if (connection != null) {
+        try {
+          connection.close();
+        } catch (final SQLException e) {
+          LOGGER.log(Level.WARNING, e.getMessage(), e);
+        }
+      }
     }
   }
 

@@ -43,23 +43,19 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
+import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -77,11 +73,9 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
-import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
 public class OfflineSnapshotTest {
@@ -184,9 +178,8 @@ public class OfflineSnapshotTest {
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
     schemaTextOptionsBuilder.noInfo(false);
 
-    final Connection connection = newOfflineConnection(serializedCatalogFile);
     final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
+        newOfflineDatabaseConnectionSource(serializedCatalogFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -236,9 +229,8 @@ public class OfflineSnapshotTest {
 
   private void executeExecutable(
       final SchemaCrawlerExecutable executable, final String referenceFileName) throws Exception {
-    final OfflineConnection connection = newOfflineConnection(serializedCatalogFile);
     final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
+        newOfflineDatabaseConnectionSource(serializedCatalogFile);
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);

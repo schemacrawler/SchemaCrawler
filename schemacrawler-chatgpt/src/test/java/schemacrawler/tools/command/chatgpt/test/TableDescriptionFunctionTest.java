@@ -65,14 +65,14 @@ public class TableDescriptionFunctionTest {
   @Test
   public void describeTable(final TestContext testContext) throws Exception {
     final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
-    args.setTableNameContains("BOOKS");
+    args.setTableNameContains("AUTHORS");
     describeTable(testContext, args);
   }
 
   @Test
   public void describeTableColumns(final TestContext testContext) throws Exception {
     final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
-    args.setTableNameContains("BOOKS");
+    args.setTableNameContains("ΒΙΒΛΊΑ");
     args.setDescriptionScope(TableDescriptionScope.COLUMNS);
     describeTable(testContext, args);
   }
@@ -88,7 +88,7 @@ public class TableDescriptionFunctionTest {
   @Test
   public void describeTableIndexes(final TestContext testContext) throws Exception {
     final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
-    args.setTableNameContains("BOOKS");
+    args.setTableNameContains("BOOKAUTHORS");
     args.setDescriptionScope(TableDescriptionScope.INDEXES);
     describeTable(testContext, args);
   }
@@ -96,14 +96,14 @@ public class TableDescriptionFunctionTest {
   @Test
   public void describeTableLike(final TestContext testContext) throws Exception {
     final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
-    args.setTableNameContains("Auth");
+    args.setTableNameContains("Celeb");
     describeTable(testContext, args);
   }
 
   @Test
   public void describeTablePrimaryKey(final TestContext testContext) throws Exception {
     final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
-    args.setTableNameContains("BOOKS");
+    args.setTableNameContains("AUTHORS");
     args.setDescriptionScope(TableDescriptionScope.PRIMARY_KEY);
     describeTable(testContext, args);
   }

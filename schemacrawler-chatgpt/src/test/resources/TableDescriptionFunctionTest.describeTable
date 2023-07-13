@@ -1,22 +1,88 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following columns:
- 1. "ID" of type INTEGER and is not nullable
- 2. "TITLE" of type VARCHAR(255) and is not nullable
- 3. "DESCRIPTION" of type VARCHAR(255)
- 4. "PUBLISHERID" of type INTEGER and is not nullable
- 5. "PUBLICATIONDATE" of type DATE
- 6. "PRICE" of type DOUBLE(64, 0)
- 7. "PREVIOUSEDITIONID" of type INTEGER
 
-Table "PUBLIC"."BOOKS"."BOOKS" has the following primary key:
-"PK_BOOKS" on columns "ID"
 
-Table "PUBLIC"."BOOKS"."BOOKS" has the following indexes:
-- "PK_BOOKS" on columns "ID"
-- "U_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
-- "FK_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
+Tables
+========================================================================
 
-Table "PUBLIC"."BOOKS"."BOOKS" has the following foreign keys:
-- "FK_PREVIOUSEDITION" with references
-    "PREVIOUSEDITIONID" to "PUBLIC"."BOOKS"."BOOKS"."ID"
 
-Table "PUBLIC"."BOOKS"."BOOKS" has no triggers.
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
+  STATE                             CHARACTER(2)                
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+Primary Key
+
+PK_AUTHORS                                                 [primary key]
+  ID                                                            
+
+Foreign Keys
+
+Z_FK_AUTHOR                                [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+Indexes
+
+PK_AUTHORS                                                [unique index]
+  ID                                ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+IDX_A_AUTHORS                                         [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Triggers
+
+TRG_AUTHORS                             [trigger, after delete, per row]
+UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
+  SOMEDATA                          VARCHAR(30)                 
+
+Foreign Keys
+
+Z_FK_AUTHOR                                [foreign key, with no action]
+  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+
+SYS_FK_10120                               [foreign key, with no action]
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+
+Indexes
+
+Z_FK_AUTHOR                                           [non-unique index]
+  AUTHORID                          ascending                   
+
+SYS_FK_10120                                          [non-unique index]
+  BOOKID                            ascending                   
+
+UIDX_BOOKAUTHORS                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+

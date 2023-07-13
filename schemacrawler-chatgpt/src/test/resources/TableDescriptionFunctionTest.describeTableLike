@@ -1,23 +1,52 @@
-Table "PUBLIC"."BOOKS"."AUTHORS" has the following columns:
- 1. "ID" of type INTEGER and is not nullable
- 2. "FIRSTNAME" of type VARCHAR(20) and is not nullable
- 3. "LASTNAME" of type VARCHAR(20) and is not nullable
- 4. "ADDRESS1" of type VARCHAR(255)
- 5. "ADDRESS2" of type VARCHAR(255)
- 6. "CITY" of type VARCHAR(50)
- 7. "STATE" of type CHARACTER(2)
- 8. "POSTALCODE" of type VARCHAR(10)
- 9. "COUNTRY" of type VARCHAR(50)
 
-Table "PUBLIC"."BOOKS"."AUTHORS" has the following primary key:
-"PK_AUTHORS" on columns "ID"
 
-Table "PUBLIC"."BOOKS"."AUTHORS" has the following indexes:
-- "PK_AUTHORS" on columns "ID"
-- "IDX_B_AUTHORS" on columns "LASTNAME", "FIRSTNAME"
-- "IDX_A_AUTHORS" on columns "CITY", "STATE", "POSTALCODE", "COUNTRY"
+Tables
+========================================================================
 
-Table "PUBLIC"."BOOKS"."AUTHORS" has no foreign keys.
 
-Table "PUBLIC"."BOOKS"."AUTHORS" has the following triggers:
-- "TRG_AUTHORS" after delete on row
+
+PUBLIC.BOOKS."Celebrities"                                       [table]
+------------------------------------------------------------------------
+  "Id"                              INTEGER NOT NULL            
+  NAME                              VARCHAR(20)                 
+
+Primary Key
+
+"PK_Celebrities"                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+SYS_FK_10130                               [foreign key, with no action]
+  "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+"PK_Celebrities"                                          [unique index]
+  "Id"                              ascending                   
+
+
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+  "UPDATE"                          VARCHAR(20)                 
+
+Primary Key
+
+"PK Celebrity Updates"                                     [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+SYS_FK_10130                               [foreign key, with no action]
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
+
+Indexes
+
+"PK Celebrity Updates"                                    [unique index]
+  "Celebrity Id"                    ascending                   
+
+SYS_FK_10130                                          [non-unique index]
+  "Celebrity Id"                    ascending                   
+

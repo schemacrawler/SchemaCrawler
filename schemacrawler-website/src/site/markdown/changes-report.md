@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.20.3"></a>
+## Release 16.20.3 - 2023-07-20
+
+- Use SchemaCrawler commands for output from ChatGPT plugin
+- Allow hiding of specific portions of table output, such as primary keys, foreign keys, indexes, and so on
+
+
 <a name="a16.20.2"></a>
 ## Release 16.20.2 - 2023-07-07
 

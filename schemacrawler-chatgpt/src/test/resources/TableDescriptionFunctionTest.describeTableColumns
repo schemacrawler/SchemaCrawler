@@ -1,8 +1,14 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following columns:
- 1. "ID" of type INTEGER and is not nullable
- 2. "TITLE" of type VARCHAR(255) and is not nullable
- 3. "DESCRIPTION" of type VARCHAR(255)
- 4. "PUBLISHERID" of type INTEGER and is not nullable
- 5. "PUBLICATIONDATE" of type DATE
- 6. "PRICE" of type DOUBLE(64, 0)
- 7. "PREVIOUSEDITIONID" of type INTEGER
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
+------------------------------------------------------------------------
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
+  ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
+

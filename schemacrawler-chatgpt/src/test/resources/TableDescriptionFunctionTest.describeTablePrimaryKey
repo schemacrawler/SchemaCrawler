@@ -1,2 +1,28 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following primary key:
-"PK_BOOKS" on columns "ID"
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+Contact details for book authors
+
+Primary Key
+
+PK_AUTHORS                                                 [primary key]
+  ID                                                            
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+

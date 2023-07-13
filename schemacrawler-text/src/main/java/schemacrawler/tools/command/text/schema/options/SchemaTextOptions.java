@@ -30,7 +30,6 @@ package schemacrawler.tools.command.text.schema.options;
 
 import java.util.EnumMap;
 import java.util.Map;
-
 import schemacrawler.tools.text.options.BaseTextOptions;
 
 public class SchemaTextOptions extends BaseTextOptions {
@@ -41,6 +40,7 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isShowOrdinalNumbers;
   private final boolean isShowStandardColumnTypeNames;
   private final boolean isHideTableRowCounts;
+  private final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
   private final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
 
   protected SchemaTextOptions(
@@ -54,6 +54,12 @@ public class SchemaTextOptions extends BaseTextOptions {
     isShowStandardColumnTypeNames = builder.isShowStandardColumnTypeNames;
     isHideTableRowCounts = builder.isHideTableRowCounts;
 
+    hideDatabaseObjects = new EnumMap<>(HideDatabaseObjectsType.class);
+    for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
+      hideDatabaseObjects.put(
+          databaseObjectsType,
+          builder.hideDatabaseObjects.getOrDefault(databaseObjectsType, false));
+    }
     hideNames = new EnumMap<>(HideDatabaseObjectNamesType.class);
     for (final HideDatabaseObjectNamesType databaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
@@ -64,6 +70,10 @@ public class SchemaTextOptions extends BaseTextOptions {
 
   public boolean get(final HideDatabaseObjectNamesType key) {
     return hideNames.getOrDefault(key, false);
+  }
+
+  public boolean get(final HideDatabaseObjectsType key) {
+    return hideDatabaseObjects.getOrDefault(key, false);
   }
 
   public boolean isAlphabeticalSortForForeignKeys() {

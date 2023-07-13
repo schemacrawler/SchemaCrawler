@@ -1,4 +1,24 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following indexes:
-- "PK_BOOKS" on columns "ID"
-- "U_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
-- "FK_PREVIOUSEDITION" on columns "PREVIOUSEDITIONID"
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+
+Indexes
+
+Z_FK_AUTHOR                                           [non-unique index]
+  AUTHORID                          ascending                   
+
+SYS_FK_10120                                          [non-unique index]
+  BOOKID                            ascending                   
+
+UIDX_BOOKAUTHORS                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+
