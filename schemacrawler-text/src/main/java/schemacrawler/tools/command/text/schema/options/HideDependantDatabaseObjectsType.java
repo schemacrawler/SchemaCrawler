@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema.options;
 
-public enum HideDependentDatabaseObjectsType {
+public enum HideDependantDatabaseObjectsType {
   hideAlternateKeys("hide_alternatekeys"),
   hideForeignKeys("hide_foreignkeys"),
   hideIndexes("hide_indexes"),
@@ -44,7 +44,7 @@ public enum HideDependentDatabaseObjectsType {
 
   private final String key;
 
-  HideDependentDatabaseObjectsType(final String key) {
+  HideDependantDatabaseObjectsType(final String key) {
     this.key = key;
   }
 
