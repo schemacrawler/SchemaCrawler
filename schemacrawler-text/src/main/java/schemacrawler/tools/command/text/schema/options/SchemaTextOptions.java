@@ -40,7 +40,7 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isShowOrdinalNumbers;
   private final boolean isShowStandardColumnTypeNames;
   private final boolean isHideTableRowCounts;
-  private final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
+  private final Map<HideDependentDatabaseObjectsType, Boolean> hideDatabaseObjects;
   private final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
 
   protected SchemaTextOptions(
@@ -54,8 +54,9 @@ public class SchemaTextOptions extends BaseTextOptions {
     isShowStandardColumnTypeNames = builder.isShowStandardColumnTypeNames;
     isHideTableRowCounts = builder.isHideTableRowCounts;
 
-    hideDatabaseObjects = new EnumMap<>(HideDatabaseObjectsType.class);
-    for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
+    hideDatabaseObjects = new EnumMap<>(HideDependentDatabaseObjectsType.class);
+    for (final HideDependentDatabaseObjectsType databaseObjectsType :
+        HideDependentDatabaseObjectsType.values()) {
       hideDatabaseObjects.put(
           databaseObjectsType,
           builder.hideDatabaseObjects.getOrDefault(databaseObjectsType, false));
@@ -72,7 +73,7 @@ public class SchemaTextOptions extends BaseTextOptions {
     return hideNames.getOrDefault(key, false);
   }
 
-  public boolean get(final HideDatabaseObjectsType key) {
+  public boolean get(final HideDependentDatabaseObjectsType key) {
     return hideDatabaseObjects.getOrDefault(key, false);
   }
 
