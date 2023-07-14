@@ -40,7 +40,8 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isShowOrdinalNumbers;
   private final boolean isShowStandardColumnTypeNames;
   private final boolean isHideTableRowCounts;
-  private final Map<HideDependantDatabaseObjectsType, Boolean> hideDatabaseObjects;
+  private final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
+  private final Map<HideDependantDatabaseObjectsType, Boolean> hideDependantDatabaseObjects;
   private final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
 
   protected SchemaTextOptions(
@@ -54,10 +55,16 @@ public class SchemaTextOptions extends BaseTextOptions {
     isShowStandardColumnTypeNames = builder.isShowStandardColumnTypeNames;
     isHideTableRowCounts = builder.isHideTableRowCounts;
 
-    hideDatabaseObjects = new EnumMap<>(HideDependantDatabaseObjectsType.class);
+    hideDatabaseObjects = new EnumMap<>(HideDatabaseObjectsType.class);
+    for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
+      hideDatabaseObjects.put(
+          databaseObjectsType,
+          builder.hideDatabaseObjects.getOrDefault(databaseObjectsType, false));
+    }
+    hideDependantDatabaseObjects = new EnumMap<>(HideDependantDatabaseObjectsType.class);
     for (final HideDependantDatabaseObjectsType databaseObjectsType :
         HideDependantDatabaseObjectsType.values()) {
-      hideDatabaseObjects.put(
+      hideDependantDatabaseObjects.put(
           databaseObjectsType,
           builder.hideDependantDatabaseObjects.getOrDefault(databaseObjectsType, false));
     }
@@ -73,8 +80,12 @@ public class SchemaTextOptions extends BaseTextOptions {
     return hideNames.getOrDefault(key, false);
   }
 
-  public boolean is(final HideDependantDatabaseObjectsType key) {
+  public boolean is(final HideDatabaseObjectsType key) {
     return hideDatabaseObjects.getOrDefault(key, false);
+  }
+
+  public boolean is(final HideDependantDatabaseObjectsType key) {
+    return hideDependantDatabaseObjects.getOrDefault(key, false);
   }
 
   public boolean isAlphabeticalSortForForeignKeys() {

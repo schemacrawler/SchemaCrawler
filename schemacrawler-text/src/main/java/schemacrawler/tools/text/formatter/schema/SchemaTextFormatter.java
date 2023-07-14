@@ -40,6 +40,10 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTableConstraintNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
@@ -141,6 +145,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handle(final Routine routine) {
+    if (routine == null || options.is(hideRoutines)) {
+      return;
+    }
+
     final String routineTypeDetail =
         String.format("%s, %s", routine.getRoutineType(), routine.getReturnType());
     final String routineName = quoteName(routine);
@@ -202,6 +210,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handle(final Synonym synonym) {
+    if (synonym == null || options.is(hideSynonyms)) {
+      return;
+    }
+
     final String synonymName = quoteName(synonym);
     final String synonymType = "[synonym]";
 
@@ -229,6 +241,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   @Override
   public void handle(final Table table) {
+    if (table == null || options.is(hideTables)) {
+      return;
+    }
+
     final String tableName = quoteName(table);
     final String tableType = "[" + table.getTableType() + "]";
 
@@ -290,6 +306,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handleRoutinesStart() {
+    if (options.is(hideRoutines)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Routines");
   }
 
@@ -302,6 +322,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handleSequencesStart() {
+    if (options.is(hideSequences)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Sequences");
   }
 
@@ -314,6 +338,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handleSynonymsStart() {
+    if (options.is(hideSynonyms)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Synonyms");
   }
 
@@ -326,6 +354,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handleTablesStart() {
+    if (options.is(hideTables)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Tables");
   }
 

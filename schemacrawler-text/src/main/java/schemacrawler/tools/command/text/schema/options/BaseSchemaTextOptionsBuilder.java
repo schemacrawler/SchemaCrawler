@@ -36,6 +36,11 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTableConstraintNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSchemas;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
@@ -74,10 +79,12 @@ public abstract class BaseSchemaTextOptionsBuilder<
   protected boolean isShowOrdinalNumbers;
   protected boolean isShowStandardColumnTypeNames;
   protected boolean isHideTableRowCounts;
+  protected final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
   protected final Map<HideDependantDatabaseObjectsType, Boolean> hideDependantDatabaseObjects;
   protected final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
 
   public BaseSchemaTextOptionsBuilder() {
+    hideDatabaseObjects = new EnumMap<>(HideDatabaseObjectsType.class);
     hideDependantDatabaseObjects = new EnumMap<>(HideDependantDatabaseObjectsType.class);
     hideNames = new EnumMap<>(HideDatabaseObjectNamesType.class);
   }
@@ -99,6 +106,10 @@ public abstract class BaseSchemaTextOptionsBuilder<
         config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
     isAlphabeticalSortForIndexes = config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
 
+    for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
+      final boolean booleanValue = config.getBooleanValue(databaseObjectsType.getKey());
+      hideDatabaseObjects.put(databaseObjectsType, booleanValue);
+    }
     for (final HideDependantDatabaseObjectsType databaseObjectsType :
         HideDependantDatabaseObjectsType.values()) {
       final boolean booleanValue = config.getBooleanValue(databaseObjectsType.getKey());
@@ -132,6 +143,9 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isAlphabeticalSortForForeignKeys = options.isAlphabeticalSortForForeignKeys();
     isAlphabeticalSortForIndexes = options.isAlphabeticalSortForIndexes();
 
+    for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
+      hideDatabaseObjects.put(databaseObjectsType, options.is(databaseObjectsType));
+    }
     for (final HideDependantDatabaseObjectsType databaseObjectsType :
         HideDependantDatabaseObjectsType.values()) {
       hideDependantDatabaseObjects.put(databaseObjectsType, options.is(databaseObjectsType));
@@ -254,12 +268,48 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
+  public final B noRoutines() {
+    return noRoutines(true);
+  }
+
+  public final B noRoutines(final boolean value) {
+    hideDatabaseObjects.put(hideRoutines, value);
+    return (B) this;
+  }
+
   public final B noRoutineSpecificNames() {
     return noRoutineSpecificNames(true);
   }
 
   public final B noRoutineSpecificNames(final boolean value) {
     hideNames.put(hideRoutineSpecificNames, value);
+    return (B) this;
+  }
+
+  public final B noSchemas() {
+    return noSchemas(true);
+  }
+
+  public final B noSchemas(final boolean value) {
+    hideDatabaseObjects.put(hideSchemas, value);
+    return (B) this;
+  }
+
+  public final B noSequences() {
+    return noSequences(true);
+  }
+
+  public final B noSequences(final boolean value) {
+    hideDatabaseObjects.put(hideSequences, value);
+    return (B) this;
+  }
+
+  public final B noSynonyms() {
+    return noSynonyms(true);
+  }
+
+  public final B noSynonyms(final boolean value) {
+    hideDatabaseObjects.put(hideSynonyms, value);
     return (B) this;
   }
 
@@ -278,6 +328,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   public final B noTableConstraints(final boolean value) {
     hideDependantDatabaseObjects.put(hideTableConstraints, value);
+    return (B) this;
+  }
+
+  public final B noTables() {
+    return noTables(true);
+  }
+
+  public final B noTables(final boolean value) {
+    hideDatabaseObjects.put(hideTables, value);
     return (B) this;
   }
 
@@ -383,6 +442,11 @@ public abstract class BaseSchemaTextOptionsBuilder<
     config.put(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
     config.put(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
 
+    for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
+      config.put(
+          databaseObjectsType.getKey(),
+          hideDatabaseObjects.getOrDefault(databaseObjectsType, false));
+    }
     for (final HideDependantDatabaseObjectsType databaseObjectsType :
         HideDependantDatabaseObjectsType.values()) {
       config.put(
