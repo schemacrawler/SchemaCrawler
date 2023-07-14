@@ -32,6 +32,14 @@ import static java.util.Comparator.naturalOrder;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hidePrimaryKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTableConstraintNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
@@ -150,7 +158,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
 
     if (isVerbose()) {
-      if (!options.isHideRoutineSpecificNames()) {
+      if (!options.is(hideRoutineSpecificNames)) {
         final String specificName = routine.getSpecificName();
         if (!isBlank(specificName)) {
           formattingHelper.writeEmptyRow();
@@ -231,7 +239,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         nodeId(table), tableName, tableType, colorMap.getColor(table));
     printRemarks(table);
 
-    if (!options.get(hideTableColumns)) {
+    if (!options.is(hideTableColumns)) {
       printTableColumns(table.getColumns(), true);
       if (isVerbose()) {
         printTableColumns(new ArrayList<>(table.getHiddenColumns()), true);
@@ -322,7 +330,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printAlternateKeys(final Table table) {
-    if (table == null || options.get(hideAlternateKeys)) {
+    if (table == null || options.is(hideAlternateKeys)) {
       return;
     }
 
@@ -338,7 +346,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     for (final TableConstraint alternateKey : alternateKeys) {
       final String name = identifiers.quoteName(alternateKey);
       final String akName;
-      if (!options.isHideAlternateKeyNames()) {
+      if (!options.is(hideAlternateKeyNames)) {
         akName = name;
       } else {
         akName = "";
@@ -492,7 +500,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printForeignKeys(final Table table) {
-    if (table == null || options.get(hideForeignKeys)) {
+    if (table == null || options.is(hideForeignKeys)) {
       return;
     }
 
@@ -537,7 +545,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeEmptyRow();
 
         String fkName = "";
-        if (!options.isHideForeignKeyNames()) {
+        if (!options.is(hideForeignKeyNames)) {
           fkName = name;
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
@@ -550,7 +558,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printIndexes(final Collection<Index> indexesCollection) {
-    if (indexesCollection.isEmpty() || options.get(hideIndexes)) {
+    if (indexesCollection.isEmpty() || options.is(hideIndexes)) {
       return;
     }
 
@@ -566,7 +574,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeEmptyRow();
 
         String indexName = "";
-        if (!options.isHideIndexNames()) {
+        if (!options.is(hideIndexNames)) {
           indexName = identifiers.quoteName(index);
         }
         final IndexType indexType = index.getIndexType();
@@ -589,7 +597,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printPrimaryKey(final PrimaryKey primaryKey) {
-    if (primaryKey == null || options.get(hidePrimaryKeys)) {
+    if (primaryKey == null || options.is(hidePrimaryKeys)) {
       return;
     }
 
@@ -600,7 +608,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     final String name = identifiers.quoteName(primaryKey);
     String pkName = "";
-    if (!options.isHidePrimaryKeyNames()) {
+    if (!options.is(hidePrimaryKeyNames)) {
       pkName = name;
     }
     pkName = trimToEmpty(pkName);
@@ -651,7 +659,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printRoutineParameters(final List<? extends RoutineParameter<?>> parameters) {
-    if (parameters.isEmpty() || options.get(hideRoutineParameters)) {
+    if (parameters.isEmpty() || options.is(hideRoutineParameters)) {
       return;
     }
 
@@ -800,7 +808,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection) {
-    if (options.get(hideTableConstraints)) {
+    if (options.is(hideTableConstraints)) {
       return;
     }
 
@@ -826,7 +834,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     for (final TableConstraint constraint : constraints) {
       if (constraint != null) {
         String constraintName = "";
-        if (!options.isHideTableConstraintNames()) {
+        if (!options.is(hideTableConstraintNames)) {
           constraintName = identifiers.quoteName(constraint);
         }
         final String constraintType = constraint.getType().getValue().toLowerCase();
@@ -856,7 +864,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printTriggers(final Collection<Trigger> triggers) {
-    if (triggers.isEmpty() || options.get(hideTriggers)) {
+    if (triggers.isEmpty() || options.is(hideTriggers)) {
       return;
     }
 
@@ -886,7 +894,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeEmptyRow();
 
         final String triggerName;
-        if (options.isHideTriggerNames()) {
+        if (options.is(hideTriggerNames)) {
           triggerName = "";
         } else {
           triggerName = identifiers.quoteName(trigger);
@@ -926,7 +934,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printWeakAssociations(final Table table) {
-    if (table == null || options.get(hideWeakAssociations)) {
+    if (table == null || options.is(hideWeakAssociations)) {
       return;
     }
 
@@ -947,7 +955,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeEmptyRow();
 
         String fkName = "";
-        if (!options.isHideWeakAssociationNames()) {
+        if (!options.is(hideWeakAssociationNames)) {
           fkName = name;
         }
         final String fkDetails = "[weak association]";

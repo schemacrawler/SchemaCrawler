@@ -31,6 +31,10 @@ package schemacrawler.tools.text.formatter.diagram;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
@@ -171,7 +175,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
     printTableRemarks(table);
 
-    if (!options.get(hideTableColumns)) {
+    if (!options.is(hideTableColumns)) {
       printTableColumns(table.getColumns());
       if (isVerbose()) {
         printTableColumns(new ArrayList<>(table.getHiddenColumns()));
@@ -275,7 +279,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printAlternateKeys(final Table table) {
-    if (table == null || options.get(hideAlternateKeys)) {
+    if (table == null || options.is(hideAlternateKeys)) {
       return;
     }
 
@@ -289,7 +293,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     for (final TableConstraint alternateKey : alternateKeys) {
       final String name = identifiers.quoteName(alternateKey);
       final String akName;
-      if (!options.isHideAlternateKeyNames()) {
+      if (!options.is(hideAlternateKeyNames)) {
         akName = name;
       } else {
         akName = "";
@@ -382,8 +386,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
 
     final String associationName;
-    if (isForeignKey && options.isHideForeignKeyNames()
-        || !isForeignKey && options.isHideWeakAssociationNames()) {
+    if (isForeignKey && options.is(hideForeignKeyNames)
+        || !isForeignKey && options.is(hideWeakAssociationNames)) {
       associationName = "";
     } else {
       associationName = fkName;
@@ -403,7 +407,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printForeignKeys(final Table table) {
-    if (table == null || options.get(hideForeignKeys)) {
+    if (table == null || options.is(hideForeignKeys)) {
       return;
     }
     printForeignKeys(table, table.getForeignKeys());
@@ -453,7 +457,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printIndexes(final Table table) {
-    if (table == null || options.get(hideIndexes)) {
+    if (table == null || options.is(hideIndexes)) {
       return;
     }
 
@@ -467,7 +471,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     for (final Index index : indexes) {
       final String name = identifiers.quoteName(index);
       final String indexName;
-      if (!options.isHideIndexNames()) {
+      if (!options.is(hideIndexNames)) {
         indexName = name;
       } else {
         indexName = "";
@@ -732,7 +736,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printWeakAssociations(final Table table) {
-    if (table == null || options.get(hideWeakAssociations)) {
+    if (table == null || options.is(hideWeakAssociations)) {
       return;
     }
     final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
