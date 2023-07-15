@@ -121,6 +121,30 @@ public abstract class AbstractSchemaCrawlerOutputTest {
         .noSchemaCrawlerInfo(false)
         .showDatabaseInfo(true)
         .showJdbcDriverInfo(true)
+        .noTables()
+        .noRoutines();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    assertAll(
+        outputFormats()
+            .map(
+                outputFormat ->
+                    () -> {
+                      compareHideDatabaseObjectsOutput(
+                          dataSource, textOptions, outputFormat, "hidden_database_objects");
+                    }));
+  }
+
+  @Test
+  public void compareHideDependantDatabaseObjectsOutput(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    clean(HIDE_DATABASE_OBJECTS_OUTPUT);
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+        .noSchemaCrawlerInfo(false)
+        .showDatabaseInfo(true)
+        .showJdbcDriverInfo(true)
         .noPrimaryKeys()
         .noForeignKeys()
         .noTableColumns()
@@ -134,7 +158,11 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareHideDatabaseObjectsOutput(dataSource, textOptions, outputFormat);
+                      compareHideDatabaseObjectsOutput(
+                          dataSource,
+                          textOptions,
+                          outputFormat,
+                          "hidden_dependant_database_objects");
                     }));
   }
 
@@ -372,9 +400,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   private void compareHideDatabaseObjectsOutput(
       final DatabaseConnectionSource dataSource,
       final SchemaTextOptions textOptions,
-      final OutputFormat outputFormat)
+      final OutputFormat outputFormat,
+      final String referenceFileStem)
       throws Exception {
-    final String referenceFile = "hidden_database_objects." + outputFormat.getFormat();
+    final String referenceFile = referenceFileStem + "." + outputFormat.getFormat();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
