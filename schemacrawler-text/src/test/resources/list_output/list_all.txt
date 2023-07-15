@@ -4,22 +4,38 @@ Tables
 ========================================================================
 
 PUBLIC.BOOKS.AUTHORS                                             [table]
-  Contact details for book authors
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
-  Relationship between books and their authors, 
-along with the latest updated information
 PUBLIC.BOOKS.BOOKS                                               [table]
-  Details for published books
 PUBLIC.BOOKS."Celebrities"                                       [table]
 PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 PUBLIC.BOOKS.COUPONS                                             [table]
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 PUBLIC.BOOKS.CUSTOMERS                                           [table]
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
-  List of book publishers
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
-PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
-PUBLIC."PUBLISHER SALES".SALES                                   [table]
-PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
+
+
+
+Routines
+========================================================================
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+
+
+
+Sequences
+========================================================================
+
+PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
+
+
+
+Synonyms
+========================================================================
+
+PUBLIC.BOOKS.PUBLICATIONS                                      [synonym]
 

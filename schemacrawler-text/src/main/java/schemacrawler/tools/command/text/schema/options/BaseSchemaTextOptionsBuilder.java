@@ -28,6 +28,28 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema.options;
 
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hidePrimaryKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTableConstraintNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSchemas;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hidePrimaryKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideRoutineParameters;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import java.util.EnumMap;
 import java.util.Map;
 import schemacrawler.tools.options.Config;
@@ -58,10 +80,12 @@ public abstract class BaseSchemaTextOptionsBuilder<
   protected boolean isShowStandardColumnTypeNames;
   protected boolean isHideTableRowCounts;
   protected final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
+  protected final Map<HideDependantDatabaseObjectsType, Boolean> hideDependantDatabaseObjects;
   protected final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
 
   public BaseSchemaTextOptionsBuilder() {
     hideDatabaseObjects = new EnumMap<>(HideDatabaseObjectsType.class);
+    hideDependantDatabaseObjects = new EnumMap<>(HideDependantDatabaseObjectsType.class);
     hideNames = new EnumMap<>(HideDatabaseObjectNamesType.class);
   }
 
@@ -85,6 +109,11 @@ public abstract class BaseSchemaTextOptionsBuilder<
     for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
       final boolean booleanValue = config.getBooleanValue(databaseObjectsType.getKey());
       hideDatabaseObjects.put(databaseObjectsType, booleanValue);
+    }
+    for (final HideDependantDatabaseObjectsType databaseObjectsType :
+        HideDependantDatabaseObjectsType.values()) {
+      final boolean booleanValue = config.getBooleanValue(databaseObjectsType.getKey());
+      hideDependantDatabaseObjects.put(databaseObjectsType, booleanValue);
     }
     for (final HideDatabaseObjectNamesType databaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
@@ -115,11 +144,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isAlphabeticalSortForIndexes = options.isAlphabeticalSortForIndexes();
 
     for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
-      hideDatabaseObjects.put(databaseObjectsType, options.get(databaseObjectsType));
+      hideDatabaseObjects.put(databaseObjectsType, options.is(databaseObjectsType));
+    }
+    for (final HideDependantDatabaseObjectsType databaseObjectsType :
+        HideDependantDatabaseObjectsType.values()) {
+      hideDependantDatabaseObjects.put(databaseObjectsType, options.is(databaseObjectsType));
     }
     for (final HideDatabaseObjectNamesType databaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
-      hideNames.put(databaseObjectNamesType, options.get(databaseObjectNamesType));
+      hideNames.put(databaseObjectNamesType, options.is(databaseObjectNamesType));
     }
 
     return (B) this;
@@ -139,7 +172,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noAlternateKeyNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hideAlternateKeyNames, value);
+    hideNames.put(hideAlternateKeyNames, value);
     return (B) this;
   }
 
@@ -148,7 +181,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noAlternateKeys(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideAlternateKeys, value);
+    hideDependantDatabaseObjects.put(hideAlternateKeys, value);
     return (B) this;
   }
 
@@ -157,7 +190,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noConstraintNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hideTableConstraintNames, value);
+    hideNames.put(hideTableConstraintNames, value);
     return (B) this;
   }
 
@@ -166,7 +199,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noForeignKeyNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hideForeignKeyNames, value);
+    hideNames.put(hideForeignKeyNames, value);
     return (B) this;
   }
 
@@ -175,7 +208,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noForeignKeys(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideForeignKeys, value);
+    hideDependantDatabaseObjects.put(hideForeignKeys, value);
     return (B) this;
   }
 
@@ -184,7 +217,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noIndexes(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideIndexes, value);
+    hideDependantDatabaseObjects.put(hideIndexes, value);
     return (B) this;
   }
 
@@ -193,7 +226,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noIndexNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hideIndexNames, value);
+    hideNames.put(hideIndexNames, value);
     return (B) this;
   }
 
@@ -202,7 +235,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noPrimaryKeyNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hidePrimaryKeyNames, value);
+    hideNames.put(hidePrimaryKeyNames, value);
     return (B) this;
   }
 
@@ -211,7 +244,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noPrimaryKeys(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hidePrimaryKeys, value);
+    hideDependantDatabaseObjects.put(hidePrimaryKeys, value);
     return (B) this;
   }
 
@@ -231,7 +264,16 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noRoutineParameters(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideRoutineParameters, value);
+    hideDependantDatabaseObjects.put(hideRoutineParameters, value);
+    return (B) this;
+  }
+
+  public final B noRoutines() {
+    return noRoutines(true);
+  }
+
+  public final B noRoutines(final boolean value) {
+    hideDatabaseObjects.put(hideRoutines, value);
     return (B) this;
   }
 
@@ -240,7 +282,34 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noRoutineSpecificNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hideRoutineSpecificNames, value);
+    hideNames.put(hideRoutineSpecificNames, value);
+    return (B) this;
+  }
+
+  public final B noSchemas() {
+    return noSchemas(true);
+  }
+
+  public final B noSchemas(final boolean value) {
+    hideDatabaseObjects.put(hideSchemas, value);
+    return (B) this;
+  }
+
+  public final B noSequences() {
+    return noSequences(true);
+  }
+
+  public final B noSequences(final boolean value) {
+    hideDatabaseObjects.put(hideSequences, value);
+    return (B) this;
+  }
+
+  public final B noSynonyms() {
+    return noSynonyms(true);
+  }
+
+  public final B noSynonyms(final boolean value) {
+    hideDatabaseObjects.put(hideSynonyms, value);
     return (B) this;
   }
 
@@ -249,7 +318,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noTableColumns(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideTableColumns, value);
+    hideDependantDatabaseObjects.put(hideTableColumns, value);
     return (B) this;
   }
 
@@ -258,7 +327,16 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noTableConstraints(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideTableConstraints, value);
+    hideDependantDatabaseObjects.put(hideTableConstraints, value);
+    return (B) this;
+  }
+
+  public final B noTables() {
+    return noTables(true);
+  }
+
+  public final B noTables(final boolean value) {
+    hideDatabaseObjects.put(hideTables, value);
     return (B) this;
   }
 
@@ -267,7 +345,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noTriggerNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hideTriggerNames, value);
+    hideNames.put(hideTriggerNames, value);
     return (B) this;
   }
 
@@ -276,7 +354,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noTriggers(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideTriggers, value);
+    hideDependantDatabaseObjects.put(hideTriggers, value);
     return (B) this;
   }
 
@@ -285,7 +363,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noWeakAssociationNames(final boolean value) {
-    hideNames.put(HideDatabaseObjectNamesType.hideWeakAssociationNames, value);
+    hideNames.put(hideWeakAssociationNames, value);
     return (B) this;
   }
 
@@ -294,7 +372,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noWeakAssociations(final boolean value) {
-    hideDatabaseObjects.put(HideDatabaseObjectsType.hideWeakAssociations, value);
+    hideDependantDatabaseObjects.put(hideWeakAssociations, value);
     return (B) this;
   }
 
@@ -368,6 +446,12 @@ public abstract class BaseSchemaTextOptionsBuilder<
       config.put(
           databaseObjectsType.getKey(),
           hideDatabaseObjects.getOrDefault(databaseObjectsType, false));
+    }
+    for (final HideDependantDatabaseObjectsType databaseObjectsType :
+        HideDependantDatabaseObjectsType.values()) {
+      config.put(
+          databaseObjectsType.getKey(),
+          hideDependantDatabaseObjects.getOrDefault(databaseObjectsType, false));
     }
     for (final HideDatabaseObjectNamesType databaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {

@@ -1,3 +1,8 @@
-These are the sequences in the database catalog:
-- "PUBLIC"."BOOKS"."PUBLISHER_ID_SEQ"
-- "PUBLIC"."SYSTEM_LOBS"."LOB_ID"
+
+
+Sequences
+========================================================================
+
+PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
+PUBLIC.SYSTEM_LOBS.LOB_ID                                     [sequence]
+

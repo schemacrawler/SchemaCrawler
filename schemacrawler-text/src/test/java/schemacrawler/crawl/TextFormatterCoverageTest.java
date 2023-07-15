@@ -29,11 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static us.fatehi.utility.Utility.isBlank;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
@@ -119,11 +120,8 @@ public class TextFormatterCoverageTest {
 
   @Test
   public void nullTable(final TestContext testContext) throws Exception {
-
     final MutableTable table = null;
-    assertThrows(
-        NullPointerException.class,
-        () -> checkTextOutputForTable(table, testContext.testMethodFullName()));
+    checkTextOutputForTable(table, null);
   }
 
   @Test
@@ -154,10 +152,14 @@ public class TextFormatterCoverageTest {
 
       formatterMethod.accept(formatter);
     }
-    assertThat(
-        outputOf(testout.getFilePath()),
-        hasSameContentAs(
-            classpathResource(FORMATTER_COVERAGE_OUTPUT + referenceFileName + ".txt")));
+    if (isBlank(referenceFileName)) {
+      assertThat(outputOf(testout.getFilePath()), hasNoContent());
+    } else {
+      assertThat(
+          outputOf(testout.getFilePath()),
+          hasSameContentAs(
+              classpathResource(FORMATTER_COVERAGE_OUTPUT + referenceFileName + ".txt")));
+    }
   }
 
   private void checkTextOutputForTable(final Table table, final String referenceFileName) {

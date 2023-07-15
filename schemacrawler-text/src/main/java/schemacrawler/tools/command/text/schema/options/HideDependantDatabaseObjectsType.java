@@ -28,19 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema.options;
 
-public enum HideDatabaseObjectsType {
-  hideRoutines("hide_routines"),
-  hideSchemas("hide_schemas"),
-  hideSequences("hide_sequences"),
-  hideSynonyms("hide_synonyms"),
-  hideTables("hide_tables"),
+public enum HideDependantDatabaseObjectsType {
+  hideAlternateKeys("hide_alternatekeys"),
+  hideForeignKeys("hide_foreignkeys"),
+  hideIndexes("hide_indexes"),
+  hidePrimaryKeys("hide_primarykeys"),
+  hideRoutineParameters("hide_routine_parameters"),
+  hideTableColumns("hide_table_columns"),
+  hideTableConstraints("hide_constraints"),
+  hideTriggers("hide_triggers"),
+  hideWeakAssociations("hide_weakassociations"),
   ;
 
   private static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
 
   private final String key;
 
-  HideDatabaseObjectsType(final String key) {
+  HideDependantDatabaseObjectsType(final String key) {
     this.key = key;
   }
 

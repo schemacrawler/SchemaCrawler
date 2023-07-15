@@ -28,8 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.formatter.schema;
 
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 import static us.fatehi.utility.Utility.isBlank;
-
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -40,6 +43,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -140,6 +144,10 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handle(final Routine routine) {
+    if (routine == null || options.is(hideRoutines)) {
+      return;
+    }
+
     final String routineTypeDetail =
         String.format("%s, %s", routine.getRoutineType(), routine.getReturnType());
     final String routineName = quoteName(routine);
@@ -152,6 +160,10 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handle(final Sequence sequence) {
+    if (sequence == null || options.is(hideSequences)) {
+      return;
+    }
+
     final String sequenceName = quoteName(sequence);
     final String sequenceType = "[sequence]";
 
@@ -162,6 +174,10 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handle(final Synonym synonym) {
+    if (synonym == null || options.is(hideSynonyms)) {
+      return;
+    }
+
     final String synonymName = quoteName(synonym);
     final String synonymType = "[synonym]";
 
@@ -171,6 +187,10 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
 
   @Override
   public void handle(final Table table) {
+    if (options.is(hideTables)) {
+      return;
+    }
+
     final String tableName = quoteName(table);
     final String tableType = "[" + table.getTableType() + "]";
 
@@ -213,12 +233,20 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handleRoutinesEnd() {
+    if (options.is(hideRoutines)) {
+      return;
+    }
+
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
   public void handleRoutinesStart() {
+    if (options.is(hideRoutines)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Routines");
 
     formattingHelper.writeObjectStart();
@@ -227,12 +255,20 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handleSequencesEnd() {
+    if (options.is(hideSequences)) {
+      return;
+    }
+
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
   public void handleSequencesStart() {
+    if (options.is(hideSequences)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Sequences");
 
     formattingHelper.writeObjectStart();
@@ -241,12 +277,20 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handleSynonymsEnd() {
+    if (options.is(hideSynonyms)) {
+      return;
+    }
+
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
   public void handleSynonymsStart() {
+    if (options.is(HideDatabaseObjectsType.hideSynonyms)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Synonyms");
 
     formattingHelper.writeObjectStart();
@@ -255,12 +299,20 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handleTablesEnd() {
+    if (options.is(hideTables)) {
+      return;
+    }
+
     formattingHelper.writeObjectEnd();
   }
 
   /** {@inheritDoc} */
   @Override
   public void handleTablesStart() {
+    if (options.is(hideTables)) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Tables");
 
     formattingHelper.writeObjectStart();

@@ -2,9 +2,10 @@ package schemacrawler.tools.command.text.schema.options;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.options.Config;
 
 /*
@@ -81,29 +82,29 @@ public class BaseSchemaTextOptionsBuilderTest {
 
     // On and off
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(false));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(false));
     builder.noAlternateKeyNames();
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(true));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
     builder.noAlternateKeyNames(false);
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(false));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(false));
     builder.noAlternateKeyNames(true);
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(true));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
 
     // From config
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(false));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(false));
     builder.fromConfig(config);
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(true));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
     builder.fromConfig(null);
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(true));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
 
     // From options
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(false));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(false));
     builder.fromOptions(options);
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(true));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
     builder.fromOptions(null);
-    assertThat(builder.toOptions().isHideAlternateKeyNames(), is(true));
+    assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
   }
 
   @Test
@@ -116,29 +117,29 @@ public class BaseSchemaTextOptionsBuilderTest {
 
     // On and off
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(false));
     builder.noRoutineSpecificNames();
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
     builder.noRoutineSpecificNames(false);
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(false));
     builder.noRoutineSpecificNames(true);
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
 
     // From config
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(false));
     builder.fromConfig(config);
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
     builder.fromConfig(null);
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
 
     // From options
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(false));
     builder.fromOptions(options);
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
     builder.fromOptions(null);
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
   }
 
   @Test
@@ -151,29 +152,29 @@ public class BaseSchemaTextOptionsBuilderTest {
 
     // On and off
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(false));
     builder.noTriggerNames();
-    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(true));
     builder.noTriggerNames(false);
-    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(false));
     builder.noTriggerNames(true);
-    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(true));
 
     // From config
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(false));
     builder.fromConfig(config);
-    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(true));
     builder.fromConfig(null);
-    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(true));
 
     // From options
     builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(false));
     builder.fromOptions(options);
-    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(true));
     builder.fromOptions(null);
-    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    assertThat(builder.toOptions().is(hideTriggerNames), is(true));
   }
 
   @Test
@@ -188,7 +189,7 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(options.isShowUnqualifiedNames(), is(false));
     for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
-      assertThat(options.get(hideDatabaseObjectNamesType), is(false));
+      assertThat(options.is(hideDatabaseObjectNamesType), is(false));
     }
 
     builder.portableNames();
@@ -196,7 +197,7 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(options.isShowUnqualifiedNames(), is(true));
     for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
-      assertThat(options.get(hideDatabaseObjectNamesType), is(true));
+      assertThat(options.is(hideDatabaseObjectNamesType), is(true));
     }
 
     builder.portableNames(false);
@@ -204,7 +205,7 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(options.isShowUnqualifiedNames(), is(false));
     for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
-      assertThat(options.get(hideDatabaseObjectNamesType), is(false));
+      assertThat(options.is(hideDatabaseObjectNamesType), is(false));
     }
 
     builder.portableNames(true);
@@ -212,7 +213,7 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(options.isShowUnqualifiedNames(), is(true));
     for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
-      assertThat(options.get(hideDatabaseObjectNamesType), is(true));
+      assertThat(options.is(hideDatabaseObjectNamesType), is(true));
     }
   }
 
