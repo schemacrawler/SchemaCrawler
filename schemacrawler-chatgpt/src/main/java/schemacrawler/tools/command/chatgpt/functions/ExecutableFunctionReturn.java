@@ -34,11 +34,11 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
-public class TableDescriptionFunctionReturn implements FunctionReturn {
+public class ExecutableFunctionReturn implements FunctionReturn {
 
   private final SchemaCrawlerExecutable executable;
 
-  protected TableDescriptionFunctionReturn(final SchemaCrawlerExecutable executable) {
+  protected ExecutableFunctionReturn(final SchemaCrawlerExecutable executable) {
     this.executable = requireNonNull(executable, "SchemaCrawler executable not provided");
   }
 

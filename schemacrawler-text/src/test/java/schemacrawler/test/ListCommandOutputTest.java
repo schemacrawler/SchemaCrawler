@@ -72,22 +72,41 @@ public class ListCommandOutputTest {
   public void compareListOutput(final DatabaseConnectionSource dataSource) throws Exception {
     clean(LIST_OUTPUT);
 
-
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
-        .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-        .includeSequences(new IncludeAll()).includeSynonyms(new IncludeAll())
-        .includeRoutines(new IncludeAll());
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .includeSequences(new IncludeAll())
+            .includeSynonyms(new IncludeAll())
+            .includeRoutines(new IncludeAll());
     final LimitOptions limitOptions = limitOptionsBuilder.toOptions();
 
-    assertAll(outputFormats().map(outputFormat -> () -> {
-      compareListOutput(dataSource, limitOptions, tablesOutputTextOptions(), "list", outputFormat,
-          "list_tables");
-    }));
+    assertAll(
+        outputFormats()
+            .map(
+                outputFormat ->
+                    () -> {
+                      compareListOutput(
+                          dataSource,
+                          limitOptions,
+                          tablesOutputTextOptions(),
+                          "list",
+                          outputFormat,
+                          "list_tables");
+                    }));
 
-    assertAll(outputFormats().map(outputFormat -> () -> {
-      compareListOutput(dataSource, limitOptions, allOutputTextOptions(), "list", outputFormat,
-          "list_all");
-    }));
+    assertAll(
+        outputFormats()
+            .map(
+                outputFormat ->
+                    () -> {
+                      compareListOutput(
+                          dataSource,
+                          limitOptions,
+                          allOutputTextOptions(),
+                          "list",
+                          outputFormat,
+                          "list_all");
+                    }));
   }
 
   @BeforeAll
@@ -101,36 +120,54 @@ public class ListCommandOutputTest {
 
   private SchemaTextOptions allOutputTextOptions() {
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
+    textOptionsBuilder
+        .noRemarks()
+        .noSchemaCrawlerInfo()
+        .showDatabaseInfo(false)
         .showJdbcDriverInfo(false);
     return textOptionsBuilder.toOptions();
   }
 
-  private void compareListOutput(final DatabaseConnectionSource dataSource,
-      final LimitOptions limitOptions, final SchemaTextOptions textOptions, final String command,
-      final OutputFormat outputFormat, final String title) throws Exception {
+  private void compareListOutput(
+      final DatabaseConnectionSource dataSource,
+      final LimitOptions limitOptions,
+      final SchemaTextOptions textOptions,
+      final String command,
+      final OutputFormat outputFormat,
+      final String title)
+      throws Exception {
 
     final String referenceFile = String.format("%s.%s", title, outputFormat.getFormat());
 
     final LoadOptions loadOptions =
         LoadOptionsBuilder.builder().withInfoLevel(InfoLevel.maximum).toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-        .newSchemaCrawlerOptions().withLoadOptions(loadOptions).withLimitOptions(limitOptions);
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLoadOptions(loadOptions)
+            .withLimitOptions(limitOptions);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
-    assertThat(outputOf(executableExecution(dataSource, executable, outputFormat)),
+    assertThat(
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(LIST_OUTPUT + referenceFile), outputFormat));
   }
 
   private SchemaTextOptions tablesOutputTextOptions() {
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
-        .showJdbcDriverInfo(false).noSchemas().noSynonyms().noSequences().noRoutines();
+    textOptionsBuilder
+        .noRemarks()
+        .noSchemaCrawlerInfo()
+        .showDatabaseInfo(false)
+        .showJdbcDriverInfo(false)
+        .noSchemas()
+        .noSynonyms()
+        .noSequences()
+        .noRoutines();
     return textOptionsBuilder.toOptions();
   }
 }
