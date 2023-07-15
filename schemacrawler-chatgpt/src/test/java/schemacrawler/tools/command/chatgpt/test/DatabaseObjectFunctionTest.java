@@ -33,6 +33,11 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.ALL;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.ROUTINES;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.SEQUENCES;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.SYNONYMS;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.TABLES;
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -52,7 +57,6 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters;
-import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType;
 import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 
 @WithTestDatabase
@@ -86,35 +90,35 @@ public class DatabaseObjectFunctionTest {
   @Test
   public void routines(final TestContext testContext) throws Exception {
     final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(DatabaseObjectType.ROUTINES);
+    args.setDatabaseObjectType(ROUTINES);
     databaseObjects(testContext, args);
   }
 
   @Test
   public void schemas(final TestContext testContext) throws Exception {
     final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(DatabaseObjectType.SCHEMAS);
+    args.setDatabaseObjectType(ALL);
     databaseObjects(testContext, args);
   }
 
   @Test
   public void sequences(final TestContext testContext) throws Exception {
     final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(DatabaseObjectType.SEQUENCES);
+    args.setDatabaseObjectType(SEQUENCES);
     databaseObjects(testContext, args);
   }
 
   @Test
   public void synonyms(final TestContext testContext) throws Exception {
     final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(DatabaseObjectType.SYNONYMS);
+    args.setDatabaseObjectType(SYNONYMS);
     databaseObjects(testContext, args);
   }
 
   @Test
   public void tables(final TestContext testContext) throws Exception {
     final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(DatabaseObjectType.TABLES);
+    args.setDatabaseObjectType(TABLES);
     databaseObjects(testContext, args);
   }
 

@@ -1,2 +1,7 @@
-These are the synonyms in the database catalog:
-- "PUBLIC"."BOOKS"."PUBLICATIONS"
+
+
+Synonyms
+========================================================================
+
+PUBLIC.BOOKS.PUBLICATIONS                                      [synonym]
+

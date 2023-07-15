@@ -1,6 +1,6 @@
 package schemacrawler.tools.command.chatgpt.functions;
 
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.TABLES;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.ALL;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -9,9 +9,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class DatabaseObjectListFunctionParameters implements FunctionParameters {
 
   public enum DatabaseObjectType {
+    ALL("all"),
     TABLES("tables"),
     ROUTINES("routines"),
-    SCHEMAS("schemas"),
     SEQUENCES("sequences"),
     SYNONYMS("synonyms");
 
@@ -32,7 +32,7 @@ public class DatabaseObjectListFunctionParameters implements FunctionParameters 
 
   public DatabaseObjectType getDatabaseObjectType() {
     if (databaseObjectType == null) {
-      return TABLES;
+      return ALL;
     }
     return databaseObjectType;
   }

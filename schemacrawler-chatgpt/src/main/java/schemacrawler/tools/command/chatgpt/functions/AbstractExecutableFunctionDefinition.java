@@ -33,6 +33,7 @@ import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOffli
 import java.nio.file.Path;
 import java.util.function.Function;
 import java.util.zip.GZIPOutputStream;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -53,7 +54,8 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
   public Function<P, FunctionReturn> getExecutor() {
     return args -> {
       final SchemaCrawlerExecutable executable = createExecutable(args);
-      return new ExecutableFunctionReturn(executable);
+      final Function<Catalog, Boolean> resultsChecker = getResultsChecker(args);
+      return new ExecutableFunctionReturn(executable, resultsChecker);
     };
   }
 
@@ -61,14 +63,17 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
 
   protected abstract SchemaCrawlerOptions createSchemaCrawlerOptions(final P args);
 
+  protected abstract String getCommand();
+
+  protected abstract Function<Catalog, Boolean> getResultsChecker(final P args);
+
   private SchemaCrawlerExecutable createExecutable(final P args) {
 
     final DatabaseConnectionSource databaseConnectionSource = createOfflineDatasource();
 
     final SchemaCrawlerOptions options = createSchemaCrawlerOptions(args);
     final Config config = createAdditionalConfig(args);
-
-    final String command = "schema";
+    final String command = getCommand();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);

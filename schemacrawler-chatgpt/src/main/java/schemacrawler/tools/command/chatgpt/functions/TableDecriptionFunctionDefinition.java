@@ -34,8 +34,10 @@ import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunct
 import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.INDEXES;
 import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.PRIMARY_KEY;
 import static schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope.TRIGGERS;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import schemacrawler.inclusionrule.ExcludeAll;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -61,20 +63,20 @@ public final class TableDecriptionFunctionDefinition
     if (scope != DEFAULT) {
       if (scope != COLUMNS) {
         schemaTextOptionsBuilder.noTableColumns();
-      }
+      } // fall through - no else
       if (scope != PRIMARY_KEY) {
         schemaTextOptionsBuilder.noPrimaryKeys();
-      }
+      } // fall through - no else
       if (scope != FOREIGN_KEYS) {
         schemaTextOptionsBuilder.noForeignKeys();
         schemaTextOptionsBuilder.noWeakAssociations();
-      }
+      } // fall through - no else
       if (scope != INDEXES) {
         schemaTextOptionsBuilder.noIndexes();
-      }
+      } // fall through - no else
       if (scope != TRIGGERS) {
         schemaTextOptionsBuilder.noTriggers();
-      }
+      } // fall through - no else
     }
     schemaTextOptionsBuilder.noTableConstraints().noAlternateKeys().noInfo();
     return schemaTextOptionsBuilder.toConfig();
@@ -95,5 +97,16 @@ public final class TableDecriptionFunctionDefinition
     return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
         .withLimitOptions(limitOptionsBuilder.toOptions())
         .withGrepOptions(grepOptionsBuilder.toOptions());
+  }
+
+  @Override
+  protected String getCommand() {
+    return "schema";
+  }
+
+  @Override
+  protected Function<Catalog, Boolean> getResultsChecker(
+      final TableDecriptionFunctionParameters args) {
+    return catalog -> !catalog.getTables().isEmpty();
   }
 }

@@ -30,6 +30,8 @@ package schemacrawler.tools.command.chatgpt.functions;
 
 import static java.util.Objects.requireNonNull;
 import java.io.StringWriter;
+import java.util.function.Function;
+import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -37,9 +39,12 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 public class ExecutableFunctionReturn implements FunctionReturn {
 
   private final SchemaCrawlerExecutable executable;
+  private final Function<Catalog, Boolean> resultsChecker;
 
-  protected ExecutableFunctionReturn(final SchemaCrawlerExecutable executable) {
+  protected ExecutableFunctionReturn(
+      final SchemaCrawlerExecutable executable, final Function<Catalog, Boolean> resultsChecker) {
     this.executable = requireNonNull(executable, "SchemaCrawler executable not provided");
+    this.resultsChecker = requireNonNull(resultsChecker, "Check for results");
   }
 
   @Override
@@ -52,7 +57,7 @@ public class ExecutableFunctionReturn implements FunctionReturn {
     executable.setOutputOptions(outputOptions);
     executable.execute();
 
-    if (executable.getCatalog().getTables().isEmpty()) {
+    if (!resultsChecker.apply(executable.getCatalog())) {
       return "There were no matching results for your query.";
     }
 
