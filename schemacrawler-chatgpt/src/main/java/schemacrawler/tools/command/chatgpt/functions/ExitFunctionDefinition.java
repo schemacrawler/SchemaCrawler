@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.functions;
 
 import java.util.function.Function;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition.ExitFunctionParameters;
 
 public final class ExitFunctionDefinition
@@ -45,5 +47,14 @@ public final class ExitFunctionDefinition
   @Override
   public Function<ExitFunctionParameters, FunctionReturn> getExecutor() {
     return args -> () -> "Thank you for using SchemaCrawler with ChatGPT.";
+  }
+
+  @Override
+  public String toString() {
+    try {
+      return new ObjectMapper().writeValueAsString(this);
+    } catch (final JsonProcessingException e) {
+      return super.toString();
+    }
   }
 }

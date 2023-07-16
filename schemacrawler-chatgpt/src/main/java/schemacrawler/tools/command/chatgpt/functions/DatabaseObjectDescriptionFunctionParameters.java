@@ -2,6 +2,8 @@ package schemacrawler.tools.command.chatgpt.functions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -52,5 +54,14 @@ public class DatabaseObjectDescriptionFunctionParameters implements FunctionPara
 
   public void setDatabaseObjectsScope(final DatabaseObjectsScope databaseObjectsScope) {
     this.databaseObjectsScope = databaseObjectsScope;
+  }
+
+  @Override
+  public String toString() {
+    try {
+      return new ObjectMapper().writeValueAsString(this);
+    } catch (final JsonProcessingException e) {
+      return super.toString();
+    }
   }
 }
