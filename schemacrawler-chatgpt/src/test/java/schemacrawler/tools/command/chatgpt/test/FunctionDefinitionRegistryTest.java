@@ -29,7 +29,7 @@ public class FunctionDefinitionRegistryTest {
     final FunctionDefinitionRegistry registry =
         FunctionDefinitionRegistry.getFunctionDefinitionRegistry();
     final Collection<FunctionDefinition> functions = convertIterableToCollection(registry);
-    assertThat(functions, hasSize(5));
+    assertThat(functions, hasSize(6));
     assertThat(
         functions,
         containsInAnyOrder(

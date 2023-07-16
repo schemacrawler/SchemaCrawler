@@ -18,6 +18,6 @@ public class ChatGPTUtilityTest {
     final Catalog catalog = mock(Catalog.class);
     final FunctionExecutor functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog);
     assertThat(functionExecutor, is(not(nullValue())));
-    assertThat(functionExecutor.getFunctions(), hasSize(5));
+    assertThat(functionExecutor.getFunctions(), hasSize(6));
   }
 }
