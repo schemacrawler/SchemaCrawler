@@ -1,11 +1,7 @@
 package schemacrawler.tools.offline;
 
 import static java.nio.file.Files.newInputStream;
-import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
-import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
-import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
-import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
-import static schemacrawler.filter.ReducerFactory.getTableReducer;
+import static schemacrawler.utility.MetaDataUtility.reduceCatalog;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -13,12 +9,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.zip.GZIPInputStream;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Reducible;
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Sequence;
-import schemacrawler.schema.Synonym;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
@@ -67,7 +57,10 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
             new JavaSerializedCatalog(inputFileStream);
         catalog = deserializedCatalog.getCatalog();
       }
-      reduceCatalog(catalog);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
+      reduceCatalog(catalog, schemaCrawlerOptions);
+
     } catch (final IOException e) {
       throw new IORuntimeException("Could not load offline database", e);
     } catch (final SQLException e) {
@@ -75,14 +68,5 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
     }
 
     setCatalog(catalog);
-  }
-
-  private void reduceCatalog(final Catalog catalog) {
-    final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
-    ((Reducible) catalog).reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Table.class, getTableReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Routine.class, getRoutineReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
   }
 }
