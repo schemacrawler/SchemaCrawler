@@ -6,6 +6,7 @@ SchemaCrawler release notes.
 ## Release 16.20.3 - 2023-07-20
 
 - Use SchemaCrawler commands for output from ChatGPT plugin
+- Support lint in ChatGPT interactions
 - Allow hiding of specific portions of table output, such as primary keys, foreign keys, indexes, and so on
 
 
@@ -22,8 +23,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="a16.20.2"></a>
-## Release 16.20.2 - 2023-06-03
+<a name="a16.20.3"></a>
+## Release 16.20.3 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
