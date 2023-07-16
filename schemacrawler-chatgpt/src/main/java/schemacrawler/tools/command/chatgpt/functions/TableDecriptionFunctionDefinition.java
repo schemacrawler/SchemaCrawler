@@ -51,7 +51,6 @@ public final class TableDecriptionFunctionDefinition
 
   public TableDecriptionFunctionDefinition() {
     super(
-        "describe-tables",
         "Gets the details and description of database tables, including columns, foreign keys, indexes and triggers.",
         TableDecriptionFunctionParameters.class);
   }

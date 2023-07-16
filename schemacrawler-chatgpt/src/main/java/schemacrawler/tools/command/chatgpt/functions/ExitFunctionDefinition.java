@@ -38,7 +38,6 @@ public final class ExitFunctionDefinition
 
   public ExitFunctionDefinition() {
     super(
-        "exit",
         "Called when the user is done with their research, wants to end the chat session.",
         ExitFunctionParameters.class);
   }

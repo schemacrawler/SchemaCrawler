@@ -48,7 +48,6 @@ public final class DatabaseObjectListFunctionDefinition
 
   public DatabaseObjectListFunctionDefinition() {
     super(
-        "database-object-list",
         "Lists database objects like tables, routines (that is, functions and stored procedures), sequences, or synonyms.",
         DatabaseObjectListFunctionParameters.class);
   }

@@ -36,14 +36,11 @@ import schemacrawler.schema.Catalog;
 public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
     implements FunctionDefinition<P> {
 
-  private final String name;
   private final String description;
   private final Class<P> parameters;
   protected Catalog catalog;
 
-  protected AbstractFunctionDefinition(
-      final String name, final String description, final Class<P> parameters) {
-    this.name = requireNotBlank(name, "Function name not provided");
+  protected AbstractFunctionDefinition(final String description, final Class<P> parameters) {
     this.description = requireNotBlank(description, "Function description not provided");
     this.parameters = requireNonNull(parameters, "Function parameters not provided");
   }
@@ -58,7 +55,6 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
     }
     final AbstractFunctionDefinition<?> other = (AbstractFunctionDefinition<?>) obj;
     return Objects.equals(description, other.description)
-        && Objects.equals(name, other.name)
         && Objects.equals(parameters, other.parameters);
   }
 
@@ -74,7 +70,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
 
   @Override
   public String getName() {
-    return name;
+    return this.getClass().getName();
   }
 
   @Override
@@ -84,7 +80,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, name, parameters);
+    return Objects.hash(description, parameters);
   }
 
   @Override
@@ -94,6 +90,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
 
   @Override
   public String toString() {
-    return String.format("function %s(%s)%n\"%s\"", name, parameters.getSimpleName(), description);
+    return String.format(
+        "function %s(%s)%n\"%s\"", getName(), parameters.getSimpleName(), description);
   }
 }

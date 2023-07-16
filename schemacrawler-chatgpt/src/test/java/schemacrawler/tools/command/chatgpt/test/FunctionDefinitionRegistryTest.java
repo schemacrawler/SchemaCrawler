@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasSize;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
+import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.FunctionDefinition;
@@ -36,6 +37,7 @@ public class FunctionDefinitionRegistryTest {
             new DatabaseObjectListFunctionDefinition(),
             new TableDecriptionFunctionDefinition(),
             new TableReferencesFunctionDefinition(),
+            new DatabaseObjectDescriptionFunctionDefinition(),
             new LintFunctionDefinition(),
             new ExitFunctionDefinition()));
   }

@@ -14,7 +14,7 @@ public class EqualsTest {
 
     protected TestFunctionDefinition(
         final String name, final String description, final Class<FunctionParameters> parameters) {
-      super(name, description, parameters);
+      super(description, parameters);
     }
 
     @Override

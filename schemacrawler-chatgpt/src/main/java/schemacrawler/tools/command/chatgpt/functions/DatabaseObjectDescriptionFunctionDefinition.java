@@ -55,7 +55,6 @@ public final class DatabaseObjectDescriptionFunctionDefinition
 
   public DatabaseObjectDescriptionFunctionDefinition() {
     super(
-        "describe-database-objects",
         "Gets the details and description of database objects like routines (that is, functions and stored procedures), sequences, or synonyms.",
         DatabaseObjectDescriptionFunctionParameters.class);
   }

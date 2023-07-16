@@ -46,8 +46,8 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
     extends AbstractFunctionDefinition<P> {
 
   protected AbstractExecutableFunctionDefinition(
-      final String name, final String description, final Class<P> parameters) {
-    super(name, description, parameters);
+      final String description, final Class<P> parameters) {
+    super(description, parameters);
   }
 
   @Override

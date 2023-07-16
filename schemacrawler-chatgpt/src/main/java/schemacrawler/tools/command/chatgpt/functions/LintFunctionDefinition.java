@@ -43,7 +43,6 @@ public final class LintFunctionDefinition
 
   public LintFunctionDefinition() {
     super(
-        "lint",
         "Lint database schemas. Find problems with database design, such as no indexes on foreign keys.",
         LintFunctionParameters.class);
   }
