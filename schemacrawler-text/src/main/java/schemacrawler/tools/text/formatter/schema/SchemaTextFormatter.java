@@ -62,6 +62,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -101,10 +103,13 @@ import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.string.StringFormat;
 
 /** Text formatting of schema. */
 public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOptions>
     implements SchemaTraversalHandler {
+
+  private static final Logger LOGGER = Logger.getLogger(SchemaTextFormatter.class.getName());
 
   private static final String SPACE = " ";
 
@@ -146,6 +151,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handle(final Routine routine) {
     if (routine == null || options.is(hideRoutines)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing routine <%s>", routine));
       return;
     }
 
@@ -167,6 +173,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     if (isVerbose()) {
       if (!options.is(hideRoutineSpecificNames)) {
+        LOGGER.log(
+            Level.FINER, new StringFormat("Not showing routine specific name for <%s>", routine));
         final String specificName = routine.getSpecificName();
         if (!isBlank(specificName)) {
           formattingHelper.writeEmptyRow();
@@ -211,6 +219,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handle(final Synonym synonym) {
     if (synonym == null || options.is(hideSynonyms)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing synonym <%s>", synonym));
       return;
     }
 
@@ -242,6 +251,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handle(final Table table) {
     if (table == null || options.is(hideTables)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing table <%s>", table));
       return;
     }
 
@@ -256,6 +266,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     printRemarks(table);
 
     if (!options.is(hideTableColumns)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing table columns for <%s>", table));
       printTableColumns(table.getColumns(), true);
       if (isVerbose()) {
         printTableColumns(new ArrayList<>(table.getHiddenColumns()), true);
@@ -307,6 +318,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handleRoutinesStart() {
     if (options.is(hideRoutines)) {
+      LOGGER.log(Level.FINER, "Not showing routines");
       return;
     }
 
@@ -323,6 +335,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handleSequencesStart() {
     if (options.is(hideSequences)) {
+      LOGGER.log(Level.FINER, "Not showing sequences");
       return;
     }
 
@@ -339,6 +352,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handleSynonymsStart() {
     if (options.is(hideSynonyms)) {
+      LOGGER.log(Level.FINER, "Not showing synonyms");
       return;
     }
 
@@ -355,6 +369,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handleTablesStart() {
     if (options.is(hideTables)) {
+      LOGGER.log(Level.FINER, "Not showing tables");
       return;
     }
 
@@ -363,6 +378,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printAlternateKeys(final Table table) {
     if (table == null || options.is(hideAlternateKeys)) {
+      LOGGER.log(Level.FINER, "Not showing alternate keys");
       return;
     }
 
@@ -379,6 +395,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String name = identifiers.quoteName(alternateKey);
       final String akName;
       if (!options.is(hideAlternateKeyNames)) {
+        LOGGER.log(
+            Level.FINER, new StringFormat("Not showing alternate key names for <%s>", table));
         akName = name;
       } else {
         akName = "";
@@ -533,6 +551,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printForeignKeys(final Table table) {
     if (table == null || options.is(hideForeignKeys)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing foreign keys for <%s>", table));
       return;
     }
 
@@ -578,6 +597,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
         String fkName = "";
         if (!options.is(hideForeignKeyNames)) {
+          LOGGER.log(
+              Level.FINER, new StringFormat("Not showing foreign key names for <%s>", table));
           fkName = name;
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
@@ -591,6 +612,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printIndexes(final Collection<Index> indexesCollection) {
     if (indexesCollection.isEmpty() || options.is(hideIndexes)) {
+      LOGGER.log(Level.FINER, "Not showing indexes");
       return;
     }
 
@@ -607,6 +629,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
         String indexName = "";
         if (!options.is(hideIndexNames)) {
+          LOGGER.log(Level.FINER, new StringFormat("Not showing index names for <%s>", index));
           indexName = identifiers.quoteName(index);
         }
         final IndexType indexType = index.getIndexType();
@@ -630,6 +653,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printPrimaryKey(final PrimaryKey primaryKey) {
     if (primaryKey == null || options.is(hidePrimaryKeys)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing primary key <%s>", primaryKey));
       return;
     }
 
@@ -641,6 +665,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     final String name = identifiers.quoteName(primaryKey);
     String pkName = "";
     if (!options.is(hidePrimaryKeyNames)) {
+      LOGGER.log(
+          Level.FINER, new StringFormat("Not showing primary key name for <%s>", primaryKey));
       pkName = name;
     }
     pkName = trimToEmpty(pkName);
@@ -692,6 +718,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printRoutineParameters(final List<? extends RoutineParameter<?>> parameters) {
     if (parameters.isEmpty() || options.is(hideRoutineParameters)) {
+      LOGGER.log(Level.FINER, "Not showing routine parameters");
       return;
     }
 
@@ -841,6 +868,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection) {
     if (options.is(hideTableConstraints)) {
+      LOGGER.log(Level.FINER, "Not showing table constraints");
       return;
     }
 
@@ -867,6 +895,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       if (constraint != null) {
         String constraintName = "";
         if (!options.is(hideTableConstraintNames)) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Not showing table constraint name for <%s>", constraint));
           constraintName = identifiers.quoteName(constraint);
         }
         final String constraintType = constraint.getType().getValue().toLowerCase();
@@ -897,6 +928,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printTriggers(final Collection<Trigger> triggers) {
     if (triggers.isEmpty() || options.is(hideTriggers)) {
+      LOGGER.log(Level.FINER, "Not showing triggers");
       return;
     }
 
@@ -927,6 +959,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
         final String triggerName;
         if (options.is(hideTriggerNames)) {
+          LOGGER.log(Level.FINER, new StringFormat("Not showing trigger name for <%s>", trigger));
           triggerName = "";
         } else {
           triggerName = identifiers.quoteName(trigger);
@@ -967,6 +1000,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printWeakAssociations(final Table table) {
     if (table == null || options.is(hideWeakAssociations)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
       return;
     }
 
@@ -988,6 +1022,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
         String fkName = "";
         if (!options.is(hideWeakAssociationNames)) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Not showing weak associations name for <%s>", weakAssociation));
           fkName = name;
         }
         final String fkDetails = "[weak association]";

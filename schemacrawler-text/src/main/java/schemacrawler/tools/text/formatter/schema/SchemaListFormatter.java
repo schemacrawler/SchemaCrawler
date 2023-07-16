@@ -33,6 +33,8 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 import static us.fatehi.utility.Utility.isBlank;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -51,10 +53,13 @@ import schemacrawler.tools.text.formatter.base.BaseFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.string.StringFormat;
 
 /** Text formatting of schema. */
 public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
     implements SchemaTraversalHandler {
+
+  private static final Logger LOGGER = Logger.getLogger(SchemaListFormatter.class.getName());
 
   /**
    * Text formatting of schema.
@@ -145,6 +150,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handle(final Routine routine) {
     if (routine == null || options.is(hideRoutines)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing routine <%s>", routine));
       return;
     }
 
@@ -161,6 +167,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handle(final Sequence sequence) {
     if (sequence == null || options.is(hideSequences)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing sequence <%s>", sequence));
       return;
     }
 
@@ -175,6 +182,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handle(final Synonym synonym) {
     if (synonym == null || options.is(hideSynonyms)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing synonym <%s>", synonym));
       return;
     }
 
@@ -188,6 +196,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handle(final Table table) {
     if (options.is(hideTables)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing table <%s>", table));
       return;
     }
 
@@ -234,6 +243,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleRoutinesEnd() {
     if (options.is(hideRoutines)) {
+      LOGGER.log(Level.FINER, "Not showing tables");
       return;
     }
 
@@ -244,6 +254,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleRoutinesStart() {
     if (options.is(hideRoutines)) {
+      LOGGER.log(Level.FINER, "Not showing routines");
       return;
     }
 
@@ -256,6 +267,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleSequencesEnd() {
     if (options.is(hideSequences)) {
+      LOGGER.log(Level.FINER, "Not showing sequences");
       return;
     }
 
@@ -266,6 +278,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleSequencesStart() {
     if (options.is(hideSequences)) {
+      LOGGER.log(Level.FINER, "Not showing sequences");
       return;
     }
 
@@ -278,6 +291,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleSynonymsEnd() {
     if (options.is(hideSynonyms)) {
+      LOGGER.log(Level.FINER, "Not showing synonyms");
       return;
     }
 
@@ -288,6 +302,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleSynonymsStart() {
     if (options.is(HideDatabaseObjectsType.hideSynonyms)) {
+      LOGGER.log(Level.FINER, "Not showing synonyms");
       return;
     }
 
@@ -300,6 +315,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleTablesEnd() {
     if (options.is(hideTables)) {
+      LOGGER.log(Level.FINER, "Not showing tables");
       return;
     }
 
@@ -310,6 +326,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   @Override
   public void handleTablesStart() {
     if (options.is(hideTables)) {
+      LOGGER.log(Level.FINER, "Not showing tables");
       return;
     }
 
