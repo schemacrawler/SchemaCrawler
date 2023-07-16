@@ -30,7 +30,7 @@ public class AbstractFunctionDefinitionTest {
   public void properties() {
     final TableDecriptionFunctionDefinition functionDefinition =
         new TableDecriptionFunctionDefinition();
-    final String functionName = TableDecriptionFunctionDefinition.class.getName();
+    final String functionName = TableDecriptionFunctionDefinition.class.getSimpleName();
     assertThat(
         functionDefinition.toString(),
         startsWith("function " + functionName + "(TableDecriptionFunctionParameters)"));

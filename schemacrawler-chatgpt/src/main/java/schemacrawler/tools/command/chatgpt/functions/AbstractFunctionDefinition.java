@@ -70,7 +70,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
 
   @Override
   public String getName() {
-    return this.getClass().getName();
+    return this.getClass().getSimpleName();
   }
 
   @Override
