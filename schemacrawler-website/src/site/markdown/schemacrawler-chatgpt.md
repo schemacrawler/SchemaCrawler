@@ -4,22 +4,28 @@ SchemaCrawler is integrated with ChatGPT to provide an interactive way to interr
 
 Once you have this running, you will have an interactive chat shell with ChatGPT, enhanced with information about your database metadata. You can try prompts such as the following ones:
 
-- "List all schemas"
-- "List all tables"
-- "Describe the AUTHORS table"
-- "Show me all the details of a table whose name is something like "auth""
-- "What are the indexes on the AUTHORS table?"
-- "What are the AUTHORS columns?"
-- "What is the AUTHORS primary key?"
-- "Describe the AuthorsList view"
-- "Show me the triggers on AUTHORS"
-- "Find the parents of BOOKAUTHORS"
-- "What are the children of BOOKS?"
+- List all tables
+- Describe the AUTHORS table
+- Show me all the details of a table whose name is something like auth
+- What are the indexes on the AUTHORS table?
+- What are the AUTHORS columns?
+- What is the AUTHORS primary key?
+- Describe the AuthorsList view
+- Show me the triggers on AUTHORS
+- Find the parents of BOOKAUTHORS
+- What are the children of BOOKS?
 
 To quit the console, you can type something like:
 
-- "I think I have everything I need"
-or simply, "done", "exit" or "quit".
+- I think I have everything I need
+- or simply, "done", "exit" or "quit"
+  
+You can use any language that ChatGPT supports, for example, try something like:
+
+- Combien de tables y a-til dans cette base de données?
+- Décris-moi la table Books
+- Y'a t-il une clé primaire?
+- Décris-moi la table NoName
 
 
 ## Extensions
