@@ -66,6 +66,13 @@ public class DatabaseObjectFunctionTest {
 
   private Catalog catalog;
 
+  @Test
+  public void all(final TestContext testContext) throws Exception {
+    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
+    args.setDatabaseObjectType(ALL);
+    databaseObjects(testContext, args);
+  }
+
   @BeforeAll
   public void loadCatalog(final Connection connection) throws Exception {
 
@@ -91,13 +98,6 @@ public class DatabaseObjectFunctionTest {
   public void routines(final TestContext testContext) throws Exception {
     final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
     args.setDatabaseObjectType(ROUTINES);
-    databaseObjects(testContext, args);
-  }
-
-  @Test
-  public void schemas(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(ALL);
     databaseObjects(testContext, args);
   }
 
