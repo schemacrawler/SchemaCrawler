@@ -6,13 +6,18 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>16.20.2</version>
+    <version>16.20.3</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-text</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Text</name>
   <dependencies>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-utility</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-loader</artifactId>
@@ -38,7 +43,6 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
   <build>
     <plugins>
