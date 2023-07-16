@@ -29,7 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.functions;
 
 import java.util.function.Function;
+import java.util.regex.Pattern;
+import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.Config;
@@ -51,7 +55,18 @@ public final class LintFunctionDefinition
 
   @Override
   protected SchemaCrawlerOptions createSchemaCrawlerOptions(final LintFunctionParameters args) {
-    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSynonyms(new ExcludeAll())
+            .includeSequences(new ExcludeAll())
+            .includeRoutines(new ExcludeAll());
+    final Pattern grepTablesPattern =
+        Pattern.compile(String.format(".*(?i)%s(?-i).*", args.getTableNameContains()));
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder().includeGreppedTables(grepTablesPattern);
+    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+        .withLimitOptions(limitOptionsBuilder.toOptions())
+        .withGrepOptions(grepOptionsBuilder.toOptions());
   }
 
   @Override
