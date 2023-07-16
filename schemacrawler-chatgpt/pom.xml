@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>us.fatehi</groupId>
@@ -30,7 +30,12 @@
       <artifactId>schemacrawler-offline</artifactId>
       <version>${project.version}</version>
     </dependency>
-        
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-lint</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>com.theokanning.openai-gpt3-java</groupId>
       <artifactId>api</artifactId>
