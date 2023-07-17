@@ -6,9 +6,7 @@ import static schemacrawler.filter.FilterFactory.schemaFilter;
 import static schemacrawler.filter.FilterFactory.sequenceFilter;
 import static schemacrawler.filter.FilterFactory.synonymFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
-
 import java.util.function.Predicate;
-
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.ReducibleCollection;
@@ -33,6 +31,12 @@ public final class ReducerFactory {
     public void reduce(final ReducibleCollection<? extends N> allNamedObjects) {
       requireNonNull(allNamedObjects, "No named objects provided");
       allNamedObjects.filter(filter);
+    }
+
+    @Override
+    public void undo(final ReducibleCollection<? extends N> allNamedObjects) {
+      requireNonNull(allNamedObjects, "No named objects provided");
+      allNamedObjects.resetFilters();
     }
   }
 

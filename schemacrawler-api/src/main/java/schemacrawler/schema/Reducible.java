@@ -28,8 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-@FunctionalInterface
 public interface Reducible {
 
   <N extends NamedObject> void reduce(Class<N> clazz, Reducer<N> reducer);
+
+  <N extends NamedObject> void undo(Class<N> clazz, Reducer<N> reducer);
 }

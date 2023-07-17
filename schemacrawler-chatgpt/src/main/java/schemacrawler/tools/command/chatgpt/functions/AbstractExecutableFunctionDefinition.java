@@ -28,19 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.functions;
 
-import static java.nio.file.Files.newOutputStream;
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
-import java.nio.file.Path;
 import java.util.function.Function;
-import java.util.zip.GZIPOutputStream;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.IOUtility;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import schemacrawler.utility.MetaDataUtility;
 
 public abstract class AbstractExecutableFunctionDefinition<P extends FunctionParameters>
     extends AbstractFunctionDefinition<P> {
@@ -69,29 +62,18 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
 
   private SchemaCrawlerExecutable createExecutable(final P args) {
 
-    final DatabaseConnectionSource databaseConnectionSource = createOfflineDatasource();
-
     final SchemaCrawlerOptions options = createSchemaCrawlerOptions(args);
     final Config config = createAdditionalConfig(args);
     final String command = getCommand();
 
+    // Re-filter catalog
+    MetaDataUtility.reduceCatalog(catalog, options);
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(config);
-    executable.setDataSource(databaseConnectionSource);
+    executable.setCatalog(catalog);
 
     return executable;
-  }
-
-  private DatabaseConnectionSource createOfflineDatasource() {
-    try {
-      final Path serializedCatalogFile =
-          IOUtility.createTempFilePath("sc_java_serialization", "ser");
-      new JavaSerializedCatalog(catalog)
-          .save(new GZIPOutputStream(newOutputStream(serializedCatalogFile)));
-      return newOfflineDatabaseConnectionSource(serializedCatalogFile);
-    } catch (final Exception e) {
-      throw new ExecutionRuntimeException("Could not create an offline connection", e);
-    }
   }
 }

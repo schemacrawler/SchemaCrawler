@@ -75,9 +75,10 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
   }
 
   private final Map<NamedObjectKey, N> objects = new ConcurrentHashMap<>();
+  private final Map<NamedObjectKey, N> filteredObjects = new ConcurrentHashMap<>();
 
   @Override
-  public void filter(final Predicate<? super N> predicate) {
+  public synchronized void filter(final Predicate<? super N> predicate) {
     if (predicate == null) {
       return;
     }
@@ -88,7 +89,9 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
       final Entry<NamedObjectKey, N> entry = iterator.next();
       final N namedObject = entry.getValue();
       if (!predicate.test(namedObject)) {
+        // Filter object by moving it to the filtered objects map
         iterator.remove();
+        filteredObjects.put(entry.getKey(), entry.getValue());
         if (namedObject instanceof AttributedObject) {
           final AttributedObject attributedObject = (AttributedObject) namedObject;
           attributedObject.setAttribute("schemacrawler.filtered_out", true);
@@ -125,6 +128,13 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     }
 
     return new UnmodifiableIterator(values().iterator());
+  }
+
+  @Override
+  public synchronized void resetFilters() {
+    // Reset all previously filtered objects
+    objects.putAll(filteredObjects);
+    filteredObjects.clear();
   }
 
   /** {@inheritDoc} */

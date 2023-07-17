@@ -252,10 +252,19 @@ public final class MetaDataUtility {
     requireNonNull(catalog, "No catalog provided");
     requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
 
+    ((Reducible) catalog).undo(Schema.class, getSchemaReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Table.class, getTableReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Table.class, getTableReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Routine.class, getRoutineReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Routine.class, getRoutineReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
   }
 
