@@ -56,6 +56,8 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
 
   private static final long serialVersionUID = 3257847666804142128L;
 
+  private static final String SCHEMACRAWLER_FILTERED_OUT = "schemacrawler.filtered_out";
+
   private static NamedObjectKey makeLookupKey(final NamedObject namedObject) {
     final NamedObjectKey key;
     if (namedObject == null) {
@@ -77,6 +79,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
   private final Map<NamedObjectKey, N> objects = new ConcurrentHashMap<>();
   private final Map<NamedObjectKey, N> filteredObjects = new ConcurrentHashMap<>();
 
+  /** {@inheritDoc} */
   @Override
   public synchronized void filter(final Predicate<? super N> predicate) {
     if (predicate == null) {
@@ -87,14 +90,15 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     for (final Iterator<Entry<NamedObjectKey, N>> iterator = entrySet.iterator();
         iterator.hasNext(); ) {
       final Entry<NamedObjectKey, N> entry = iterator.next();
+      final NamedObjectKey namedObjectKey = entry.getKey();
       final N namedObject = entry.getValue();
       if (!predicate.test(namedObject)) {
         // Filter object by moving it to the filtered objects map
         iterator.remove();
-        filteredObjects.put(entry.getKey(), entry.getValue());
+        filteredObjects.put(namedObjectKey, namedObject);
         if (namedObject instanceof AttributedObject) {
           final AttributedObject attributedObject = (AttributedObject) namedObject;
-          attributedObject.setAttribute("schemacrawler.filtered_out", true);
+          attributedObject.setAttribute(SCHEMACRAWLER_FILTERED_OUT, true);
         }
       }
     }
@@ -130,11 +134,22 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     return new UnmodifiableIterator(values().iterator());
   }
 
+  /** {@inheritDoc} */
   @Override
-  public synchronized void resetFilters() {
-    // Reset all previously filtered objects
-    objects.putAll(filteredObjects);
-    filteredObjects.clear();
+  public synchronized void resetFilter() {
+    final Set<Entry<NamedObjectKey, N>> entrySet = filteredObjects.entrySet();
+    for (final Iterator<Entry<NamedObjectKey, N>> iterator = entrySet.iterator();
+        iterator.hasNext(); ) {
+      final Entry<NamedObjectKey, N> entry = iterator.next();
+      final NamedObjectKey namedObjectKey = entry.getKey();
+      final N namedObject = entry.getValue();
+      objects.put(namedObjectKey, namedObject);
+      iterator.remove();
+      if (namedObject instanceof AttributedObject) {
+        final AttributedObject attributedObject = (AttributedObject) namedObject;
+        attributedObject.removeAttribute(SCHEMACRAWLER_FILTERED_OUT);
+      }
+    }
   }
 
   /** {@inheritDoc} */

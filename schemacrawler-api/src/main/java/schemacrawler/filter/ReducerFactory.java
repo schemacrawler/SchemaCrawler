@@ -36,7 +36,7 @@ public final class ReducerFactory {
     @Override
     public void undo(final ReducibleCollection<? extends N> allNamedObjects) {
       requireNonNull(allNamedObjects, "No named objects provided");
-      allNamedObjects.resetFilters();
+      allNamedObjects.resetFilter();
     }
   }
 

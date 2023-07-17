@@ -64,7 +64,7 @@ final class TablesReducer implements Reducer<Table> {
     if (allTables == null) {
       return;
     }
-    allTables.resetFilters();
+    allTables.resetFilter();
   }
 
   private void doReduce(final ReducibleCollection<? extends Table> allTables) {

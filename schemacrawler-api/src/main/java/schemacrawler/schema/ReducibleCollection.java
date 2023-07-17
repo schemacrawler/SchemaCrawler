@@ -32,7 +32,13 @@ import java.util.function.Predicate;
 
 public interface ReducibleCollection<N extends NamedObject> extends Iterable<N> {
 
+  /**
+   * Filter out objects.
+   *
+   * @param predicate Predicate to filter by.
+   */
   void filter(Predicate<? super N> predicate);
 
-  void resetFilters();
+  /** Reset all previously filtered objects. */
+  void resetFilter();
 }
