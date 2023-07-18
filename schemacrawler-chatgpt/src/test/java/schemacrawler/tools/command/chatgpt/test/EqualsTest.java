@@ -26,7 +26,7 @@ public class EqualsTest {
   @Test
   public void baseProductVersion() {
     EqualsVerifier.forClass(TestFunctionDefinition.class)
-        .withIgnoredFields("catalog")
+        .withIgnoredFields("catalog", "connection")
         .withRedefinedSuperclass()
         .usingGetClass()
         .verify();

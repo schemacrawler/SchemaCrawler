@@ -30,6 +30,7 @@ package schemacrawler.tools.command.chatgpt.functions;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import java.sql.Connection;
 import java.util.Objects;
 import schemacrawler.schema.Catalog;
 
@@ -39,6 +40,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
   private final String description;
   private final Class<P> parameters;
   protected Catalog catalog;
+  protected Connection connection;
 
   protected AbstractFunctionDefinition(final String description, final Class<P> parameters) {
     this.description = requireNotBlank(description, "Function description not provided");
@@ -61,6 +63,10 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
   @Override
   public Catalog getCatalog() {
     return catalog;
+  }
+
+  public Connection getConnection() {
+    return connection;
   }
 
   @Override
@@ -86,6 +92,10 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
   @Override
   public void setCatalog(final Catalog catalog) {
     this.catalog = catalog;
+  }
+
+  public void setConnection(final Connection connection) {
+    this.connection = connection;
   }
 
   @Override

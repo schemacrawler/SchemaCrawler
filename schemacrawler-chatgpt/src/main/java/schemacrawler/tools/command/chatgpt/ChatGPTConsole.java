@@ -1,6 +1,7 @@
 package schemacrawler.tools.command.chatgpt;
 
 import static java.util.Objects.requireNonNull;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,12 +32,15 @@ public final class ChatGPTConsole {
   private final OpenAiService service;
   private final CircularBoundedList<ChatMessage> chatHistory;
 
-  public ChatGPTConsole(final ChatGPTCommandOptions commandOptions, final Catalog catalog) {
+  public ChatGPTConsole(
+      final ChatGPTCommandOptions commandOptions,
+      final Catalog catalog,
+      final Connection connection) {
 
     this.commandOptions = requireNonNull(commandOptions, "ChatGPT options not provided");
     requireNonNull(catalog, "No catalog provided");
 
-    functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog);
+    functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog, connection);
     service = new OpenAiService(commandOptions.getApiKey());
     chatHistory = new CircularBoundedList<>(commandOptions.getContext());
   }

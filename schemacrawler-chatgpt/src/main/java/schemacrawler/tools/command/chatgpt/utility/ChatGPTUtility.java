@@ -1,6 +1,7 @@
 package schemacrawler.tools.command.chatgpt.utility;
 
 import static java.util.Objects.requireNonNull;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import com.theokanning.openai.completion.chat.ChatFunction;
@@ -13,7 +14,8 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public class ChatGPTUtility {
 
-  public static FunctionExecutor newFunctionExecutor(final Catalog catalog) {
+  public static FunctionExecutor newFunctionExecutor(
+      final Catalog catalog, final Connection connection) {
 
     requireNonNull(catalog, "No catalog provided");
 
@@ -21,6 +23,7 @@ public class ChatGPTUtility {
     for (final FunctionDefinition functionDefinition :
         FunctionDefinitionRegistry.getFunctionDefinitionRegistry()) {
       functionDefinition.setCatalog(catalog);
+      functionDefinition.setConnection(connection);
       final ChatFunction chatFunction =
           ChatFunction.builder()
               .name(functionDefinition.getName())

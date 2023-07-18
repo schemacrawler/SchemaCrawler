@@ -31,9 +31,11 @@ package schemacrawler.tools.command.chatgpt.functions;
 import java.util.function.Function;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.command.chatgpt.utility.ConnectionDatabaseConnectionSource;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.utility.MetaDataUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public abstract class AbstractExecutableFunctionDefinition<P extends FunctionParameters>
     extends AbstractFunctionDefinition<P> {
@@ -73,6 +75,11 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(config);
     executable.setCatalog(catalog);
+    if (connection != null) {
+      final DatabaseConnectionSource databaseConnectionSource =
+          new ConnectionDatabaseConnectionSource(connection);
+      executable.setDataSource(databaseConnectionSource);
+    }
 
     return executable;
   }
