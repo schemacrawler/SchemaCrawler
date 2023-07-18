@@ -31,6 +31,8 @@ package schemacrawler.tools.command.chatgpt.functions;
 import java.util.Optional;
 import java.util.function.Function;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.utility.MetaDataUtility;
 
 public final class TableReferencesFunctionDefinition
     extends AbstractFunctionDefinition<TableReferencesFunctionParameters> {
@@ -46,6 +48,9 @@ public final class TableReferencesFunctionDefinition
   @Override
   public Function<TableReferencesFunctionParameters, FunctionReturn> getExecutor() {
     return args -> {
+      // Re-filter catalog
+      MetaDataUtility.reduceCatalog(catalog, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+
       final Optional<Table> firstMatchedTable =
           catalog.getTables().stream()
               .filter(table -> table.getName().matches("(?i)" + args.getTableName()))
