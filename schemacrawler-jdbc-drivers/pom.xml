@@ -145,8 +145,7 @@
             </goals>
             <configuration>
               <outputDirectory>${project.build.directory}/_jdbc-drivers/lib</outputDirectory>
-              <excludeScope>test</excludeScope>
-              <includeScope>runtime</includeScope>
+              <includeScope>compile</includeScope>
               <excludeGroupIds>org.checkerframework,com.google.protobuf</excludeGroupIds>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
