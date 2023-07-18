@@ -88,8 +88,7 @@ public final class DatabaseObjectDescriptionFunctionDefinition
   protected SchemaCrawlerOptions createSchemaCrawlerOptions(
       final DatabaseObjectDescriptionFunctionParameters args) {
 
-    final Pattern inclusionPattern =
-        Pattern.compile(String.format(".*(?i)%s(?-i).*", args.getDatabaseObjectNameContains()));
+    final Pattern inclusionPattern = makeNameInclusionPattern(args.getDatabaseObjectName());
     final DatabaseObjectsScope scope = args.getDatabaseObjectsScope();
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
     switch (scope) {

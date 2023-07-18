@@ -16,17 +16,16 @@ public class TableReferencesFunctionParameters implements FunctionParameters {
     child;
   }
 
-  @JsonPropertyDescription(
-      "Part of the name of database table to find. For example, 'ABC' is a part of 'QWEABCXYZ'.")
+  @JsonPropertyDescription("Name of database table for which to show references.")
   @JsonProperty(required = true)
-  private String tableNameContains;
+  private String tableName;
 
   @JsonPropertyDescription(
       "The type of related tables requested - either child tables or parent tables, or both types (all relationships).")
   private TableReferenceType tableReferenceType;
 
-  public String getTableNameContains() {
-    return tableNameContains;
+  public String getTableName() {
+    return tableName;
   }
 
   public TableReferenceType getTableReferenceType() {
@@ -36,8 +35,8 @@ public class TableReferencesFunctionParameters implements FunctionParameters {
     return tableReferenceType;
   }
 
-  public void setTableNameContains(final String tableNameContains) {
-    this.tableNameContains = tableNameContains;
+  public void setTableName(final String tableNameContains) {
+    this.tableName = tableNameContains;
   }
 
   public void setTableReferenceType(final TableReferenceType tableReferenceType) {

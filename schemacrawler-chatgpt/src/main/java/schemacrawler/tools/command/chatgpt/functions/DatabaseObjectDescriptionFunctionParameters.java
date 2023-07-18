@@ -29,16 +29,17 @@ public class DatabaseObjectDescriptionFunctionParameters implements FunctionPara
   }
 
   @JsonPropertyDescription(
-      "Part of the name of database object to find. For example, 'ABC' is a part of 'QWEABCXYZ'.")
+      "Name of database object to describe. "
+          + "Use a blank value to describe all database objects.")
   @JsonProperty(required = true)
-  private String databaseObjectNameContains;
+  private String databaseObjectName;
 
   @JsonPropertyDescription(
       "Indicates what details of database objects to show - sequences, synonyms, or routines (that is, stored procedures or functions).")
   private DatabaseObjectsScope databaseObjectsScope;
 
-  public String getDatabaseObjectNameContains() {
-    return databaseObjectNameContains;
+  public String getDatabaseObjectName() {
+    return databaseObjectName;
   }
 
   public DatabaseObjectsScope getDatabaseObjectsScope() {
@@ -48,8 +49,8 @@ public class DatabaseObjectDescriptionFunctionParameters implements FunctionPara
     return databaseObjectsScope;
   }
 
-  public void setDatabaseObjectNameContains(final String databaseObjectNameContains) {
-    this.databaseObjectNameContains = databaseObjectNameContains;
+  public void setDatabaseObjectName(final String databaseObjectNameContains) {
+    this.databaseObjectName = databaseObjectNameContains;
   }
 
   public void setDatabaseObjectsScope(final DatabaseObjectsScope databaseObjectsScope) {

@@ -65,7 +65,7 @@ public class TableReferencesFunctionTest {
   @Test
   public void childrenForTable(final TestContext testContext) throws Exception {
     final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableNameContains("BOOKS");
+    args.setTableName("BOOKS");
     args.setTableReferenceType(TableReferenceType.child);
     referencesForTable(testContext, args);
   }
@@ -94,7 +94,7 @@ public class TableReferencesFunctionTest {
   @Test
   public void parentsForTable(final TestContext testContext) throws Exception {
     final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableNameContains("BOOKAUTHORS");
+    args.setTableName("BOOKAUTHORS");
     args.setTableReferenceType(TableReferenceType.parent);
     referencesForTable(testContext, args);
   }
@@ -102,28 +102,21 @@ public class TableReferencesFunctionTest {
   @Test
   public void referencesForTable(final TestContext testContext) throws Exception {
     final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableNameContains("BOOKS");
-    referencesForTable(testContext, args);
-  }
-
-  @Test
-  public void referencesForTableLike(final TestContext testContext) throws Exception {
-    final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableNameContains("Auth");
+    args.setTableName("BOOKS");
     referencesForTable(testContext, args);
   }
 
   @Test
   public void referencesForUnknownTable(final TestContext testContext) throws Exception {
     final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableNameContains("NOT_A_TABLE");
+    args.setTableName("NOT_A_TABLE");
     referencesForTable(testContext, args);
   }
 
   @Test
   public void referencesForView(final TestContext testContext) throws Exception {
     final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableNameContains("AuthorsList");
+    args.setTableName("AuthorsList");
     referencesForTable(testContext, args);
   }
 

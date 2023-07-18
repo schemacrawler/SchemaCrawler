@@ -11,16 +11,17 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class LintFunctionParameters implements FunctionParameters {
 
   @JsonPropertyDescription(
-      "Part of the name of database table to find. For example, 'ABC' is a part of 'QWEABCXYZ'.")
+      "Name of database table for which to find design issues. "
+          + "Use a blank value to find design issues for all tables.")
   @JsonProperty(required = true)
-  private String tableNameContains;
+  private String tableName;
 
-  public String getTableNameContains() {
-    return tableNameContains;
+  public String getTableName() {
+    return tableName;
   }
 
-  public void setTableNameContains(final String tableNameContains) {
-    this.tableNameContains = tableNameContains;
+  public void setTableName(final String tableNameContains) {
+    this.tableName = tableNameContains;
   }
 
   @Override

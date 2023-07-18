@@ -43,7 +43,9 @@ public final class LintFunctionDefinition
 
   public LintFunctionDefinition() {
     super(
-        "Lint database schemas. Find problems with database design, such as no indexes on foreign keys.",
+        "Lint database schemas. "
+            + "Find design issues with specific tables, or with the entire database."
+            + "Find problems with database design, such as no indexes on foreign keys.",
         LintFunctionParameters.class);
   }
 
@@ -59,8 +61,7 @@ public final class LintFunctionDefinition
             .includeSynonyms(new ExcludeAll())
             .includeSequences(new ExcludeAll())
             .includeRoutines(new ExcludeAll());
-    final Pattern grepTablesPattern =
-        Pattern.compile(String.format(".*(?i)%s(?-i).*", args.getTableNameContains()));
+    final Pattern grepTablesPattern = makeNameInclusionPattern(args.getTableName());
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder().includeGreppedTables(grepTablesPattern);
     return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()

@@ -46,9 +46,10 @@ public final class TableReferencesFunctionDefinition
   @Override
   public Function<TableReferencesFunctionParameters, FunctionReturn> getExecutor() {
     return args -> {
-      final String regex = String.format("(?i).*%s.*", args.getTableNameContains());
       final Optional<Table> firstMatchedTable =
-          catalog.getTables().stream().filter(table -> table.getName().matches(regex)).findFirst();
+          catalog.getTables().stream()
+              .filter(table -> table.getName().matches("(?i)" + args.getTableName()))
+              .findFirst();
 
       if (firstMatchedTable.isPresent()) {
         final Table table = firstMatchedTable.get();

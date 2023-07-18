@@ -1,4 +1,0 @@
-Table "PUBLIC"."BOOKS"."AUTHORS" has no parent relationships.
-
-Table "PUBLIC"."BOOKS"."AUTHORS" has the following child tables:
-- "PUBLIC"."BOOKS"."BOOKAUTHORS"

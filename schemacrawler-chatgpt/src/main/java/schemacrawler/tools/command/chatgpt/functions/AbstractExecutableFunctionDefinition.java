@@ -28,8 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.functions;
 
+import static us.fatehi.utility.Utility.isBlank;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.command.chatgpt.utility.ConnectionDatabaseConnectionSource;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -62,6 +65,14 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
 
   protected abstract Function<Catalog, Boolean> getResultsChecker(final P args);
 
+  protected Pattern makeNameInclusionPattern(final String name) {
+    if (isBlank(name)) {
+      return Pattern.compile(".*");
+    }
+    final boolean hasDefaultSchema = hasDefaultSchema();
+    return Pattern.compile(String.format(".*%s(?i)%s(?-i)", hasDefaultSchema ? "" : "\\.", name));
+  }
+
   private SchemaCrawlerExecutable createExecutable(final P args) {
 
     final SchemaCrawlerOptions options = createSchemaCrawlerOptions(args);
@@ -82,5 +93,14 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
     }
 
     return executable;
+  }
+
+  private boolean hasDefaultSchema() {
+    for (final Schema schema : catalog.getSchemas()) {
+      if (isBlank(schema.getFullName())) {
+        return true;
+      }
+    }
+    return false;
   }
 }

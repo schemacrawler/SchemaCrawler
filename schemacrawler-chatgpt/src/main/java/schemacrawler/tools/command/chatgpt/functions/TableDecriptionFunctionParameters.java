@@ -29,13 +29,12 @@ public class TableDecriptionFunctionParameters implements FunctionParameters {
     }
   }
 
-  @JsonPropertyDescription(
-      "Part of the name of database table to find. For example, 'ABC' is a part of 'QWEABCXYZ'.")
+  @JsonPropertyDescription("Name of database table or view to describe.")
   @JsonProperty(required = true)
-  private String tableNameContains;
+  private String tableName;
 
   @JsonPropertyDescription(
-      "Indicates what details of the database table to show - columns, primary key, indexes, foreign keys, or triggers.")
+      "Indicates what details of the database table or view to show - columns, primary key, indexes, foreign keys, or triggers.")
   private TableDescriptionScope descriptionScope;
 
   public TableDescriptionScope getDescriptionScope() {
@@ -45,16 +44,16 @@ public class TableDecriptionFunctionParameters implements FunctionParameters {
     return descriptionScope;
   }
 
-  public String getTableNameContains() {
-    return tableNameContains;
+  public String getTableName() {
+    return tableName;
   }
 
   public void setDescriptionScope(final TableDescriptionScope descriptionScope) {
     this.descriptionScope = descriptionScope;
   }
 
-  public void setTableNameContains(final String tableNameContains) {
-    this.tableNameContains = tableNameContains;
+  public void setTableName(final String tableNameContains) {
+    this.tableName = tableNameContains;
   }
 
   @Override

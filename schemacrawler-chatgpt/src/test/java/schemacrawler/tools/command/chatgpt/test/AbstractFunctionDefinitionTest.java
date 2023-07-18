@@ -39,7 +39,7 @@ public class AbstractFunctionDefinitionTest {
     assertThat(
         functionDefinition.getDescription(),
         is(
-            "Gets the details and description of database tables, including columns, foreign keys, indexes and triggers."));
+            "Gets the details and description of database tables or views, including columns, foreign keys, indexes and triggers."));
     assertThat(
         functionDefinition.getParameters().getSimpleName(),
         is("TableDecriptionFunctionParameters"));

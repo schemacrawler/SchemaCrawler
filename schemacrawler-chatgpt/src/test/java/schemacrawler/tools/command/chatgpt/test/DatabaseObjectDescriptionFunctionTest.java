@@ -69,7 +69,7 @@ public class DatabaseObjectDescriptionFunctionTest {
     final DatabaseObjectDescriptionFunctionParameters args =
         new DatabaseObjectDescriptionFunctionParameters();
     args.setDatabaseObjectsScope(ROUTINES);
-    args.setDatabaseObjectNameContains("CUSTOMADD");
+    args.setDatabaseObjectName("CUSTOMADD");
     describeDatabaseObject(testContext, args);
   }
 
@@ -78,7 +78,7 @@ public class DatabaseObjectDescriptionFunctionTest {
     final DatabaseObjectDescriptionFunctionParameters args =
         new DatabaseObjectDescriptionFunctionParameters();
     args.setDatabaseObjectsScope(SEQUENCES);
-    args.setDatabaseObjectNameContains("PUBLISHER_ID_SEQ");
+    args.setDatabaseObjectName("PUBLISHER_ID_SEQ");
     describeDatabaseObject(testContext, args);
   }
 
@@ -87,7 +87,7 @@ public class DatabaseObjectDescriptionFunctionTest {
     final DatabaseObjectDescriptionFunctionParameters args =
         new DatabaseObjectDescriptionFunctionParameters();
     args.setDatabaseObjectsScope(SYNONYMS);
-    args.setDatabaseObjectNameContains("PUBLICATIONS");
+    args.setDatabaseObjectName("PUBLICATIONS");
     describeDatabaseObject(testContext, args);
   }
 
@@ -96,7 +96,7 @@ public class DatabaseObjectDescriptionFunctionTest {
     final DatabaseObjectDescriptionFunctionParameters args =
         new DatabaseObjectDescriptionFunctionParameters();
     args.setDatabaseObjectsScope(SYNONYMS);
-    args.setDatabaseObjectNameContains("NOT_A SYNONYM");
+    args.setDatabaseObjectName("NOT_A SYNONYM");
     describeDatabaseObject(testContext, args);
   }
 
