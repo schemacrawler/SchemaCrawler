@@ -1,6 +1,5 @@
 package schemacrawler.tools.command.chatgpt.functions;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +29,6 @@ public class TableDecriptionFunctionParameters implements FunctionParameters {
   }
 
   @JsonPropertyDescription("Name of database table or view to describe.")
-  @JsonProperty(required = true)
   private String tableName;
 
   @JsonPropertyDescription(

@@ -1,6 +1,5 @@
 package schemacrawler.tools.command.chatgpt.functions;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,10 +27,7 @@ public class DatabaseObjectDescriptionFunctionParameters implements FunctionPara
     }
   }
 
-  @JsonPropertyDescription(
-      "Name of database object to describe. "
-          + "Use a blank value to describe all database objects.")
-  @JsonProperty(required = true)
+  @JsonPropertyDescription("Name of database object to describe.")
   private String databaseObjectName;
 
   @JsonPropertyDescription(
