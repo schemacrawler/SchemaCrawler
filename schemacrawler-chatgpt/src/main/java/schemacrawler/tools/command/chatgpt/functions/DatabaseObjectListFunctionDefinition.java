@@ -56,7 +56,6 @@ public final class DatabaseObjectListFunctionDefinition
   protected Config createAdditionalConfig(final DatabaseObjectListFunctionParameters args) {
     final DatabaseObjectType databaseObjectType = args.getDatabaseObjectType();
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    // Unset defaults
     if (databaseObjectType != ALL) {
       if (databaseObjectType != TABLES) {
         schemaTextOptionsBuilder.noTables();
