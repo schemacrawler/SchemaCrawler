@@ -49,6 +49,7 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.LintFunctionDefinition;
@@ -62,24 +63,29 @@ public class LintFunctionTest {
   private Catalog catalog;
 
   @Test
-  public void lintTable(final TestContext testContext) throws Exception {
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  public void lintAllTables(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final LintFunctionParameters args = new LintFunctionParameters();
+    lintTable(testContext, args, connection);
+  }
+
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  public void lintTable(final TestContext testContext, final Connection connection)
+      throws Exception {
     final LintFunctionParameters args = new LintFunctionParameters();
     args.setTableName("AUTHORS");
-    lintTable(testContext, args);
+    lintTable(testContext, args, connection);
   }
 
   @Test
-  public void lintTableLike(final TestContext testContext) throws Exception {
-    final LintFunctionParameters args = new LintFunctionParameters();
-    args.setTableName("auth");
-    lintTable(testContext, args);
-  }
-
-  @Test
-  public void lintUnknownTable(final TestContext testContext) throws Exception {
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  public void lintUnknownTable(final TestContext testContext, final Connection connection)
+      throws Exception {
     final LintFunctionParameters args = new LintFunctionParameters();
     args.setTableName("NOT_A_TABLE");
-    lintTable(testContext, args);
+    lintTable(testContext, args, connection);
   }
 
   @BeforeAll
@@ -103,11 +109,13 @@ public class LintFunctionTest {
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }
 
-  private void lintTable(final TestContext testContext, final LintFunctionParameters args)
+  private void lintTable(
+      final TestContext testContext, final LintFunctionParameters args, final Connection connection)
       throws Exception {
 
     final LintFunctionDefinition functionDefinition = new LintFunctionDefinition();
     functionDefinition.setCatalog(catalog);
+    functionDefinition.setConnection(connection);
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
