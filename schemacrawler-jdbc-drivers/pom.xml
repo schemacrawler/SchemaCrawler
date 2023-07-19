@@ -22,9 +22,9 @@
       <version>42.6.0</version>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.32</version>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>8.0.33</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.protobuf</groupId>
@@ -145,8 +145,7 @@
             </goals>
             <configuration>
               <outputDirectory>${project.build.directory}/_jdbc-drivers/lib</outputDirectory>
-              <excludeScope>test</excludeScope>
-              <includeScope>runtime</includeScope>
+              <includeScope>compile</includeScope>
               <excludeGroupIds>org.checkerframework,com.google.protobuf</excludeGroupIds>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
@@ -165,7 +164,8 @@
             </goals>
             <configuration>
               <licensesOutputDirectory>${project.build.directory}/_licenses</licensesOutputDirectory>
-              <licensesOutputFile>${project.build.directory}/_licenses/licenses..xml</licensesOutputFile>
+              <licensesOutputFile>
+                ${project.build.directory}/_licenses/licenses..xml</licensesOutputFile>
               <excludedScopes>test,provided</excludedScopes>
               <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
             </configuration>

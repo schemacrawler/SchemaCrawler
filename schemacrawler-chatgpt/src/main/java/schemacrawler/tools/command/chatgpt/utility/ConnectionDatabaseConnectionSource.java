@@ -26,25 +26,41 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.command.chatgpt.functions;
+package schemacrawler.tools.command.chatgpt.utility;
 
+import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
-import java.util.function.Function;
-import schemacrawler.schema.Catalog;
+import java.util.function.Consumer;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.PooledConnectionUtility;
 
-public interface FunctionDefinition<P extends FunctionParameters> {
+public final class ConnectionDatabaseConnectionSource implements DatabaseConnectionSource {
 
-  Catalog getCatalog();
+  private final Connection connection;
 
-  String getDescription();
+  public ConnectionDatabaseConnectionSource(final Connection connection) {
+    this.connection = requireNonNull(connection, "No connection provided");
+  }
 
-  Function<P, FunctionReturn> getExecutor();
+  @Override
+  public void close() throws Exception {
+    connection.close();
+  }
 
-  String getName();
+  @Override
+  public Connection get() {
+    // Do not close this connection
+    return PooledConnectionUtility.newPooledConnection(connection, this);
+  }
 
-  Class<P> getParameters();
+  @Override
+  public boolean releaseConnection(final Connection connection) {
+    // No-op
+    return true;
+  }
 
-  void setCatalog(Catalog catalog);
-
-  void setConnection(Connection connection);
+  @Override
+  public void setFirstConnectionInitializer(final Consumer<Connection> connectionInitializer) {
+    // No-op
+  }
 }

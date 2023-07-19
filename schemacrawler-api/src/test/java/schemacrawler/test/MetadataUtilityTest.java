@@ -36,16 +36,13 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-
 import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -56,7 +53,9 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
@@ -179,6 +178,31 @@ public class MetadataUtilityTest {
     } catch (final Exception e) {
       fail("Catalog not loaded", e);
     }
+  }
+
+  @Test
+  public void reduceCatalog() throws Exception {
+
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
+    limitOptionsBuilder.includeTables(tableName -> !tableName.matches(".*\\.BOOKS"));
+
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    // Reduce catalog
+    MetaDataUtility.reduceCatalog(catalog, schemaCrawlerOptions);
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    assertThat("BOOKS Schema not found", schema, notNullValue());
+
+    assertThat("BOOKS Table not found", !catalog.lookupTable(schema, "BOOKS").isPresent());
+
+    // Undo reduce catalog
+    MetaDataUtility.reduceCatalog(catalog, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+
+    final Table table = catalog.lookupTable(schema, "BOOKS").get();
+    assertThat("BOOKS Table not found", table, notNullValue());
   }
 
   @Test

@@ -48,7 +48,6 @@ public final class DatabaseObjectListFunctionDefinition
 
   public DatabaseObjectListFunctionDefinition() {
     super(
-        "database-object-list",
         "Lists database objects like tables, routines (that is, functions and stored procedures), sequences, or synonyms.",
         DatabaseObjectListFunctionParameters.class);
   }
@@ -80,20 +79,19 @@ public final class DatabaseObjectListFunctionDefinition
       final DatabaseObjectListFunctionParameters args) {
     final DatabaseObjectType databaseObjectType = args.getDatabaseObjectType();
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
-    if (databaseObjectType != ALL) {
-      if (databaseObjectType != TABLES) {
-        limitOptionsBuilder.includeTables(new ExcludeAll());
-      } // fall through - no else
-      if (databaseObjectType == ROUTINES) {
-        limitOptionsBuilder.includeAllRoutines();
-      } // fall through - no else
-      if (databaseObjectType == SEQUENCES) {
-        limitOptionsBuilder.includeAllSequences();
-      } // fall through - no else
-      if (databaseObjectType == SYNONYMS) {
-        limitOptionsBuilder.includeAllSynonyms();
-      } // fall through - no else
-    }
+    if (databaseObjectType != TABLES && databaseObjectType != ALL) {
+      limitOptionsBuilder.includeTables(new ExcludeAll());
+    } // fall through - no else
+    if (databaseObjectType == ROUTINES || databaseObjectType == ALL) {
+      limitOptionsBuilder.includeAllRoutines();
+    } // fall through - no else
+    if (databaseObjectType == SEQUENCES || databaseObjectType == ALL) {
+      limitOptionsBuilder.includeAllSequences();
+    } // fall through - no else
+    if (databaseObjectType == SYNONYMS || databaseObjectType == ALL) {
+      limitOptionsBuilder.includeAllSynonyms();
+    } // fall through - no else
+
     return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
         .withLimitOptions(limitOptionsBuilder.toOptions());
   }

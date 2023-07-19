@@ -28,26 +28,24 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.functions;
 
-import static java.nio.file.Files.newOutputStream;
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
-import java.nio.file.Path;
+import static us.fatehi.utility.Utility.isBlank;
 import java.util.function.Function;
-import java.util.zip.GZIPOutputStream;
+import java.util.regex.Pattern;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.tools.command.chatgpt.utility.ConnectionDatabaseConnectionSource;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.IOUtility;
+import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public abstract class AbstractExecutableFunctionDefinition<P extends FunctionParameters>
     extends AbstractFunctionDefinition<P> {
 
   protected AbstractExecutableFunctionDefinition(
-      final String name, final String description, final Class<P> parameters) {
-    super(name, description, parameters);
+      final String description, final Class<P> parameters) {
+    super(description, parameters);
   }
 
   @Override
@@ -67,31 +65,42 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
 
   protected abstract Function<Catalog, Boolean> getResultsChecker(final P args);
 
-  private SchemaCrawlerExecutable createExecutable(final P args) {
+  protected Pattern makeNameInclusionPattern(final String name) {
+    if (isBlank(name)) {
+      return Pattern.compile(".*");
+    }
+    final boolean hasDefaultSchema = hasDefaultSchema();
+    return Pattern.compile(String.format(".*%s(?i)%s(?-i)", hasDefaultSchema ? "" : "\\.", name));
+  }
 
-    final DatabaseConnectionSource databaseConnectionSource = createOfflineDatasource();
+  private SchemaCrawlerExecutable createExecutable(final P args) {
 
     final SchemaCrawlerOptions options = createSchemaCrawlerOptions(args);
     final Config config = createAdditionalConfig(args);
     final String command = getCommand();
 
+    // Re-filter catalog
+    MetaDataUtility.reduceCatalog(catalog, options);
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(config);
-    executable.setDataSource(databaseConnectionSource);
+    executable.setCatalog(catalog);
+    if (connection != null) {
+      final DatabaseConnectionSource databaseConnectionSource =
+          new ConnectionDatabaseConnectionSource(connection);
+      executable.setDataSource(databaseConnectionSource);
+    }
 
     return executable;
   }
 
-  private DatabaseConnectionSource createOfflineDatasource() {
-    try {
-      final Path serializedCatalogFile =
-          IOUtility.createTempFilePath("sc_java_serialization", "ser");
-      new JavaSerializedCatalog(catalog)
-          .save(new GZIPOutputStream(newOutputStream(serializedCatalogFile)));
-      return newOfflineDatabaseConnectionSource(serializedCatalogFile);
-    } catch (final Exception e) {
-      throw new ExecutionRuntimeException("Could not create an offline connection", e);
+  private boolean hasDefaultSchema() {
+    for (final Schema schema : catalog.getSchemas()) {
+      if (isBlank(schema.getFullName())) {
+        return true;
+      }
     }
+    return false;
   }
 }

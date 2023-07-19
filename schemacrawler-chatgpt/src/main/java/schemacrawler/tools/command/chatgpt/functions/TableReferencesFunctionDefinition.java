@@ -31,13 +31,14 @@ package schemacrawler.tools.command.chatgpt.functions;
 import java.util.Optional;
 import java.util.function.Function;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.utility.MetaDataUtility;
 
 public final class TableReferencesFunctionDefinition
     extends AbstractFunctionDefinition<TableReferencesFunctionParameters> {
 
   public TableReferencesFunctionDefinition() {
     super(
-        "get-table-references",
         "Gets the relationships of a database table, either child tables or parent tables. "
             + "Child tables are also known as referencing tables or foreign key tables. "
             + "Parent tables are also known as referenced tables, or primary key tables.",
@@ -47,9 +48,13 @@ public final class TableReferencesFunctionDefinition
   @Override
   public Function<TableReferencesFunctionParameters, FunctionReturn> getExecutor() {
     return args -> {
-      final String regex = String.format("(?i).*%s.*", args.getTableNameContains());
+      // Re-filter catalog
+      MetaDataUtility.reduceCatalog(catalog, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+
       final Optional<Table> firstMatchedTable =
-          catalog.getTables().stream().filter(table -> table.getName().matches(regex)).findFirst();
+          catalog.getTables().stream()
+              .filter(table -> table.getName().matches("(?i)" + args.getTableName()))
+              .findFirst();
 
       if (firstMatchedTable.isPresent()) {
         final Table table = firstMatchedTable.get();

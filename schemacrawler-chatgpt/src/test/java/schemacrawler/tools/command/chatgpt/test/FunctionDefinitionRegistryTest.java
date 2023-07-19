@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasSize;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
+import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.FunctionDefinition;
@@ -29,13 +30,14 @@ public class FunctionDefinitionRegistryTest {
     final FunctionDefinitionRegistry registry =
         FunctionDefinitionRegistry.getFunctionDefinitionRegistry();
     final Collection<FunctionDefinition> functions = convertIterableToCollection(registry);
-    assertThat(functions, hasSize(5));
+    assertThat(functions, hasSize(6));
     assertThat(
         functions,
         containsInAnyOrder(
             new DatabaseObjectListFunctionDefinition(),
             new TableDecriptionFunctionDefinition(),
             new TableReferencesFunctionDefinition(),
+            new DatabaseObjectDescriptionFunctionDefinition(),
             new LintFunctionDefinition(),
             new ExitFunctionDefinition()));
   }

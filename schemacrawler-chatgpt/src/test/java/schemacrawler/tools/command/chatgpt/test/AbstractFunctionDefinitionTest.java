@@ -30,15 +30,16 @@ public class AbstractFunctionDefinitionTest {
   public void properties() {
     final TableDecriptionFunctionDefinition functionDefinition =
         new TableDecriptionFunctionDefinition();
+    final String functionName = TableDecriptionFunctionDefinition.class.getSimpleName();
     assertThat(
         functionDefinition.toString(),
-        startsWith("function describe-tables(TableDecriptionFunctionParameters)"));
+        startsWith("function " + functionName + "(TableDecriptionFunctionParameters)"));
 
-    assertThat(functionDefinition.getName(), is("describe-tables"));
+    assertThat(functionDefinition.getName(), is(functionName));
     assertThat(
         functionDefinition.getDescription(),
         is(
-            "Gets the details and description of database tables, including columns, foreign keys, indexes and triggers."));
+            "Gets the details and description of database tables or views, including columns, foreign keys, indexes and triggers."));
     assertThat(
         functionDefinition.getParameters().getSimpleName(),
         is("TableDecriptionFunctionParameters"));

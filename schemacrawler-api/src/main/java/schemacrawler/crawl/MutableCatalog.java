@@ -299,18 +299,49 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     requireNonNull(clazz, "No lookup class provided");
 
     if (Schema.class.isAssignableFrom(clazz)) {
-      ((Reducer<Schema>) reducer).reduce(schemas);
+      final Reducer<Schema> schemaReducer = (Reducer<Schema>) reducer;
+      schemaReducer.reduce(schemas);
     } else if (Table.class.isAssignableFrom(clazz)) {
       // Filter the list of tables based on grep criteria, and
       // parent-child relationships
-      ((Reducer<Table>) reducer).reduce(tables);
+      final Reducer<Table> tableReducer = (Reducer<Table>) reducer;
+      tableReducer.reduce(tables);
     } else if (Routine.class.isAssignableFrom(clazz)) {
       // Filter the list of routines based on grep criteria
-      ((Reducer<Routine>) reducer).reduce(routines);
+      final Reducer<Routine> routineReducer = (Reducer<Routine>) reducer;
+      routineReducer.reduce(routines);
     } else if (Synonym.class.isAssignableFrom(clazz)) {
-      ((Reducer<Synonym>) reducer).reduce(synonyms);
+      final Reducer<Synonym> synonymReducer = (Reducer<Synonym>) reducer;
+      synonymReducer.reduce(synonyms);
     } else if (Sequence.class.isAssignableFrom(clazz)) {
-      ((Reducer<Sequence>) reducer).reduce(sequences);
+      final Reducer<Sequence> sequenceReducer = (Reducer<Sequence>) reducer;
+      sequenceReducer.reduce(sequences);
+    }
+  }
+
+  @Override
+  public <N extends NamedObject> void undo(final Class<N> clazz, final Reducer<N> reducer) {
+    requireNonNull(reducer, "No reducer provided");
+    requireNonNull(clazz, "No lookup class provided");
+
+    if (Schema.class.isAssignableFrom(clazz)) {
+      final Reducer<Schema> schemaReducer = (Reducer<Schema>) reducer;
+      schemaReducer.undo(schemas);
+    } else if (Table.class.isAssignableFrom(clazz)) {
+      // Filter the list of tables based on grep criteria, and
+      // parent-child relationships
+      final Reducer<Table> tableReducer = (Reducer<Table>) reducer;
+      tableReducer.undo(tables);
+    } else if (Routine.class.isAssignableFrom(clazz)) {
+      // Filter the list of routines based on grep criteria
+      final Reducer<Routine> routineReducer = (Reducer<Routine>) reducer;
+      routineReducer.undo(routines);
+    } else if (Synonym.class.isAssignableFrom(clazz)) {
+      final Reducer<Synonym> synonymReducer = (Reducer<Synonym>) reducer;
+      synonymReducer.undo(synonyms);
+    } else if (Sequence.class.isAssignableFrom(clazz)) {
+      final Reducer<Sequence> sequenceReducer = (Reducer<Sequence>) reducer;
+      sequenceReducer.undo(sequences);
     }
   }
 

@@ -33,10 +33,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.ALL;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.ROUTINES;
 import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.SEQUENCES;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.SYNONYMS;
 import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.TABLES;
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
@@ -62,16 +59,9 @@ import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 @WithTestDatabase
 @ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DatabaseObjectFunctionTest {
+public class RefilterTest {
 
   private Catalog catalog;
-
-  @Test
-  public void all(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(ALL);
-    databaseObjects(testContext, args);
-  }
 
   @BeforeAll
   public void loadCatalog(final Connection connection) throws Exception {
@@ -95,36 +85,18 @@ public class DatabaseObjectFunctionTest {
   }
 
   @Test
-  public void routines(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(ROUTINES);
-    databaseObjects(testContext, args);
-  }
+  public void refilterTest(final TestContext testContext) throws Exception {
+    final DatabaseObjectListFunctionParameters args1 = new DatabaseObjectListFunctionParameters();
+    args1.setDatabaseObjectType(SEQUENCES);
+    databaseObjects(testContext.testMethodFullName() + ".sequences", args1);
 
-  @Test
-  public void sequences(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(SEQUENCES);
-    databaseObjects(testContext, args);
-  }
-
-  @Test
-  public void synonyms(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(SYNONYMS);
-    databaseObjects(testContext, args);
-  }
-
-  @Test
-  public void tables(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(TABLES);
-    databaseObjects(testContext, args);
+    final DatabaseObjectListFunctionParameters args2 = new DatabaseObjectListFunctionParameters();
+    args2.setDatabaseObjectType(TABLES);
+    databaseObjects(testContext.testMethodFullName() + ".tables", args2);
   }
 
   private void databaseObjects(
-      final TestContext testContext, final DatabaseObjectListFunctionParameters args)
-      throws Exception {
+      final String reference, final DatabaseObjectListFunctionParameters args) throws Exception {
 
     final DatabaseObjectListFunctionDefinition functionDefinition =
         new DatabaseObjectListFunctionDefinition();
@@ -135,7 +107,6 @@ public class DatabaseObjectFunctionTest {
       final FunctionReturn functionReturn = functionDefinition.getExecutor().apply(args);
       out.write(functionReturn.render());
     }
-    assertThat(
-        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(reference)));
   }
 }

@@ -51,8 +51,7 @@ public final class TableDecriptionFunctionDefinition
 
   public TableDecriptionFunctionDefinition() {
     super(
-        "describe-tables",
-        "Gets the details and description of database tables, including columns, foreign keys, indexes and triggers.",
+        "Gets the details and description of database tables or views, including columns, foreign keys, indexes and triggers.",
         TableDecriptionFunctionParameters.class);
   }
 
@@ -90,8 +89,7 @@ public final class TableDecriptionFunctionDefinition
             .includeSynonyms(new ExcludeAll())
             .includeSequences(new ExcludeAll())
             .includeRoutines(new ExcludeAll());
-    final Pattern grepTablesPattern =
-        Pattern.compile(String.format(".*(?i)%s(?-i).*", args.getTableNameContains()));
+    final Pattern grepTablesPattern = makeNameInclusionPattern(args.getTableName());
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder().includeGreppedTables(grepTablesPattern);
     return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()

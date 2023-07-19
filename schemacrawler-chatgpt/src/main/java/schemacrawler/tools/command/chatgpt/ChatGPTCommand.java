@@ -56,6 +56,12 @@ public class ChatGPTCommand extends BaseSchemaCrawlerCommand<ChatGPTCommandOptio
 
   @Override
   public void execute() {
-    new ChatGPTConsole(commandOptions, catalog).console();
+    new ChatGPTConsole(commandOptions, catalog, connection).console();
+  }
+
+  @Override
+  public boolean usesConnection() {
+    // Support commands that use connections
+    return true;
   }
 }

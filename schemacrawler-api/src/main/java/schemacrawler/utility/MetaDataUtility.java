@@ -29,24 +29,34 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 import static java.util.Objects.requireNonNull;
-
+import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
+import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
+import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
+import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
+import static schemacrawler.filter.ReducerFactory.getTableReducer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.Reducible;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
@@ -235,6 +245,27 @@ public final class MetaDataUtility {
       }
     }
     return String.join(", ", columnsList);
+  }
+
+  public static void reduceCatalog(
+      final Catalog catalog, final SchemaCrawlerOptions schemaCrawlerOptions) {
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
+
+    ((Reducible) catalog).undo(Schema.class, getSchemaReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Table.class, getTableReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Table.class, getTableReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Routine.class, getRoutineReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Routine.class, getRoutineReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
+
+    ((Reducible) catalog).undo(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table) {

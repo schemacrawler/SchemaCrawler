@@ -67,7 +67,7 @@ jobs:
 
     - id: upload-artifact
       name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
+      uses: actions/upload-pages-artifact@v2
       with:
         path: ./schemacrawler-website/target/_website
 

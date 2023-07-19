@@ -33,11 +33,9 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.ALL;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.ROUTINES;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.SEQUENCES;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.SYNONYMS;
-import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters.DatabaseObjectType.TABLES;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionParameters.DatabaseObjectsScope.ROUTINES;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionParameters.DatabaseObjectsScope.SEQUENCES;
+import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionParameters.DatabaseObjectsScope.SYNONYMS;
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -55,22 +53,51 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
-import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionDefinition;
-import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectListFunctionParameters;
+import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionDefinition;
+import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionParameters;
 import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 
 @WithTestDatabase
 @ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DatabaseObjectFunctionTest {
+public class DatabaseObjectDescriptionFunctionTest {
 
   private Catalog catalog;
 
   @Test
-  public void all(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(ALL);
-    databaseObjects(testContext, args);
+  public void describeRoutines(final TestContext testContext) throws Exception {
+    final DatabaseObjectDescriptionFunctionParameters args =
+        new DatabaseObjectDescriptionFunctionParameters();
+    args.setDatabaseObjectsScope(ROUTINES);
+    args.setDatabaseObjectName("CUSTOMADD");
+    describeDatabaseObject(testContext, args);
+  }
+
+  @Test
+  public void describeSequences(final TestContext testContext) throws Exception {
+    final DatabaseObjectDescriptionFunctionParameters args =
+        new DatabaseObjectDescriptionFunctionParameters();
+    args.setDatabaseObjectsScope(SEQUENCES);
+    args.setDatabaseObjectName("PUBLISHER_ID_SEQ");
+    describeDatabaseObject(testContext, args);
+  }
+
+  @Test
+  public void describeSynonyms(final TestContext testContext) throws Exception {
+    final DatabaseObjectDescriptionFunctionParameters args =
+        new DatabaseObjectDescriptionFunctionParameters();
+    args.setDatabaseObjectsScope(SYNONYMS);
+    args.setDatabaseObjectName("PUBLICATIONS");
+    describeDatabaseObject(testContext, args);
+  }
+
+  @Test
+  public void describeUnknownDatabaseObject(final TestContext testContext) throws Exception {
+    final DatabaseObjectDescriptionFunctionParameters args =
+        new DatabaseObjectDescriptionFunctionParameters();
+    args.setDatabaseObjectsScope(SYNONYMS);
+    args.setDatabaseObjectName("NOT_A SYNONYM");
+    describeDatabaseObject(testContext, args);
   }
 
   @BeforeAll
@@ -94,40 +121,12 @@ public class DatabaseObjectFunctionTest {
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }
 
-  @Test
-  public void routines(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(ROUTINES);
-    databaseObjects(testContext, args);
-  }
-
-  @Test
-  public void sequences(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(SEQUENCES);
-    databaseObjects(testContext, args);
-  }
-
-  @Test
-  public void synonyms(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(SYNONYMS);
-    databaseObjects(testContext, args);
-  }
-
-  @Test
-  public void tables(final TestContext testContext) throws Exception {
-    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
-    args.setDatabaseObjectType(TABLES);
-    databaseObjects(testContext, args);
-  }
-
-  private void databaseObjects(
-      final TestContext testContext, final DatabaseObjectListFunctionParameters args)
+  private void describeDatabaseObject(
+      final TestContext testContext, final DatabaseObjectDescriptionFunctionParameters args)
       throws Exception {
 
-    final DatabaseObjectListFunctionDefinition functionDefinition =
-        new DatabaseObjectListFunctionDefinition();
+    final DatabaseObjectDescriptionFunctionDefinition functionDefinition =
+        new DatabaseObjectDescriptionFunctionDefinition();
     functionDefinition.setCatalog(catalog);
 
     final TestWriter testout = new TestWriter();

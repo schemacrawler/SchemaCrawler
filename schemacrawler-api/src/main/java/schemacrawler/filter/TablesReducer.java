@@ -29,12 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.filter;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
-
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.ReducibleCollection;
@@ -59,6 +57,14 @@ final class TablesReducer implements Reducer<Table> {
       return;
     }
     doReduce(allTables);
+  }
+
+  @Override
+  public void undo(final ReducibleCollection<? extends Table> allTables) {
+    if (allTables == null) {
+      return;
+    }
+    allTables.resetFilter();
   }
 
   private void doReduce(final ReducibleCollection<? extends Table> allTables) {

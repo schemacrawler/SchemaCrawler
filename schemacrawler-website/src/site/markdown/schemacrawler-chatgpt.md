@@ -6,7 +6,6 @@ Once you have this running, you will have an interactive chat shell with ChatGPT
 
 - List all tables
 - Describe the AUTHORS table
-- Show me all the details of a table whose name is something like auth
 - What are the indexes on the AUTHORS table?
 - What are the AUTHORS columns?
 - What is the AUTHORS primary key?

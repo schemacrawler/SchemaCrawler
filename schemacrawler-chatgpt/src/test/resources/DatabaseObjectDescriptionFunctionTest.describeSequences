@@ -1,0 +1,15 @@
+
+
+Sequences
+========================================================================
+
+
+
+PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
+------------------------------------------------------------------------
+  increment                         1                           
+  start value                       1                           
+  minimum value                     -2147483648                 
+  maximum value                     2147483647                  
+  cycle                             false                       
+
