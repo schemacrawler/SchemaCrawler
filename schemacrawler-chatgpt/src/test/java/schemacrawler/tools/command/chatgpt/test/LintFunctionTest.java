@@ -64,21 +64,21 @@ public class LintFunctionTest {
   @Test
   public void lintTable(final TestContext testContext) throws Exception {
     final LintFunctionParameters args = new LintFunctionParameters();
-    args.setTableNameContains("AUTHORS");
+    args.setTableName("AUTHORS");
     lintTable(testContext, args);
   }
 
   @Test
   public void lintTableLike(final TestContext testContext) throws Exception {
     final LintFunctionParameters args = new LintFunctionParameters();
-    args.setTableNameContains("auth");
+    args.setTableName("auth");
     lintTable(testContext, args);
   }
 
   @Test
   public void lintUnknownTable(final TestContext testContext) throws Exception {
     final LintFunctionParameters args = new LintFunctionParameters();
-    args.setTableNameContains("NOT_A_TABLE");
+    args.setTableName("NOT_A_TABLE");
     lintTable(testContext, args);
   }
 
