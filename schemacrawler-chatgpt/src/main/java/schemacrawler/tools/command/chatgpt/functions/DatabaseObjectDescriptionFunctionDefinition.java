@@ -33,7 +33,6 @@ import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescri
 import static schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionParameters.DatabaseObjectsScope.SYNONYMS;
 import java.util.function.Function;
 import java.util.regex.Pattern;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -48,10 +47,8 @@ import schemacrawler.tools.options.Config;
 public final class DatabaseObjectDescriptionFunctionDefinition
     extends AbstractExecutableFunctionDefinition<DatabaseObjectDescriptionFunctionParameters> {
 
-  @JsonPropertyDescription(
-      "Part of the name of database objects to find. For example, 'ABC' is a part of 'QWEABCXYZ'.")
-  @JsonProperty(required = true)
-  private String objectNameContains;
+  @JsonPropertyDescription("Name of database object to find.")
+  private String objectName;
 
   public DatabaseObjectDescriptionFunctionDefinition() {
     super(
@@ -59,12 +56,12 @@ public final class DatabaseObjectDescriptionFunctionDefinition
         DatabaseObjectDescriptionFunctionParameters.class);
   }
 
-  public String getObjectNameContains() {
-    return objectNameContains;
+  public String getObjectName() {
+    return objectName;
   }
 
-  public void setObjectNameContains(final String objectNameContains) {
-    this.objectNameContains = objectNameContains;
+  public void setObjectName(final String objectName) {
+    this.objectName = objectName;
   }
 
   @Override

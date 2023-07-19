@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.functions;
 
 import static us.fatehi.utility.Utility.isBlank;
+import java.util.Collection;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import schemacrawler.schema.Catalog;
@@ -96,8 +97,10 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
   }
 
   private boolean hasDefaultSchema() {
-    for (final Schema schema : catalog.getSchemas()) {
-      if (isBlank(schema.getFullName())) {
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final int schemaCount = schemas.size();
+    for (final Schema schema : schemas) {
+      if (isBlank(schema.getFullName()) && schemaCount == 1) {
         return true;
       }
     }

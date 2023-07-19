@@ -62,7 +62,7 @@ import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 @WithTestDatabase
 @ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DatabaseObjectFunctionTest {
+public class DatabaseObjectListFunctionTest {
 
   private Catalog catalog;
 

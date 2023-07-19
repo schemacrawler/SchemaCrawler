@@ -63,6 +63,12 @@ public class TableDescriptionFunctionTest {
   private Catalog catalog;
 
   @Test
+  public void describeAllTables(final TestContext testContext) throws Exception {
+    final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
+    describeTable(testContext, args);
+  }
+
+  @Test
   public void describeTable(final TestContext testContext) throws Exception {
     final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
     args.setTableName("AUTHORS");

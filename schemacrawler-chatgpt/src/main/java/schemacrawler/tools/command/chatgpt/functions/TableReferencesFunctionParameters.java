@@ -35,8 +35,8 @@ public class TableReferencesFunctionParameters implements FunctionParameters {
     return tableReferenceType;
   }
 
-  public void setTableName(final String tableNameContains) {
-    this.tableName = tableNameContains;
+  public void setTableName(final String tableName) {
+    this.tableName = tableName;
   }
 
   public void setTableReferenceType(final TableReferenceType tableReferenceType) {

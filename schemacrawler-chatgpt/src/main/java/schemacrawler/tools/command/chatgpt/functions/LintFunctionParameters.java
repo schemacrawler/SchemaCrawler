@@ -16,8 +16,8 @@ public class LintFunctionParameters implements FunctionParameters {
     return tableName;
   }
 
-  public void setTableName(final String tableNameContains) {
-    this.tableName = tableNameContains;
+  public void setTableName(final String tableName) {
+    this.tableName = tableName;
   }
 
   @Override

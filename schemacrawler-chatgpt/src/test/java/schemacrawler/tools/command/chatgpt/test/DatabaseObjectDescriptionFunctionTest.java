@@ -65,6 +65,21 @@ public class DatabaseObjectDescriptionFunctionTest {
   private Catalog catalog;
 
   @Test
+  public void describeAllRoutines(final TestContext testContext) throws Exception {
+    final DatabaseObjectDescriptionFunctionParameters args =
+        new DatabaseObjectDescriptionFunctionParameters();
+    args.setDatabaseObjectsScope(ROUTINES);
+    describeDatabaseObject(testContext, args);
+  }
+
+  @Test
+  public void describeNone(final TestContext testContext) throws Exception {
+    final DatabaseObjectDescriptionFunctionParameters args =
+        new DatabaseObjectDescriptionFunctionParameters();
+    describeDatabaseObject(testContext, args);
+  }
+
+  @Test
   public void describeRoutines(final TestContext testContext) throws Exception {
     final DatabaseObjectDescriptionFunctionParameters args =
         new DatabaseObjectDescriptionFunctionParameters();

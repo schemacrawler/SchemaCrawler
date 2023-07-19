@@ -45,8 +45,8 @@ public class DatabaseObjectDescriptionFunctionParameters implements FunctionPara
     return databaseObjectsScope;
   }
 
-  public void setDatabaseObjectName(final String databaseObjectNameContains) {
-    this.databaseObjectName = databaseObjectNameContains;
+  public void setDatabaseObjectName(final String databaseObjectName) {
+    this.databaseObjectName = databaseObjectName;
   }
 
   public void setDatabaseObjectsScope(final DatabaseObjectsScope databaseObjectsScope) {
