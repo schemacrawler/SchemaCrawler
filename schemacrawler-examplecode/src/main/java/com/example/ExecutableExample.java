@@ -1,11 +1,9 @@
 package com.example;
 
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -30,8 +28,7 @@ public final class ExecutableExample {
 
     // Create the options
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+        LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*_PK"));
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder()
             // Set what details are required in the schema - this affects the
@@ -59,11 +56,9 @@ public final class ExecutableExample {
   }
 
   private static DatabaseConnectionSource getDatabaseConnectionSource() {
-    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, new MultiUseUserCredentials("sa", ""));
-    return dataSource;
+    final String connectionUrl = "jdbc:sqlite::resource:test.db";
+    return DatabaseConnectionSources.newDatabaseConnectionSource(
+        connectionUrl, new MultiUseUserCredentials("", ""));
   }
 
   private static Path getOutputFile(final String[] args) {
@@ -73,7 +68,6 @@ public final class ExecutableExample {
     } else {
       outputfile = "./schemacrawler_output.html";
     }
-    final Path outputFile = Paths.get(outputfile).toAbsolutePath().normalize();
-    return outputFile;
+    return Paths.get(outputfile).toAbsolutePath().normalize();
   }
 }

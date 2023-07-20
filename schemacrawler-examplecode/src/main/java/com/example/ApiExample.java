@@ -1,8 +1,6 @@
 package com.example;
 
 import java.util.logging.Level;
-
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -29,8 +27,7 @@ public final class ApiExample {
     // Create the options
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
-            .includeTables(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
+            .includeTables(tableFullName -> !tableFullName.contains("_PK"));
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder()
             // Set what details are required in the schema - this affects the
@@ -63,10 +60,8 @@ public final class ApiExample {
   }
 
   private static DatabaseConnectionSource getDataSource() {
-    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, new MultiUseUserCredentials("sa", ""));
-    return dataSource;
+    final String connectionUrl = "jdbc:sqlite::resource:test.db";
+    return DatabaseConnectionSources.newDatabaseConnectionSource(
+        connectionUrl, new MultiUseUserCredentials("", ""));
   }
 }

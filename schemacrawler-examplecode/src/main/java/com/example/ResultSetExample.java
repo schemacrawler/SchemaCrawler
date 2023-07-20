@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Level;
-
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
@@ -21,16 +20,8 @@ public final class ResultSetExample {
     new LoggingConfig(Level.OFF);
 
     final String query =
-        "SELECT                                                      \n"
-            + "  BOOKS.TITLE AS BOOKTITLE,                               \n"
-            + "  AUTHORS.FIRSTNAME + ' ' + AUTHORS.FIRSTNAME AS AUTHOR   \n"
-            + "FROM                                                      \n"
-            + "  PUBLIC.BOOKS.BOOKS AS BOOKS                             \n"
-            + "  INNER JOIN PUBLIC.BOOKS.BOOKAUTHORS AS BOOKAUTHORS      \n"
-            + "    ON BOOKS.ID = BOOKAUTHORS.BOOKID                      \n"
-            + "  INNER JOIN PUBLIC.BOOKS.AUTHORS AS AUTHORS              \n"
-            + "    ON BOOKAUTHORS.AUTHORID = AUTHORS.ID                  \n";
-    try (final Connection connection = getConnection();
+        "SELECT T1.*, T2.* FROM TABLE1_PK T1 JOIN TABLE2_PK T2 ON T1.ENTITY_ID = T2.ENTITY_ID";
+    try (final Connection connection = getDatabaseConnectionSource().get();
         final Statement statement = connection.createStatement();
         final ResultSet results = statement.executeQuery(query)) {
       // Get result set metadata
@@ -44,11 +35,9 @@ public final class ResultSetExample {
     }
   }
 
-  private static Connection getConnection() {
-    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(
-            connectionUrl, new MultiUseUserCredentials("sa", ""));
-    return dataSource.get();
+  private static DatabaseConnectionSource getDatabaseConnectionSource() {
+    final String connectionUrl = "jdbc:sqlite::resource:test.db";
+    return DatabaseConnectionSources.newDatabaseConnectionSource(
+        connectionUrl, new MultiUseUserCredentials("", ""));
   }
 }
