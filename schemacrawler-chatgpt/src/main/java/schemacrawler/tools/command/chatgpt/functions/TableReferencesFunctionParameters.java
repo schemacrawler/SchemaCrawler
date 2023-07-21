@@ -11,9 +11,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class TableReferencesFunctionParameters implements FunctionParameters {
 
   public enum TableReferenceType {
-    all,
-    parent,
-    child;
+    ALL,
+    PARENT,
+    CHILD;
   }
 
   @JsonPropertyDescription("Name of database table for which to show references.")
@@ -30,7 +30,7 @@ public class TableReferencesFunctionParameters implements FunctionParameters {
 
   public TableReferenceType getTableReferenceType() {
     if (tableReferenceType == null) {
-      return TableReferenceType.all;
+      return TableReferenceType.ALL;
     }
     return tableReferenceType;
   }

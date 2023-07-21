@@ -10,28 +10,13 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class DatabaseObjectDescriptionFunctionParameters implements FunctionParameters {
 
   public enum DatabaseObjectsScope {
-    NONE("none"),
-    SEQUENCES("squences"),
-    SYNONYMS("synonyms"),
-    ROUTINES("routines"),
-    ;
-
-    private final String readableString;
-
-    DatabaseObjectsScope(final String readableString) {
-      this.readableString = readableString;
-    }
-
-    public String toReadableString() {
-      return readableString;
-    }
+    NONE, SEQUENCES, SYNONYMS, ROUTINES,;
   }
 
   @JsonPropertyDescription("Name of database object to describe.")
   private String databaseObjectName;
 
-  @JsonPropertyDescription(
-      "Indicates what details of database objects to show - sequences, synonyms, or routines (that is, stored procedures or functions).")
+  @JsonPropertyDescription("Indicates what details of database objects to show - sequences, synonyms, or routines (that is, stored procedures or functions).")
   private DatabaseObjectsScope databaseObjectsScope;
 
   public String getDatabaseObjectName() {

@@ -11,25 +11,10 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class DatabaseObjectListFunctionParameters implements FunctionParameters {
 
   public enum DatabaseObjectType {
-    ALL("all"),
-    TABLES("tables"),
-    ROUTINES("routines"),
-    SEQUENCES("sequences"),
-    SYNONYMS("synonyms");
-
-    private final String readableString;
-
-    DatabaseObjectType(final String readableString) {
-      this.readableString = readableString;
-    }
-
-    public String toReadableString() {
-      return readableString;
-    }
+    ALL, TABLES, ROUTINES, SEQUENCES, SYNONYMS;
   }
 
-  @JsonPropertyDescription(
-      "Type of database object to list, like tables, routines (that is, functions and stored procedures), schemas (that is, catalogs), sequences, or synonyms.")
+  @JsonPropertyDescription("Type of database object to list, like tables, routines (that is, functions and stored procedures), schemas (that is, catalogs), sequences, or synonyms.")
   private DatabaseObjectType databaseObjectType;
 
   public DatabaseObjectType getDatabaseObjectType() {

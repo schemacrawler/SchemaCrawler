@@ -66,7 +66,7 @@ public class TableReferencesFunctionTest {
   public void childrenForTable(final TestContext testContext) throws Exception {
     final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
     args.setTableName("BOOKS");
-    args.setTableReferenceType(TableReferenceType.child);
+    args.setTableReferenceType(TableReferenceType.CHILD);
     referencesForTable(testContext, args);
   }
 
@@ -95,7 +95,7 @@ public class TableReferencesFunctionTest {
   public void parentsForTable(final TestContext testContext) throws Exception {
     final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
     args.setTableName("BOOKAUTHORS");
-    args.setTableReferenceType(TableReferenceType.parent);
+    args.setTableReferenceType(TableReferenceType.PARENT);
     referencesForTable(testContext, args);
   }
 
