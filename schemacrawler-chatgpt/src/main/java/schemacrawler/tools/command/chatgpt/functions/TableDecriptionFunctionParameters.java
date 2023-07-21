@@ -10,13 +10,19 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class TableDecriptionFunctionParameters implements FunctionParameters {
 
   public enum TableDescriptionScope {
-    DEFAULT, COLUMNS, PRIMARY_KEY, INDEXES, FOREIGN_KEYS, TRIGGERS;
+    DEFAULT,
+    COLUMNS,
+    PRIMARY_KEY,
+    INDEXES,
+    FOREIGN_KEYS,
+    TRIGGERS;
   }
 
   @JsonPropertyDescription("Name of database table or view to describe.")
   private String tableName;
 
-  @JsonPropertyDescription("Indicates what details of the database table or view to show - columns, primary key, indexes, foreign keys, or triggers.")
+  @JsonPropertyDescription(
+      "Indicates what details of the database table or view to show - columns, primary key, indexes, foreign keys, or triggers.")
   private TableDescriptionScope descriptionScope;
 
   public TableDescriptionScope getDescriptionScope() {

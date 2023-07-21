@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -148,6 +149,14 @@ public class TableDescriptionFunctionTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+  }
+
+  @Test
+  public void parameters(final TestContext testContext) throws Exception {
+    final TableDecriptionFunctionParameters args = new TableDecriptionFunctionParameters();
+    args.setTableName("AUTHORS");
+    assertThat(
+        args.toString(), is("{\"table-name\":\"AUTHORS\",\"description-scope\":\"DEFAULT\"}"));
   }
 
   private void describeTable(

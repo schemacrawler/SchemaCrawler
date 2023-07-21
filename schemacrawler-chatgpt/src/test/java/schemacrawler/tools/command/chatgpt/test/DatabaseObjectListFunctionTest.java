@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -92,6 +93,13 @@ public class DatabaseObjectListFunctionTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+  }
+
+  @Test
+  public void parameters(final TestContext testContext) throws Exception {
+    final DatabaseObjectListFunctionParameters args = new DatabaseObjectListFunctionParameters();
+    args.setDatabaseObjectType(ALL);
+    assertThat(args.toString(), is("{\"database-object-type\":\"ALL\"}"));
   }
 
   @Test
