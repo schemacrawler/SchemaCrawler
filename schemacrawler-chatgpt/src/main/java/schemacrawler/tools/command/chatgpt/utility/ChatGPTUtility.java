@@ -8,6 +8,7 @@ import com.theokanning.openai.completion.chat.ChatFunction;
 import com.theokanning.openai.service.FunctionExecutor;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.FunctionDefinition;
+import schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType;
 import schemacrawler.tools.command.chatgpt.functions.FunctionDefinitionRegistry;
 import us.fatehi.utility.UtilityMarker;
 
@@ -22,6 +23,9 @@ public class ChatGPTUtility {
     final List<ChatFunction> chatFunctions = new ArrayList<>();
     for (final FunctionDefinition functionDefinition :
         FunctionDefinitionRegistry.getFunctionDefinitionRegistry()) {
+      if (functionDefinition.getFunctionType() != FunctionType.USER) {
+        continue;
+      }
       functionDefinition.setCatalog(catalog);
       functionDefinition.setConnection(connection);
       final ChatFunction chatFunction =
