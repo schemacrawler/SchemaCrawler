@@ -31,6 +31,8 @@ package schemacrawler.tools.command.chatgpt.functions;
 import java.util.function.Function;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import schemacrawler.tools.command.chatgpt.FunctionParameters;
+import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition.ExitFunctionParameters;
 
 public final class ExitFunctionDefinition

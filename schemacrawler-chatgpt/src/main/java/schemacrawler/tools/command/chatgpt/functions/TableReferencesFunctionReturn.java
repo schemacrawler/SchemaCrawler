@@ -37,6 +37,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
+import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.TableReferencesFunctionParameters.TableReferenceType;
 
 public class TableReferencesFunctionReturn implements FunctionReturn {

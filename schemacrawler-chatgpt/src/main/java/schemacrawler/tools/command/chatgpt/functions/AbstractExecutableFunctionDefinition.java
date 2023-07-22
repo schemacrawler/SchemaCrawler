@@ -35,6 +35,8 @@ import java.util.regex.Pattern;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.command.chatgpt.FunctionParameters;
+import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.utility.ConnectionDatabaseConnectionSource;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;

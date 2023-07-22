@@ -7,7 +7,7 @@ import java.util.List;
 import com.theokanning.openai.completion.chat.ChatFunction;
 import com.theokanning.openai.service.FunctionExecutor;
 import schemacrawler.schema.Catalog;
-import schemacrawler.tools.command.chatgpt.functions.FunctionDefinition;
+import schemacrawler.tools.command.chatgpt.FunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.FunctionDefinitionRegistry;
 import us.fatehi.utility.UtilityMarker;
 

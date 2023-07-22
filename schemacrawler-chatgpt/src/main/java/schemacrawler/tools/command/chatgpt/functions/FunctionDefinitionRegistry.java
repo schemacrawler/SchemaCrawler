@@ -37,6 +37,7 @@ import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.tools.command.chatgpt.FunctionDefinition;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for function definitions. */

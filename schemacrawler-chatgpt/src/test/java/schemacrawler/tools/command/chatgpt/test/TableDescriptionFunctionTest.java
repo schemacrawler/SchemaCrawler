@@ -51,7 +51,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
-import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
+import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters;
 import schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters.TableDescriptionScope;

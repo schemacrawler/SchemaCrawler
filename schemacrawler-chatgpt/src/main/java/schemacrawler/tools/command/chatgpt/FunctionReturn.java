@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.command.chatgpt.functions;
+package schemacrawler.tools.command.chatgpt;
 
 public interface FunctionReturn {
   String render();

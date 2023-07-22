@@ -32,6 +32,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.utility.MetaDataUtility;
 
 public final class TableReferencesFunctionDefinition

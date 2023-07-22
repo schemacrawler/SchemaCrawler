@@ -16,7 +16,6 @@ import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.FunctionExecutor;
 import com.theokanning.openai.service.OpenAiService;
 import schemacrawler.schema.Catalog;
-import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility;
 import us.fatehi.utility.collections.CircularBoundedList;

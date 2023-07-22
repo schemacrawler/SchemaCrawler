@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.StringWriter;
 import java.util.function.Function;
 import schemacrawler.schema.Catalog;
+import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;

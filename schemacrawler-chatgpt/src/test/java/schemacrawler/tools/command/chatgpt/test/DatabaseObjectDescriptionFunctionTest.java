@@ -54,9 +54,9 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionParameters;
-import schemacrawler.tools.command.chatgpt.functions.FunctionReturn;
 
 @WithTestDatabase
 @ResolveTestContext

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import schemacrawler.tools.command.chatgpt.FunctionParameters;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public class TableReferencesFunctionParameters implements FunctionParameters {
