@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.FunctionParameters;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.utility.ConnectionDatabaseConnectionSource;
@@ -53,6 +54,9 @@ public abstract class AbstractExecutableFunctionDefinition<P extends FunctionPar
 
   @Override
   public Function<P, FunctionReturn> getExecutor() {
+    if (catalog == null) {
+      throw new ExecutionRuntimeException("Catalog is not provided");
+    }
     return args -> {
       final SchemaCrawlerExecutable executable = createExecutable(args);
       final Function<Catalog, Boolean> resultsChecker = getResultsChecker(args);
