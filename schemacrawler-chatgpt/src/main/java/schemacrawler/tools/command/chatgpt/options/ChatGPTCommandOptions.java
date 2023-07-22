@@ -39,8 +39,10 @@ public class ChatGPTCommandOptions implements CommandOptions {
   private final String apiKey;
   private final String model;
   private final int context;
+  private final boolean useMetadata;
 
-  public ChatGPTCommandOptions(final String apiKey, final String model, final int context) {
+  public ChatGPTCommandOptions(
+      final String apiKey, final String model, final int context, final boolean useMetadata) {
     this.apiKey = requireNotBlank(apiKey, "No OpenAI API key provided");
     this.model = requireNotBlank(model, "No ChatGPT model provided");
     if (context <= 0 || context > MAXIMUM_CONTEXT) {
@@ -48,6 +50,7 @@ public class ChatGPTCommandOptions implements CommandOptions {
     } else {
       this.context = context;
     }
+    this.useMetadata = useMetadata;
   }
 
   public String getApiKey() {
@@ -60,5 +63,9 @@ public class ChatGPTCommandOptions implements CommandOptions {
 
   public String getModel() {
     return model;
+  }
+
+  public boolean isUseMetadata() {
+    return useMetadata;
   }
 }
