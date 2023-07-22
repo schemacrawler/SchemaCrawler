@@ -158,7 +158,7 @@ public class DatabaseObjectDescriptionFunctionTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final FunctionReturn functionReturn = functionDefinition.getExecutor().apply(args);
-      out.write(functionReturn.render());
+      out.write(functionReturn.get());
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));

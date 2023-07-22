@@ -49,7 +49,7 @@ public class ExecutableFunctionReturn implements FunctionReturn {
   }
 
   @Override
-  public String render() {
+  public String get() {
 
     final StringWriter writer = new StringWriter();
     final OutputOptions outputOptions =

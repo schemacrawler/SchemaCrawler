@@ -101,7 +101,7 @@ public final class ChatGPTConsole {
                   final ChatMessage functionResponseMessage =
                       new ChatMessage(
                           ChatMessageRole.FUNCTION.value(),
-                          functionReturn.render(),
+                          functionReturn.get(),
                           functionCall.getName(),
                           functionCall);
                   completions.add(functionResponseMessage);

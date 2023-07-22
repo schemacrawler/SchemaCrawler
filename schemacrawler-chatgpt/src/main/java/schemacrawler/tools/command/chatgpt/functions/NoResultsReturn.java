@@ -33,7 +33,7 @@ import schemacrawler.tools.command.chatgpt.FunctionReturn;
 public class NoResultsReturn implements FunctionReturn {
 
   @Override
-  public String render() {
+  public String get() {
     return "There were no matching results for your query.";
   }
 }

@@ -56,7 +56,7 @@ public class TableReferencesFunctionReturn implements FunctionReturn {
   }
 
   @Override
-  public String render() {
+  public String get() {
     switch (tableReferenceType) {
       case PARENT:
         return renderTableRelationships(TableReferenceType.PARENT);

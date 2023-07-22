@@ -28,6 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt;
 
-public interface FunctionReturn {
-  String render();
-}
+import java.util.function.Supplier;
+
+public interface FunctionReturn extends Supplier<String> {}
