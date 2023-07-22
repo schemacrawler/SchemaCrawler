@@ -83,7 +83,6 @@ public class SchemaFunctionTest {
   }
 
   @Test
-  // @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void outputSchema(final TestContext testContext, final Connection connection)
       throws Exception {
     final SchemaFunctionParameters args = new SchemaFunctionParameters();
