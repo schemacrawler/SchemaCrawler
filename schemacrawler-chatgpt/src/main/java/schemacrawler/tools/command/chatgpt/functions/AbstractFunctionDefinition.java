@@ -77,11 +77,6 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
   }
 
   @Override
-  public String getName() {
-    return this.getClass().getSimpleName();
-  }
-
-  @Override
   public Class<P> getParameters() {
     return parameters;
   }
@@ -96,6 +91,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
     this.catalog = catalog;
   }
 
+  @Override
   public void setConnection(final Connection connection) {
     this.connection = connection;
   }

@@ -40,7 +40,9 @@ public interface FunctionDefinition<P extends FunctionParameters> {
 
   Function<P, FunctionReturn> getExecutor();
 
-  String getName();
+  default String getName() {
+    return this.getClass().getSimpleName();
+  }
 
   Class<P> getParameters();
 
