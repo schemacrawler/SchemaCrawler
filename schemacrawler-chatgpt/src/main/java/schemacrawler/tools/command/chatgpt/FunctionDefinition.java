@@ -31,6 +31,7 @@ package schemacrawler.tools.command.chatgpt;
 import static schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType.USER;
 import java.sql.Connection;
 import java.util.function.Function;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.KebabCaseStrategy;
 import schemacrawler.schema.Catalog;
 
 public interface FunctionDefinition<P extends FunctionParameters> {
@@ -51,7 +52,7 @@ public interface FunctionDefinition<P extends FunctionParameters> {
   }
 
   default String getName() {
-    return this.getClass().getSimpleName();
+    return new KebabCaseStrategy().translate(this.getClass().getSimpleName());
   }
 
   Class<P> getParameters();
