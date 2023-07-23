@@ -8,39 +8,30 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public final class TableDescription {
+public final class SchemaDescription {
 
   private String name;
-  private final List<ColumnDescription> columns;
-  private String remarks;
+  private final List<TableDescription> tables;
 
-  public TableDescription() {
-    columns = new ArrayList<>();
+  public SchemaDescription() {
+    tables = new ArrayList<>();
   }
 
-  public void addColumn(final ColumnDescription column) {
-    if (column != null) {
-      columns.add(column);
+  public void addTable(final TableDescription table) {
+    if (table != null) {
+      tables.add(table);
     }
-  }
-
-  public List<ColumnDescription> getColumns() {
-    return columns;
   }
 
   public String getName() {
     return name;
   }
 
-  public String getRemarks() {
-    return remarks;
+  public List<TableDescription> getTables() {
+    return tables;
   }
 
   public void setName(final String name) {
     this.name = name;
-  }
-
-  public void setRemarks(final String remarks) {
-    this.remarks = remarks;
   }
 }

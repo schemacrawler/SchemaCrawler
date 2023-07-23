@@ -30,6 +30,7 @@ package schemacrawler.tools.command.chatgpt.systemfunctions;
 
 import java.util.function.Function;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
@@ -59,19 +60,23 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
 
   protected CatalogDescription createCatalogDescription() {
     final CatalogDescription catalogDescription = new CatalogDescription();
-    for (final Table table : catalog.getTables()) {
-      final TableDescription tableDescription = new TableDescription();
-      tableDescription.setSchema(table.getSchema().getFullName());
-      tableDescription.setName(table.getName());
-      tableDescription.setRemarks(table.getRemarks());
-      for (final Column column : table.getColumns()) {
-        final ColumnDescription columnDescription = new ColumnDescription();
-        columnDescription.setName(column.getName());
-        columnDescription.setDataType(column.getColumnDataType().getName());
-        columnDescription.setRemarks(column.getRemarks());
-        tableDescription.addColumn(columnDescription);
+    for (final Schema schema : catalog.getSchemas()) {
+      final SchemaDescription schemaDescription = new SchemaDescription();
+      schemaDescription.setName(schema.getFullName());
+      for (final Table table : catalog.getTables(schema)) {
+        final TableDescription tableDescription = new TableDescription();
+        tableDescription.setName(table.getName());
+        tableDescription.setRemarks(table.getRemarks());
+        for (final Column column : table.getColumns()) {
+          final ColumnDescription columnDescription = new ColumnDescription();
+          columnDescription.setName(column.getName());
+          columnDescription.setDataType(column.getColumnDataType().getName());
+          columnDescription.setRemarks(column.getRemarks());
+          tableDescription.addColumn(columnDescription);
+        }
+        schemaDescription.addTable(tableDescription);
       }
-      catalogDescription.addTable(tableDescription);
+      catalogDescription.addSchema(schemaDescription);
     }
     return catalogDescription;
   }
