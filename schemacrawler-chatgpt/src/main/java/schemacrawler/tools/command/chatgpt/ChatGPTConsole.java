@@ -42,7 +42,12 @@ public final class ChatGPTConsole {
     functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog, connection);
     service = new OpenAiService(commandOptions.getApiKey());
 
-    final List<ChatMessage> systemMessages = ChatGPTUtility.systemMessages(catalog, connection);
+    final List<ChatMessage> systemMessages;
+    if (commandOptions.isUseMetadata()) {
+      systemMessages = ChatGPTUtility.systemMessages(catalog, connection);
+    } else {
+      systemMessages = new ArrayList<>();
+    }
     chatHistory = new ChatHistory(commandOptions.getContext(), systemMessages);
   }
 
