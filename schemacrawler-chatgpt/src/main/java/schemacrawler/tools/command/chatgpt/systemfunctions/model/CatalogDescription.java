@@ -1,4 +1,4 @@
-package schemacrawler.tools.command.chatgpt.systemfunctions;
+package schemacrawler.tools.command.chatgpt.systemfunctions.model;
 
 import java.util.ArrayList;
 import java.util.List;

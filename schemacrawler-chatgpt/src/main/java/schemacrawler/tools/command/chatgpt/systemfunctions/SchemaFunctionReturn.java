@@ -30,6 +30,7 @@ package schemacrawler.tools.command.chatgpt.systemfunctions;
 
 import static java.util.Objects.requireNonNull;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
+import schemacrawler.tools.command.chatgpt.systemfunctions.model.CatalogDescription;
 
 public class SchemaFunctionReturn implements FunctionReturn {
 

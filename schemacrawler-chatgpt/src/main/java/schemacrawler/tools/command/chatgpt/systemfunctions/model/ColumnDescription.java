@@ -1,31 +1,23 @@
-package schemacrawler.tools.command.chatgpt.systemfunctions;
+package schemacrawler.tools.command.chatgpt.systemfunctions.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public final class TableDescription {
+public final class ColumnDescription {
 
   private String name;
-  private final List<ColumnDescription> columns;
-  private String remarks;
+  public String dataType;
+  public String remarks;
 
-  public TableDescription() {
-    columns = new ArrayList<>();
-  }
-
-  public void addColumn(final ColumnDescription column) {
-    if (column != null) {
-      columns.add(column);
-    }
-  }
-
-  public List<ColumnDescription> getColumns() {
-    return columns;
+  @JsonProperty("type")
+  public String getDataType() {
+    return dataType;
   }
 
   public String getName() {
@@ -36,10 +28,16 @@ public final class TableDescription {
     return remarks;
   }
 
+  public void setDataType(final String dataType) {
+    this.dataType = dataType;
+  }
+
+  @JsonSetter(nulls = Nulls.AS_EMPTY)
   public void setName(final String name) {
     this.name = name;
   }
 
+  @JsonSetter(nulls = Nulls.AS_EMPTY)
   public void setRemarks(final String remarks) {
     this.remarks = remarks;
   }

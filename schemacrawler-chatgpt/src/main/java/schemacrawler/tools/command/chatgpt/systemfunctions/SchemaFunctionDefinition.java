@@ -36,6 +36,10 @@ import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.AbstractFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
+import schemacrawler.tools.command.chatgpt.systemfunctions.model.CatalogDescription;
+import schemacrawler.tools.command.chatgpt.systemfunctions.model.ColumnDescription;
+import schemacrawler.tools.command.chatgpt.systemfunctions.model.SchemaDescription;
+import schemacrawler.tools.command.chatgpt.systemfunctions.model.TableDescription;
 
 public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters>
     implements SystemFunctionDefinition {
