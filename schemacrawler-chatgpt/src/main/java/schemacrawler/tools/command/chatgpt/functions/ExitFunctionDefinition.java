@@ -31,23 +31,18 @@ package schemacrawler.tools.command.chatgpt.functions;
 import java.util.function.Function;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import schemacrawler.tools.command.chatgpt.FunctionParameters;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
-import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition.ExitFunctionParameters;
 
-public final class ExitFunctionDefinition
-    extends AbstractFunctionDefinition<ExitFunctionParameters> {
-
-  public static class ExitFunctionParameters implements FunctionParameters {}
+public final class ExitFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters> {
 
   public ExitFunctionDefinition() {
     super(
         "Called when the user is done with their research, wants to end the chat session.",
-        ExitFunctionParameters.class);
+        NoFunctionParameters.class);
   }
 
   @Override
-  public Function<ExitFunctionParameters, FunctionReturn> getExecutor() {
+  public Function<NoFunctionParameters, FunctionReturn> getExecutor() {
     return args -> () -> "Thank you for using SchemaCrawler with ChatGPT.";
   }
 

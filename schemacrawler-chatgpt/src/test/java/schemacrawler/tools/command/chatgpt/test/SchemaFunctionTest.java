@@ -51,8 +51,8 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
+import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
 import schemacrawler.tools.command.chatgpt.systemfunctions.SchemaFunctionDefinition;
-import schemacrawler.tools.command.chatgpt.systemfunctions.SchemaFunctionParameters;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -85,7 +85,7 @@ public class SchemaFunctionTest {
   @Test
   public void outputSchema(final TestContext testContext, final Connection connection)
       throws Exception {
-    final SchemaFunctionParameters args = new SchemaFunctionParameters();
+    final NoFunctionParameters args = new NoFunctionParameters();
     final SchemaFunctionDefinition functionDefinition = new SchemaFunctionDefinition();
     functionDefinition.setCatalog(catalog);
 

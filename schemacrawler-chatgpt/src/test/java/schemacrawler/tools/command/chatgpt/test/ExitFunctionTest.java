@@ -40,7 +40,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition;
-import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition.ExitFunctionParameters;
+import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -51,7 +51,7 @@ public class ExitFunctionTest {
   public void exit(final TestContext testContext) throws Exception {
 
     final ExitFunctionDefinition functionDefinition = new ExitFunctionDefinition();
-    final ExitFunctionParameters args = new ExitFunctionParameters();
+    final NoFunctionParameters args = new NoFunctionParameters();
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

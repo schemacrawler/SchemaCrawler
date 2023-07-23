@@ -37,17 +37,18 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.AbstractFunctionDefinition;
+import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
 
-public class SchemaFunctionDefinition extends AbstractFunctionDefinition<SchemaFunctionParameters> {
+public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters> {
 
   public SchemaFunctionDefinition() {
     super(
         "Called when the user is done with their research, wants to end the chat session.",
-        SchemaFunctionParameters.class);
+        NoFunctionParameters.class);
   }
 
   @Override
-  public Function<SchemaFunctionParameters, FunctionReturn> getExecutor() {
+  public Function<NoFunctionParameters, FunctionReturn> getExecutor() {
     if (catalog == null) {
       throw new ExecutionRuntimeException("Catalog is not provided");
     }
