@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.systemfunctions;
 
-import static schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType.SYSTEM;
 import java.util.function.Function;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,7 +38,8 @@ import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.AbstractFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
 
-public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters> {
+public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters>
+    implements SystemFunctionDefinition {
 
   public SchemaFunctionDefinition() {
     super(
@@ -57,11 +57,6 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
       final CatalogDescription catalogDescription = createCatalogDescription();
       return new SchemaFunctionReturn(catalogDescription);
     };
-  }
-
-  @Override
-  public FunctionType getFunctionType() {
-    return SYSTEM;
   }
 
   @Override
