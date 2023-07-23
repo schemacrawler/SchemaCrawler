@@ -18,7 +18,6 @@ import com.theokanning.openai.service.OpenAiService;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility;
-import us.fatehi.utility.collections.CircularBoundedList;
 
 public final class ChatGPTConsole {
 
@@ -29,7 +28,7 @@ public final class ChatGPTConsole {
   private final ChatGPTCommandOptions commandOptions;
   private final FunctionExecutor functionExecutor;
   private final OpenAiService service;
-  private final CircularBoundedList<ChatMessage> chatHistory;
+  private final ChatHistory chatHistory;
 
   public ChatGPTConsole(
       final ChatGPTCommandOptions commandOptions,
@@ -38,10 +37,13 @@ public final class ChatGPTConsole {
 
     this.commandOptions = requireNonNull(commandOptions, "ChatGPT options not provided");
     requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
 
     functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog, connection);
     service = new OpenAiService(commandOptions.getApiKey());
-    chatHistory = new CircularBoundedList<>(commandOptions.getContext());
+
+    final List<ChatMessage> systemMessages = ChatGPTUtility.systemMessages(catalog, connection);
+    chatHistory = new ChatHistory(commandOptions.getContext(), systemMessages);
   }
 
   public void console() {
@@ -80,7 +82,7 @@ public final class ChatGPTConsole {
       chatHistory.add(userMessage);
       final ChatCompletionRequest completionRequest =
           ChatCompletionRequest.builder()
-              .messages(chatHistory.convertToList())
+              .messages(chatHistory.toList())
               .functions(functionExecutor.getFunctions())
               .functionCall(new ChatCompletionRequestFunctionCall("auto"))
               .model(commandOptions.getModel())
