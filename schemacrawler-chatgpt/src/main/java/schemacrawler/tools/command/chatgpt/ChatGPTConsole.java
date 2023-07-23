@@ -1,6 +1,8 @@
 package schemacrawler.tools.command.chatgpt;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.isExitCondition;
+import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.printResponse;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,26 +54,19 @@ public final class ChatGPTConsole {
     chatHistory = new ChatHistory(commandOptions.getContext(), systemMessages);
   }
 
+  /** Simple REPL for the SchemaCrawler ChatGPT integration. */
   public void console() {
     try (final Scanner scanner = new Scanner(System.in)) {
       while (true) {
         System.out.print(PROMPT);
         final String prompt = scanner.nextLine();
         final List<ChatMessage> completions = complete(prompt);
-        printResponse(completions);
-        checkEndLoop(completions);
+        printResponse(completions, System.out);
+        if (isExitCondition(completions)) {
+          System.exit(0);
+        }
       }
     }
-  }
-
-  private void checkEndLoop(final List<ChatMessage> completions) {
-    completions.stream()
-        .forEach(
-            c -> {
-              if (c.getFunctionCall() != null && c.getName().equals("exit")) {
-                System.exit(0);
-              }
-            });
   }
 
   /**
@@ -126,18 +121,5 @@ public final class ChatGPTConsole {
     }
 
     return completions;
-  }
-
-  /**
-   * Send prompt to ChatGPT API and display response
-   *
-   * @param prompt Input prompt.
-   */
-  private void printResponse(final List<ChatMessage> completions) {
-    completions.stream()
-        .forEach(
-            c -> {
-              System.out.println(c.getContent());
-            });
   }
 }

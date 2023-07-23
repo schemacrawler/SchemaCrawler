@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.utility;
 
 import static java.util.Objects.requireNonNull;
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +42,24 @@ import schemacrawler.tools.command.chatgpt.FunctionDefinition;
 import schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType;
 import schemacrawler.tools.command.chatgpt.FunctionParameters;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
+import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.FunctionDefinitionRegistry;
 import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public class ChatGPTUtility {
+
+  public static boolean isExitCondition(final List<ChatMessage> completions) {
+    requireNonNull(completions, "No completions provided");
+    final String exitFunctionName = new ExitFunctionDefinition().getName();
+    for (final ChatMessage c : completions) {
+      if (c.getFunctionCall() != null && c.getName().equals(exitFunctionName)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   public static FunctionExecutor newFunctionExecutor(
       final Catalog catalog, final Connection connection) {
@@ -71,6 +84,21 @@ public class ChatGPTUtility {
       chatFunctions.add(chatFunction);
     }
     return new FunctionExecutor(chatFunctions);
+  }
+
+  /**
+   * Send prompt to ChatGPT API and display response
+   *
+   * @param prompt Input prompt.
+   */
+  public static void printResponse(final List<ChatMessage> completions, final PrintStream out) {
+    requireNonNull(out, "No ouput stream provided");
+    requireNonNull(completions, "No completions provided");
+    completions.stream()
+        .forEach(
+            c -> {
+              out.println(c.getContent());
+            });
   }
 
   public static List<ChatMessage> systemMessages(
