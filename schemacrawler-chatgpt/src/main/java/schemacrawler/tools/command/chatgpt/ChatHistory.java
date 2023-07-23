@@ -53,7 +53,7 @@ public class ChatHistory {
   public List<ChatMessage> toList() {
     final List<ChatMessage> chatMessages = new ArrayList<>(chatHistory.convertToList());
     for (final ChatMessage systemMessage : systemMessages) {
-      chatMessages.set(0, systemMessage);
+      chatMessages.add(0, systemMessage);
     }
     return chatMessages;
   }
