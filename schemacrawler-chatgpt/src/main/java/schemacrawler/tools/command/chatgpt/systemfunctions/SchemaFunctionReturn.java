@@ -41,6 +41,6 @@ public class SchemaFunctionReturn implements FunctionReturn {
 
   @Override
   public String get() {
-    return catalogDescription.toString();
+    return String.format("Description of database schema in JSON:%n%s", catalogDescription);
   }
 }
