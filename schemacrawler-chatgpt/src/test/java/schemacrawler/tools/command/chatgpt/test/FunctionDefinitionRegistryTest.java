@@ -42,6 +42,7 @@ import schemacrawler.tools.command.chatgpt.functions.FunctionDefinitionRegistry;
 import schemacrawler.tools.command.chatgpt.functions.LintFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.TableReferencesFunctionDefinition;
+import schemacrawler.tools.command.chatgpt.systemfunctions.AgentFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.systemfunctions.SchemaFunctionDefinition;
 
 public class FunctionDefinitionRegistryTest {
@@ -59,7 +60,7 @@ public class FunctionDefinitionRegistryTest {
     final FunctionDefinitionRegistry registry =
         FunctionDefinitionRegistry.getFunctionDefinitionRegistry();
     final Collection<FunctionDefinition> functions = convertIterableToCollection(registry);
-    assertThat(functions, hasSize(7));
+    assertThat(functions, hasSize(8));
     assertThat(
         functions,
         containsInAnyOrder(
@@ -69,6 +70,7 @@ public class FunctionDefinitionRegistryTest {
             new DatabaseObjectDescriptionFunctionDefinition(),
             new LintFunctionDefinition(),
             new ExitFunctionDefinition(),
-            new SchemaFunctionDefinition()));
+            new SchemaFunctionDefinition(),
+            new AgentFunctionDefinition()));
   }
 }
