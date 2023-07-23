@@ -4,3 +4,4 @@ schemacrawler.tools.command.chatgpt.functions.TableReferencesFunctionDefinition
 schemacrawler.tools.command.chatgpt.functions.DatabaseObjectDescriptionFunctionDefinition
 schemacrawler.tools.command.chatgpt.functions.LintFunctionDefinition
 schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition
+schemacrawler.tools.command.chatgpt.systemfunctions.SchemaFunctionDefinition

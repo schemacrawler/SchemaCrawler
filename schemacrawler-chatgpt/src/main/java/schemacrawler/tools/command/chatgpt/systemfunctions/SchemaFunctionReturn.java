@@ -26,21 +26,22 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.command.chatgpt.functions;
+package schemacrawler.tools.command.chatgpt.systemfunctions;
 
-import java.util.function.Function;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
+import schemacrawler.tools.command.chatgpt.systemfunctions.model.CatalogDescription;
 
-public final class ExitFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters> {
+public class SchemaFunctionReturn implements FunctionReturn {
 
-  public ExitFunctionDefinition() {
-    super(
-        "Called when the user is done with their research, wants to end the chat session.",
-        NoFunctionParameters.class);
+  private final CatalogDescription catalogDescription;
+
+  protected SchemaFunctionReturn(final CatalogDescription catalogDescription) {
+    this.catalogDescription = requireNonNull(catalogDescription, "No catalog provided");
   }
 
   @Override
-  public Function<NoFunctionParameters, FunctionReturn> getExecutor() {
-    return args -> () -> "Thank you for using SchemaCrawler with ChatGPT.";
+  public String get() {
+    return String.format("Description of database schema in JSON:%n%s", catalogDescription);
   }
 }

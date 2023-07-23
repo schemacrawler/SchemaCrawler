@@ -26,21 +26,35 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.command.chatgpt.functions;
+package schemacrawler.tools.command.chatgpt;
 
-import java.util.function.Function;
-import schemacrawler.tools.command.chatgpt.FunctionReturn;
+import static java.util.Objects.requireNonNull;
+import java.util.ArrayList;
+import java.util.List;
+import com.theokanning.openai.completion.chat.ChatMessage;
+import us.fatehi.utility.collections.CircularBoundedList;
 
-public final class ExitFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters> {
+public class ChatHistory {
 
-  public ExitFunctionDefinition() {
-    super(
-        "Called when the user is done with their research, wants to end the chat session.",
-        NoFunctionParameters.class);
+  private final CircularBoundedList<ChatMessage> chatHistory;
+  private final List<ChatMessage> systemMessages;
+
+  public ChatHistory(final int context, final List<ChatMessage> systemMessages) {
+    chatHistory = new CircularBoundedList<>(context);
+    this.systemMessages = requireNonNull(systemMessages, "No system messages provided");
   }
 
-  @Override
-  public Function<NoFunctionParameters, FunctionReturn> getExecutor() {
-    return args -> () -> "Thank you for using SchemaCrawler with ChatGPT.";
+  public void add(final ChatMessage message) {
+    if (message != null) {
+      chatHistory.add(message);
+    }
+  }
+
+  public List<ChatMessage> toList() {
+    final List<ChatMessage> chatMessages = new ArrayList<>(chatHistory.convertToList());
+    for (final ChatMessage systemMessage : systemMessages) {
+      chatMessages.add(0, systemMessage);
+    }
+    return chatMessages;
   }
 }

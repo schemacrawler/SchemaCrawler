@@ -32,7 +32,10 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import java.sql.Connection;
 import java.util.Objects;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.KebabCaseStrategy;
 import schemacrawler.schema.Catalog;
+import schemacrawler.tools.command.chatgpt.FunctionDefinition;
+import schemacrawler.tools.command.chatgpt.FunctionParameters;
 
 public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
     implements FunctionDefinition<P> {
@@ -75,11 +78,6 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
   }
 
   @Override
-  public String getName() {
-    return this.getClass().getSimpleName();
-  }
-
-  @Override
   public Class<P> getParameters() {
     return parameters;
   }
@@ -94,6 +92,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
     this.catalog = catalog;
   }
 
+  @Override
   public void setConnection(final Connection connection) {
     this.connection = connection;
   }
@@ -101,6 +100,7 @@ public abstract class AbstractFunctionDefinition<P extends FunctionParameters>
   @Override
   public String toString() {
     return String.format(
-        "function %s(%s)%n\"%s\"", getName(), parameters.getSimpleName(), description);
+        "function %s(%s)%n\"%s\"",
+        getName(), new KebabCaseStrategy().translate(parameters.getSimpleName()), description);
   }
 }

@@ -28,19 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.functions;
 
-import java.util.function.Function;
-import schemacrawler.tools.command.chatgpt.FunctionReturn;
+import schemacrawler.tools.command.chatgpt.FunctionParameters;
 
-public final class ExitFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters> {
-
-  public ExitFunctionDefinition() {
-    super(
-        "Called when the user is done with their research, wants to end the chat session.",
-        NoFunctionParameters.class);
-  }
-
-  @Override
-  public Function<NoFunctionParameters, FunctionReturn> getExecutor() {
-    return args -> () -> "Thank you for using SchemaCrawler with ChatGPT.";
-  }
-}
+public class NoFunctionParameters implements FunctionParameters {}

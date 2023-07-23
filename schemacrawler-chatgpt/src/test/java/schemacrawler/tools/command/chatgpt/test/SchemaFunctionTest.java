@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.test;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -52,24 +51,15 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
-import schemacrawler.tools.command.chatgpt.functions.TableReferencesFunctionDefinition;
-import schemacrawler.tools.command.chatgpt.functions.TableReferencesFunctionParameters;
-import schemacrawler.tools.command.chatgpt.functions.TableReferencesFunctionParameters.TableReferenceType;
+import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
+import schemacrawler.tools.command.chatgpt.systemfunctions.SchemaFunctionDefinition;
 
 @WithTestDatabase
 @ResolveTestContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TableReferencesFunctionTest {
+public class SchemaFunctionTest {
 
   private Catalog catalog;
-
-  @Test
-  public void childrenForTable(final TestContext testContext) throws Exception {
-    final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableName("BOOKS");
-    args.setTableReferenceType(TableReferenceType.CHILD);
-    referencesForTable(testContext, args);
-  }
 
   @BeforeAll
   public void loadCatalog(final Connection connection) throws Exception {
@@ -93,49 +83,10 @@ public class TableReferencesFunctionTest {
   }
 
   @Test
-  public void parameters(final TestContext testContext) throws Exception {
-    final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableName("BOOKS");
-    args.setTableReferenceType(TableReferenceType.CHILD);
-    assertThat(
-        args.toString(), is("{\"table-name\":\"BOOKS\",\"table-reference-type\":\"CHILD\"}"));
-  }
-
-  @Test
-  public void parentsForTable(final TestContext testContext) throws Exception {
-    final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableName("BOOKAUTHORS");
-    args.setTableReferenceType(TableReferenceType.PARENT);
-    referencesForTable(testContext, args);
-  }
-
-  @Test
-  public void referencesForTable(final TestContext testContext) throws Exception {
-    final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableName("BOOKS");
-    referencesForTable(testContext, args);
-  }
-
-  @Test
-  public void referencesForUnknownTable(final TestContext testContext) throws Exception {
-    final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableName("NOT_A_TABLE");
-    referencesForTable(testContext, args);
-  }
-
-  @Test
-  public void referencesForView(final TestContext testContext) throws Exception {
-    final TableReferencesFunctionParameters args = new TableReferencesFunctionParameters();
-    args.setTableName("AuthorsList");
-    referencesForTable(testContext, args);
-  }
-
-  private void referencesForTable(
-      final TestContext testContext, final TableReferencesFunctionParameters args)
+  public void outputSchema(final TestContext testContext, final Connection connection)
       throws Exception {
-
-    final TableReferencesFunctionDefinition functionDefinition =
-        new TableReferencesFunctionDefinition();
+    final NoFunctionParameters args = new NoFunctionParameters();
+    final SchemaFunctionDefinition functionDefinition = new SchemaFunctionDefinition();
     functionDefinition.setCatalog(catalog);
 
     final TestWriter testout = new TestWriter();

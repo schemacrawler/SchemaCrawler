@@ -61,7 +61,12 @@ public class ChatGPTCommandProvider extends BaseCommandProvider {
             "context",
             Integer.class,
             "Number of chat messages (not tokens) to maintain as chat context",
-            "Optional, defaults to 10");
+            "Optional, defaults to 10")
+        .addOption(
+            "use-metadata",
+            Boolean.class,
+            "Allow sharing of database metadata with OpenAI to enhance chat responses",
+            "Optional, defaults to false");
     return pluginCommand;
   }
 

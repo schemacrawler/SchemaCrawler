@@ -6,8 +6,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.KebabCaseStrategy;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionDefinition;
+import schemacrawler.tools.command.chatgpt.functions.TableDecriptionFunctionParameters;
 
 public class AbstractFunctionDefinitionTest {
 
@@ -30,10 +32,14 @@ public class AbstractFunctionDefinitionTest {
   public void properties() {
     final TableDecriptionFunctionDefinition functionDefinition =
         new TableDecriptionFunctionDefinition();
-    final String functionName = TableDecriptionFunctionDefinition.class.getSimpleName();
+
+    final String functionName =
+        new KebabCaseStrategy().translate(TableDecriptionFunctionDefinition.class.getSimpleName());
+    final String functionParameters =
+        new KebabCaseStrategy().translate(TableDecriptionFunctionParameters.class.getSimpleName());
     assertThat(
         functionDefinition.toString(),
-        startsWith("function " + functionName + "(TableDecriptionFunctionParameters)"));
+        startsWith("function " + functionName + "(" + functionParameters + ")"));
 
     assertThat(functionDefinition.getName(), is(functionName));
     assertThat(

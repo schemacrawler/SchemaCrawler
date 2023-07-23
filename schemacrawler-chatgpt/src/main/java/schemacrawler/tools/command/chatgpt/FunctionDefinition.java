@@ -26,13 +26,20 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.command.chatgpt.functions;
+package schemacrawler.tools.command.chatgpt;
 
+import static schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType.USER;
 import java.sql.Connection;
 import java.util.function.Function;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.KebabCaseStrategy;
 import schemacrawler.schema.Catalog;
 
 public interface FunctionDefinition<P extends FunctionParameters> {
+
+  public enum FunctionType {
+    USER,
+    SYSTEM;
+  }
 
   Catalog getCatalog();
 
@@ -40,7 +47,13 @@ public interface FunctionDefinition<P extends FunctionParameters> {
 
   Function<P, FunctionReturn> getExecutor();
 
-  String getName();
+  default FunctionType getFunctionType() {
+    return USER;
+  }
+
+  default String getName() {
+    return new KebabCaseStrategy().translate(this.getClass().getSimpleName());
+  }
 
   Class<P> getParameters();
 

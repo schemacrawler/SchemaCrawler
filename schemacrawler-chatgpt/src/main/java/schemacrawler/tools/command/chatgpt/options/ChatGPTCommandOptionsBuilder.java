@@ -47,6 +47,7 @@ public final class ChatGPTCommandOptionsBuilder
   private String apiKey;
   private String model;
   private int context;
+  private boolean useMetadata;
 
   private ChatGPTCommandOptionsBuilder() {
     model = "gpt-3.5-turbo";
@@ -59,6 +60,7 @@ public final class ChatGPTCommandOptionsBuilder
       apiKey = getApiKey(config);
       model = config.getStringValue("model", model);
       context = config.getIntegerValue("context", DEFAULT_CONTEXT);
+      useMetadata = config.getBooleanValue("use-metadata");
     }
 
     return this;
@@ -81,7 +83,7 @@ public final class ChatGPTCommandOptionsBuilder
 
   @Override
   public ChatGPTCommandOptions toOptions() {
-    return new ChatGPTCommandOptions(apiKey, model, context);
+    return new ChatGPTCommandOptions(apiKey, model, context, useMetadata);
   }
 
   /**
@@ -118,6 +120,17 @@ public final class ChatGPTCommandOptionsBuilder
     if (!isBlank(model)) {
       this.model = model;
     }
+    return this;
+  }
+
+  /**
+   * Allow sharing of database metadata with OpenAI to enhance chat responses.
+   *
+   * @param useMetadata Whether to share database metadata with OpenAI to enhance chat responses.
+   * @return Self.
+   */
+  public ChatGPTCommandOptionsBuilder withUseMetadata(final boolean useMetadata) {
+    this.useMetadata = useMetadata;
     return this;
   }
 
