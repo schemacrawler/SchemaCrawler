@@ -31,12 +31,12 @@ You can use any language that ChatGPT supports, for example, try something like:
 
 If you are willing to share your database metadata with OpenAI, you can get additional help from ChatGPT. For example, you can summarize what the database does, get help with writing SQL queries, or with writing good comments on your database schema. To share data, pass an additional command-line argument to SchemaCrawler, `--use-metadata`. Please note that depending on your database schema, this can exceed the maximum tokens allowed by ChatGPT. If you end up exceeding the tokens, either do not use this flag, or use the SchemaCrawler command-line to limit the tables in scope using regular expressions.
 
-Try out prompts like:
+Try out prompts like (even though they may not return completely accurate information):
 
 - Summarize the database in one paragraph
-- Write a SQL query for book names and author names
-- Write a SQL query to find all books that have previous editions
-- Write comments for columns that do not have them
+- Based on my schema, write a SQL query for book names and author names
+- Based on my schema, write a SQL query to find all books that have previous editions
+- Suggest remarks for columns that do not have them
 
 
 ## Extensions
