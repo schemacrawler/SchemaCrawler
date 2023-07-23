@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.systemfunctions;
 
 import java.util.function.Function;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
@@ -57,15 +55,6 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
       final CatalogDescription catalogDescription = createCatalogDescription();
       return new SchemaFunctionReturn(catalogDescription);
     };
-  }
-
-  @Override
-  public String toString() {
-    try {
-      return new ObjectMapper().writeValueAsString(this);
-    } catch (final JsonProcessingException e) {
-      return super.toString();
-    }
   }
 
   protected CatalogDescription createCatalogDescription() {
