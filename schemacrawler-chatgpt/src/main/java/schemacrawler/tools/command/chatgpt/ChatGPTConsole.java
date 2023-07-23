@@ -18,6 +18,7 @@ import com.theokanning.openai.service.OpenAiService;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility;
+import us.fatehi.utility.string.StringFormat;
 
 public final class ChatGPTConsole {
 
@@ -85,16 +86,18 @@ public final class ChatGPTConsole {
     try {
       final ChatMessage userMessage = new ChatMessage(ChatMessageRole.USER.value(), prompt);
       chatHistory.add(userMessage);
+
+      final List<ChatMessage> messages = chatHistory.toList();
       final ChatCompletionRequest completionRequest =
           ChatCompletionRequest.builder()
-              .messages(chatHistory.toList())
+              .messages(messages)
               .functions(functionExecutor.getFunctions())
               .functionCall(new ChatCompletionRequestFunctionCall("auto"))
               .model(commandOptions.getModel())
               .build();
 
       final ChatCompletionResult chatCompletion = service.createChatCompletion(completionRequest);
-
+      LOGGER.log(Level.INFO, new StringFormat("Token usage: %s", chatCompletion.getUsage()));
       chatCompletion
           .getChoices()
           .forEach(
