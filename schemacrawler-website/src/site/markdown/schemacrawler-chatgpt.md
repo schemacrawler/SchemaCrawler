@@ -27,6 +27,18 @@ You can use any language that ChatGPT supports, for example, try something like:
 - Décris-moi la table NoName
 
 
+## Get Summary and Help on the Schema
+
+If you are willing to share your database metadata with OpenAI, you can get additional help from ChatGPT. For example, you can summarize what the database does, get help with writing SQL queries, or with writing good comments on your database schema. To share data, pass an additional command-line argument to SchemaCrawler, `--use-metadata`. Please note that depending on your database schema, this can exceed the maximum tokens allowed by ChatGPT. If you end up exceeding the tokens, either do not use this flag, or use the SchemaCrawler command-line to limit the tables in scope using regular expressions.
+
+Try out prompts like:
+
+- Summarize the database in one paragraph
+- Write a SQL query for book names and author names
+- Write a SQL query to find all books that have previous editions
+- Write comments for columns that do not have them
+
+
 ## Extensions
 
 SchemaCrawler allows you to extend the functionality with your own functions that work against the database catalog. Your functions should implement `schemacrawler.tools.command.chatgpt.functions.FunctionDefinition<P extends FunctionParameters>`. Package your functions in a jar, with a service provider file called `META-INF/services/schemacrawler.tools.command.chatgpt.functions.FunctionDefinition`. Put this jar on the SchemaCrawler classpath, and your functions will be provided to ChatGPT for processing.
