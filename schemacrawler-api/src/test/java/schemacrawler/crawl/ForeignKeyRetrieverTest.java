@@ -42,18 +42,15 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
@@ -109,7 +106,7 @@ public class ForeignKeyRetrieverTest {
             out.println("      delete rule: " + foreignKey.getDeleteRule());
             out.println("      update rule: " + foreignKey.getUpdateRule());
 
-            out.println("      referencing table: " + foreignKey.getReferencingTable());
+            out.println("      dependent table: " + foreignKey.getDependentTable());
             out.println("      referenced table: " + foreignKey.getReferencedTable());
             out.println("      column references: ");
             final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
@@ -118,9 +115,9 @@ public class ForeignKeyRetrieverTest {
               out.println("          " + columnReference);
             }
             out.println("      table constraint: ");
-            out.println("        parent (referencing table): " + foreignKey.getParent());
-            for (final TableConstraintColumn constraintColumn :
-                foreignKey.getConstrainedColumns()) {
+            out.println("        parent (dependent table): " + foreignKey.getParent());
+            for (final TableConstraintColumn constraintColumn : foreignKey
+                .getConstrainedColumns()) {
               out.println("          constrained column: " + constraintColumn);
             }
 
@@ -139,15 +136,11 @@ public class ForeignKeyRetrieverTest {
   @DisplayName("Retrieve foreign keys from data dictionary")
   public void fkFromDataDictionary(final DatabaseConnectionSource dataSource) throws Exception {
     final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(
-                InformationSchemaKey.FOREIGN_KEYS,
-                "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE")
-            .toOptions();
+        InformationSchemaViewsBuilder.builder().withSql(InformationSchemaKey.FOREIGN_KEYS,
+            "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE").toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(foreignKeysRetrievalStrategy, data_dictionary_all)
+    schemaRetrievalOptionsBuilder.with(foreignKeysRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
@@ -164,23 +157,16 @@ public class ForeignKeyRetrieverTest {
 
   @BeforeAll
   public void loadBaseCatalog(final Connection connection) {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(
-                SchemaInfoLevelBuilder.builder()
-                    .withInfoLevel(InfoLevel.standard)
-                    .setRetrieveForeignKeys(false)
-                    .toOptions());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-    catalog =
-        (MutableCatalog)
-            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder()
+            .withInfoLevel(InfoLevel.standard).setRetrieveForeignKeys(false).toOptions());
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .newSchemaCrawlerOptions().withLimitOptions(limitOptionsBuilder.toOptions())
+        .withLoadOptions(loadOptionsBuilder.toOptions());
+    catalog = (MutableCatalog) getCatalog(connection, schemaRetrievalOptionsDefault,
+        schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(14));

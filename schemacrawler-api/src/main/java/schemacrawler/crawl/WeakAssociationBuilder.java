@@ -166,12 +166,12 @@ public final class WeakAssociationBuilder {
 
     final ColumnReference someColumnReference = iterator.next();
     final Table referencedTable = someColumnReference.getPrimaryKeyColumn().getParent();
-    final Table referencingTable = someColumnReference.getForeignKeyColumn().getParent();
+    final Table dependentTable = someColumnReference.getForeignKeyColumn().getParent();
 
     final String weakAssociationName;
     if (isBlank(name)) {
       weakAssociationName =
-          RetrieverUtility.constructForeignKeyName(referencedTable, referencingTable);
+          RetrieverUtility.constructForeignKeyName(referencedTable, dependentTable);
     } else {
       weakAssociationName = name;
     }
@@ -211,8 +211,8 @@ public final class WeakAssociationBuilder {
       if (referencedTable instanceof MutableTable) {
         ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
       }
-      if (referencingTable instanceof MutableTable) {
-        ((MutableTable) referencingTable).addWeakAssociation(weakAssociation);
+      if (dependentTable instanceof MutableTable) {
+        ((MutableTable) dependentTable).addWeakAssociation(weakAssociation);
       }
 
       return Optional.of(weakAssociation);

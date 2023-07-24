@@ -383,7 +383,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
           continue;
         }
 
-        final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
+        final boolean isImportedKey = foreignKey.getDependentTable().equals(this);
         if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
           iterator.remove();
           continue;
@@ -398,8 +398,8 @@ class MutableTable extends AbstractDatabaseObject implements Table {
         nullsLast(
             ((Comparator<R>)
                     (final R one, final R two) -> {
-                      final boolean isOneImportedKey = one.getReferencingTable().equals(this);
-                      final boolean isTwoImportedKey = two.getReferencingTable().equals(this);
+                      final boolean isOneImportedKey = one.getDependentTable().equals(this);
+                      final boolean isTwoImportedKey = two.getDependentTable().equals(this);
 
                       if (isOneImportedKey == isTwoImportedKey) {
                         return 0;

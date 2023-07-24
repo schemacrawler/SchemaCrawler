@@ -102,7 +102,7 @@ public final class MetaDataUtility {
     }
     final boolean isForeignKeyUnique = isForeignKeyUnique(tableRef);
     final boolean isColumnReference =
-        tableRef.getReferencingTable() instanceof PartialDatabaseObject;
+        tableRef.getDependentTable() instanceof PartialDatabaseObject;
 
     final ForeignKeyCardinality connectivity;
     if (isColumnReference) {

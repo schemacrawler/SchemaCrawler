@@ -467,10 +467,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final Column fkColumn = columnRef.getForeignKeyColumn();
 
       final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
-      final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
+      final Table dependentTable = columnRef.getForeignKeyColumn().getParent();
 
       final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
-      final boolean isFkColumnFiltered = isTableFiltered(referencingTable);
+      final boolean isFkColumnFiltered = isTableFiltered(dependentTable);
 
       final String pkColumnName;
       final String fkColumnName;
@@ -484,7 +484,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       } else {
         pkColumnName = identifiers.quoteFullName(pkColumn);
       }
-      if (referencingTable.equals(table)) {
+      if (dependentTable.equals(table)) {
         fkColumnName = identifiers.quoteName(fkColumn);
       } else if (options.isShowUnqualifiedNames()) {
         fkColumnName = identifiers.quoteShortName(fkColumn);
@@ -503,7 +503,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         if (isFkColumnFiltered) {
           fkHyperlink = fkColumnName;
         } else {
-          fkHyperlink = formattingHelper.createAnchor(fkColumnName, "#" + nodeId(referencingTable));
+          fkHyperlink = formattingHelper.createAnchor(fkColumnName, "#" + nodeId(dependentTable));
         }
         final String arrow =
             isForeignKey

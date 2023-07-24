@@ -9,13 +9,13 @@ schema: PUBLIC.SCHEMA1
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.SCHEMA1.TABLEB
+      dependent table: PUBLIC.SCHEMA1.TABLEB
       referenced table: PUBLIC.SCHEMA1.TABLEA
       column references: 
         key sequence: 1
           PUBLIC.SCHEMA1.TABLEB.ID --> PUBLIC.SCHEMA1.TABLEA.ID
       table constraint: 
-        parent (referencing table): PUBLIC.SCHEMA1.TABLEB
+        parent (dependent table): PUBLIC.SCHEMA1.TABLEB
           constrained column: PUBLIC.SCHEMA1.TABLEB.ID
   table: PUBLIC.SCHEMA1.TABLEB
     foreign key: FK_TABLEA
@@ -25,13 +25,13 @@ schema: PUBLIC.SCHEMA1
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.SCHEMA1.TABLEB
+      dependent table: PUBLIC.SCHEMA1.TABLEB
       referenced table: PUBLIC.SCHEMA1.TABLEA
       column references: 
         key sequence: 1
           PUBLIC.SCHEMA1.TABLEB.ID --> PUBLIC.SCHEMA1.TABLEA.ID
       table constraint: 
-        parent (referencing table): PUBLIC.SCHEMA1.TABLEB
+        parent (dependent table): PUBLIC.SCHEMA1.TABLEB
           constrained column: PUBLIC.SCHEMA1.TABLEB.ID
 schema: PUBLIC.SCHEMA2
   table: PUBLIC.SCHEMA2.TABLEA
@@ -42,13 +42,13 @@ schema: PUBLIC.SCHEMA2
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.SCHEMA2.TABLEB
+      dependent table: PUBLIC.SCHEMA2.TABLEB
       referenced table: PUBLIC.SCHEMA2.TABLEA
       column references: 
         key sequence: 1
           PUBLIC.SCHEMA2.TABLEB.ID --> PUBLIC.SCHEMA2.TABLEA.ID
       table constraint: 
-        parent (referencing table): PUBLIC.SCHEMA2.TABLEB
+        parent (dependent table): PUBLIC.SCHEMA2.TABLEB
           constrained column: PUBLIC.SCHEMA2.TABLEB.ID
   table: PUBLIC.SCHEMA2.TABLEB
     foreign key: FK_TABLEA
@@ -58,12 +58,12 @@ schema: PUBLIC.SCHEMA2
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.SCHEMA2.TABLEB
+      dependent table: PUBLIC.SCHEMA2.TABLEB
       referenced table: PUBLIC.SCHEMA2.TABLEA
       column references: 
         key sequence: 1
           PUBLIC.SCHEMA2.TABLEB.ID --> PUBLIC.SCHEMA2.TABLEA.ID
       table constraint: 
-        parent (referencing table): PUBLIC.SCHEMA2.TABLEB
+        parent (dependent table): PUBLIC.SCHEMA2.TABLEB
           constrained column: PUBLIC.SCHEMA2.TABLEB.ID
 schema: PUBLIC.SYSTEM_LOBS

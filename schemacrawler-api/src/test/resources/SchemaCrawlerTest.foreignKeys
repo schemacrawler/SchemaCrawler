@@ -7,13 +7,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS.BOOKAUTHORS
+      dependent table: PUBLIC.BOOKS.BOOKAUTHORS
       referenced table: PUBLIC.BOOKS.AUTHORS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
+        parent (dependent table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
   table: PUBLIC.BOOKS.AUTHORSLIST
   table: PUBLIC.BOOKS.BOOKAUTHORS
@@ -24,13 +24,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS.BOOKAUTHORS
+      dependent table: PUBLIC.BOOKS.BOOKAUTHORS
       referenced table: PUBLIC.BOOKS.AUTHORS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
+        parent (dependent table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
     foreign key: SYS_FK_10120
       definition: 
@@ -39,13 +39,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS.BOOKAUTHORS
+      dependent table: PUBLIC.BOOKS.BOOKAUTHORS
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
+        parent (dependent table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   table: PUBLIC.BOOKS.BOOKS
     foreign key: FK_PREVIOUSEDITION
@@ -55,13 +55,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS.BOOKS
+      dependent table: PUBLIC.BOOKS.BOOKS
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.BOOKS
+        parent (dependent table): PUBLIC.BOOKS.BOOKS
           constrained column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
     foreign key: FK_SALES_BOOK
       definition: 
@@ -70,13 +70,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      dependent table: PUBLIC."PUBLISHER SALES".SALES
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
-        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+        parent (dependent table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
     foreign key: SYS_FK_10120
       definition: 
@@ -85,13 +85,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS.BOOKAUTHORS
+      dependent table: PUBLIC.BOOKS.BOOKAUTHORS
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
+        parent (dependent table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   table: PUBLIC.BOOKS."Celebrities"
     foreign key: SYS_FK_10130
@@ -101,13 +101,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS."Celebrity Updates"
+      dependent table: PUBLIC.BOOKS."Celebrity Updates"
       referenced table: PUBLIC.BOOKS."Celebrities"
       column references: 
         key sequence: 1
           PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS."Celebrities"."Id"
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS."Celebrity Updates"
+        parent (dependent table): PUBLIC.BOOKS."Celebrity Updates"
           constrained column: PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"
   table: PUBLIC.BOOKS."Celebrity Updates"
     foreign key: SYS_FK_10130
@@ -117,13 +117,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS."Celebrity Updates"
+      dependent table: PUBLIC.BOOKS."Celebrity Updates"
       referenced table: PUBLIC.BOOKS."Celebrities"
       column references: 
         key sequence: 1
           PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id" --> PUBLIC.BOOKS."Celebrities"."Id"
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS."Celebrity Updates"
+        parent (dependent table): PUBLIC.BOOKS."Celebrity Updates"
           constrained column: PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
@@ -136,13 +136,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
+      dependent table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
       referenced table: PUBLIC.BOOKS.PUBLISHERS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.ΒΙΒΛΊΑ
+        parent (dependent table): PUBLIC.BOOKS.ΒΙΒΛΊΑ
           constrained column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     foreign key: FK_ΒΙΒΛΊΑ_PUBLISHERS
@@ -152,13 +152,13 @@ schema: PUBLIC.BOOKS
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
+      dependent table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
       referenced table: PUBLIC.BOOKS.PUBLISHERS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
       table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.ΒΙΒΛΊΑ
+        parent (dependent table): PUBLIC.BOOKS.ΒΙΒΛΊΑ
           constrained column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
@@ -171,7 +171,7 @@ schema: PUBLIC."PUBLISHER SALES"
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      dependent table: PUBLIC."PUBLISHER SALES".SALES
       referenced table: PUBLIC."PUBLISHER SALES".REGIONS
       column references: 
         key sequence: 1
@@ -179,7 +179,7 @@ schema: PUBLIC."PUBLISHER SALES"
         key sequence: 2
           PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
       table constraint: 
-        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+        parent (dependent table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
           constrained column: PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALES
@@ -190,13 +190,13 @@ schema: PUBLIC."PUBLISHER SALES"
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      dependent table: PUBLIC."PUBLISHER SALES".SALES
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
-        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+        parent (dependent table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
     foreign key: FK_SALES_SALESDATA
       definition: 
@@ -205,13 +205,13 @@ schema: PUBLIC."PUBLISHER SALES"
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      dependent table: PUBLIC."PUBLISHER SALES".SALES
       referenced table: PUBLIC."PUBLISHER SALES".SALESDATA
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
       table constraint: 
-        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+        parent (dependent table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
     foreign key: FK_SALES_REGIONS
       definition: 
@@ -220,7 +220,7 @@ schema: PUBLIC."PUBLISHER SALES"
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      dependent table: PUBLIC."PUBLISHER SALES".SALES
       referenced table: PUBLIC."PUBLISHER SALES".REGIONS
       column references: 
         key sequence: 1
@@ -228,7 +228,7 @@ schema: PUBLIC."PUBLISHER SALES"
         key sequence: 2
           PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
       table constraint: 
-        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+        parent (dependent table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
           constrained column: PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALESDATA
@@ -239,12 +239,12 @@ schema: PUBLIC."PUBLISHER SALES"
       initially deferred: false
       delete rule: no action
       update rule: no action
-      referencing table: PUBLIC."PUBLISHER SALES".SALES
+      dependent table: PUBLIC."PUBLISHER SALES".SALES
       referenced table: PUBLIC."PUBLISHER SALES".SALESDATA
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
       table constraint: 
-        parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
+        parent (dependent table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
 schema: PUBLIC.SYSTEM_LOBS

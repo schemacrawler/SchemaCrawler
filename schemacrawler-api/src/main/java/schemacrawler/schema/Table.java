@@ -52,6 +52,15 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
   List<Column> getColumns();
 
   /**
+   * Gets child tables which have a foreign key from this table.
+   *
+   * @return Dependent or child tables.
+   */
+  default Collection<Table> getDependentTables() {
+    return getRelatedTables(child);
+  }
+
+  /**
    * Gets the list of exported foreign keys. That is, only those whose primary key is referenced in
    * another table.
    *
@@ -112,10 +121,10 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
   }
 
   /**
-   * Gets child tables which have a foreign key from this table.
-   *
-   * @return Referencing or child tables.
+   * @deprecated
+   * @see {@link #getDependentTables()}
    */
+  @Deprecated
   default Collection<Table> getReferencingTables() {
     return getRelatedTables(child);
   }

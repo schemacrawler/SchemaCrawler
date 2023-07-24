@@ -421,10 +421,10 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
-        final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
+        final Table dependentTable = columnRef.getForeignKeyColumn().getParent();
 
         final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
-        final boolean isFkColumnFiltered = isTableFiltered(referencingTable);
+        final boolean isFkColumnFiltered = isTableFiltered(dependentTable);
 
         // Hide foreign keys to filtered tables
         if (!options.isShowFilteredTables() && (isPkColumnFiltered || isFkColumnFiltered)) {
@@ -438,7 +438,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
           remarks = "";
         }
 
-        if (table.equals(referencedTable) || isPkColumnFiltered && table.equals(referencingTable)) {
+        if (table.equals(referencedTable) || isPkColumnFiltered && table.equals(dependentTable)) {
           formattingHelper.append(
               printColumnReference(
                   isForeignKey,

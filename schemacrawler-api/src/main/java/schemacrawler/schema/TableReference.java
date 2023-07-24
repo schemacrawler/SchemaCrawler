@@ -31,12 +31,8 @@ package schemacrawler.schema;
 import java.util.List;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-public interface TableReference
-    extends NamedObject,
-        AttributedObject,
-        DescribedObject,
-        TableConstraint,
-        Iterable<ColumnReference> {
+public interface TableReference extends NamedObject, AttributedObject, DescribedObject,
+    TableConstraint, Iterable<ColumnReference> {
 
   /**
    * Gets the list of column pairs.
@@ -46,9 +42,18 @@ public interface TableReference
   List<ColumnReference> getColumnReferences();
 
   /**
-   * Gets the referencing table.
+   * Gets dependent or child table for this reference.
    *
-   * @return Referencing table.
+   * @return Dependent table for this reference.
+   */
+  default Table getDependentTable() {
+    return getForeignKeyTable();
+  }
+
+  /**
+   * Gets the dependent table with an imported foreign key.
+   *
+   * @return Dependent table.
    */
   Table getForeignKeyTable();
 
@@ -59,10 +64,20 @@ public interface TableReference
    */
   Table getPrimaryKeyTable();
 
+  /**
+   * Gets referenced or parent table for this reference.
+   *
+   * @return Referenced table for this reference.
+   */
   default Table getReferencedTable() {
     return getPrimaryKeyTable();
   }
 
+  /**
+   * @deprecated
+   * @see {@link #getDependentTable()}
+   */
+  @Deprecated
   default Table getReferencingTable() {
     return getForeignKeyTable();
   }
