@@ -12,15 +12,23 @@ public final class TableDescription {
 
   private String name;
   private final List<ColumnDescription> columns;
+  private final List<TableDescription> referencedTables;
   private String remarks;
 
   public TableDescription() {
     columns = new ArrayList<>();
+    referencedTables = new ArrayList<>();
   }
 
   public void addColumn(final ColumnDescription column) {
     if (column != null) {
       columns.add(column);
+    }
+  }
+
+  public void addReferencedTable(final TableDescription referencedTable) {
+    if (referencedTable != null) {
+      referencedTables.add(referencedTable);
     }
   }
 
@@ -30,6 +38,10 @@ public final class TableDescription {
 
   public String getName() {
     return name;
+  }
+
+  public List<TableDescription> getReferencedTables() {
+    return referencedTables;
   }
 
   public String getRemarks() {

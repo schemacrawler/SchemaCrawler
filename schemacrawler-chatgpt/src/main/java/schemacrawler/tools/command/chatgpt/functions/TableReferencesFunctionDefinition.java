@@ -41,7 +41,7 @@ public final class TableReferencesFunctionDefinition
   public TableReferencesFunctionDefinition() {
     super(
         "Gets the relationships of a database table, either child tables or parent tables. "
-            + "Child tables are also known as referencing tables or foreign key tables. "
+            + "Child tables are also known as dependent tables or foreign key tables. "
             + "Parent tables are also known as referenced tables, or primary key tables.",
         TableReferencesFunctionParameters.class);
   }

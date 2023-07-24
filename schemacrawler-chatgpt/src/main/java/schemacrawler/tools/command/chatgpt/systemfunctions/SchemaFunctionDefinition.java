@@ -30,8 +30,10 @@ package schemacrawler.tools.command.chatgpt.systemfunctions;
 
 import java.util.function.Function;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.AbstractFunctionDefinition;
@@ -40,6 +42,7 @@ import schemacrawler.tools.command.chatgpt.systemfunctions.model.CatalogDescript
 import schemacrawler.tools.command.chatgpt.systemfunctions.model.ColumnDescription;
 import schemacrawler.tools.command.chatgpt.systemfunctions.model.SchemaDescription;
 import schemacrawler.tools.command.chatgpt.systemfunctions.model.TableDescription;
+import schemacrawler.utility.MetaDataUtility;
 
 public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunctionParameters>
     implements SystemFunctionDefinition {
@@ -57,6 +60,9 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
     }
 
     return args -> {
+      // Re-filter catalog
+      MetaDataUtility.reduceCatalog(catalog, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+
       final CatalogDescription catalogDescription = createCatalogDescription();
       return new SchemaFunctionReturn(catalogDescription);
     };
@@ -71,6 +77,7 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
         final TableDescription tableDescription = new TableDescription();
         tableDescription.setName(table.getName());
         tableDescription.setRemarks(table.getRemarks());
+        // Add columns
         for (final Column column : table.getColumns()) {
           final ColumnDescription columnDescription = new ColumnDescription();
           columnDescription.setName(column.getName());
@@ -78,6 +85,18 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
           columnDescription.setRemarks(column.getRemarks());
           tableDescription.addColumn(columnDescription);
         }
+        // Add referenced tables
+        for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+          final Table referencedTable = foreignKey.getReferencedTable();
+          final TableDescription referencedTableDescription = new TableDescription();
+          if (schema.equals(referencedTable.getSchema())) {
+            referencedTableDescription.setName(referencedTable.getName());
+          } else {
+            referencedTableDescription.setName(referencedTable.getFullName());
+          }
+          tableDescription.addReferencedTable(referencedTableDescription);
+        }
+        // Add table to the schema
         schemaDescription.addTable(tableDescription);
       }
       catalogDescription.addSchema(schemaDescription);
