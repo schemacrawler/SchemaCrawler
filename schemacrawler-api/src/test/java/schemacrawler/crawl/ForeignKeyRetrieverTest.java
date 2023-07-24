@@ -116,8 +116,8 @@ public class ForeignKeyRetrieverTest {
             }
             out.println("      table constraint: ");
             out.println("        parent (dependent table): " + foreignKey.getParent());
-            for (final TableConstraintColumn constraintColumn : foreignKey
-                .getConstrainedColumns()) {
+            for (final TableConstraintColumn constraintColumn :
+                foreignKey.getConstrainedColumns()) {
               out.println("          constrained column: " + constraintColumn);
             }
 
@@ -136,11 +136,15 @@ public class ForeignKeyRetrieverTest {
   @DisplayName("Retrieve foreign keys from data dictionary")
   public void fkFromDataDictionary(final DatabaseConnectionSource dataSource) throws Exception {
     final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder().withSql(InformationSchemaKey.FOREIGN_KEYS,
-            "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE").toOptions();
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.FOREIGN_KEYS,
+                "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE")
+            .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.with(foreignKeysRetrievalStrategy, data_dictionary_all)
+    schemaRetrievalOptionsBuilder
+        .with(foreignKeysRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
@@ -157,16 +161,23 @@ public class ForeignKeyRetrieverTest {
 
   @BeforeAll
   public void loadBaseCatalog(final Connection connection) {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder()
-            .withInfoLevel(InfoLevel.standard).setRetrieveForeignKeys(false).toOptions());
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-        .newSchemaCrawlerOptions().withLimitOptions(limitOptionsBuilder.toOptions())
-        .withLoadOptions(loadOptionsBuilder.toOptions());
-    catalog = (MutableCatalog) getCatalog(connection, schemaRetrievalOptionsDefault,
-        schemaCrawlerOptions);
+        LoadOptionsBuilder.builder()
+            .withSchemaInfoLevel(
+                SchemaInfoLevelBuilder.builder()
+                    .withInfoLevel(InfoLevel.standard)
+                    .setRetrieveForeignKeys(false)
+                    .toOptions());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+    catalog =
+        (MutableCatalog)
+            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(14));

@@ -31,8 +31,12 @@ package schemacrawler.schema;
 import java.util.List;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-public interface TableReference extends NamedObject, AttributedObject, DescribedObject,
-    TableConstraint, Iterable<ColumnReference> {
+public interface TableReference
+    extends NamedObject,
+        AttributedObject,
+        DescribedObject,
+        TableConstraint,
+        Iterable<ColumnReference> {
 
   /**
    * Gets the list of column pairs.

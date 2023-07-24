@@ -101,8 +101,7 @@ public final class MetaDataUtility {
       return ForeignKeyCardinality.unknown;
     }
     final boolean isForeignKeyUnique = isForeignKeyUnique(tableRef);
-    final boolean isColumnReference =
-        tableRef.getDependentTable() instanceof PartialDatabaseObject;
+    final boolean isColumnReference = tableRef.getDependentTable() instanceof PartialDatabaseObject;
 
     final ForeignKeyCardinality connectivity;
     if (isColumnReference) {

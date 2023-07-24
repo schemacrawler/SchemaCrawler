@@ -50,12 +50,13 @@ public final class RetrieverUtility {
     requireNonNull(pkTable, "No referenced table provided");
     requireNonNull(fkTable, "No dependent table provided");
 
-    return String.format("SCHCRWLR_%1$08X_%2$08X", fkTable.getFullName().hashCode(),
-        pkTable.getFullName().hashCode());
+    return String.format(
+        "SCHCRWLR_%1$08X_%2$08X",
+        fkTable.getFullName().hashCode(), pkTable.getFullName().hashCode());
   }
 
-  static Column lookupOrCreateColumn(final Catalog catalog, final Schema schema,
-      final String tableName, final String columnName) {
+  static Column lookupOrCreateColumn(
+      final Catalog catalog, final Schema schema, final String tableName, final String columnName) {
 
     if (isBlank(columnName)) {
       return null;
@@ -77,7 +78,8 @@ public final class RetrieverUtility {
       column = new ColumnPartial(table, columnName);
       table.addColumn(column);
 
-      LOGGER.log(Level.FINER,
+      LOGGER.log(
+          Level.FINER,
           new StringFormat("Creating partial column for a column reference <%s>", column));
     }
     return column;
@@ -87,10 +89,14 @@ public final class RetrieverUtility {
    * Looks up a column in the database. If the column and table are not found, they are created, and
    * added to the schema. This is prevent foreign key relationships from having a null pointer.
    */
-  static Column lookupOrCreateColumn(final Catalog catalog, final String catalogName,
-      final String schemaName, final String tableName, final String columnName) {
-    return lookupOrCreateColumn(catalog, new SchemaReference(catalogName, schemaName), tableName,
-        columnName);
+  static Column lookupOrCreateColumn(
+      final Catalog catalog,
+      final String catalogName,
+      final String schemaName,
+      final String tableName,
+      final String columnName) {
+    return lookupOrCreateColumn(
+        catalog, new SchemaReference(catalogName, schemaName), tableName, columnName);
   }
 
   private RetrieverUtility() {
