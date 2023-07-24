@@ -63,7 +63,7 @@ public class WeakAssociationAttributes extends ObjectAttributes {
     return referencedTable;
   }
 
-  public TableAttributes getReferencingTable() {
+  public TableAttributes getDependentTable() {
     return dependentTable;
   }
 }

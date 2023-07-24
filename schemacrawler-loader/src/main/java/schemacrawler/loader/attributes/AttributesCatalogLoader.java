@@ -192,7 +192,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
         catalogAttributes.getWeakAssociations()) {
 
       final TableAttributes pkTableAttributes = weakAssociationAttributes.getReferencedTable();
-      final TableAttributes fkTableAttributes = weakAssociationAttributes.getReferencingTable();
+      final TableAttributes fkTableAttributes = weakAssociationAttributes.getDependentTable();
 
       final WeakAssociationBuilder weakAssociationBuilder = WeakAssociationBuilder.builder(catalog);
 
