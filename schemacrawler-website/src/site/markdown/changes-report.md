@@ -2,6 +2,14 @@
 
 SchemaCrawler release notes.
 
+
+<a name="a16.20.4"></a>
+## Release 16.20.4 - 2023-07-26
+
+- Support "system functions" for the ChatGPT plugin which allows metadata to be sent to OpenAI for analysis
+- Add a command-line argument `--use-metadata` for the ChatGPT plugin to get consent from the user to share metadata with OpenAIA
+
+
 <a name="a16.20.3"></a>
 ## Release 16.20.3 - 2023-07-20
 
@@ -23,8 +31,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="a16.20.3"></a>
-## Release 16.20.3 - 2023-06-03
+<a name="a16.20.4"></a>
+## Release 16.20.4 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
