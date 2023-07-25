@@ -28,29 +28,48 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-
+import static org.mockito.Mockito.verifyNoInteractions;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.LoggingConfig;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class IOUtilityTest {
+
+  @Test
+  public void copy() throws IOException {
+    final StringWriter writer = new StringWriter();
+    IOUtility.copy(null, writer);
+    assertThat(writer.toString(), is(""));
+
+    final Reader reader = mock(Reader.class);
+    IOUtility.copy(reader, null);
+    verifyNoInteractions(reader);
+  }
+
+  @Test
+  public void createTempFilePath() throws IOException {
+    final Path tempFilePath = IOUtility.createTempFilePath("stem", "ext");
+    assertThat(tempFilePath.getFileName().toString(), startsWith("stem"));
+    assertThat(tempFilePath.getFileName().toString(), endsWith("ext"));
+  }
 
   @BeforeAll
   public void disableLogging() throws Exception {
@@ -62,7 +81,7 @@ public class IOUtilityTest {
   public void fileExtension_path() {
     assertThat(IOUtility.getFileExtension((Path) null), is(""));
     assertThat(IOUtility.getFileExtension(Paths.get("")), is(""));
-    // assertThat(IOUtility.getFileExtension(Paths.get("  ")), is(""));
+    // assertThat(IOUtility.getFileExtension(Paths.get(" ")), is(""));
     assertThat(IOUtility.getFileExtension(Paths.get(".")), is(""));
     assertThat(IOUtility.getFileExtension(Paths.get("abc")), is(""));
     assertThat(IOUtility.getFileExtension(Paths.get("abc.")), is(""));
@@ -95,6 +114,11 @@ public class IOUtilityTest {
     final Path tempFile = Files.createTempFile("sc", ".dat");
     // (empty file)
     assertThat(IOUtility.isFileReadable(tempFile), is(false));
+    // File is not readable
+    assertThat(IOUtility.isFileReadable(tempFile.resolve("no-file")), is(false));
+
+    Files.write(tempFile, new byte[] {65});
+    assertThat(IOUtility.isFileReadable(tempFile), is(true));
   }
 
   @Test
@@ -102,6 +126,15 @@ public class IOUtilityTest {
     assertThat(IOUtility.isFileWritable(null), is(false));
     // ("." is not a file, but a directory)
     assertThat(IOUtility.isFileWritable(Paths.get(".")), is(false));
+
+    final Path tempFile = IOUtility.createTempFilePath("", ".dat");
+    Files.write(tempFile, new byte[] {65});
+    assertThat(IOUtility.isFileWritable(tempFile), is(true));
+
+    // Parent path is not a directory
+    assertThat(IOUtility.isFileWritable(tempFile.resolve("badfile")), is(false));
+    // Parent path does not exist
+    assertThat(IOUtility.isFileWritable(tempFile.getParent().resolve("baddir/badfile")), is(false));
   }
 
   @Test
@@ -114,5 +147,11 @@ public class IOUtilityTest {
         .read(any(), anyInt(), anyInt());
 
     assertThat(IOUtility.readFully(reader), is(""));
+  }
+
+  @Test
+  public void readResourceFully() throws IOException {
+    assertThat(IOUtility.readResourceFully("no-resouce"), is(""));
+    assertThat(IOUtility.readResourceFully("/test-resource.txt"), startsWith("hello, world"));
   }
 }

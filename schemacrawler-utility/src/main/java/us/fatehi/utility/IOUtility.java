@@ -37,7 +37,6 @@ import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.isWritable;
 import static java.nio.file.Files.size;
 import static java.util.UUID.randomUUID;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -94,11 +93,10 @@ public final class IOUtility {
 
   public static Path createTempFilePath(final String stem, final String extension)
       throws IOException {
+    final String filename =
+        String.format("%s%s.%s", Utility.trimToEmpty(stem), randomUUID(), extension);
     final Path tempFilePath =
-        createTempDirectory(null)
-            .resolve(randomUUID() + "." + extension)
-            .normalize()
-            .toAbsolutePath();
+        createTempDirectory(null).resolve(filename).normalize().toAbsolutePath();
     tempFilePath.toFile().deleteOnExit();
     return tempFilePath;
   }
@@ -130,10 +128,7 @@ public final class IOUtility {
    * @return True if the file can be read, false otherwise.
    */
   public static boolean isFileReadable(final Path file) {
-    if (file == null) {
-      return false;
-    }
-    if (!isReadable(file) || !isRegularFile(file)) {
+    if (file == null || !isReadable(file) || !isRegularFile(file)) {
       return false;
     }
     try {
@@ -153,10 +148,7 @@ public final class IOUtility {
    * @return True if the file can be written, false otherwise.
    */
   public static boolean isFileWritable(final Path file) {
-    if (file == null) {
-      return false;
-    }
-    if (isDirectory(file)) {
+    if (file == null || isDirectory(file)) {
       return false;
     }
     final Path parentPath = file.getParent();
