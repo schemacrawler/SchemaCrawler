@@ -98,7 +98,7 @@ public final class ChatGPTConsole {
           .getChoices()
           .forEach(
               c -> {
-                LOGGER.log(Level.CONFIG, new StringFormat("%s", c));
+                LOGGER.log(Level.CONFIG, new StringFormat("ChatGPT response:%n%s", c));
                 final ChatMessage message = c.getMessage();
                 chatHistory.add(message);
                 final ChatFunctionCall functionCall = message.getFunctionCall();
