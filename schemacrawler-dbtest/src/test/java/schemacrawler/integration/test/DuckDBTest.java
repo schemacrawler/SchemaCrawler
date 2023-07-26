@@ -34,13 +34,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
 import java.io.IOException;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -55,7 +52,7 @@ public class DuckDBTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws IOException {
-    final Path databasePath = IOUtility.createTempFilePath("SC.DuckDB", "db");
+    final Path databasePath = IOUtility.createTempFilePath("sc.", "db");
     createDataSource("jdbc:duckdb:" + databasePath, null, null);
     createDatabase("/duckdb.scripts.txt");
   }
