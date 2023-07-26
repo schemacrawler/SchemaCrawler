@@ -83,6 +83,7 @@ public final class ChatGPTConsole {
       chatHistory.add(userMessage);
 
       final List<ChatMessage> messages = chatHistory.toList();
+      LOGGER.log(Level.CONFIG, new StringFormat("ChatGPT request:%n%s", messages));
       final ChatCompletionRequest completionRequest =
           ChatCompletionRequest.builder()
               .messages(messages)
@@ -97,7 +98,7 @@ public final class ChatGPTConsole {
           .getChoices()
           .forEach(
               c -> {
-                LOGGER.log(Level.CONFIG, String.valueOf(c));
+                LOGGER.log(Level.CONFIG, new StringFormat("%s", c));
                 final ChatMessage message = c.getMessage();
                 chatHistory.add(message);
                 final ChatFunctionCall functionCall = message.getFunctionCall();
