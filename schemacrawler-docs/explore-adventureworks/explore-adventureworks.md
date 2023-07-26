@@ -5,7 +5,7 @@
 - Start SchemaCrawler with the AdventureWorks Database on Microsoft SQL Server
   `docker-compose -f adventureworks.yaml up -d`
 - Start SchemaCrawler bash with
-  `docker exec -it schemacrawler /bin/bash`
+  `docker exec -it schemacrawler bash`
 
 
 ## Exploration
@@ -44,9 +44,9 @@
 ## Model Your Existing Database
 
 - Generate and edit a dbdiagram.io diagram
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command script --grep-tables ".*\.Employee" --children 1 --scripting-language python --script share/dbml.py --output-file share/adventureworks.dbml`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command script --grep-tables ".*\.Employee" --children 1 --scripting-language python --script dbml.py --output-file share/adventureworks.dbml`
 - Generate and edit a mermaid diagram
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command script --grep-tables ".*\.Employee" --children 1 --scripting-language python --script share/mermaid.py --output-file share/adventureworks.mermaid`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command script --grep-tables ".*\.Employee" --children 1 --scripting-language python --script mermaid.py --output-file share/adventureworks.mermaid`
 
 
 ## Other Commands
