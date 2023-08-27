@@ -35,7 +35,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -43,7 +42,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -52,6 +50,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -59,13 +59,14 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @HeavyDatabaseTest
 @Testcontainers
+@ResolveTestContext
 public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
 
   private final DockerImageName imageName = DockerImageName.parse(PostgreSQLContainer.IMAGE);
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new PostgreSQLContainer<>(imageName.withTag("14.1"));
+      new PostgreSQLContainer<>(imageName.withTag("15.4"));
 
   @BeforeEach
   public void createDatabase() {
@@ -82,7 +83,7 @@ public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "postgresql")
-  public void testPostgreSQLWithConnection() throws Exception {
+  public void testPostgreSQLWithConnection(final TestContext testContext) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("books"))
@@ -107,7 +108,7 @@ public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
 
     // -- Schema output tests
     final String expectedResource =
-        String.format("testPostgreSQLWithConnection.%s.txt", javaVersion());
+        String.format("%s.%s.txt", testContext.testMethodName(), javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
