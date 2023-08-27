@@ -67,7 +67,7 @@
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
-      <version>3.42.0.0</version>
+      <version>3.42.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.informix</groupId>
@@ -103,7 +103,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>423</version>
+      <version>425</version>
     </dependency>
     <dependency>
       <groupId>com.ing.data</groupId>
