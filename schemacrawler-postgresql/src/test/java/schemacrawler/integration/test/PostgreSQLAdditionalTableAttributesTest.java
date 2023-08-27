@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL9Container;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL11Container;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
@@ -65,7 +65,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 @DisplayName("Test for issue #258 on GitHub")
 public class PostgreSQLAdditionalTableAttributesTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL9Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL11Container();
 
   @BeforeEach
   public void createDatabase() {
