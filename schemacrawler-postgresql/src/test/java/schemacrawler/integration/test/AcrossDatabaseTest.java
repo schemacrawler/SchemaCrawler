@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL14Container;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL15Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -68,7 +68,7 @@ import us.fatehi.utility.database.SqlScript;
 @Testcontainers
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL14Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL15Container();
 
   @Test
   public void acrossDatabase(final TestContext testContext) throws Exception {

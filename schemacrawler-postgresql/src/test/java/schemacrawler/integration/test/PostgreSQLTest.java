@@ -36,27 +36,24 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL9Container;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL11Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -71,6 +68,8 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -78,9 +77,10 @@ import us.fatehi.utility.ObjectToString;
 
 @HeavyDatabaseTest
 @Testcontainers
+@ResolveTestContext
 public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL9Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL11Container();
 
   @BeforeEach
   public void createDatabase() {
@@ -96,7 +96,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  public void testPostgreSQLWithConnection() throws Exception {
+  public void testPostgreSQLWithConnection(final TestContext testContext) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("books"))
@@ -122,7 +122,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
         SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     final String expectedResultsResource =
-        String.format("testPostgreSQLWithConnection.%s.txt", javaVersion());
+        String.format("%s.%s.txt", testContext.testMethodName(), javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResultsResource)));

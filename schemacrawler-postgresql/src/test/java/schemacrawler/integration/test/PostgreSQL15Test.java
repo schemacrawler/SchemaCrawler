@@ -33,24 +33,21 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL14Container;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL15Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
@@ -62,15 +59,18 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @HeavyDatabaseTest
 @Testcontainers
-public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
+@ResolveTestContext
+public class PostgreSQL15Test extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL14Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL15Container();
 
   @BeforeEach
   public void createDatabase() {
@@ -86,7 +86,7 @@ public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  public void testPostgreSQL14WithConnection() throws Exception {
+  public void testPostgreSQL15WithConnection(final TestContext testContext) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("books"))
@@ -111,7 +111,7 @@ public class PostgreSQL14Test extends BaseAdditionalDatabaseTest {
 
     // -- Schema output tests
     final String expectedResultsResource =
-        String.format("testPostgreSQL14WithConnection.%s.txt", javaVersion());
+        String.format("%s.%s.txt", testContext.testMethodName(), javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));

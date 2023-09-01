@@ -32,7 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL14Container;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL15Container;
 import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
@@ -71,7 +71,7 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
           .withIdentifierQuotingStrategy(quote_all)
           .withIdentifierQuoteString("\"")
           .toOptions();
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL14Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL15Container();
 
   @BeforeEach
   public void createDatabase() throws Exception {
