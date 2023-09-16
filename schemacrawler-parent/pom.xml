@@ -208,13 +208,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.29</version>
+      <version>5.3.30</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>5.3.29</version>
+      <version>5.3.30</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
