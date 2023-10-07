@@ -99,7 +99,10 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
 
   @Override
   public String createAnchor(final String text, final String link) {
-    return anchor().withEscapedText(text).withHyperlink(link).make()
+    return anchor()
+        .withEscapedText(text)
+        .withHyperlink(link)
+        .make()
         .render(TagOutputFormat.valueOf(outputFormat.name()));
   }
 
@@ -125,8 +128,13 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
 
   /** {@inheritDoc} */
   @Override
-  public void writeDetailRow(final String text1, final String text2, final String text3,
-      final boolean escapeText, final boolean emphasize, final String style) {
+  public void writeDetailRow(
+      final String text1,
+      final String text2,
+      final String text3,
+      final boolean escapeText,
+      final boolean emphasize,
+      final String style) {
     final int text2Width = 32;
     final int text3Width = 28;
     final String text3Sytle;
@@ -144,11 +152,21 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
           tableCell().withEscapedText(text1).withWidth(2).withStyleClass("spacer").make());
     }
 
-    row.addInnerTag(tableCell().withEscapedText(text2, escapeText).withWidth(text2Width)
-        .withEmphasis(emphasize).withStyleClass("minwidth").make());
+    row.addInnerTag(
+        tableCell()
+            .withEscapedText(text2, escapeText)
+            .withWidth(text2Width)
+            .withEmphasis(emphasize)
+            .withStyleClass("minwidth")
+            .make());
 
-    row.addInnerTag(tableCell().withEscapedText(text3).withWidth(text3Width)
-        .withAlignment(Alignment.inherit).withStyleClass("minwidth" + text3Sytle).make());
+    row.addInnerTag(
+        tableCell()
+            .withEscapedText(text3)
+            .withWidth(text3Width)
+            .withAlignment(Alignment.inherit)
+            .withStyleClass("minwidth" + text3Sytle)
+            .make());
 
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
@@ -168,8 +186,9 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper#writeNameRow(java.lang.String,
-   *      java.lang.String)
+   * @see
+   *     schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper#writeNameRow(java.lang.String,
+   *     java.lang.String)
    */
   @Override
   public void writeNameRow(final String name, final String description) {
@@ -185,10 +204,20 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
     }
 
     final Tag row = tableRow().make();
-    row.addInnerTag(tableCell().withEscapedText(name).withWidth(nameWidth).withStyleClass("name")
-        .withColumnSpan(2).make());
-    row.addInnerTag(tableCell().withEscapedText(description).withWidth(descriptionWidth)
-        .withAlignment(Alignment.right).withStyleClass("description right").make());
+    row.addInnerTag(
+        tableCell()
+            .withEscapedText(name)
+            .withWidth(nameWidth)
+            .withStyleClass("name")
+            .withColumnSpan(2)
+            .make());
+    row.addInnerTag(
+        tableCell()
+            .withEscapedText(description)
+            .withWidth(descriptionWidth)
+            .withAlignment(Alignment.right)
+            .withStyleClass("description right")
+            .make());
 
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
@@ -199,8 +228,8 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
    * @see TextFormattingHelper#writeNameValueRow(java.lang.String, java.lang.String, Alignment)
    */
   @Override
-  public void writeNameValueRow(final String name, final String value,
-      final Alignment valueAlignment) {
+  public void writeNameValueRow(
+      final String name, final String value, final Alignment valueAlignment) {
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
 
@@ -209,10 +238,19 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
         "property_value" + (alignmentForValue == Alignment.inherit ? "" : " right");
 
     final Tag row = tableRow().make();
-    row.addInnerTag(tableCell().withEscapedText(name).withWidth(nameWidth)
-        .withStyleClass("property_name").make());
-    row.addInnerTag(tableCell().withEscapedText(value).withWidth(valueWidth)
-        .withAlignment(alignmentForValue).withStyleClass(valueStyle).make());
+    row.addInnerTag(
+        tableCell()
+            .withEscapedText(name)
+            .withWidth(nameWidth)
+            .withStyleClass("property_name")
+            .make());
+    row.addInnerTag(
+        tableCell()
+            .withEscapedText(value)
+            .withWidth(valueWidth)
+            .withAlignment(alignmentForValue)
+            .withStyleClass(valueStyle)
+            .make());
 
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
