@@ -49,11 +49,12 @@ public class SqlScript implements Runnable {
 
   private static final Logger LOGGER = Logger.getLogger(SqlScript.class.getName());
 
-  private static final boolean debug = Boolean
-      .parseBoolean(System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
+  private static final boolean debug =
+      Boolean.parseBoolean(
+          System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
-  public static void executeScriptFromResource(final String scriptResourceLine,
-      final Connection connection) {
+  public static void executeScriptFromResource(
+      final String scriptResourceLine, final Connection connection) {
 
     requireNonNull(scriptResourceLine, "No script resource line provided");
     requireNonNull(connection, "No database connection provided");
@@ -81,8 +82,9 @@ public class SqlScript implements Runnable {
       return;
     }
 
-    try (final BufferedReader scriptReader = new BufferedReader(
-        new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8));) {
+    try (final BufferedReader scriptReader =
+        new BufferedReader(
+            new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8)); ) {
       new SqlScript(scriptReader, delimiter, connection).run();
     } catch (final IOException e) {
       throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
@@ -93,8 +95,7 @@ public class SqlScript implements Runnable {
   private final String delimiter;
   private final Connection connection;
 
-  private SqlScript(final Reader scriptReader, final String delimiter,
-      final Connection connection) {
+  public SqlScript(final Reader scriptReader, final String delimiter, final Connection connection) {
     this.scriptReader = requireNonNull(scriptReader, "No script resource line provided");
     this.delimiter = requireNonNull(delimiter, "No delimiter provided");
     this.connection = requireNonNull(connection, "No database connection provided");
@@ -106,8 +107,9 @@ public class SqlScript implements Runnable {
     final boolean skip = delimiter.equals("#");
 
     if (debug) {
-      final String lineLogMessage = String.format("%s %s", scriptReader,
-          skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
+      final String lineLogMessage =
+          String.format(
+              "%s %s", scriptReader, skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
       LOGGER.log(Level.INFO, lineLogMessage);
       System.out.println(lineLogMessage);
     }
@@ -121,7 +123,7 @@ public class SqlScript implements Runnable {
     // NOTE: Do not close reader or connection, since we did not open them
     ) {
       final List<String> sqlList = readSql(new BufferedReader(scriptReader));
-      for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext();) {
+      for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext(); ) {
         sql = iterator.next();
         statement.clearWarnings();
         try {
