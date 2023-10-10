@@ -53,17 +53,14 @@ public class SqlScript implements Runnable {
           System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
   public static void executeScriptFromResource(
-      final String scriptResource, final Connection connection) {
-    new SqlScript(scriptResource, connection).run();
-  }
+      final String scriptResourceLine, final Connection connection) {
 
-  private final String scriptResource;
-  private final String delimiter;
-
-  private final Connection connection;
-
-  private SqlScript(final String scriptResourceLine, final Connection connection) {
     requireNonNull(scriptResourceLine, "No script resource line provided");
+    requireNonNull(connection, "No database connection provided");
+
+    final String scriptResource;
+    final String delimiter;
+
     final String[] split = scriptResourceLine.split(",");
     if (split.length == 1) {
       scriptResource = scriptResourceLine.trim();
@@ -79,6 +76,17 @@ public class SqlScript implements Runnable {
       throw new SQLRuntimeException("Too many fields in " + scriptResourceLine);
     }
 
+    new SqlScript(scriptResource, delimiter, connection).run();
+  }
+
+  private final String scriptResource;
+  private final String delimiter;
+  private final Connection connection;
+
+  private SqlScript(
+      final String scriptResource, final String delimiter, final Connection connection) {
+    this.scriptResource = requireNonNull(scriptResource, "No script resource line provided");
+    this.delimiter = requireNonNull(delimiter, "No delimiter provided");
     this.connection = requireNonNull(connection, "No database connection provided");
   }
 
