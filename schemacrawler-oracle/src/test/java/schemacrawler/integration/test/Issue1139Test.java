@@ -132,7 +132,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
   private void showSchemaInDDL(final DatabaseConnectionSource dataSource) throws Exception {
 
     final Connection connection = getConnection();
-    SqlScript.executeScriptFromResource(";,/db/books/01_schemas_C.sql", connection);
+    SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
     try (final Statement stmt = connection.createStatement()) {
       stmt.execute(
           "CREATE OR REPLACE FUNCTION CustomAdd(One IN INTEGER) \n"

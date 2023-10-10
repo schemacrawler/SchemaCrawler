@@ -39,31 +39,10 @@ public class SqlScriptTest {
 
     final String tableName = "TABLE3";
 
-    // 1. Too many delimiters
     // Pre-condition - table does not exist
     assertThat(doesTableExist(tableName), is(false));
     // Test
-    assertThrows(
-        RuntimeException.class,
-        () ->
-            SqlScript.executeScriptFromResource(
-                "#,/sql-resource-table3.sql,hello-there", connection));
-    // Post-condition - table exists
-    assertThat(doesTableExist(tableName), is(false));
-
-    // 2. Do not execute script
-    // Pre-condition - table does not exist
-    assertThat(doesTableExist(tableName), is(false));
-    // Test
-    SqlScript.executeScriptFromResource("#,/sql-resource-table3.sql", connection);
-    // Post-condition - table exists
-    assertThat(doesTableExist(tableName), is(false));
-
-    // 3. Happy path
-    // Pre-condition - table does not exist
-    assertThat(doesTableExist(tableName), is(false));
-    // Test
-    SqlScript.executeScriptFromResource(";,/sql-resource-table3.sql", connection);
+    SqlScript.executeScriptFromResource("/sql-resource-table3.sql", connection);
     // Post-condition - table exists
     assertThat(doesTableExist(tableName), is(true));
   }
@@ -140,7 +119,6 @@ public class SqlScriptTest {
     final DatabaseMetaData dbMetaData = connection.getMetaData();
     final ResultSet results =
         dbMetaData.getTables(catalog, null, tableName, new String[] {"TABLE"});
-    final boolean tableExists = results.next();
-    return tableExists;
+    return results.next();
   }
 }

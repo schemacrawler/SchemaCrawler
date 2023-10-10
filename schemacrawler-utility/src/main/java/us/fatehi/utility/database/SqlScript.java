@@ -30,9 +30,11 @@ package us.fatehi.utility.database;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLWarning;
 import java.sql.Statement;
@@ -54,31 +56,25 @@ public class SqlScript implements Runnable {
 
   public static void executeScriptFromResource(
       final String scriptResource, final Connection connection) {
-    new SqlScript(scriptResource, connection).run();
+
+    requireNotBlank(scriptResource, "No script resource line provided");
+    requireNonNull(connection, "No database connection provided");
+
+    try (final Reader scriptReader =
+        new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8)) {
+      new SqlScript(scriptReader, ";", connection).run();
+    } catch (final IOException e) {
+      throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
+    }
   }
 
-  private final String scriptResource;
+  private final Reader scriptReader;
   private final String delimiter;
-
   private final Connection connection;
 
-  private SqlScript(final String scriptResourceLine, final Connection connection) {
-    requireNonNull(scriptResourceLine, "No script resource line provided");
-    final String[] split = scriptResourceLine.split(",");
-    if (split.length == 1) {
-      scriptResource = scriptResourceLine.trim();
-      if (scriptResource.isEmpty()) {
-        delimiter = "#";
-      } else {
-        delimiter = ";";
-      }
-    } else if (split.length == 2) {
-      delimiter = split[0].trim();
-      scriptResource = split[1].trim();
-    } else {
-      throw new SQLRuntimeException("Too many fields in " + scriptResourceLine);
-    }
-
+  public SqlScript(final Reader scriptReader, final String delimiter, final Connection connection) {
+    this.scriptReader = requireNonNull(scriptReader, "No script resource line provided");
+    this.delimiter = requireNonNull(delimiter, "No delimiter provided");
     this.connection = requireNonNull(connection, "No database connection provided");
   }
 
@@ -90,7 +86,7 @@ public class SqlScript implements Runnable {
     if (debug) {
       final String lineLogMessage =
           String.format(
-              "%s %s", scriptResource, skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
+              "%s %s", scriptReader, skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
       LOGGER.log(Level.INFO, lineLogMessage);
       System.out.println(lineLogMessage);
     }
@@ -100,13 +96,10 @@ public class SqlScript implements Runnable {
     }
 
     String sql = null;
-    try (final BufferedReader lineReader =
-            new BufferedReader(
-                new InputStreamReader(this.getClass().getResourceAsStream(scriptResource), UTF_8));
-        final Statement statement = connection.createStatement();
-        // NOTE: Do not close connection, since we did not open it
-        ) {
-      final List<String> sqlList = readSql(lineReader);
+    try (final Statement statement = connection.createStatement()
+    // NOTE: Do not close reader or connection, since we did not open them
+    ) {
+      final List<String> sqlList = readSql(new BufferedReader(scriptReader));
       for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext(); ) {
         sql = iterator.next();
         statement.clearWarnings();
@@ -144,11 +137,9 @@ public class SqlScript implements Runnable {
       }
     } catch (final Exception e) {
       final Throwable throwable = getCause(e);
-      final String message =
-          String.format("Script: %s -- %s", scriptResource, throwable.getMessage());
-      System.err.println(message);
+      System.err.println(throwable.getMessage());
       System.err.println(sql);
-      LOGGER.log(Level.WARNING, message, throwable);
+      LOGGER.log(Level.WARNING, throwable.getMessage(), throwable);
       throw new SQLRuntimeException(e);
     }
   }

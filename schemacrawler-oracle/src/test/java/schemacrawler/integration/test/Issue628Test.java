@@ -35,17 +35,14 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.sql.Statement;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -78,7 +75,7 @@ public class Issue628Test extends BaseOracleWithConnectionTest {
   public void slashedName() throws Exception {
 
     final Connection connection = getConnection();
-    SqlScript.executeScriptFromResource(";,/db/books/01_schemas_C.sql", connection);
+    SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
     try (final Statement stmt = connection.createStatement()) {
       stmt.execute("CREATE TABLE \"A/B\" (I INT)");
       stmt.execute("CREATE TABLE CD (\"E/F\" INT)");
