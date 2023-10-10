@@ -28,17 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.server.oracle;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import us.fatehi.utility.database.SqlScript;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
 public final class OracleConnectionInitializer implements Consumer<Connection> {
@@ -48,16 +42,8 @@ public final class OracleConnectionInitializer implements Consumer<Connection> {
 
   @Override
   public void accept(final Connection connection) {
-    try {
-      LOGGER.log(Level.FINE, new StringFormat("Initializing Oracle connection <%s>", connection));
-      final InputResource inputResource =
-          new ClasspathInputResource("/schemacrawler-oracle.before.sql");
-      try (final Reader reader = inputResource.openNewInputReader(StandardCharsets.UTF_8)) {
-        new SqlScript(reader, ";", connection).run();
-      }
-      LOGGER.log(Level.FINE, new StringFormat("Initialized connection <%s>", connection));
-    } catch (final IOException e) {
-      throw new SchemaCrawlerException("Could not initialize connection", e);
-    }
+    LOGGER.log(Level.FINE, new StringFormat("Initializing Oracle connection <%s>", connection));
+    SqlScript.executeScriptFromResource("/schemacrawler-oracle.before.sql", connection);
+    LOGGER.log(Level.FINE, new StringFormat("Initialized connection <%s>", connection));
   }
 }

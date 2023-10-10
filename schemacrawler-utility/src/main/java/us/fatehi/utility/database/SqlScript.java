@@ -30,6 +30,7 @@ package us.fatehi.utility.database;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -54,38 +55,14 @@ public class SqlScript implements Runnable {
           System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
   public static void executeScriptFromResource(
-      final String scriptResourceLine, final Connection connection) {
+      final String scriptResource, final Connection connection) {
 
-    requireNonNull(scriptResourceLine, "No script resource line provided");
+    requireNotBlank(scriptResource, "No script resource line provided");
     requireNonNull(connection, "No database connection provided");
 
-    final String scriptResource;
-    final String delimiter;
-
-    final String[] split = scriptResourceLine.split(",");
-    if (split.length == 1) {
-      scriptResource = scriptResourceLine.trim();
-      if (scriptResource.isEmpty()) {
-        delimiter = "#";
-      } else {
-        delimiter = ";";
-      }
-    } else if (split.length == 2) {
-      delimiter = split[0].trim();
-      scriptResource = split[1].trim();
-    } else {
-      throw new SQLRuntimeException(String.format("Too many fields in \"%s\"", scriptResourceLine));
-    }
-
-    final boolean skip = delimiter.equals("#");
-    if (skip) {
-      return;
-    }
-
-    try (final BufferedReader scriptReader =
-        new BufferedReader(
-            new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8)); ) {
-      new SqlScript(scriptReader, delimiter, connection).run();
+    try (final Reader scriptReader =
+        new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8)) {
+      new SqlScript(scriptReader, ";", connection).run();
     } catch (final IOException e) {
       throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
     }
