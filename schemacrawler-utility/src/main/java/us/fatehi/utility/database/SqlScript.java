@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLWarning;
 import java.sql.Statement;
@@ -48,12 +49,11 @@ public class SqlScript implements Runnable {
 
   private static final Logger LOGGER = Logger.getLogger(SqlScript.class.getName());
 
-  private static final boolean debug =
-      Boolean.parseBoolean(
-          System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
+  private static final boolean debug = Boolean
+      .parseBoolean(System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
-  public static void executeScriptFromResource(
-      final String scriptResourceLine, final Connection connection) {
+  public static void executeScriptFromResource(final String scriptResourceLine,
+      final Connection connection) {
 
     requireNonNull(scriptResourceLine, "No script resource line provided");
     requireNonNull(connection, "No database connection provided");
@@ -73,19 +73,29 @@ public class SqlScript implements Runnable {
       delimiter = split[0].trim();
       scriptResource = split[1].trim();
     } else {
-      throw new SQLRuntimeException("Too many fields in " + scriptResourceLine);
+      throw new SQLRuntimeException(String.format("Too many fields in \"%s\"", scriptResourceLine));
     }
 
-    new SqlScript(scriptResource, delimiter, connection).run();
+    final boolean skip = delimiter.equals("#");
+    if (skip) {
+      return;
+    }
+
+    try (final BufferedReader scriptReader = new BufferedReader(
+        new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8));) {
+      new SqlScript(scriptReader, delimiter, connection).run();
+    } catch (final IOException e) {
+      throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
+    }
   }
 
-  private final String scriptResource;
+  private final Reader scriptReader;
   private final String delimiter;
   private final Connection connection;
 
-  private SqlScript(
-      final String scriptResource, final String delimiter, final Connection connection) {
-    this.scriptResource = requireNonNull(scriptResource, "No script resource line provided");
+  private SqlScript(final Reader scriptReader, final String delimiter,
+      final Connection connection) {
+    this.scriptReader = requireNonNull(scriptReader, "No script resource line provided");
     this.delimiter = requireNonNull(delimiter, "No delimiter provided");
     this.connection = requireNonNull(connection, "No database connection provided");
   }
@@ -96,9 +106,8 @@ public class SqlScript implements Runnable {
     final boolean skip = delimiter.equals("#");
 
     if (debug) {
-      final String lineLogMessage =
-          String.format(
-              "%s %s", scriptResource, skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
+      final String lineLogMessage = String.format("%s %s", scriptReader,
+          skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
       LOGGER.log(Level.INFO, lineLogMessage);
       System.out.println(lineLogMessage);
     }
@@ -108,14 +117,11 @@ public class SqlScript implements Runnable {
     }
 
     String sql = null;
-    try (final BufferedReader lineReader =
-            new BufferedReader(
-                new InputStreamReader(this.getClass().getResourceAsStream(scriptResource), UTF_8));
-        final Statement statement = connection.createStatement();
-        // NOTE: Do not close connection, since we did not open it
-        ) {
-      final List<String> sqlList = readSql(lineReader);
-      for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext(); ) {
+    try (final Statement statement = connection.createStatement()
+    // NOTE: Do not close reader or connection, since we did not open them
+    ) {
+      final List<String> sqlList = readSql(new BufferedReader(scriptReader));
+      for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext();) {
         sql = iterator.next();
         statement.clearWarnings();
         try {
@@ -153,7 +159,7 @@ public class SqlScript implements Runnable {
     } catch (final Exception e) {
       final Throwable throwable = getCause(e);
       final String message =
-          String.format("Script: %s -- %s", scriptResource, throwable.getMessage());
+          String.format("Script: %s -- %s", scriptReader, throwable.getMessage());
       System.err.println(message);
       System.err.println(sql);
       LOGGER.log(Level.WARNING, message, throwable);
