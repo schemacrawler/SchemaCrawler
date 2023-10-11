@@ -30,18 +30,22 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import java.io.Reader;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.function.Consumer;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -58,18 +62,20 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
+@TestInstance(PER_CLASS)
 @HeavyDatabaseTest
 @Testcontainers
 @ResolveTestContext
 public class Issue1139Test extends BaseOracleWithConnectionTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
   private final Consumer<Connection> customConnectionInitializer =
       connection -> {
@@ -83,7 +89,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
         }
       };
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
@@ -100,7 +106,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource = getDataSource();
     dataSource.setFirstConnectionInitializer(customConnectionInitializer);
 
-    showSchemaInDDL(dataSource);
+    showSchemaInDDL(dataSource, "TEST1");
   }
 
   @Test
@@ -113,7 +119,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
             new MultiUseUserCredentials("SYS AS SYSDBA", dbContainer.getPassword()));
     dataSource.setFirstConnectionInitializer(customConnectionInitializer);
 
-    showSchemaInDDL(dataSource);
+    showSchemaInDDL(dataSource, "TEST2");
   }
 
   @Test
@@ -126,13 +132,17 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
             new MultiUseUserCredentials("SYS AS SYSDBA", dbContainer.getPassword()));
     dataSource.setFirstConnectionInitializer(customConnectionInitializer);
 
-    showSchemaInDDL(dataSource);
+    showSchemaInDDL(dataSource, "TEST3");
   }
 
-  private void showSchemaInDDL(final DatabaseConnectionSource dataSource) throws Exception {
+  private void showSchemaInDDL(final DatabaseConnectionSource dataSource, final String schema)
+      throws Exception {
+
+    final String createSchemaSql = IOUtility.readResourceFully("/db/books/01_schemas_C.sql");
+    final Reader reader = new StringReader(createSchemaSql.replaceAll("BOOKS", schema));
 
     final Connection connection = getConnection();
-    SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
+    new SqlScript(reader, ";", connection).run();
     try (final Statement stmt = connection.createStatement()) {
       stmt.execute(
           "CREATE OR REPLACE FUNCTION CustomAdd(One IN INTEGER) \n"
@@ -146,7 +156,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeSchemas(new RegularExpressionInclusionRule(schema))
             .includeTables(new ExcludeAll())
             .includeRoutines(new IncludeAll());
     final LoadOptionsBuilder loadOptionsBuilder =
@@ -165,7 +175,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     // -- Schema output tests
-    final String classpathResource = "showSchemaInDDL.txt";
+    final String classpathResource = String.format("showSchemaInDDL.%s.txt", schema);
     assertThat(
         outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(classpathResource)));
