@@ -5,7 +5,7 @@ Routines
 
 
 
-BOOKS.CUSTOMADD                      [function, does not return a table]
+TEST3.CUSTOMADD                      [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               NUMBER(22, 38), in          
 
@@ -14,7 +14,7 @@ CUSTOMADD
 
 Definition
                                                             [definition]
-CREATE OR REPLACE EDITIONABLE FUNCTION "BOOKS"."CUSTOMADD" (One IN INTEGER) 
+CREATE OR REPLACE EDITIONABLE FUNCTION "TEST3"."CUSTOMADD" (One IN INTEGER) 
 RETURN INTEGER 
 AS 
 BEGIN
