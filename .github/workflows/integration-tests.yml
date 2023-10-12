@@ -26,6 +26,15 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
+    - id: maximize-build-space
+      name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.5
