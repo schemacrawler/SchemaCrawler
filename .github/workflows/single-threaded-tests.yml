@@ -27,7 +27,6 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: maximize-build-space
       name: Maximize build space
-      if: matrix.os == 'ubuntu-latest'
       uses: easimon/maximize-build-space@master
       with:
         remove-dotnet: 'true'
