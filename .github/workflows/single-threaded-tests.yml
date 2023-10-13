@@ -25,6 +25,16 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
+    - id: maximize-build-space
+      name: Maximize build space
+      if: matrix.os == 'ubuntu-latest'
+      uses: easimon/maximize-build-space@master
+      with:
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.5
@@ -32,7 +42,7 @@ jobs:
         java-version: ${{ matrix.java }}
     - id: install-graphviz
       name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.1
+      uses: sualeh/install-graphviz@v1.0.3
 
 # BUILD AND TEST
     - id: build-test
