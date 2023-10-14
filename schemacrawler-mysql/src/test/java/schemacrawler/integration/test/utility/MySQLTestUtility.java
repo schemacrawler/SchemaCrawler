@@ -35,11 +35,6 @@ import org.testcontainers.utility.DockerImageName;
 public final class MySQLTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newMySQL56Container() {
-    return newMySQLContainer("5.6.51");
-  }
-
-  @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newMySQL8Container() {
     return newMySQLContainer("8.0.31");
   }
