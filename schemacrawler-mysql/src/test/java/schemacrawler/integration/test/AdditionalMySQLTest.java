@@ -35,27 +35,31 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
+import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.HeavyDatabaseTest;
@@ -63,15 +67,15 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @HeavyDatabaseTest
 @Testcontainers
-@DisplayName("Test for support of enum values")
-public class MySQLEnumColumnTest extends BaseAdditionalDatabaseTest {
+public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
   @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
+  private static final JdbcDatabaseContainer<?> dbContainer =
       newMySQL8Container().withUsername("schemacrawler");
 
   @Test
   public void columnWithEnum() throws Exception {
+
     try (final Connection connection = getConnection();
         final Statement stmt = connection.createStatement(); ) {
       stmt.execute("CREATE TABLE shirts (name VARCHAR(40), size ENUM('small', 'medium', 'large'))");
@@ -115,5 +119,36 @@ public class MySQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+  }
+
+  @Test
+  @DisplayName("Issue #252 - Retrieve table and columns names with a dot in them")
+  public void dotName() throws Exception {
+
+    try (final Connection connection = getConnection();
+        final Statement stmt = connection.createStatement(); ) {
+      stmt.execute("CREATE TABLE `test.abc` (`a.b` INT(11) DEFAULT NULL)");
+      // Auto-commited
+    }
+
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder()
+            .fromOptions(matchSchemaRetrievalOptions(getDataSource()))
+            .with(tableColumnsRetrievalStrategy, data_dictionary_all);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+
+    final SchemaCrawler schemaCrawler =
+        new SchemaCrawler(getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions);
+    final Catalog catalog = schemaCrawler.crawl();
+
+    final Schema schema = catalog.lookupSchema("test").orElse(null);
+    assertThat(schema, notNullValue());
+    final Table table = catalog.lookupTable(schema, "test.abc").orElse(null);
+    assertThat(table, notNullValue());
+    final Column column = table.lookupColumn("a.b").orElse(null);
+    assertThat(column, notNullValue());
   }
 }
