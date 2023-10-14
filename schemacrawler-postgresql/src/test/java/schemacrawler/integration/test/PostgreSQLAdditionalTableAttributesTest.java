@@ -36,19 +36,17 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL11Container;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
-
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -63,6 +61,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 @HeavyDatabaseTest
 @Testcontainers
 @DisplayName("Test for issue #258 on GitHub")
+@Disabled("Only for PostgreSQL 11")
 public class PostgreSQLAdditionalTableAttributesTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL11Container();

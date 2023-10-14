@@ -36,12 +36,17 @@ public final class PostgreSQLTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newPostgreSQL11Container() {
-    return newPostgreSQLContainer("11.16");
+    return newPostgreSQLContainer("11.16-alpine");
+  }
+
+  @SuppressWarnings("resource")
+  public static JdbcDatabaseContainer<?> newPostgreSQL12Container() {
+    return newPostgreSQLContainer("12.16-alpine");
   }
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newPostgreSQL15Container() {
-    return newPostgreSQLContainer("15.4");
+    return newPostgreSQLContainer("15.4-alpine");
   }
 
   @SuppressWarnings("resource")
