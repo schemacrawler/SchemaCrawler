@@ -31,9 +31,9 @@ package schemacrawler.integration.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServer2019Container;
@@ -43,19 +43,20 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.BeforeEach;
+import org.apache.commons.lang3.SerializationUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.context.annotation.Description;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -78,14 +79,17 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
+@TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest
 @Testcontainers
 public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
+  @Container
+  private static final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
@@ -102,6 +106,33 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
         dbContainer.getUsername(),
         dbContainer.getPassword(),
         "database=BOOKS");
+  }
+
+  @Test
+  @Description("Issue #482")
+  public void serializeUnknownObjectSynonym() throws Exception {
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
+            .includeAllSynonyms();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource(), schemaCrawlerOptions);
+
+    assertThat(catalog.getTables(), hasSize(11));
+    assertThat(catalog.getSynonyms(), hasSize(2));
+
+    final Catalog clonedCatalog = SerializationUtils.clone(catalog);
+
+    assertThat(catalog, equalTo(clonedCatalog));
+    assertThat(clonedCatalog.getTables(), hasSize(11));
+    assertThat(clonedCatalog.getSynonyms(), hasSize(2));
   }
 
   @Test
