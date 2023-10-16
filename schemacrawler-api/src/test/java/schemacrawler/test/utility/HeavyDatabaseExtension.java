@@ -36,11 +36,19 @@ import java.util.Optional;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.testcontainers.DockerClientFactory;
 
 final class HeavyDatabaseExtension implements ExecutionCondition {
 
   @Override
   public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context) {
+
+    if (!isDockerAvailable()) {
+      System.err.println(
+          "Heavy Testcontainers test for databases not run since Docker is not available on this system");
+      return disabled(
+          "Do NOT run heavy Testcontainers test for databases: Docker is not available on this system");
+    }
 
     if (isSetOverrideForDev()) {
       return enabled("Run heavy Testcontainers test for databases: overridden for development");
@@ -63,6 +71,15 @@ final class HeavyDatabaseExtension implements ExecutionCondition {
     final Optional<HeavyDatabaseTest> heavyDbAnnotation =
         findAnnotation(context.getTestClass(), HeavyDatabaseTest.class);
     return heavyDbAnnotation.map(HeavyDatabaseTest::value).orElse(null);
+  }
+
+  private boolean isDockerAvailable() {
+    try {
+      DockerClientFactory.instance().client();
+      return true;
+    } catch (final Throwable ex) {
+      return false;
+    }
   }
 
   private boolean isSetOverrideForDev() {
