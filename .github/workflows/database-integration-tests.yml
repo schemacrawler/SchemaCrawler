@@ -52,7 +52,7 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -D${{ matrix.database }}
+          -D${{ matrix.database }} \
           clean package
         # Save expected results files
         .github/scripts/unit-tests-results-output.sh
