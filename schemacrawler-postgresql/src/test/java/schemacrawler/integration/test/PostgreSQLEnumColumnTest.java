@@ -72,7 +72,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 
 @TestInstance(Lifecycle.PER_CLASS)
-@HeavyDatabaseTest
+@HeavyDatabaseTest("postgresql")
 @Testcontainers
 @DisplayName("Test for issue #284 - support enum values")
 public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {

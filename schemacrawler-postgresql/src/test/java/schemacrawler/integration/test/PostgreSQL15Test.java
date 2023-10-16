@@ -65,7 +65,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("postgresql")
 @Testcontainers
 @ResolveTestContext
 public class PostgreSQL15Test extends BaseAdditionalDatabaseTest {

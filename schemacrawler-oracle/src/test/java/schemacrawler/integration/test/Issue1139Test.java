@@ -70,7 +70,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @TestInstance(PER_CLASS)
-@HeavyDatabaseTest
+@HeavyDatabaseTest("oracle")
 @Testcontainers
 @ResolveTestContext
 public class Issue1139Test extends BaseOracleWithConnectionTest {

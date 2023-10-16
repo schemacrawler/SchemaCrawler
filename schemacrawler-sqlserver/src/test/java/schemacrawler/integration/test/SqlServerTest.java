@@ -82,7 +82,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
 @TestInstance(Lifecycle.PER_CLASS)
-@HeavyDatabaseTest
+@HeavyDatabaseTest("sqlserver")
 @Testcontainers
 public class SqlServerTest extends BaseAdditionalDatabaseTest {
 

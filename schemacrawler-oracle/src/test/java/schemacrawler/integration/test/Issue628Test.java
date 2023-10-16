@@ -53,7 +53,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.database.SqlScript;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("oracle")
 @Testcontainers
 public class Issue628Test extends BaseOracleWithConnectionTest {
 

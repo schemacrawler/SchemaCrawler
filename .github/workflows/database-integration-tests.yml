@@ -1,0 +1,66 @@
+name: Database Integration Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+  schedule:
+    - cron: '21 21 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: read-all
+
+jobs:
+  build:
+    name: Database Integration Tests
+    strategy:
+      fail-fast: false
+      matrix:
+        database: [oracle, sqlserver, postgresql, mysql, db2]
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: maximize-build-space
+      name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.3.5
+      with:
+        java-version: 8
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.3
+
+# RUN DATABASE TESTS
+    - id: build-test-diagrams
+      name: Build and run diagram tests
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -D${{ matrix.os }}
+          clean package
+        # Save expected results files
+        .github/scripts/unit-tests-results-output.sh
+    - id: upload-unit-tests-results-output
+      name: Upload expected results files
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: unit-tests-results-output
+        path: ./unit-tests-results-output.zip
+        retention-days: 5

@@ -75,7 +75,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.ObjectToString;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("postgresql")
 @Testcontainers
 @ResolveTestContext
 public class PostgreSQLTest extends BaseAdditionalDatabaseTest {

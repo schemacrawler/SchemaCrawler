@@ -58,7 +58,7 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("postgresql")
 @Testcontainers
 @DisplayName("Test for issue #258 on GitHub")
 @Disabled("Only for PostgreSQL 11")
