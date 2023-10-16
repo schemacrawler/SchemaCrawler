@@ -45,7 +45,7 @@ jobs:
 
 # RUN DATABASE TESTS
     - id: build-test-diagrams
-      name: Build and run diagram tests
+      name: Build and run database tests
       shell: bash
       run: |
         # Build
@@ -53,6 +53,8 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -D${{ matrix.database }} \
+          --projects schemacrawler-${{ matrix.database }} \
+          --also-make \
           clean package
         # Save expected results files
         .github/scripts/unit-tests-results-output.sh
