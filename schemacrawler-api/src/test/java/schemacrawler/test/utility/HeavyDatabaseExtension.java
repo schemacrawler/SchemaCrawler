@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.extension.ConditionEvaluationResult.enabled;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 import static us.fatehi.utility.Utility.isBlank;
 import java.util.Optional;
-import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -47,21 +46,13 @@ final class HeavyDatabaseExtension implements ExecutionCondition {
       return enabled("Run heavy Testcontainers test for databases: overridden for development");
     }
 
-    if (isLinuxOs()) {
+    if (isSetToRun()) {
+      return enabled("Run heavy Testcontainers test for databases: \"heavydb\" override is set");
+    }
 
-      if (isSetToRun()) {
-        return enabled("Run heavy Testcontainers test for databases: \"heavydb\" override is set");
-      }
-
-      if (isSetToRunForDatabase(context)) {
-        return enabled(
-            "Run heavy Testcontainers test for databases: database specific override is set");
-      }
-
-    } else {
-      return disabled(
-          "Do NOT run heavy Testcontainers test for databases: GitHub Actions does not support Docker on "
-              + OS.current());
+    if (isSetToRunForDatabase(context)) {
+      return enabled(
+          "Run heavy Testcontainers test for databases: database specific override is set");
     }
 
     return disabled(
@@ -70,12 +61,8 @@ final class HeavyDatabaseExtension implements ExecutionCondition {
 
   private String findValue(final ExtensionContext context) {
     final Optional<HeavyDatabaseTest> heavyDbAnnotation =
-        findAnnotation(context.getTestMethod(), HeavyDatabaseTest.class);
+        findAnnotation(context.getTestClass(), HeavyDatabaseTest.class);
     return heavyDbAnnotation.map(HeavyDatabaseTest::value).orElse(null);
-  }
-
-  private boolean isLinuxOs() {
-    return OS.LINUX.isCurrentOs();
   }
 
   private boolean isSetOverrideForDev() {
