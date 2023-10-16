@@ -28,10 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import static org.junit.jupiter.api.condition.OS.LINUX;
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.disabled;
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.enabled;
-
+import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
+import static us.fatehi.utility.Utility.isBlank;
+import java.util.Optional;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -41,25 +43,60 @@ final class HeavyDatabaseExtension implements ExecutionCondition {
   @Override
   public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context) {
 
-    final boolean overrideForDev = System.getProperty("usetestcontainers") != null;
-
-    if (noHeavyDb()) {
-      return disabled("Disable heavy database tests since \"heavydb\" is not set");
-    } else if (overrideForDev) {
-      return enabled("Override the test of Testcontainers for databases");
-    } else if (LINUX.isCurrentOs()) {
-      return enabled(
-          "Enable heavy database tests on Linux, since GitHub Actions only supports Docker on this platform");
-    } else {
-      // Disable by default
-      return disabled("Disable heavy database tests since conditions are not met");
+    if (isSetOverrideForDev()) {
+      return enabled("Run heavy Testcontainers test for databases: overridden for development");
     }
+
+    if (isLinuxOs()) {
+
+      if (isSetToRun()) {
+        return enabled("Run heavy Testcontainers test for databases: \"heavydb\" override is set");
+      }
+
+      if (isSetToRunForDatabase(context)) {
+        return enabled(
+            "Run heavy Testcontainers test for databases: database specific override is set");
+      }
+
+    } else {
+      return disabled(
+          "Do NOT run heavy Testcontainers test for databases: GitHub Actions does not support Docker on "
+              + OS.current());
+    }
+
+    return disabled(
+        "Do NOT run heavy Testcontainers test for databases: no environmental variables set to run tests");
   }
 
-  private boolean noHeavyDb() {
+  private String findValue(final ExtensionContext context) {
+    final Optional<HeavyDatabaseTest> heavyDbAnnotation =
+        findAnnotation(context.getTestMethod(), HeavyDatabaseTest.class);
+    return heavyDbAnnotation.map(HeavyDatabaseTest::value).orElse(null);
+  }
+
+  private boolean isLinuxOs() {
+    return OS.LINUX.isCurrentOs();
+  }
+
+  private boolean isSetOverrideForDev() {
+    return System.getProperty("usetestcontainers") != null;
+  }
+
+  private boolean isSetToRun() {
     final String heavydb = System.getProperty("heavydb");
-    return heavydb == null
-        || heavydb.toLowerCase().equals("false") // this is not the same as the Boolean check
-        || heavydb.toLowerCase().equals("no");
+    final boolean isNotSetHeavyDB =
+        heavydb == null
+            // this is not the same as the Boolean check
+            || heavydb.toLowerCase().equals("false")
+            || heavydb.toLowerCase().equals("no");
+    return !isNotSetHeavyDB;
+  }
+
+  private boolean isSetToRunForDatabase(final ExtensionContext context) {
+    final String databaseVariableName = findValue(context);
+    if (isBlank(databaseVariableName)) {
+      return false;
+    }
+    return System.getProperty(databaseVariableName) != null;
   }
 }
