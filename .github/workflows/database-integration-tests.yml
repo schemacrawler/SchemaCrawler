@@ -50,7 +50,7 @@ jobs:
       shell: bash
       run: |
         # Build
-        du -sh /var/lib/docker
+        sudo du -sh /var/lib/docker
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim-faststart
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
