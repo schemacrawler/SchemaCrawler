@@ -25,15 +25,6 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: maximize-build-space
-      name: Maximize build space
-      uses: easimon/maximize-build-space@master
-      with:
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
-        remove-docker-images: 'true'
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.5
@@ -42,15 +33,24 @@ jobs:
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
+    - id: maximize-build-space
+      name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        root-reserve-mb: '3072'
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
 
 # RUN DATABASE TESTS
-    - id: build-test-diagrams
+    - id: build-test-databases
       name: Build and run database tests
       shell: bash
       run: |
         # Build
-        docker system prune --all --volumes
-        df -haT
+        du -sh /var/lib/docker
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim-faststart
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
