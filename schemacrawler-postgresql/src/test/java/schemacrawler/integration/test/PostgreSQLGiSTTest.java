@@ -37,19 +37,16 @@ import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
-
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
@@ -61,7 +58,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("postgresql")
 @Testcontainers
 @DisplayName("Test for issue #458 - daterange index in Postgres results in NotLoadedException")
 public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {

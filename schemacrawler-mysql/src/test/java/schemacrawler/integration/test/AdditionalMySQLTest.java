@@ -65,7 +65,7 @@ import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("mysql")
 @Testcontainers
 public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
