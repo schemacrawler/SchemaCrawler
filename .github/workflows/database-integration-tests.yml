@@ -49,6 +49,8 @@ jobs:
       shell: bash
       run: |
         # Build
+        docker system prune --all --volumes
+        df -haT
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim-faststart
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
