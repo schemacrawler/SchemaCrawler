@@ -25,14 +25,6 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: prepare-maven-build
-      name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.3.5
-      with:
-        java-version: 8
-    - id: install-graphviz
-      name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.3
     - id: maximize-build-space
       name: Maximize build space
       uses: easimon/maximize-build-space@master
@@ -56,6 +48,14 @@ jobs:
         sudo du -sh /var/lib/docker
         echo "Available storage:"
         df -h
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.3.5
+      with:
+        java-version: 8
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.3
 
 # RUN DATABASE TESTS
     - id: build-test-databases
