@@ -37,12 +37,21 @@ jobs:
       name: Maximize build space
       uses: easimon/maximize-build-space@master
       with:
-        temp-reserve-mb: '3072'
+        root-reserve-mb: '3072'
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
+    - id: restart-docker
+      name: Restart Docker
+      shell: bash
+      run: |
+        # Restart Docker
+        sudo systemctl stop docker
+        sudo rm -rf /var/lib/docker
+        sudo systemctl start docker
+        sudo du -sh /var/lib/docker
 
 # RUN DATABASE TESTS
     - id: build-test-databases
@@ -50,7 +59,6 @@ jobs:
       shell: bash
       run: |
         # Build
-        sudo du -sh /var/lib/docker
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim-faststart
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
