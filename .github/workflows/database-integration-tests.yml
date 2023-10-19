@@ -51,7 +51,10 @@ jobs:
         sudo systemctl stop docker
         sudo rm -rf /var/lib/docker
         sudo systemctl start docker
+        echo "Docker used space:"
         sudo du -sh /var/lib/docker
+        echo "Available storage:"
+        df -h
 
 # RUN DATABASE TESTS
     - id: build-test-databases
@@ -59,6 +62,7 @@ jobs:
       shell: bash
       run: |
         # Build
+        echo "Downloading Docker image"
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim-faststart
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
@@ -66,6 +70,8 @@ jobs:
         elif [ "${{ matrix.database }}" == "db2" ]; then
             docker pull ibmcom/db2
         fi
+        echo "Building code"
+        pwd
         mvn \
           --no-transfer-progress \
           --batch-mode \
