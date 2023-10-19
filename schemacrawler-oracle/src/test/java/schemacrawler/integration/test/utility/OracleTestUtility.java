@@ -39,7 +39,7 @@ public final class OracleTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newOracle21Container() {
-    return newOracleContainer("21-slim-faststart").withStartupTimeout(STARTUP_TIMEOUT);
+    return newOracleContainer("21-slim").withStartupTimeout(STARTUP_TIMEOUT);
   }
 
   @SuppressWarnings("resource")
