@@ -48,6 +48,7 @@ jobs:
       shell: bash
       run: |
         # Restart Docker
+        # https://stackoverflow.com/a/71113148/100856
         sudo systemctl stop docker
         sudo rm -rf /var/lib/docker
         sudo systemctl start docker
@@ -62,14 +63,6 @@ jobs:
       shell: bash
       run: |
         # Build
-        echo "Downloading Docker image"
-        if [ "${{ matrix.database }}" == "oracle" ]; then
-            docker pull gvenzl/oracle-xe:21-slim-faststart
-        elif [ "${{ matrix.database }}" == "sqlserver" ]; then
-            docker pull mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
-        elif [ "${{ matrix.database }}" == "db2" ]; then
-            docker pull ibmcom/db2
-        fi
         echo "Building code"
         pwd
         mvn \
