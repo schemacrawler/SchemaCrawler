@@ -74,6 +74,7 @@ jobs:
         fi
         pwd
         ls -l
+        ls -l ..
         mvn \
           --no-transfer-progress \
           --batch-mode \
