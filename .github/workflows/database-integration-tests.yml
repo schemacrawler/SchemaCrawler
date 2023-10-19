@@ -29,7 +29,7 @@ jobs:
       name: Maximize build space
       uses: easimon/maximize-build-space@master
       with:
-        root-reserve-mb: '4096'
+        root-reserve-mb: '6144'
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
@@ -70,7 +70,7 @@ jobs:
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
             docker pull mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
         elif [ "${{ matrix.database }}" == "db2" ]; then
-            docker pull ibmcom/db2
+            docker pull ibmcom/db2:11.5.7.0
         fi
         mvn \
           --no-transfer-progress \
