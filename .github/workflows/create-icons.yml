@@ -2,9 +2,6 @@ name: Create Icons
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '**/schemacrawler_logo.svg'
 
 permissions: read-all
 
