@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        database: [oracle, sqlserver, postgresql, mysql, db2]
+        database: [oracle, sqlserver, postgresql, mysql, db2, mariadb]
     runs-on: ubuntu-latest
     steps:
 
@@ -65,16 +65,24 @@ jobs:
         echo "Downloading Docker image"
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim
+            databasename = ${{ matrix.database }}
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
             docker pull mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
+            databasename = ${{ matrix.database }}
         elif [ "${{ matrix.database }}" == "db2" ]; then
             docker pull ibmcom/db2:11.5.7.0
+            databasename = ${{ matrix.database }}
+        elif [ "${{ matrix.database }}" == "mariadb" ]; then
+            docker pull mariadb:10.7.3
+            databasename = "dbtest"           
+        else
+            databasename = "dbtest"
         fi
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -D${{ matrix.database }} \
-          --projects schemacrawler-${{ matrix.database }} \
+          -D$databasename \
+          --projects schemacrawler-dbtest,schemacrawler-$databasename \
           --also-make \
           clean package
         # Save expected results files
