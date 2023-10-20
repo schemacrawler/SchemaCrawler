@@ -38,10 +38,17 @@ import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.testcontainers.DockerClientFactory;
 
-final class HeavyDatabaseExtension implements ExecutionCondition {
+public final class HeavyDatabaseExtension implements ExecutionCondition {
 
   @Override
   public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context) {
+
+    final String databaseVariableName = findValue(context);
+
+    return evaluateExecutionCondition(databaseVariableName);
+  }
+
+  public ConditionEvaluationResult evaluateExecutionCondition(final String databaseVariableName) {
 
     if (!isDockerAvailable()) {
       System.err.println(
@@ -58,7 +65,7 @@ final class HeavyDatabaseExtension implements ExecutionCondition {
       return enabled("Run heavy Testcontainers test for databases: \"heavydb\" override is set");
     }
 
-    if (isSetToRunForDatabase(context)) {
+    if (isSetToRunForDatabase(databaseVariableName)) {
       return enabled(
           "Run heavy Testcontainers test for databases: database specific override is set");
     }
@@ -96,8 +103,7 @@ final class HeavyDatabaseExtension implements ExecutionCondition {
     return !isNotSetHeavyDB;
   }
 
-  private boolean isSetToRunForDatabase(final ExtensionContext context) {
-    final String databaseVariableName = findValue(context);
+  private boolean isSetToRunForDatabase(final String databaseVariableName) {
     if (isBlank(databaseVariableName)) {
       return false;
     }
