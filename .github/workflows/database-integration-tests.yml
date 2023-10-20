@@ -3,10 +3,8 @@ name: Database Integration Tests
 on:
   workflow_dispatch:
   push:
-    branches:
-      - '**'
   schedule:
-    - cron: '21 21 * * *'
+    - cron: '22 22 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

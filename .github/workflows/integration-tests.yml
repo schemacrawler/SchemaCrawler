@@ -6,7 +6,7 @@ on:
     branches:
       - '**'
   schedule:
-    - cron: '12 0/5 * * *'
+    - cron: '22 22 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,9 +28,9 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: maximize-build-space
       name: Maximize build space
-      if: matrix.os == 'ubuntu-latest'
       uses: easimon/maximize-build-space@master
       with:
+        root-reserve-mb: '8192'
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
@@ -53,14 +53,12 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Dheavydb \
-          -Ddistrib \
           clean package
 
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
     - id: install-graphviz
       name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.1
+      uses: sualeh/install-graphviz@v1.0.3
     - id: build-test-diagrams
       name: Build and run diagram tests
       shell: bash
@@ -91,6 +89,16 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
+    - id: maximize-build-space
+      name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        root-reserve-mb: '8192'
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.5
@@ -98,7 +106,7 @@ jobs:
         java-version: 8
     - id: install-graphviz
       name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.1
+      uses: sualeh/install-graphviz@v1.0.3
 
 # BUILD AND TEST
     - id: build-test
