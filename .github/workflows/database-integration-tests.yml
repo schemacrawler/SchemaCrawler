@@ -65,19 +65,20 @@ jobs:
         echo "Downloading Docker image"
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim
-            databasename = ${{ matrix.database }}
+            databasename="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
             docker pull mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
-            databasename = ${{ matrix.database }}
+            databasename="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "db2" ]; then
             docker pull ibmcom/db2:11.5.7.0
-            databasename = ${{ matrix.database }}
+            databasename="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mariadb" ]; then
             docker pull mariadb:10.7.3
-            databasename = "dbtest"           
+            databasename="dbtest"
         else
-            databasename = "dbtest"
+            databasename="dbtest"
         fi
+        echo "databasename=$databasename"
         mvn \
           --no-transfer-progress \
           --batch-mode \
