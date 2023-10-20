@@ -82,7 +82,7 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -D$databasename \
+          -D${{ matrix.database }} \
           --projects schemacrawler-dbtest,schemacrawler-$databasename \
           --also-make \
           clean package
