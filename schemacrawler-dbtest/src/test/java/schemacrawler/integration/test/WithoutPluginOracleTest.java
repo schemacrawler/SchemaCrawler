@@ -38,11 +38,9 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +49,6 @@ import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -65,7 +62,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("oracle")
 @Testcontainers
 public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
@@ -114,9 +111,8 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
         assertThrows(
             RuntimeException.class, () -> getCatalog(getDataSource(), schemaCrawlerOptions));
     final SQLException cause = (SQLException) executionRuntimeException.getCause().getCause();
-    assertThat(
-        cause.getSQLState(),
-        is("22025")); // ORA-01424: missing or illegal character following the escape character
+    assertThat(cause.getSQLState(), is("22025")); // ORA-01424: missing or illegal character
+    // following the escape character
   }
 
   @Test
@@ -127,7 +123,8 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
             .includeAllSequences()
             .includeAllSynonyms()
-            .includeTables(table -> !table.contains("Global")) // NOTE: Index retrieval fails
+            .includeTables(table -> !table.contains("Global")) // NOTE: Index
+            // retrieval fails
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
             .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
     final LoadOptionsBuilder loadOptionsBuilder =

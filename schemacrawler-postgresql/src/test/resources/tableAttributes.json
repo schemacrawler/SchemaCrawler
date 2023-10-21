@@ -1,15 +1,15 @@
 {
   "books.authors":   {
+    "OID": 16441,
     "REF_GENERATION": "",
     "RELACL": "{test=arwdDxt/test,otheruser=r/test}",
     "RELALLVISIBLE": 0,
-    "RELAM": 0,
+    "RELAM": 2,
     "RELCHECKS": 1,
     "RELFILENODE": 16441,
     "RELFORCEROWSECURITY": false,
-    "RELFROZENXID": "582",
+    "RELFROZENXID": "500",
     "RELHASINDEX": true,
-    "RELHASOIDS": false,
     "RELHASRULES": false,
     "RELHASSUBCLASS": false,
     "RELHASTRIGGERS": true,

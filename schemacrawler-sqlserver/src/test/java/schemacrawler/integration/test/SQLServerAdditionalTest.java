@@ -35,13 +35,15 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.context.annotation.Description;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
+import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -58,15 +60,17 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.database.SqlScript;
 
+@TestInstance(Lifecycle.PER_CLASS)
 @DisableLogging
 @ResolveTestContext
 @HeavyDatabaseTest
 @Testcontainers
-public class Issue466Test extends BaseAdditionalDatabaseTest {
+public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
+  @Container
+  private static final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
@@ -75,12 +79,13 @@ public class Issue466Test extends BaseAdditionalDatabaseTest {
 
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
-
-    SqlScript.executeScriptFromResource("/issue466.sql", getConnection());
   }
 
   @Test
+  @Description("Issue #466 - foreign key comparison violates contract")
   public void fkSort(final TestContext testContext) throws Exception {
+
+    SqlScript.executeScriptFromResource("/issue466.sql", getConnection());
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -100,6 +105,32 @@ public class Issue466Test extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    final String expectedResource = testContext.testMethodFullName();
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  public void longProcedure(final TestContext testContext) throws Exception {
+
+    SqlScript.executeScriptFromResource("/longProcedure.sql", getConnection());
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("master\\.dbo"))
+            .includeTables(new ExcludeAll())
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final String expectedResource = testContext.testMethodFullName();
     assertThat(

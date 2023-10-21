@@ -36,29 +36,30 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
 import java.io.IOException;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import net.ucanaccess.util.Logger;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.CaptureSystemStreams;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-@HeavyDatabaseTest
+@DisableLogging
 public class AccessTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() {
     try {
+      Logger.turnOffJackcessLog();
+
       Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
       final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
       createDataSource(
@@ -69,6 +70,7 @@ public class AccessTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
+  @CaptureSystemStreams
   public void testAccessWithConnection() throws Exception {
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());

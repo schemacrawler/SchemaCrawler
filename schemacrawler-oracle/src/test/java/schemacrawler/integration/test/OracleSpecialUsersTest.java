@@ -53,7 +53,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @TestInstance(PER_CLASS)
-@HeavyDatabaseTest
+@HeavyDatabaseTest("oracle")
 @Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 

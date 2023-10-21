@@ -65,7 +65,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
 @ResolveTestContext
-@HeavyDatabaseTest
+@HeavyDatabaseTest("mariadb")
 @Testcontainers
 public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
 

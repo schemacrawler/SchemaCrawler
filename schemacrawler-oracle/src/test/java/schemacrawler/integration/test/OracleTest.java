@@ -31,17 +31,15 @@ package schemacrawler.integration.test;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
-@HeavyDatabaseTest
+@HeavyDatabaseTest("oracle")
 @Testcontainers
 public class OracleTest extends BaseOracleWithConnectionTest {
 

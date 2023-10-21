@@ -6,7 +6,7 @@ on:
     branches:
       - '**'
   schedule:
-    - cron: '22 22 * * *'
+    - cron: '20 20 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -29,6 +29,7 @@ jobs:
       name: Maximize build space
       uses: easimon/maximize-build-space@master
       with:
+        root-reserve-mb: '8192'
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
@@ -55,5 +56,4 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Dheavydb \
           clean package
