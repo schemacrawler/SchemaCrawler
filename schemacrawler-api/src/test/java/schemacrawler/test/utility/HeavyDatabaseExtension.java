@@ -36,6 +36,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.platform.commons.logging.LoggerFactory;
 import org.testcontainers.DockerClientFactory;
 
 public final class HeavyDatabaseExtension implements ExecutionCondition {
@@ -45,14 +46,15 @@ public final class HeavyDatabaseExtension implements ExecutionCondition {
 
     final String databaseVariableName = findValue(context);
 
-    return evaluateExecutionCondition(databaseVariableName);
+    final ConditionEvaluationResult executionCondition =
+        evaluateExecutionCondition(databaseVariableName);
+    LoggerFactory.getLogger(getClass()).info(() -> String.valueOf(executionCondition));
+    return executionCondition;
   }
 
   public ConditionEvaluationResult evaluateExecutionCondition(final String databaseVariableName) {
 
     if (!isDockerAvailable()) {
-      System.err.println(
-          "Heavy Testcontainers test for databases not run since Docker is not available on this system");
       return disabled(
           "Do NOT run heavy Testcontainers test for databases: Docker is not available on this system");
     }
