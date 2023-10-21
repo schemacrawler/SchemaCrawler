@@ -27,7 +27,7 @@ jobs:
         java-version: 8
     - id: install-graphviz
       name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.1
+      uses: sualeh/install-graphviz@v1.0.3
 
 # BUILD FOR DISTRIBUTION
     - id: build
