@@ -76,40 +76,47 @@ jobs:
         echo "Downloading Docker image"
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-xe:21-slim
-            databasename="${{ matrix.database }}"
+            dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
             docker pull mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
-            databasename="${{ matrix.database }}"
+            dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "db2" ]; then
             docker pull ibmcom/db2:11.5.7.0
-            databasename="${{ matrix.database }}"
+            dbproject="${{ matrix.database }}"
+        elif [ "${{ matrix.database }}" == "postgresql" ]; then
+            docker pull postgres:12.16-alpine
+            docker pull postgres:15.4-alpine
+            dbproject="${{ matrix.database }}"
+        elif [ "${{ matrix.database }}" == "mysql" ]; then
+            docker pull mysql:8.0.31
+            dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mariadb" ]; then
             docker pull mariadb:10.7.3
-            databasename="dbtest"
+            dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cassandra" ]; then
             docker pull cassandra:4.1.0
-            databasename="dbtest"
+            dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cockroachdb" ]; then
             docker pull cockroachdb/cockroach:v19.2.12
-            databasename="dbtest"
+            dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "firebird" ]; then
             docker pull jacobalberty/firebird:v4.0.2
-            databasename="dbtest"
+            dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "informix" ]; then
             docker pull ibmcom/informix-developer-database:14.10.FC7W1DE
-            databasename="dbtest"
+            dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "trino" ]; then
             docker pull trinodb/trino:421
-            databasename="dbtest"
+            dbproject="dbtest"
         else
-            databasename="dbtest"
+            dbproject="dbtest"
         fi
-        echo "databasename=$databasename"
+        echo "dbproject=$dbproject"
         mvn \
           --no-transfer-progress \
           --batch-mode \
           -D${{ matrix.database }} \
-          --projects schemacrawler-dbtest,schemacrawler-$databasename \
+          --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \
           clean package
         # Save expected results files

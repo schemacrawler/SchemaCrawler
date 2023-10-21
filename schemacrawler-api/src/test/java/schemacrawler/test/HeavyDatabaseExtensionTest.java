@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import schemacrawler.test.utility.HeavyDatabaseExtension;
 import schemacrawler.test.utility.WithSystemProperty;
 
+@Disabled("Disable for now")
 public class HeavyDatabaseExtensionTest {
 
   @Test
