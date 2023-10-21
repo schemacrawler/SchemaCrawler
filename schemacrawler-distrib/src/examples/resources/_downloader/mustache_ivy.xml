@@ -8,6 +8,6 @@
   </configurations>
   <dependencies>
     <dependency org="com.github.spullara.mustache.java"
-      name="compiler" rev="0.9.10" conf="binaries->default" />
+      name="compiler" rev="0.9.11" conf="binaries->default" />
   </dependencies>
 </ivy-module>
