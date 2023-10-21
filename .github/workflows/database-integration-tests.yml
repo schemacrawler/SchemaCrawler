@@ -18,7 +18,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        database: [oracle, sqlserver, postgresql, mysql, db2, mariadb]
+        database:
+        - oracle
+        - sqlserver
+        - postgresql
+        - mysql
+        - db2
+        - mariadb
+        - cassandra
+        - cockroachdb
+        - firebird
+        - informix
+        - trino
     runs-on: ubuntu-latest
     steps:
 
@@ -74,6 +85,21 @@ jobs:
             databasename="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mariadb" ]; then
             docker pull mariadb:10.7.3
+            databasename="dbtest"
+        elif [ "${{ matrix.database }}" == "cassandra" ]; then
+            docker pull cassandra:4.1.0
+            databasename="dbtest"
+        elif [ "${{ matrix.database }}" == "cockroachdb" ]; then
+            docker pull cockroachdb/cockroach:v19.2.12
+            databasename="dbtest"
+        elif [ "${{ matrix.database }}" == "firebird" ]; then
+            docker pull jacobalberty/firebird:v4.0.2
+            databasename="dbtest"
+        elif [ "${{ matrix.database }}" == "informix" ]; then
+            docker pull ibmcom/informix-developer-database:14.10.FC7W1DE
+            databasename="dbtest"
+        elif [ "${{ matrix.database }}" == "trino" ]; then
+            docker pull trinodb/trino:421
             databasename="dbtest"
         else
             databasename="dbtest"
