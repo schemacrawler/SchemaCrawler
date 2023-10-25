@@ -14,29 +14,9 @@ jobs:
   build:
     name: Quick build
     runs-on: ubuntu-latest
-    env:
-      LANG: it_IT.UTF-8
-      LC_NUMERIC: it_IT.UTF-8
-      LC_ALL: it_IT.UTF-8
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: set-locale
-      name: Set locale
-      shell: bash
-      run: |
-        # Set locale
-        sudo locale-gen it_IT.UTF-8
-        sudo update-locale LANG=it_IT.UTF-8 LC_NUMERIC=it_IT.UTF-8 LC_ALL=it_IT.UTF-8
-    - id: check-locale
-      name: Check locale
-      shell: bash
-      run: |
-        # Check locale
-        locale
-        locale -k LC_NUMERIC
-        date
-        printf "%'.3f\n" 123123
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.5
