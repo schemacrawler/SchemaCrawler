@@ -17,6 +17,14 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
+    - id: set-locale
+      name: Set locale
+      shell: bash
+      run: |
+        # Set locale
+        sudo locale-gen it_IT.UTF-8
+        sudo update-locale LANG=de_DE.UTF-8
+        locale -a
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.5
