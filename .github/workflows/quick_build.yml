@@ -23,7 +23,7 @@ jobs:
       run: |
         # Set locale
         sudo locale-gen it_IT.UTF-8
-        sudo update-locale LANG=de_DE.UTF-8
+        sudo update-locale LANG=it_IT.UTF-8
         locale -a
     - id: prepare-maven-build
       name: Prepare Maven build
