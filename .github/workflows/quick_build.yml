@@ -15,9 +15,9 @@ jobs:
     name: Quick build
     runs-on: ubuntu-latest
     env:
-      - LANG: it_IT.UTF-8
-      - LC_NUMERIC: it_IT.UTF-8
-      - LC_ALL: it_IT.UTF-8
+      LANG: it_IT.UTF-8
+      LC_NUMERIC: it_IT.UTF-8
+      LC_ALL: it_IT.UTF-8
     steps:
 
 # SETUP BUILD ENVIRONMENT
