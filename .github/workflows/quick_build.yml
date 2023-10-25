@@ -25,6 +25,11 @@ jobs:
         sudo locale-gen it_IT.UTF-8
         sudo update-locale LANG="it_IT.UTF-8"
         sudo update-locale LC_NUMERIC="it_IT.UTF-8"
+    - id: check-locale
+      name: Check locale
+      shell: bash
+      run: |
+        # Check locale
         locale
         locale -k LC_NUMERIC
     - id: prepare-maven-build
