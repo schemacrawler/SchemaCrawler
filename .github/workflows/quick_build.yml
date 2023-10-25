@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
@@ -23,8 +23,10 @@ jobs:
       run: |
         # Set locale
         sudo locale-gen it_IT.UTF-8
-        sudo update-locale LANG=it_IT.UTF-8
-        locale -a
+        sudo update-locale LANG="it_IT.UTF-8"
+        sudo update-locale LC_NUMERIC="it_IT.UTF-8"
+        locale
+        locale -k LC_NUMERIC
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.3.5
