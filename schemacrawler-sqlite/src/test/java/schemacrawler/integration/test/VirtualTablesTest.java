@@ -62,7 +62,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class VirtualTablesTest extends BaseSqliteTest {
 
   @Test
-  @WithLocale("it-IT")
+  @WithLocale("us-US")
   public void count(final TestContext testContext) throws Exception {
     run(testContext.testMethodFullName(), InfoLevel.minimum, "count", new IncludeAll());
   }
