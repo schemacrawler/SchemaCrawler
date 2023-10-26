@@ -62,6 +62,7 @@ final class WithLocaleExtension implements BeforeEachCallback, AfterEachCallback
           if (isBlank(localeString)) {
             throw new IllegalArgumentException("No locale provided");
           }
+          systemLocale = Locale.getDefault();
           final Locale locale = Locale.forLanguageTag(localeString);
           Locale.setDefault(locale);
         });
