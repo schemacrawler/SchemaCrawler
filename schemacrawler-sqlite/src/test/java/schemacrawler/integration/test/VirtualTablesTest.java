@@ -36,6 +36,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
+
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.inclusionrule.IncludeAll;
@@ -50,6 +51,7 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.WithLocale;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -60,6 +62,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class VirtualTablesTest extends BaseSqliteTest {
 
   @Test
+  @WithLocale("us-US")
   public void count(final TestContext testContext) throws Exception {
     run(testContext.testMethodFullName(), InfoLevel.minimum, "count", new IncludeAll());
   }
@@ -83,7 +86,8 @@ public class VirtualTablesTest extends BaseSqliteTest {
     assertThat(
         exception.getMessage(),
         endsWith(
-            "Could not retrieve table columns for table <demo>: [SQLITE_ERROR] SQL error or missing database (no such module: spellfix1)"));
+            "Could not retrieve table columns for table <demo>: "
+                + "[SQLITE_ERROR] SQL error or missing database (no such module: spellfix1)"));
   }
 
   @Test
