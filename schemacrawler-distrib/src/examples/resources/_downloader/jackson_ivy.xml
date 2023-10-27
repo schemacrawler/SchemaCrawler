@@ -17,7 +17,7 @@
                 name="jackson-dataformat-yaml" rev="2.15.3" conf="binaries->default" />
     <dependency org="com.fasterxml.jackson.core"
                 name="jackson-annotations" rev="2.15.3" conf="binaries->default" />
-    <dependency org="org.yaml" name="snakeyaml" rev="1.26" conf="binaries->default" />
+    <dependency org="org.yaml" name="snakeyaml" rev="2.1" conf="binaries->default" />
 
   </dependencies>
 </ivy-module>
