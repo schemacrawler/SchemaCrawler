@@ -1,0 +1,9 @@
+{
+    "github.codespaces.defaultExtensions": [
+        "vscjava.vscode-java-pack",
+        "GitHub.codespaces",
+        "GitHub.vscode-pull-request-github"
+    ],
+    "editor.tabSize": 2,
+    "scm.showActionButton": false
+}
