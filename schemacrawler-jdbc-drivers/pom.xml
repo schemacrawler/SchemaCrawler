@@ -24,7 +24,7 @@
     <dependency>
       <groupId>com.mysql</groupId>
       <artifactId>mysql-connector-j</artifactId>
-      <version>8.1.0</version>
+      <version>8.2.0</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.protobuf</groupId>
@@ -35,12 +35,12 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>12.4.1.jre8</version>
+      <version>12.4.2.jre8</version>
     </dependency>
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc_auth</artifactId>
-      <version>12.4.1.x64</version>
+      <version>12.4.2.x64</version>
       <type>dll</type>
     </dependency>
     <dependency>

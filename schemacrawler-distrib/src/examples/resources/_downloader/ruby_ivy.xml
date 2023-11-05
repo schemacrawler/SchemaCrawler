@@ -8,7 +8,7 @@
   </configurations>
   <dependencies>
     <dependency org="org.jruby" name="jruby"
-              rev="9.4.3.0" conf="binaries->default" />
+              rev="9.4.5.0" conf="binaries->default" />
 
     <override org="com.github.jnr" module="jnr-ffi"
               rev="2.2.15" />
