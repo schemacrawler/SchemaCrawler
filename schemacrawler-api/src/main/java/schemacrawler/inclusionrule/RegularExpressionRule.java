@@ -28,14 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.inclusionrule;
 
+import static java.util.regex.Pattern.DOTALL;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -79,8 +78,8 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
    */
   public RegularExpressionRule(final String patternInclude, final String patternExclude) {
     this(
-        patternInclude == null ? null : Pattern.compile(patternInclude),
-        patternExclude == null ? null : Pattern.compile(patternExclude));
+        patternInclude == null ? null : Pattern.compile(patternInclude, DOTALL),
+        patternExclude == null ? null : Pattern.compile(patternExclude, DOTALL));
   }
 
   @Override

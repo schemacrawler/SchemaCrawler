@@ -3,11 +3,8 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
-
 import java.util.Objects;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionRule;
 
 public class RegularExpressionRuleTest {
@@ -99,5 +96,29 @@ public class RegularExpressionRuleTest {
     assertThat(rule4.test("inc"), is(true));
     assertThat(rule4.test("exc"), is(false));
     assertThat(rule4.test("abc"), is(false));
+  }
+
+  @Test
+  public void testMultiline() {
+    final String multilineText = "line 1: hello world\nline 2: inc\nline 3: exc";
+
+    final RegularExpressionRule rule1 = new RegularExpressionRule(".*inc.*", (String) null);
+    assertThat(rule1.getInclusionPattern().pattern(), is(".*inc.*"));
+    assertThat(rule1.getExclusionPattern().pattern(), is(""));
+    assertThat(rule1.toString(), endsWith("{+/.*inc.*/ -//}"));
+    assertThat(rule1.test(null), is(false));
+    assertThat(rule1.test(""), is(false));
+    assertThat(rule1.test("inc"), is(true));
+    assertThat(rule1.test(multilineText), is(true));
+
+    final RegularExpressionRule rule2 = new RegularExpressionRule((String) null, ".*exc.*");
+    assertThat(rule2.getInclusionPattern().pattern(), is(".*"));
+    assertThat(rule2.getExclusionPattern().pattern(), is(".*exc.*"));
+    assertThat(rule2.toString(), endsWith("{+/.*/ -/.*exc.*/}"));
+    assertThat(rule2.test(null), is(false));
+    assertThat(rule2.test(""), is(false));
+    assertThat(rule2.test("inc"), is(true));
+    assertThat(rule2.test("exc"), is(false));
+    assertThat(rule2.test(multilineText), is(false));
   }
 }
