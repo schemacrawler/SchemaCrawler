@@ -119,10 +119,7 @@ final class RoutineRetriever extends AbstractRetriever {
       function.setRemarks(remarks);
       function.addAttributes(results.getAttributes());
 
-      // Add the function only if a stored procedure with the same name is not already present
-      if (!catalog.lookupRoutine(function.key()).isPresent()) {
-        catalog.addRoutine(function);
-      }
+      catalog.addRoutine(function);
     }
   }
 
