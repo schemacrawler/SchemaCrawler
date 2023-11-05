@@ -17,7 +17,7 @@
 ;,/db/books/35_generated_columns_D.sql
 #,/db/books/36_hidden_columns_A.sql
 @,/db/books/40_procedures_C.sql
-#,/db/books/41_functions_A.sql
+@,/db/books/41_functions_G.sql
 #,/db/books/50_triggers_A.sql
 ;,/db/books/70_grants_A.sql
 ;,/db/books/71_synonyms_01_base_A.sql
