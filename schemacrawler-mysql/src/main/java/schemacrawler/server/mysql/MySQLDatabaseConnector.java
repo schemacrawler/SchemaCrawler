@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.mysql;
 
 import java.util.regex.Pattern;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -52,6 +51,7 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
             DatabaseConnectionSourceBuilder.builder("jdbc:mysql://${host}:${port}/${database}")
                 .withDefaultPort(3306)
                 .withDefaultUrlx("nullNamePatternMatchesAll", true)
+                .withDefaultUrlx("getProceduresReturnsFunctions", false)
                 .withDefaultUrlx("noAccessToProcedureBodies", true)
                 .withDefaultUrlx("logger", "Jdk14Logger")
                 .withDefaultUrlx("dumpQueriesOnException", true)

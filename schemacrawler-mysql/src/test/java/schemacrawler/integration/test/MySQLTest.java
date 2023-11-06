@@ -40,6 +40,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import java.util.List;
+import java.util.Properties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -77,8 +78,33 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
+    // Use default connection properties from MySQLDatabaseConnector
+    final Properties connectionProperties = new Properties();
+    connectionProperties.put("nullNamePatternMatchesAll", "true");
+    connectionProperties.put("getProceduresReturnsFunctions", "false");
+    connectionProperties.put("noAccessToProcedureBodies", "true");
+    connectionProperties.put("logger", "Jdk14Logger");
+    connectionProperties.put("dumpQueriesOnException", "true");
+    connectionProperties.put("dumpMetadataOnColumnNotFound", "true");
+    connectionProperties.put("maxQuerySizeToLog", "4096");
+    connectionProperties.put("disableMariaDbDriver", "true");
+    connectionProperties.put("useInformationSchema", "true");
+
+    final StringBuilder connectionPropertiesString = new StringBuilder();
+    connectionProperties.entrySet().stream()
+        .forEach(
+            entry ->
+                connectionPropertiesString
+                    .append(entry.getKey())
+                    .append("=")
+                    .append(entry.getValue())
+                    .append(";"));
+
     createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+        dbContainer.getJdbcUrl(),
+        dbContainer.getUsername(),
+        dbContainer.getPassword(),
+        connectionPropertiesString.toString());
 
     createDatabase("/mysql.scripts.txt");
   }
