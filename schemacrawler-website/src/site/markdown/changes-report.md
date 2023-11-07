@@ -2,9 +2,14 @@
 
 SchemaCrawler release notes.
 
-
 <a name="a16.20.5"></a>
-## Release 16.20.5 - 2023-07-26
+## Release 16.20.5 - 2023-11-07
+
+- Fix issue #1294 - allow search through multi-line definitions with grep
+
+
+<a name="a16.20.4"></a>
+## Release 16.20.4 - 2023-07-26
 
 - Support "system functions" for the ChatGPT plugin which allows metadata to be sent to OpenAI for analysis
 - Add a command-line argument `--use-metadata` for the ChatGPT plugin to get consent from the user to share metadata with OpenAIA
