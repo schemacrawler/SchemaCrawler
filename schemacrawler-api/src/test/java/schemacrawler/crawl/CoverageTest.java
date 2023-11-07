@@ -33,6 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import java.sql.Connection;
@@ -79,7 +80,7 @@ public class CoverageTest {
     // See issue #931
     when(dbMetaData2.getUserName()).thenThrow(new SQLException("Cannot get user name"));
 
-    final Connection connection2 = spy(connection);
+    final Connection connection2 = mock();
     when(connection2.getMetaData()).thenReturn(dbMetaData2);
 
     final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection2);

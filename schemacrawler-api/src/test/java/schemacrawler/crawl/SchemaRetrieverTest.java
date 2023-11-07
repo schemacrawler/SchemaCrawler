@@ -33,7 +33,6 @@ import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import java.sql.Connection;
@@ -68,8 +67,8 @@ public class SchemaRetrieverTest {
   @DisplayName("Verify that schemas can be obtained from INFORMATION_SCHEMA")
   public void schemataView(final Connection connection) throws SQLException {
     // Mock database metadata, so we can check if it is being used over the INFORMATION_SCHEMA
-    // final Connection spyConnection = connection;
-    final Connection spyConnection = spy(connection);
+    final Connection spyConnection = connection;
+    // final Connection spyConnection = spy(connection.unwrap(Connection.class));
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
 
     final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
