@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.20.5"></a>
+## Release 16.20.5 - 2023-11-07
+
+- Fix issue #1294 - allow search through multi-line definitions with grep
+
 
 <a name="a16.20.4"></a>
 ## Release 16.20.4 - 2023-07-26
@@ -31,8 +36,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="a16.20.4"></a>
-## Release 16.20.4 - 2023-06-03
+<a name="a16.20.5"></a>
+## Release 16.20.5 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
