@@ -160,7 +160,7 @@
     <dependency>
       <groupId>com.tngtech.archunit</groupId>
       <artifactId>archunit-junit5</artifactId>
-      <version>1.1.0</version>
+      <version>1.2.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -268,7 +268,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.6.0</version>
+          <version>3.6.2</version>
           <configuration>
             <source>8</source>
           </configuration>
