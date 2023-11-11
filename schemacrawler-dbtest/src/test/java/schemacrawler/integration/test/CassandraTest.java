@@ -63,7 +63,7 @@ public class CassandraTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final CassandraContainer<?> dbContainer =
-      new CassandraContainer<>(imageName.withTag("4.1.0"))
+      new CassandraContainer<>(imageName.withTag("5.0"))
           .withInitScript("create-cassandra-database.cql");
 
   @BeforeEach
@@ -76,8 +76,12 @@ public class CassandraTest extends BaseAdditionalDatabaseTest {
     final InetSocketAddress contactPoint = dbContainer.getContactPoint();
     final String host = contactPoint.getHostName();
     final int port = contactPoint.getPort();
-    final String keyspace = "store";
-    final String connectionUrl = String.format("jdbc:cassandra://%s:%d/%s", host, port, keyspace);
+    final String keyspace = "books";
+    final String localDatacenter = dbContainer.getLocalDatacenter();
+    final String connectionUrl =
+        String.format(
+            "jdbc:cassandra://%s:%d/%s?localdatacenter=%s", host, port, keyspace, localDatacenter);
+    System.out.printf("url=%s%n", connectionUrl);
     createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
   }
 
