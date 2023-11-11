@@ -108,7 +108,7 @@
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>4.8.0</version>
+      <version>4.10.2</version>
       <exclusions>
         <exclusion>
           <groupId>com.github.jnr</groupId>
