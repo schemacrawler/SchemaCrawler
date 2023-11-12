@@ -31,14 +31,12 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ResultsColumns;
@@ -156,7 +154,7 @@ final class ResultsRetriever {
       column.setSearchable(resultsMetaData.isSearchable(columnIndex));
       column.setSigned(resultsMetaData.isSigned(columnIndex));
       column.setWritable(resultsMetaData.isWritable(columnIndex));
-    } catch (final Exception e) {
+    } catch (final Throwable e) {
       LOGGER.log(
           Level.WARNING,
           e,
