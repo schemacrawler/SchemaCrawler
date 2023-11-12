@@ -68,6 +68,8 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
 
   protected CatalogDescription createCatalogDescription() {
     final CatalogDescription catalogDescription = new CatalogDescription();
+    final String databaseProductName = catalog.getDatabaseInfo().getDatabaseProductName();
+    catalogDescription.setDatabaseProductName(databaseProductName);
     for (final Schema schema : catalog.getSchemas()) {
       final SchemaDescription schemaDescription = new SchemaDescription();
       schemaDescription.setName(schema.getFullName());
