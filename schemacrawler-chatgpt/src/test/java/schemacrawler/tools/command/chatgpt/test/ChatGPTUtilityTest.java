@@ -19,6 +19,7 @@ import com.theokanning.openai.completion.chat.ChatFunctionCall;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.FunctionExecutor;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility;
@@ -62,6 +63,10 @@ public class ChatGPTUtilityTest {
   @Test
   public void systemMessages() {
     final Catalog catalog = mock(Catalog.class);
+    final DatabaseInfo databaseInfo = mock(DatabaseInfo.class);
+    when(catalog.getDatabaseInfo()).thenReturn(databaseInfo);
+    when(databaseInfo.getDatabaseProductName()).thenReturn("Mock database");
+
     final Connection connection = mock(Connection.class);
 
     assertThrows(NullPointerException.class, () -> ChatGPTUtility.systemMessages(null, connection));

@@ -48,9 +48,7 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
     implements SystemFunctionDefinition {
 
   public SchemaFunctionDefinition() {
-    super(
-        "Called when the user is done with their research, wants to end the chat session.",
-        NoFunctionParameters.class);
+    super("Provides a concise description of the database schema.", NoFunctionParameters.class);
   }
 
   @Override
@@ -70,6 +68,8 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
 
   protected CatalogDescription createCatalogDescription() {
     final CatalogDescription catalogDescription = new CatalogDescription();
+    final String databaseProductName = catalog.getDatabaseInfo().getDatabaseProductName();
+    catalogDescription.setDatabaseProductName(databaseProductName);
     for (final Schema schema : catalog.getSchemas()) {
       final SchemaDescription schemaDescription = new SchemaDescription();
       schemaDescription.setName(schema.getFullName());
