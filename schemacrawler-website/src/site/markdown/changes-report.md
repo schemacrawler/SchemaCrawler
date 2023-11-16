@@ -4,13 +4,13 @@ SchemaCrawler release notes.
 
 
 <a name="a16.20.6"></a>
-## Release 16.20.6 - 2023-11-15
+## Release 16.20.6 - 2023-11-17
 
 - Fix issue #1333 - add joins to Oracle foreign key query
 
 
-<a name="a16.20.6"></a>
-## Release 16.20.6 - 2023-11-07
+<a name="a16.20.5"></a>
+## Release 16.20.5 - 2023-11-07
 
 - Fix issue #1294 - allow search through multi-line definitions with grep
 
