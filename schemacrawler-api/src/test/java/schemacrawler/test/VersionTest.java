@@ -47,7 +47,7 @@ public class VersionTest {
   public void version(final CapturedSystemStreams streams) throws Exception {
     Version.main(new String[0]);
 
-    assertThat(contentsOf(streams.out()), startsWith("SchemaCrawler 16.20.5"));
+    assertThat(contentsOf(streams.out()), startsWith("SchemaCrawler 16.20.6"));
     assertThat(outputOf(streams.err()), hasNoContent());
   }
 }
