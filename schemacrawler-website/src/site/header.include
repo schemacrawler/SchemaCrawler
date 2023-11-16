@@ -49,7 +49,7 @@
     "https://www.linkedin.com/company/2826059/"
   ],
   "downloadUrl":"http://github.com/schemacrawler/SchemaCrawler/releases/",
-  "softwareVersion":"SchemaCrawler, v16.20.5",
+  "softwareVersion":"SchemaCrawler, v16.20.6",
   "applicationCategory": "Databases, QA, Java, JDBC",
   "operatingSystem": "Any",
   "releaseNotes": "https://www.schemacrawler.com/changes-report.html"
