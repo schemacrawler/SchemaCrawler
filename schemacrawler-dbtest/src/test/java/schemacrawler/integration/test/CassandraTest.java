@@ -43,6 +43,8 @@ import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.utility.MountableFile;
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -64,6 +66,13 @@ public class CassandraTest extends BaseAdditionalDatabaseTest {
   @Container
   private final CassandraContainer<?> dbContainer =
       new CassandraContainer<>(imageName.withTag("5.0"))
+          .withConfigurationOverride("cassandra_config_override")
+          .withCopyFileToContainer(
+              MountableFile.forClasspathResource("cassandra.keystore"),
+              "/security/cassandra.keystore")
+          .withCopyFileToContainer(
+              MountableFile.forClasspathResource("cassandra.truststore"),
+              "/security/cassandra.truststore")
           .withInitScript("create-cassandra-database.cql");
 
   @BeforeEach
@@ -81,7 +90,7 @@ public class CassandraTest extends BaseAdditionalDatabaseTest {
     final String connectionUrl =
         String.format(
             "jdbc:cassandra://%s:%d/%s?localdatacenter=%s", host, port, keyspace, localDatacenter);
-    System.out.printf("url=%s%n", connectionUrl);
+    // System.out.printf("url=%s%n", connectionUrl);
     createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
   }
 
@@ -89,7 +98,9 @@ public class CassandraTest extends BaseAdditionalDatabaseTest {
   public void testCassandraWithConnection() throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().includeSchemas(Pattern.compile("books"));
+        LimitOptionsBuilder.builder()
+            .includeSchemas(Pattern.compile("books"))
+            .includeRoutines(new IncludeAll());
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
         SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.maximum);
     final LoadOptionsBuilder loadOptionsBuilder =
