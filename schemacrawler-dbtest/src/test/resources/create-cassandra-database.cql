@@ -1,5 +1,4 @@
 -- Create a keyspace
-DROP KEYSPACE IF EXISTS books;
 CREATE KEYSPACE IF NOT EXISTS books WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '1' };
 USE books;
 
@@ -19,6 +18,12 @@ CREATE TABLE IF NOT EXISTS Authors
 WITH comment = 'Contact details for book authors';
 
 CREATE INDEX IDX_B_Authors ON Authors(LastName)
+;
+
+CREATE FUNCTION CustomAdd(one int, two int)
+  RETURNS NULL ON NULL INPUT
+  RETURNS int LANGUAGE java AS
+  'return one + two;'
 ;
 
 -- Insert some data

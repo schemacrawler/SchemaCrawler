@@ -309,6 +309,9 @@ final class RoutineRetriever extends AbstractRetriever {
           createProcedure(results, schemas, procedureFilter);
         }
         LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", numProcedures));
+      } catch (final SQLException e) {
+        // Note: Cassandra does not support procedures, but supports functions
+        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve procedures"), e);
       }
     }
   }
