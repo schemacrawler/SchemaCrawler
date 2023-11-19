@@ -90,7 +90,7 @@ public class CassandraTest extends BaseAdditionalDatabaseTest {
     final String connectionUrl =
         String.format(
             "jdbc:cassandra://%s:%d/%s?localdatacenter=%s", host, port, keyspace, localDatacenter);
-    System.out.printf("url=%s%n", connectionUrl);
+    // System.out.printf("url=%s%n", connectionUrl);
     createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
   }
 
