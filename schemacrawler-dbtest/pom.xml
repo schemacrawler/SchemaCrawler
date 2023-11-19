@@ -79,19 +79,19 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>mariadb</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>cockroachdb</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -103,31 +103,31 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>oracle-xe</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>db2</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>trino</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>cassandra</artifactId>
-      <version>1.19.1</version>
+      <version>1.19.2</version>
       <scope>test</scope>
     </dependency>
     
@@ -173,7 +173,7 @@
     <dependency>
       <groupId>org.apache.calcite</groupId>
       <artifactId>calcite-csv</artifactId>
-      <version>1.35.0</version>
+      <version>1.36.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
