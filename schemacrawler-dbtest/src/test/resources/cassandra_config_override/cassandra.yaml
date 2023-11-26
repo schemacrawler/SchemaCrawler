@@ -546,14 +546,14 @@ commitlog_segment_size: 32MiB
 # any class that implements the SeedProvider interface and has a
 # constructor that takes a Map<String, String> of parameters will do.
 seed_provider:
-#  Addresses of hosts that are deemed contact points.
-#  Cassandra nodes use this list of hosts to find each other and learn
-#  the topology of the ring.  You must change this if you are running
-#  multiple nodes!
+  # Addresses of hosts that are deemed contact points.
+  # Cassandra nodes use this list of hosts to find each other and learn
+  # the topology of the ring.  You must change this if you are running
+  # multiple nodes!
   - class_name: org.apache.cassandra.locator.SimpleSeedProvider
     parameters:
-    #  seeds is actually a comma-delimited list of addresses.
-    #  Ex: "<ip1>,<ip2>,<ip3>"
+      # seeds is actually a comma-delimited list of addresses.
+      # Ex: "<ip1>,<ip2>,<ip3>"
       - seeds: "172.17.0.4"
 
 # For workloads with more data than can fit in memory, Cassandra's
@@ -1132,6 +1132,7 @@ request_timeout: 10000ms
 # internode_application_receive_queue_reserve_endpoint_capacity: 128MiB
 # internode_application_receive_queue_reserve_global_capacity: 512MiB
 
+
 # How long before a node logs slow queries. Select queries that take longer than
 # this timeout to execute, will generate an aggregated log message, so that slow queries
 # can be identified. Set this value to zero to disable slow query logging.
@@ -1316,39 +1317,39 @@ dynamic_snitch_badness_threshold: 1.0
 # Step 2: Set optional=false (or remove it) and if you generated truststores and want to use mutual
 # auth set require_client_auth=true. Restart all nodes
 server_encryption_options:
-#  On outbound connections, determine which type of peers to securely connect to.
-#    The available options are :
-#      none : Do not encrypt outgoing connections
-#      dc   : Encrypt connections to peers in other datacenters but not within datacenters
-#      rack : Encrypt connections to peers in other racks but not within racks
-#      all  : Always use encrypted connections
+  # On outbound connections, determine which type of peers to securely connect to.
+  #   The available options are :
+  #     none : Do not encrypt outgoing connections
+  #     dc   : Encrypt connections to peers in other datacenters but not within datacenters
+  #     rack : Encrypt connections to peers in other racks but not within racks
+  #     all  : Always use encrypted connections
   internode_encryption: all
-#  When set to true, encrypted and unencrypted connections are allowed on the storage_port
-#  This should _only be true_ while in unencrypted or transitional operation
-#  optional defaults to true if internode_encryption is none
-#  optional: true
-#  If enabled, will open up an encrypted listening socket on ssl_storage_port. Should only be used
-#  during upgrade to 4.0; otherwise, set to false.
+  # When set to true, encrypted and unencrypted connections are allowed on the storage_port
+  # This should _only be true_ while in unencrypted or transitional operation
+  # optional defaults to true if internode_encryption is none
+  # optional: true
+  # If enabled, will open up an encrypted listening socket on ssl_storage_port. Should only be used
+  # during upgrade to 4.0; otherwise, set to false.
   legacy_ssl_storage_port_enabled: false
-#  Set to a valid keystore if internode_encryption is dc, rack or all
+  # Set to a valid keystore if internode_encryption is dc, rack or all
   keystore: /security/cassandra.keystore
   keystore_password: changeit
-#  Verify peer server certificates
+  # Verify peer server certificates
   require_client_auth: false
-#  Set to a valid trustore if require_client_auth is true
+  # Set to a valid trustore if require_client_auth is true
   truststore: /security/cassandra.truststore
   truststore_password: changeit
-#  Verify that the host name in the certificate matches the connected host
+  # Verify that the host name in the certificate matches the connected host
   require_endpoint_verification: false
-#  More advanced defaults:
-#  protocol: TLS
-#  store_type: JKS
-#  cipher_suites: [
-#    TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-#    TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-#    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA,
-#    TLS_RSA_WITH_AES_256_CBC_SHA
-#  ]
+  # More advanced defaults:
+  # protocol: TLS
+  # store_type: JKS
+  # cipher_suites: [
+  #   TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+  #   TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+  #   TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA,
+  #   TLS_RSA_WITH_AES_256_CBC_SHA
+  # ]
 
 # Configure client-to-server encryption.
 #
@@ -1363,29 +1364,29 @@ server_encryption_options:
 # Step 2: Set optional=false (or remove it) and if you generated truststores and want to use mutual
 # auth set require_client_auth=true. Restart all nodes
 client_encryption_options:
-#  Enable client-to-server encryption
+  # Enable client-to-server encryption
   enabled: true
-#  When set to true, encrypted and unencrypted connections are allowed on the native_transport_port
-#  This should _only be true_ while in unencrypted or transitional operation
-#  optional defaults to true when enabled is false, and false when enabled is true.
+  # When set to true, encrypted and unencrypted connections are allowed on the native_transport_port
+  # This should _only be true_ while in unencrypted or transitional operation
+  # optional defaults to true when enabled is false, and false when enabled is true.
   optional: true
-#  Set keystore and keystore_password to valid keystores if enabled is true
+  # Set keystore and keystore_password to valid keystores if enabled is true
   keystore: /security/cassandra.keystore
   keystore_password: changeit
-#  Verify client certificates
+  # Verify client certificates
   require_client_auth: false
-#  Set trustore and truststore_password if require_client_auth is true
-#  truststore: conf/.truststore
-#  truststore_password: cassandra
-#  More advanced defaults:
-#  protocol: TLS
-#  store_type: JKS
-#  cipher_suites: [
-#    TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-#    TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-#    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA,
-#    TLS_RSA_WITH_AES_256_CBC_SHA
-#  ]
+  # Set trustore and truststore_password if require_client_auth is true
+  # truststore: conf/.truststore
+  # truststore_password: cassandra
+  # More advanced defaults:
+  # protocol: TLS
+  # store_type: JKS
+  # cipher_suites: [
+  #   TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+  #   TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+  #   TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA,
+  #   TLS_RSA_WITH_AES_256_CBC_SHA
+  # ]
 
 # internode_compression controls whether traffic between nodes is
 # compressed.
@@ -1442,8 +1443,8 @@ transparent_data_encryption_options:
   chunk_length_kb: 64
   cipher: AES/CBC/PKCS5Padding
   key_alias: testing:1
-#  CBC IV length for AES needs to be 16 bytes (which is also the default size)
-#  iv_length: 16
+  # CBC IV length for AES needs to be 16 bytes (which is also the default size)
+  # iv_length: 16
   key_provider:
     - class_name: org.apache.cassandra.security.JKSKeyProvider
       parameters:
@@ -1451,6 +1452,7 @@ transparent_data_encryption_options:
           keystore_password: cassandra
           store_type: JCEKS
           key_password: cassandra
+
 
 #####################
 # SAFETY THRESHOLDS #
@@ -1474,17 +1476,17 @@ tombstone_failure_threshold: 100000
 # mechanism materializes replica results by partition on-heap at the coordinator. The more possibly
 # stale results returned by the replicas, the more rows materialized during the query.
 replica_filtering_protection:
-#  These thresholds exist to limit the damage severely out-of-date replicas can cause during these
-#  queries. They limit the number of rows from all replicas individual index and filtering queries
-#  can materialize on-heap to return correct results at the desired read consistency level.
+  # These thresholds exist to limit the damage severely out-of-date replicas can cause during these
+  # queries. They limit the number of rows from all replicas individual index and filtering queries
+  # can materialize on-heap to return correct results at the desired read consistency level.
   #
-#  "cached_replica_rows_warn_threshold" is the per-query threshold at which a warning will be logged.
-#  "cached_replica_rows_fail_threshold" is the per-query threshold at which the query will fail.
+  # "cached_replica_rows_warn_threshold" is the per-query threshold at which a warning will be logged.
+  # "cached_replica_rows_fail_threshold" is the per-query threshold at which the query will fail.
   #
-#  These thresholds may also be adjusted at runtime using the StorageService mbean.
+  # These thresholds may also be adjusted at runtime using the StorageService mbean.
   #
-#  If the failure threshold is breached, it is likely that either the current page/fetch size
-#  is too large or one or more replicas is severely out-of-sync and in need of repair.
+  # If the failure threshold is breached, it is likely that either the current page/fetch size
+  # is too large or one or more replicas is severely out-of-sync and in need of repair.
   cached_rows_warn_threshold: 2000
   cached_rows_fail_threshold: 32000
 
@@ -1554,33 +1556,33 @@ audit_logging_options:
   enabled: false
   logger:
     - class_name: BinAuditLogger
-#  audit_logs_dir:
-#  included_keyspaces:
-#  excluded_keyspaces: system, system_schema, system_virtual_schema
-#  included_categories:
-#  excluded_categories:
-#  included_users:
-#  excluded_users:
-#  roll_cycle: HOURLY
-#  block: true
-#  max_queue_weight: 268435456 # 256 MiB
-#  max_log_size: 17179869184 # 16 GiB
-#  # archive command is "/path/to/script.sh %path" where %path is replaced with the file being rolled:
-#  archive_command:
-#  max_archive_retries: 10
+  # audit_logs_dir:
+  # included_keyspaces:
+  # excluded_keyspaces: system, system_schema, system_virtual_schema
+  # included_categories:
+  # excluded_categories:
+  # included_users:
+  # excluded_users:
+  # roll_cycle: HOURLY
+  # block: true
+  # max_queue_weight: 268435456 # 256 MiB
+  # max_log_size: 17179869184 # 16 GiB
+  ## archive command is "/path/to/script.sh %path" where %path is replaced with the file being rolled:
+  # archive_command:
+  # max_archive_retries: 10
 
 
-#  default options for full query logging - these can be overridden from command line when executing
-#  nodetool enablefullquerylog
-#  full_query_logging_options:
-#  log_dir:
-#  roll_cycle: HOURLY
-#  block: true
-#  max_queue_weight: 268435456 # 256 MiB
-#  max_log_size: 17179869184 # 16 GiB
-#  # archive command is "/path/to/script.sh %path" where %path is replaced with the file being rolled:
-#  archive_command:
-#  max_archive_retries: 10
+  # default options for full query logging - these can be overridden from command line when executing
+  # nodetool enablefullquerylog
+  # full_query_logging_options:
+  # log_dir:
+  # roll_cycle: HOURLY
+  # block: true
+  # max_queue_weight: 268435456 # 256 MiB
+  # max_log_size: 17179869184 # 16 GiB
+  ## archive command is "/path/to/script.sh %path" where %path is replaced with the file being rolled:
+  # archive_command:
+  # max_archive_retries: 10
 
 # validate tombstones on reads and compaction
 # can be either "disabled", "warn" or "exception"
@@ -1653,8 +1655,8 @@ drop_compact_storage_enabled: false
 # When the client triggers a protocol exception or unknown issue (Cassandra bug) we increment
 # a client metric showing this; this logic will exclude specific subnets from updating these
 # metrics
-# client_error_reporting_exclusions:
-#    subnets:
+#client_error_reporting_exclusions:
+#  subnets:
 #    - 127.0.0.1
 #    - 127.0.0.0/31
 
@@ -1786,12 +1788,12 @@ drop_compact_storage_enabled: false
 # are configurable (so you can disable them) but these which are enumerated bellow.
 # Uncomment the startup checks and configure them appropriately to cover your needs.
 #
-# startup_checks:
+#startup_checks:
 # Verifies correct ownership of attached locations on disk at startup. See CASSANDRA-16879 for more details.
-#   check_filesystem_ownership:
-#     enabled: false
-#     ownership_token: "sometoken" # (overriden by "CassandraOwnershipToken" system property)
-#     ownership_filename: ".cassandra_fs_ownership" # (overriden by "cassandra.fs_ownership_filename")
+#  check_filesystem_ownership:
+#    enabled: false
+#    ownership_token: "sometoken" # (overriden by "CassandraOwnershipToken" system property)
+#    ownership_filename: ".cassandra_fs_ownership" # (overriden by "cassandra.fs_ownership_filename")
 # Prevents a node from starting if snitch's data center differs from previous data center.
 #  check_dc:
 #    enabled: true # (overriden by cassandra.ignore_dc system property)
