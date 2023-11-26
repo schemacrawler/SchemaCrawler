@@ -23,7 +23,7 @@ rules:
     max-spaces-after: 1
   commas: enable
   comments:
-    require-starting-space: true
+    require-starting-space: false
     ignore-shebangs: true
     min-spaces-from-content: 2
     level: warning
@@ -32,7 +32,7 @@ rules:
   document-end: disable
   document-start: disable
   empty-lines:
-    max: 1
+    max: 2
     max-end: 1
   empty-values: disable
   float-values: disable
