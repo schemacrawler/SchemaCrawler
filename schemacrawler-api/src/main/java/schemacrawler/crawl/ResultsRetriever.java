@@ -88,20 +88,27 @@ final class ResultsRetriever {
           execute("schema name", () -> resultsMetaData.getSchemaName(columnIndex));
 
       final Schema schema =
-          schemas.lookup(new NamedObjectKey(catalogName, schemaName)).orElseGet(() -> {
-            final SchemaReference newSchema = new SchemaReference(catalogName, schemaName);
-            schemas.add(newSchema);
-            return newSchema;
-          });
+          schemas
+              .lookup(new NamedObjectKey(catalogName, schemaName))
+              .orElseGet(
+                  () -> {
+                    final SchemaReference newSchema = new SchemaReference(catalogName, schemaName);
+                    schemas.add(newSchema);
+                    return newSchema;
+                  });
 
       final String tableName =
           trimToEmpty(execute("table name", () -> resultsMetaData.getTableName(columnIndex)));
 
-      final Table table = tables.lookup(schema, tableName).orElseGet(() -> {
-        final Table newTable = new TablePartial(schema, tableName);
-        tables.add(newTable);
-        return newTable;
-      });
+      final Table table =
+          tables
+              .lookup(schema, tableName)
+              .orElseGet(
+                  () -> {
+                    final Table newTable = new TablePartial(schema, tableName);
+                    tables.add(newTable);
+                    return newTable;
+                  });
 
       final String columnName =
           execute("column name", () -> resultsMetaData.getColumnName(columnIndex));
@@ -122,14 +129,16 @@ final class ResultsRetriever {
     try {
       return getResultsColumn.call();
     } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, e,
+      LOGGER.log(
+          Level.WARNING,
+          e,
           new StringFormat("Could not retrieve results column field, %s", resultsColumnField));
       return null;
     }
   }
 
-  private void retrieveAdditionalColumnData(final int columnIndex,
-      final MutableResultsColumn column) {
+  private void retrieveAdditionalColumnData(
+      final int columnIndex, final MutableResultsColumn column) {
     try {
       final boolean isNullable =
           resultsMetaData.isNullable(columnIndex) == ResultSetMetaData.columnNullable;
@@ -146,9 +155,12 @@ final class ResultsRetriever {
       column.setSigned(resultsMetaData.isSigned(columnIndex));
       column.setWritable(resultsMetaData.isWritable(columnIndex));
     } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, e,
-          new StringFormat("Could not retrieve results column additional data for %s (%s)", column,
-              column.getLabel()));
+      LOGGER.log(
+          Level.WARNING,
+          e,
+          new StringFormat(
+              "Could not retrieve results column additional data for %s (%s)",
+              column, column.getLabel()));
     }
   }
 
@@ -169,8 +181,12 @@ final class ResultsRetriever {
       //
       column.setColumnDataType(columnDataType);
     } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, e, new StringFormat(
-          "Could not retrieve results column data type for %s (%s)", column, column.getLabel()));
+      LOGGER.log(
+          Level.WARNING,
+          e,
+          new StringFormat(
+              "Could not retrieve results column data type for %s (%s)",
+              column, column.getLabel()));
 
       final MutableColumnDataType unknownColumnDataType =
           new MutableColumnDataType(schema, "<unknown>", user_defined);

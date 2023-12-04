@@ -54,8 +54,11 @@ final class DataTypeRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(DataTypeRetriever.class.getName());
 
-  DataTypeRetriever(final RetrieverConnection retrieverConnection, final MutableCatalog catalog,
-      final SchemaCrawlerOptions options) throws SQLException {
+  DataTypeRetriever(
+      final RetrieverConnection retrieverConnection,
+      final MutableCatalog catalog,
+      final SchemaCrawlerOptions options)
+      throws SQLException {
     super(retrieverConnection, catalog, options);
   }
 
@@ -69,7 +72,8 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     switch (getRetrieverConnection().get(typeInfoRetrievalStrategy)) {
       case data_dictionary_all:
-        LOGGER.log(Level.INFO,
+        LOGGER.log(
+            Level.INFO,
             "Retrieving system column data types, using fast data dictionary retrieval");
         retrieveSystemColumnDataTypesFromDataDictionary(systemSchema);
         break;
@@ -90,25 +94,28 @@ final class DataTypeRetriever extends AbstractRetriever {
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     for (final Schema schema : schemas) {
-      LOGGER.log(Level.INFO,
+      LOGGER.log(
+          Level.INFO,
           new StringFormat("Retrieving user-defined data types for schema <%s>", schema));
       retrieveUserDefinedColumnDataTypesFromMetadata(schema);
     }
   }
 
-  private void createSystemColumnDataType(final MetadataResultSet results,
-      final Schema systemSchema) {
+  private void createSystemColumnDataType(
+      final MetadataResultSet results, final Schema systemSchema) {
     final String typeName = results.getString("TYPE_NAME");
     final int dataType = results.getInt("DATA_TYPE", 0);
-    LOGGER.log(Level.FINER,
+    LOGGER.log(
+        Level.FINER,
         new StringFormat("Retrieving data type <%s> with type id %d", typeName, dataType));
 
     final long precision = results.getLong("PRECISION", 0L);
     final String literalPrefix = results.getString("LITERAL_PREFIX");
     final String literalSuffix = results.getString("LITERAL_SUFFIX");
     final String createParameters = results.getString("CREATE_PARAMS");
-    final boolean isNullable = results.getInt("NULLABLE",
-        DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
+    final boolean isNullable =
+        results.getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown)
+            == DatabaseMetaData.typeNullable;
     final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
     final SearchableType searchable = results.getEnumFromId("SEARCHABLE", SearchableType.unknown);
     final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
@@ -155,13 +162,14 @@ final class DataTypeRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule());) {
+            new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule()); ) {
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
         createSystemColumnDataType(results, systemSchema);
       }
-      LOGGER.log(Level.INFO,
+      LOGGER.log(
+          Level.INFO,
           new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
     }
   }
@@ -169,14 +177,16 @@ final class DataTypeRetriever extends AbstractRetriever {
   private void retrieveSystemColumnDataTypesFromMetadata(final Schema systemSchema)
       throws SQLException {
     try (final Connection connection = getRetrieverConnection().getConnection();
-        final MetadataResultSet results = new MetadataResultSet(
-            connection.getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo");) {
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo"); ) {
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
         createSystemColumnDataType(results, systemSchema);
       }
-      LOGGER.log(Level.INFO,
+      LOGGER.log(
+          Level.INFO,
           new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
     } catch (final SQLException e) {
       logPossiblyUnsupportedSQLFeature(
@@ -190,8 +200,10 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     final Optional<SchemaReference> schemaOptional = catalog.lookupSchema(schema.getFullName());
     if (!schemaOptional.isPresent()) {
-      LOGGER.log(Level.INFO, new StringFormat(
-          "Cannot locate schema, so not retrieving data types for schema: %s", schema));
+      LOGGER.log(
+          Level.INFO,
+          new StringFormat(
+              "Cannot locate schema, so not retrieving data types for schema: %s", schema));
       return;
     }
 
@@ -201,9 +213,10 @@ final class DataTypeRetriever extends AbstractRetriever {
     final String schemaName = schema.getName();
 
     try (final Connection connection = getRetrieverConnection().getConnection();
-        final MetadataResultSet results = new MetadataResultSet(
-            connection.getMetaData().getUDTs(catalogName, schemaName, null, null),
-            "DatabaseMetaData::getUDTs");) {
+        final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getUDTs(catalogName, schemaName, null, null),
+                "DatabaseMetaData::getUDTs"); ) {
       while (results.next()) {
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");
