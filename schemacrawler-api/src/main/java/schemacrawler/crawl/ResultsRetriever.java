@@ -154,7 +154,7 @@ final class ResultsRetriever {
       column.setSearchable(resultsMetaData.isSearchable(columnIndex));
       column.setSigned(resultsMetaData.isSigned(columnIndex));
       column.setWritable(resultsMetaData.isWritable(columnIndex));
-    } catch (final Throwable e) {
+    } catch (final Exception e) {
       LOGGER.log(
           Level.WARNING,
           e,

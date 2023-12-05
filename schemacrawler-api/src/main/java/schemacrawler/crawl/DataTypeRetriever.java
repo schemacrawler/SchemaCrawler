@@ -246,8 +246,6 @@ final class DataTypeRetriever extends AbstractRetriever {
     } catch (final SQLException e) {
       logPossiblyUnsupportedSQLFeature(
           new StringFormat("Could not retrieve user-defined column data types"), e);
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve user-defined column data types", e);
     }
   }
 }
