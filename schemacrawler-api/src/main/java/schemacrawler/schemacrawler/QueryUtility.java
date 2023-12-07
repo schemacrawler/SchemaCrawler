@@ -65,7 +65,7 @@ public final class QueryUtility {
       final InclusionRule tableInclusionRule)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query, schemaInclusionRule);
+    final String sql = getQuery(query, schemaInclusionRule, tableInclusionRule);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -117,6 +117,22 @@ public final class QueryUtility {
     return executeSqlForScalar(connection, sql);
   }
 
+  protected static void addInclusionRule(
+      final String limitType,
+      final InclusionRule schemaInclusionRule,
+      final Map<String, String> properties) {
+    properties.put(limitType, ".*");
+    if (schemaInclusionRule instanceof InclusionRuleWithRegularExpression) {
+      final String schemaInclusionPattern =
+          ((InclusionRuleWithRegularExpression) schemaInclusionRule)
+              .getInclusionPattern()
+              .pattern();
+      if (!isBlank(schemaInclusionPattern)) {
+        properties.put(limitType, schemaInclusionPattern);
+      }
+    }
+  }
+
   private static String getQuery(final Query query) {
     return expandTemplate(query.getQuery());
   }
@@ -127,19 +143,14 @@ public final class QueryUtility {
    * @param schemaInclusionRule Schema inclusion rule
    * @return Ready-to-execute query
    */
-  private static String getQuery(final Query query, final InclusionRule schemaInclusionRule) {
+  private static String getQuery(
+      final Query query,
+      final InclusionRule schemaInclusionRule,
+      final InclusionRule tableInclusionRule) {
     final Map<String, String> properties = new HashMap<>();
 
-    properties.put("schemas", ".*");
-    if (schemaInclusionRule instanceof InclusionRuleWithRegularExpression) {
-      final String schemaInclusionPattern =
-          ((InclusionRuleWithRegularExpression) schemaInclusionRule)
-              .getInclusionPattern()
-              .pattern();
-      if (!isBlank(schemaInclusionPattern)) {
-        properties.put("schemas", schemaInclusionPattern);
-      }
-    }
+    addInclusionRule("schemas", schemaInclusionRule, properties);
+    addInclusionRule("tables", tableInclusionRule, properties);
 
     String sql = query.getQuery();
     sql = expandTemplate(sql, properties);

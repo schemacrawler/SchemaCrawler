@@ -58,11 +58,23 @@ public class QueryUtilityTest {
   public void executeAgainstSchema(final TestContext testContext, final Connection cxn)
       throws Exception {
     final Query query =
-        new Query(
-            "Tables for schema",
-            "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') ORDER BY TABLE_NAME");
+        new Query("Tables for schema", tablesWhere("REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}')"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
     final InclusionRule tableInclusionRule = null;
+
+    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
+  }
+
+  @Test
+  public void executeAgainstSchemaAndTable(final TestContext testContext, final Connection cxn)
+      throws Exception {
+    final Query query =
+        new Query(
+            "Tables for schema",
+            tablesWhere(
+                "REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') AND REGEXP_MATCHES(TABLE_NAME, '${tables}')"));
+    final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
+    final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule("AUTHORS");
 
     executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
   }
@@ -71,9 +83,7 @@ public class QueryUtilityTest {
   public void executeAgainstSchemaNoMatch(final TestContext testContext, final Connection cxn)
       throws Exception {
     final Query query =
-        new Query(
-            "Tables for schema",
-            "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') ORDER BY TABLE_NAME");
+        new Query("Tables for schema", tablesWhere("REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}')"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
     final InclusionRule tableInclusionRule = null;
 
@@ -94,12 +104,20 @@ public class QueryUtilityTest {
   @Test
   public void executeAgainstSchemaNoTemplate(final TestContext testContext, final Connection cxn)
       throws Exception {
-    final Query query =
-        new Query(
-            "Tables for schema",
-            "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA= 'BOOKS' ORDER BY TABLE_NAME");
+    final Query query = new Query("Tables for schema", tablesWhere("TABLE_SCHEMA = 'BOOKS'"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
     final InclusionRule tableInclusionRule = null;
+
+    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
+  }
+
+  @Test
+  public void executeAgainstTable(final TestContext testContext, final Connection cxn)
+      throws Exception {
+    final Query query =
+        new Query("Tables for schema", tablesWhere("REGEXP_MATCHES(TABLE_NAME, '${tables}')"));
+    final InclusionRule schemaInclusionRule = null;
+    final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule("AUTHORS");
 
     executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
   }
@@ -131,6 +149,12 @@ public class QueryUtilityTest {
     assertThat(scalar, nullValue());
   }
 
+  protected String tablesWhere(final String where) {
+    return String.format(
+        "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE %s ORDER BY TABLE_SCHEMA, TABLE_NAME",
+        where);
+  }
+
   private void executeAgainstSchemaTest(
       final TestContext testContext,
       final Connection cxn,
@@ -146,7 +170,9 @@ public class QueryUtilityTest {
               QueryUtility.executeAgainstSchema(
                   query, statement, schemaInclusionRule, tableInclusionRule)) {
         while (resultSet.next()) {
-          out.println(resultSet.getString("TABLE_NAME"));
+          out.println(
+              String.format(
+                  "%s.%s", resultSet.getString("TABLE_SCHEMA"), resultSet.getString("TABLE_NAME")));
         }
       }
     }
