@@ -162,7 +162,8 @@ final class DataTypeRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                typeInfoSql, statement, getSchemaInclusionRule(), getTableInclusionRule()); ) {
       int numSystemColumnDataTypes = 0;
       while (results.next()) {
         numSystemColumnDataTypes = numSystemColumnDataTypes + 1;

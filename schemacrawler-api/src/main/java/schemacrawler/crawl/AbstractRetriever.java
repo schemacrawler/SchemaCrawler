@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static us.fatehi.utility.Utility.isBlank;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
@@ -109,6 +110,10 @@ abstract class AbstractRetriever {
 
   final InclusionRule getSchemaInclusionRule() {
     return options.getLimitOptions().get(ruleForSchemaInclusion);
+  }
+
+  final InclusionRule getTableInclusionRule() {
+    return options.getLimitOptions().get(ruleForTableInclusion);
   }
 
   final void logPossiblyUnsupportedSQLFeature(

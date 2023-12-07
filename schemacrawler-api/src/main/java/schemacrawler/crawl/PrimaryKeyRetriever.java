@@ -124,7 +124,8 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(pkSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                pkSql, statement, getSchemaInclusionRule(), getTableInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));

@@ -106,7 +106,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                extTableConstraintInformationSql, statement, getSchemaInclusionRule()); ) {
+                extTableConstraintInformationSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
@@ -160,7 +163,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                extTableConstraintsInformationSql, statement, getSchemaInclusionRule()); ) {
+                extTableConstraintsInformationSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
@@ -275,7 +281,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                tableConstraintsInformationSql, statement, getSchemaInclusionRule()); ) {
+                tableConstraintsInformationSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
 
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
@@ -357,7 +366,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
-                tableConstraintsColumnsInformationSql, statement, getSchemaInclusionRule()); ) {
+                tableConstraintsColumnsInformationSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));

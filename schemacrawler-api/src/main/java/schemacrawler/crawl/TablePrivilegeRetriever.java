@@ -166,7 +166,11 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                tablePrivelegesSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
       createPrivileges(results, true);
     }
   }
@@ -193,7 +197,11 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablePrivelegesSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                tablePrivelegesSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
       createPrivileges(results, false);
     }
   }

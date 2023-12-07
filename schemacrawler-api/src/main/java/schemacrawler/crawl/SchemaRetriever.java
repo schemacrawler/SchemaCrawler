@@ -200,7 +200,8 @@ final class SchemaRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                schemataSql, statement, getSchemaInclusionRule(), getTableInclusionRule()); ) {
       int numSchemas = 0;
       while (results.next()) {
         numSchemas = numSchemas + 1;

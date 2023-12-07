@@ -78,7 +78,11 @@ final class RoutineExtRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(routineDefinitionsSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                routineDefinitionsSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));

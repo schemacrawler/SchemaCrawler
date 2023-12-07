@@ -199,7 +199,11 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(functionColumnsSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                functionColumnsSql,
+                statement,
+                getSchemaInclusionRule(),
+                getTableInclusionRule()); ) {
       while (results.next()) {
         createFunctionParameter(results, allRoutines, parameterFilter);
       }

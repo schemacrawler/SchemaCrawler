@@ -78,7 +78,10 @@ public final class MetadataResultSet implements AutoCloseable {
   private boolean showLobs;
 
   public MetadataResultSet(
-      final Query query, final Statement statement, final InclusionRule schemaInclusionRule)
+      final Query query,
+      final Statement statement,
+      final InclusionRule schemaInclusionRule,
+      InclusionRule tableInclusionRule)
       throws SQLException {
     this(executeAgainstSchema(query, statement, schemaInclusionRule), query.getName());
   }

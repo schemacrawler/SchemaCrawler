@@ -200,7 +200,8 @@ final class RoutineRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(functionsSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                functionsSql, statement, getSchemaInclusionRule(), getTableInclusionRule()); ) {
       int numFunctions = 0;
       while (results.next()) {
         numFunctions = numFunctions + 1;
@@ -278,7 +279,8 @@ final class RoutineRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(proceduresSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(
+                proceduresSql, statement, getSchemaInclusionRule(), getTableInclusionRule()); ) {
       int numProcedures = 0;
       while (results.next()) {
         numProcedures = numProcedures + 1;
