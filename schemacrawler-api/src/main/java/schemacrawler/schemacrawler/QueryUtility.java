@@ -59,7 +59,10 @@ public final class QueryUtility {
   private static final Logger LOGGER = Logger.getLogger(QueryUtility.class.getName());
 
   public static ResultSet executeAgainstSchema(
-      final Query query, final Statement statement, final InclusionRule schemaInclusionRule)
+      final Query query,
+      final Statement statement,
+      final InclusionRule schemaInclusionRule,
+      final InclusionRule tableInclusionRule)
       throws SQLException {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, schemaInclusionRule);
