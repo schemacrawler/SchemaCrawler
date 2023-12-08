@@ -46,11 +46,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -235,8 +235,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(
-                databaseUsersSql, statement, new IncludeAll(), getTableInclusionRule()); ) {
+            new MetadataResultSet(databaseUsersSql, statement, new HashMap<>()); ) {
       while (results.next()) {
         final String username = results.getString("USERNAME");
         if (isBlank(username)) {
@@ -271,8 +270,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(
-                serverInfoSql, statement, new IncludeAll(), getTableInclusionRule()); ) {
+            new MetadataResultSet(serverInfoSql, statement, new HashMap<>()); ) {
       while (results.next()) {
         final String propertyName = results.getString("NAME");
         if (isBlank(propertyName)) {

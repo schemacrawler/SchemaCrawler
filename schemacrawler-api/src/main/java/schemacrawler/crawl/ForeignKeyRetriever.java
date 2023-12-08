@@ -208,8 +208,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(
-                fkSql, statement, getSchemaInclusionRule(), getTableInclusionRule()); ) {
+            new MetadataResultSet(fkSql, statement, getLimitMap()); ) {
       createForeignKeys(results, foreignKeys);
     } catch (final SQLException e) {
       throw new WrappedSQLException(

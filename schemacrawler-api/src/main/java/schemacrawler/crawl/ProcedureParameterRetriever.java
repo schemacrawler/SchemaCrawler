@@ -204,11 +204,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(
-                procedureColumnsSql,
-                statement,
-                getSchemaInclusionRule(),
-                getTableInclusionRule()); ) {
+            new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         createProcedureParameter(results, allRoutines, parameterFilter);
       }

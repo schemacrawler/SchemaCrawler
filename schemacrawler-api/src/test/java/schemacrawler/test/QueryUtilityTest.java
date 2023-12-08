@@ -40,6 +40,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -62,7 +64,8 @@ public class QueryUtilityTest {
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
     final InclusionRule tableInclusionRule = null;
 
-    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
+    executeAgainstSchemaTest(
+        testContext, cxn, query, makeLimitMap(schemaInclusionRule, tableInclusionRule));
   }
 
   @Test
@@ -76,7 +79,8 @@ public class QueryUtilityTest {
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
     final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule("AUTHORS");
 
-    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
+    executeAgainstSchemaTest(
+        testContext, cxn, query, makeLimitMap(schemaInclusionRule, tableInclusionRule));
   }
 
   @Test
@@ -92,7 +96,7 @@ public class QueryUtilityTest {
         final Statement statement = connection.createStatement();
         final ResultSet resultSet =
             QueryUtility.executeAgainstSchema(
-                query, statement, schemaInclusionRule, tableInclusionRule)) {
+                query, statement, makeLimitMap(schemaInclusionRule, tableInclusionRule))) {
       while (resultSet.next()) {
         rows++;
       }
@@ -108,7 +112,8 @@ public class QueryUtilityTest {
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
     final InclusionRule tableInclusionRule = null;
 
-    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
+    executeAgainstSchemaTest(
+        testContext, cxn, query, makeLimitMap(schemaInclusionRule, tableInclusionRule));
   }
 
   @Test
@@ -119,7 +124,8 @@ public class QueryUtilityTest {
     final InclusionRule schemaInclusionRule = null;
     final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule("AUTHORS");
 
-    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule, tableInclusionRule);
+    executeAgainstSchemaTest(
+        testContext, cxn, query, makeLimitMap(schemaInclusionRule, tableInclusionRule));
   }
 
   @Test
@@ -159,16 +165,14 @@ public class QueryUtilityTest {
       final TestContext testContext,
       final Connection cxn,
       final Query query,
-      final InclusionRule schemaInclusionRule,
-      final InclusionRule tableInclusionRule)
+      final Map<String, InclusionRule> limitMap)
       throws IOException, SQLException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       try (final Connection connection = cxn;
           final Statement statement = connection.createStatement();
           final ResultSet resultSet =
-              QueryUtility.executeAgainstSchema(
-                  query, statement, schemaInclusionRule, tableInclusionRule)) {
+              QueryUtility.executeAgainstSchema(query, statement, limitMap)) {
         while (resultSet.next()) {
           out.println(
               String.format(
@@ -178,5 +182,13 @@ public class QueryUtilityTest {
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  private Map<String, InclusionRule> makeLimitMap(
+      final InclusionRule schemaInclusionRule, final InclusionRule tableInclusionRule) {
+    final Map<String, InclusionRule> limitMap = new HashMap<>();
+    limitMap.put("schemas", schemaInclusionRule);
+    limitMap.put("tables", tableInclusionRule);
+    return limitMap;
   }
 }

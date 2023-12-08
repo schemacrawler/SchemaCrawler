@@ -41,6 +41,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -59,13 +60,10 @@ public final class QueryUtility {
   private static final Logger LOGGER = Logger.getLogger(QueryUtility.class.getName());
 
   public static ResultSet executeAgainstSchema(
-      final Query query,
-      final Statement statement,
-      final InclusionRule schemaInclusionRule,
-      final InclusionRule tableInclusionRule)
+      final Query query, final Statement statement, final Map<String, InclusionRule> limitMap)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query, schemaInclusionRule, tableInclusionRule);
+    final String sql = getQuery(query, limitMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -143,14 +141,15 @@ public final class QueryUtility {
    * @param schemaInclusionRule Schema inclusion rule
    * @return Ready-to-execute query
    */
-  private static String getQuery(
-      final Query query,
-      final InclusionRule schemaInclusionRule,
-      final InclusionRule tableInclusionRule) {
+  private static String getQuery(final Query query, final Map<String, InclusionRule> limitMap) {
     final Map<String, String> properties = new HashMap<>();
 
-    addInclusionRule("schemas", schemaInclusionRule, properties);
-    addInclusionRule("tables", tableInclusionRule, properties);
+    requireNonNull(query, "No query provided");
+    requireNonNull(limitMap, "No limit map provided");
+
+    for (final Entry<String, InclusionRule> limit : limitMap.entrySet()) {
+      addInclusionRule(limit.getKey(), limit.getValue(), properties);
+    }
 
     String sql = query.getQuery();
     sql = expandTemplate(sql, properties);

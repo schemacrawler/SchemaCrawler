@@ -29,14 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -78,11 +76,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(
-                routineDefinitionsSql,
-                statement,
-                getSchemaInclusionRule(),
-                getTableInclusionRule()); ) {
+            new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));

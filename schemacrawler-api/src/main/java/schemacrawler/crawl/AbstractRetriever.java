@@ -34,6 +34,8 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static us.fatehi.utility.Utility.isBlank;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -104,16 +106,15 @@ abstract class AbstractRetriever {
     return catalog.getAllSchemas();
   }
 
+  final Map<String, InclusionRule> getLimitMap() {
+    final Map<String, InclusionRule> limitMap = new HashMap<>();
+    limitMap.put("schemas", options.getLimitOptions().get(ruleForSchemaInclusion));
+    limitMap.put("tables", options.getLimitOptions().get(ruleForTableInclusion));
+    return limitMap;
+  }
+
   final RetrieverConnection getRetrieverConnection() {
     return retrieverConnection;
-  }
-
-  final InclusionRule getSchemaInclusionRule() {
-    return options.getLimitOptions().get(ruleForSchemaInclusion);
-  }
-
-  final InclusionRule getTableInclusionRule() {
-    return options.getLimitOptions().get(ruleForTableInclusion);
   }
 
   final void logPossiblyUnsupportedSQLFeature(
