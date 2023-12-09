@@ -60,7 +60,9 @@ public class QueryUtilityTest {
   public void executeAgainstSchema(final TestContext testContext, final Connection cxn)
       throws Exception {
     final Query query =
-        new Query("Tables for schema", tablesWhere("REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}')"));
+        new Query(
+            "Tables for schema",
+            tablesWhere("REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}')"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
     final InclusionRule tableInclusionRule = null;
 
@@ -75,9 +77,11 @@ public class QueryUtilityTest {
         new Query(
             "Tables for schema",
             tablesWhere(
-                "REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') AND REGEXP_MATCHES(TABLE_NAME, '${tables}')"));
+                "REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}')"
+                    + " AND "
+                    + "REGEXP_MATCHES(TABLE_SCHEMA || '.' || TABLE_NAME, '${table-inclusion-rule}')"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
-    final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule("AUTHORS");
+    final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule(".*\\.AUTHORS");
 
     executeAgainstSchemaTest(
         testContext, cxn, query, makeLimitMap(schemaInclusionRule, tableInclusionRule));
@@ -87,7 +91,9 @@ public class QueryUtilityTest {
   public void executeAgainstSchemaNoMatch(final TestContext testContext, final Connection cxn)
       throws Exception {
     final Query query =
-        new Query("Tables for schema", tablesWhere("REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}')"));
+        new Query(
+            "Tables for schema",
+            tablesWhere("REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}')"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
     final InclusionRule tableInclusionRule = null;
 
@@ -120,9 +126,12 @@ public class QueryUtilityTest {
   public void executeAgainstTable(final TestContext testContext, final Connection cxn)
       throws Exception {
     final Query query =
-        new Query("Tables for schema", tablesWhere("REGEXP_MATCHES(TABLE_NAME, '${tables}')"));
+        new Query(
+            "Tables for schema",
+            tablesWhere(
+                "REGEXP_MATCHES(TABLE_SCHEMA || '.' || TABLE_NAME, '${table-inclusion-rule}')"));
     final InclusionRule schemaInclusionRule = null;
-    final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule("AUTHORS");
+    final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule(".*\\.AUTHORS");
 
     executeAgainstSchemaTest(
         testContext, cxn, query, makeLimitMap(schemaInclusionRule, tableInclusionRule));
@@ -187,8 +196,8 @@ public class QueryUtilityTest {
   private Map<String, InclusionRule> makeLimitMap(
       final InclusionRule schemaInclusionRule, final InclusionRule tableInclusionRule) {
     final Map<String, InclusionRule> limitMap = new HashMap<>();
-    limitMap.put("schemas", schemaInclusionRule);
-    limitMap.put("tables", tableInclusionRule);
+    limitMap.put("schema-inclusion-rule", schemaInclusionRule);
+    limitMap.put("table-inclusion-rule", tableInclusionRule);
     return limitMap;
   }
 }

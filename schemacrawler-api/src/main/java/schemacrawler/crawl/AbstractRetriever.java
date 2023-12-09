@@ -108,8 +108,8 @@ abstract class AbstractRetriever {
 
   final Map<String, InclusionRule> getLimitMap() {
     final Map<String, InclusionRule> limitMap = new HashMap<>();
-    limitMap.put("schemas", options.getLimitOptions().get(ruleForSchemaInclusion));
-    limitMap.put("tables", options.getLimitOptions().get(ruleForTableInclusion));
+    limitMap.put("schema-inclusion-rule", options.getLimitOptions().get(ruleForSchemaInclusion));
+    limitMap.put("table-inclusion-rule", options.getLimitOptions().get(ruleForTableInclusion));
     return limitMap;
   }
 
