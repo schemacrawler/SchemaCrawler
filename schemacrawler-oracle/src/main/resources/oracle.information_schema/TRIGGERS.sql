@@ -37,3 +37,4 @@ FROM
       AND NOT REGEXP_LIKE(USERS.USERNAME, '^FLOWS_[0-9]{5}$')
 WHERE
   REGEXP_LIKE(TRIGGERS.OWNER, '${schema-inclusion-rule}')
+  AND REGEXP_LIKE(TRIGGERS.OWNER || '.' || TRIGGERS.TABLE_NAME, '${table-inclusion-rule}')
