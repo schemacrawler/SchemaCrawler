@@ -88,6 +88,24 @@ public class QueryUtilityTest {
   }
 
   @Test
+  public void executeAgainstSchemaAndTableExclude(
+      final TestContext testContext, final Connection cxn) throws Exception {
+    final Query query =
+        new Query(
+            "Tables for schema",
+            tablesWhere(
+                "REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}')"
+                    + " AND "
+                    + "REGEXP_MATCHES(TABLE_SCHEMA || '.' || TABLE_NAME, '${table-inclusion-rule}')"));
+    final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("(?!.*INF).*");
+    final InclusionRule tableInclusionRule =
+        new RegularExpressionInclusionRule(".*\\.(?!.*AUTH).*");
+
+    executeAgainstSchemaTest(
+        testContext, cxn, query, makeLimitMap(schemaInclusionRule, tableInclusionRule));
+  }
+
+  @Test
   public void executeAgainstSchemaNoMatch(final TestContext testContext, final Connection cxn)
       throws Exception {
     final Query query =
@@ -164,12 +182,6 @@ public class QueryUtilityTest {
     assertThat(scalar, nullValue());
   }
 
-  protected String tablesWhere(final String where) {
-    return String.format(
-        "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE %s ORDER BY TABLE_SCHEMA, TABLE_NAME",
-        where);
-  }
-
   private void executeAgainstSchemaTest(
       final TestContext testContext,
       final Connection cxn,
@@ -199,5 +211,11 @@ public class QueryUtilityTest {
     limitMap.put("schema-inclusion-rule", schemaInclusionRule);
     limitMap.put("table-inclusion-rule", tableInclusionRule);
     return limitMap;
+  }
+
+  private String tablesWhere(final String where) {
+    return String.format(
+        "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE %s ORDER BY TABLE_SCHEMA, TABLE_NAME",
+        where);
   }
 }
