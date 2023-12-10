@@ -171,7 +171,7 @@ final class IndexRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(indexesSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));

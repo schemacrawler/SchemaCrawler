@@ -167,7 +167,7 @@ final class TableRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tablesSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(tablesSql, statement, getLimitMap()); ) {
       int numTables = 0;
       while (results.next()) {
         numTables = numTables + 1;

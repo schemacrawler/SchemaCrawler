@@ -90,7 +90,7 @@ final class SequenceRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(sequencesDefinitionSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(sequencesDefinitionSql, statement, getLimitMap()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("SEQUENCE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("SEQUENCE_SCHEMA"));

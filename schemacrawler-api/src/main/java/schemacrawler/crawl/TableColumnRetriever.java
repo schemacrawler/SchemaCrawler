@@ -218,7 +218,7 @@ final class TableColumnRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(hiddenColumnsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
@@ -256,7 +256,7 @@ final class TableColumnRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(tableColumnsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
       }

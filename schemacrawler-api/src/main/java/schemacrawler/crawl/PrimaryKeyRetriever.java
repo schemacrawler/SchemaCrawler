@@ -31,14 +31,12 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -66,7 +64,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     switch (getRetrieverConnection().get(primaryKeysRetrievalStrategy)) {
       case data_dictionary_all:
         LOGGER.log(Level.INFO, "Retrieving primary keys, using fast data dictionary retrieval");
-        retrievePrimaryKeysFromDataDictionary(allTables);
+        retrievePrimaryKeysFromDataDictionary();
         break;
 
       case metadata:
@@ -110,8 +108,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     }
   }
 
-  private void retrievePrimaryKeysFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-      throws WrappedSQLException {
+  private void retrievePrimaryKeysFromDataDictionary() throws WrappedSQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
@@ -124,7 +121,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(pkSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));

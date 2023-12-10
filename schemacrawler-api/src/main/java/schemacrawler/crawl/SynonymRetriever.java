@@ -102,7 +102,7 @@ final class SynonymRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
-            new MetadataResultSet(synonymsDefinitionSql, statement, getSchemaInclusionRule()); ) {
+            new MetadataResultSet(synonymsDefinitionSql, statement, getLimitMap()); ) {
       while (results.next()) {
         final String catalogName = normalizeCatalogName(results.getString("SYNONYM_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("SYNONYM_SCHEMA"));

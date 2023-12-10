@@ -78,9 +78,9 @@ public final class MetadataResultSet implements AutoCloseable {
   private boolean showLobs;
 
   public MetadataResultSet(
-      final Query query, final Statement statement, final InclusionRule schemaInclusionRule)
+      final Query query, final Statement statement, final Map<String, InclusionRule> limitMap)
       throws SQLException {
-    this(executeAgainstSchema(query, statement, schemaInclusionRule), query.getName());
+    this(executeAgainstSchema(query, statement, limitMap), query.getName());
   }
 
   public MetadataResultSet(final ResultSet resultSet, final String description)
@@ -440,7 +440,6 @@ public final class MetadataResultSet implements AutoCloseable {
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not read character data", e);
-      return new BinaryData();
     }
 
     return new BinaryData();
