@@ -33,6 +33,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
+          -Ddocker.skip=false \
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
@@ -64,3 +65,18 @@ jobs:
           ./schemacrawler-distrib/target/schemacrawler-16.20.6-distribution.zip.SHA-512
           ./schemacrawler-distrib/target/schemacrawler-16.20.6-bin.zip
           ./schemacrawler-distrib/target/schemacrawler-16.20.6-bin.zip.SHA-512
+
+# PUBLISH DOCKER IMAGE
+    - id: publish-docker-image
+      name: Publish Docker image
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      shell: bash
+      run: |
+        # Publish Docker image
+        docker version
+        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:early-access-release
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker push --all-tags schemacrawler/schemacrawler
+        docker logout
