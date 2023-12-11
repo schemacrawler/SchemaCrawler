@@ -76,7 +76,8 @@ jobs:
       run: |
         # Publish Docker image
         docker version
-        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:early-access-release
+        docker tag schemacrawler/schemacrawler:latest \
+                   schemacrawler/schemacrawler:early-access-release
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker push --all-tags schemacrawler/schemacrawler
+        docker push schemacrawler/schemacrawler:early-access-release
         docker logout
