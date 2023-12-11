@@ -29,8 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -46,7 +53,44 @@ import us.fatehi.utility.ioresource.ClasspathInputResource;
 public class SchemaCrawlerOptionsConfigTest {
 
   @Test
-  public void limitOptions() {
+  public void limitOptionsInclusionRules() {
+    final LimitOptionsBuilder builder = LimitOptionsBuilder.builder();
+    final Config config = new Config(loadConfig("/limit.config.properties"));
+
+    SchemaCrawlerOptionsConfig.fromConfig(builder, config);
+
+    final LimitOptions limitOptions = builder.toOptions();
+
+    assertThat(
+        limitOptions.get(ruleForTableInclusion).toString(), endsWith("{+/.*.SOME_TAB/ -//}"));
+    assertThat(
+        limitOptions.get(ruleForColumnInclusion).toString(), endsWith("{+/.*/ -/.*.SOME_COL/}"));
+    assertThat(
+        limitOptions.get(ruleForRoutineInclusion).toString(),
+        endsWith("{+/.*/ -/.*.SOME_ROUTINE/}"));
+    assertThat(
+        limitOptions.get(ruleForRoutineParameterInclusion).toString(),
+        endsWith("{+/.*.OTHER_ROUTINE/ -//}"));
+    assertThat(
+        limitOptions.get(ruleForSynonymInclusion).toString(), endsWith("{+/.*.A_SYNONYM/ -//}"));
+    assertThat(
+        limitOptions.get(ruleForSequenceInclusion).toString(), endsWith("{+/.*/ -/EXC_SYN/}"));
+  }
+
+  @Test
+  public void limitOptionsRoutineTypes() {
+    final LimitOptionsBuilder builder = LimitOptionsBuilder.builder();
+    final Config config = new Config(loadConfig("/limit.config.properties"));
+
+    SchemaCrawlerOptionsConfig.fromConfig(builder, config);
+
+    final LimitOptions limitOptions = builder.toOptions();
+
+    assertThat(limitOptions.getRoutineTypes().toString(), is("[]"));
+  }
+
+  @Test
+  public void limitOptionsTableTypes() {
     final LimitOptionsBuilder builder = LimitOptionsBuilder.builder();
     final Config config = new Config(loadConfig("/limit.config.properties"));
 
