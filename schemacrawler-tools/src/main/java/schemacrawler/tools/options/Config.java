@@ -65,7 +65,7 @@ public final class Config implements Options {
    *
    * @param configMap Config to copy
    */
-  public Config(final Map<String, Object> map) {
+  public Config(final Map<String, ? extends Object> map) {
     this();
     if (map != null) {
       configMap.putAll(map);
