@@ -31,6 +31,8 @@ package schemacrawler.test.schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
@@ -42,8 +44,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.options.Config;
@@ -99,6 +103,20 @@ public class SchemaCrawlerOptionsConfigTest {
     final LimitOptions limitOptions = builder.toOptions();
 
     assertThat(limitOptions.getTableTypes().toString(), is("[other table]"));
+  }
+
+  @Test
+  public void nullBuilders() {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        SchemaCrawlerOptionsConfig.fromConfig((LimitOptionsBuilder) null, new Config());
+    assertThat(limitOptionsBuilder, is(not(nullValue())));
+
+    final GrepOptionsBuilder grepOptionsBuilder =
+        SchemaCrawlerOptionsConfig.fromConfig((GrepOptionsBuilder) null, new Config());
+    assertThat(grepOptionsBuilder, is(not(nullValue())));
+
+    SchemaCrawlerOptionsConfig.fromConfig((LoadOptionsBuilder) null, new Config());
+    assertThat(grepOptionsBuilder, is(not(nullValue())));
   }
 
   private Map<String, String> loadConfig(final String configResource) {
