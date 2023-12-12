@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.20.7"></a>
+## Release 16.20.7 - 2023-12-20
+
+- Fix issue #1371 - add option to specify table and routine types to limit in a config file
+
 
 <a name="a16.20.6"></a>
 ## Release 16.20.6 - 2023-11-17

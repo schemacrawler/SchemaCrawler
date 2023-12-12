@@ -28,9 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.utility;
 
+import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.routine;
+import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.table;
 import java.util.Optional;
-
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval;
 import schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion;
 import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
@@ -122,6 +124,13 @@ public final class SchemaCrawlerOptionsConfig {
       }
     }
 
+    final String tableTypes =
+        config.getStringValue(getLimitTypesProperty(table), "BASE TABLE,TABLE,VIEW");
+    builder.tableTypes(tableTypes);
+    final String routineTypes =
+        config.getStringValue(getLimitTypesProperty(routine), "PROCEDURE,FUNCTION");
+    builder.routineTypes(routineTypes);
+
     return builder;
   }
 
@@ -178,9 +187,7 @@ public final class SchemaCrawlerOptionsConfig {
         GrepOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getGrepOptions());
     final GrepOptions grepOptions =
         SchemaCrawlerOptionsConfig.fromConfig(grepOptionsBuilder, config).toOptions();
-    schemaCrawlerOptions = schemaCrawlerOptions.withGrepOptions(grepOptions);
-
-    return schemaCrawlerOptions;
+    return schemaCrawlerOptions.withGrepOptions(grepOptions);
   }
 
   private static String getExcludePatternProperty(
@@ -191,5 +198,10 @@ public final class SchemaCrawlerOptionsConfig {
   private static String getIncludePatternProperty(
       final DatabaseObjectRuleForInclusion ruleForInclusion) {
     return String.format("schemacrawler.%s.pattern.include", ruleForInclusion.getKey());
+  }
+
+  private static String getLimitTypesProperty(
+      final DatabaseObjectInfoRetrieval databaseObjectType) {
+    return String.format("schemacrawler.%s.types", databaseObjectType.name());
   }
 }
