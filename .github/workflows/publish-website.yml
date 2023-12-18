@@ -54,7 +54,7 @@ jobs:
 
     - id: upload-link-check-report
       name: Upload website link check report
-      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
+      uses: actions/upload-artifact@353073034f1f3c6d1a65ede161c5a2ca79650a49 # @v3
       with:
         path: ./lychee/out.md
         name: website-link-check-report.md
