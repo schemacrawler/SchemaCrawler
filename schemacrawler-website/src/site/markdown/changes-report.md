@@ -48,8 +48,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="a16.20.6"></a>
-## Release 16.20.6 - 2023-06-03
+<a name="a16.20.7"></a>
+## Release 16.20.7 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
