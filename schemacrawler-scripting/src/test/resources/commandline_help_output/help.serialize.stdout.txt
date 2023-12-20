@@ -5,7 +5,8 @@ For more information, see https://www.schemacrawler.com/serialize.html
          Supported serialization formats
          Use one of [ser] Java serialization, [json] JavaScript Object Notation
            (JSON) serialization format, [yaml] YAML Ain't Markup Language
-           (YAML) serialization format
+           (YAML) serialization format, [compact_json] Compact JavaScript
+           Object Notation (JSON) serialization format
 Deserialization is possible with the "offline" command for Java serialization
 Add command options to the `execute` command in the SchemaCrawler Shell
 

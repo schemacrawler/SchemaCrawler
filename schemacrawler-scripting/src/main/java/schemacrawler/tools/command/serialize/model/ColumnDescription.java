@@ -1,4 +1,4 @@
-package schemacrawler.tools.command.chatgpt.systemfunctions.model;
+package schemacrawler.tools.command.serialize.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
