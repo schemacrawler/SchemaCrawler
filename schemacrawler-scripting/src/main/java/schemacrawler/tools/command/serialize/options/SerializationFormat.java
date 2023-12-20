@@ -45,7 +45,12 @@ public enum SerializationFormat implements OutputFormat {
   yaml(
       "YAML Ain't Markup Language (YAML) serialization format",
       "schemacrawler.tools.formatter.serialize.YamlSerializedCatalog",
-      false);
+      false),
+  compact_json(
+      "Compact JavaScript Object Notation (JSON) serialization format",
+      "schemacrawler.tools.formatter.serialize.CompactSerializedCatalog",
+      false),
+  ;
 
   private static final Logger LOGGER = Logger.getLogger(SerializationFormat.class.getName());
 
