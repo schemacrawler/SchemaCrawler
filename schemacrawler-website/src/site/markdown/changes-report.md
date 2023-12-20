@@ -3,9 +3,10 @@
 SchemaCrawler release notes.
 
 <a name="a16.20.7"></a>
-## Release 16.20.7 - 2023-12-20
+## Release 16.20.7 - 2023-12-22
 
 - Fix issue #1371 - add option to specify table and routine types to limit in a config file
+- Add "compact_json" as an additional serialization format, to use with ChatGPT
 
 
 <a name="a16.20.6"></a>
