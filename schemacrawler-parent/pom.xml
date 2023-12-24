@@ -396,7 +396,7 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2000-2023 {organizationName}. All
+              <bottom>Copyright © 2000-2024 {organizationName}. All
                 rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
