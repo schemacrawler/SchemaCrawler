@@ -66,7 +66,7 @@ jobs:
         QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
     - id: upload-coverage-test-results
       name: Upload coverage test results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.0.0
       if: contains(github.ref, 'main')
       with:
         name: jacoco-coverage-test-results
