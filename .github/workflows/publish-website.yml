@@ -54,7 +54,7 @@ jobs:
 
     - id: upload-link-check-report
       name: Upload website link check report
-      uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # @v3
+      uses: actions/upload-artifact@v4
       with:
         path: ./lychee/out.md
         name: website-link-check-report.md
@@ -67,7 +67,7 @@ jobs:
 
     - id: upload-artifact
       name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v3
       with:
         path: ./schemacrawler-website/target/_website
 
@@ -84,4 +84,4 @@ jobs:
 
     - id: deploy-pages
       name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v3
+      uses: actions/deploy-pages@v4
