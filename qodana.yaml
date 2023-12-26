@@ -1,0 +1,21 @@
+version: "1.0"
+linter: jetbrains/qodana-jvm-community:2023.3
+include:
+  - name: UnnecessarySemicolon
+  - name: JavadocLinkAsPlainText
+  - name: NullableProblems
+  - name: StringBufferReplaceableByString
+  - name: UnnecessaryContinue
+  - name: UNCHECKED_WARNING
+exclude:
+  - name: All
+    paths:
+      - schemacrawler-diff      
+      - schemacrawler-dbtest
+      - schemacrawler-distrib
+      - schemacrawler-docker
+      - schemacrawler-docker-compose
+      - schemacrawler-docs
+      - schemacrawler-examplecode
+      - schemacrawler-testdb
+      - schemacrawler-website
