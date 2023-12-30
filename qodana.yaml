@@ -10,7 +10,7 @@ include:
 exclude:
   - name: All
     paths:
-      - schemacrawler-diff      
+      - schemacrawler-diff
       - schemacrawler-dbtest
       - schemacrawler-distrib
       - schemacrawler-docker
