@@ -63,25 +63,25 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.16.0</version>
+      <version>2.16.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.16.0</version>
+      <version>2.16.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
-      <version>2.16.0</version>
+      <version>2.16.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
-      <version>2.16.0</version>
+      <version>2.16.1</version>
       <scope>provided</scope>
     </dependency>
 
@@ -208,13 +208,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.30</version>
+      <version>5.3.31</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>5.3.30</version>
+      <version>5.3.31</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -268,7 +268,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.6.2</version>
+          <version>3.6.3</version>
           <configuration>
             <source>8</source>
           </configuration>
