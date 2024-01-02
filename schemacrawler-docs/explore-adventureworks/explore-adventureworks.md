@@ -27,7 +27,7 @@
   - Show only important columns with `--command brief`
   - Show indexes on the diagram with `--command details`
 - Find all tables with a "BusinessEntityID" column in a diagram
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-columns .*\.BusinessEntityID --output-file share/businessentityid-tables.pdf`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-columns .*\.\"+BusinessEntityID\"+ --output-file share/businessentityid-tables.pdf`
 - Show advanced diagram configuration by editing the configuration file
   - Hide foreign key names with `schemacrawler.graph.show.foreignkey.cardinality=false`
   - Show ordinal numbers with `schemacrawler.format.show_ordinal_numbers=true`
@@ -52,7 +52,7 @@
 ## Other Commands
 
 - Guess at weak associations in a diagram
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-columns .*\.BusinessEntityID --weak-associations --output-file share/businessentityid-tables-weak-associations.pdf`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-columns .*\.\"+BusinessEntityID\"+ --weak-associations --output-file share/businessentityid-tables-weak-associations.pdf`
 - Find schema design problems with lint
   `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command lint --grep-tables ".*\.Employee" --children 1`
 - See row counts employee related tables in the database
