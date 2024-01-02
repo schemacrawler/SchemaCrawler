@@ -36,9 +36,9 @@
 ## Offline Access
 
 - Serialize schema metadata model for offline access
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command serialize --output-format ser --output-file adventureworks-schema.ser`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command serialize --output-format ser --output-file share/adventureworks-schema.ser`
 - Use offline database
-  `schemacrawler --server offline --database adventureworks-schema.ser --schemas AdventureWorks\.[A-Z].* --info-level maximum --command list`
+  `schemacrawler --server offline --database share/adventureworks-schema.ser --info-level maximum --command list`
 
 
 ## Model Your Existing Database
@@ -63,11 +63,13 @@
 - Output schema to HTML, with diagram, in a single file
   `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command details --grep-tables ".*\.Employee" --children 1 --output-format htmlx --output-file share/employee-table.html`
 - Get JSON output
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command serialize --grep-tables ".*\.Employee" --children 1 --output-format json`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command serialize --grep-tables ".*\.Employee" --children 1 --output-format json --output-file share/employee-table.json`
 
 
 
 ## Tear Down
 
+- Exit SchemaCrawler bash with
+  `exit`
 - Stop the SchemaCrawler and database Docker containers
-  `docker-compose -f schemacrawler.yml -f adventureworks.yml down -t0`
+  `docker-compose -f adventureworks.yaml down -t0`
