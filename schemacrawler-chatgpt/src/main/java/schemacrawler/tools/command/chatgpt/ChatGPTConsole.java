@@ -3,12 +3,15 @@ package schemacrawler.tools.command.chatgpt;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.isExitCondition;
 import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.printResponse;
+
 import java.sql.Connection;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest.ChatCompletionRequestFunctionCall;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
@@ -17,12 +20,13 @@ import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.FunctionExecutor;
 import com.theokanning.openai.service.OpenAiService;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility;
 import us.fatehi.utility.string.StringFormat;
 
-public final class ChatGPTConsole {
+public final class ChatGPTConsole implements AutoCloseable {
 
   private static final Logger LOGGER = Logger.getLogger(ChatGPTConsole.class.getCanonicalName());
 
@@ -43,7 +47,7 @@ public final class ChatGPTConsole {
     requireNonNull(connection, "No connection provided");
 
     functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog, connection);
-    service = new OpenAiService(commandOptions.getApiKey());
+    service = new OpenAiService(commandOptions.getApiKey(), Duration.ofSeconds(20));
 
     final List<ChatMessage> systemMessages;
     if (commandOptions.isUseMetadata()) {
@@ -52,6 +56,11 @@ public final class ChatGPTConsole {
       systemMessages = new ArrayList<>();
     }
     chatHistory = new ChatHistory(commandOptions.getContext(), systemMessages);
+  }
+
+  @Override
+  public void close() {
+    service.shutdownExecutor();
   }
 
   /** Simple REPL for the SchemaCrawler ChatGPT integration. */
@@ -63,7 +72,7 @@ public final class ChatGPTConsole {
         final List<ChatMessage> completions = complete(prompt);
         printResponse(completions, System.out);
         if (isExitCondition(completions)) {
-          System.exit(0);
+          return;
         }
       }
     }
@@ -90,6 +99,7 @@ public final class ChatGPTConsole {
               .functions(functionExecutor.getFunctions())
               .functionCall(new ChatCompletionRequestFunctionCall("auto"))
               .model(commandOptions.getModel())
+              .n(1)
               .build();
 
       final ChatCompletionResult chatCompletion = service.createChatCompletion(completionRequest);
