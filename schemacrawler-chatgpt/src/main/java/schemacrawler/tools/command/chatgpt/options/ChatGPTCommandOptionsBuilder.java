@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.options;
 
 import static us.fatehi.utility.Utility.isBlank;
+
 import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigOptionsBuilder;
@@ -39,6 +40,7 @@ public final class ChatGPTCommandOptionsBuilder
         ConfigOptionsBuilder<ChatGPTCommandOptionsBuilder, ChatGPTCommandOptions> {
 
   private static final int DEFAULT_CONTEXT = 10;
+  private static final int DEFAULT_TIME_OUT = 10;
 
   public static ChatGPTCommandOptionsBuilder builder() {
     return new ChatGPTCommandOptionsBuilder();
@@ -46,12 +48,14 @@ public final class ChatGPTCommandOptionsBuilder
 
   private String apiKey;
   private String model;
+  private int timeOut;
   private int context;
   private boolean useMetadata;
 
   private ChatGPTCommandOptionsBuilder() {
     model = "gpt-3.5-turbo";
     context = DEFAULT_CONTEXT;
+    timeOut = DEFAULT_TIME_OUT;
   }
 
   @Override
@@ -59,7 +63,8 @@ public final class ChatGPTCommandOptionsBuilder
     if (config != null) {
       apiKey = getApiKey(config);
       model = config.getStringValue("model", model);
-      context = config.getIntegerValue("context", DEFAULT_CONTEXT);
+      timeOut = config.getIntegerValue("context", DEFAULT_TIME_OUT);
+      context = config.getIntegerValue("time-out", DEFAULT_CONTEXT);
       useMetadata = config.getBooleanValue("use-metadata");
     }
 
@@ -71,6 +76,9 @@ public final class ChatGPTCommandOptionsBuilder
     if (options != null) {
       apiKey = options.getApiKey();
       model = options.getModel();
+      timeOut = options.getTimeOut();
+      context = options.getContext();
+      useMetadata = options.isUseMetadata();
     }
     return this;
   }
@@ -83,7 +91,7 @@ public final class ChatGPTCommandOptionsBuilder
 
   @Override
   public ChatGPTCommandOptions toOptions() {
-    return new ChatGPTCommandOptions(apiKey, model, context, useMetadata);
+    return new ChatGPTCommandOptions(apiKey, model, timeOut, context, useMetadata);
   }
 
   /**
@@ -100,9 +108,9 @@ public final class ChatGPTCommandOptionsBuilder
   }
 
   /**
-   * Use the provided OpenAI API key is it is not blank.
+   * Use the provided context setting.
    *
-   * @param apiKey OpenAI API key.
+   * @param context Chat context to keep.
    * @return Self.
    */
   public ChatGPTCommandOptionsBuilder withContext(final int context) {
@@ -124,6 +132,17 @@ public final class ChatGPTCommandOptionsBuilder
   }
 
   /**
+   * Use the provided time out setting.
+   *
+   * @param timeOut Request time-out in seconds.
+   * @return Self.
+   */
+  public ChatGPTCommandOptionsBuilder withTimeOut(final int timeOut) {
+    this.timeOut = timeOut;
+    return this;
+  }
+
+  /**
    * Allow sharing of database metadata with OpenAI to enhance chat responses.
    *
    * @param useMetadata Whether to share database metadata with OpenAI to enhance chat responses.
@@ -137,7 +156,7 @@ public final class ChatGPTCommandOptionsBuilder
   private String getApiKey(final Config config) {
     String apiKey = config.getStringValue("api-key", null);
     if (isBlank(apiKey)) {
-      final String apikeyVar = config.getStringValue("api-key:env", null);
+      final String apikeyVar = config.getStringValue("api-key:env", "OPENAI_API_KEY");
       if (!isBlank(apikeyVar)) {
         apiKey = PropertiesUtility.getSystemConfigurationProperty(apikeyVar, null);
       }
