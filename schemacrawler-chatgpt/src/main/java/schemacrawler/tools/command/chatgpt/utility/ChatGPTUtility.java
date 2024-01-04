@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.utility;
 
+import static com.theokanning.openai.completion.chat.ChatMessageRole.SYSTEM;
 import static java.util.Objects.requireNonNull;
 
 import java.io.PrintStream;
@@ -37,7 +38,6 @@ import java.util.List;
 
 import com.theokanning.openai.completion.chat.ChatFunction;
 import com.theokanning.openai.completion.chat.ChatMessage;
-import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.FunctionExecutor;
 
 import schemacrawler.schema.Catalog;
@@ -119,8 +119,7 @@ public class ChatGPTUtility {
       functionDefinition.setConnection(connection);
       final FunctionReturn functionReturn =
           functionDefinition.getExecutor().apply(new NoFunctionParameters());
-      final ChatMessage systemMessage =
-          new ChatMessage(ChatMessageRole.SYSTEM.value(), functionReturn.get());
+      final ChatMessage systemMessage = new ChatMessage(SYSTEM.value(), functionReturn.get());
       systemMessages.add(systemMessage);
     }
     return systemMessages;
