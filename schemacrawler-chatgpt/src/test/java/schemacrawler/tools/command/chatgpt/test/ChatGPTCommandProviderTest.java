@@ -3,7 +3,9 @@ package schemacrawler.tools.command.chatgpt.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.ChatGPTCommand;
 import schemacrawler.tools.command.chatgpt.ChatGPTCommandProvider;
@@ -41,6 +43,7 @@ public class ChatGPTCommandProviderTest {
                 + "PluginCommandOption[name='api-key', valueClass=java.lang.String], "
                 + "PluginCommandOption[name='api-key:env', valueClass=java.lang.String], "
                 + "PluginCommandOption[name='model', valueClass=java.lang.String], "
+                + "PluginCommandOption[name='time-out', valueClass=java.lang.Integer], "
                 + "PluginCommandOption[name='context', valueClass=java.lang.Integer], "
                 + "PluginCommandOption[name='use-metadata', valueClass=java.lang.Boolean]"
                 + "]]"));
