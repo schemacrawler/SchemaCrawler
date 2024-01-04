@@ -1,5 +1,7 @@
 package schemacrawler.tools.command.chatgpt;
 
+import static com.theokanning.openai.completion.chat.ChatMessageRole.FUNCTION;
+import static com.theokanning.openai.completion.chat.ChatMessageRole.USER;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.isExitCondition;
 import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.printResponse;
@@ -17,7 +19,6 @@ import com.theokanning.openai.completion.chat.ChatCompletionRequest.ChatCompleti
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.completion.chat.ChatFunctionCall;
 import com.theokanning.openai.completion.chat.ChatMessage;
-import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.FunctionExecutor;
 import com.theokanning.openai.service.OpenAiService;
 
@@ -88,7 +89,7 @@ public final class ChatGPTConsole implements AutoCloseable {
     final List<ChatMessage> completions = new ArrayList<>();
 
     try {
-      final ChatMessage userMessage = new ChatMessage(ChatMessageRole.USER.value(), prompt);
+      final ChatMessage userMessage = new ChatMessage(USER.value(), prompt);
       chatHistory.add(userMessage);
 
       final List<ChatMessage> messages = chatHistory.toList();
@@ -104,27 +105,19 @@ public final class ChatGPTConsole implements AutoCloseable {
 
       final ChatCompletionResult chatCompletion = service.createChatCompletion(completionRequest);
       LOGGER.log(Level.INFO, new StringFormat("Token usage: %s", chatCompletion.getUsage()));
-      chatCompletion
-          .getChoices()
-          .forEach(
-              c -> {
-                LOGGER.log(Level.CONFIG, new StringFormat("ChatGPT response:%n%s", c));
-                final ChatMessage message = c.getMessage();
-                chatHistory.add(message);
-                final ChatFunctionCall functionCall = message.getFunctionCall();
-                if (functionCall != null) {
-                  final FunctionReturn functionReturn = functionExecutor.execute(functionCall);
-                  final ChatMessage functionResponseMessage =
-                      new ChatMessage(
-                          ChatMessageRole.FUNCTION.value(),
-                          functionReturn.get(),
-                          functionCall.getName(),
-                          functionCall);
-                  completions.add(functionResponseMessage);
-                } else {
-                  completions.add(message);
-                }
-              });
+      // Assume only one message was returned, since we asked for only one
+      final ChatMessage responseMessage = chatCompletion.getChoices().get(0).getMessage();
+      chatHistory.add(responseMessage);
+      final ChatFunctionCall functionCall = responseMessage.getFunctionCall();
+      if (functionCall != null) {
+        final FunctionReturn functionReturn = functionExecutor.execute(functionCall);
+        final ChatMessage functionResponseMessage =
+            new ChatMessage(
+                FUNCTION.value(), functionReturn.get(), functionCall.getName(), functionCall);
+        completions.add(functionResponseMessage);
+      } else {
+        completions.add(responseMessage);
+      }
     } catch (final Exception e) {
       LOGGER.log(Level.INFO, e.getMessage(), e);
       final ChatMessage exceptionMessage = functionExecutor.convertExceptionToMessage(e);

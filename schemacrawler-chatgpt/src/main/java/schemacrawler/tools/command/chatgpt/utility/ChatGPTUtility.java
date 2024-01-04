@@ -29,14 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.utility;
 
 import static java.util.Objects.requireNonNull;
+
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.theokanning.openai.completion.chat.ChatFunction;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.FunctionExecutor;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.FunctionDefinition;
 import schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType;
@@ -94,11 +97,9 @@ public class ChatGPTUtility {
   public static void printResponse(final List<ChatMessage> completions, final PrintStream out) {
     requireNonNull(out, "No ouput stream provided");
     requireNonNull(completions, "No completions provided");
-    completions.stream()
-        .forEach(
-            c -> {
-              out.println(c.getContent());
-            });
+    for (final ChatMessage chatMessage : completions) {
+      out.println(chatMessage.getContent());
+    }
   }
 
   public static List<ChatMessage> systemMessages(
