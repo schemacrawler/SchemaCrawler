@@ -36,19 +36,19 @@ public class ChatGPTCommandOptions implements CommandOptions {
 
   private static final int DEFAULT_CONTEXT = 10;
   private static final int MAXIMUM_CONTEXT = 50;
-  private static final int DEFAULT_TIME_OUT = 10;
-  private static final int MAXIMUM_TIME_OUT = 180;
+  private static final int DEFAULT_TIMEOUT = 10;
+  private static final int MAXIMUM_TIMEOUT = 180;
 
   private final String apiKey;
   private final String model;
-  private final int timeOut;
+  private final int timeout;
   private final int context;
   private final boolean useMetadata;
 
   public ChatGPTCommandOptions(
       final String apiKey,
       final String model,
-      final int timeOut,
+      final int timeout,
       final int context,
       final boolean useMetadata) {
 
@@ -56,10 +56,10 @@ public class ChatGPTCommandOptions implements CommandOptions {
 
     this.model = requireNotBlank(model, "No ChatGPT model provided");
 
-    if (timeOut < 0 || timeOut > MAXIMUM_TIME_OUT) {
-      this.timeOut = DEFAULT_TIME_OUT;
+    if (timeout < 0 || timeout > MAXIMUM_TIMEOUT) {
+      this.timeout = DEFAULT_TIMEOUT;
     } else {
-      this.timeOut = timeOut;
+      this.timeout = timeout;
     }
 
     if (context <= 0 || context > MAXIMUM_CONTEXT) {
@@ -83,8 +83,8 @@ public class ChatGPTCommandOptions implements CommandOptions {
     return model;
   }
 
-  public int getTimeOut() {
-    return timeOut;
+  public int getTimeout() {
+    return timeout;
   }
 
   public boolean isUseMetadata() {

@@ -76,20 +76,20 @@ public class ChatGPTCommandOptionsBuilderTest {
   }
 
   @Test
-  public void chatGPTCommandOptionsBuilderTimeOut() {
+  public void chatGPTCommandOptionsBuilderTimeout() {
 
     final ChatGPTCommandOptionsBuilder optionsBuilder =
         ChatGPTCommandOptionsBuilder.builder().withApiKey("api-key");
 
-    assertThat(optionsBuilder.toOptions().getTimeOut(), is(10));
-    optionsBuilder.withTimeOut(20);
-    assertThat(optionsBuilder.toOptions().getTimeOut(), is(20));
-    optionsBuilder.withTimeOut(0);
-    assertThat(optionsBuilder.toOptions().getTimeOut(), is(0));
-    optionsBuilder.withTimeOut(500);
-    assertThat(optionsBuilder.toOptions().getTimeOut(), is(10));
-    optionsBuilder.withTimeOut(-2);
-    assertThat(optionsBuilder.toOptions().getTimeOut(), is(10));
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(10));
+    optionsBuilder.withTimeout(20);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(20));
+    optionsBuilder.withTimeout(0);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(0));
+    optionsBuilder.withTimeout(500);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(10));
+    optionsBuilder.withTimeout(-2);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(10));
   }
 
   @Test

@@ -40,7 +40,7 @@ public final class ChatGPTCommandOptionsBuilder
         ConfigOptionsBuilder<ChatGPTCommandOptionsBuilder, ChatGPTCommandOptions> {
 
   private static final int DEFAULT_CONTEXT = 10;
-  private static final int DEFAULT_TIME_OUT = 10;
+  private static final int DEFAULT_TIMEOUT = 10;
 
   public static ChatGPTCommandOptionsBuilder builder() {
     return new ChatGPTCommandOptionsBuilder();
@@ -48,14 +48,14 @@ public final class ChatGPTCommandOptionsBuilder
 
   private String apiKey;
   private String model;
-  private int timeOut;
+  private int timeout;
   private int context;
   private boolean useMetadata;
 
   private ChatGPTCommandOptionsBuilder() {
     model = "gpt-3.5-turbo";
     context = DEFAULT_CONTEXT;
-    timeOut = DEFAULT_TIME_OUT;
+    timeout = DEFAULT_TIMEOUT;
   }
 
   @Override
@@ -63,7 +63,7 @@ public final class ChatGPTCommandOptionsBuilder
     if (config != null) {
       apiKey = getApiKey(config);
       model = config.getStringValue("model", model);
-      timeOut = config.getIntegerValue("context", DEFAULT_TIME_OUT);
+      timeout = config.getIntegerValue("context", DEFAULT_TIMEOUT);
       context = config.getIntegerValue("time-out", DEFAULT_CONTEXT);
       useMetadata = config.getBooleanValue("use-metadata");
     }
@@ -76,7 +76,7 @@ public final class ChatGPTCommandOptionsBuilder
     if (options != null) {
       apiKey = options.getApiKey();
       model = options.getModel();
-      timeOut = options.getTimeOut();
+      timeout = options.getTimeout();
       context = options.getContext();
       useMetadata = options.isUseMetadata();
     }
@@ -91,7 +91,7 @@ public final class ChatGPTCommandOptionsBuilder
 
   @Override
   public ChatGPTCommandOptions toOptions() {
-    return new ChatGPTCommandOptions(apiKey, model, timeOut, context, useMetadata);
+    return new ChatGPTCommandOptions(apiKey, model, timeout, context, useMetadata);
   }
 
   /**
@@ -134,11 +134,11 @@ public final class ChatGPTCommandOptionsBuilder
   /**
    * Use the provided time out setting.
    *
-   * @param timeOut Request time-out in seconds.
+   * @param timeout Request time-out in seconds.
    * @return Self.
    */
-  public ChatGPTCommandOptionsBuilder withTimeOut(final int timeOut) {
-    this.timeOut = timeOut;
+  public ChatGPTCommandOptionsBuilder withTimeout(final int timeout) {
+    this.timeout = timeout;
     return this;
   }
 

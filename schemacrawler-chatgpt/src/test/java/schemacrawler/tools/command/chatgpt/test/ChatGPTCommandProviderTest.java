@@ -43,7 +43,7 @@ public class ChatGPTCommandProviderTest {
                 + "PluginCommandOption[name='api-key', valueClass=java.lang.String], "
                 + "PluginCommandOption[name='api-key:env', valueClass=java.lang.String], "
                 + "PluginCommandOption[name='model', valueClass=java.lang.String], "
-                + "PluginCommandOption[name='time-out', valueClass=java.lang.Integer], "
+                + "PluginCommandOption[name='timeout', valueClass=java.lang.Integer], "
                 + "PluginCommandOption[name='context', valueClass=java.lang.Integer], "
                 + "PluginCommandOption[name='use-metadata', valueClass=java.lang.Boolean]"
                 + "]]"));

@@ -59,9 +59,9 @@ public class ChatGPTCommandProvider extends BaseCommandProvider {
         .addOption(
             "model", String.class, "ChatGPT model", "Optional, defaults to 'chatgpt-3.5-turbo'")
         .addOption(
-            "time-out",
+            "timeout",
             Integer.class,
-            "Number of seconds to time-out a request if no response is received",
+            "Number of seconds to timeout a request if no response is received",
             "Optional, defaults to 10")
         .addOption(
             "context",
