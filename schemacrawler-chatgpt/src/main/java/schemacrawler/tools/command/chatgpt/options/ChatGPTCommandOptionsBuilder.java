@@ -63,8 +63,8 @@ public final class ChatGPTCommandOptionsBuilder
     if (config != null) {
       apiKey = getApiKey(config);
       model = config.getStringValue("model", model);
-      timeout = config.getIntegerValue("context", DEFAULT_TIMEOUT);
-      context = config.getIntegerValue("timeout", DEFAULT_CONTEXT);
+      timeout = config.getIntegerValue("timeout", DEFAULT_TIMEOUT);
+      context = config.getIntegerValue("context", DEFAULT_CONTEXT);
       useMetadata = config.getBooleanValue("use-metadata");
     }
 
