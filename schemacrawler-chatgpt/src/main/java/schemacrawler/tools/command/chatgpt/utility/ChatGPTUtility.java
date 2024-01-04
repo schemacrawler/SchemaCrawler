@@ -53,6 +53,10 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public class ChatGPTUtility {
 
+  public static boolean inIntegerRange(final int value, final int min, final int max) {
+    return value > min && value <= max;
+  }
+
   public static boolean isExitCondition(final List<ChatMessage> completions) {
     requireNonNull(completions, "No completions provided");
     final String exitFunctionName = new ExitFunctionDefinition().getName();

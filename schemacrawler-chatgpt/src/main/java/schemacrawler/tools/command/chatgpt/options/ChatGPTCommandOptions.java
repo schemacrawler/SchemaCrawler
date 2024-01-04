@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.options;
 
+import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.inIntegerRange;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import schemacrawler.tools.executable.CommandOptions;
@@ -56,16 +57,16 @@ public class ChatGPTCommandOptions implements CommandOptions {
 
     this.model = requireNotBlank(model, "No ChatGPT model provided");
 
-    if (timeout < 0 || timeout > MAXIMUM_TIMEOUT) {
-      this.timeout = DEFAULT_TIMEOUT;
-    } else {
+    if (inIntegerRange(timeout, -1, MAXIMUM_TIMEOUT)) {
       this.timeout = timeout;
+    } else {
+      this.timeout = DEFAULT_TIMEOUT;
     }
 
-    if (context <= 0 || context > MAXIMUM_CONTEXT) {
-      this.context = DEFAULT_CONTEXT;
-    } else {
+    if (inIntegerRange(context, 0, MAXIMUM_CONTEXT)) {
       this.context = context;
+    } else {
+      this.context = DEFAULT_CONTEXT;
     }
 
     this.useMetadata = useMetadata;
