@@ -30,8 +30,10 @@ package schemacrawler.tools.command.chatgpt;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.theokanning.openai.model.Model;
 import com.theokanning.openai.service.OpenAiService;
+
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 
@@ -56,7 +58,10 @@ public class ChatGPTCommand extends BaseSchemaCrawlerCommand<ChatGPTCommandOptio
 
   @Override
   public void execute() {
-    new ChatGPTConsole(commandOptions, catalog, connection).console();
+    try (ChatGPTConsole chatGPTConsole =
+        new ChatGPTConsole(commandOptions, catalog, connection); ) {
+      chatGPTConsole.console();
+    }
   }
 
   @Override

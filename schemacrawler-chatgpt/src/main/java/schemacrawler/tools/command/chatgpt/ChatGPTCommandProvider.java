@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptionsBuilder;
@@ -57,6 +58,11 @@ public class ChatGPTCommandProvider extends BaseCommandProvider {
             "api-key:env", String.class, "OpenAI API key, from an environmental variable value")
         .addOption(
             "model", String.class, "ChatGPT model", "Optional, defaults to 'chatgpt-3.5-turbo'")
+        .addOption(
+            "timeout",
+            Integer.class,
+            "Number of seconds to timeout a request if no response is received",
+            "Optional, defaults to 10")
         .addOption(
             "context",
             Integer.class,

@@ -3,7 +3,9 @@ package schemacrawler.tools.command.chatgpt.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptionsBuilder;
 import schemacrawler.tools.options.Config;
@@ -11,7 +13,7 @@ import schemacrawler.tools.options.Config;
 public class ChatGPTCommandOptionsBuilderTest {
 
   @Test
-  public void chatGPTCommandOptionsBuilder() {
+  public void chatGPTCommandOptionsBuilderApiKey() {
 
     assertThrows(
         IllegalArgumentException.class, () -> ChatGPTCommandOptionsBuilder.builder().toOptions());
@@ -32,18 +34,75 @@ public class ChatGPTCommandOptionsBuilderTest {
     optionsBuilder.withApiKey("new-api-key");
     assertThat(optionsBuilder.toOptions().getApiKey(), is("new-api-key"));
     assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
+  }
+
+  @Test
+  public void chatGPTCommandOptionsBuilderContext() {
+
+    final ChatGPTCommandOptionsBuilder optionsBuilder =
+        ChatGPTCommandOptionsBuilder.builder().withApiKey("api-key");
+
+    assertThat(optionsBuilder.toOptions().getContext(), is(10));
+    optionsBuilder.withContext(20);
+    assertThat(optionsBuilder.toOptions().getContext(), is(20));
+    optionsBuilder.withContext(0);
+    assertThat(optionsBuilder.toOptions().getContext(), is(10));
+    optionsBuilder.withContext(500);
+    assertThat(optionsBuilder.toOptions().getContext(), is(10));
+    optionsBuilder.withContext(-2);
+    assertThat(optionsBuilder.toOptions().getContext(), is(10));
+  }
+
+  @Test
+  public void chatGPTCommandOptionsBuilderModel() {
+
+    assertThrows(
+        IllegalArgumentException.class, () -> ChatGPTCommandOptionsBuilder.builder().toOptions());
+
+    final ChatGPTCommandOptionsBuilder optionsBuilder =
+        ChatGPTCommandOptionsBuilder.builder().withApiKey("api-key");
 
     optionsBuilder.withModel(null);
-    assertThat(optionsBuilder.toOptions().getApiKey(), is("new-api-key"));
+    assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
     assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
 
     optionsBuilder.withModel("\t");
-    assertThat(optionsBuilder.toOptions().getApiKey(), is("new-api-key"));
+    assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
     assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
 
     optionsBuilder.withModel("new-model");
-    assertThat(optionsBuilder.toOptions().getApiKey(), is("new-api-key"));
+    assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
     assertThat(optionsBuilder.toOptions().getModel(), is("new-model"));
+  }
+
+  @Test
+  public void chatGPTCommandOptionsBuilderTimeout() {
+
+    final ChatGPTCommandOptionsBuilder optionsBuilder =
+        ChatGPTCommandOptionsBuilder.builder().withApiKey("api-key");
+
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(10));
+    optionsBuilder.withTimeout(20);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(20));
+    optionsBuilder.withTimeout(0);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(0));
+    optionsBuilder.withTimeout(500);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(10));
+    optionsBuilder.withTimeout(-2);
+    assertThat(optionsBuilder.toOptions().getTimeout(), is(10));
+  }
+
+  @Test
+  public void chatGPTCommandOptionsBuilderUseMetadata() {
+
+    final ChatGPTCommandOptionsBuilder optionsBuilder =
+        ChatGPTCommandOptionsBuilder.builder().withApiKey("api-key");
+
+    assertThat(optionsBuilder.toOptions().isUseMetadata(), is(false));
+    optionsBuilder.withUseMetadata(true);
+    assertThat(optionsBuilder.toOptions().isUseMetadata(), is(true));
+    optionsBuilder.withUseMetadata(false);
+    assertThat(optionsBuilder.toOptions().isUseMetadata(), is(false));
   }
 
   @Test

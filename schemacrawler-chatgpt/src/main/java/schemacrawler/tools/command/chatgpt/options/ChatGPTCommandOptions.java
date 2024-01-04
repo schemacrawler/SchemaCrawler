@@ -28,28 +28,47 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.options;
 
+import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.inIntegerRange;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
 import schemacrawler.tools.executable.CommandOptions;
 
 public class ChatGPTCommandOptions implements CommandOptions {
 
   private static final int DEFAULT_CONTEXT = 10;
-  static final int MAXIMUM_CONTEXT = 50;
+  private static final int MAXIMUM_CONTEXT = 50;
+  private static final int DEFAULT_TIMEOUT = 10;
+  private static final int MAXIMUM_TIMEOUT = 180;
 
   private final String apiKey;
   private final String model;
+  private final int timeout;
   private final int context;
   private final boolean useMetadata;
 
   public ChatGPTCommandOptions(
-      final String apiKey, final String model, final int context, final boolean useMetadata) {
+      final String apiKey,
+      final String model,
+      final int timeout,
+      final int context,
+      final boolean useMetadata) {
+
     this.apiKey = requireNotBlank(apiKey, "No OpenAI API key provided");
+
     this.model = requireNotBlank(model, "No ChatGPT model provided");
-    if (context <= 0 || context > MAXIMUM_CONTEXT) {
-      this.context = DEFAULT_CONTEXT;
+
+    if (inIntegerRange(timeout, -1, MAXIMUM_TIMEOUT)) {
+      this.timeout = timeout;
     } else {
-      this.context = context;
+      this.timeout = DEFAULT_TIMEOUT;
     }
+
+    if (inIntegerRange(context, 0, MAXIMUM_CONTEXT)) {
+      this.context = context;
+    } else {
+      this.context = DEFAULT_CONTEXT;
+    }
+
     this.useMetadata = useMetadata;
   }
 
@@ -63,6 +82,10 @@ public class ChatGPTCommandOptions implements CommandOptions {
 
   public String getModel() {
     return model;
+  }
+
+  public int getTimeout() {
+    return timeout;
   }
 
   public boolean isUseMetadata() {
