@@ -48,7 +48,8 @@ public final class ChatGPTConsole implements AutoCloseable {
     requireNonNull(connection, "No connection provided");
 
     functionExecutor = ChatGPTUtility.newFunctionExecutor(catalog, connection);
-    service = new OpenAiService(commandOptions.getApiKey(), Duration.ofSeconds(20));
+    final Duration timeout = Duration.ofSeconds(commandOptions.getTimeOut());
+    service = new OpenAiService(commandOptions.getApiKey(), timeout);
 
     final List<ChatMessage> systemMessages;
     if (commandOptions.isUseMetadata()) {
