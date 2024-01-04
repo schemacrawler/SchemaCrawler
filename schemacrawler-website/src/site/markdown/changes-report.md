@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="a16.20.9"></a>
+## Release 16.20.9 - 2024-01-15
+
+- Add a timeout option for ChatGPT
+
+
 <a name="a16.20.8"></a>
 ## Release 16.20.8 - 2023-12-30
 
