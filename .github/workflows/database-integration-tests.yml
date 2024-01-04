@@ -3,6 +3,9 @@ name: Database Integration Tests
 on:
   workflow_dispatch:
   push:
+  pull_request:
+    branches:
+      - main
   schedule:
     - cron: '21 21 * * *'
 
