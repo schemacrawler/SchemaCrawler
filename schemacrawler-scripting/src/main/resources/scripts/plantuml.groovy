@@ -21,15 +21,15 @@ entity "<b>$name</b>" as $slug << (V, Aquamarine) view >>
 !endprocedure
 
 !procedure $pkfk($name)
-<color:#Brown><&key></color> <b>$name</b>
+<color:#Brown><&key></color> <u><i>$name</i></u>
 !endprocedure
 
 !procedure $pk($name)
-<color:#GoldenRod><&key></color> <b>$name</b>
+<color:#GoldenRod><&key></color> <u>$name</u>
 !endprocedure
 
 !procedure $fk($name)
-<color:#Silver><&key></color> $name
+<color:#Silver><&key></color> <i>$name</i>
 !endprocedure
 
 !procedure $column($name)
@@ -37,11 +37,19 @@ entity "<b>$name</b>" as $slug << (V, Aquamarine) view >>
 !endprocedure
 
 !procedure $pk_index($name, $columns)
-  {method}<<PK>> $name ($columns)
+{method}<<PK>> $name ($columns)
 !endprocedure
 
 !procedure $fk_constraint($name, $col, $target, $columns)
-  {method}<<FK>> $name ($col) <&arrow-right> $target ($columns)
+{method}<<FK>> $name ($col) <&arrow-right> $target ($columns)
+!endprocedure
+
+!procedure $unique($name, $columns)
+{method}<<unique>> $name ($columns)
+!endprocedure
+
+!procedure $index_column($name, $columns)
+{method}<<index>> $name ($columns)
 !endprocedure
 
 ''')
@@ -49,7 +57,7 @@ entity "<b>$name</b>" as $slug << (V, Aquamarine) view >>
 renderTitle(title, catalog)
 
 // Tables
-renderSchemas()
+renderSchemas(catalog)
 
 // Foreign keys
 renderLinks(catalog)
@@ -79,7 +87,7 @@ private renderSchemas(Catalog catalog) {
 }
 
 private void renderSchema(Schema schema, Catalog catalog) {
-  println("\$schema(\"${schema.fullName.replaceAll('"', '')}\", \"${schema.key().slug()}\") {")
+  println("\$schema(\"${schema.fullName.replaceAll('"', '""')}\", \"${schema.key().slug()}\") {")
   println()
   renderTables(catalog, schema)
   println()
@@ -120,22 +128,33 @@ private List<Column> renderColumnNotes(Table table) {
 
 private void renderTable(Table table) {
   def viewType = table.tableType.view ? '$view' : '$table'
-  println(viewType + '("' + table.name.replaceAll('"', '') + '", "' + table.key().slug() + '") {')
+  println("$viewType(\"${table.name.replaceAll('"', '""')}\", \"${table.key().slug()}\") {")
+  renderColumns(table)
+  if (table.primaryKey) {
+    println "  \$pk_index(\"${table.primaryKey.name.replaceAll('"', '""')}\",\"${table.primaryKey.constrainedColumns.collect { it.name.replaceAll('"', '""') }.join(',')}\")"
+  }
+  table.foreignKeys.each { fk ->
+    println "  \$fk_constraint(\"${fk.name.replaceAll('"', '""')}\", \"${fk.constrainedColumns.collect { it.name.replaceAll('"', '""') }.join(',')}\", \"${fk.referencedTable.name.replaceAll('"', '""')}\", \"${fk.columnReferences.collect { it.primaryKeyColumn.name.replaceAll('"', '""') }.join(',')}\" )"
+  }
+  table.indexes.each { index ->
+    print('  ');
+    if (index.unique) {
+      print('$unique');
+    } else {
+      print('$index_column');
+    }
+    printf("(\"%s\", \"%s\")%n", index.name.replaceAll('"', '""'), index.columns.collect { it.name.replaceAll('"', '""') }.join(","));
+  }
+  println('}')
+}
+
+private List<Column> renderColumns(Table table) {
   table.columns.each { column ->
     def columnType = column.partOfPrimaryKey && column.partOfForeignKey ? '$pkfk' : column.partOfPrimaryKey ? '$pk'
       : column.partOfForeignKey ? '$fk'
       : '$column'
-    println('  ' + columnType + '("' + column.name + '"): ' + column.columnDataType.name
-      + (column.nullable ? '' : ' NOT NULL'))
+    println("  $columnType(\"$column.name\"): $column.columnDataType.name${column.columnDataType.precision ? "(${column.size}${column.decimalDigits ? ",${column.decimalDigits}" : ''})" : ''}${column.nullable ? '' : ' NOT NULL'}")
   }
-  if (table.primaryKey) {
-    println "  \$pk_index(\"${table.primaryKey.name}\",\"${table.primaryKey.constrainedColumns.collect { it.name }.join(',')}\")"
-
-  }
-  table.foreignKeys.each { fk ->
-    println "\$fk_constraint(\"${fk.name}\", \"${fk.constrainedColumns.collect { it.name }.join(',')}\", \"${fk.referencedTable.name}\", \"${fk.columnReferences.collect { it.primaryKeyColumn.name }.join(',')}\" )"
-  }
-  println('}')
 }
 
 private Object renderLinks(Catalog catalog) {
@@ -148,11 +167,11 @@ private Object renderLinks(Catalog catalog) {
         def fkColumn = columnReference.foreignKeyColumn
         print('' + pkTable.schema.key().slug() + '.'
           + pkTable.key().slug() + '::'
-          + pkColumn.name.replaceAll('"', '')
+          + pkColumn.name.replaceAll('"', '""')
           + '  ||--o{ '
           + fkTable.schema.key().slug() + '.'
           + fkTable.key().slug() + '::'
-          + fkColumn.name.replaceAll('"', ''))
+          + fkColumn.name.replaceAll('"', '""'))
         if (fk.name && !fk.name.startsWith('SCHCRWLR_')) {
           println(' : ' + fk.name)
         }
