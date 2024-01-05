@@ -1,5 +1,4 @@
 import schemacrawler.schema.Catalog
-import schemacrawler.schema.Column
 import schemacrawler.schema.Schema
 import schemacrawler.schema.Table
 
@@ -77,7 +76,7 @@ private void renderTitle(String title, Catalog catalog) {
   println()
 }
 
-private renderSchemas(Catalog catalog) {
+private void renderSchemas(Catalog catalog) {
   catalog.schemas.forEach { schema ->
     if (!catalog.getTables(schema).empty) {
       renderSchema(schema, catalog)
@@ -94,7 +93,7 @@ private void renderSchema(Schema schema, Catalog catalog) {
   println('}')
 }
 
-private Object renderTables(Catalog catalog, Schema schema) {
+private void renderTables(Catalog catalog, Schema schema) {
   catalog.getTables(schema).forEach { table ->
     renderTable(table)
     println()
@@ -114,7 +113,7 @@ private void renderTableNote(Table table) {
   }
 }
 
-private List<Column> renderColumnNotes(Table table) {
+private void renderColumnNotes(Table table) {
   table.columns.each { column ->
     if (column.remarks) {
       println('note right of ' + table.key().slug() + '::'
@@ -148,7 +147,7 @@ private void renderTable(Table table) {
   println('}')
 }
 
-private List<Column> renderColumns(Table table) {
+private void renderColumns(Table table) {
   table.columns.each { column ->
     def columnType = column.partOfPrimaryKey && column.partOfForeignKey ? '$pkfk' : column.partOfPrimaryKey ? '$pk'
       : column.partOfForeignKey ? '$fk'
@@ -157,7 +156,30 @@ private List<Column> renderColumns(Table table) {
   }
 }
 
-private Object renderLinks(Catalog catalog) {
+private void renderLinks(Catalog catalog) {
+  catalog.tables.each { table ->
+    table.exportedForeignKeys.each { fk ->
+      def pkTable = fk.primaryKeyTable
+      def fkTable = fk.foreignKeyTable
+
+      print("${pkTable.schema.key().slug()}.${pkTable.key().slug()}")
+      def primaryColumns = fk.columnReferences.primaryKeyColumn.collect { it.name.replaceAll('"', '""') }
+      def foreignColumns = fk.columnReferences.foreignKeyColumn.collect { it.name.replaceAll('"', '""') }
+      if (primaryColumns.size() == 1) {
+        print("::${primaryColumns.join(',')} ")
+      }
+      print(" \"${primaryColumns.join(',')}\" ||--o{ \"${foreignColumns.join(',')}\" ${fkTable.schema.key().slug()}.${fkTable.key().slug()}")
+      if (foreignColumns.size() == 1) {
+        print("::${foreignColumns.join(',')} ")
+      }
+      if (fk.name && !fk.name.startsWith('SCHCRWLR_')) {
+        println(' : ' + fk.name)
+      }
+    }
+  }
+}
+
+private void renderLinksOrig(Catalog catalog) {
   catalog.tables.each { table ->
     table.exportedForeignKeys.each { fk ->
       def pkTable = fk.primaryKeyTable
