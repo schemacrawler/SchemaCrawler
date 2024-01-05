@@ -20,19 +20,19 @@ entity "<b>$name</b>" as $slug << (V, Aquamarine) view >>
 !endprocedure
 
 !procedure $pkfk($name)
-<color:#Brown><&key></color> <u><i>$name</i></u>
+{field}<color:#Brown><&key></color> <u><i>$name</i></u>
 !endprocedure
 
 !procedure $pk($name)
-<color:#GoldenRod><&key></color> <u>$name</u>
+{field}<color:#GoldenRod><&key></color> <u>$name</u>
 !endprocedure
 
 !procedure $fk($name)
-<color:#Silver><&key></color> <i>$name</i>
+{field}<color:#Silver><&key></color> <i>$name</i>
 !endprocedure
 
 !procedure $column($name)
-{field} <color:#White><&media-record></color> $name
+{field}<color:#White><&media-record></color> $name
 !endprocedure
 
 !procedure $pk_index($name, $columns)
