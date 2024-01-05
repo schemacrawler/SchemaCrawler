@@ -129,20 +129,22 @@ private void renderTable(Table table) {
   def viewType = table.tableType.view ? '$view' : '$table'
   println("$viewType(\"${table.name.replaceAll('"', '""')}\", \"${table.key().slug()}\") {")
   renderColumns(table)
-  if (table.primaryKey) {
+  if (table.primaryKey && !(table.indexes?.any { it.name == table.primaryKey.name })) {
     println "  \$pk_index(\"${table.primaryKey.name.replaceAll('"', '""')}\",\"${table.primaryKey.constrainedColumns.collect { it.name.replaceAll('"', '""') }.join(',')}\")"
   }
   table.foreignKeys.each { fk ->
     println "  \$fk_constraint(\"${fk.name.replaceAll('"', '""')}\", \"${fk.constrainedColumns.collect { it.name.replaceAll('"', '""') }.join(',')}\", \"${fk.referencedTable.name.replaceAll('"', '""')}\", \"${fk.columnReferences.collect { it.primaryKeyColumn.name.replaceAll('"', '""') }.join(',')}\" )"
   }
   table.indexes.each { index ->
-    print('  ');
-    if (index.unique) {
-      print('$unique');
+    print('  ')
+    if (table.primaryKey?.name == index.name) {
+      print('$pk_index')
+    } else if (index.unique) {
+      print('$unique')
     } else {
-      print('$index_column');
+      print('$index_column')
     }
-    printf("(\"%s\", \"%s\")%n", index.name.replaceAll('"', '""'), index.columns.collect { it.name.replaceAll('"', '""') }.join(","));
+    printf("(\"%s\", \"%s\")%n", index.name.replaceAll('"', '""'), index.columns.sort { it.indexOrdinalPosition }.collect { it.name.replaceAll('"', '""') }.join(","))
   }
   println('}')
 }
@@ -174,29 +176,6 @@ private void renderLinks(Catalog catalog) {
       }
       if (fk.name && !fk.name.startsWith('SCHCRWLR_')) {
         println(' : ' + fk.name)
-      }
-    }
-  }
-}
-
-private void renderLinksOrig(Catalog catalog) {
-  catalog.tables.each { table ->
-    table.exportedForeignKeys.each { fk ->
-      def pkTable = fk.primaryKeyTable
-      def fkTable = fk.foreignKeyTable
-      fk.columnReferences.each { columnReference ->
-        def pkColumn = columnReference.primaryKeyColumn
-        def fkColumn = columnReference.foreignKeyColumn
-        print('' + pkTable.schema.key().slug() + '.'
-          + pkTable.key().slug() + '::'
-          + pkColumn.name.replaceAll('"', '""')
-          + '  ||--o{ '
-          + fkTable.schema.key().slug() + '.'
-          + fkTable.key().slug() + '::'
-          + fkColumn.name.replaceAll('"', '""'))
-        if (fk.name && !fk.name.startsWith('SCHCRWLR_')) {
-          println(' : ' + fk.name)
-        }
       }
     }
   }
