@@ -241,6 +241,18 @@ schemacrawler/schemacrawler \
 Generate a diagram by pasting the contents of "sc.dbml" into [dbdiagram.io](https://dbdiagram.io/d).
 
 
+## User Contributed Diagram Scripts
+
+You can completely customize how your diagram will look by writing your own script. It is easier to write your own script 
+in a programming language of your choice. You can start with some of the user-contributed scripts below. 
+To use your own script, use a command like the one above, but provide a full path to your script with the
+`--script` option, and of course set the `--script-language` to the right one.
+
+Here are some user-contributed diagram scripts:
+- [Petr Vraník's Groovy script to generate PlantUML diagrams](https://gist.github.com/konikvranik/15ff54cb2c3b255ce86a689b8e2ba6c6)
+
+
+
 ## SchemaCrawler Diagrams in Use
 
 Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](https://www.noumea.nc/).
