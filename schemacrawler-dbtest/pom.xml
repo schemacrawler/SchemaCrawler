@@ -59,7 +59,7 @@
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>4.11.0</version>
+      <version>4.11.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -91,7 +91,7 @@
     <dependency>
       <groupId>org.firebirdsql</groupId>
       <artifactId>firebird-testcontainers-java</artifactId>
-      <version>1.3.0</version>
+      <version>1.4.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>

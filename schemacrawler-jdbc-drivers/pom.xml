@@ -109,12 +109,12 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>434</version>
+      <version>435</version>
     </dependency>
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>4.11.0</version>
+      <version>4.11.1</version>
       <exclusions>
         <exclusion>
           <groupId>com.github.jnr</groupId>
