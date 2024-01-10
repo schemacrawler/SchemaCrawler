@@ -9,6 +9,6 @@ CREATE FUNCTION trg_authors() RETURNS trigger AS $trg_authors$
 $trg_authors$ LANGUAGE plpgsql
 @
 
-CREATE TRIGGER TRG_Authors BEFORE INSERT OR UPDATE ON Authors
+CREATE TRIGGER TRG_Authors BEFORE UPDATE OR DELETE ON Authors
     FOR EACH ROW EXECUTE PROCEDURE trg_authors();
 @
