@@ -1,7 +1,7 @@
 -- Triggers
--- Oracle syntax
+-- SQLite syntax
 CREATE TRIGGER TRG_Authors 
-AFTER INSERT OR DELETE 
+AFTER DELETE 
 ON Authors 
 FOR EACH ROW 
 BEGIN

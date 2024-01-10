@@ -1,5 +1,5 @@
 -- Triggers
--- MySQL and Oracle syntax
+-- HyperSQL, MySQL and DB2 syntax
 CREATE TRIGGER TRG_Authors 
   AFTER DELETE ON Authors 
   FOR EACH ROW 
