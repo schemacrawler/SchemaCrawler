@@ -118,13 +118,11 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
     this.conditionTiming = conditionTiming;
   }
 
-  void addEventManipulationType(final EventManipulationType eventManipulationType) {
-    if (eventManipulationType != null) {
-      this.eventManipulationType.add(eventManipulationType);
-    }
-    if (this.eventManipulationType.size() > 1
-        && this.eventManipulationType.contains(EventManipulationType.unknown)) {
-      this.eventManipulationType.remove(EventManipulationType.unknown);
+  void setEventManipulationTypes(final Set<EventManipulationType> eventManipulationTypes) {
+    if (eventManipulationTypes == null) {
+      this.eventManipulationType.add(EventManipulationType.unknown);
+    } else {
+      this.eventManipulationType.addAll(eventManipulationTypes);
     }
   }
 }

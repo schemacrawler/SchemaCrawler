@@ -35,11 +35,16 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
+import static schemacrawler.utility.EnumUtility.enumValue;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.EnumSet;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -365,8 +370,7 @@ final class TableExtRetriever extends AbstractRetriever {
 
         final MutableTable table = tableOptional.get();
 
-        final EventManipulationType eventManipulationType =
-            results.getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
+        final Set<EventManipulationType> eventManipulationTypes = getEventManipulationType(results);
         final int actionOrder = results.getInt("ACTION_ORDER", 0);
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
@@ -394,7 +398,7 @@ final class TableExtRetriever extends AbstractRetriever {
         }
         trigger.withQuoting(getRetrieverConnection().getIdentifiers());
 
-        trigger.addEventManipulationType(eventManipulationType);
+        trigger.setEventManipulationTypes(eventManipulationTypes);
         trigger.addAttributes(results.getAttributes());
 
         // Add trigger to the table
@@ -403,6 +407,52 @@ final class TableExtRetriever extends AbstractRetriever {
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve triggers", e);
     }
+  }
+
+  private Set<EventManipulationType> getEventManipulationType(MetadataResultSet results) {
+    if (results == null) {
+      return null;
+    }
+    String eventManipulationString = results.getString("EVENT_MANIPULATION");
+    if (isBlank(eventManipulationString)) {
+      return null;
+    }
+    eventManipulationString = eventManipulationString.toLowerCase(Locale.ENGLISH);
+
+    // Find what to split multiple values by
+    final String splitBy;
+    String oracleSeparator = " or ";
+    String plainSeparator = ";";
+    if (eventManipulationString.contains(oracleSeparator)) {
+      // Oracle returns values separated by "OR"
+      splitBy = oracleSeparator;
+    } else if (eventManipulationString.contains(plainSeparator)) {
+      splitBy = plainSeparator;
+
+    } else {
+      splitBy = "";
+    }
+
+    // Split into multiple event manipulation types
+    final String[] eventManipulationTypeStrings;
+    if (splitBy.isEmpty()) {
+      eventManipulationTypeStrings = new String[] {eventManipulationString};
+    } else {
+      eventManipulationTypeStrings = eventManipulationString.split(splitBy);
+    }
+
+    final Set<EventManipulationType> eventManipulationTypes =
+        EnumSet.noneOf(EventManipulationType.class);
+    for (String eventManipulationTypeString : eventManipulationTypeStrings) {
+      final EventManipulationType eventManipulationType =
+          enumValue(eventManipulationTypeString, EventManipulationType.unknown);
+      eventManipulationTypes.add(eventManipulationType);
+    }
+    if (eventManipulationTypes.size() > 1) {
+      eventManipulationTypes.remove(EventManipulationType.unknown);
+    }
+
+    return eventManipulationTypes;
   }
 
   /**

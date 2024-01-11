@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumSet;
 
@@ -41,7 +42,7 @@ public class EnumUtility {
   public static <E extends Enum<E>> E enumValue(final String value, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     E enumValue;
-    if (value == null) {
+    if (isBlank(value)) {
       enumValue = defaultValue;
     } else {
       try {
@@ -49,7 +50,7 @@ public class EnumUtility {
         if (enumClass.getEnclosingClass() != null) {
           enumClass = enumClass.getEnclosingClass();
         }
-        enumValue = Enum.valueOf((Class<E>) enumClass, value);
+        enumValue = Enum.valueOf((Class<E>) enumClass, value.trim());
       } catch (final Exception e) {
         enumValue = defaultValue;
       }
