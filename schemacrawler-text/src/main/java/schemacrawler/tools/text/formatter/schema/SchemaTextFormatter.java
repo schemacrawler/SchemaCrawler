@@ -940,15 +940,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     for (final Trigger trigger : triggers) {
       if (trigger != null) {
 
-        final String orientation;
-        if (trigger.getActionOrientation() != null
-            && trigger.getActionOrientation() != ActionOrientationType.unknown) {
-          orientation = "per " + trigger.getActionOrientation();
-        } else {
-          orientation = "";
-        }
-
         final StringBuilder timingBuffer = new StringBuilder();
+
         final ConditionTimingType conditionTiming = trigger.getConditionTiming();
         if (conditionTiming != null && conditionTiming != ConditionTimingType.unknown) {
           timingBuffer.append(conditionTiming);
@@ -964,10 +957,15 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
             timingBuffer.append(eventManipulationType);
             if (eventManipulationTypes.indexOf(eventManipulationType)
                 < eventManipulationTypes.size() - 1) {
-              timingBuffer.append(", ");
+              timingBuffer.append(" or ");
             }
           }
         }
+        if (trigger.getActionOrientation() != null
+            && trigger.getActionOrientation() != ActionOrientationType.unknown) {
+          timingBuffer.append(", per ").append(trigger.getActionOrientation());
+        }
+
         final String timing = timingBuffer.toString();
 
         String triggerType = "[trigger]";
@@ -985,7 +983,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         }
 
         formattingHelper.writeNameRow(triggerName, triggerType);
-        formattingHelper.writeDescriptionRow(orientation);
         formattingHelper.writeDescriptionRow(timing);
 
         if (!isBlank(actionCondition)) {
