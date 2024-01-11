@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
@@ -43,12 +46,12 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
   private int actionOrder;
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
-  private EventManipulationType eventManipulationType;
+  private Set<EventManipulationType> eventManipulationType;
 
   MutableTrigger(final Table parent, final String name) {
     super(new TablePointer(parent), name);
     // Default values
-    eventManipulationType = EventManipulationType.unknown;
+    eventManipulationType = EnumSet.noneOf(EventManipulationType.class);
     actionOrientation = ActionOrientationType.unknown;
     conditionTiming = ConditionTimingType.unknown;
     actionCondition = new StringBuffer();
@@ -87,8 +90,8 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
 
   /** {@inheritDoc} */
   @Override
-  public EventManipulationType getEventManipulationType() {
-    return eventManipulationType;
+  public Set<EventManipulationType> getEventManipulationTypes() {
+    return EnumSet.copyOf(eventManipulationType);
   }
 
   void appendActionCondition(final String actionCondition) {
@@ -115,7 +118,13 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
     this.conditionTiming = conditionTiming;
   }
 
-  void setEventManipulationType(final EventManipulationType eventManipulationType) {
-    this.eventManipulationType = eventManipulationType;
+  void addEventManipulationType(final EventManipulationType eventManipulationType) {
+    if (eventManipulationType != null) {
+      this.eventManipulationType.add(eventManipulationType);
+    }
+    if (this.eventManipulationType.size() > 1
+        && this.eventManipulationType.contains(EventManipulationType.unknown)) {
+      this.eventManipulationType.remove(EventManipulationType.unknown);
+    }
   }
 }

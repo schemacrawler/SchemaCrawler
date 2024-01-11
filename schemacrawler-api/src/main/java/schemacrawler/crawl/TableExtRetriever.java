@@ -35,12 +35,14 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.ActionOrientationType;
@@ -377,17 +379,22 @@ final class TableExtRetriever extends AbstractRetriever {
         final ConditionTimingType conditionTiming =
             ConditionTimingType.valueOfFromValue(conditionTimingString);
 
-        final MutableTrigger trigger =
-            table.lookupTrigger(triggerName).orElse(new MutableTrigger(table, triggerName));
+        final MutableTrigger trigger;
+        final Optional<MutableTrigger> optionalTrigger = table.lookupTrigger(triggerName);
+        if (optionalTrigger.isPresent()) {
+          trigger = optionalTrigger.get();
+        } else {
+          trigger = new MutableTrigger(table, triggerName);
+          // Set fields only for the first time the trigger is seen
+          trigger.setActionOrder(actionOrder);
+          trigger.appendActionCondition(actionCondition);
+          trigger.appendActionStatement(actionStatement);
+          trigger.setActionOrientation(actionOrientation);
+          trigger.setConditionTiming(conditionTiming);
+        }
         trigger.withQuoting(getRetrieverConnection().getIdentifiers());
 
-        trigger.setEventManipulationType(eventManipulationType);
-        trigger.setActionOrder(actionOrder);
-        trigger.appendActionCondition(actionCondition);
-        trigger.appendActionStatement(actionStatement);
-        trigger.setActionOrientation(actionOrientation);
-        trigger.setConditionTiming(conditionTiming);
-
+        trigger.addEventManipulationType(eventManipulationType);
         trigger.addAttributes(results.getAttributes());
 
         // Add trigger to the table
