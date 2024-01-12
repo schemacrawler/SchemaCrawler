@@ -5,12 +5,22 @@ SELECT
     AS TRIGGER_SCHEMA,
   triggers.name
     AS TRIGGER_NAME,
-  CASE
-    WHEN OBJECTPROPERTY(triggers.id, 'ExecIsInsertTrigger') = 1 THEN 'INSERT'
-    WHEN OBJECTPROPERTY(triggers.id, 'ExecIsUpdateTrigger') = 1 THEN 'UPDATE'
-    WHEN OBJECTPROPERTY(triggers.id, 'ExecIsDeleteTrigger') = 1 THEN 'DELETE'
-    ELSE 'UNKNOWN'
-  END
+  CONCAT(
+    CASE
+      WHEN OBJECTPROPERTY(triggers.id, 'ExecIsInsertTrigger') = 1 THEN 'INSERT'
+      ELSE 'UNKNOWN'
+    END,
+    ', ',
+    CASE
+      WHEN OBJECTPROPERTY(triggers.id, 'ExecIsUpdateTrigger') = 1 THEN 'UPDATE'
+      ELSE 'UNKNOWN'
+    END,
+    ', ',
+    CASE
+      WHEN OBJECTPROPERTY(triggers.id, 'ExecIsDeleteTrigger') = 1 THEN 'DELETE'
+      ELSE 'UNKNOWN'
+    END
+  )
     AS EVENT_MANIPULATION,
   information_schema_tables.TABLE_CATALOG
     AS EVENT_OBJECT_CATALOG,
@@ -30,7 +40,7 @@ SELECT
     AS ACTION_ORDER,
   ''
     AS ACTION_CONDITION,
-  'UNKNOWN'
+  'STATEMENT'
     AS ACTION_ORIENTATION,
   CASE
     WHEN OBJECTPROPERTY(triggers.id, 'ExecIsAfterTrigger') = 1 THEN 'AFTER'

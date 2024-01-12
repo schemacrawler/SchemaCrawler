@@ -422,7 +422,7 @@ final class TableExtRetriever extends AbstractRetriever {
     // Find what to split multiple values by
     final String splitBy;
     final String oracleSeparator = " or ";
-    final String plainSeparator = ";";
+    final String plainSeparator = ",";
     if (eventManipulationString.contains(oracleSeparator)) {
       // Oracle returns values separated by "OR"
       splitBy = oracleSeparator;
