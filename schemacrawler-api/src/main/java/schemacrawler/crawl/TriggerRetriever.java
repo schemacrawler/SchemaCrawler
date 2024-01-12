@@ -29,13 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
-import static schemacrawler.utility.EnumUtility.enumValue;
+import static schemacrawler.utility.EnumUtility.enumValues;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -163,30 +162,10 @@ final class TriggerRetriever extends AbstractRetriever {
       splitBy = oracleSeparator;
     } else if (eventManipulationString.contains(plainSeparator)) {
       splitBy = plainSeparator;
-
     } else {
       splitBy = "";
     }
 
-    // Split into multiple event manipulation types
-    final String[] eventManipulationTypeStrings;
-    if (splitBy.isEmpty()) {
-      eventManipulationTypeStrings = new String[] {eventManipulationString};
-    } else {
-      eventManipulationTypeStrings = eventManipulationString.split(splitBy);
-    }
-
-    final Set<EventManipulationType> eventManipulationTypes =
-        EnumSet.noneOf(EventManipulationType.class);
-    for (String eventManipulationTypeString : eventManipulationTypeStrings) {
-      final EventManipulationType eventManipulationType =
-          enumValue(eventManipulationTypeString, EventManipulationType.unknown);
-      eventManipulationTypes.add(eventManipulationType);
-    }
-    if (eventManipulationTypes.size() > 1) {
-      eventManipulationTypes.remove(EventManipulationType.unknown);
-    }
-
-    return eventManipulationTypes;
+    return enumValues(eventManipulationString, splitBy, EventManipulationType.unknown);
   }
 }
