@@ -12,7 +12,6 @@ Contact details for book authors
 Triggers
 
 TRG_AUTHORS                                                    [trigger]
-  per row
-  after delete
+  after delete, per row
 UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
 

@@ -208,7 +208,12 @@ public final class MetadataResultSet implements AutoCloseable {
    * @return Enum value of the column, or the default if not available
    */
   public <E extends Enum<E>> E getEnum(final String columnName, final E defaultValue) {
+    requireNotBlank(columnName, "No column name provided");
+    requireNonNull(defaultValue, "No default value provided");
     final String value = getString(columnName);
+    if (isBlank(value)) {
+      return defaultValue;
+    }
     return enumValue(value.toLowerCase(Locale.ENGLISH), defaultValue);
   }
 

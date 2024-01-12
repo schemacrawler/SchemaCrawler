@@ -409,7 +409,7 @@ final class TableExtRetriever extends AbstractRetriever {
     }
   }
 
-  private Set<EventManipulationType> getEventManipulationType(MetadataResultSet results) {
+  private Set<EventManipulationType> getEventManipulationType(final MetadataResultSet results) {
     if (results == null) {
       return null;
     }
@@ -421,8 +421,8 @@ final class TableExtRetriever extends AbstractRetriever {
 
     // Find what to split multiple values by
     final String splitBy;
-    String oracleSeparator = " or ";
-    String plainSeparator = ";";
+    final String oracleSeparator = " or ";
+    final String plainSeparator = ";";
     if (eventManipulationString.contains(oracleSeparator)) {
       // Oracle returns values separated by "OR"
       splitBy = oracleSeparator;
