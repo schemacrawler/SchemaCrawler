@@ -1,0 +1,23 @@
+
+
+Tables
+========================================================================
+
+
+
+BOOKS.SOME_TABLE                                                 [table]
+------------------------------------------------------------------------
+  MESSAGE_ID                        VARCHAR2(255) NOT NULL      
+  MESSAGE_BOX                       VARCHAR2(255) NOT NULL      
+  SOME_DATA                         VARCHAR2(255)               
+
+Primary Key
+
+SYS_C008301                                                [primary key]
+
+Indexes
+
+UNIQUE_ID_BOX                                             [unique index]
+  MESSAGE_ID                        ascending                   
+  MESSAGE_BOX                       ascending                   
+
