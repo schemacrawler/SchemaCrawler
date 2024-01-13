@@ -3,7 +3,7 @@ version: "3.7"
 services:
 
   db2:
-    image: ibmcom/db2:11.5.5.1
+    image: ibmcom/db2:11.5.8.0
     container_name: db2
     ports:
       - target: 50000

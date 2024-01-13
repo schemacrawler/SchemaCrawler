@@ -36,7 +36,7 @@ public final class DB2TestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newDB211Container() {
-    return newDB2Container("11.5.7.0");
+    return newDB2Container("11.5.8.0");
   }
 
   @SuppressWarnings("resource")
