@@ -14,6 +14,8 @@ BOOKS.SOME_TABLE                                                 [table]
 Primary Key
 
 SYS_C008301                                                [primary key]
+  MESSAGE_ID                                                    
+  MESSAGE_BOX                                                   
 
 Indexes
 
