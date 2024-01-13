@@ -29,8 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumSet;
+import java.util.Set;
 
 import schemacrawler.schema.IdentifiedEnum;
 import us.fatehi.utility.UtilityMarker;
@@ -38,10 +40,39 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public class EnumUtility {
 
+  public static <E extends Enum<E>> Set<E> enumValues(
+      final String values, final String splitBy, final E defaultValue) {
+    requireNonNull(defaultValue, "No default value provided");
+
+    final EnumSet<E> enumValues = EnumSet.of(defaultValue);
+
+    if (isBlank(values)) {
+      return enumValues;
+    }
+
+    // Split into multiple event manipulation types
+    final String[] valueStrings;
+    if (isBlank(splitBy)) {
+      valueStrings = new String[] {values};
+    } else {
+      valueStrings = values.split(splitBy);
+    }
+
+    for (String valueString : valueStrings) {
+      final E enumValue = enumValue(valueString, defaultValue);
+      enumValues.add(enumValue);
+    }
+    if (enumValues.size() > 1) {
+      enumValues.remove(defaultValue);
+    }
+
+    return enumValues;
+  }
+
   public static <E extends Enum<E>> E enumValue(final String value, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     E enumValue;
-    if (value == null) {
+    if (isBlank(value)) {
       enumValue = defaultValue;
     } else {
       try {
@@ -49,7 +80,7 @@ public class EnumUtility {
         if (enumClass.getEnclosingClass() != null) {
           enumClass = enumClass.getEnclosingClass();
         }
-        enumValue = Enum.valueOf((Class<E>) enumClass, value);
+        enumValue = Enum.valueOf((Class<E>) enumClass, value.trim());
       } catch (final Exception e) {
         enumValue = defaultValue;
       }

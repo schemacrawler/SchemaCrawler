@@ -45,6 +45,8 @@ IDX_A_AUTHORS                                         [non-unique index]
 
 Triggers
 
-TRG_AUTHORS                             [trigger, after delete, per row]
+TRG_AUTHORS                                                    [trigger]
+  after delete, per row
+                                                      [action statement]
 UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
 

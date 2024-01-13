@@ -34,6 +34,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -130,6 +131,45 @@ public class IndexRetrieverTest {
     indexRetriever.retrieveIndexes(catalog.getAllTables());
 
     verifyRetrieveIndexes(catalog);
+  }
+
+  @Test
+  @DisplayName("Retrieve index definitions from INFORMATION_SCHEMA")
+  public void indexInfo(final DatabaseConnectionSource dataSource) throws Exception {
+
+    final String remarks = "TEST Index remarks";
+    final String definition = "TEST Index definition";
+
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                EXT_INDEXES,
+                String.format(
+                    "SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
+                        + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
+                        + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO",
+                    remarks, definition))
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    indexRetriever.retrieveIndexInformation();
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(14));
+    for (final Table table : tables) {
+      for (final Index index : table.getIndexes()) {
+        assertThat(index.getRemarks(), is(remarks));
+        assertThat(index.getDefinition(), is(definition));
+      }
+    }
   }
 
   @BeforeAll

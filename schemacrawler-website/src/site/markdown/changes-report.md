@@ -2,10 +2,13 @@
 
 SchemaCrawler release notes.
 
-<a name="a16.20.9"></a>
-## Release 16.20.9 - 2024-01-15
+<a name="a16.21.1"></a>
+## Release 16.21.1 - 2024-01-15
 
 - Add a timeout option for ChatGPT
+- Distribute MariaDB JDBC driver
+- Change Trigger model to allow for multiple event manipulation types
+- Change text and HTML output for triggers
 
 
 <a name="a16.20.8"></a>

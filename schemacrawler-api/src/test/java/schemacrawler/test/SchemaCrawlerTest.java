@@ -667,7 +667,8 @@ public class SchemaCrawlerTest {
           out.println(String.format("    action orientation: %s", trigger.getActionOrientation()));
           out.println(String.format("    action statement: %s", trigger.getActionStatement()));
           out.println(
-              String.format("    event manipulation type: %s", trigger.getEventManipulationType()));
+              String.format(
+                  "    event manipulation type: %s", trigger.getEventManipulationTypes()));
         }
       }
     }

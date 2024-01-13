@@ -71,11 +71,13 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTriggerInf
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -367,6 +369,10 @@ public final class SchemaCrawler {
         new TableConstraintRetriever(retrieverConnection, catalog, options);
     final TableExtRetriever retrieverExtra =
         new TableExtRetriever(retrieverConnection, catalog, options);
+    final ViewExtRetriever viewExtRetriever =
+        new ViewExtRetriever(retrieverConnection, catalog, options);
+    final TriggerRetriever triggerRetriever =
+        new TriggerRetriever(retrieverConnection, catalog, options);
     final TablePrivilegeRetriever retrieverPrivilege =
         new TablePrivilegeRetriever(retrieverConnection, catalog, options);
     final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
@@ -414,7 +420,7 @@ public final class SchemaCrawler {
             retrieveTableConstraints,
             constraintRetriever::retrieveTableConstraints,
             retrieveTableColumns)
-        .add(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation)
+        .add(retrieveTriggerInformation, triggerRetriever::retrieveTriggerInformation)
         .submit();
 
     // Should be run independently, since filter and sort modifies the tables collection
@@ -449,15 +455,15 @@ public final class SchemaCrawler {
             retrieveTableConstraintInformation,
             constraintRetriever::retrieveTableConstraintInformation,
             retrieveTableConstraints)
-        .add(retrieveViewInformation, retrieverExtra::retrieveViewInformation, retrieveTables)
-        .add(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage, retrieveTables)
+        .add(retrieveViewInformation, viewExtRetriever::retrieveViewInformation, retrieveTables)
+        .add(retrieveViewTableUsage, viewExtRetriever::retrieveViewTableUsage, retrieveTables)
         .add(
             retrieveTableDefinitionsInformation,
             retrieverExtra::retrieveTableDefinitions,
             retrieveTables)
         .add(
             retrieveIndexInformation,
-            () -> retrieverExtra.retrieveIndexInformation(),
+            () -> indexRetriever.retrieveIndexInformation(),
             retrieveIndexes)
         .add(
             retrieveAdditionalTableAttributes,

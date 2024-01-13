@@ -18,7 +18,7 @@
 #,/db/books/36_hidden_columns_A.sql
 #,/db/books/40_procedures_A.sql
 #,/db/books/41_functions_A.sql
-@,/db/books/50_triggers_B.sql
+@,/db/books/50_triggers_E.sql
 #,/db/books/70_grants_A.sql
 #,/db/books/71_synonyms_01_base_A.sql
 #,/db/books/71_synonyms_02_dangling_A.sql

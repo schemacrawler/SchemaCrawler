@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+import java.util.Set;
+
 /** Represents a trigger. */
 public interface Trigger extends DependantObject<Table> {
 
@@ -70,9 +72,9 @@ public interface Trigger extends DependantObject<Table> {
   ConditionTimingType getConditionTiming();
 
   /**
-   * Gets the event manipulation type. The trigger event - INSERT, DELETE, or UPDATE.
+   * Gets the event manipulation types. The trigger event - INSERT, DELETE, or UPDATE.
    *
-   * @return Event manipulation type
+   * @return Event manipulation types
    */
-  EventManipulationType getEventManipulationType();
+  Set<EventManipulationType> getEventManipulationTypes();
 }

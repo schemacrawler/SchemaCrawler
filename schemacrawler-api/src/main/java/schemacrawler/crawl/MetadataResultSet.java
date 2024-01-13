@@ -35,6 +35,7 @@ import static us.fatehi.utility.IOUtility.readFully;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isIntegral;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.io.Reader;
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -50,6 +51,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.schema.ResultsColumn;
@@ -206,6 +208,8 @@ public final class MetadataResultSet implements AutoCloseable {
    * @return Enum value of the column, or the default if not available
    */
   public <E extends Enum<E>> E getEnum(final String columnName, final E defaultValue) {
+    requireNotBlank(columnName, "No column name provided");
+    requireNonNull(defaultValue, "No default value provided");
     final String value = getString(columnName);
     if (isBlank(value)) {
       return defaultValue;

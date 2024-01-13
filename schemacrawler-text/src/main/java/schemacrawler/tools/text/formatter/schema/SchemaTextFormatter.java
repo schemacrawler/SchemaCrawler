@@ -55,6 +55,7 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,6 +65,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -937,21 +939,36 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     for (final Trigger trigger : triggers) {
       if (trigger != null) {
-        String timing = "";
+
+        final StringBuilder timingBuffer = new StringBuilder();
+
         final ConditionTimingType conditionTiming = trigger.getConditionTiming();
-        final EventManipulationType eventManipulationType = trigger.getEventManipulationType();
-        if (conditionTiming != null
-            && conditionTiming != ConditionTimingType.unknown
-            && eventManipulationType != null
-            && eventManipulationType != EventManipulationType.unknown) {
-          timing = ", " + conditionTiming + SPACE + eventManipulationType;
+        if (conditionTiming != null && conditionTiming != ConditionTimingType.unknown) {
+          timingBuffer.append(conditionTiming);
         }
-        String orientation = "";
+        final List<EventManipulationType> eventManipulationTypes =
+            new ArrayList<>(trigger.getEventManipulationTypes());
+        if (eventManipulationTypes != null
+            && eventManipulationTypes.get(0) != EventManipulationType.unknown) {
+          if (timingBuffer.length() > 0) {
+            timingBuffer.append(SPACE);
+          }
+          for (EventManipulationType eventManipulationType : eventManipulationTypes) {
+            timingBuffer.append(eventManipulationType);
+            if (eventManipulationTypes.indexOf(eventManipulationType)
+                < eventManipulationTypes.size() - 1) {
+              timingBuffer.append(" or ");
+            }
+          }
+        }
         if (trigger.getActionOrientation() != null
             && trigger.getActionOrientation() != ActionOrientationType.unknown) {
-          orientation = ", per " + trigger.getActionOrientation();
+          timingBuffer.append(", per ").append(trigger.getActionOrientation());
         }
-        String triggerType = "[trigger" + timing + orientation + "]";
+
+        final String timing = timingBuffer.toString();
+
+        String triggerType = "[trigger]";
         triggerType = triggerType.toLowerCase(Locale.ENGLISH);
         final String actionCondition = trigger.getActionCondition();
         final String actionStatement = trigger.getActionStatement();
@@ -966,12 +983,16 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         }
 
         formattingHelper.writeNameRow(triggerName, triggerType);
+        formattingHelper.writeDescriptionRow(timing);
 
-        if (!isBlank(actionCondition)) {
-          formattingHelper.writeWideRow(actionCondition, "definition");
-        }
+
         if (!isBlank(actionStatement)) {
+          formattingHelper.writeNameRow("", "[action statement]");
           formattingHelper.writeWideRow(actionStatement, "definition");
+        }
+        if (!isBlank(actionCondition)) {
+          formattingHelper.writeNameRow("", "[action condition]");
+          formattingHelper.writeWideRow(actionCondition, "definition");
         }
       }
     }

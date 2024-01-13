@@ -1,8 +1,10 @@
 -- Triggers
--- HyperSQL, MySQL and DB2 syntax
+-- Microsoft SQL Server syntax
 CREATE TRIGGER TRG_Authors 
-  AFTER DELETE ON Authors 
-  FOR EACH ROW 
+  ON Authors 
+  AFTER INSERT, DELETE 
+  AS 
     UPDATE Publishers 
       SET Publisher = 'Jacob' 
       WHERE Publisher = 'John'
+;
