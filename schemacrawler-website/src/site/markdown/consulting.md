@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Only the latest version of SchemaCrawler (v16.20.8) is supported from the point of new feature development and security updates. 
+Only the latest version of SchemaCrawler (v16.21.1) is supported from the point of new feature development and security updates. 
 If you would like support for an older version of SchemaCrawler, please request a Professional Support Package. 
 You can report a security vulnerability by filing an issue on the [SchemaCrawler issues page].
 

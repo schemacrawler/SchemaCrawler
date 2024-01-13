@@ -985,7 +985,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeNameRow(triggerName, triggerType);
         formattingHelper.writeDescriptionRow(timing);
 
-
         if (!isBlank(actionStatement)) {
           formattingHelper.writeNameRow("", "[action statement]");
           formattingHelper.writeWideRow(actionStatement, "definition");

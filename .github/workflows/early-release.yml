@@ -61,10 +61,10 @@ jobs:
           SchemaCrawler ${{ github.event.release.tag_name }} early access release at last commit ${{ github.sha }}
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-16.20.8-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.20.8-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-16.20.8-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.20.8-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.21.1-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.21.1-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.21.1-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.21.1-bin.zip.SHA-512
 
 # PUBLISH DOCKER IMAGE
     - id: publish-docker-image
