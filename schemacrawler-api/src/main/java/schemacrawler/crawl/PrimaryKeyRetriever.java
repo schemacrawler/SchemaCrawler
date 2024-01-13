@@ -31,12 +31,14 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -83,7 +85,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
     final String columnName = results.getString("COLUMN_NAME");
     final String primaryKeyName = results.getString("PK_NAME");
-    final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
+    final int keySequence = results.getShort("KEY_SEQ", (short) 1);
     LOGGER.log(
         Level.FINE,
         new StringFormat(
@@ -106,6 +108,8 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       //
       primaryKey.addColumn(pkColumn);
     }
+
+    primaryKey.addAttributes(results.getAttributes());
   }
 
   private void retrievePrimaryKeysFromDataDictionary() throws WrappedSQLException {
