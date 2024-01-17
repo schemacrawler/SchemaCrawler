@@ -1,0 +1,26 @@
+
+
+Tables
+========================================================================
+
+
+
+BOOKS.GUY                                                        [table]
+------------------------------------------------------------------------
+  ID                                VARCHAR2(255) NOT NULL      
+  NAME                              VARCHAR2(255) NOT NULL      
+  FAVOURITE_VOWEL                   VARCHAR2(1) NOT NULL        
+
+Primary Key
+
+SYS_C008304                                                [primary key]
+  ID                                                            
+
+Indexes
+
+SYS_C008304                                               [unique index]
+  ID                                ascending                   
+
+NAME_INDEX                                            [non-unique index]
+  NAME                              ascending                   
+

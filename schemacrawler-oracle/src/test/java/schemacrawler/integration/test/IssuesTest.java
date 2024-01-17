@@ -57,7 +57,7 @@ import us.fatehi.utility.database.SqlScript;
 
 @HeavyDatabaseTest("oracle")
 @Testcontainers
-public class Issue1419Test extends BaseOracleWithConnectionTest {
+public class IssuesTest extends BaseOracleWithConnectionTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
@@ -80,7 +80,39 @@ public class Issue1419Test extends BaseOracleWithConnectionTest {
     SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
     SqlScript.executeScriptFromResource("/issue1419.sql", connection);
 
-    final String expectedResource = "pkFromIndex.txt";
+    final String expectedResource = "issue1419_pk_from_index.txt";
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .tableTypes("TABLE");
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    // -- Schema output tests
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  @DisplayName("Issue #1432 - cannot extract check constraints")
+  public void checkConstraints() throws Exception {
+
+    final Connection connection = getConnection();
+    SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
+    SqlScript.executeScriptFromResource("/issue1432.sql", connection);
+
+    final String expectedResource = "issue1432_check_constraints.txt";
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
