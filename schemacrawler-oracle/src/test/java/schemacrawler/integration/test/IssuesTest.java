@@ -81,6 +81,40 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
   }
 
   @Test
+  @DisplayName("Issue #628 - retrieve table and columns names with a slash or dot")
+  public void slashedName() throws Exception {
+
+    final Connection connection = getConnection();
+    connection.setSchema("BOOKS");
+    SqlScript.executeScriptFromResource("/issue628.sql", connection);
+
+    final String expectedResource = "issue628_slashed_name.txt";
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeTables(
+                new RegularExpressionInclusionRule("BOOKS\\.\\\"?(A\\/B|CD|G\\.H|KL)\\\"?"))
+            .tableTypes("TABLE");
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    // -- Schema output tests
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
   @DisplayName("Issue #1419 - primary keys created using index not registered as primary keys")
   public void pkFromIndex() throws Exception {
 
