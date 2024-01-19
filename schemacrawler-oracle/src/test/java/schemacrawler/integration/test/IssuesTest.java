@@ -182,4 +182,37 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
+
+  @Test
+  @DisplayName("Issue #1434 - foreign keys to unique indexes")
+  public void fkToUniqueIndex() throws Exception {
+
+    final Connection connection = getConnection();
+    connection.setSchema("BOOKS");
+    SqlScript.executeScriptFromResource("/issue1434.sql", connection);
+
+    final String expectedResource = "issue1434_fk_to_unique_index.txt";
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeTables(new RegularExpressionInclusionRule("BOOKS\\.(COMMUNICATION|CHANNEL)"))
+            .tableTypes("TABLE");
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    // -- Schema output tests
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
 }

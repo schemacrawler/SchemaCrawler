@@ -1,0 +1,37 @@
+
+
+Tables
+========================================================================
+
+
+
+BOOKS.CHANNEL                                                    [table]
+------------------------------------------------------------------------
+  ID                                NUMBER(11, 0) NOT NULL      
+  CHANNEL_CODE                      VARCHAR2(2) NOT NULL        
+  DESCRIPTION                       VARCHAR2(20)                
+  COMMUNICATION_CODE_FK             VARCHAR2(3) NOT NULL        
+
+Foreign Keys
+
+CHANNEL_FK1                            [foreign key, on delete restrict]
+  COMMUNICATION_CODE_FK (0..many)--> BOOKS.COMMUNICATION.COMMUNICATION_CODE                              
+
+
+
+BOOKS.COMMUNICATION                                              [table]
+------------------------------------------------------------------------
+  ID                                NUMBER(11, 0) NOT NULL      
+  COMMUNICATION_CODE                VARCHAR2(3) NOT NULL        
+  DESCRIPTION                       VARCHAR2(100) NOT NULL      
+
+Foreign Keys
+
+CHANNEL_FK1                            [foreign key, on delete restrict]
+  COMMUNICATION_CODE <--(0..many) BOOKS.CHANNEL.COMMUNICATION_CODE_FK                              
+
+Indexes
+
+COMMUNICATION_UQ                                          [unique index]
+  COMMUNICATION_CODE                ascending                   
+
