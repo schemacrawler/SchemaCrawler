@@ -38,9 +38,11 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -59,11 +61,12 @@ import us.fatehi.utility.database.SqlScript;
 
 @HeavyDatabaseTest("oracle")
 @Testcontainers
+@TestInstance(Lifecycle.PER_CLASS)
 public class IssuesTest extends BaseOracleWithConnectionTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
@@ -72,6 +75,9 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
 
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
+
+    final Connection connection = getConnection();
+    SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
   }
 
   @Test
@@ -79,7 +85,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
   public void pkFromIndex() throws Exception {
 
     final Connection connection = getConnection();
-    SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
+    connection.setSchema("BOOKS");
     SqlScript.executeScriptFromResource("/issue1419.sql", connection);
 
     final String expectedResource = "issue1419_pk_from_index.txt";
@@ -87,6 +93,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeTables(new RegularExpressionInclusionRule("BOOKS\\.SOME_TABLE"))
             .tableTypes("TABLE");
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
@@ -111,7 +118,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
   public void checkConstraints() throws Exception {
 
     final Connection connection = getConnection();
-    SqlScript.executeScriptFromResource("/db/books/01_schemas_C.sql", connection);
+    connection.setSchema("BOOKS");
     SqlScript.executeScriptFromResource("/issue1432.sql", connection);
 
     final String expectedResource = "issue1432_check_constraints.txt";
@@ -119,6 +126,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeTables(new RegularExpressionInclusionRule("BOOKS\\.GUY"))
             .tableTypes("TABLE");
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
