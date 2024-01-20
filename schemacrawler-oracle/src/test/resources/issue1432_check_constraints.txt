@@ -1,0 +1,55 @@
+
+
+Tables
+========================================================================
+
+
+
+BOOKS.GUY                                                        [table]
+------------------------------------------------------------------------
+  ID                                VARCHAR2(255) NOT NULL      
+  NAME                              VARCHAR2(255) NOT NULL      
+  FAVOURITE_VOWEL                   VARCHAR2(1) NOT NULL        
+
+Primary Key
+
+SYS_C008304                                                [primary key]
+  ID                                                            
+
+Indexes
+
+SYS_C008304                                               [unique index]
+  ID                                ascending                   
+CREATE UNIQUE INDEX "SYS_C008304" ON "GUY" ("ID") 
+  ;
+
+NAME_INDEX                                            [non-unique index]
+  NAME                              ascending                   
+CREATE INDEX "NAME_INDEX" ON "GUY" ("NAME") 
+  ;
+
+Table Constraints
+
+SYS_C008301                                           [check constraint]
+  NAME                                                          
+ALTER TABLE "GUY" MODIFY ("NAME" NOT NULL ENABLE);
+
+SYS_C008302                                           [check constraint]
+  FAVOURITE_VOWEL                                               
+ALTER TABLE "GUY" MODIFY ("FAVOURITE_VOWEL" NOT NULL ENABLE);
+
+SYS_C008303                                           [check constraint]
+  FAVOURITE_VOWEL                                               
+ALTER TABLE "GUY" ADD CHECK (FAVOURITE_VOWEL IN ('A', 'E', 'I', 'O', 'U', 'Y')) ENABLE;
+
+Definition
+                                                            [definition]
+CREATE TABLE "GUY" 
+   (	"ID" VARCHAR2(255 BYTE), 
+	"NAME" VARCHAR2(255 BYTE) NOT NULL ENABLE, 
+	"FAVOURITE_VOWEL" VARCHAR2(1 BYTE) NOT NULL ENABLE, 
+	 CHECK (FAVOURITE_VOWEL IN ('A', 'E', 'I', 'O', 'U', 'Y')) ENABLE, 
+	 PRIMARY KEY ("ID")
+  USING INDEX  ENABLE
+   ) ;
+
