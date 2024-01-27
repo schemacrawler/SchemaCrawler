@@ -6,7 +6,7 @@ services:
     image: dbeaver/cloudbeaver
     container_name: dbeaver
     ports:
-      - "8080:8978"
+      - 8081:8978
     volumes:
       - type: bind
         source: ./dbeaver-workspace
