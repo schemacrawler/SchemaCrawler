@@ -32,7 +32,7 @@ services:
       PORT_sqlserver: 1433
       AUTH_TYPE_sqlserver: sql
       ENGINE_sqlserver: mssql@dbgate-plugin-mssql
-      
+
       LABEL_oracle: Oracle
       SERVER_oracle: oracle
       USER_oracle: "SYS AS SYSDBA"
@@ -40,7 +40,7 @@ services:
       PORT_oracle: 1521
       DATABASE_oracle: XEPDB1
       ENGINE_oracle: oracle@dbgate-plugin-oracle
-      
+
 volumes:
   dbgate-data:
     driver: local
