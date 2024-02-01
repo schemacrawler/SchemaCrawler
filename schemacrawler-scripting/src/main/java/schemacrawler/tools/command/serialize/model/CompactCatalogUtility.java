@@ -29,8 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.serialize.model;
 
 import static java.util.Objects.requireNonNull;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -39,48 +43,43 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public final class CompactCatalogUtility {
 
-  private CompactCatalogUtility() {
-    // Prevent instantiation
-  }
-
   public static CatalogDescription createCatalogDescription(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
 
-    final CatalogDescription catalogDescription = new CatalogDescription();
-    final String databaseProductName = catalog.getDatabaseInfo().getDatabaseProductName();
-    catalogDescription.setDatabaseProductName(databaseProductName);
+    final CatalogDescription catalogDescription =
+        new CatalogDescription(catalog.getDatabaseInfo().getDatabaseProductName());
     for (final Schema schema : catalog.getSchemas()) {
-      final SchemaDescription schemaDescription = new SchemaDescription();
-      schemaDescription.setName(schema.getFullName());
       // Add tables
       for (final Table table : catalog.getTables(schema)) {
-        final TableDescription tableDescription = new TableDescription();
-        tableDescription.setName(table.getName());
-        tableDescription.setRemarks(table.getRemarks());
+        final Map<String, Column> referencedColumns = mapReferencedColumns(table);
+        final TableDescription tableDescription = new TableDescription(table);
         // Add columns
         for (final Column column : table.getColumns()) {
-          final ColumnDescription columnDescription = new ColumnDescription();
-          columnDescription.setName(column.getName());
-          columnDescription.setDataType(column.getColumnDataType().getName());
-          columnDescription.setRemarks(column.getRemarks());
+          final ColumnDescription columnDescription =
+              new ColumnDescription(column, referencedColumns.get(column.getName()));
           tableDescription.addColumn(columnDescription);
         }
-        // Add referenced tables
-        for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-          final Table referencedTable = foreignKey.getReferencedTable();
-          final TableDescription referencedTableDescription = new TableDescription();
-          if (schema.equals(referencedTable.getSchema())) {
-            referencedTableDescription.setName(referencedTable.getName());
-          } else {
-            referencedTableDescription.setName(referencedTable.getFullName());
-          }
-          tableDescription.addReferencedTable(referencedTableDescription);
-        }
-        // Add table to the schema
-        schemaDescription.addTable(tableDescription);
+        mapReferencedColumns(table);
+        // Add table to the catalog
+        catalogDescription.addTable(tableDescription);
       }
-      catalogDescription.addSchema(schemaDescription);
     }
     return catalogDescription;
+  }
+
+  private static Map<String, Column> mapReferencedColumns(final Table table) {
+    final Map<String, Column> referencedColumns = new HashMap<>();
+    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+      List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
+      for (ColumnReference columnReference : columnReferences) {
+        referencedColumns.put(
+            columnReference.getForeignKeyColumn().getName(), columnReference.getPrimaryKeyColumn());
+      }
+    }
+    return referencedColumns;
+  }
+
+  private CompactCatalogUtility() {
+    // Prevent instantiation
   }
 }
