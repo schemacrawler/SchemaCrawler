@@ -36,7 +36,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import us.fatehi.utility.UtilityMarker;
 
@@ -48,21 +47,17 @@ public final class CompactCatalogUtility {
 
     final CatalogDescription catalogDescription =
         new CatalogDescription(catalog.getDatabaseInfo().getDatabaseProductName());
-    for (final Schema schema : catalog.getSchemas()) {
-      // Add tables
-      for (final Table table : catalog.getTables(schema)) {
-        final Map<String, Column> referencedColumns = mapReferencedColumns(table);
-        final TableDescription tableDescription = new TableDescription(table);
-        // Add columns
-        for (final Column column : table.getColumns()) {
-          final ColumnDescription columnDescription =
-              new ColumnDescription(column, referencedColumns.get(column.getName()));
-          tableDescription.addColumn(columnDescription);
-        }
-        mapReferencedColumns(table);
-        // Add table to the catalog
-        catalogDescription.addTable(tableDescription);
+    for (final Table table : catalog.getTables()) {
+      final Map<String, Column> referencedColumns = mapReferencedColumns(table);
+      final TableDescription tableDescription = new TableDescription(table);
+      for (final Column column : table.getColumns()) {
+        final ColumnDescription columnDescription =
+            new ColumnDescription(column, referencedColumns.get(column.getName()));
+        tableDescription.addColumn(columnDescription);
       }
+      mapReferencedColumns(table);
+      // Add table to the catalog
+      catalogDescription.addTable(tableDescription);
     }
     return catalogDescription;
   }
