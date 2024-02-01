@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import schemacrawler.schema.Column;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonPropertyOrder({"columnName", "remarks", "dataType"})
 public final class ColumnDescription {
 
   private final String columnName;
