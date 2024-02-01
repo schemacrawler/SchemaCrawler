@@ -48,21 +48,29 @@ public final class CompactCatalogUtility {
     final CatalogDescription catalogDescription =
         new CatalogDescription(catalog.getDatabaseInfo().getDatabaseProductName());
     for (final Table table : catalog.getTables()) {
-      final Map<String, Column> referencedColumns = mapReferencedColumns(table);
-      final TableDescription tableDescription = new TableDescription(table);
-      for (final Column column : table.getColumns()) {
-        final ColumnDescription columnDescription =
-            new ColumnDescription(column, referencedColumns.get(column.getName()));
-        tableDescription.addColumn(columnDescription);
-      }
-      mapReferencedColumns(table);
-      // Add table to the catalog
+      final TableDescription tableDescription = getTableDescription(table);
       catalogDescription.addTable(tableDescription);
     }
     return catalogDescription;
   }
 
+  public static TableDescription getTableDescription(final Table table) {
+    requireNonNull(table, "No table provided");
+
+    final Map<String, Column> referencedColumns = mapReferencedColumns(table);
+    final TableDescription tableDescription = new TableDescription(table);
+    for (final Column column : table.getColumns()) {
+      final ColumnDescription columnDescription =
+          new ColumnDescription(column, referencedColumns.get(column.getName()));
+      tableDescription.addColumn(columnDescription);
+    }
+    mapReferencedColumns(table);
+    return tableDescription;
+  }
+
   private static Map<String, Column> mapReferencedColumns(final Table table) {
+    requireNonNull(table, "No table provided");
+
     final Map<String, Column> referencedColumns = new HashMap<>();
     for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
       List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
