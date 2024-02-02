@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.command.chatgpt;
+package schemacrawler.tools.command.chatgpt.utility;
 
 import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;

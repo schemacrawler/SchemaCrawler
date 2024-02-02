@@ -1,20 +1,25 @@
 package schemacrawler.tools.command.serialize.model;
 
-import static us.fatehi.utility.Utility.isBlank;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Table;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonPropertyOrder({"schemaName", "tableName", "remarks", "columns"})
-public final class TableDescription {
+public final class TableDescription implements Serializable {
+
+  private static final long serialVersionUID = 1873929712139211255L;
 
   private final String tableName;
   private final String schemaName;
@@ -24,16 +29,16 @@ public final class TableDescription {
   public TableDescription(final Table table) {
     Objects.requireNonNull(table, "No table provided");
 
-    this.tableName = table.getName();
+    tableName = table.getName();
 
     final String schema = table.getSchema().getFullName();
     if (!isBlank(schema)) {
-      this.schemaName = schema;
+      schemaName = schema;
     } else {
-      this.schemaName = null;
+      schemaName = null;
     }
 
-    this.columns = new ArrayList<>();
+    columns = new ArrayList<>();
 
     final String remarks = table.getRemarks();
     if (!isBlank(remarks)) {
@@ -45,26 +50,39 @@ public final class TableDescription {
 
   public void addColumn(final ColumnDescription column) {
     if (column != null) {
-      this.columns.add(column);
+      columns.add(column);
     }
   }
 
   public List<ColumnDescription> getColumns() {
-    return this.columns;
-  }
-
-  @JsonProperty("table")
-  public String getTableName() {
-    return this.tableName;
+    return columns;
   }
 
   @JsonProperty("remarks")
   public String getRemarks() {
-    return this.remarks;
+    return remarks;
   }
 
   @JsonProperty("schema")
   public String getSchema() {
-    return this.schemaName;
+    return schemaName;
+  }
+
+  @JsonProperty("table")
+  public String getTableName() {
+    return tableName;
+  }
+
+  public String toJson() {
+    try {
+      return new ObjectMapper().writeValueAsString(this);
+    } catch (final JsonProcessingException e) {
+      return super.toString();
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toJson();
   }
 }

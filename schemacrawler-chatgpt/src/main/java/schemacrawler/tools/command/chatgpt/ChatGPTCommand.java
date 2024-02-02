@@ -30,15 +30,13 @@ package schemacrawler.tools.command.chatgpt;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.theokanning.openai.model.Model;
 import com.theokanning.openai.service.OpenAiService;
-
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 
 /** SchemaCrawler command plug-in. */
-public class ChatGPTCommand extends BaseSchemaCrawlerCommand<ChatGPTCommandOptions> {
+public final class ChatGPTCommand extends BaseSchemaCrawlerCommand<ChatGPTCommandOptions> {
 
   private static final Logger LOGGER = Logger.getLogger(ChatGPTCommand.class.getName());
 
@@ -51,15 +49,15 @@ public class ChatGPTCommand extends BaseSchemaCrawlerCommand<ChatGPTCommandOptio
   @Override
   public void checkAvailability() throws RuntimeException {
     // Check that OpenAI API key works, and the model is available
-    final OpenAiService service = new OpenAiService(commandOptions.getApiKey());
-    final Model model = service.getModel(commandOptions.getModel());
+    final OpenAiService service = new OpenAiService(this.commandOptions.getApiKey());
+    final Model model = service.getModel(this.commandOptions.getModel());
     LOGGER.log(Level.CONFIG, String.format("Using ChatGPT model:%n%s", model));
   }
 
   @Override
   public void execute() {
     try (ChatGPTConsole chatGPTConsole =
-        new ChatGPTConsole(commandOptions, catalog, connection); ) {
+        new ChatGPTConsole(this.commandOptions, this.catalog, this.connection); ) {
       chatGPTConsole.console();
     }
   }
