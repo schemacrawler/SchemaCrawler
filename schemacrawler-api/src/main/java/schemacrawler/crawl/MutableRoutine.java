@@ -50,6 +50,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   private RoutineBodyType routineBodyType;
   private final String specificName;
   private transient NamedObjectKey key;
+
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
    * effectively final

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -11,32 +12,31 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonPropertyOrder({"databaseProductName", "tables"})
 public final class CatalogDescription {
 
-  private final List<SchemaDescription> schemas;
-  private String databaseProductName;
+  private final List<TableDescription> tables;
+  private final String databaseProductName;
 
-  public CatalogDescription() {
-    schemas = new ArrayList<>();
+  public CatalogDescription(final String databaseProductName) {
+    this.tables = new ArrayList<>();
+    this.databaseProductName = databaseProductName;
   }
 
-  public void addSchema(final SchemaDescription schema) {
-    if (schema != null) {
-      schemas.add(schema);
+  public void addTable(final TableDescription table) {
+    if (table != null) {
+      this.tables.add(table);
     }
   }
 
   @JsonProperty("db")
   public String getDatabaseProductName() {
-    return databaseProductName;
+    return this.databaseProductName;
   }
 
-  public List<SchemaDescription> getSchemas() {
-    return schemas;
-  }
-
-  public void setDatabaseProductName(final String databaseSystem) {
-    this.databaseProductName = databaseSystem;
+  @JsonProperty("tables")
+  public List<TableDescription> getTables() {
+    return this.tables;
   }
 
   @Override
