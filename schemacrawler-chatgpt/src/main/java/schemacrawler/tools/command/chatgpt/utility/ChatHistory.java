@@ -28,10 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.utility;
 
-import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.List;
 import com.theokanning.openai.completion.chat.ChatMessage;
+import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.collections.CircularBoundedList;
 
 public class ChatHistory {

@@ -25,25 +25,37 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.tools.command.chatgpt.embeddings;
 
 import static java.util.Objects.requireNonNull;
-import schemacrawler.schema.Table;
 
-public final class TableEmbeddingService {
+public final class TableSimilarity implements Comparable<TableSimilarity> {
 
-  private final EmbeddingService service;
+  private final EmbeddedTable table;
+  private final double similarity;
 
-  public TableEmbeddingService(final EmbeddingService service) {
-    this.service = requireNonNull(service, "No embedding service provided");
+  public TableSimilarity(final EmbeddedTable table, final double similarity) {
+    this.table = requireNonNull(table);
+    this.similarity = similarity;
   }
 
-  public EmbeddedTable getEmbeddedTable(final Table table) {
-    requireNonNull(table, "No table provided");
+  @Override
+  public int compareTo(final TableSimilarity other) {
+    // Null and instance checks
+    if (other == null) {
+      throw new NullPointerException("Cannot compare with null object");
+    }
 
-    final EmbeddedTable embeddedTable = new EmbeddedTable(table);
-    embeddedTable.setEmbedding(service.embed(embeddedTable.toJson()));
-    return embeddedTable;
+    // Reverse similarity - comparison results in descending order
+    final int compare = Double.compare(other.similarity, similarity);
+    return compare;
+  }
+
+  public double getSimilarity() {
+    return similarity;
+  }
+
+  public EmbeddedTable getTable() {
+    return table;
   }
 }

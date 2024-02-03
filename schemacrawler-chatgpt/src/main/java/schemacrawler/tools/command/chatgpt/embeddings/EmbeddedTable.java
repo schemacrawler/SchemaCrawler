@@ -95,11 +95,11 @@ public class EmbeddedTable implements NamedObject {
     return getFullName();
   }
 
-  void setEmbedding(final List<Double> embedding) {
-    embedding.clear();
-    if (embedding == null) {
+  void setEmbedding(final List<Double> providedEmmedding) {
+    this.embedding.clear();
+    if (providedEmmedding == null) {
       return;
     }
-    this.embedding.addAll(embedding);
+    this.embedding.addAll(providedEmmedding);
   }
 }
