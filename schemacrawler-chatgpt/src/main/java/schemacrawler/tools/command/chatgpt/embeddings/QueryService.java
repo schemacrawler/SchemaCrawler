@@ -62,10 +62,12 @@ public final class QueryService {
   public Collection<ChatMessage> query(final String prompt) {
     final Collection<ChatMessage> messages = new ArrayList<>();
 
-    messages.add(new ChatMessage(SYSTEM.value(),
-        "You are a helpful assistant, conversing with a user about "
-            + "the database schema contained in a set of JSON documents. "
-            + "Use the information from the JSON to provide accurate answers. "));
+    messages.add(
+        new ChatMessage(
+            SYSTEM.value(),
+            "You are a helpful assistant, conversing with a user about "
+                + "the database schema contained in a set of JSON documents. "
+                + "Use the information from the JSON to provide accurate answers. "));
 
     final Collection<EmbeddedTable> matchedTables = tableSimilarityService.query(prompt, TOP_K);
     for (final EmbeddedTable embeddedTable : matchedTables) {
@@ -74,5 +76,4 @@ public final class QueryService {
     }
     return messages;
   }
-
 }

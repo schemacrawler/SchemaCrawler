@@ -68,7 +68,9 @@ public final class ChatGPTConsole implements AutoCloseable {
   private final ChatHistory chatHistory;
   private final boolean useMetadata;
 
-  public ChatGPTConsole(final ChatGPTCommandOptions commandOptions, final Catalog catalog,
+  public ChatGPTConsole(
+      final ChatGPTCommandOptions commandOptions,
+      final Catalog catalog,
       final Connection connection) {
 
     this.commandOptions = requireNonNull(commandOptions, "ChatGPT options not provided");
@@ -128,10 +130,14 @@ public final class ChatGPTConsole implements AutoCloseable {
 
       final List<ChatMessage> messages = chatHistory.toList();
       LOGGER.log(Level.CONFIG, new StringFormat("ChatGPT request:%n%s", messages));
-      final ChatCompletionRequest completionRequest = ChatCompletionRequest.builder()
-          .messages(messages).functions(functionExecutor.getFunctions())
-          .functionCall(new ChatCompletionRequestFunctionCall("auto"))
-          .model(commandOptions.getModel()).n(1).build();
+      final ChatCompletionRequest completionRequest =
+          ChatCompletionRequest.builder()
+              .messages(messages)
+              .functions(functionExecutor.getFunctions())
+              .functionCall(new ChatCompletionRequestFunctionCall("auto"))
+              .model(commandOptions.getModel())
+              .n(1)
+              .build();
 
       final ChatCompletionResult chatCompletion = service.createChatCompletion(completionRequest);
       LOGGER.log(Level.INFO, new StringFormat("Token usage: %s", chatCompletion.getUsage()));
@@ -141,8 +147,9 @@ public final class ChatGPTConsole implements AutoCloseable {
       final ChatFunctionCall functionCall = responseMessage.getFunctionCall();
       if (functionCall != null) {
         final FunctionReturn functionReturn = functionExecutor.execute(functionCall);
-        final ChatMessage functionResponseMessage = new ChatMessage(FUNCTION.value(),
-            functionReturn.get(), functionCall.getName(), functionCall);
+        final ChatMessage functionResponseMessage =
+            new ChatMessage(
+                FUNCTION.value(), functionReturn.get(), functionCall.getName(), functionCall);
         completions.add(functionResponseMessage);
       } else {
         completions.add(responseMessage);
