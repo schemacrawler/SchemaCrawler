@@ -38,7 +38,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.tools.command.serialize.model.CompactCatalogUtility;
 import schemacrawler.tools.command.serialize.model.TableDescription;
 
-public class EmbeddedTable implements NamedObject {
+public final class EmbeddedTable implements NamedObject {
 
   private static final long serialVersionUID = 5216101777323983303L;
 
@@ -96,10 +96,10 @@ public class EmbeddedTable implements NamedObject {
   }
 
   void setEmbedding(final List<Double> providedEmmedding) {
-    this.embedding.clear();
+    embedding.clear();
     if (providedEmmedding == null) {
       return;
     }
-    this.embedding.addAll(providedEmmedding);
+    embedding.addAll(providedEmmedding);
   }
 }
