@@ -47,7 +47,7 @@ public final class EmbeddedTable implements NamedObject {
   private final String tableDescriptionJson;
   private final List<Double> embedding;
 
-  public EmbeddedTable(final Table table) {
+  EmbeddedTable(final Table table) {
     this.table = requireNonNull(table, "No table provided");
     tableDescription = CompactCatalogUtility.getTableDescription(table);
     tableDescriptionJson = tableDescription.toJson();

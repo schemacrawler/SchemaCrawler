@@ -36,18 +36,20 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.crawl.LightTable;
 
 public class EmbeddedTableTest {
 
-  private LightTable table;
+  private Table table;
   private EmbeddedTable embeddedTable;
 
   @BeforeEach
   public void setUp() {
-    table = new LightTable(new SchemaReference("schema_name", ""), "table_name");
+    final LightTable table = new LightTable(new SchemaReference("schema_name", ""), "table_name");
     table.addColumn("column_name");
+    this.table = table;
 
     embeddedTable = new EmbeddedTable(table);
   }
