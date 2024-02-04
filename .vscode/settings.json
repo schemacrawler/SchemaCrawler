@@ -5,5 +5,6 @@
         "GitHub.vscode-pull-request-github"
     ],
     "editor.tabSize": 2,
-    "scm.showActionButton": false
+    "scm.showActionButton": false,
+    "java.compile.nullAnalysis.mode": "automatic"
 }
