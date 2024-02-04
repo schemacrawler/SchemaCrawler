@@ -67,7 +67,7 @@ public class TableEmbeddingServiceTest {
 
     when(mockService.embed(anyString())).thenReturn(Arrays.asList(1.0, 2.0, 3.0));
 
-    final EmbeddedTable result = tableEmbeddingService.getEmbeddedTable(table);
+    final EmbeddedTable result = tableEmbeddingService.embedTable(table);
 
     assertThat(result, is(notNullValue()));
     assertThat(result.getEmbedding(), contains(1.0, 2.0, 3.0));
@@ -75,6 +75,6 @@ public class TableEmbeddingServiceTest {
 
   @Test
   public void testGetEmbeddedTableWithNullTable() {
-    assertThrows(NullPointerException.class, () -> tableEmbeddingService.getEmbeddedTable(null));
+    assertThrows(NullPointerException.class, () -> tableEmbeddingService.embedTable(null));
   }
 }

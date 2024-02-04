@@ -31,12 +31,17 @@ package schemacrawler.tools.command.chatgpt.embeddings;
 import static com.theokanning.openai.completion.chat.ChatMessageRole.SYSTEM;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
+import us.fatehi.utility.string.StringFormat;
 
 public final class QueryService {
+
+  private static final Logger LOGGER = Logger.getLogger(QueryService.class.getCanonicalName());
 
   private static final int TOP_K = 3;
 
@@ -54,12 +59,14 @@ public final class QueryService {
     requireNonNull(tables, "No tables provided");
 
     for (final Table table : tables) {
-      final EmbeddedTable embeddingTable = tableEmbeddingService.getEmbeddedTable(table);
+      final EmbeddedTable embeddingTable = tableEmbeddingService.embedTable(table);
       tableSimilarityService.addTable(embeddingTable);
     }
   }
 
   public Collection<ChatMessage> query(final String prompt) {
+    LOGGER.log(Level.INFO, new StringFormat("Finding matched tables for prompt%n%s", prompt));
+
     final Collection<ChatMessage> messages = new ArrayList<>();
 
     messages.add(
@@ -71,6 +78,7 @@ public final class QueryService {
 
     final Collection<EmbeddedTable> matchedTables = tableSimilarityService.query(prompt, TOP_K);
     for (final EmbeddedTable embeddedTable : matchedTables) {
+      LOGGER.fine(new StringFormat("Prompt matched table <%s>", embeddedTable));
       final ChatMessage chatMessage = new ChatMessage(SYSTEM.value(), embeddedTable.toJson());
       messages.add(chatMessage);
     }

@@ -28,10 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.embeddings;
 
+import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
+import us.fatehi.utility.string.StringFormat;
 
 public final class TableEmbeddingService {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(TableEmbeddingService.class.getCanonicalName());
 
   private final EmbeddingService service;
 
@@ -39,8 +44,10 @@ public final class TableEmbeddingService {
     this.service = requireNonNull(service, "No embedding service provided");
   }
 
-  public EmbeddedTable getEmbeddedTable(final Table table) {
+  public EmbeddedTable embedTable(final Table table) {
     requireNonNull(table, "No table provided");
+
+    LOGGER.fine(new StringFormat("Emebedding table <%s>", table));
 
     final EmbeddedTable embeddedTable = new EmbeddedTable(table);
     embeddedTable.setEmbedding(service.embed(embeddedTable.toJson()));

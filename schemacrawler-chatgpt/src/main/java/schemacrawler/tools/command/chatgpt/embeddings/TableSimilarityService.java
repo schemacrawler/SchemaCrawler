@@ -32,12 +32,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 public final class TableSimilarityService {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(TableSimilarityService.class.getCanonicalName());
 
   private static double[] convertListToArray(final List<Double> list) {
     requireNonNull(list, "No embedding provided");
@@ -48,7 +53,8 @@ public final class TableSimilarityService {
     for (int i = 0; i < size; i++) {
       final Double value = list.get(i);
       if (value == null) {
-        throw new IllegalArgumentException("Embedding cannot contain null values");
+        LOGGER.log(Level.WARNING, "Embedding contains null values");
+        continue;
       }
       array[i] = value;
     }
@@ -57,8 +63,11 @@ public final class TableSimilarityService {
   }
 
   private static double cosineSimilarity(final double[] vectorA, final double[] vectorB) {
-    final RealVector v1 = new ArrayRealVector(vectorA);
-    final RealVector v2 = new ArrayRealVector(vectorB);
+    requireNonNull(vectorA, "No vector provided");
+    requireNonNull(vectorB, "No vector provided");
+
+    final RealVector v1 = new ArrayRealVector(vectorA, false);
+    final RealVector v2 = new ArrayRealVector(vectorB, false);
 
     final double cosineSimilarity = (v1.dotProduct(v2)) / (v1.getNorm() * v2.getNorm());
     return cosineSimilarity;

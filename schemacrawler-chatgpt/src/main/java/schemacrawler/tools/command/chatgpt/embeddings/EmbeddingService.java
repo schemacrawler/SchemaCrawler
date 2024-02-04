@@ -31,13 +31,18 @@ package schemacrawler.tools.command.chatgpt.embeddings;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import com.theokanning.openai.embedding.Embedding;
 import com.theokanning.openai.embedding.EmbeddingRequest;
 import com.theokanning.openai.service.OpenAiService;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import us.fatehi.utility.string.StringFormat;
 
 public final class EmbeddingService {
+
+  private static final Logger LOGGER = Logger.getLogger(EmbeddingService.class.getCanonicalName());
 
   private static final String TEXT_EMBEDDING_MODEL =
       "text-embedding-3-small"; // "text-embedding-ada-002";
@@ -51,16 +56,20 @@ public final class EmbeddingService {
   public List<Double> embed(final String text) {
     requireNotBlank(text, "No text provided");
 
-    final EmbeddingRequest embeddingRequest =
-        EmbeddingRequest.builder()
-            .model(TEXT_EMBEDDING_MODEL)
-            .input(Collections.singletonList(text))
-            .build();
+    try {
+      final EmbeddingRequest embeddingRequest =
+          EmbeddingRequest.builder()
+              .model(TEXT_EMBEDDING_MODEL)
+              .input(Collections.singletonList(text))
+              .build();
 
-    final List<Embedding> embeddings = service.createEmbeddings(embeddingRequest).getData();
-    if ((embeddings != null) && (embeddings.size() == 1)) {
-      final List<Double> embedding = embeddings.get(0).getEmbedding();
-      return embedding;
+      final List<Embedding> embeddings = service.createEmbeddings(embeddingRequest).getData();
+      if ((embeddings != null) && (embeddings.size() == 1)) {
+        final List<Double> embedding = embeddings.get(0).getEmbedding();
+        return embedding;
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, e, new StringFormat("Could not embed text"));
     }
     return new ArrayList<>();
   }
