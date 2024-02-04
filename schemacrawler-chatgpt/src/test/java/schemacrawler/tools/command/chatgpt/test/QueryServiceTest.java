@@ -28,46 +28,46 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
-import schemacrawler.tools.command.chatgpt.embeddings.EmbeddingService;
+import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightTable;
+import schemacrawler.tools.command.chatgpt.embeddings.QueryService;
 import schemacrawler.tools.command.chatgpt.test.utility.ChatGptTestUtility;
 
-public class EmbeddingServiceTest {
+public class QueryServiceTest {
 
   private OpenAiService openAiService;
-  private EmbeddingService embeddingService;
-  private List<Double> expectedEmbedding;
+  private QueryService queryService;
+  private Table table;
 
   @BeforeEach
-  void setUp() {
-    expectedEmbedding = new ArrayList<>(Collections.singletonList(0.5));
-    openAiService = ChatGptTestUtility.setUpMockOpenAiService(expectedEmbedding);
-    embeddingService = new EmbeddingService(openAiService);
+  public void setUp() {
+    final LightTable table = new LightTable(new SchemaReference("schema_name", ""), "table_name");
+    table.addColumn("column_name");
+    this.table = table;
+
+    openAiService =
+        ChatGptTestUtility.setUpMockOpenAiService(new ArrayList<>(Collections.singletonList(0.5)));
+    queryService = new QueryService(openAiService);
   }
 
   @Test
-  void testEmbeddingWithEmptyText() {
-    final String text = "";
+  public void testQuery() {
+    final String prompt = "test prompt";
+    queryService.addTables(Arrays.asList(table));
 
-    final IllegalArgumentException exception =
-        org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, () -> embeddingService.embed(text));
+    final Collection<ChatMessage> messages = queryService.query(prompt);
 
-    assertEquals("No text provided", exception.getMessage());
-  }
-
-  @Test
-  void testEmbeddingWithValidText() {
-    final String text = "example text";
-
-    final List<Double> actualEmbedding = embeddingService.embed(text);
-
-    assertEquals(expectedEmbedding, actualEmbedding);
+    assertThat(messages, hasSize(2));
   }
 }

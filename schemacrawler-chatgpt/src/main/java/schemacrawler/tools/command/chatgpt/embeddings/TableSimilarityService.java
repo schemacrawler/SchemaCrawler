@@ -94,12 +94,15 @@ public final class TableSimilarityService {
       similarities.add(new TableSimilarity(embeddedTable, cosineSimilarity));
     }
     Collections.sort(similarities);
-    List<TableSimilarity> topKSimilarities;
+
+    final List<TableSimilarity> topKSimilarities;
+    final int maxTopK;
     if (topK > 0) {
-      topKSimilarities = similarities.subList(0, topK);
+      maxTopK = Math.min(topK, similarities.size());
     } else {
-      topKSimilarities = similarities;
+      maxTopK = similarities.size();
     }
+    topKSimilarities = similarities.subList(0, maxTopK);
 
     final List<EmbeddedTable> matchedTables = new ArrayList<>();
     for (final TableSimilarity tableSimilarity : topKSimilarities) {
