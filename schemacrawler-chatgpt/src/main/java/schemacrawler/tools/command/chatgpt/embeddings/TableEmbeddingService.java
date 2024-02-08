@@ -24,10 +24,11 @@ License v3 are available at:
 http://www.gnu.org/licenses/
 
 ========================================================================
-*/
+ */
 
 package schemacrawler.tools.command.chatgpt.embeddings;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
@@ -47,7 +48,7 @@ public final class TableEmbeddingService {
   public EmbeddedTable embedTable(final Table table) {
     requireNonNull(table, "No table provided");
 
-    LOGGER.fine(new StringFormat("Emebedding table <%s>", table));
+    LOGGER.log(Level.FINE, new StringFormat("Emebedding table <%s>", table));
 
     final EmbeddedTable embeddedTable = new EmbeddedTable(table);
     embeddedTable.setEmbedding(service.embed(embeddedTable.toJson()));

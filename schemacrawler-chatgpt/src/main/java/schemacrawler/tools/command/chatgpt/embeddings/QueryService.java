@@ -24,7 +24,7 @@ License v3 are available at:
 http://www.gnu.org/licenses/
 
 ========================================================================
-*/
+ */
 
 package schemacrawler.tools.command.chatgpt.embeddings;
 
@@ -37,13 +37,14 @@ import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
+import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
 public final class QueryService {
 
   private static final Logger LOGGER = Logger.getLogger(QueryService.class.getCanonicalName());
 
-  private static final int TOP_K = 3;
+  private static final int TOP_K = 16;
 
   private final TableEmbeddingService tableEmbeddingService;
   private final TableSimilarityService tableSimilarityService;
@@ -58,6 +59,7 @@ public final class QueryService {
   public void addTables(final Collection<Table> tables) {
     requireNonNull(tables, "No tables provided");
 
+    LOGGER.log(Level.INFO, "Embedding all tables in the catalog");
     for (final Table table : tables) {
       final EmbeddedTable embeddingTable = tableEmbeddingService.embedTable(table);
       tableSimilarityService.addTable(embeddingTable);
@@ -65,7 +67,7 @@ public final class QueryService {
   }
 
   public Collection<ChatMessage> query(final String prompt) {
-    LOGGER.log(Level.INFO, new StringFormat("Finding matched tables for prompt%n%s", prompt));
+    LOGGER.log(Level.INFO, new StringFormat("Searching for tables matching prompt:%n%s", prompt));
 
     final Collection<ChatMessage> messages = new ArrayList<>();
 
@@ -77,8 +79,9 @@ public final class QueryService {
                 + "Use the information from the JSON to provide accurate answers. "));
 
     final Collection<EmbeddedTable> matchedTables = tableSimilarityService.query(prompt, TOP_K);
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat("Tables matching prompt", matchedTables));
+
     for (final EmbeddedTable embeddedTable : matchedTables) {
-      LOGGER.fine(new StringFormat("Prompt matched table <%s>", embeddedTable));
       final ChatMessage chatMessage = new ChatMessage(SYSTEM.value(), embeddedTable.toJson());
       messages.add(chatMessage);
     }

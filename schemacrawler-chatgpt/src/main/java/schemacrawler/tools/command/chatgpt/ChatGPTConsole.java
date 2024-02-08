@@ -24,7 +24,7 @@ License v3 are available at:
 http://www.gnu.org/licenses/
 
 ========================================================================
-*/
+ */
 
 package schemacrawler.tools.command.chatgpt;
 
@@ -129,7 +129,6 @@ public final class ChatGPTConsole implements AutoCloseable {
       chatHistory.add(userMessage);
 
       final List<ChatMessage> messages = chatHistory.toList();
-      LOGGER.log(Level.CONFIG, new StringFormat("ChatGPT request:%n%s", messages));
       final ChatCompletionRequest completionRequest =
           ChatCompletionRequest.builder()
               .messages(messages)
@@ -138,6 +137,7 @@ public final class ChatGPTConsole implements AutoCloseable {
               .model(commandOptions.getModel())
               .n(1)
               .build();
+      logChatRequest(completionRequest.getMessages(), completionRequest.getFunctions());
 
       final ChatCompletionResult chatCompletion = service.createChatCompletion(completionRequest);
       LOGGER.log(Level.INFO, new StringFormat("Token usage: %s", chatCompletion.getUsage()));
@@ -161,5 +161,25 @@ public final class ChatGPTConsole implements AutoCloseable {
     }
 
     return completions;
+  }
+
+  private void logChatRequest(final List<ChatMessage> messages, final List<?> functions) {
+    final Level level = Level.CONFIG;
+    if (!LOGGER.isLoggable(level)) {
+      return;
+    }
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append("ChatGPT request:").append(System.lineSeparator());
+    if (messages != null) {
+      for (final ChatMessage message : messages) {
+        buffer.append(message).append(System.lineSeparator());
+      }
+    }
+    if (functions != null) {
+      for (final Object function : functions) {
+        buffer.append(function).append(System.lineSeparator());
+      }
+    }
+    LOGGER.log(level, buffer.toString());
   }
 }
