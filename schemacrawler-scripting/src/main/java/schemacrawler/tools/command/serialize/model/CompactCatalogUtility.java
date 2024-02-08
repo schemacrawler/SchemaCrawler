@@ -28,10 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.serialize.model;
 
-import static java.util.Objects.requireNonNull;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -64,7 +65,13 @@ public final class CompactCatalogUtility {
           new ColumnDescription(column, referencedColumns.get(column.getName()));
       tableDescription.addColumn(columnDescription);
     }
-    mapReferencedColumns(table);
+
+    final Collection<Table> dependentTables = table.getDependentTables();
+    for (Table dependentTable : dependentTables) {
+      final TableDescription dependentTableDescription = new TableDescription(dependentTable);
+      tableDescription.addDependentTable(dependentTableDescription);
+    }
+
     return tableDescription;
   }
 

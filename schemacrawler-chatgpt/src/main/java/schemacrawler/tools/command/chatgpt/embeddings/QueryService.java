@@ -76,7 +76,9 @@ public final class QueryService {
             SYSTEM.value(),
             "You are a helpful assistant, conversing with a user about "
                 + "the database schema contained in a set of JSON documents. "
-                + "Use the information from the JSON to provide accurate answers. "));
+                + "Use the information from the JSON to provide accurate answers. "
+                + "Use only columns or tables in joins that you do have information about. "
+                + "If you do not have enough information, please state what you will need to complete the request. "));
 
     final Collection<EmbeddedTable> matchedTables = tableSimilarityService.query(prompt, TOP_K);
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat("Tables matching prompt", matchedTables));

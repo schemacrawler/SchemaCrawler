@@ -12,7 +12,7 @@ import schemacrawler.schema.Column;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonPropertyOrder({"columnName", "remarks", "dataType"})
+@JsonPropertyOrder({"column", "remarks", "type", "referenced-column"})
 public final class ColumnDescription implements Serializable {
 
   private static final long serialVersionUID = 5110252842937512910L;

@@ -2,6 +2,7 @@ package schemacrawler.tools.command.serialize.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,7 +17,7 @@ import schemacrawler.schema.Table;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonPropertyOrder({"schemaName", "tableName", "remarks", "columns"})
+@JsonPropertyOrder({"schema", "table", "remarks", "columns", "dependents"})
 public final class TableDescription implements Serializable {
 
   private static final long serialVersionUID = 1873929712139211255L;
@@ -25,6 +26,7 @@ public final class TableDescription implements Serializable {
   private final String schemaName;
   private final List<ColumnDescription> columns;
   private final String remarks;
+  private final Collection<TableDescription> dependentTables;
 
   public TableDescription(final Table table) {
     Objects.requireNonNull(table, "No table provided");
@@ -46,16 +48,17 @@ public final class TableDescription implements Serializable {
     } else {
       this.remarks = null;
     }
-  }
 
-  public void addColumn(final ColumnDescription column) {
-    if (column != null) {
-      columns.add(column);
-    }
+    dependentTables = new ArrayList<>();
   }
 
   public List<ColumnDescription> getColumns() {
     return columns;
+  }
+
+  @JsonProperty("dependents")
+  public Collection<TableDescription> getDependentTables() {
+    return dependentTables;
   }
 
   @JsonProperty("remarks")
@@ -84,5 +87,17 @@ public final class TableDescription implements Serializable {
   @Override
   public String toString() {
     return toJson();
+  }
+
+  void addColumn(final ColumnDescription column) {
+    if (column != null) {
+      columns.add(column);
+    }
+  }
+
+  void addDependentTable(final TableDescription dependentTable) {
+    if (dependentTable != null) {
+      dependentTables.add(dependentTable);
+    }
   }
 }

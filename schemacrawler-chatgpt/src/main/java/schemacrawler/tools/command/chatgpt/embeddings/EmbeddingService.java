@@ -44,8 +44,7 @@ public final class EmbeddingService {
 
   private static final Logger LOGGER = Logger.getLogger(EmbeddingService.class.getCanonicalName());
 
-  private static final String TEXT_EMBEDDING_MODEL =
-      "text-embedding-3-small"; // "text-embedding-ada-002";
+  private static final String TEXT_EMBEDDING_MODEL = "text-embedding-3-small";
 
   private final OpenAiService service;
 
