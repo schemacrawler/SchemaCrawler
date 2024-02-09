@@ -36,21 +36,21 @@ import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.command.serialize.model.CompactCatalogUtility;
-import schemacrawler.tools.command.serialize.model.TableDescription;
+import schemacrawler.tools.command.serialize.model.TableDocument;
 
 public final class EmbeddedTable implements NamedObject {
 
   private static final long serialVersionUID = 5216101777323983303L;
 
   private final Table table;
-  private final TableDescription tableDescription;
-  private final String tableDescriptionJson;
+  private final TableDocument tableDocument;
+  private final String tableJson;
   private final List<Double> embedding;
 
   EmbeddedTable(final Table table) {
     this.table = requireNonNull(table, "No table provided");
-    tableDescription = CompactCatalogUtility.getTableDescription(table);
-    tableDescriptionJson = tableDescription.toJson();
+    tableDocument = CompactCatalogUtility.getTableDocument(table);
+    tableJson = tableDocument.toJson();
     embedding = new ArrayList<>();
   }
 
@@ -87,7 +87,7 @@ public final class EmbeddedTable implements NamedObject {
   }
 
   public String toJson() {
-    return tableDescriptionJson;
+    return tableJson;
   }
 
   @Override

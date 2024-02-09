@@ -18,17 +18,17 @@ import schemacrawler.schema.Table;
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonPropertyOrder({"schema", "table", "remarks", "columns", "dependents"})
-public final class TableDescription implements Serializable {
+public final class TableDocument implements Serializable {
 
   private static final long serialVersionUID = 1873929712139211255L;
 
   private final String tableName;
   private final String schemaName;
-  private final List<ColumnDescription> columns;
+  private final List<ColumnDocument> columns;
   private final String remarks;
-  private final Collection<TableDescription> dependentTables;
+  private final Collection<TableDocument> dependentTables;
 
-  public TableDescription(final Table table) {
+  public TableDocument(final Table table) {
     Objects.requireNonNull(table, "No table provided");
 
     tableName = table.getName();
@@ -52,12 +52,12 @@ public final class TableDescription implements Serializable {
     dependentTables = new ArrayList<>();
   }
 
-  public List<ColumnDescription> getColumns() {
+  public List<ColumnDocument> getColumns() {
     return columns;
   }
 
   @JsonProperty("dependents")
-  public Collection<TableDescription> getDependentTables() {
+  public Collection<TableDocument> getDependentTables() {
     return dependentTables;
   }
 
@@ -89,13 +89,13 @@ public final class TableDescription implements Serializable {
     return toJson();
   }
 
-  void addColumn(final ColumnDescription column) {
+  void addColumn(final ColumnDocument column) {
     if (column != null) {
       columns.add(column);
     }
   }
 
-  void addDependentTable(final TableDescription dependentTable) {
+  void addDependentTable(final TableDocument dependentTable) {
     if (dependentTable != null) {
       dependentTables.add(dependentTable);
     }

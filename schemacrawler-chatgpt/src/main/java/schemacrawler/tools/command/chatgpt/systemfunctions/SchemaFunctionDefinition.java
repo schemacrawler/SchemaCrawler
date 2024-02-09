@@ -34,7 +34,7 @@ import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.AbstractFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
-import schemacrawler.tools.command.serialize.model.CatalogDescription;
+import schemacrawler.tools.command.serialize.model.CatalogDocument;
 import schemacrawler.tools.command.serialize.model.CompactCatalogUtility;
 import schemacrawler.utility.MetaDataUtility;
 
@@ -55,8 +55,8 @@ public class SchemaFunctionDefinition extends AbstractFunctionDefinition<NoFunct
       // Re-filter catalog
       MetaDataUtility.reduceCatalog(catalog, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
-      final CatalogDescription catalogDescription =
-          CompactCatalogUtility.createCatalogDescription(catalog);
+      final CatalogDocument catalogDescription =
+          CompactCatalogUtility.createCatalogDocument(catalog);
       return new SchemaFunctionReturn(catalogDescription);
     };
   }

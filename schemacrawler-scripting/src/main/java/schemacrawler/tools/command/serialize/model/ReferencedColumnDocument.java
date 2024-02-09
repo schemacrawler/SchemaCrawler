@@ -14,7 +14,7 @@ import schemacrawler.schema.Table;
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonPropertyOrder({"schemaName", "tableName", "columnName"})
-public final class ReferencedColumnDescription implements Serializable {
+public final class ReferencedColumnDocument implements Serializable {
 
   private static final long serialVersionUID = -2159895984317222363L;
 
@@ -22,7 +22,7 @@ public final class ReferencedColumnDescription implements Serializable {
   private final String schemaName;
   private final String columnName;
 
-  public ReferencedColumnDescription(final Column column) {
+  public ReferencedColumnDocument(final Column column) {
     requireNonNull(column, "No column provided");
 
     final Table table = column.getParent();

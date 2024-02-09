@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
-import schemacrawler.tools.command.serialize.model.CatalogDescription;
+import schemacrawler.tools.command.serialize.model.CatalogDocument;
 import schemacrawler.tools.command.serialize.model.CompactCatalogUtility;
 
 /** Decorates a database to allow for serialization to a compact JSON format. */
@@ -47,11 +47,11 @@ public final class CompactSerializedCatalog implements CatalogSerializer {
   private static final Logger LOGGER = Logger.getLogger(CompactSerializedCatalog.class.getName());
 
   private final Catalog catalog;
-  private final CatalogDescription catalogDescription;
+  private final CatalogDocument catalogDescription;
 
   public CompactSerializedCatalog(final Catalog catalog) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
-    this.catalogDescription = CompactCatalogUtility.createCatalogDescription(catalog);
+    this.catalogDescription = CompactCatalogUtility.createCatalogDocument(catalog);
   }
 
   @Override

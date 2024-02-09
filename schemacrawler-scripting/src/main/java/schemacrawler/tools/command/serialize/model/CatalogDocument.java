@@ -14,19 +14,19 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonPropertyOrder({"databaseProductName", "tables"})
-public final class CatalogDescription implements Serializable {
+public final class CatalogDocument implements Serializable {
 
   private static final long serialVersionUID = -1937966351313941597L;
 
-  private final List<TableDescription> tables;
+  private final List<TableDocument> tables;
   private final String databaseProductName;
 
-  public CatalogDescription(final String databaseProductName) {
+  public CatalogDocument(final String databaseProductName) {
     tables = new ArrayList<>();
     this.databaseProductName = databaseProductName;
   }
 
-  public void addTable(final TableDescription table) {
+  public void addTable(final TableDocument table) {
     if (table != null) {
       tables.add(table);
     }
@@ -38,7 +38,7 @@ public final class CatalogDescription implements Serializable {
   }
 
   @JsonProperty("tables")
-  public List<TableDescription> getTables() {
+  public List<TableDocument> getTables() {
     return tables;
   }
 

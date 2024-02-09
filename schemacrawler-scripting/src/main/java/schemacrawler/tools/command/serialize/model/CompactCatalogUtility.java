@@ -43,36 +43,36 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public final class CompactCatalogUtility {
 
-  public static CatalogDescription createCatalogDescription(final Catalog catalog) {
+  public static CatalogDocument createCatalogDocument(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
 
-    final CatalogDescription catalogDescription =
-        new CatalogDescription(catalog.getDatabaseInfo().getDatabaseProductName());
+    final CatalogDocument catalogDocument =
+        new CatalogDocument(catalog.getDatabaseInfo().getDatabaseProductName());
     for (final Table table : catalog.getTables()) {
-      final TableDescription tableDescription = getTableDescription(table);
-      catalogDescription.addTable(tableDescription);
+      final TableDocument tableDocument = getTableDocument(table);
+      catalogDocument.addTable(tableDocument);
     }
-    return catalogDescription;
+    return catalogDocument;
   }
 
-  public static TableDescription getTableDescription(final Table table) {
+  public static TableDocument getTableDocument(final Table table) {
     requireNonNull(table, "No table provided");
 
     final Map<String, Column> referencedColumns = mapReferencedColumns(table);
-    final TableDescription tableDescription = new TableDescription(table);
+    final TableDocument tableDocument = new TableDocument(table);
     for (final Column column : table.getColumns()) {
-      final ColumnDescription columnDescription =
-          new ColumnDescription(column, referencedColumns.get(column.getName()));
-      tableDescription.addColumn(columnDescription);
+      final ColumnDocument columnDocument =
+          new ColumnDocument(column, referencedColumns.get(column.getName()));
+      tableDocument.addColumn(columnDocument);
     }
 
     final Collection<Table> dependentTables = table.getDependentTables();
     for (Table dependentTable : dependentTables) {
-      final TableDescription dependentTableDescription = new TableDescription(dependentTable);
-      tableDescription.addDependentTable(dependentTableDescription);
+      final TableDocument dependentTableDocument = new TableDocument(dependentTable);
+      tableDocument.addDependentTable(dependentTableDocument);
     }
 
-    return tableDescription;
+    return tableDocument;
   }
 
   private static Map<String, Column> mapReferencedColumns(final Table table) {

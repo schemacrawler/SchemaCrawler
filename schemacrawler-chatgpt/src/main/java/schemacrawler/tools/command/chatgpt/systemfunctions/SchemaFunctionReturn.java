@@ -30,13 +30,13 @@ package schemacrawler.tools.command.chatgpt.systemfunctions;
 
 import static java.util.Objects.requireNonNull;
 import schemacrawler.tools.command.chatgpt.FunctionReturn;
-import schemacrawler.tools.command.serialize.model.CatalogDescription;
+import schemacrawler.tools.command.serialize.model.CatalogDocument;
 
 public class SchemaFunctionReturn implements FunctionReturn {
 
-  private final CatalogDescription catalogDescription;
+  private final CatalogDocument catalogDescription;
 
-  protected SchemaFunctionReturn(final CatalogDescription catalogDescription) {
+  protected SchemaFunctionReturn(final CatalogDocument catalogDescription) {
     this.catalogDescription = requireNonNull(catalogDescription, "No catalog provided");
   }
 
