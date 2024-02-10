@@ -47,7 +47,7 @@ public final class QueryService {
 
   private static final Logger LOGGER = Logger.getLogger(QueryService.class.getCanonicalName());
 
-  private static final int MAX_TOKENS = 10_000;
+  private static final int MAX_TOKENS = 5_000;
 
   private final String metadataPriming;
   private final TableEmbeddingService tableEmbeddingService;
