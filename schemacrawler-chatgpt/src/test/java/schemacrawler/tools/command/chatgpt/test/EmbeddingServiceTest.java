@@ -66,7 +66,7 @@ public class EmbeddingServiceTest {
   void testEmbeddingWithValidText() {
     final String text = "example text";
 
-    final List<Double> actualEmbedding = embeddingService.embed(text);
+    final List<Double> actualEmbedding = embeddingService.embed(text).getEmbedding();
 
     assertEquals(expectedEmbedding, actualEmbedding);
   }

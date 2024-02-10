@@ -31,7 +31,9 @@ package schemacrawler.tools.command.chatgpt.embeddings;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +66,7 @@ public class EmbeddedTableTest {
     assertThat(
         embeddedTable.toJson(),
         is(
-            "{\"table\":\"table_name\",\"columns\":[{\"column\":\"column_name\",\"type\":\"INTEGER\"}],\"schema\":\"schema_name\"}"));
+            "{\"schema\":\"schema_name\",\"table\":\"table_name\",\"columns\":[{\"column\":\"column_name\",\"type\":\"INTEGER\"}]}"));
   }
 
   @Test
@@ -78,24 +80,29 @@ public class EmbeddedTableTest {
   @Test
   public void testEmbedding() {
     assertThat(embeddedTable.hasEmbedding(), is(false));
-    assertNotNull(embeddedTable.getEmbedding());
-    assertThat(embeddedTable.getEmbedding().isEmpty(), is(true));
+    assertThat(embeddedTable.getEmbedding(), is(nullValue()));
+
+    TextEmbedding textEmbedding;
 
     final List<Double> embeddings1 = Collections.singletonList(0.25);
-    embeddedTable.setEmbedding(embeddings1);
+    textEmbedding = mock(TextEmbedding.class);
+    when(textEmbedding.getEmbedding()).thenReturn(embeddings1);
+    embeddedTable.setEmbedding(textEmbedding);
 
     assertThat(embeddedTable.hasEmbedding(), is(true));
-    assertThat(embeddedTable.getEmbedding(), is(embeddings1));
+    assertThat(embeddedTable.getEmbedding().getEmbedding(), is(embeddings1));
 
     final List<Double> embeddings2 = Collections.singletonList(0.75);
-    embeddedTable.setEmbedding(embeddings2);
+    textEmbedding = mock(TextEmbedding.class);
+    when(textEmbedding.getEmbedding()).thenReturn(embeddings2);
+    embeddedTable.setEmbedding(textEmbedding);
 
     assertThat(embeddedTable.hasEmbedding(), is(true));
-    assertThat(embeddedTable.getEmbedding(), is(embeddings2));
+    assertThat(embeddedTable.getEmbedding().getEmbedding(), is(embeddings2));
 
     embeddedTable.setEmbedding(null);
 
     assertThat(embeddedTable.hasEmbedding(), is(false));
-    assertThat(embeddedTable.getEmbedding().isEmpty(), is(true));
+    assertThat(embeddedTable.getEmbedding(), is(nullValue()));
   }
 }

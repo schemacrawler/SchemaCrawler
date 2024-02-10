@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.embeddings;
 
-import java.util.ArrayList;
-import java.util.List;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
@@ -44,14 +42,11 @@ public final class EmbeddedTable implements NamedObject {
 
   private final Table table;
   private final TableDocument tableDocument;
-  private final String tableJson;
-  private final List<Double> embedding;
+  private TextEmbedding embedding;
 
   EmbeddedTable(final Table table) {
     this.table = requireNonNull(table, "No table provided");
     tableDocument = CompactCatalogUtility.getTableDocument(table);
-    tableJson = tableDocument.toJson();
-    embedding = new ArrayList<>();
   }
 
   @Override
@@ -59,8 +54,8 @@ public final class EmbeddedTable implements NamedObject {
     return table.compareTo(object);
   }
 
-  public List<Double> getEmbedding() {
-    return new ArrayList<>(embedding);
+  public TextEmbedding getEmbedding() {
+    return embedding;
   }
 
   @Override
@@ -78,7 +73,7 @@ public final class EmbeddedTable implements NamedObject {
   }
 
   public boolean hasEmbedding() {
-    return !embedding.isEmpty();
+    return embedding != null;
   }
 
   @Override
@@ -87,7 +82,7 @@ public final class EmbeddedTable implements NamedObject {
   }
 
   public String toJson() {
-    return tableJson;
+    return tableDocument.toJson();
   }
 
   @Override
@@ -95,11 +90,7 @@ public final class EmbeddedTable implements NamedObject {
     return getFullName();
   }
 
-  void setEmbedding(final List<Double> providedEmmedding) {
-    embedding.clear();
-    if (providedEmmedding == null) {
-      return;
-    }
-    embedding.addAll(providedEmmedding);
+  void setEmbedding(final TextEmbedding providedEmmedding) {
+    embedding = providedEmmedding;
   }
 }

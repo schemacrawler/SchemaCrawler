@@ -37,6 +37,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Table;
@@ -45,6 +46,7 @@ import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.tools.command.chatgpt.embeddings.EmbeddedTable;
 import schemacrawler.tools.command.chatgpt.embeddings.EmbeddingService;
 import schemacrawler.tools.command.chatgpt.embeddings.TableEmbeddingService;
+import schemacrawler.tools.command.chatgpt.embeddings.TextEmbedding;
 
 public class TableEmbeddingServiceTest {
 
@@ -65,12 +67,15 @@ public class TableEmbeddingServiceTest {
   @Test
   public void testGetEmbeddedTable() {
 
-    when(mockService.embed(anyString())).thenReturn(Arrays.asList(1.0, 2.0, 3.0));
+    final List<Double> embedding = Arrays.asList(1.0, 2.0, 3.0);
+    final TextEmbedding textEmbedding = mock(TextEmbedding.class);
+    when(textEmbedding.getEmbedding()).thenReturn(embedding);
+    when(mockService.embed(anyString())).thenReturn(textEmbedding);
 
     final EmbeddedTable result = tableEmbeddingService.embedTable(table);
 
     assertThat(result, is(notNullValue()));
-    assertThat(result.getEmbedding(), contains(1.0, 2.0, 3.0));
+    assertThat(result.getEmbedding().getEmbedding(), contains(1.0, 2.0, 3.0));
   }
 
   @Test

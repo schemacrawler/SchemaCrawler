@@ -33,6 +33,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.List;
+import com.theokanning.openai.Usage;
 import com.theokanning.openai.embedding.Embedding;
 import com.theokanning.openai.embedding.EmbeddingRequest;
 import com.theokanning.openai.embedding.EmbeddingResult;
@@ -48,6 +49,9 @@ public class ChatGptTestUtility {
     when(embedding.getEmbedding()).thenReturn(expectedEmbedding);
     final EmbeddingResult embeddingResult = mock(EmbeddingResult.class);
     when(embeddingResult.getData()).thenReturn(Collections.singletonList(embedding));
+    final Usage usage = mock(Usage.class);
+    when(usage.getPromptTokens()).thenReturn(101L);
+    when(embeddingResult.getUsage()).thenReturn(usage);
     when(openAiService.createEmbeddings(any(EmbeddingRequest.class))).thenReturn(embeddingResult);
 
     return openAiService;

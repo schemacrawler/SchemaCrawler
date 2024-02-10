@@ -32,45 +32,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 public final class TableSimilarityService {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableSimilarityService.class.getCanonicalName());
+  private static double cosineSimilarity(final RealVector v1, final RealVector v2) {
+    requireNonNull(v1, "No vector provided");
+    requireNonNull(v2, "No vector provided");
 
-  private static double[] convertListToArray(final List<Double> list) {
-    requireNonNull(list, "No embedding provided");
-
-    final int size = list.size();
-    final double[] array = new double[size];
-
-    for (int i = 0; i < size; i++) {
-      final Double value = list.get(i);
-      if (value == null) {
-        LOGGER.log(Level.WARNING, "Embedding contains null values");
-        continue;
-      }
-      array[i] = value;
-    }
-
-    return array;
-  }
-
-  private static double cosineSimilarity(final double[] vectorA, final double[] vectorB) {
-    requireNonNull(vectorA, "No vector provided");
-    requireNonNull(vectorB, "No vector provided");
-
-    final RealVector v1 = new ArrayRealVector(vectorA, false);
-    final RealVector v2 = new ArrayRealVector(vectorB, false);
-
-    final double cosineSimilarity = (v1.dotProduct(v2)) / (v1.getNorm() * v2.getNorm());
-    return cosineSimilarity;
+    return (v1.dotProduct(v2)) / (v1.getNorm() * v2.getNorm());
   }
 
   private final EmbeddingService service;
@@ -91,15 +63,17 @@ public final class TableSimilarityService {
   public Collection<EmbeddedTable> query(final String prompt, final int topK) {
     requireNotBlank(prompt, "No prompt provided");
 
-    final double[] promptEmbedding = convertListToArray(service.embed(prompt));
+    final TextEmbedding promptEmbedding = service.embed(prompt);
 
     final List<TableSimilarity> similarities = new ArrayList<>();
     for (final EmbeddedTable embeddedTable : allTables) {
       if (!embeddedTable.hasEmbedding()) {
         continue;
       }
-      final double[] tableEmbedding = convertListToArray(embeddedTable.getEmbedding());
-      final double cosineSimilarity = cosineSimilarity(promptEmbedding, tableEmbedding);
+      final TextEmbedding tableEmbedding = embeddedTable.getEmbedding();
+      final double cosineSimilarity =
+          cosineSimilarity(
+              promptEmbedding.getEmbeddingVector(), tableEmbedding.getEmbeddingVector());
       similarities.add(new TableSimilarity(embeddedTable, cosineSimilarity));
     }
     Collections.sort(similarities);

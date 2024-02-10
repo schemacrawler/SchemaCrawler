@@ -28,13 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.embeddings;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.theokanning.openai.embedding.Embedding;
 import com.theokanning.openai.embedding.EmbeddingRequest;
+import com.theokanning.openai.embedding.EmbeddingResult;
 import com.theokanning.openai.service.OpenAiService;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
@@ -52,7 +50,7 @@ public final class EmbeddingService {
     this.service = requireNonNull(service, "No Open AI service provided");
   }
 
-  public List<Double> embed(final String text) {
+  public TextEmbedding embed(final String text) {
     requireNotBlank(text, "No text provided");
 
     try {
@@ -62,14 +60,11 @@ public final class EmbeddingService {
               .input(Collections.singletonList(text))
               .build();
 
-      final List<Embedding> embeddings = service.createEmbeddings(embeddingRequest).getData();
-      if ((embeddings != null) && (embeddings.size() == 1)) {
-        final List<Double> embedding = embeddings.get(0).getEmbedding();
-        return embedding;
-      }
+      final EmbeddingResult embeddingResult = service.createEmbeddings(embeddingRequest);
+      return new TextEmbedding(text, embeddingResult);
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, e, new StringFormat("Could not embed text"));
     }
-    return new ArrayList<>();
+    return new TextEmbedding(text);
   }
 }
