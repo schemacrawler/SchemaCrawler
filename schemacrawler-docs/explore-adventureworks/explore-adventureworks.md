@@ -75,7 +75,7 @@
   - Write a nicely formatted SQL query to find the number of employees in each shift for each department, using fully qualified table names.
   - What are the tables in this database?
   - What is the purpose of this database?
-  - Write a nicely formatted SQL query to find the current employee first and last names and departments, using fully qualified table names. An employee is a person.
+  - Write a nicely formatted SQL query to find the current employee first and last names and departments, using fully qualified table names.
 
 
 ## Tear Down
