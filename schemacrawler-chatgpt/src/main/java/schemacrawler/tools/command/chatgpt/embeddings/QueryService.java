@@ -58,7 +58,7 @@ public final class QueryService {
     final EmbeddingService embeddingService = new EmbeddingService(service);
     tableEmbeddingService = new TableEmbeddingService(embeddingService);
     tableSimilarityService = new TableSimilarityService(embeddingService);
-    metadataPriming = IOUtility.readResourceFully("metadata-priming.txt");
+    metadataPriming = IOUtility.readResourceFully("/metadata-priming.txt");
     if (isBlank(metadataPriming)) {
       throw new ConfigurationException("Could not load metadata priming text");
     }
