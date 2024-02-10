@@ -36,7 +36,10 @@ import java.util.logging.Logger;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
+import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -46,6 +49,7 @@ public final class QueryService {
 
   private static final int MAX_TOKENS = 10_000;
 
+  private final String metadataPriming;
   private final TableEmbeddingService tableEmbeddingService;
   private final TableSimilarityService tableSimilarityService;
 
@@ -54,6 +58,10 @@ public final class QueryService {
     final EmbeddingService embeddingService = new EmbeddingService(service);
     tableEmbeddingService = new TableEmbeddingService(embeddingService);
     tableSimilarityService = new TableSimilarityService(embeddingService);
+    metadataPriming = IOUtility.readResourceFully("metadata-priming.txt");
+    if (isBlank(metadataPriming)) {
+      throw new ConfigurationException("Could not load metadata priming text");
+    }
   }
 
   public void addTables(final Collection<Table> tables) {
@@ -71,14 +79,7 @@ public final class QueryService {
 
     final Collection<ChatMessage> messages = new ArrayList<>();
 
-    messages.add(
-        new ChatMessage(
-            SYSTEM.value(),
-            "You are a helpful assistant, conversing with a user about "
-                + "the database schema contained in a set of JSON documents. "
-                + "Use the information from the JSON to provide accurate answers. "
-                + "Use only columns or tables in joins that you do have information about. "
-                + "If you do not have enough information, please state what you will need to complete the request. "));
+    messages.add(new ChatMessage(SYSTEM.value(), metadataPriming));
 
     final Collection<EmbeddedTable> matchedTables =
         tableSimilarityService.query(prompt, MAX_TOKENS);
