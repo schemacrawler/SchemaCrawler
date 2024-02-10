@@ -44,7 +44,7 @@ public final class QueryService {
 
   private static final Logger LOGGER = Logger.getLogger(QueryService.class.getCanonicalName());
 
-  private static final int TOP_K = 16;
+  private static final int MAX_TOKENS = 10_000;
 
   private final TableEmbeddingService tableEmbeddingService;
   private final TableSimilarityService tableSimilarityService;
@@ -80,7 +80,8 @@ public final class QueryService {
                 + "Use only columns or tables in joins that you do have information about. "
                 + "If you do not have enough information, please state what you will need to complete the request. "));
 
-    final Collection<EmbeddedTable> matchedTables = tableSimilarityService.query(prompt, TOP_K);
+    final Collection<EmbeddedTable> matchedTables =
+        tableSimilarityService.query(prompt, MAX_TOKENS);
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat("Tables matching prompt", matchedTables));
 
     for (final EmbeddedTable embeddedTable : matchedTables) {

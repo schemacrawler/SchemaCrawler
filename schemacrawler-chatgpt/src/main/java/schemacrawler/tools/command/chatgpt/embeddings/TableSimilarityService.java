@@ -42,7 +42,7 @@ public final class TableSimilarityService {
     requireNonNull(v1, "No vector provided");
     requireNonNull(v2, "No vector provided");
 
-    return (v1.dotProduct(v2)) / (v1.getNorm() * v2.getNorm());
+    return v1.dotProduct(v2) / (v1.getNorm() * v2.getNorm());
   }
 
   private final EmbeddingService service;
@@ -60,7 +60,7 @@ public final class TableSimilarityService {
     }
   }
 
-  public Collection<EmbeddedTable> query(final String prompt, final int topK) {
+  public Collection<EmbeddedTable> query(final String prompt, final long maxTokens) {
     requireNotBlank(prompt, "No prompt provided");
 
     final TextEmbedding promptEmbedding = service.embed(prompt);
@@ -78,19 +78,39 @@ public final class TableSimilarityService {
     }
     Collections.sort(similarities);
 
-    final List<TableSimilarity> topKSimilarities;
-    final int maxTopK;
-    if (topK > 0) {
-      maxTopK = Math.min(topK, similarities.size());
-    } else {
-      maxTopK = similarities.size();
-    }
-    topKSimilarities = similarities.subList(0, maxTopK);
+    final List<TableSimilarity> tableSimilarities = pruneToMaxTokens(similarities, maxTokens);
 
     final List<EmbeddedTable> matchedTables = new ArrayList<>();
-    for (final TableSimilarity tableSimilarity : topKSimilarities) {
+    for (final TableSimilarity tableSimilarity : tableSimilarities) {
       matchedTables.add(tableSimilarity.getTable());
     }
     return matchedTables;
+  }
+
+  private List<TableSimilarity> pruneToMaxTokens(
+      final List<TableSimilarity> similarities, final long maxTokens) {
+    requireNonNull(similarities, "No similarities provided");
+
+    long tokenSum = 0;
+    int index = -1;
+    for (final TableSimilarity tableSimilarity : similarities) {
+      if (tableSimilarity == null) {
+        continue;
+      }
+      final TextEmbedding embedding = tableSimilarity.getTable().getEmbedding();
+      if (embedding == null) {
+        continue;
+      }
+      final long tokenCount = embedding.getTokenCount();
+      if (tokenSum + tokenCount >= maxTokens) {
+        break;
+      }
+      tokenSum = tokenSum + tokenCount;
+      index = index + 1;
+    }
+    if (index == -1) {
+      return new ArrayList<>();
+    }
+    return similarities.subList(0, index + 1);
   }
 }

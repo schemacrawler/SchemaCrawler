@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.options;
 
 import static us.fatehi.utility.Utility.isBlank;
-
 import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigOptionsBuilder;
@@ -53,7 +52,7 @@ public final class ChatGPTCommandOptionsBuilder
   private boolean useMetadata;
 
   private ChatGPTCommandOptionsBuilder() {
-    model = "gpt-3.5-turbo";
+    model = "gpt-3.5-turbo-0125";
     context = DEFAULT_CONTEXT;
     timeout = DEFAULT_TIMEOUT;
   }
