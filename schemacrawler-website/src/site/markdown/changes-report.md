@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.21.2"></a>
+## Release 16.21.2 - 2024-02-15
+
+- Remove Microsoft Access JDBC driver distribution, since the driver is not being maintained
+
+
 <a name="v16.21.1"></a>
 ## Release 16.21.1 - 2024-01-15
 
