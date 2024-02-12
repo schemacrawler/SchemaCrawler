@@ -25,16 +25,37 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.tools.command.chatgpt.embeddings;
 
-package schemacrawler.tools.command.chatgpt.systemfunctions;
+import static java.util.Objects.requireNonNull;
 
-import static schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType.SYSTEM;
-import schemacrawler.tools.command.chatgpt.FunctionDefinition;
-import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
+public final class TableSimilarity implements Comparable<TableSimilarity> {
 
-public interface SystemFunctionDefinition extends FunctionDefinition<NoFunctionParameters> {
+  private final EmbeddedTable table;
+  private final double similarity;
+
+  public TableSimilarity(final EmbeddedTable table, final double similarity) {
+    this.table = requireNonNull(table);
+    this.similarity = similarity;
+  }
+
   @Override
-  default FunctionType getFunctionType() {
-    return SYSTEM;
+  public int compareTo(final TableSimilarity other) {
+    // Null and instance checks
+    if (other == null) {
+      throw new NullPointerException("Cannot compare with null object");
+    }
+
+    // Reverse similarity - comparison results in descending order
+    final int compare = Double.compare(other.similarity, similarity);
+    return compare;
+  }
+
+  public double getSimilarity() {
+    return similarity;
+  }
+
+  public EmbeddedTable getTable() {
+    return table;
   }
 }

@@ -1,5 +1,6 @@
 package schemacrawler.tools.command.serialize.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,30 +14,32 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonPropertyOrder({"databaseProductName", "tables"})
-public final class CatalogDescription {
+public final class CatalogDocument implements Serializable {
 
-  private final List<TableDescription> tables;
+  private static final long serialVersionUID = -1937966351313941597L;
+
+  private final List<TableDocument> tables;
   private final String databaseProductName;
 
-  public CatalogDescription(final String databaseProductName) {
-    this.tables = new ArrayList<>();
+  public CatalogDocument(final String databaseProductName) {
+    tables = new ArrayList<>();
     this.databaseProductName = databaseProductName;
   }
 
-  public void addTable(final TableDescription table) {
+  public void addTable(final TableDocument table) {
     if (table != null) {
-      this.tables.add(table);
+      tables.add(table);
     }
   }
 
   @JsonProperty("db")
   public String getDatabaseProductName() {
-    return this.databaseProductName;
+    return databaseProductName;
   }
 
   @JsonProperty("tables")
-  public List<TableDescription> getTables() {
-    return this.tables;
+  public List<TableDocument> getTables() {
+    return tables;
   }
 
   @Override

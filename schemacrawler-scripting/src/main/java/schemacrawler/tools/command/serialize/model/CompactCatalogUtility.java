@@ -28,10 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.serialize.model;
 
-import static java.util.Objects.requireNonNull;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -42,30 +43,38 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public final class CompactCatalogUtility {
 
-  public static CatalogDescription createCatalogDescription(final Catalog catalog) {
+  public static CatalogDocument createCatalogDocument(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
 
-    final CatalogDescription catalogDescription =
-        new CatalogDescription(catalog.getDatabaseInfo().getDatabaseProductName());
+    final CatalogDocument catalogDocument =
+        new CatalogDocument(catalog.getDatabaseInfo().getDatabaseProductName());
     for (final Table table : catalog.getTables()) {
-      final TableDescription tableDescription = getTableDescription(table);
-      catalogDescription.addTable(tableDescription);
+      final TableDocument tableDocument = getTableDocument(table, true);
+      catalogDocument.addTable(tableDocument);
     }
-    return catalogDescription;
+    return catalogDocument;
   }
 
-  public static TableDescription getTableDescription(final Table table) {
+  public static TableDocument getTableDocument(final Table table, final boolean withDependents) {
     requireNonNull(table, "No table provided");
 
     final Map<String, Column> referencedColumns = mapReferencedColumns(table);
-    final TableDescription tableDescription = new TableDescription(table);
+    final TableDocument tableDocument = new TableDocument(table);
     for (final Column column : table.getColumns()) {
-      final ColumnDescription columnDescription =
-          new ColumnDescription(column, referencedColumns.get(column.getName()));
-      tableDescription.addColumn(columnDescription);
+      final ColumnDocument columnDocument =
+          new ColumnDocument(column, referencedColumns.get(column.getName()));
+      tableDocument.addColumn(columnDocument);
     }
-    mapReferencedColumns(table);
-    return tableDescription;
+
+    if (withDependents) {
+      final Collection<Table> dependentTables = table.getDependentTables();
+      for (final Table dependentTable : dependentTables) {
+        final TableDocument dependentTableDocument = new TableDocument(dependentTable);
+        tableDocument.addDependentTable(dependentTableDocument);
+      }
+    }
+
+    return tableDocument;
   }
 
   private static Map<String, Column> mapReferencedColumns(final Table table) {
@@ -73,8 +82,8 @@ public final class CompactCatalogUtility {
 
     final Map<String, Column> referencedColumns = new HashMap<>();
     for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-      List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
-      for (ColumnReference columnReference : columnReferences) {
+      final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
+      for (final ColumnReference columnReference : columnReferences) {
         referencedColumns.put(
             columnReference.getForeignKeyColumn().getName(), columnReference.getPrimaryKeyColumn());
       }

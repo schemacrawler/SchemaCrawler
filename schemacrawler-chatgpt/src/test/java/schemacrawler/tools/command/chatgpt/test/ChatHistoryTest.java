@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import com.theokanning.openai.completion.chat.ChatMessage;
-import schemacrawler.tools.command.chatgpt.ChatHistory;
+import schemacrawler.tools.command.chatgpt.utility.ChatHistory;
 
 public class ChatHistoryTest {
 

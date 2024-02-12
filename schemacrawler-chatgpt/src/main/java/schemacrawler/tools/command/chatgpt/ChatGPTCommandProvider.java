@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptionsBuilder;
@@ -40,7 +39,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 /** SchemaCrawler command plug-in for ChatGPT. */
-public class ChatGPTCommandProvider extends BaseCommandProvider {
+public final class ChatGPTCommandProvider extends BaseCommandProvider {
 
   public static final String DESCRIPTION_HEADER = "SchemaCrawler ChatGPT integration";
 

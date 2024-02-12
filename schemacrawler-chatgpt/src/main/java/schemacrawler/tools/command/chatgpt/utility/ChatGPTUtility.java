@@ -28,26 +28,19 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.utility;
 
-import static com.theokanning.openai.completion.chat.ChatMessageRole.SYSTEM;
-import static java.util.Objects.requireNonNull;
-
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.theokanning.openai.completion.chat.ChatFunction;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.FunctionExecutor;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.command.chatgpt.FunctionDefinition;
 import schemacrawler.tools.command.chatgpt.FunctionDefinition.FunctionType;
-import schemacrawler.tools.command.chatgpt.FunctionParameters;
-import schemacrawler.tools.command.chatgpt.FunctionReturn;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.functions.FunctionDefinitionRegistry;
-import schemacrawler.tools.command.chatgpt.functions.NoFunctionParameters;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
@@ -104,29 +97,6 @@ public class ChatGPTUtility {
     for (final ChatMessage chatMessage : completions) {
       out.println(chatMessage.getContent());
     }
-  }
-
-  public static List<ChatMessage> systemMessages(
-      final Catalog catalog, final Connection connection) {
-
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-
-    final List<ChatMessage> systemMessages = new ArrayList<>();
-    new ArrayList<>();
-    for (final FunctionDefinition<FunctionParameters> functionDefinition :
-        FunctionDefinitionRegistry.getFunctionDefinitionRegistry()) {
-      if (functionDefinition.getFunctionType() != FunctionType.SYSTEM) {
-        continue;
-      }
-      functionDefinition.setCatalog(catalog);
-      functionDefinition.setConnection(connection);
-      final FunctionReturn functionReturn =
-          functionDefinition.getExecutor().apply(new NoFunctionParameters());
-      final ChatMessage systemMessage = new ChatMessage(SYSTEM.value(), functionReturn.get());
-      systemMessages.add(systemMessage);
-    }
-    return systemMessages;
   }
 
   private ChatGPTUtility() {

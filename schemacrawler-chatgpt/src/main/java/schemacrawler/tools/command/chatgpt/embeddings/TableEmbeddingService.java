@@ -24,24 +24,34 @@ License v3 are available at:
 http://www.gnu.org/licenses/
 
 ========================================================================
-*/
+ */
 
-package schemacrawler.tools.command.chatgpt.systemfunctions;
+package schemacrawler.tools.command.chatgpt.embeddings;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
-import schemacrawler.tools.command.chatgpt.FunctionReturn;
-import schemacrawler.tools.command.serialize.model.CatalogDescription;
+import schemacrawler.schema.Table;
+import us.fatehi.utility.string.StringFormat;
 
-public class SchemaFunctionReturn implements FunctionReturn {
+public final class TableEmbeddingService {
 
-  private final CatalogDescription catalogDescription;
+  private static final Logger LOGGER =
+      Logger.getLogger(TableEmbeddingService.class.getCanonicalName());
 
-  protected SchemaFunctionReturn(final CatalogDescription catalogDescription) {
-    this.catalogDescription = requireNonNull(catalogDescription, "No catalog provided");
+  private final EmbeddingService service;
+
+  public TableEmbeddingService(final EmbeddingService service) {
+    this.service = requireNonNull(service, "No embedding service provided");
   }
 
-  @Override
-  public String get() {
-    return String.format("Description of database schema in JSON:%n%s", catalogDescription);
+  public EmbeddedTable embedTable(final Table table) {
+    requireNonNull(table, "No table provided");
+
+    LOGGER.log(Level.FINE, new StringFormat("Emebedding table <%s>", table));
+
+    final EmbeddedTable embeddedTable = new EmbeddedTable(table);
+    embeddedTable.setEmbedding(service.embed(embeddedTable.toJson()));
+    return embeddedTable;
   }
 }

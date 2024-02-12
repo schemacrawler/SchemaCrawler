@@ -24,29 +24,38 @@ License v3 are available at:
 http://www.gnu.org/licenses/
 
 ========================================================================
-*/
+ */
 
 package us.fatehi.utility.string;
 
 import java.util.function.Supplier;
-
+import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.ObjectToString;
 
 public final class ObjectToStringFormat implements Supplier<String> {
 
+  private final String context;
   private final Object args;
 
   public ObjectToStringFormat(final Object args) {
+    this(null, args);
+  }
+
+  public ObjectToStringFormat(final String context, final Object args) {
+    this.context = context;
     this.args = args;
   }
 
   @Override
   public String get() {
-    if (args == null) {
-      return "";
+    final StringBuilder buffer = new StringBuilder();
+    if (!isBlank(context)) {
+      buffer.append(context).append(System.lineSeparator());
     }
-
-    return ObjectToString.toString(args);
+    if (args != null) {
+      buffer.append(ObjectToString.toString(args));
+    }
+    return buffer.toString();
   }
 
   @Override

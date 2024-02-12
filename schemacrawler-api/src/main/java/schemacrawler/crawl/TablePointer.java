@@ -31,7 +31,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
 
-class TablePointer extends DatabaseObjectReference<Table> {
+final class TablePointer extends DatabaseObjectReference<Table> {
 
   private static final long serialVersionUID = 8940800217960888019L;
 

@@ -30,7 +30,6 @@ package schemacrawler.tools.command.chatgpt.options;
 
 import static schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility.inIntegerRange;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
 import schemacrawler.tools.executable.CommandOptions;
 
 public class ChatGPTCommandOptions implements CommandOptions {
