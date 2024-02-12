@@ -91,17 +91,6 @@
       <version>2.1.0.25</version>
     </dependency>
     <dependency>
-      <groupId>net.sf.ucanaccess</groupId>
-      <artifactId>ucanaccess</artifactId>
-      <version>5.0.1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.firebirdsql.jdbc</groupId>
       <artifactId>jaybird</artifactId>
       <version>5.0.3.java8</version>
@@ -139,7 +128,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
-          <version>2.3.0</version>
+          <version>2.4.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
