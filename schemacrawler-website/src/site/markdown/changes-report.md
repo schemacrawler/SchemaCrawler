@@ -9,8 +9,8 @@ SchemaCrawler release notes.
 - Allow SchemaCrawler ChatGPT plugin to do Retrieval Augmented Generation (RAG) for optimal help with SQL queries
 
 
-<a name="v16.21.1"></a>
-## Release 16.21.1 - 2024-01-15
+<a name="v16.21.2"></a>
+## Release 16.21.2 - 2024-01-15
 
 - Add a timeout option for ChatGPT
 - Distribute MariaDB JDBC driver
@@ -72,8 +72,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.21.1"></a>
-## Release 16.21.1 - 2023-06-03
+<a name="v16.21.2"></a>
+## Release 16.21.2 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
