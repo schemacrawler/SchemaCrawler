@@ -46,7 +46,7 @@ public final class EmbeddedTable implements NamedObject {
 
   EmbeddedTable(final Table table) {
     this.table = requireNonNull(table, "No table provided");
-    tableDocument = CompactCatalogUtility.getTableDocument(table);
+    tableDocument = CompactCatalogUtility.getTableDocument(table, false);
   }
 
   @Override

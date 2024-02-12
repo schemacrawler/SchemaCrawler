@@ -49,13 +49,13 @@ public final class CompactCatalogUtility {
     final CatalogDocument catalogDocument =
         new CatalogDocument(catalog.getDatabaseInfo().getDatabaseProductName());
     for (final Table table : catalog.getTables()) {
-      final TableDocument tableDocument = getTableDocument(table);
+      final TableDocument tableDocument = getTableDocument(table, true);
       catalogDocument.addTable(tableDocument);
     }
     return catalogDocument;
   }
 
-  public static TableDocument getTableDocument(final Table table) {
+  public static TableDocument getTableDocument(final Table table, final boolean withDependents) {
     requireNonNull(table, "No table provided");
 
     final Map<String, Column> referencedColumns = mapReferencedColumns(table);
@@ -66,10 +66,12 @@ public final class CompactCatalogUtility {
       tableDocument.addColumn(columnDocument);
     }
 
-    final Collection<Table> dependentTables = table.getDependentTables();
-    for (Table dependentTable : dependentTables) {
-      final TableDocument dependentTableDocument = new TableDocument(dependentTable);
-      tableDocument.addDependentTable(dependentTableDocument);
+    if (withDependents) {
+      final Collection<Table> dependentTables = table.getDependentTables();
+      for (final Table dependentTable : dependentTables) {
+        final TableDocument dependentTableDocument = new TableDocument(dependentTable);
+        tableDocument.addDependentTable(dependentTableDocument);
+      }
     }
 
     return tableDocument;
@@ -80,8 +82,8 @@ public final class CompactCatalogUtility {
 
     final Map<String, Column> referencedColumns = new HashMap<>();
     for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-      List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
-      for (ColumnReference columnReference : columnReferences) {
+      final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
+      for (final ColumnReference columnReference : columnReferences) {
         referencedColumns.put(
             columnReference.getForeignKeyColumn().getName(), columnReference.getPrimaryKeyColumn());
       }
