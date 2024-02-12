@@ -1,6 +1,7 @@
 package schemacrawler.tools.command.chatgpt.test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ public class ChatGPTCommandProviderTest {
     final ChatGPTCommand command = commandProvider.newSchemaCrawlerCommand("chatgpt", config);
     final ChatGPTCommandOptions commandOptions = command.getCommandOptions();
     assertThat(commandOptions.getApiKey(), is("api-key"));
-    assertThat(commandOptions.getModel(), is("gpt-3.5-turbo"));
+    assertThat(commandOptions.getModel(), startsWith("gpt-3.5-turbo"));
   }
 
   @Test

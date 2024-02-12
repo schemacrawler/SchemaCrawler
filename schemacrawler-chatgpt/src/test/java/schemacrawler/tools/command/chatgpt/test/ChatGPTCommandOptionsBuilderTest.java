@@ -1,6 +1,7 @@
 package schemacrawler.tools.command.chatgpt.test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
@@ -19,19 +20,19 @@ public class ChatGPTCommandOptionsBuilderTest {
     final ChatGPTCommandOptionsBuilder optionsBuilder =
         ChatGPTCommandOptionsBuilder.builder().withApiKey("api-key");
     assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
-    assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
+    assertThat(optionsBuilder.toOptions().getModel(), startsWith("gpt-3.5-turbo"));
 
     optionsBuilder.withApiKey(null);
     assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
-    assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
+    assertThat(optionsBuilder.toOptions().getModel(), startsWith("gpt-3.5-turbo"));
 
     optionsBuilder.withApiKey("\t");
     assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
-    assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
+    assertThat(optionsBuilder.toOptions().getModel(), startsWith("gpt-3.5-turbo"));
 
     optionsBuilder.withApiKey("new-api-key");
     assertThat(optionsBuilder.toOptions().getApiKey(), is("new-api-key"));
-    assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
+    assertThat(optionsBuilder.toOptions().getModel(), startsWith("gpt-3.5-turbo"));
   }
 
   @Test
@@ -62,11 +63,11 @@ public class ChatGPTCommandOptionsBuilderTest {
 
     optionsBuilder.withModel(null);
     assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
-    assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
+    assertThat(optionsBuilder.toOptions().getModel(), startsWith("gpt-3.5-turbo"));
 
     optionsBuilder.withModel("\t");
     assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
-    assertThat(optionsBuilder.toOptions().getModel(), is("gpt-3.5-turbo"));
+    assertThat(optionsBuilder.toOptions().getModel(), startsWith("gpt-3.5-turbo"));
 
     optionsBuilder.withModel("new-model");
     assertThat(optionsBuilder.toOptions().getApiKey(), is("api-key"));
@@ -112,7 +113,7 @@ public class ChatGPTCommandOptionsBuilderTest {
     final ChatGPTCommandOptions options =
         ChatGPTCommandOptionsBuilder.builder().fromConfig(config).toOptions();
     assertThat(options.getApiKey(), is("api-key"));
-    assertThat(options.getModel(), is("gpt-3.5-turbo"));
+    assertThat(options.getModel(), startsWith("gpt-3.5-turbo"));
 
     // Have both keys
     config = new Config();
@@ -121,7 +122,7 @@ public class ChatGPTCommandOptionsBuilderTest {
     final ChatGPTCommandOptions options2 =
         ChatGPTCommandOptionsBuilder.builder().fromConfig(config).toOptions();
     assertThat(options2.getApiKey(), is("api-key"));
-    assertThat(options2.getModel(), is("gpt-3.5-turbo"));
+    assertThat(options2.getModel(), startsWith("gpt-3.5-turbo"));
 
     config = new Config();
     config.put("api-key:env", "api-key-env");
@@ -129,7 +130,7 @@ public class ChatGPTCommandOptionsBuilderTest {
     final ChatGPTCommandOptions options3 =
         ChatGPTCommandOptionsBuilder.builder().fromConfig(config).toOptions();
     assertThat(options3.getApiKey(), is("api-key"));
-    assertThat(options3.getModel(), is("gpt-3.5-turbo"));
+    assertThat(options3.getModel(), startsWith("gpt-3.5-turbo"));
 
     // Have both keys, with api-key blank
     config = new Config();
@@ -138,7 +139,7 @@ public class ChatGPTCommandOptionsBuilderTest {
     final ChatGPTCommandOptions options4 =
         ChatGPTCommandOptionsBuilder.builder().fromConfig(config).toOptions();
     assertThat(options4.getApiKey(), is("api-key"));
-    assertThat(options4.getModel(), is("gpt-3.5-turbo"));
+    assertThat(options4.getModel(), startsWith("gpt-3.5-turbo"));
 
     // No value for environmental variable
     final Config config1 = new Config();

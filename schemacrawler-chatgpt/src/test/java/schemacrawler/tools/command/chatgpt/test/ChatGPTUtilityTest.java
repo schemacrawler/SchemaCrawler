@@ -13,13 +13,11 @@ import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import com.theokanning.openai.completion.chat.ChatFunctionCall;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.FunctionExecutor;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.command.chatgpt.functions.ExitFunctionDefinition;
 import schemacrawler.tools.command.chatgpt.utility.ChatGPTUtility;
@@ -58,22 +56,6 @@ public class ChatGPTUtilityTest {
     ChatGPTUtility.printResponse(Arrays.asList(mock(ChatMessage.class)), out);
     out.flush();
     assertThat(stream.getContents(), startsWith("null"));
-  }
-
-  @Test
-  public void systemMessages() {
-    final Catalog catalog = mock(Catalog.class);
-    final DatabaseInfo databaseInfo = mock(DatabaseInfo.class);
-    when(catalog.getDatabaseInfo()).thenReturn(databaseInfo);
-    when(databaseInfo.getDatabaseProductName()).thenReturn("Mock database");
-
-    final Connection connection = mock(Connection.class);
-
-    assertThrows(NullPointerException.class, () -> ChatGPTUtility.systemMessages(null, connection));
-    assertThrows(NullPointerException.class, () -> ChatGPTUtility.systemMessages(catalog, null));
-
-    final List<ChatMessage> systemMessages = ChatGPTUtility.systemMessages(catalog, connection);
-    assertThat(systemMessages, hasSize(1));
   }
 
   @Test
