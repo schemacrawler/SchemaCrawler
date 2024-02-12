@@ -69,7 +69,7 @@
 ## Using ChatGPT
 
 - Use ChatGPT to generate queries
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas "AdventureWorks\.HumanResources.*" --user SA --password Schem#Crawl3r --info-level maximum --command chatgpt --use-metadata --api-key <your-api-key>`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas "AdventureWorks\.[A-Z].*" --user SA --password Schem#Crawl3r --info-level maximum --command chatgpt --use-metadata --api-key <your-api-key>`
   Ask the following questions
   - Write a nicely formatted SQL query to find the employee logins and departments, using fully qualified table names.
   - Write a nicely formatted SQL query to find the number of employees in each shift for each department, using fully qualified table names.
