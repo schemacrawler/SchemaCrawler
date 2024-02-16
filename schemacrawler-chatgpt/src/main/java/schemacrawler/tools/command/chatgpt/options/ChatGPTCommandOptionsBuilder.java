@@ -52,7 +52,7 @@ public final class ChatGPTCommandOptionsBuilder
   private boolean useMetadata;
 
   private ChatGPTCommandOptionsBuilder() {
-    model = "gpt-3.5-turbo-0125";
+    model = "gpt-3.5-turbo";
     context = DEFAULT_CONTEXT;
     timeout = DEFAULT_TIMEOUT;
   }

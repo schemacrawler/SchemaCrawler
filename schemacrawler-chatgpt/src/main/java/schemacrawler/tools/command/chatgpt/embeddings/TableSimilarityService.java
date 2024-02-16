@@ -32,11 +32,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.math3.linear.RealVector;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import us.fatehi.utility.string.StringFormat;
 
 public final class TableSimilarityService {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(TableSimilarityService.class.getCanonicalName());
 
   private static double cosineSimilarity(final RealVector v1, final RealVector v2) {
     requireNonNull(v1, "No vector provided");
@@ -111,6 +117,8 @@ public final class TableSimilarityService {
     if (index == -1) {
       return new ArrayList<>();
     }
-    return similarities.subList(0, index + 1);
+    LOGGER.log(
+        Level.CONFIG, new StringFormat("Limiting to %d tables, with %d tokens", index, tokenSum));
+    return similarities.subList(0, index);
   }
 }
