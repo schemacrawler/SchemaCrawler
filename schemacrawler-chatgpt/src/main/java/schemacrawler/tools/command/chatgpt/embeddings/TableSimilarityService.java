@@ -119,6 +119,6 @@ public final class TableSimilarityService {
     }
     LOGGER.log(
         Level.CONFIG, new StringFormat("Limiting to %d tables, with %d tokens", index, tokenSum));
-    return similarities.subList(0, index);
+    return similarities.subList(0, index + 1);
   }
 }

@@ -79,12 +79,14 @@ public final class QueryService {
 
     final Collection<ChatMessage> messages = new ArrayList<>();
 
-    messages.add(new ChatMessage(SYSTEM.value(), metadataPriming));
-
     final Collection<EmbeddedTable> matchedTables =
         tableSimilarityService.query(prompt, MAX_TOKENS);
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat("Tables matching prompt", matchedTables));
+    if (matchedTables.isEmpty()) {
+      return messages;
+    }
 
+    messages.add(new ChatMessage(SYSTEM.value(), metadataPriming));
     for (final EmbeddedTable embeddedTable : matchedTables) {
       final ChatMessage chatMessage = new ChatMessage(SYSTEM.value(), embeddedTable.toJson());
       messages.add(chatMessage);
