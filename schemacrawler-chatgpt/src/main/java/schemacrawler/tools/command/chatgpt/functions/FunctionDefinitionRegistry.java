@@ -100,7 +100,8 @@ public final class FunctionDefinitionRegistry implements Iterable<FunctionDefini
 
   @Override
   public Iterator<FunctionDefinition> iterator() {
-    final List<FunctionDefinition> functionDefinitions = new ArrayList<>(functionDefinitionRegistry.values());
+    final List<FunctionDefinition> functionDefinitions =
+        new ArrayList<>(functionDefinitionRegistry.values());
     return functionDefinitions.iterator();
   }
 }

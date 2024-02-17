@@ -51,7 +51,6 @@ public class DirectedGraph<T extends Comparable<? super T>> {
    * self-loops.
    *
    * @see <a href="https://en.wikipedia.org/wiki/Loop_(graph_theory)">Loop (graph theory)</a>
-   *
    * @param from Vertex value at the start of the edge
    * @param to Vertex value at the end of the edge
    */
