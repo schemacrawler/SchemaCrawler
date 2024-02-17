@@ -67,10 +67,6 @@ jobs:
       if: contains(github.ref, 'main')
       env:
         QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-    - id: qodana-results
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
     - id: upload-coverage-test-results
       name: Upload coverage test results
       uses: actions/upload-artifact@v4
