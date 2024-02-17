@@ -42,7 +42,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
@@ -50,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -715,7 +715,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printTableRowCount(final Table table) {
-    if (options.isHideTableRowCounts() || table == null || !hasRowCount(table)) {
+    if (options.isHideTableRowCounts() || !hasRowCount(table)) {
       return;
     }
 
