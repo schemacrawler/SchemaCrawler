@@ -27,15 +27,10 @@ import static java.sql.Types.LONGNVARCHAR;
 import static java.sql.Types.LONGVARBINARY;
 import static java.sql.Types.LONGVARCHAR;
 import static java.sql.Types.NCLOB;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static schemacrawler.utility.EnumUtility.enumValueFromId;
 import static us.fatehi.utility.IOUtility.readFully;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.isIntegral;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.io.Reader;
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -51,7 +46,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.isIntegral;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.schema.ResultsColumn;
@@ -174,16 +172,14 @@ public final class MetadataResultSet implements AutoCloseable {
               Level.FINER,
               new StringFormat("NULL value for column <%s>, so evaluating to 'false'", columnName));
           return false;
-        } else {
-          stringBooleanValue = String.valueOf(booleanValue).trim();
         }
+        stringBooleanValue = String.valueOf(booleanValue).trim();
 
         if (isIntegral(stringBooleanValue)) {
-          return !stringBooleanValue.equals("0");
-        } else {
-          return stringBooleanValue.equalsIgnoreCase("yes")
-              || stringBooleanValue.equalsIgnoreCase("true");
+          return !"0".equals(stringBooleanValue);
         }
+        return "yes".equalsIgnoreCase(stringBooleanValue)
+            || "true".equalsIgnoreCase(stringBooleanValue);
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
@@ -197,7 +193,7 @@ public final class MetadataResultSet implements AutoCloseable {
   public String[] getColumnNames() {
     final List<String> columnNames = new ArrayList<>();
     resultsColumns.forEach(resultsColumn -> columnNames.add(resultsColumn.getName()));
-    return columnNames.toArray(new String[columnNames.size()]);
+    return columnNames.toArray(new String[0]);
   }
 
   /**
