@@ -28,15 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.formatter.operation;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -177,7 +175,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
   private void iterateRows(final MetadataResultSet dataRows) throws SQLException {
     while (dataRows.next()) {
       final List<Object> currentRow = dataRows.row();
-      final Object[] columnData = currentRow.toArray(new Object[currentRow.size()]);
+      final Object[] columnData = currentRow.toArray();
       formattingHelper.writeRow(columnData);
     }
   }
