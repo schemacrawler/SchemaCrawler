@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
-import static us.fatehi.utility.Utility.isBlank;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -51,6 +50,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -166,7 +166,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
             Collections.sort(resultsList);
             dbProperties.add(
                 new ImmutableDatabaseProperty(
-                    method.getName(), resultsList.toArray(new String[resultsList.size()])));
+                    method.getName(), resultsList.toArray(new String[0])));
           }
 
         } catch (final IllegalAccessException | InvocationTargetException e) {

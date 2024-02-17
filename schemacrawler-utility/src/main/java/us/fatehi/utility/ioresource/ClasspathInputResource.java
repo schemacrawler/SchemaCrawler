@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +37,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 
 public class ClasspathInputResource implements InputResource {
 
@@ -62,7 +61,13 @@ public class ClasspathInputResource implements InputResource {
 
   @Override
   public String getDescription() {
-    return ClasspathInputResource.class.getResource(classpathResource).toExternalForm();
+    String url;
+    try {
+      url = ClasspathInputResource.class.getResource(classpathResource).toExternalForm();
+    } catch (final Exception e) {
+      url = classpathResource;
+    }
+    return url;
   }
 
   @Override
@@ -70,6 +75,10 @@ public class ClasspathInputResource implements InputResource {
     requireNonNull(charset, "No input charset provided");
     final InputStream inputStream =
         ClasspathInputResource.class.getResourceAsStream(classpathResource);
+    if (inputStream == null) {
+      throw new NullPointerException(
+          String.format("Cannot open classpath resource <%s> for reading", classpathResource));
+    }
     final Reader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
     LOGGER.log(Level.INFO, "Opened input reader to classpath resource, " + classpathResource);
 

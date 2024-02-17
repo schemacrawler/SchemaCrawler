@@ -1,13 +1,8 @@
 package schemacrawler.schemacrawler;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.emptyList;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -18,8 +13,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public class IdentifiersBuilder implements OptionsBuilder<IdentifiersBuilder, Identifiers> {
 
@@ -34,13 +32,12 @@ public class IdentifiersBuilder implements OptionsBuilder<IdentifiersBuilder, Id
     final Set<String> reservedWords = new HashSet<>();
     try (final BufferedReader reader =
         new BufferedReader(
-            new InputStreamReader(
-                Identifiers.class.getResourceAsStream("/sql2003_reserved_words.txt")))) {
+            new ClasspathInputResource("/sql2003_reserved_words.txt").openNewInputReader(UTF_8))) {
       String line;
       while ((line = reader.readLine()) != null) {
         reservedWords.add(line);
       }
-    } catch (final IOException e) {
+    } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not read list of SQL 2003 reserved words", e);
     }
     if (reservedWords.isEmpty()) {
@@ -103,33 +100,6 @@ public class IdentifiersBuilder implements OptionsBuilder<IdentifiersBuilder, Id
     return this;
   }
 
-  @Override
-  public IdentifiersBuilder fromOptions(final Identifiers identifiers) {
-    if (identifiers == null) {
-      return this;
-    }
-
-    identifierQuoteString = identifiers.getIdentifierQuoteString();
-    identifierQuotingStrategy = identifiers.getIdentifierQuotingStrategy();
-    quoteMixedCaseIdentifiers = identifiers.isQuoteMixedCaseIdentifiers();
-
-    return this;
-  }
-
-  public boolean isIdentifierQuoteStringSet() {
-    return identifierQuoteString != null;
-  }
-
-  public IdentifiersBuilder quoteMixedCaseIdentifiers() {
-    quoteMixedCaseIdentifiers = true;
-    return this;
-  }
-
-  @Override
-  public Identifiers toOptions() {
-    return new Identifiers(this);
-  }
-
   /**
    * Constructs a list of database object identifiers from SQL 2003 keywords, and from the database
    * server. Also obtains the identifier quote string from the database server.
@@ -161,6 +131,33 @@ public class IdentifiersBuilder implements OptionsBuilder<IdentifiersBuilder, Id
       LOGGER.log(Level.WARNING, "Could not obtain connection-specific information", e);
     }
     return this;
+  }
+
+  @Override
+  public IdentifiersBuilder fromOptions(final Identifiers identifiers) {
+    if (identifiers == null) {
+      return this;
+    }
+
+    identifierQuoteString = identifiers.getIdentifierQuoteString();
+    identifierQuotingStrategy = identifiers.getIdentifierQuotingStrategy();
+    quoteMixedCaseIdentifiers = identifiers.isQuoteMixedCaseIdentifiers();
+
+    return this;
+  }
+
+  public boolean isIdentifierQuoteStringSet() {
+    return identifierQuoteString != null;
+  }
+
+  public IdentifiersBuilder quoteMixedCaseIdentifiers() {
+    quoteMixedCaseIdentifiers = true;
+    return this;
+  }
+
+  @Override
+  public Identifiers toOptions() {
+    return new Identifiers(this);
   }
 
   /**

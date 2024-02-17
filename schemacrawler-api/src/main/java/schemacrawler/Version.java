@@ -31,12 +31,10 @@ package schemacrawler;
 import static java.lang.System.lineSeparator;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
-
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.List;
-
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 /**
  * Version information for this product. Has methods to obtain information about the product, as
@@ -52,8 +50,7 @@ public final class Version extends BaseProductVersion {
   static {
     try (final BufferedReader reader =
         new BufferedReader(
-            new InputStreamReader(
-                Version.class.getResourceAsStream("/help/SchemaCrawler.txt"), UTF_8))) {
+            new ClasspathInputResource("/help/SchemaCrawler.txt").openNewInputReader(UTF_8))) {
 
       final List<String> lines = reader.lines().collect(toList());
       lines.add("");

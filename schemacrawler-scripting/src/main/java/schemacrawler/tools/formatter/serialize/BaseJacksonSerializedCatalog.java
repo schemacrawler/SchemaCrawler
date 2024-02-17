@@ -33,8 +33,6 @@ import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTR
 import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -46,7 +44,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -64,7 +61,7 @@ import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -158,9 +155,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
 
   private void loadAllTableColumns() {
     for (final Table table : catalog.getTables()) {
-      for (final Column column : table.getColumns()) {
-        allTableColumns.add(column);
-      }
+      allTableColumns.addAll(table.getColumns());
     }
   }
 

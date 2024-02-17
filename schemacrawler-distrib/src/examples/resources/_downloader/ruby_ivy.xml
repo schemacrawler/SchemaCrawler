@@ -11,9 +11,9 @@
               rev="9.4.5.0" conf="binaries->default" />
 
     <override org="com.github.jnr" module="jnr-ffi"
-              rev="2.2.15" />
+              rev="2.2.16" />
     <override org="com.github.jnr" module="jnr-posix"
-              rev="3.1.18" />
+              rev="3.1.19" />
     <override org="org.ow2.asm"
               rev="9.6" />
 

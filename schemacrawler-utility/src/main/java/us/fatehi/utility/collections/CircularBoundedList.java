@@ -91,7 +91,7 @@ public class CircularBoundedList<T> implements Iterable<T> {
     isFull = size == elements.length;
   }
 
-  public <T> List<T> convertToList() {
+  public List<T> convertToList() {
     return StreamSupport.stream(((Iterable<T>) this).spliterator(), false)
         .collect(Collectors.toList());
   }
