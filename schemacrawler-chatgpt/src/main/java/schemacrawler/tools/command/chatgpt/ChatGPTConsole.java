@@ -126,9 +126,7 @@ public final class ChatGPTConsole implements AutoCloseable {
 
       if (useMetadata) {
         final Collection<ChatMessage> chatMessages = queryService.query(prompt);
-        for (final ChatMessage chatMessage : chatMessages) {
-          messages.add(chatMessage);
-        }
+        messages.addAll(chatMessages);
       }
 
       final ChatCompletionRequest completionRequest =
