@@ -18,7 +18,7 @@
     <exclude  org="com.google.errorprone" />
 
     <override org="com.github.jnr" module="jnr-ffi"
-              rev="2.2.15" />
+              rev="2.2.16" />
     <override org="com.github.jnr" module="jnr-posix"
               rev="3.1.18" />
     <override org="org.ow2.asm"
