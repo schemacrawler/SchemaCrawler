@@ -29,11 +29,8 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.database;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLWarning;
@@ -44,7 +41,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import us.fatehi.utility.SQLRuntimeException;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public class SqlScript implements Runnable {
 
@@ -61,9 +61,9 @@ public class SqlScript implements Runnable {
     requireNonNull(connection, "No database connection provided");
 
     try (final Reader scriptReader =
-        new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8)) {
+        new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)) {
       new SqlScript(scriptReader, ";", connection).run();
-    } catch (final IOException e) {
+    } catch (final Exception e) {
       throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
     }
   }
@@ -81,7 +81,7 @@ public class SqlScript implements Runnable {
   @Override
   public void run() {
 
-    final boolean skip = delimiter.equals("#");
+    final boolean skip = "#".equals(delimiter);
 
     if (debug) {
       final String lineLogMessage =
