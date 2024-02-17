@@ -24,7 +24,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.3.5
+      uses: sualeh/prepare-maven-build@v1.4.0
       with:
         java-version: 8
     - id: install-graphviz
@@ -48,7 +48,7 @@ jobs:
       name: Check website links
       uses: lycheeverse/lychee-action@v1.9.3
       with:
-        args: --verbose --accept 200,999 --no-progress ./schemacrawler-website/target/_website/**/*
+        args: --verbose --accept 200,999 --no-progress --base . `./schemacrawler-website/target/_website/**/*.html`
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
