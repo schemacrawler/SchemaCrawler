@@ -1,10 +1,7 @@
 version: "1.0"
 linter: jetbrains/qodana-jvm-community:2023.1
 include:
-  - name: UnnecessarySemicolon
-  - name: JavadocLinkAsPlainText
   - name: NullableProblems
-  - name: StringBufferReplaceableByString
   - name: UnnecessaryContinue
   - name: UNCHECKED_WARNING
 exclude:
