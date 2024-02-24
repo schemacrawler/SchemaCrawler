@@ -40,7 +40,7 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc_auth</artifactId>
-      <version>12.6.1.x64</version>
+      <version>12.6.1.x86</version>
       <type>dll</type>
     </dependency>
     <dependency>
