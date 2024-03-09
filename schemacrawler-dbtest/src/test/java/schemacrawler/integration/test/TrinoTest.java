@@ -62,7 +62,7 @@ public class TrinoTest extends BaseAdditionalDatabaseTest {
   private final DockerImageName imageName = DockerImageName.parse("trinodb/trino");
 
   @Container
-  private final JdbcDatabaseContainer<?> dbContainer = new TrinoContainer(imageName.withTag("439"));
+  private final JdbcDatabaseContainer<?> dbContainer = new TrinoContainer(imageName.withTag("440"));
 
   @BeforeEach
   public void createDatabase() {
