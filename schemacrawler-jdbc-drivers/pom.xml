@@ -46,7 +46,7 @@
     <dependency>
       <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
-      <version>21.11.0.0</version>
+      <version>21.13.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.db2</groupId>
@@ -98,7 +98,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>439</version>
+      <version>440</version>
     </dependency>
     <dependency>
       <groupId>com.ing.data</groupId>
