@@ -67,6 +67,13 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+	  <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-framework-bom</artifactId>
+	    <version>5.3.32</version>
+	    <type>pom</type>
+        <scope>import</scope>
+	  </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -217,13 +224,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.32</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>5.3.32</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -262,7 +267,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.12.1</version>
+          <version>3.13.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -295,7 +300,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.6.0</version>
+          <version>3.7.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
