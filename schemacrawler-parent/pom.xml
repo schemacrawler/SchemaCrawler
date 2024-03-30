@@ -70,7 +70,7 @@
 	  <dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-framework-bom</artifactId>
-	    <version>5.3.32</version>
+	    <version>6.1.5</version>
 	    <type>pom</type>
         <scope>import</scope>
 	  </dependency>
