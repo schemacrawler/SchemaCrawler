@@ -63,7 +63,7 @@ jobs:
 # UPLOAD WEBSITE
     - id: configure-pages
       name: Setup Pages
-      uses: actions/configure-pages@v4
+      uses: actions/configure-pages@v5
 
     - id: upload-artifact
       name: Upload artifact
