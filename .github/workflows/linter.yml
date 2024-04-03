@@ -50,7 +50,7 @@ jobs:
       name: Persist linter logs
       uses: actions/upload-artifact@v4
       # Disable, since the logs leak the GitHub Actions token
-      if: false || always()
+      if: false && always()
       with:
         name: super-linter-log
         path: super-linter.log
