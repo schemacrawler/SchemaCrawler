@@ -8,8 +8,8 @@
   </configurations>
   <dependencies>
     <dependency org="org.graalvm.js" name="js"
-                rev="21.3.9" conf="binaries->default" />
+                rev="21.3.10" conf="binaries->default" />
     <dependency org="org.graalvm.js" name="js-scriptengine"
-                rev="21.3.9" conf="binaries->default" />
+                rev="21.3.10" conf="binaries->default" />
   </dependencies>
 </ivy-module>

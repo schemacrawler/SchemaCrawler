@@ -203,13 +203,13 @@
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
-      <version>21.3.9</version>
+      <version>21.3.10</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
-      <version>21.3.9</version>
+      <version>21.3.10</version>
       <scope>provided</scope>
     </dependency>
 
