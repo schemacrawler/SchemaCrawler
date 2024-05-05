@@ -34,7 +34,7 @@ jobs:
         cat .github/super-linter.env >> "$GITHUB_ENV"
     - id: lint-code-base
       name: Lint Code Base
-      uses: github/super-linter/slim@v6
+      uses: github/super-linter/slim@v5
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BRANCH: main
