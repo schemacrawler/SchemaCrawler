@@ -12,9 +12,8 @@
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler)]( https://community.chocolatey.org/packages/schemacrawler)
 
 
-<img src="https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/main/schemacrawler-website/src/site/resources/images/schemacrawler_logo.png" height="80px" width="80px" align="right" />
 
-# SchemaCrawler
+# SchemaCrawler <img src="https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/main/schemacrawler-website/src/site/resources/images/schemacrawler_logo.png" height="100px" width="100px" align="right"/>
 
 > **Note**:
 > * Please see the [SchemaCrawler website](https://www.schemacrawler.com/) for more details.
