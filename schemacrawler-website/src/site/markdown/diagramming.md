@@ -16,7 +16,7 @@ SchemaCrawler relies on [Graphviz](https://www.graphviz.org/) to generate diagra
 Install [Graphviz](https://www.graphviz.org/) first, and ensure that it is on the system
 PATH. If installing [Graphviz](https://www.graphviz.org/) is not an option for you, use
 the pure Java Graphviz library. Instructions are provided with
-[the SchemaCrawler download](https://github.com/schemacrawler/SchemaCrawler/releases),
+[the SchemaCrawler download](https://www.schemacrawler.com/downloads.html#running-examples-locally),
 in the `diagram` example.
 Currently, the the pure Java Graphviz library is only able to generate PNG and SVG diagrams.
 
@@ -25,7 +25,7 @@ example,
 `--command=schema --output-format=png --output-file=graph.png`
 
 See the diagram example in the
-[SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/)
+[SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/)
 download. An example of a SchemaCrawler database diagram is below.
 
 <a href="diagram-examples/diagram.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">

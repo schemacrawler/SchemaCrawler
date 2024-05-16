@@ -17,7 +17,7 @@ schema lints, as well as some checks for common database schema design issues. Y
 extend this by creating your own jar that contains lint checks.
 
 For more details, see the `lint` example in the 
-[SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) 
+[SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) 
 download.
 
 ## SchemaCrawler Lint Reports

@@ -1,7 +1,7 @@
 # SchemaCrawler Downloads
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
-[![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
+[![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://www.schemacrawler.com/downloads.html#running-examples-locally)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 
 
@@ -11,7 +11,7 @@ SchemaCrawler is distributed in a variety of ways, to support various use cases.
 
 If you would like to use SchemaCrawler without installing it, you can explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler). The tutorial works from within any browser with no software or plugins needed.
 
-If you need to use SchemaCrawler locally, you have a number of options. You can [download SchemaCrawler releases with tutorials from GitHub](https://github.com/sualeh/SchemaCrawler/releases). You can install the SchemaCrawler Interactive Shell using platform-specific installers downloaded from [schemacrawler/SchemaCrawler-Installers](https://github.com/schemacrawler/SchemaCrawler-Installers). For Windows, SchemaCrawler is also available via the [Scoop command-line installer](https://scoop.sh/), [Chocolatey package manager](https://community.chocolatey.org/packages/schemacrawler), [SDKMan](https://sdkman.io/sdks#schemacrawler), as well as via [Microsoft Windows Package Manager, winget](https://docs.microsoft.com/en-us/windows/package-manager/).
+If you need to use SchemaCrawler locally, you have a number of options. You can [download SchemaCrawler releases with tutorials from GitHub](https://www.schemacrawler.com/downloads.html#running-examples-locally). You can install the SchemaCrawler Interactive Shell using platform-specific installers downloaded from [schemacrawler/SchemaCrawler-Installers](https://github.com/schemacrawler/SchemaCrawler-Installers). For Windows, SchemaCrawler is also available via the [Scoop command-line installer](https://scoop.sh/), [Chocolatey package manager](https://community.chocolatey.org/packages/schemacrawler), [SDKMan](https://sdkman.io/sdks#schemacrawler), as well as via [Microsoft Windows Package Manager, winget](https://docs.microsoft.com/en-us/windows/package-manager/).
 
 If you want to use SchemaCrawler as a library, and in your build, all jars are in the [Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](https://maven.apache.org/) projects, or with any other build system that supports the Central Repository. SchemaCrawler reports can be incorporated into Apache Maven builds with the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) and into the GitHub Actions workflow with the [SchemaCrawler Action](https://github.com/schemacrawler/SchemaCrawler-Action) or in [GitLab pipelines](https://gitlab.com/sualeh/schemacrawler-action-usage-example/-/pipelines). If you would like to extend SchemaCrawler with plugins for a certain database, create new database lints, or create a new command, use the [starter projects to create new SchemaCrawler plugins](https://github.com/schemacrawler/SchemaCrawler-Plugins-Starter) on GitHub.
 
@@ -65,9 +65,9 @@ You can install SchemaCrawler on supported platforms using [SDKMan](https://sdkm
 4. Run SchemaCrawler with `schemacrawler.bat` on Windows, or `schemacrawler.sh` on other  platforms 
 
 
-### Running Examples Locally
+## Running Examples Locally
 
-You can download example code explaining how to use SchemaCrawler from the [releases page](https://github.com/schemacrawler/SchemaCrawler/releases/latest). 
+You can download example code explaining how to use SchemaCrawler from the [releases page](https://github.com/schemacrawler/SchemaCrawler/releases).
 Download a file called "schemacrawler-16.21.2-distribution.zip". You should have previously installed the Java SDK on your system. Unzip the file, and
 read the README files in each folder to follow through with the examples. The examples show how to use the SchemaCrawler command-line, use the API,
 and extend SchemaCrawler functionality programmatically.

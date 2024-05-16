@@ -111,7 +111,7 @@ Additional [download and installation options](downloads.html) are available.
 
 
 
-[SchemaCrawler examples]: https://github.com/schemacrawler/SchemaCrawler/releases/
+[SchemaCrawler examples]: https://www.schemacrawler.com/downloads.html#running-examples-locally/
 [Groovy]: https://www.groovy-lang.org/
 [Ruby]: https://www.ruby-lang.org/en/
 [Python]: https://www.python.org/

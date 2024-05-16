@@ -22,7 +22,7 @@ Java SE 8 or better.
 [![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
-[![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
+[![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://www.schemacrawler.com/downloads.html#running-examples-locally)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler)](https://community.chocolatey.org/packages/schemacrawler)
 [![Scoop](https://img.shields.io/scoop/v/schemacrawler.svg)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
@@ -52,7 +52,7 @@ SchemaCrawler has powerful scripting ability,
 using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
 script context to allow you to select from or even modify your database.
 Examples are provided for all of these with the
-[download](https://github.com/schemacrawler/SchemaCrawler/releases/).
+[download](https://www.schemacrawler.com/downloads.html#running-examples-locally/).
 
 SchemaCrawler is integrated with templating engines, such
 as [Apache Velocity](https://velocity.apache.org/), [Thymeleaf](https://www.thymeleaf.org/),

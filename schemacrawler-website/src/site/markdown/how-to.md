@@ -222,13 +222,13 @@ SchemaCrawler has built-in support to be used with JavaScript scripts. Write you
 
 ### <a name="velocity">How to create your own output format</a>
 
-SchemaCrawler integrates with [Apache Velocity](https://velocity.apache.org/) to allow for templated output. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options `--command velocity --template <your Velocity template>`. See the Velocity example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download.
+SchemaCrawler integrates with [Apache Velocity](https://velocity.apache.org/) to allow for templated output. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options `--command velocity --template <your Velocity template>`. See the Velocity example in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download.
 
 ---------
 
 ### <a name="diagrams">How to create a database diagram of your schema</a>
 
-SchemaCrawler integrates with [Graphviz](https://www.graphviz.org/) to produce graph images. See the diagram example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download. For more details, see the [diagram section](diagramming.html).
+SchemaCrawler integrates with [Graphviz](https://www.graphviz.org/) to produce graph images. See the diagram example in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download. For more details, see the [diagram section](diagramming.html).
 
 ---------
 
@@ -241,7 +241,7 @@ You can provide additional Graphviz command-line options using the `SC_GRAPHVIZ_
 
 ### <a name="graphviz-java">How to use pure-Java Graphviz</a>
 
-In certain situations, it may not be possible to install Graphviz. SchemaCrawler integrates with [nidi3/graphviz-java](https://github.com/nidi3/graphviz-java) to provide a pre-Java approach to generating graphs. Download the [SchemaCrawler distribution](https://github.com/schemacrawler/SchemaCrawler/releases), and run through the `diagram` example. This will download the required jar files automatically.
+In certain situations, it may not be possible to install Graphviz. SchemaCrawler integrates with [nidi3/graphviz-java](https://github.com/nidi3/graphviz-java) to provide a pre-Java approach to generating graphs. Download the [SchemaCrawler distribution](https://www.schemacrawler.com/downloads.html#running-examples-locally), and run through the `diagram` example. This will download the required jar files automatically.
 
 ---------
 
@@ -254,7 +254,7 @@ In certain situations, it may not be possible to install Graphviz. SchemaCrawler
 
 Read [How to Get Database Metadata as Java POJOs](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li), and browse the [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/).
 
-_See the api example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download._
+_See the api example in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download._
 
 Or, if you are impatient, try code similar to the following:
 

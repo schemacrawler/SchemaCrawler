@@ -196,7 +196,7 @@ SchemaCrawler has built-in support to be used with JavaScript scripts. SchemaCra
 
 Also, look at the [scripting](scripting.html) page.
 
-_For more details, see scripting examples in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
+_For more details, see scripting examples in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
 
 ---------
 
@@ -206,7 +206,7 @@ SchemaCrawler is an API that improves on the standard JDBC metadata facilities. 
 
 Read [How to Get Database Metadata as Java POJOs](https://dev.to/sualeh/how-to-get-database-metadata-as-java-pojos-24li), and browse the [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/).
 
-_For more details, see scripting example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\api` directory._
+_For more details, see scripting example in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download, in the `examples\api` directory._
 
 ---------
 
@@ -214,7 +214,7 @@ _For more details, see scripting example in the [SchemaCrawler examples](https:/
 
 SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is designed to be used programmatically with the [Spring Framework](https://spring.io/) . 
 
-SchemaCrawler comes pre-built with integration with [Apache Velocity.](https://velocity.apache.org/) This allows you to specify your own templates for formatting the schema. For more details, see scripting example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\velocity` directory.
+SchemaCrawler comes pre-built with integration with [Apache Velocity.](https://velocity.apache.org/) This allows you to specify your own templates for formatting the schema. For more details, see scripting example in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download, in the `examples\velocity` directory.
 
 
 </dl>
@@ -224,7 +224,7 @@ SchemaCrawler comes pre-built with integration with [Apache Velocity.](https://v
 
 ### <a name="availability ">Where is SchemaCrawler available?</a>
 
-SchemaCrawler is available as a download from [GitHub](https://github.com/schemacrawler/SchemaCrawler/releases) .
+SchemaCrawler is available as a download from [GitHub](https://www.schemacrawler.com/downloads.html#running-examples-locally) .
 
 ---------
 

@@ -20,5 +20,5 @@ options similar to
 This will find all tables that have a CUSTOMER_ID column.
 
 For more details, see the grep example in the 
-[SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) 
+[SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) 
 download.

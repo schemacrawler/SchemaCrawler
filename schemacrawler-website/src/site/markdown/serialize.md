@@ -22,7 +22,7 @@ SchemaCrawler serialization can be run using the
 will be saved to a file.
 
 For more details, see the `serialize` example in the 
-[SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) 
+[SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) 
 download.
 
 SchemaCrawler serialization can produce output in binary Java serialization,

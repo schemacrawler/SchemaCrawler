@@ -32,7 +32,7 @@ in order to be compatible with the licenses of the JDBC drivers. The
 JDBC drivers that are packaged with these SchemaCrawler distributions 
 are in their binary form, and retain their original license. 
 
-If you download and use the [main SchemaCrawler distribution](https://github.com/schemacrawler/SchemaCrawler/releases/),
+If you download and use the [main SchemaCrawler distribution](https://www.schemacrawler.com/downloads.html#running-examples-locally/),
 or the the [SchemaCrawler Docker image](https://hub.docker.com/r/schemacrawler/schemacrawler/),
 you are downloading and using SchemaCrawler distributed along with open-source JDBC drivers.
 In this case, you are licensed to use SchemaCrawler only under the 
