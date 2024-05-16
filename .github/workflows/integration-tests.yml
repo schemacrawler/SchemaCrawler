@@ -26,7 +26,7 @@ jobs:
         exclude:
           - os: macos-latest
             java: 8
-        runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     steps:
 
 # SETUP BUILD ENVIRONMENT
