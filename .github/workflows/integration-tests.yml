@@ -19,14 +19,14 @@ jobs:
   build:
     name: Integration Tests
     strategy:
-      fail-fast: false      
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         java: [8, 17]
-    exclude:
-      - os: macos-latest
-        java: 8
-    runs-on: ${{ matrix.os }}
+        exclude:
+          - os: macos-latest
+            java: 8
+        runs-on: ${{ matrix.os }}
     steps:
 
 # SETUP BUILD ENVIRONMENT
