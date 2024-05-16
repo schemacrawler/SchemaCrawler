@@ -27,6 +27,16 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
+    - id: install-java-macos
+      name: Install Java 8 on MacOS
+      if: runner.os == 'macOS' && runner.java == '8'
+      shell: bash
+      env:
+        HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: true
+      run: |
+        # Install Java 8 on MacOS
+        brew info openjdk@8
+        brew install openjdk@8
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.4.0
