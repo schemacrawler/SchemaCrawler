@@ -142,7 +142,7 @@
             <configuration>
               <headerHtmlFile>${project.basedir}/src/site/header.include</headerHtmlFile>
               <footerHtmlFile>${project.basedir}/src/site/footer.include</footerHtmlFile>
-              <pegdownExtensions>SMARTYPANTS,FENCED_CODE_BLOCKS,AUTOLINKS,TABLES</pegdownExtensions>
+              <pegdownExtensions>SMARTYPANTS,FENCED_CODE_BLOCKS,AUTOLINKS,ANCHORLINKS,TABLES</pegdownExtensions>
               <recursiveInput>true</recursiveInput>
               <inputDirectory>${project.basedir}/target/site-markdown</inputDirectory>
               <outputDirectory>${project.basedir}/target/_website</outputDirectory>
