@@ -68,7 +68,7 @@
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli-shell-jline3</artifactId>
-      <version>4.7.5</version>
+      <version>4.7.6</version>
     </dependency>
 
     <!-- graphviz-java dependencies -->
