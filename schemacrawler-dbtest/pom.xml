@@ -59,7 +59,7 @@
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>4.11.1</version>
+      <version>4.12.0</version>
       <scope>test</scope>
     </dependency>
     <!--  -->
@@ -148,7 +148,7 @@
     <dependency>
       <groupId>org.apache.calcite</groupId>
       <artifactId>calcite-csv</artifactId>
-      <version>1.36.0</version>
+      <version>1.37.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>

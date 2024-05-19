@@ -56,7 +56,7 @@
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>
-        <version>1.19.7</version>
+        <version>1.19.8</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -70,7 +70,7 @@
 	  <dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-framework-bom</artifactId>
-	    <version>5.3.34</version>
+	    <version>5.3.35</version>
 	    <type>pom</type>
         <scope>import</scope>
 	  </dependency>
