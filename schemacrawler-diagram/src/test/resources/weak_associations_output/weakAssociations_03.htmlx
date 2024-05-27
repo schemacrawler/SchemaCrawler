@@ -278,7 +278,7 @@ td.section {
 <text text-anchor="start" x="11.5" y="-466.3" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.AUTHORS</text>
 <polygon fill="#c2dcf2" stroke="transparent" points="198.5,-459.5 198.5,-478.5 372.5,-478.5 372.5,-459.5 198.5,-459.5"/>
 <text text-anchor="start" x="331.5" y="-465.3" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="11.5" y="-447.3" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
+<text text-anchor="start" x="11.5" y="-448.3" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
 <text text-anchor="start" x="153.5" y="-446.3" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text text-anchor="start" x="200.5" y="-446.3" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
 <text text-anchor="start" x="11.5" y="-427.3" font-family="Helvetica,sans-Serif" font-size="14.00">FIRSTNAME</text>
@@ -333,7 +333,7 @@ td.section {
 <ellipse fill="none" stroke="black" cx="1237" cy="-491.5" rx="4" ry="4"/>
 <polygon fill="black" stroke="black" points="372.92,-455.57 375.99,-446.05 377.89,-446.66 374.82,-456.18 372.92,-455.57"/>
 <polyline fill="none" stroke="black" points="373.5,-450.5 378.26,-452.03 "/>
-<polygon fill="black" stroke="black" points="377.68,-457.1 380.74,-447.58 382.65,-448.19 379.58,-457.71 377.68,-457.1"/>
+<polygon fill="black" stroke="black" points="377.68,-457.1 380.74,-448.58 382.65,-448.19 379.58,-457.71 377.68,-457.1"/>
 <polyline fill="none" stroke="black" points="378.26,-452.03 383.02,-453.57 "/>
 <text text-anchor="start" x="719" y="-496.3" font-family="Helvetica,sans-Serif" font-size="14.00">Z_FK_AUTHOR</text>
 </g>

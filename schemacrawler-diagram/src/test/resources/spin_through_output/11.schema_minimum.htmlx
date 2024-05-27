@@ -436,7 +436,7 @@ td.section {
 <text text-anchor="start" x="125.5" y="-1059.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</text>
 <polygon fill="#f2d6c2" stroke="transparent" points="403.5,-1053 403.5,-1072 446.5,-1072 446.5,-1053 403.5,-1053"/>
 <text text-anchor="start" x="405.5" y="-1058.8" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<polygon fill="none" stroke="#888888" points="122,-1052.5 122,-1073.5 447,-1073.5 447,-1052.5 122,-1052.5"/>
+<polygon fill="none" stroke="#888888" points="122,-1052.5 122,-1073.5 448,-1073.5 448,-1052.5 122,-1052.5"/>
 </g>
 <!-- sales_751e68cc -->
 <g id="node19" class="node">
