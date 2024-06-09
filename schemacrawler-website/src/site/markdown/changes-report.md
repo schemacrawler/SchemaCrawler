@@ -3,7 +3,13 @@
 SchemaCrawler release notes.
 
 <a name="v16.21.3"></a>
-## Release 16.21.3 - 2024-02-16
+## Release 16.21.3 - 2024-06-09
+
+- Update dependencies and database drivers
+
+
+<a name="v16.21.2"></a>
+## Release 16.21.2 - 2024-02-16
 
 - Remove Microsoft Access JDBC driver distribution, since the driver is not being maintained
 - Allow SchemaCrawler ChatGPT plugin to do Retrieval Augmented Generation (RAG) for optimal help with SQL queries
