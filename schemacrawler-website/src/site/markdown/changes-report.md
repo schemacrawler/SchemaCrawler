@@ -2,8 +2,8 @@
 
 SchemaCrawler release notes.
 
-<a name="v16.21.2"></a>
-## Release 16.21.2 - 2024-02-16
+<a name="v16.21.3"></a>
+## Release 16.21.3 - 2024-02-16
 
 - Remove Microsoft Access JDBC driver distribution, since the driver is not being maintained
 - Allow SchemaCrawler ChatGPT plugin to do Retrieval Augmented Generation (RAG) for optimal help with SQL queries
@@ -72,8 +72,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.21.2"></a>
-## Release 16.21.2 - 2023-06-03
+<a name="v16.21.3"></a>
+## Release 16.21.3 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
