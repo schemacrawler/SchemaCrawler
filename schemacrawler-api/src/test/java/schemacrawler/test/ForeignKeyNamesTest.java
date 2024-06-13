@@ -30,14 +30,11 @@ package schemacrawler.test;
 
 import static schemacrawler.crawl.ForeignKeyRetrieverTest.verifyRetrieveForeignKeys;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-
 import java.io.IOException;
 import java.sql.Connection;
-
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.Description;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -54,7 +51,7 @@ public class ForeignKeyNamesTest {
   private Catalog catalog;
 
   @Test
-  @Description("Verify that foreign key names are scoped within a schema")
+  @DisplayName("Verify that foreign key names are scoped within a schema")
   public void fkNames(final TestContext testContext) throws IOException {
     verifyRetrieveForeignKeys(catalog, testContext.testMethodFullName());
   }

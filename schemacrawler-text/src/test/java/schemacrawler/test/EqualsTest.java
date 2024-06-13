@@ -30,17 +30,15 @@ package schemacrawler.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.Description;
-
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 
 public class EqualsTest {
 
   @Test
-  @Description("Ensure that equals is inherited from Object")
+  @DisplayName("Ensure that equals is inherited from Object")
   public void schemaTextOptions() {
     final SchemaTextOptions newSchemaTextOptions1 = SchemaTextOptionsBuilder.newSchemaTextOptions();
     final SchemaTextOptions newSchemaTextOptions2 = SchemaTextOptionsBuilder.newSchemaTextOptions();

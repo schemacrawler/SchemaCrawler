@@ -36,10 +36,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.context.annotation.Description;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -82,7 +82,7 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  @Description("Issue #466 - foreign key comparison violates contract")
+  @DisplayName("Issue #466 - foreign key comparison violates contract")
   public void fkSort(final TestContext testContext) throws Exception {
 
     SqlScript.executeScriptFromResource("/issue466.sql", getConnection());

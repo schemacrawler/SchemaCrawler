@@ -50,10 +50,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.context.annotation.Description;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -109,7 +109,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  @Description("Issue #482")
+  @DisplayName("Issue #482")
   public void serializeUnknownObjectSynonym() throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
