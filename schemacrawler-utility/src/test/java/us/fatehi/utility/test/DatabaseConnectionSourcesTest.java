@@ -32,15 +32,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-
+import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
@@ -50,14 +47,7 @@ public class DatabaseConnectionSourcesTest {
   @Test
   public void test() throws SQLException {
 
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("testdb.sql")
-            .build();
-
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
     final Connection wrappedConnection = db.getConnection();
     final DatabaseMetaData metaData = wrappedConnection.getMetaData();
     final String connectionUrl = metaData.getURL();

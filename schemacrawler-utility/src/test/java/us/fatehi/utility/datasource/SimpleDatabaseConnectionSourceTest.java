@@ -34,17 +34,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;
-
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import us.fatehi.test.utility.DataSourceTestUtility;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class SimpleDatabaseConnectionSourceTest {
@@ -87,14 +85,7 @@ public class SimpleDatabaseConnectionSourceTest {
   @BeforeEach
   public void createDatabase() throws Exception {
 
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("testdb.sql")
-            .build();
-
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
     final Connection wrappedConnection = db.getConnection();
     final DatabaseMetaData metaData = wrappedConnection.getMetaData();
     final String connectionUrl = metaData.getURL();

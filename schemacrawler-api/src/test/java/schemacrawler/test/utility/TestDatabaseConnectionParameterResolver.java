@@ -28,20 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
-import java.io.IOException;
 import java.lang.reflect.Parameter;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Optional;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.hsqldb.jdbc.JDBCDataSource;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -51,6 +43,7 @@ import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.testdb.TestDatabase;
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
@@ -133,7 +126,7 @@ final class TestDatabaseConnectionParameterResolver
     final String script = locateAnnotation(extensionContext).getScript();
     final Parameter parameter = parameterContext.getParameter();
     if (!isBlank(script)) {
-      final DataSource ds = newEmbeddedDatabase(script);
+      final DataSource ds = DataSourceTestUtility.newEmbeddedDatabase(script);
       dataSource = DatabaseConnectionSources.fromDataSource(ds);
 
       if (isParameterConnection(parameter)) {
@@ -209,29 +202,5 @@ final class TestDatabaseConnectionParameterResolver
     ds.setUsername("sa");
     ds.setPassword("");
     return ds;
-  }
-
-  private DataSource newEmbeddedDatabase(final String script) {
-    try {
-      // Create data source
-      final String randomDatabaseName = RandomStringUtils.randomAlphabetic(7);
-      final JDBCDataSource hsqlDataSource = new JDBCDataSource();
-      hsqlDataSource.setDatabase("jdbc:hsqldb:mem:" + randomDatabaseName);
-      // Read script
-      final String sql = IOUtils.resourceToString(script, StandardCharsets.UTF_8);
-      String[] statements = sql.split(";");
-      // Create a QueryRunner to execute the SQL statements
-      final QueryRunner runner = new QueryRunner(hsqlDataSource);
-      for (String statement : statements) {
-          statement = statement.trim();
-          System.out.println(statement);
-          if (!statement.isEmpty()) {
-              runner.update(statement);
-          }
-      }
-      return hsqlDataSource;
-    } catch (IOException | SQLException e) {
-      return fail("Could not create a data source", e);
-    }
   }
 }

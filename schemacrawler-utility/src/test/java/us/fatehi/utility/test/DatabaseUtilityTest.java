@@ -1,23 +1,30 @@
 /*
- * ======================================================================== SchemaCrawler
- * http://www.schemacrawler.com Copyright (c) 2000-2024, Sualeh Fatehi <sualeh@hotmail.com>. All
- * rights reserved. ------------------------------------------------------------------------
- *
- * SchemaCrawler is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * SchemaCrawler and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0, GNU General Public License v3 or GNU Lesser General Public License v3.
- *
- * You may elect to redistribute this code under any of these licenses.
- *
- * The Eclipse Public License is available at: http://www.eclipse.org/legal/epl-v10.html
- *
- * The GNU General Public License v3 and the GNU Lesser General Public License v3 are available at:
- * http://www.gnu.org/licenses/
- *
- * ========================================================================
- */
+========================================================================
+SchemaCrawler
+http://www.schemacrawler.com
+Copyright (c) 2000-2024, Sualeh Fatehi <sualeh@hotmail.com>.
+All rights reserved.
+------------------------------------------------------------------------
+
+SchemaCrawler is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+SchemaCrawler and the accompanying materials are made available under
+the terms of the Eclipse Public License v1.0, GNU General Public License
+v3 or GNU Lesser General Public License v3.
+
+You may elect to redistribute this code under any of these licenses.
+
+The Eclipse Public License is available at:
+http://www.eclipse.org/legal/epl-v10.html
+
+The GNU General Public License v3 and the GNU Lesser General Public
+License v3 are available at:
+http://www.gnu.org/licenses/
+
+========================================================================
+*/
 
 package us.fatehi.utility.test;
 
@@ -46,6 +53,7 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -54,8 +62,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.database.DatabaseUtility;
@@ -113,14 +120,7 @@ public class DatabaseUtilityTest {
   @BeforeAll
   public void createDatabase() throws Exception {
 
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("testdb.sql")
-            .build();
-
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
     connection = db.getConnection();
   }
 

@@ -34,18 +34,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;
-
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import us.fatehi.test.utility.DataSourceTestUtility;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class TestDatabaseConnectionSourceTest {
@@ -83,7 +81,7 @@ public class TestDatabaseConnectionSourceTest {
     final String connectionUrl = metaData.getURL();
     final String userName = metaData.getUserName();
     final String password = "";
-    final HashMap<String, String> connectionProperties = new HashMap<String, String>();
+    final HashMap<String, String> connectionProperties = new HashMap<>();
     connectionProperties.put("key", "value");
     databaseConnectionSource =
         new SingleDatabaseConnectionSource(
@@ -100,15 +98,7 @@ public class TestDatabaseConnectionSourceTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
-
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("testdb.sql")
-            .build();
-
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
     wrappedConnection = db.getConnection();
     databaseConnectionSource = DatabaseConnectionSources.fromDataSource(db);
   }
