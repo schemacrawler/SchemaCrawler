@@ -7,12 +7,12 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.database.SqlScript;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -22,15 +22,7 @@ public class SqlScriptTest {
 
   @BeforeAll
   public void createDatabase() throws Exception {
-
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("testdb.sql")
-            .build();
-
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
     connection = db.getConnection();
   }
 

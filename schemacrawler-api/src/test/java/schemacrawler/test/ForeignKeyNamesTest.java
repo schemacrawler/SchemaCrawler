@@ -45,7 +45,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 
 @ResolveTestContext
-@WithTestDatabase(script = "fk_dupe_name.sql")
+@WithTestDatabase(script = "/fk_dupe_name.sql")
 public class ForeignKeyNamesTest {
 
   private Catalog catalog;

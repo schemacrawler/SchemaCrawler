@@ -38,13 +38,10 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.FilterOptionsBuilder;
@@ -68,7 +65,7 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
-@WithTestDatabase(script = "table-chain.sql")
+@WithTestDatabase(script = "/table-chain.sql")
 public class DiagramRendererOptionsAdditionalSchemasTest {
 
   private static final String ADDITIONAL_DIAGRAM_OPTIONS_OUTPUT =

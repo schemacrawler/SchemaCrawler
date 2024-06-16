@@ -35,7 +35,6 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -43,15 +42,13 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.PooledConnectionUtility;
 
@@ -65,15 +62,7 @@ public class PooledConnectionTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
-
-    final EmbeddedDatabase db =
-        new EmbeddedDatabaseBuilder()
-            .generateUniqueName(true)
-            .setScriptEncoding("UTF-8")
-            .ignoreFailedDrops(true)
-            .addScript("testdb.sql")
-            .build();
-
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
     connection = db.getConnection();
   }
 
@@ -155,7 +144,7 @@ public class PooledConnectionTest {
     boolean testedIsWrapperFor = false;
     boolean testedUnrwap = false;
     for (final Method method : Connection.class.getMethods()) {
-      if (method.getName().equals("isWrapperFor")) {
+      if ("isWrapperFor".equals(method.getName())) {
         testedIsWrapperFor = true;
         boolean returnValue;
 
@@ -166,7 +155,7 @@ public class PooledConnectionTest {
         assertThat(returnValue, is(false));
       }
 
-      if (method.getName().equals("unwrap")) {
+      if ("unwrap".equals(method.getName())) {
         testedUnrwap = true;
         Connection returnValue;
 
