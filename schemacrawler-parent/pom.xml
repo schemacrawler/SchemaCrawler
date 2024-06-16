@@ -67,13 +67,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-	  <dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-framework-bom</artifactId>
-	    <version>5.3.36</version>
-	    <type>pom</type>
-        <scope>import</scope>
-	  </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -224,16 +217,6 @@
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.9.4</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

@@ -4,18 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
   <bean id="datasource"
-        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName">
-      <value>org.hsqldb.jdbcDriver</value>
-    </property>
-    <property name="url">
-      <value>jdbc:hsqldb:hsql://localhost/schemacrawler</value>
-    </property>
-    <property name="username">
-      <value>sa</value>
-    </property>
-    <property name="password">
-      <value></value>
+        class="org.hsqldb.jdbc.JDBCDataSource">
+    <property name="database">
+      <value>jdbc:hsqldb:mem:springtest</value>
     </property>
   </bean>
 
