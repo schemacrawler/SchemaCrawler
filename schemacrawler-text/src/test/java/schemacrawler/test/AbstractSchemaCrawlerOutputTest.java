@@ -75,6 +75,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT = "show_weak_associations_output/";
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
   private static final String HIDE_DATABASE_OBJECTS_OUTPUT = "hide_database_objects_output/";
+  private static final String HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT = "hide_dependant_database_objects_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
@@ -131,14 +132,14 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                 outputFormat ->
                     () -> {
                       compareHideDatabaseObjectsOutput(
-                          dataSource, textOptions, outputFormat, "hidden_database_objects");
+                          dataSource, textOptions, outputFormat, HIDE_DATABASE_OBJECTS_OUTPUT + "hidden_database_objects");
                     }));
   }
 
   @Test
   public void compareHideDependantDatabaseObjectsOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(HIDE_DATABASE_OBJECTS_OUTPUT);
+    clean(HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -162,7 +163,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           dataSource,
                           textOptions,
                           outputFormat,
-                          "hidden_dependant_database_objects");
+                          HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT + "hidden_dependant_database_objects");
                     }));
   }
 
@@ -430,7 +431,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     assertThat(
         outputOf(executableExecution(dataSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
-            classpathResource(HIDE_DATABASE_OBJECTS_OUTPUT + referenceFile), outputFormat));
+            classpathResource(referenceFile), outputFormat));
   }
 
   private void compareIdentifierQuotingOutput(

@@ -190,7 +190,7 @@ public class SchemaCrawlerCoverageTest {
         jdbcDriverInfo.toString(),
         matchesPattern(
             Pattern.compile(
-                "-- driver: HSQL Database Engine Driver 2.7.2\\R"
+                "-- driver: HSQL Database Engine Driver 2.7.3\\R"
                     + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
                     + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R",
                 Pattern.DOTALL)));

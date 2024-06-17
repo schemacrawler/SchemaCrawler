@@ -33,12 +33,9 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-
 import java.sql.Connection;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -58,17 +55,17 @@ public class SortingTest {
   public void columnSort(final Connection connection) throws Exception {
 
     final String[] sortedNatural =
-        new String[] {
-          "ID",
-          "FIRSTNAME",
-          "LASTNAME",
-          "ADDRESS1",
-          "ADDRESS2",
-          "CITY",
-          "STATE",
-          "POSTALCODE",
-          "COUNTRY",
-        };
+        {
+      "ID",
+      "FIRSTNAME",
+      "LASTNAME",
+      "ADDRESS1",
+      "ADDRESS2",
+      "CITY",
+      "STATE",
+      "POSTALCODE",
+      "COUNTRY",
+    };
 
     final String[] sortedAlpha = Arrays.copyOf(sortedNatural, sortedNatural.length);
     Arrays.sort(sortedAlpha);
@@ -81,9 +78,9 @@ public class SortingTest {
   public void fkSort(final Connection connection) throws Exception {
 
     final String[] sortedNatural =
-        new String[] {
-          "Z_FK_AUTHOR", "SYS_FK_10120",
-        };
+        {
+      "Z_FK_AUTHOR", "SYS_FK_10118",
+    };
 
     final String[] sortedAlpha = Arrays.copyOf(sortedNatural, sortedNatural.length);
     Arrays.sort(sortedAlpha);
@@ -96,9 +93,9 @@ public class SortingTest {
   public void indexSort(final Connection connection) throws Exception {
 
     final String[] sortedNatural =
-        new String[] {
-          "PK_AUTHORS", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
-        };
+        {
+      "PK_AUTHORS", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
+    };
     final String[] sortedAlpha = Arrays.copyOf(sortedNatural, sortedNatural.length);
     Arrays.sort(sortedAlpha);
 
