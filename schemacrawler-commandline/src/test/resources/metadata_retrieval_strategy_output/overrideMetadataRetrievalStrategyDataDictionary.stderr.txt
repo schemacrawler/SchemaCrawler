@@ -1,4 +1,4 @@
-SchemaCrawler 16.18.2
+SchemaCrawler 16.21.3
 
 Error: No tables SQL provided
 
@@ -17,9 +17,9 @@ https://killercoda.com/schemacrawler
 
 
 Environment:
-  SchemaCrawler 16.18.2
+  SchemaCrawler 16.21.3
   Windows 10 10.0
-  Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 1.8.0_301-b09
-  HSQL Database Engine 2.7.2
-  HSQL Database Engine Driver 2.7.2
+  Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 1.8.0_151-b12
+  HSQL Database Engine 2.7.3
+  HSQL Database Engine Driver 2.7.3
 
