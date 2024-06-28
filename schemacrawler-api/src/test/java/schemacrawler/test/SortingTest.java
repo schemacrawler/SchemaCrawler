@@ -54,8 +54,7 @@ public class SortingTest {
   @Test
   public void columnSort(final Connection connection) throws Exception {
 
-    final String[] sortedNatural =
-        {
+    final String[] sortedNatural = {
       "ID",
       "FIRSTNAME",
       "LASTNAME",
@@ -77,8 +76,7 @@ public class SortingTest {
   @Test
   public void fkSort(final Connection connection) throws Exception {
 
-    final String[] sortedNatural =
-        {
+    final String[] sortedNatural = {
       "Z_FK_AUTHOR", "SYS_FK_10118",
     };
 
@@ -92,8 +90,7 @@ public class SortingTest {
   @Test
   public void indexSort(final Connection connection) throws Exception {
 
-    final String[] sortedNatural =
-        {
+    final String[] sortedNatural = {
       "PK_AUTHORS", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
     };
     final String[] sortedAlpha = Arrays.copyOf(sortedNatural, sortedNatural.length);

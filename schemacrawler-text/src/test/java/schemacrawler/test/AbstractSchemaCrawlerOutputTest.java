@@ -75,7 +75,8 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT = "show_weak_associations_output/";
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
   private static final String HIDE_DATABASE_OBJECTS_OUTPUT = "hide_database_objects_output/";
-  private static final String HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT = "hide_dependant_database_objects_output/";
+  private static final String HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT =
+      "hide_dependant_database_objects_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
@@ -132,7 +133,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                 outputFormat ->
                     () -> {
                       compareHideDatabaseObjectsOutput(
-                          dataSource, textOptions, outputFormat, HIDE_DATABASE_OBJECTS_OUTPUT + "hidden_database_objects");
+                          dataSource,
+                          textOptions,
+                          outputFormat,
+                          HIDE_DATABASE_OBJECTS_OUTPUT + "hidden_database_objects");
                     }));
   }
 
@@ -163,7 +167,8 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           dataSource,
                           textOptions,
                           outputFormat,
-                          HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT + "hidden_dependant_database_objects");
+                          HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT
+                              + "hidden_dependant_database_objects");
                     }));
   }
 
@@ -430,8 +435,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
     assertThat(
         outputOf(executableExecution(dataSource, executable, outputFormat)),
-        hasSameContentAndTypeAs(
-            classpathResource(referenceFile), outputFormat));
+        hasSameContentAndTypeAs(classpathResource(referenceFile), outputFormat));
   }
 
   private void compareIdentifierQuotingOutput(

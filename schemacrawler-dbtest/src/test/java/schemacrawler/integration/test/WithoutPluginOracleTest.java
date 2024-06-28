@@ -41,6 +41,8 @@ import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,11 +68,26 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @Testcontainers
 public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
-  final DockerImageName imageName = DockerImageName.parse("gvenzl/oracle-xe");
+  final DockerImageName imageName =
+      DockerImageName.parse("gvenzl/oracle-free").asCompatibleSubstituteFor("gvenzl/oracle-xe");
+
+  private static class OracleFreeContainer extends OracleContainer {
+    OracleFreeContainer(final DockerImageName dockerImageName) {
+      super(dockerImageName);
+      List<Integer> ports = new ArrayList<>();
+      ports.add(1521);
+      setExposedPorts(ports);
+    }
+
+    @Override
+    public String getDatabaseName() {
+      return "freepdb1";
+    }
+  }
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleContainer(imageName.withTag("21-slim"));
+      new OracleFreeContainer(imageName.withTag("23-slim-faststart"));
 
   @BeforeEach
   public void createDatabase() {

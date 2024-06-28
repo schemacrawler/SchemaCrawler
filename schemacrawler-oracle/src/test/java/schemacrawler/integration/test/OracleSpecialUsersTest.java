@@ -28,16 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle23Container;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +58,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 @Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle23Container();
 
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;
@@ -92,14 +93,16 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(catalogUserDataSource);
     final String expectedResource =
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 34);
 
     final DatabaseAccessException sqlException =
         assertThrows(
             DatabaseAccessException.class,
             () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
     assertThat(
-        sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
+        sqlException.getMessage(),
+        matchesPattern(
+            Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
 
     assertCatalogScope(connection, true, true);
   }
@@ -124,14 +127,16 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
     final String expectedResource =
         String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 34);
 
     final DatabaseAccessException sqlException =
         assertThrows(
             DatabaseAccessException.class,
             () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
     assertThat(
-        sqlException.getMessage(), containsString("ORA-00942: table or view does not exist"));
+        sqlException.getMessage(),
+        matchesPattern(
+            Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
 
     assertCatalogScope(connection, false, true);
   }
@@ -146,7 +151,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource);
     final String expectedResource =
         String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 34);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
@@ -164,7 +169,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     final String expectedResource =
         String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 33);
+    testOracleWithConnection(dataSource, expectedResource, 34);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 

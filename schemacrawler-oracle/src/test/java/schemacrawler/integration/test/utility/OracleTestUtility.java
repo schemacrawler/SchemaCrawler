@@ -30,7 +30,6 @@ package schemacrawler.integration.test.utility;
 
 import java.time.Duration;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public final class OracleTestUtility {
@@ -38,14 +37,14 @@ public final class OracleTestUtility {
   private static final Duration STARTUP_TIMEOUT = Duration.ofMinutes(3);
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newOracle21Container() {
-    return newOracleContainer("21-slim").withStartupTimeout(STARTUP_TIMEOUT);
+  public static JdbcDatabaseContainer<?> newOracle23Container() {
+    return newOracleContainer("23-slim-faststart");
   }
 
   @SuppressWarnings("resource")
   private static OracleContainer newOracleContainer(final String version) {
-    final DockerImageName imageName = DockerImageName.parse("gvenzl/oracle-xe").withTag(version);
-    return new OracleContainer(imageName.withTag(version)).withStartupTimeout(STARTUP_TIMEOUT);
+    final DockerImageName imageName = DockerImageName.parse("gvenzl/oracle-free");
+    return new OracleContainer(imageName.withTag(version));
   }
 
   private OracleTestUtility() {
