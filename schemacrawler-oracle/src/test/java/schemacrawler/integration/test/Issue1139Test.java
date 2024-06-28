@@ -31,7 +31,7 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle23Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -75,7 +75,7 @@ import us.fatehi.utility.datasource.MultiUseUserCredentials;
 @ResolveTestContext
 public class Issue1139Test extends BaseOracleWithConnectionTest {
 
-  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle23Container();
 
   private final Consumer<Connection> customConnectionInitializer =
       connection -> {

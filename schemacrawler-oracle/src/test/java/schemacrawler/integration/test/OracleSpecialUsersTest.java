@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle23Container;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import java.sql.Connection;
@@ -57,7 +57,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 @Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle23Container();
 
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;

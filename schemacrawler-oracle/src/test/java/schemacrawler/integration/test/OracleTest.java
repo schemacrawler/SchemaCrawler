@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle21Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle23Container;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @Testcontainers
 public class OracleTest extends BaseOracleWithConnectionTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle21Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle23Container();
 
   @BeforeEach
   public void createDatabase() {
@@ -52,8 +52,10 @@ public class OracleTest extends BaseOracleWithConnectionTest {
       fail("Testcontainer for database is not available");
     }
 
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    System.out.println(jdbcUrl);
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
-    createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
+    createDataSource(jdbcUrl, "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
     createDatabase("/oracle.scripts.txt");
   }
