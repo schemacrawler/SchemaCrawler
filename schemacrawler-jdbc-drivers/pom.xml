@@ -78,7 +78,7 @@
     <dependency>
       <groupId>com.ibm.informix</groupId>
       <artifactId>jdbc</artifactId>
-      <version>4.50.10.1</version>
+      <version>4.50.10.2</version>
     </dependency>
     <dependency>
       <groupId>net.snowflake</groupId>
@@ -98,7 +98,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>448</version>
+      <version>451</version>
     </dependency>
     <dependency>
       <groupId>com.ing.data</groupId>
