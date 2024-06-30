@@ -17,7 +17,7 @@ of these licenses, as long as you have downloaded SchemaCrawler that is not bund
 
 In order to download and use SchemaCrawler under one of the licenses above, you should
 have obtained the SchemaCrawler jar files from the 
-[The Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*), 
+[The Central Repository](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name), 
 or built them yourself from the source code.
 
 

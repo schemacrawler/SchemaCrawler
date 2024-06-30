@@ -58,7 +58,7 @@ Before importing the various SchemaCrawler projects into [Eclipse] or [IntelliJ 
 [Java]: https://www.java.com/
 [Eclipse]: https://www.eclipse.org/downloads/eclipse-packages/
 [IntelliJ IDEA]: https://www.jetbrains.com/idea/download/
-[SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*
+[SchemaCrawler jars]: https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name
 [SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
 [Gradle]: https://gradle.org/
 [Graphviz]: https://www.graphviz.org/

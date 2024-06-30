@@ -21,7 +21,7 @@ Java SE 8 or better.
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
 [![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
 
-[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
+[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
 [![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://www.schemacrawler.com/downloads.html#running-examples-locally)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler)](https://community.chocolatey.org/packages/schemacrawler)
