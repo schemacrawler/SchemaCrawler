@@ -86,13 +86,13 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
-      <version>3.0.21</version>
+      <version>3.0.22</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.4.7.0</version>
+      <version>9.4.8.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
