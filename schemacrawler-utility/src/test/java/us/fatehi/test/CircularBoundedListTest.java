@@ -1,5 +1,7 @@
 package us.fatehi.test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,12 +26,22 @@ public class CircularBoundedListTest {
 
   @Test
   public void testAddingElements() {
-    final CircularBoundedList<Integer> list = new CircularBoundedList<>(5);
+
+    assertThat(list.isEmpty(), is(true));
+    assertThat(list.isFull(), is(false));
+
     list.add(1);
     list.add(2);
+
+    assertThat(list.isEmpty(), is(false));
+    assertThat(list.isFull(), is(false));
+
     list.add(3);
     list.add(4);
     list.add(5);
+
+    assertThat(list.isEmpty(), is(false));
+    assertThat(list.isFull(), is(true));
 
     // Using the iterator
     final int[] expectedInitialContents = {1, 2, 3, 4, 5};
