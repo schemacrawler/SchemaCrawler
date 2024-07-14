@@ -33,6 +33,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
+import schemacrawler.tools.commandline.command.AvailableScriptEngines;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
@@ -129,6 +130,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
 
     System.out.println(CommandLineUtility.getEnvironment(state));
 
+    new AvailableScriptEngines().print(System.out);
     new AvailableJDBCDrivers().print(System.out);
     new AvailableServersCommand().run();
     new AvailableCatalogLoadersCommand().run();
