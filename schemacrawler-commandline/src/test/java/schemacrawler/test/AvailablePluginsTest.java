@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.script.ScriptEngineFactory;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
@@ -47,7 +49,11 @@ public class AvailablePluginsTest {
   public void availableScriptEngines() throws UnsupportedEncodingException {
     final AvailableScriptEngines availableScriptEngines = new AvailableScriptEngines();
     final int size = availableScriptEngines.size();
-    assertThat(size == 1 || size == 2, is(true));
+    assertThat("Incorrect number of script engines found", size == 1 || size == 0, is(true));
+    if (JRE.currentVersion() != JAVA_8 && size == 0) {
+      // No script engines ship with Java versions later than 8
+      return;
+    }
 
     final List<ScriptEngineFactory> availableScriptEnginesList = new ArrayList<>();
     availableScriptEngines.forEach(availableScriptEnginesList::add);
