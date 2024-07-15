@@ -28,63 +28,51 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
+import schemacrawler.tools.executable.CommandDescription;
 
-public class AvailableScriptEngines implements Iterable<ScriptEngineFactory> {
+public class AvailableScriptEngines extends BaseAvailableCommandDescriptions implements Runnable {
 
   private static final Logger LOGGER = Logger.getLogger(AvailableScriptEngines.class.getName());
 
-  private static List<ScriptEngineFactory> availableScriptEngines() {
-    final List<ScriptEngineFactory> availableScriptEngines = new ArrayList<>();
+  private static List<CommandDescription> availableScriptEngines() {
+    final List<CommandDescription> availableScriptEngines = new ArrayList<>();
     try {
       final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-      availableScriptEngines.addAll(scriptEngineManager.getEngineFactories());
+      final List<ScriptEngineFactory> engineFactories = scriptEngineManager.getEngineFactories();
+      for (final ScriptEngineFactory scriptEngineFactory : engineFactories) {
+        if (scriptEngineFactory != null) {
+          availableScriptEngines.add(
+              new CommandDescription(
+                  scriptEngineFactory.getEngineName(),
+                  String.format(
+                      "%-15s file extensions: %s",
+                      scriptEngineFactory.getEngineVersion(),
+                      scriptEngineFactory.getExtensions())));
+        }
+      }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not list script engines", e);
     }
     return availableScriptEngines;
   }
 
-  private final List<ScriptEngineFactory> availableScriptEngines;
-
   public AvailableScriptEngines() {
-    availableScriptEngines = availableScriptEngines();
+    super(availableScriptEngines());
   }
 
   @Override
-  public Iterator<ScriptEngineFactory> iterator() {
-    return availableScriptEngines.iterator();
-  }
-
-  public void print(final PrintStream out) {
-    if (out == null) {
-      return;
-    }
-
-    out.println();
-    out.println("Available script engines:");
-    for (final ScriptEngineFactory scriptEngine : availableScriptEngines) {
-      out.printf(
-          " %-20s %-15s file extensions: %s%n",
-          scriptEngine.getEngineName(),
-          scriptEngine.getEngineVersion(),
-          scriptEngine.getExtensions());
-    }
-  }
-
-  public int size() {
-    return availableScriptEngines.size();
+  public void run() {
+    print(System.out);
   }
 
   @Override
-  public String toString() {
-    return "AvailableScriptEngines " + availableScriptEngines;
+  protected String getName() {
+    return "script engines";
   }
 }

@@ -39,13 +39,10 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalog
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.serverPluginHelpCommands;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
+import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help;
@@ -131,21 +128,17 @@ public final class CommandLineHelpCommand implements Runnable {
 
     Stream.of(
             Stream.of("log", "config-file", "connect", "limit", "grep", "filter"),
-            StreamSupport.stream(new AvailableCatalogLoaders().spliterator(), false)
-                .map(PluginCommandType.loader::toPluginCommandName),
+            new AvailableCatalogLoaders()
+                .stream().map(PluginCommandType.loader::toPluginCommandName),
             Stream.of("load"),
-            StreamSupport.stream(new AvailableCommands().spliterator(), false)
-                .map(PluginCommandType.command::toPluginCommandName),
+            new AvailableCommands().stream().map(PluginCommandType.command::toPluginCommandName),
             Stream.of("execute"))
         .flatMap(i -> i)
         .forEach(command -> showHelpForSubcommand(parent, command));
   }
 
   private void showHelpForSubcommand(final CommandLine parent, final String command) {
-    if (parent == null) {
-      return;
-    }
-    if (isBlank(command)) {
+    if ((parent == null) || isBlank(command)) {
       return;
     }
 
@@ -159,7 +152,7 @@ public final class CommandLineHelpCommand implements Runnable {
       if (isAvailabilityCommand) {
         final CommandSpec commandSpec = subCommand.getCommandSpec();
         final Object userObject = commandSpec.userObject();
-        if (userObject != null && userObject instanceof Runnable) {
+        if (userObject instanceof Runnable) {
           ((Runnable) userObject).run();
         }
       }

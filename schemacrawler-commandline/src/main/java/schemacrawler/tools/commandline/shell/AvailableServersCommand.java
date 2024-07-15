@@ -28,17 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-import static picocli.CommandLine.Help.Column.Overflow.SPAN;
-import static picocli.CommandLine.Help.Column.Overflow.WRAP;
-import static picocli.CommandLine.Help.TextTable.forColumns;
-import static us.fatehi.utility.Utility.isBlank;
-
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Help.Column;
-import picocli.CommandLine.Help.TextTable;
-import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.commandline.command.AvailableServers;
 
 @Command(
     name = "servers",
@@ -49,29 +40,11 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
     optionListHeading = "Options:%n")
 public class AvailableServersCommand implements Runnable {
 
-  private static String availableServersDescriptive() {
-    final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
-        new CommandLine.Help.ColorScheme.Builder();
-    colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
-    final TextTable textTable =
-        forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
-
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType serverType : databaseConnectorRegistry) {
-      textTable.addRowValues(
-          serverType.getDatabaseSystemIdentifier(), serverType.getDatabaseSystemName());
-    }
-    return textTable.toString();
-  }
-
   @Override
   public void run() {
-    final String availableServers = availableServersDescriptive();
-    if (!isBlank(availableServers)) {
-      System.out.println();
-      System.out.println("Available SchemaCrawler database server plugins:");
-      System.out.println(availableServers);
+    final AvailableServers availableServers = new AvailableServers();
+    if (!availableServers.isEmpty()) {
+      availableServers.print(System.out);
 
       System.out.println("Notes:");
       System.out.println("- For help on an individual database plugin,");

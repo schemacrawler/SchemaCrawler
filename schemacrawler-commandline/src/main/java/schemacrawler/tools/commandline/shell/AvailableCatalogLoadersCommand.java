@@ -28,19 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-import static picocli.CommandLine.Help.Column.Overflow.SPAN;
-import static picocli.CommandLine.Help.Column.Overflow.WRAP;
-import static picocli.CommandLine.Help.TextTable.forColumns;
-import static us.fatehi.utility.Utility.isBlank;
-
-import java.util.Collection;
-
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Help.Column;
-import picocli.CommandLine.Help.TextTable;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
-import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 
 @Command(
     name = "loaders",
@@ -51,28 +40,11 @@ import schemacrawler.tools.executable.CommandDescription;
     optionListHeading = "Options:%n")
 public class AvailableCatalogLoadersCommand implements Runnable {
 
-  private static String availableCatalogLoadersDescriptive() {
-    final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
-        new CommandLine.Help.ColorScheme.Builder();
-    colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
-    final TextTable textTable =
-        forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
-
-    final Collection<CommandDescription> supportedCatalogLoaders =
-        new CatalogLoaderRegistry().getSupportedCatalogLoaders();
-    for (final CommandDescription commandDescription : supportedCatalogLoaders) {
-      textTable.addRowValues(commandDescription.getName(), commandDescription.getDescription());
-    }
-    return textTable.toString();
-  }
-
   @Override
   public void run() {
-    final String availableCatalogLoaders = availableCatalogLoadersDescriptive();
-    if (!isBlank(availableCatalogLoaders)) {
-      System.out.println();
-      System.out.println("Available SchemaCrawler catalog loader plugins:");
-      System.out.println(availableCatalogLoaders);
+    final AvailableCatalogLoaders availableCatalogLoaders = new AvailableCatalogLoaders();
+    if (!availableCatalogLoaders.isEmpty()) {
+      availableCatalogLoaders.print(System.out);
 
       System.out.println("Notes:");
       System.out.println("- For help on an individual catalog loader,");
