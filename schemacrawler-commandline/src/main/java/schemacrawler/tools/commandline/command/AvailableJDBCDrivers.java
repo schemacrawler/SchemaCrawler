@@ -28,62 +28,47 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static java.util.Collections.list;
-
-import java.io.PrintStream;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.tools.executable.CommandDescription;
 
-public class AvailableJDBCDrivers implements Iterable<Driver> {
+public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions implements Runnable {
 
   private static final Logger LOGGER = Logger.getLogger(AvailableJDBCDrivers.class.getName());
 
-  private static List<Driver> availableJDBCDrivers() {
-    final List<Driver> availableJDBCDrivers = new ArrayList<>();
+  private static List<CommandDescription> availableJDBCDrivers() {
+    final List<CommandDescription> availableJDBCDrivers = new ArrayList<>();
     try {
-      availableJDBCDrivers.addAll(list(DriverManager.getDrivers()));
+      final Enumeration<Driver> drivers = DriverManager.getDrivers();
+      while (drivers.hasMoreElements()) {
+        final Driver driver = drivers.nextElement();
+        final String driverName = driver.getClass().getName();
+        final String driverDescription =
+            String.format("%2d.%d", driver.getMajorVersion(), driver.getMinorVersion());
+        availableJDBCDrivers.add(new CommandDescription(driverName, driverDescription));
+      }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not list JDBC drivers", e);
     }
     return availableJDBCDrivers;
   }
 
-  private final List<Driver> availableJDBCDrivers;
-
   public AvailableJDBCDrivers() {
-    availableJDBCDrivers = availableJDBCDrivers();
+    super(availableJDBCDrivers());
   }
 
   @Override
-  public Iterator<Driver> iterator() {
-    return availableJDBCDrivers.iterator();
-  }
-
-  public void print(final PrintStream out) {
-    if (out == null) {
-      return;
-    }
-
-    out.println();
-    out.println("Available JDBC drivers:");
-    for (final Driver driver : availableJDBCDrivers) {
-      out.printf(
-          " %-50s %2d.%d%n",
-          driver.getClass().getName(), driver.getMajorVersion(), driver.getMinorVersion());
-    }
-  }
-
-  public int size() {
-    return availableJDBCDrivers.size();
+  public void run() {
+    print(System.out);
   }
 
   @Override
-  public String toString() {
-    return "AvailableJDBCDrivers " + availableJDBCDrivers;
+  protected String getName() {
+    return "JDBC drivers";
   }
 }

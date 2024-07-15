@@ -30,38 +30,40 @@ package schemacrawler.tools.commandline.command;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
-public class AvailableCommands implements Iterable<String> {
+public class AvailableCommands extends BaseAvailableCommandDescriptions {
 
-  private static List<String> availableCommands() {
-    final List<String> availableCommands = new ArrayList<>();
-    final Collection<CommandDescription> commandDescriptions =
-        CommandRegistry.getCommandRegistry().getSupportedCommands();
-
-    for (final CommandDescription commandDescription : commandDescriptions) {
-      final String name = commandDescription.getName();
-      availableCommands.add(name);
-    }
-    return availableCommands;
+  private static Collection<CommandDescription> availableCommands() {
+    final Collection<CommandDescription> supportedCommands =
+        new ArrayList<>(CommandRegistry.getCommandRegistry().getSupportedCommands());
+    // Add meta-commands
+    supportedCommands.add(
+        new CommandDescription(
+            "<query_name>",
+            "Shows results of query <query_name>, "
+                + "as specified in the configuration properties file"));
+    supportedCommands.add(
+        new CommandDescription(
+            "<query>",
+            String.join(
+                "\n",
+                "Shows results of SQL <query>",
+                "The query itself can contain the variables ${table}, ${columns} "
+                    + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
+                "Queries without any variables are executed exactly once",
+                "Queries with variables are executed once for each table, "
+                    + "with the variables substituted")));
+    return supportedCommands;
   }
 
-  private final List<String> availableCommands;
-
   public AvailableCommands() {
-    availableCommands = availableCommands();
+    super(availableCommands());
   }
 
   @Override
-  public Iterator<String> iterator() {
-    return availableCommands.iterator();
-  }
-
-  public int size() {
-    return availableCommands.size();
+  protected String getName() {
+    return "SchemaCrawler commands";
   }
 }

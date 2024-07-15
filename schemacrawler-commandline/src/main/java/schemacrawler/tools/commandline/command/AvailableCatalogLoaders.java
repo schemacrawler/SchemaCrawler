@@ -28,39 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
-import schemacrawler.tools.executable.CommandDescription;
 
-public class AvailableCatalogLoaders implements Iterable<String> {
-
-  private static List<String> availableCatalogLoaders() {
-    final List<String> availableCatalogLoaders = new ArrayList<>();
-    final Collection<CommandDescription> supportedCatalogLoaders =
-        new CatalogLoaderRegistry().getSupportedCatalogLoaders();
-    for (final CommandDescription catalogLoader : supportedCatalogLoaders) {
-      final String name = catalogLoader.getName();
-      availableCatalogLoaders.add(name);
-    }
-    return availableCatalogLoaders;
-  }
-
-  private final List<String> availableCatalogLoaders;
+public class AvailableCatalogLoaders extends BaseAvailableCommandDescriptions {
 
   public AvailableCatalogLoaders() {
-    availableCatalogLoaders = availableCatalogLoaders();
+    super(new CatalogLoaderRegistry().getSupportedCatalogLoaders());
   }
 
   @Override
-  public Iterator<String> iterator() {
-    return availableCatalogLoaders.iterator();
-  }
-
-  public int size() {
-    return availableCatalogLoaders.size();
+  protected String getName() {
+    return "SchemaCrawler catalog loader plugins";
   }
 }

@@ -28,19 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-import static picocli.CommandLine.Help.Column.Overflow.SPAN;
-import static picocli.CommandLine.Help.Column.Overflow.WRAP;
-import static picocli.CommandLine.Help.TextTable.forColumns;
-import static us.fatehi.utility.Utility.isBlank;
-
-import java.util.Collection;
-
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Help.Column;
-import picocli.CommandLine.Help.TextTable;
-import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.commandline.command.AvailableCommands;
 
 @Command(
     name = "commands",
@@ -51,44 +40,11 @@ import schemacrawler.tools.executable.CommandRegistry;
     optionListHeading = "Options:%n")
 public class AvailableCommandsCommand implements Runnable {
 
-  private static String availableCommandsDescriptive() {
-    final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
-        new CommandLine.Help.ColorScheme.Builder();
-    colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
-    final TextTable textTable =
-        forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
-    final Collection<CommandDescription> commandDescriptions =
-        CommandRegistry.getCommandRegistry().getSupportedCommands();
-    commandDescriptions.add(
-        new CommandDescription(
-            "<query_name>",
-            "Shows results of query <query_name>, "
-                + "as specified in the configuration properties file"));
-    commandDescriptions.add(
-        new CommandDescription(
-            "<query>",
-            String.join(
-                "\n",
-                "Shows results of SQL <query>",
-                "The query itself can contain the variables ${table}, ${columns} "
-                    + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
-                "Queries without any variables are executed exactly once",
-                "Queries with variables are executed once for each table, "
-                    + "with the variables substituted")));
-
-    for (final CommandDescription commandDescription : commandDescriptions) {
-      textTable.addRowValues(commandDescription.getName(), commandDescription.getDescription());
-    }
-    return textTable.toString();
-  }
-
   @Override
   public void run() {
-    final String availableCommands = availableCommandsDescriptive();
-    if (!isBlank(availableCommands)) {
-      System.out.println();
-      System.out.println("Available SchemaCrawler commands:");
-      System.out.println(availableCommands);
+    final AvailableCommands availableCommands = new AvailableCommands();
+    if (!availableCommands.isEmpty()) {
+      availableCommands.print(System.out);
 
       System.out.println("Notes:");
       System.out.println("- For help on an individual SchemaCrawler command,");
