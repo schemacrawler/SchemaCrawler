@@ -94,12 +94,6 @@
 
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-jdbc-drivers</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-sqlite</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
