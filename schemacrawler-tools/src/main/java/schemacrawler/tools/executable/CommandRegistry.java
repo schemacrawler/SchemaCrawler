@@ -46,11 +46,11 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.registry.PluginRegistry;
+import schemacrawler.tools.registry.BasePluginRegistry;
 import us.fatehi.utility.string.StringFormat;
 
 /** Command registry for mapping command to executable. */
-public final class CommandRegistry implements PluginRegistry {
+public final class CommandRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class.getName());
 
@@ -69,11 +69,11 @@ public final class CommandRegistry implements PluginRegistry {
         }
         if (fallbackProviderTypeName.equals(typeName1)) {
           return 1;
-        } else if (fallbackProviderTypeName.equals(typeName2)) {
-          return -1;
-        } else {
-          return typeName1.compareTo(typeName2);
         }
+        if (fallbackProviderTypeName.equals(typeName2)) {
+          return -1;
+        }
+        return typeName1.compareTo(typeName2);
       };
 
   public static CommandRegistry getCommandRegistry() {
@@ -165,6 +165,7 @@ public final class CommandRegistry implements PluginRegistry {
     return commandLineCommands;
   }
 
+  @Override
   public Collection<CommandDescription> getCommandDescriptions() {
     final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
@@ -217,5 +218,10 @@ public final class CommandRegistry implements PluginRegistry {
               "Output format <%s> not supported for command <%s>",
               outputOptions.getOutputFormatValue(), command));
     }
+  }
+
+  @Override
+  public String getName() {
+    return "SchemaCrawler commands";
   }
 }

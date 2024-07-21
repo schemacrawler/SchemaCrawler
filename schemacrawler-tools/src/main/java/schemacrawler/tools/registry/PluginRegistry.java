@@ -39,4 +39,8 @@ public interface PluginRegistry {
   Collection<PluginCommand> getHelpCommands();
 
   Collection<CommandDescription> getCommandDescriptions();
+
+  void log();
+
+  String getName();
 }

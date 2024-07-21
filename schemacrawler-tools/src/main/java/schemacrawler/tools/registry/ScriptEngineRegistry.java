@@ -30,16 +30,14 @@ package schemacrawler.tools.registry;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public class ScriptEngineRegistry implements PluginRegistry {
+public class ScriptEngineRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(ScriptEngineRegistry.class.getName());
 
@@ -81,17 +79,12 @@ public class ScriptEngineRegistry implements PluginRegistry {
   }
 
   @Override
-  public Collection<PluginCommand> getCommandLineCommands() {
-    return Collections.emptyList();
-  }
-
-  @Override
-  public Collection<PluginCommand> getHelpCommands() {
-    return Collections.emptyList();
-  }
-
-  @Override
   public Collection<CommandDescription> getCommandDescriptions() {
     return new ArrayList<>(commandDescriptions);
+  }
+
+  @Override
+  public String getName() {
+    return "script engines";
   }
 }

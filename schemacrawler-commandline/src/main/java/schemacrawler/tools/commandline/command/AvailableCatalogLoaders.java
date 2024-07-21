@@ -38,6 +38,6 @@ public class AvailableCatalogLoaders extends BaseAvailableCommandDescriptions {
 
   @Override
   protected String getName() {
-    return "SchemaCrawler catalog loader plugins";
+    return CatalogLoaderRegistry.getCatalogLoaderRegistry().getName();
   }
 }

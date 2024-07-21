@@ -31,15 +31,13 @@ package schemacrawler.tools.registry;
 import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.database.DatabaseUtility;
 
-public class JDBCDriverRegistry implements PluginRegistry {
+public class JDBCDriverRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(JDBCDriverRegistry.class.getName());
 
@@ -75,17 +73,12 @@ public class JDBCDriverRegistry implements PluginRegistry {
   }
 
   @Override
-  public Collection<PluginCommand> getCommandLineCommands() {
-    return Collections.emptyList();
-  }
-
-  @Override
-  public Collection<PluginCommand> getHelpCommands() {
-    return Collections.emptyList();
-  }
-
-  @Override
   public Collection<CommandDescription> getCommandDescriptions() {
     return new ArrayList<>(commandDescriptions);
+  }
+
+  @Override
+  public String getName() {
+    return "JDBC drivers";
   }
 }

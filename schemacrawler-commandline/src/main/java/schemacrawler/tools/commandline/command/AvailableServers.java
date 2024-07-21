@@ -38,6 +38,6 @@ public class AvailableServers extends BaseAvailableCommandDescriptions {
 
   @Override
   protected String getName() {
-    return "SchemaCrawler database server plugins";
+    return DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getName();
   }
 }

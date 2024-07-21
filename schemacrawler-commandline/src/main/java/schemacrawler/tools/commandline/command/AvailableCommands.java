@@ -64,6 +64,6 @@ public class AvailableCommands extends BaseAvailableCommandDescriptions {
 
   @Override
   protected String getName() {
-    return "SchemaCrawler commands";
+    return CommandRegistry.getCommandRegistry().getName();
   }
 }

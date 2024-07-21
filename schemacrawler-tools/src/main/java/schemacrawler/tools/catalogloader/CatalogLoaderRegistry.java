@@ -39,11 +39,11 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.registry.PluginRegistry;
+import schemacrawler.tools.registry.BasePluginRegistry;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for registered catalog orders, in order of priority. */
-public final class CatalogLoaderRegistry implements PluginRegistry {
+public final class CatalogLoaderRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(CatalogLoaderRegistry.class.getName());
 
@@ -118,5 +118,10 @@ public final class CatalogLoaderRegistry implements PluginRegistry {
     // Make a defensive copy of the list of catalog loaders
     final List<CatalogLoader> chainedCatalogLoaders = new ArrayList<>(catalogLoaderRegistry);
     return new ChainedCatalogLoader(chainedCatalogLoaders);
+  }
+
+  @Override
+  public String getName() {
+    return "SchemaCrawler catalog loaders";
   }
 }

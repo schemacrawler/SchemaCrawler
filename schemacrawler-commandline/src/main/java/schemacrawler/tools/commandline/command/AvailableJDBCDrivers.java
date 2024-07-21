@@ -43,6 +43,6 @@ public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions imple
 
   @Override
   protected String getName() {
-    return "JDBC drivers";
+    return JDBCDriverRegistry.getJDBCDriverRegistry().getName();
   }
 }

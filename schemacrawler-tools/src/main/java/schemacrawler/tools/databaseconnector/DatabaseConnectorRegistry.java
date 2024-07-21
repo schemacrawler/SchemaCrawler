@@ -35,7 +35,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +46,11 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.registry.PluginRegistry;
+import schemacrawler.tools.registry.BasePluginRegistry;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */
-public final class DatabaseConnectorRegistry implements PluginRegistry {
+public final class DatabaseConnectorRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseConnectorRegistry.class.getName());
 
@@ -155,11 +154,6 @@ public final class DatabaseConnectorRegistry implements PluginRegistry {
   }
 
   @Override
-  public Collection<PluginCommand> getCommandLineCommands() {
-    return Collections.emptyList();
-  }
-
-  @Override
   public Collection<CommandDescription> getCommandDescriptions() {
     final List<CommandDescription> availableServers = new ArrayList<>();
     for (final DatabaseServerType serverType : getDatabaseServerTypes()) {
@@ -178,5 +172,10 @@ public final class DatabaseConnectorRegistry implements PluginRegistry {
     }
     databaseServerTypes.sort(naturalOrder());
     return databaseServerTypes;
+  }
+
+  @Override
+  public String getName() {
+    return "SchemaCrawler database server plugins";
   }
 }

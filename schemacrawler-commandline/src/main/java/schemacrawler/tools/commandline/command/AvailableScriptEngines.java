@@ -43,6 +43,6 @@ public class AvailableScriptEngines extends BaseAvailableCommandDescriptions imp
 
   @Override
   protected String getName() {
-    return "script engines";
+    return ScriptEngineRegistry.getScriptEngineRegistry().getName();
   }
 }
