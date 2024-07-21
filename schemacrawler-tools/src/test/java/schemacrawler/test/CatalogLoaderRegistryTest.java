@@ -71,7 +71,7 @@ public class CatalogLoaderRegistryTest {
   @Test
   public void supportedCatalogLoaders() throws Exception {
     final Collection<CommandDescription> supportedCatalogLoaders =
-        CatalogLoaderRegistry.getCatalogLoaderRegistry().getSupportedCatalogLoaders();
+        CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandDescriptions();
     assertThat(supportedCatalogLoaders, hasSize(2));
     final List<String> names =
         supportedCatalogLoaders.stream().map(CommandDescription::getName).collect(toList());
@@ -83,7 +83,7 @@ public class CatalogLoaderRegistryTest {
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
               InternalRuntimeException.class,
-              () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getSupportedCatalogLoaders());
+              () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandDescriptions());
         });
   }
 }

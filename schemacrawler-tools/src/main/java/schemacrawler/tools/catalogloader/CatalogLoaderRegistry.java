@@ -39,10 +39,11 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.registry.PluginRegistry;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for registered catalog orders, in order of priority. */
-public final class CatalogLoaderRegistry {
+public final class CatalogLoaderRegistry implements PluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(CatalogLoaderRegistry.class.getName());
 
@@ -83,6 +84,7 @@ public final class CatalogLoaderRegistry {
     catalogLoaderRegistry = loadCatalogLoaderRegistry();
   }
 
+  @Override
   public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
@@ -91,6 +93,7 @@ public final class CatalogLoaderRegistry {
     return commandLineCommands;
   }
 
+  @Override
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
@@ -99,7 +102,8 @@ public final class CatalogLoaderRegistry {
     return commandLineCommands;
   }
 
-  public Collection<CommandDescription> getSupportedCatalogLoaders() {
+  @Override
+  public Collection<CommandDescription> getCommandDescriptions() {
     final Collection<CommandDescription> commandLineCommands = new HashSet<>();
     for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
       final CommandDescription commandDescription = catalogLoader.getCommandDescription();

@@ -26,18 +26,17 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.registry;
 
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import java.util.Collection;
+import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public class AvailableServers extends BaseAvailableCommandDescriptions {
+public interface PluginRegistry {
 
-  public AvailableServers() {
-    super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getCommandDescriptions());
-  }
+  Collection<PluginCommand> getCommandLineCommands();
 
-  @Override
-  protected String getName() {
-    return "SchemaCrawler database server plugins";
-  }
+  Collection<PluginCommand> getHelpCommands();
+
+  Collection<CommandDescription> getCommandDescriptions();
 }

@@ -46,10 +46,11 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.registry.PluginRegistry;
 import us.fatehi.utility.string.StringFormat;
 
 /** Command registry for mapping command to executable. */
-public final class CommandRegistry {
+public final class CommandRegistry implements PluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class.getName());
 
@@ -65,9 +66,10 @@ public final class CommandRegistry {
         final String typeName2 = commandProvider2.getClass().getSimpleName();
         if (typeName1.equals(typeName2)) {
           return 0;
-        } else if (typeName1.equals(fallbackProviderTypeName)) {
+        }
+        if (fallbackProviderTypeName.equals(typeName1)) {
           return 1;
-        } else if (typeName2.equals(fallbackProviderTypeName)) {
+        } else if (fallbackProviderTypeName.equals(typeName2)) {
           return -1;
         } else {
           return typeName1.compareTo(typeName2);
@@ -145,6 +147,7 @@ public final class CommandRegistry {
     return scCommand;
   }
 
+  @Override
   public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
@@ -153,6 +156,7 @@ public final class CommandRegistry {
     return commandLineCommands;
   }
 
+  @Override
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
@@ -161,7 +165,7 @@ public final class CommandRegistry {
     return commandLineCommands;
   }
 
-  public Collection<CommandDescription> getSupportedCommands() {
+  public Collection<CommandDescription> getCommandDescriptions() {
     final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
       supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());

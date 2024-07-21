@@ -35,8 +35,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -45,12 +45,14 @@ import java.util.logging.Logger;
 import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.registry.PluginRegistry;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */
-public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerType> {
+public final class DatabaseConnectorRegistry implements PluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseConnectorRegistry.class.getName());
 
@@ -146,6 +148,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     return UNKNOWN;
   }
 
+  @Override
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineHelpCommands = new ArrayList<>();
     for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
@@ -159,12 +162,28 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
   }
 
   @Override
-  public Iterator<DatabaseServerType> iterator() {
+  public Collection<PluginCommand> getCommandLineCommands() {
+    return Collections.emptyList();
+  }
+
+  @Override
+  public Collection<CommandDescription> getCommandDescriptions() {
+
+    // First get the database server types in sorted order
     final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
     for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
       databaseServerTypes.add(databaseConnector.getDatabaseServerType());
     }
     databaseServerTypes.sort(naturalOrder());
-    return databaseServerTypes.iterator();
+
+    // Then convert to command descriptions
+    final List<CommandDescription> availableServers = new ArrayList<>();
+    for (final DatabaseServerType serverType : databaseServerTypes) {
+      final CommandDescription serverDescription =
+          new CommandDescription(
+              serverType.getDatabaseSystemIdentifier(), serverType.getDatabaseSystemName());
+      availableServers.add(serverDescription);
+    }
+    return availableServers;
   }
 }

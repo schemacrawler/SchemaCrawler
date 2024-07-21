@@ -37,7 +37,7 @@ public class AvailableCommands extends BaseAvailableCommandDescriptions {
 
   private static Collection<CommandDescription> availableCommands() {
     final Collection<CommandDescription> supportedCommands =
-        new ArrayList<>(CommandRegistry.getCommandRegistry().getSupportedCommands());
+        new ArrayList<>(CommandRegistry.getCommandRegistry().getCommandDescriptions());
     // Add meta-commands
     supportedCommands.add(
         new CommandDescription(

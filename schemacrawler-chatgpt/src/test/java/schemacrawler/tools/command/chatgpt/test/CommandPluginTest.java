@@ -16,7 +16,7 @@ public class CommandPluginTest {
   }
 
   private boolean isCommandSupported(final CommandRegistry registry, final String command) {
-    final Collection<CommandDescription> supportedCommands = registry.getSupportedCommands();
+    final Collection<CommandDescription> supportedCommands = registry.getCommandDescriptions();
     for (final CommandDescription supportedCommand : supportedCommands) {
       if (supportedCommand.getName().equals(command)) {
         return true;

@@ -70,7 +70,7 @@ public class CommandRegistryTest {
 
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
     final Collection<CommandDescription> commandLineCommands =
-        commandRegistry.getSupportedCommands();
+        commandRegistry.getCommandDescriptions();
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands, is(testCommandProvider.getSupportedCommands()));
   }
