@@ -30,7 +30,6 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Comparator.naturalOrder;
 import static schemacrawler.tools.databaseconnector.UnknownDatabaseConnector.UNKNOWN;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -44,9 +43,11 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */
@@ -111,10 +112,9 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     int index = 0;
     final StringBuilder buffer = new StringBuilder(1024);
     try {
+      final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
       buffer.append("Registered JDBC drivers:").append(System.lineSeparator());
-      final ServiceLoader<Driver> serviceLoader =
-          ServiceLoader.load(Driver.class, DatabaseConnectorRegistry.class.getClassLoader());
-      for (final Driver driver : serviceLoader) {
+      for (final Driver driver : drivers) {
         index++;
         if (log) {
           buffer.append(String.format("%2d %50s", index, driver.getClass().getName()));
@@ -156,9 +156,8 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
       final String databaseSystemIdentifier) {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return databaseConnectorRegistry.get(databaseSystemIdentifier);
-    } else {
-      return UNKNOWN;
     }
+    return UNKNOWN;
   }
 
   public DatabaseConnector findDatabaseConnectorFromUrl(final String url) {

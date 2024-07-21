@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 import java.sql.Driver;
-import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.executable.CommandDescription;
+import us.fatehi.utility.database.DatabaseUtility;
 
 public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions implements Runnable {
 
@@ -44,9 +44,8 @@ public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions imple
   private static List<CommandDescription> availableJDBCDrivers() {
     final List<CommandDescription> availableJDBCDrivers = new ArrayList<>();
     try {
-      final Enumeration<Driver> drivers = DriverManager.getDrivers();
-      while (drivers.hasMoreElements()) {
-        final Driver driver = drivers.nextElement();
+      final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
+      for (final Driver driver : drivers) {
         final String driverName = driver.getClass().getName();
         final String driverDescription =
             String.format("%2d.%d", driver.getMajorVersion(), driver.getMinorVersion());
