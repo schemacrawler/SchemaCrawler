@@ -32,7 +32,6 @@ import static java.util.Comparator.naturalOrder;
 import static schemacrawler.tools.databaseconnector.UnknownDatabaseConnector.UNKNOWN;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -103,42 +102,15 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     return databaseConnectorRegistry;
   }
 
-  /**
-   * Load registered database drivers, and throw exception if any driver cannot be loaded. Cycling
-   * through the service loader and loading driver classes allows for dependencies to be vetted out.
-   */
-  private static void loadJdbcDrivers() {
-    final boolean log = LOGGER.isLoggable(Level.CONFIG);
-    int index = 0;
-    final StringBuilder buffer = new StringBuilder(1024);
-    try {
-      final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
-      buffer.append("Registered JDBC drivers:").append(System.lineSeparator());
-      for (final Driver driver : drivers) {
-        index++;
-        if (log) {
-          buffer.append(String.format("%2d %50s", index, driver.getClass().getName()));
-          try {
-            buffer.append(
-                String.format(" %3d.%d", driver.getMajorVersion(), driver.getMinorVersion()));
-          } catch (final Exception e) {
-            // Ignore exceptions from badly behaved drivers
-          }
-          buffer.append(System.lineSeparator());
-        }
-      }
-    } catch (final Throwable e) {
-      throw new InternalRuntimeException("Could not load database drivers", e);
-    }
-    if (log) {
-      LOGGER.log(Level.CONFIG, buffer.toString());
-    }
-  }
-
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
   private DatabaseConnectorRegistry() {
-    loadJdbcDrivers();
+    // Ensure that JDBC drivers can be loaded, and fail otherwise
+    try {
+      DatabaseUtility.getAvailableJdbcDrivers();
+    } catch (SQLException e) {
+      throw new InternalRuntimeException("Could not load JDBC drivers", e);
+    }
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
   }
 
