@@ -168,22 +168,22 @@ public final class DatabaseConnectorRegistry implements PluginRegistry {
 
   @Override
   public Collection<CommandDescription> getCommandDescriptions() {
-
-    // First get the database server types in sorted order
-    final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
-    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
-      databaseServerTypes.add(databaseConnector.getDatabaseServerType());
-    }
-    databaseServerTypes.sort(naturalOrder());
-
-    // Then convert to command descriptions
     final List<CommandDescription> availableServers = new ArrayList<>();
-    for (final DatabaseServerType serverType : databaseServerTypes) {
+    for (final DatabaseServerType serverType : getDatabaseServerTypes()) {
       final CommandDescription serverDescription =
           new CommandDescription(
               serverType.getDatabaseSystemIdentifier(), serverType.getDatabaseSystemName());
       availableServers.add(serverDescription);
     }
     return availableServers;
+  }
+
+  public List<DatabaseServerType> getDatabaseServerTypes() {
+    final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
+      databaseServerTypes.add(databaseConnector.getDatabaseServerType());
+    }
+    databaseServerTypes.sort(naturalOrder());
+    return databaseServerTypes;
   }
 }
