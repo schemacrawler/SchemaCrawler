@@ -28,15 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.utility;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
@@ -60,10 +60,10 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class CommandLineUtility {
 
   public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginCommands =
-      () -> new CatalogLoaderRegistry().getCommandLineCommands();
+      () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandLineCommands();
 
   public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginHelpCommands =
-      () -> new CatalogLoaderRegistry().getHelpCommands();
+      () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getHelpCommands();
 
   public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
       () -> CommandRegistry.getCommandRegistry().getCommandLineCommands();

@@ -6,13 +6,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.TestCatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoader;
@@ -26,7 +23,7 @@ public class CatalogLoaderRegistryTest {
   @Test
   public void commandLineCommands() throws Exception {
     final Collection<PluginCommand> commandLineCommands =
-        new CatalogLoaderRegistry().getCommandLineCommands();
+        CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandLineCommands();
     assertThat(commandLineCommands, hasSize(2));
     final List<String> names =
         commandLineCommands.stream().map(PluginCommand::getName).collect(toList());
@@ -38,13 +35,14 @@ public class CatalogLoaderRegistryTest {
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
               InternalRuntimeException.class,
-              () -> new CatalogLoaderRegistry().getCommandLineCommands());
+              () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandLineCommands());
         });
   }
 
   @Test
   public void helpCommands() throws Exception {
-    final Collection<PluginCommand> helpCommands = new CatalogLoaderRegistry().getHelpCommands();
+    final Collection<PluginCommand> helpCommands =
+        CatalogLoaderRegistry.getCatalogLoaderRegistry().getHelpCommands();
     assertThat(String.valueOf(helpCommands), helpCommands, hasSize(2));
     final List<String> names = helpCommands.stream().map(PluginCommand::getName).collect(toList());
     assertThat(names, containsInAnyOrder("loader:testloader", null));
@@ -54,14 +52,15 @@ public class CatalogLoaderRegistryTest {
           System.setProperty(
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
-              InternalRuntimeException.class, () -> new CatalogLoaderRegistry().getHelpCommands());
+              InternalRuntimeException.class,
+              () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getHelpCommands());
         });
   }
 
   @Test
   public void loadCatalogLoaders() {
     final ChainedCatalogLoader chainedCatalogLoaders =
-        new CatalogLoaderRegistry().newChainedCatalogLoader();
+        CatalogLoaderRegistry.getCatalogLoaderRegistry().newChainedCatalogLoader();
 
     final List<CatalogLoader> catalogLoaders = new ArrayList<>();
     chainedCatalogLoaders.forEach(catalogLoaders::add);
@@ -72,7 +71,7 @@ public class CatalogLoaderRegistryTest {
   @Test
   public void supportedCatalogLoaders() throws Exception {
     final Collection<CommandDescription> supportedCatalogLoaders =
-        new CatalogLoaderRegistry().getSupportedCatalogLoaders();
+        CatalogLoaderRegistry.getCatalogLoaderRegistry().getSupportedCatalogLoaders();
     assertThat(supportedCatalogLoaders, hasSize(2));
     final List<String> names =
         supportedCatalogLoaders.stream().map(CommandDescription::getName).collect(toList());
@@ -84,7 +83,7 @@ public class CatalogLoaderRegistryTest {
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
           assertThrows(
               InternalRuntimeException.class,
-              () -> new CatalogLoaderRegistry().getSupportedCatalogLoaders());
+              () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getSupportedCatalogLoaders());
         });
   }
 }
