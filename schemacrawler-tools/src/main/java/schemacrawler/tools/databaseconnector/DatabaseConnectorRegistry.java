@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.PluginRegistry;
-import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */
@@ -107,12 +106,6 @@ public final class DatabaseConnectorRegistry implements PluginRegistry {
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
   private DatabaseConnectorRegistry() {
-    // Ensure that JDBC drivers can be loaded, and fail otherwise
-    try {
-      DatabaseUtility.getAvailableJdbcDrivers();
-    } catch (SQLException e) {
-      throw new InternalRuntimeException("Could not load JDBC drivers", e);
-    }
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
   }
 
