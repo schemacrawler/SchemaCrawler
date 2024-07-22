@@ -28,27 +28,30 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import java.util.Collection;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 
-@TestInstance(Lifecycle.PER_CLASS)
 public class DatabaseConnectorRegistryTest {
-
-  private DatabaseConnectorRegistry databaseConnectorRegistry;
 
   @Test
   public void databaseConnectorRegistry() {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+
     final List<DatabaseServerType> databaseServerTypes =
         databaseConnectorRegistry.getDatabaseServerTypes();
 
@@ -71,6 +74,9 @@ public class DatabaseConnectorRegistryTest {
 
   @Test
   public void findDatabaseConnectorFromUrl() {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+
     DatabaseServerType databaseServerType;
 
     databaseServerType =
@@ -90,8 +96,44 @@ public class DatabaseConnectorRegistryTest {
     assertThat(databaseServerType, is(DatabaseServerType.UNKNOWN));
   }
 
-  @BeforeAll
-  public void initDatabaseConnectorRegistry() {
-    databaseConnectorRegistry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+  @Test
+  public void commandLineCommands() throws Exception {
+
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final Collection<PluginCommand> commandLineCommands =
+        databaseConnectorRegistry.getCommandLineCommands();
+    assertThat(commandLineCommands, is(empty()));
+  }
+
+  @Test
+  public void helpCommands() throws Exception {
+
+    final TestDatabaseConnector testDatabaseConnector = new TestDatabaseConnector();
+
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final Collection<PluginCommand> commandLineCommands =
+        databaseConnectorRegistry.getHelpCommands();
+    assertThat(commandLineCommands, hasSize(1));
+    assertThat(commandLineCommands, hasItem(testDatabaseConnector.getHelpCommand()));
+  }
+
+  @Test
+  public void commandDescriptions() throws Exception {
+
+    final TestDatabaseConnector testDatabaseConnector = new TestDatabaseConnector();
+    DatabaseServerType databaseServerType = testDatabaseConnector.getDatabaseServerType();
+    final CommandDescription serverDescription =
+        new CommandDescription(
+            databaseServerType.getDatabaseSystemIdentifier(),
+            databaseServerType.getDatabaseSystemName());
+
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final Collection<CommandDescription> commandLineCommands =
+        databaseConnectorRegistry.getCommandDescriptions();
+    assertThat(commandLineCommands, hasSize(1));
+    assertThat(commandLineCommands.stream().findFirst().get(), is(serverDescription));
   }
 }

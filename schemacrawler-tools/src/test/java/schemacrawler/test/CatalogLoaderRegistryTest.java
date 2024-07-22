@@ -36,7 +36,7 @@ public class CatalogLoaderRegistryTest {
   }
 
   @Test
-  public void loadCatalogLoaders() {
+  public void chainedCatalogLoaders() {
     final ChainedCatalogLoader chainedCatalogLoaders =
         CatalogLoaderRegistry.getCatalogLoaderRegistry().newChainedCatalogLoader();
 
@@ -47,7 +47,7 @@ public class CatalogLoaderRegistryTest {
   }
 
   @Test
-  public void supportedCatalogLoaders() throws Exception {
+  public void commandDescriptions() throws Exception {
     final Collection<CommandDescription> supportedCatalogLoaders =
         CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandDescriptions();
     assertThat(supportedCatalogLoaders, hasSize(2));
