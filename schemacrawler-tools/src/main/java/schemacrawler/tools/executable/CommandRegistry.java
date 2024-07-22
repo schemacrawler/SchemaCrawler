@@ -48,7 +48,7 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.registry.BasePluginRegistry;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Command registry for mapping command to executable. */
@@ -177,13 +177,13 @@ public final class CommandRegistry extends BasePluginRegistry {
   }
 
   @Override
-  public Collection<CommandDescription> getCommandDescriptions() {
-    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
+  public Collection<PropertyName> getCommandDescriptions() {
+    final Collection<PropertyName> supportedCommandDescriptions = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
       supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
     }
 
-    final List<CommandDescription> supportedCommandsOrdered =
+    final List<PropertyName> supportedCommandsOrdered =
         new ArrayList<>(supportedCommandDescriptions);
     supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;

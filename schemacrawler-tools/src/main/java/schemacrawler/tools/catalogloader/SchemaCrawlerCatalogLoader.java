@@ -30,13 +30,13 @@ package schemacrawler.tools.catalogloader;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
 
   public SchemaCrawlerCatalogLoader() {
     super(
-        new CommandDescription("schemacrawlerloader", "Loader for SchemaCrawler metadata catalog"),
+        new PropertyName("schemacrawlerloader", "Loader for SchemaCrawler metadata catalog"),
         0);
   }
 

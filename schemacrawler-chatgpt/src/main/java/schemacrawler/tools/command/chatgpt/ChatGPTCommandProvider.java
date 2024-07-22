@@ -36,7 +36,7 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 /** SchemaCrawler command plug-in for ChatGPT. */
 public final class ChatGPTCommandProvider extends BaseCommandProvider {
@@ -44,7 +44,7 @@ public final class ChatGPTCommandProvider extends BaseCommandProvider {
   public static final String DESCRIPTION_HEADER = "SchemaCrawler ChatGPT integration";
 
   public ChatGPTCommandProvider() {
-    super(new CommandDescription(ChatGPTCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new PropertyName(ChatGPTCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override

@@ -17,7 +17,7 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.catalogloader.ChainedCatalogLoader;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class CatalogLoaderRegistryTest {
 
@@ -53,11 +53,11 @@ public class CatalogLoaderRegistryTest {
 
   @Test
   public void commandDescriptions() throws Exception {
-    final Collection<CommandDescription> supportedCatalogLoaders =
+    final Collection<PropertyName> supportedCatalogLoaders =
         CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandDescriptions();
     assertThat(supportedCatalogLoaders, hasSize(2));
     final List<String> names =
-        supportedCatalogLoaders.stream().map(CommandDescription::getName).collect(toList());
+        supportedCatalogLoaders.stream().map(PropertyName::getName).collect(toList());
     assertThat(names, containsInAnyOrder("testloader", "schemacrawlerloader"));
   }
 

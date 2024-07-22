@@ -30,7 +30,7 @@ package schemacrawler.tools.registry;
 
 import java.util.Collection;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public interface PluginRegistry {
 
@@ -38,7 +38,7 @@ public interface PluginRegistry {
 
   Collection<PluginCommand> getHelpCommands();
 
-  Collection<CommandDescription> getCommandDescriptions();
+  Collection<PropertyName> getCommandDescriptions();
 
   void log();
 

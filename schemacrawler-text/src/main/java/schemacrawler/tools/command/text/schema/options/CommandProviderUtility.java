@@ -30,15 +30,15 @@ package schemacrawler.tools.command.text.schema.options;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class CommandProviderUtility {
 
-  public static Collection<CommandDescription> schemaTextCommands() {
-    final Collection<CommandDescription> supportedCommands = new ArrayList<>();
+  public static Collection<PropertyName> schemaTextCommands() {
+    final Collection<PropertyName> supportedCommands = new ArrayList<>();
     for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values()) {
       supportedCommands.add(
-          new CommandDescription(
+          new PropertyName(
               schemaTextDetailType.name(), schemaTextDetailType.getDescription()));
     }
     return supportedCommands;

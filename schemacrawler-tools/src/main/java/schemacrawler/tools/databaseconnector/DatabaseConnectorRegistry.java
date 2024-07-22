@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.BasePluginRegistry;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */
@@ -156,11 +156,11 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
   }
 
   @Override
-  public Collection<CommandDescription> getCommandDescriptions() {
-    final List<CommandDescription> availableServers = new ArrayList<>();
+  public Collection<PropertyName> getCommandDescriptions() {
+    final List<PropertyName> availableServers = new ArrayList<>();
     for (final DatabaseServerType serverType : getDatabaseServerTypes()) {
-      final CommandDescription serverDescription =
-          new CommandDescription(
+      final PropertyName serverDescription =
+          new PropertyName(
               serverType.getDatabaseSystemIdentifier(), serverType.getDatabaseSystemName());
       availableServers.add(serverDescription);
     }

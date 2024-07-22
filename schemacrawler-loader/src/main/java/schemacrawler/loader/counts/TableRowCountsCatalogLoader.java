@@ -39,7 +39,7 @@ import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskRunners;
@@ -53,12 +53,12 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
   private static final String OPTION_LOAD_ROW_COUNTS = "load-row-counts";
 
   public TableRowCountsCatalogLoader() {
-    super(new CommandDescription("countsloader", "Loader for table row counts"), 2);
+    super(new PropertyName("countsloader", "Loader for table row counts"), 2);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final CommandDescription commandDescription = getCommandDescription();
+    final PropertyName commandDescription = getCommandDescription();
     final PluginCommand pluginCommand =
         PluginCommand.newCatalogLoaderCommand(
             commandDescription.getName(), commandDescription.getDescription());

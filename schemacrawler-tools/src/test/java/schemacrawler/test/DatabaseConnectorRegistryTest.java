@@ -46,7 +46,7 @@ import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class DatabaseConnectorRegistryTest {
 
@@ -127,14 +127,14 @@ public class DatabaseConnectorRegistryTest {
 
     final TestDatabaseConnector testDatabaseConnector = new TestDatabaseConnector();
     DatabaseServerType databaseServerType = testDatabaseConnector.getDatabaseServerType();
-    final CommandDescription serverDescription =
-        new CommandDescription(
+    final PropertyName serverDescription =
+        new PropertyName(
             databaseServerType.getDatabaseSystemIdentifier(),
             databaseServerType.getDatabaseSystemName());
 
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final Collection<CommandDescription> commandLineCommands =
+    final Collection<PropertyName> commandLineCommands =
         databaseConnectorRegistry.getCommandDescriptions();
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands.stream().findFirst().get(), is(serverDescription));

@@ -57,7 +57,7 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskRunners;
@@ -71,14 +71,14 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
 
   public AttributesCatalogLoader() {
     super(
-        new CommandDescription(
+        new PropertyName(
             "attributesloader", "Loader for catalog attributes, such as remarks or tags"),
         2);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final CommandDescription commandDescription = getCommandDescription();
+    final PropertyName commandDescription = getCommandDescription();
     final PluginCommand pluginCommand =
         PluginCommand.newCatalogLoaderCommand(
             commandDescription.getName(), commandDescription.getDescription());

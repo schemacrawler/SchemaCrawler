@@ -41,7 +41,7 @@ import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class LintCommandProvider extends BaseCommandProvider {
 
@@ -49,7 +49,7 @@ public class LintCommandProvider extends BaseCommandProvider {
       "Find lints (non-adherence to coding standards and conventions) " + "in the database schema";
 
   public LintCommandProvider() {
-    super(new CommandDescription(LintCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new PropertyName(LintCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override

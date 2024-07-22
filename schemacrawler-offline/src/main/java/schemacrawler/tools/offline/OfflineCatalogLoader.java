@@ -15,12 +15,12 @@ import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public final class OfflineCatalogLoader extends BaseCatalogLoader {
 
   public OfflineCatalogLoader() {
-    super(new CommandDescription("offlineloader", "Loader for offline databases"), -1);
+    super(new PropertyName("offlineloader", "Loader for offline databases"), -1);
   }
 
   @Override

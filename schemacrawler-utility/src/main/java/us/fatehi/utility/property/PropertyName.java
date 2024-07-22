@@ -38,17 +38,17 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 
-public final class CommandDescription implements Serializable, Comparable<CommandDescription> {
+public final class PropertyName implements Serializable, Comparable<PropertyName> {
 
   private static final long serialVersionUID = 2444083929278551904L;
 
-  private static Comparator<CommandDescription> comparator =
-      nullsLast(comparing(CommandDescription::getName, String.CASE_INSENSITIVE_ORDER));
+  private static Comparator<PropertyName> comparator =
+      nullsLast(comparing(PropertyName::getName, String.CASE_INSENSITIVE_ORDER));
 
   private final String name;
   private final String description;
 
-  public CommandDescription(final String name, final String description) {
+  public PropertyName(final String name, final String description) {
     this.name = requireNotBlank(name, "Command name not provided");
 
     if (isBlank(description)) {
@@ -59,7 +59,7 @@ public final class CommandDescription implements Serializable, Comparable<Comman
   }
 
   @Override
-  public int compareTo(final CommandDescription otherProperty) {
+  public int compareTo(final PropertyName otherProperty) {
     return compare(this, otherProperty, comparator);
   }
 
@@ -71,10 +71,10 @@ public final class CommandDescription implements Serializable, Comparable<Comman
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof CommandDescription)) {
+    if (!(obj instanceof PropertyName)) {
       return false;
     }
-    final CommandDescription other = (CommandDescription) obj;
+    final PropertyName other = (PropertyName) obj;
     if (!Objects.equals(name, other.name)) {
       return false;
     }

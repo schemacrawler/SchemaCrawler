@@ -19,7 +19,7 @@ import schemacrawler.tools.registry.JDBCDriverRegistry;
 import schemacrawler.tools.registry.PluginRegistry;
 import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.test.utility.TestDatabaseDriver;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class AvailableRegistryPluginsTest {
 
@@ -69,8 +69,8 @@ public class AvailableRegistryPluginsTest {
 
   private List<String> getCommands(final PluginRegistry registry) {
     final List<String> commands = new ArrayList<>();
-    final Collection<CommandDescription> commandDescriptions = registry.getCommandDescriptions();
-    for (final CommandDescription commandDescription : commandDescriptions) {
+    final Collection<PropertyName> commandDescriptions = registry.getCommandDescriptions();
+    for (final PropertyName commandDescription : commandDescriptions) {
       commands.add(commandDescription.getName());
     }
     return commands;

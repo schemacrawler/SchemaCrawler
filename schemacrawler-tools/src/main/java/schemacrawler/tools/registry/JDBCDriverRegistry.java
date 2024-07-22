@@ -36,7 +36,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import us.fatehi.utility.database.DatabaseUtility;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class JDBCDriverRegistry extends BasePluginRegistry {
 
@@ -53,24 +53,24 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
 
   public static void reload() {
     if (jdbcDriverRegistrySingleton != null) {
-      final Collection<CommandDescription> registry =
+      final Collection<PropertyName> registry =
           jdbcDriverRegistrySingleton.commandDescriptions;
       registry.clear();
       registry.addAll(loadJDBCDrivers());
     }
   }
 
-  private static List<CommandDescription> loadJDBCDrivers() {
+  private static List<PropertyName> loadJDBCDrivers() {
 
     // Use thread-safe list
-    final List<CommandDescription> availableJDBCDrivers = new CopyOnWriteArrayList<>();
+    final List<PropertyName> availableJDBCDrivers = new CopyOnWriteArrayList<>();
     try {
       final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
       for (final Driver driver : drivers) {
         final String driverName = driver.getClass().getName();
         final String driverDescription =
             String.format("%2d.%d", driver.getMajorVersion(), driver.getMinorVersion());
-        availableJDBCDrivers.add(new CommandDescription(driverName, driverDescription));
+        availableJDBCDrivers.add(new PropertyName(driverName, driverDescription));
       }
     } catch (final Throwable e) {
       throw new InternalRuntimeException("Could not load JDBC drivers", e);
@@ -78,14 +78,14 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
     return availableJDBCDrivers;
   }
 
-  private final Collection<CommandDescription> commandDescriptions;
+  private final Collection<PropertyName> commandDescriptions;
 
   private JDBCDriverRegistry() {
     commandDescriptions = loadJDBCDrivers();
   }
 
   @Override
-  public Collection<CommandDescription> getCommandDescriptions() {
+  public Collection<PropertyName> getCommandDescriptions() {
     return new ArrayList<>(commandDescriptions);
   }
 

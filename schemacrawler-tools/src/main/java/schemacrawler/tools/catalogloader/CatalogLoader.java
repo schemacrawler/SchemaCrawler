@@ -34,13 +34,13 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   Catalog getCatalog();
 
-  CommandDescription getCommandDescription();
+  PropertyName getCommandDescription();
 
   PluginCommand getCommandLineCommand();
 

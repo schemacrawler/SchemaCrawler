@@ -42,15 +42,15 @@ import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 abstract class BaseAvailableCommandDescriptions implements Iterable<String> {
 
   private static final Pattern metaCommand = Pattern.compile("<.*>");
-  protected final Collection<CommandDescription> commandDescriptions;
+  protected final Collection<PropertyName> commandDescriptions;
 
   protected BaseAvailableCommandDescriptions(
-      final Collection<CommandDescription> commandDescriptions) {
+      final Collection<PropertyName> commandDescriptions) {
     this.commandDescriptions =
         requireNonNull(commandDescriptions, "No command descriptions provided");
   }
@@ -80,7 +80,7 @@ abstract class BaseAvailableCommandDescriptions implements Iterable<String> {
     return commandDescriptions.stream()
         .filter(Objects::nonNull)
         .filter(commandDescription -> !metaCommand.matcher(commandDescription.getName()).matches())
-        .map(CommandDescription::getName);
+        .map(PropertyName::getName);
   }
 
   protected abstract String getName();
@@ -92,7 +92,7 @@ abstract class BaseAvailableCommandDescriptions implements Iterable<String> {
     final TextTable textTable =
         forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
 
-    for (final CommandDescription commandDescription : commandDescriptions) {
+    for (final PropertyName commandDescription : commandDescriptions) {
       textTable.addRowValues(commandDescription.getName(), commandDescription.getDescription());
     }
     return textTable;

@@ -40,7 +40,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.BasePluginRegistry;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for registered catalog orders, in order of priority. */
@@ -113,13 +113,11 @@ public final class CatalogLoaderRegistry extends BasePluginRegistry {
   }
 
   @Override
-  public Collection<CommandDescription> getCommandDescriptions() {
-    final Collection<CommandDescription> commandLineCommands = new HashSet<>();
+  public Collection<PropertyName> getCommandDescriptions() {
+    final Collection<PropertyName> commandLineCommands = new HashSet<>();
     for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
-      final CommandDescription commandDescription = catalogLoader.getCommandDescription();
-      commandLineCommands.add(
-          new CommandDescription(
-              commandDescription.getName(), commandDescription.getDescription()));
+      final PropertyName commandDescription = catalogLoader.getCommandDescription();
+      commandLineCommands.add(commandDescription);
     }
     return commandLineCommands;
   }

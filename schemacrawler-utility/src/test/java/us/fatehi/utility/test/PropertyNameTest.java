@@ -35,19 +35,19 @@ import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
-public class CommandDescriptionTest {
+public class PropertyNameTest {
 
   @Test
   public void commandDescription() {
-    EqualsVerifier.forClass(CommandDescription.class).withIgnoredFields("description").verify();
+    EqualsVerifier.forClass(PropertyName.class).withIgnoredFields("description").verify();
   }
 
   @Test
   public void compare() {
-    final CommandDescription commandDescription1 = new CommandDescription("hello1", "world");
-    final CommandDescription commandDescription2 = new CommandDescription("hello", "  ");
+    final PropertyName commandDescription1 = new PropertyName("hello1", "world");
+    final PropertyName commandDescription2 = new PropertyName("hello", "  ");
     assertThat(commandDescription1.compareTo(commandDescription2), is(equalTo(1)));
 
     assertThat(commandDescription1.compareTo(null), is(equalTo(-1)));
@@ -55,12 +55,12 @@ public class CommandDescriptionTest {
 
   @Test
   public void testString() {
-    final CommandDescription commandDescription1 = new CommandDescription("hello", "world");
+    final PropertyName commandDescription1 = new PropertyName("hello", "world");
     assertThat(commandDescription1.getName(), is(equalTo("hello")));
     assertThat(commandDescription1.getDescription(), is(equalTo("world")));
     assertThat(commandDescription1.toString(), is(equalTo("hello - world")));
 
-    final CommandDescription commandDescription2 = new CommandDescription("hello", "  ");
+    final PropertyName commandDescription2 = new PropertyName("hello", "  ");
     assertThat(commandDescription2.getName(), is(equalTo("hello")));
     assertThat(commandDescription2.getDescription(), is(equalTo("")));
     assertThat(commandDescription2.toString(), is(equalTo("hello")));

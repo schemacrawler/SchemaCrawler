@@ -36,7 +36,7 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class ScriptCommandProvider extends BaseCommandProvider {
 
@@ -44,7 +44,7 @@ public class ScriptCommandProvider extends BaseCommandProvider {
       "Process a script file, such as JavaScript, " + "against the database schema";
 
   public ScriptCommandProvider() {
-    super(new CommandDescription(ScriptCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new PropertyName(ScriptCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override

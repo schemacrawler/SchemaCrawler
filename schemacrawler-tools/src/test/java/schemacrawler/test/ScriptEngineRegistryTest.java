@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.ScriptEngineRegistry;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class ScriptEngineRegistryTest {
 
@@ -35,7 +35,7 @@ public class ScriptEngineRegistryTest {
       return;
     }
     final ScriptEngineRegistry driverRegistry = ScriptEngineRegistry.getScriptEngineRegistry();
-    final Collection<CommandDescription> commandLineCommands =
+    final Collection<PropertyName> commandLineCommands =
         driverRegistry.getCommandDescriptions();
     assertThat(commandLineCommands, hasSize(1));
   }

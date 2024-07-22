@@ -33,7 +33,7 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class TestCommandProvider extends BaseCommandProvider {
 
@@ -41,7 +41,7 @@ public class TestCommandProvider extends BaseCommandProvider {
       "Test command which is not deployed with the release";
 
   public TestCommandProvider() {
-    super(new CommandDescription(TestCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new PropertyName(TestCommand.COMMAND, DESCRIPTION_HEADER));
     forceInstantiationFailureIfConfigured();
   }
 

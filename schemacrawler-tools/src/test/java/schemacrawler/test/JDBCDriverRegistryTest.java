@@ -12,7 +12,7 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 import us.fatehi.test.utility.TestDatabaseDriver;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class JDBCDriverRegistryTest {
 
@@ -33,7 +33,7 @@ public class JDBCDriverRegistryTest {
   @Test
   public void commandDescriptions() {
     final JDBCDriverRegistry driverRegistry = JDBCDriverRegistry.getJDBCDriverRegistry();
-    final Collection<CommandDescription> commandLineCommands =
+    final Collection<PropertyName> commandLineCommands =
         driverRegistry.getCommandDescriptions();
     assertThat(commandLineCommands, hasSize(2));
   }

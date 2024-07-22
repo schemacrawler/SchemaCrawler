@@ -38,14 +38,14 @@ import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public final class OperationCommandProvider extends BaseCommandProvider {
 
-  private static Collection<CommandDescription> operationCommands() {
-    final Collection<CommandDescription> supportedCommands = new ArrayList<>();
+  private static Collection<PropertyName> operationCommands() {
+    final Collection<PropertyName> supportedCommands = new ArrayList<>();
     for (final OperationType operation : OperationType.values()) {
-      supportedCommands.add(new CommandDescription(operation.name(), operation.getDescription()));
+      supportedCommands.add(new PropertyName(operation.name(), operation.getDescription()));
     }
     return supportedCommands;
   }

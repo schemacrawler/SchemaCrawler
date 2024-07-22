@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class ScriptEngineRegistry extends BasePluginRegistry {
 
@@ -51,17 +51,17 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
     return scriptEngineRegistrySingleton;
   }
 
-  private static List<CommandDescription> loadScriptEngines() {
+  private static List<PropertyName> loadScriptEngines() {
 
     // Use thread-safe list
-    final List<CommandDescription> availableScriptEngines = new CopyOnWriteArrayList<>();
+    final List<PropertyName> availableScriptEngines = new CopyOnWriteArrayList<>();
     try {
       final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
       final List<ScriptEngineFactory> engineFactories = scriptEngineManager.getEngineFactories();
       for (final ScriptEngineFactory scriptEngineFactory : engineFactories) {
         if (scriptEngineFactory != null) {
           availableScriptEngines.add(
-              new CommandDescription(
+              new PropertyName(
                   scriptEngineFactory.getEngineName(),
                   String.format(
                       "%-15s file extensions: %s",
@@ -76,14 +76,14 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
     return availableScriptEngines;
   }
 
-  private final Collection<CommandDescription> commandDescriptions;
+  private final Collection<PropertyName> commandDescriptions;
 
   private ScriptEngineRegistry() {
     commandDescriptions = loadScriptEngines();
   }
 
   @Override
-  public Collection<CommandDescription> getCommandDescriptions() {
+  public Collection<PropertyName> getCommandDescriptions() {
     return new ArrayList<>(commandDescriptions);
   }
 

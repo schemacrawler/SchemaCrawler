@@ -17,7 +17,7 @@ import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class CommandProviderSortTest {
 
@@ -25,7 +25,7 @@ public class CommandProviderSortTest {
     private OperationCommandProvider() {
       super(
           Arrays.asList(
-              new CommandDescription("OperationCommandProvider", "OperationCommandProvider")));
+              new PropertyName("OperationCommandProvider", "OperationCommandProvider")));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CommandProviderSortTest {
   private final CommandProvider fallbackCommandProvider = new OperationCommandProvider();
   private final CommandProvider otherCommandProvider =
       new BaseCommandProvider(
-          Arrays.asList(new CommandDescription("OtherCommandProvider", "OtherCommandProvider"))) {
+          Arrays.asList(new PropertyName("OtherCommandProvider", "OtherCommandProvider"))) {
 
         @Override
         public SchemaCrawlerCommand<?> newSchemaCrawlerCommand(

@@ -16,7 +16,7 @@ import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public class CommandRegistryTest {
 
@@ -67,7 +67,7 @@ public class CommandRegistryTest {
     final TestCommandProvider testCommandProvider = new TestCommandProvider();
 
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    final Collection<CommandDescription> commandLineCommands =
+    final Collection<PropertyName> commandLineCommands =
         commandRegistry.getCommandDescriptions();
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands, is(testCommandProvider.getSupportedCommands()));

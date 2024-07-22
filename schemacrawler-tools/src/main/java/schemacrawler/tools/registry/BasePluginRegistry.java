@@ -35,7 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.database.DatabaseUtility;
-import us.fatehi.utility.property.CommandDescription;
+import us.fatehi.utility.property.PropertyName;
 
 public abstract class BasePluginRegistry implements PluginRegistry {
 
@@ -63,8 +63,8 @@ public abstract class BasePluginRegistry implements PluginRegistry {
     try {
       final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
       buffer.append("Registered ").append(getName()).append(":").append(System.lineSeparator());
-      Collection<CommandDescription> commandDescriptions = getCommandDescriptions();
-      for (CommandDescription commandDescription : commandDescriptions) {
+      Collection<PropertyName> commandDescriptions = getCommandDescriptions();
+      for (PropertyName commandDescription : commandDescriptions) {
         index++;
         if (log) {
           buffer
