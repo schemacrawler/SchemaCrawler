@@ -1,14 +1,18 @@
 package schemacrawler.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.test.utility.TestCatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.catalogloader.ChainedCatalogLoader;
@@ -62,5 +66,18 @@ public class CatalogLoaderRegistryTest {
     final CatalogLoaderRegistry catalogLoaderRegistry =
         CatalogLoaderRegistry.getCatalogLoaderRegistry();
     assertThat(catalogLoaderRegistry.getName(), is("SchemaCrawler catalog loaders"));
+  }
+
+  @Test
+  public void loadError() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.setProperty(
+              TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
+
+          assertThrows(InternalRuntimeException.class, () -> CatalogLoaderRegistry.reload());
+        });
+    // Reset
+    CatalogLoaderRegistry.reload();
   }
 }
