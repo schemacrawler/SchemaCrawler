@@ -16,8 +16,8 @@ import schemacrawler.test.utility.TestCatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.catalogloader.ChainedCatalogLoader;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.property.CommandDescription;
 
 public class CatalogLoaderRegistryTest {
 

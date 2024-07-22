@@ -44,7 +44,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 import schemacrawler.schema.DatabaseProperty;
-import schemacrawler.schema.Property;
+import us.fatehi.utility.property.AbstractProperty;
+import us.fatehi.utility.property.Property;
 
 class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProperty {
 

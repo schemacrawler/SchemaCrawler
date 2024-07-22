@@ -79,7 +79,6 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
-import schemacrawler.schema.Property;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.Schema;
@@ -106,6 +105,7 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.property.Property;
 
 @WithTestDatabase
 @ResolveTestContext

@@ -33,11 +33,11 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newPlugin
 import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.LanguageOptions;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.CommandDescription;
 
 public class TemplateCommandProvider extends BaseCommandProvider {
 

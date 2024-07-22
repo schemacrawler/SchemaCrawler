@@ -42,7 +42,7 @@ import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
-import schemacrawler.tools.executable.CommandDescription;
+import us.fatehi.utility.property.CommandDescription;
 
 abstract class BaseAvailableCommandDescriptions implements Iterable<String> {
 

@@ -51,7 +51,6 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseUser;
-import schemacrawler.schema.Property;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -66,6 +65,7 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.property.Property;
 
 public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabaseTest {
 

@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.property.CommandDescription;
 
 public class TestCatalogLoader extends BaseCatalogLoader {
 

@@ -33,10 +33,10 @@ import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptions;
 import schemacrawler.tools.command.chatgpt.options.ChatGPTCommandOptionsBuilder;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.CommandDescription;
 
 /** SchemaCrawler command plug-in for ChatGPT. */
 public final class ChatGPTCommandProvider extends BaseCommandProvider {

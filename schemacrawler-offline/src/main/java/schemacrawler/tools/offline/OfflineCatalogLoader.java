@@ -13,9 +13,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
+import us.fatehi.utility.property.CommandDescription;
 
 public final class OfflineCatalogLoader extends BaseCatalogLoader {
 

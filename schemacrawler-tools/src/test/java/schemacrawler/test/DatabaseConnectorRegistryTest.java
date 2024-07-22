@@ -45,8 +45,8 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.property.CommandDescription;
 
 public class DatabaseConnectorRegistryTest {
 

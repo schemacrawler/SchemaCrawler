@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.JRE;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.ScriptEngineRegistry;
+import us.fatehi.utility.property.CommandDescription;
 
 public class ScriptEngineRegistryTest {
 

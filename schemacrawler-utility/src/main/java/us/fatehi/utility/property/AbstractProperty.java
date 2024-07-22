@@ -26,24 +26,21 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.crawl;
-
-import static us.fatehi.utility.Utility.requireNotBlank;
+package us.fatehi.utility.property;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
-import schemacrawler.schema.Property;
-
-abstract class AbstractProperty implements Property {
+public abstract class AbstractProperty implements Property {
 
   private static final long serialVersionUID = -7150431683440256142L;
 
   private final String name;
   private final Serializable value;
 
-  AbstractProperty(final String name, final Serializable value) {
+  protected AbstractProperty(final String name, final Serializable value) {
     requireNotBlank(name, "No property name provided");
     this.name = name.trim();
     if (value != null && value.getClass().isArray()) {
@@ -58,10 +55,7 @@ abstract class AbstractProperty implements Property {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof Property)) {
+    if ((obj == null) || !(obj instanceof Property)) {
       return false;
     }
     final Property other = (Property) obj;
@@ -83,5 +77,10 @@ abstract class AbstractProperty implements Property {
   @Override
   public final int hashCode() {
     return Objects.hash(name, value);
+  }
+
+  @Override
+  public String toString() {
+    return getName() + " = " + getValue();
   }
 }

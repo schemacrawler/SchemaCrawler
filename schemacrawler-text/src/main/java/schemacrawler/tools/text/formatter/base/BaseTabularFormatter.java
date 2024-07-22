@@ -35,7 +35,6 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
-import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
@@ -43,6 +42,7 @@ import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.Docum
 import schemacrawler.tools.text.options.BaseTextOptions;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.property.Property;
 
 /** Text formatting of schema. */
 public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends BaseFormatter<O> {

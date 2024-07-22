@@ -36,9 +36,9 @@ import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationOptionsBuilder;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.CommandDescription;
 
 public final class OperationCommandProvider extends BaseCommandProvider {
 

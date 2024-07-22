@@ -30,8 +30,7 @@ package schemacrawler.tools.command.text.schema.options;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
-import schemacrawler.tools.executable.CommandDescription;
+import us.fatehi.utility.property.CommandDescription;
 
 public class CommandProviderUtility {
 

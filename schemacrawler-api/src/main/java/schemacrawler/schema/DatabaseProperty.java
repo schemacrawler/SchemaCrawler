@@ -28,4 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+import us.fatehi.utility.property.Property;
+
 public interface DatabaseProperty extends Property {}

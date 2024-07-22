@@ -33,9 +33,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.property.CommandDescription;
 
 public abstract class BasePluginRegistry implements PluginRegistry {
 

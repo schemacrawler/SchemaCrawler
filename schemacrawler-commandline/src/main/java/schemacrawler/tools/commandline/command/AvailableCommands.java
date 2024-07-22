@@ -30,8 +30,8 @@ package schemacrawler.tools.commandline.command;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
+import us.fatehi.utility.property.CommandDescription;
 
 public class AvailableCommands extends BaseAvailableCommandDescriptions {
 

@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.tools.executable.CommandDescription;
 import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.property.CommandDescription;
 
 public class JDBCDriverRegistry extends BasePluginRegistry {
 

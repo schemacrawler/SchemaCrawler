@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.testcommand.TestCommandProvider;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.CommandDescription;
 
 public class CommandProviderSortTest {
 

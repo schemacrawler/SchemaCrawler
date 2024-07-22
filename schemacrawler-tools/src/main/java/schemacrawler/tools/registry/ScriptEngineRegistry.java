@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
-import schemacrawler.tools.executable.CommandDescription;
+import us.fatehi.utility.property.CommandDescription;
 
 public class ScriptEngineRegistry extends BasePluginRegistry {
 

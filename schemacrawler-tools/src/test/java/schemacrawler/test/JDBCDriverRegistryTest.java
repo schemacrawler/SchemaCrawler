@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 import us.fatehi.test.utility.TestDatabaseDriver;
+import us.fatehi.utility.property.CommandDescription;
 
 public class JDBCDriverRegistryTest {
 

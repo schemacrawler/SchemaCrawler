@@ -40,10 +40,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.property.CommandDescription;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
 

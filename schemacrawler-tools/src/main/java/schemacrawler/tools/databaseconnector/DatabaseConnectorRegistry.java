@@ -44,9 +44,9 @@ import java.util.logging.Logger;
 import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.CommandDescription;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */

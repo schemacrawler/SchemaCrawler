@@ -38,7 +38,7 @@ import java.util.TreeSet;
 import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
-import schemacrawler.schema.Property;
+import us.fatehi.utility.property.Property;
 
 /**
  * Database and connection information. Created from metadata returned by a JDBC call, and other

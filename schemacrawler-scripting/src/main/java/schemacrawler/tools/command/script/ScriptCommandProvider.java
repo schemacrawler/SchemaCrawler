@@ -33,10 +33,10 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newPlugin
 import schemacrawler.tools.command.script.options.ScriptLanguageOptionsBuilder;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.CommandDescription;
 
 public class ScriptCommandProvider extends BaseCommandProvider {
 

@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import schemacrawler.tools.executable.CommandDescription;
+import us.fatehi.utility.property.CommandDescription;
 
 public class CommandDescriptionTest {
 

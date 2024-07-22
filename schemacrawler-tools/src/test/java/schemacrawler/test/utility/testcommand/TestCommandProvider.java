@@ -30,10 +30,10 @@ package schemacrawler.test.utility.testcommand;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.CommandDescription;
 
 public class TestCommandProvider extends BaseCommandProvider {
 

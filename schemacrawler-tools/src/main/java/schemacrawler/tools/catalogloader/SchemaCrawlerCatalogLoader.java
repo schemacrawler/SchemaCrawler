@@ -30,7 +30,7 @@ package schemacrawler.tools.catalogloader;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.tools.executable.CommandDescription;
+import us.fatehi.utility.property.CommandDescription;
 
 public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
 

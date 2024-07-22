@@ -14,12 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 import schemacrawler.tools.registry.PluginRegistry;
 import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.test.utility.TestDatabaseDriver;
+import us.fatehi.utility.property.CommandDescription;
 
 public class AvailableRegistryPluginsTest {
 

@@ -34,6 +34,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.CommandDescription;
 
 public interface CommandProvider {
 

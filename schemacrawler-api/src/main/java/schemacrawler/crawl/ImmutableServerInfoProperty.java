@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static us.fatehi.utility.Utility.trimToEmpty;
+import us.fatehi.utility.property.AbstractProperty;
 
 final class ImmutableServerInfoProperty extends AbstractProperty {
 
@@ -45,10 +46,5 @@ final class ImmutableServerInfoProperty extends AbstractProperty {
   @Override
   public String getDescription() {
     return description;
-  }
-
-  @Override
-  public String toString() {
-    return getName() + " = " + getValue();
   }
 }

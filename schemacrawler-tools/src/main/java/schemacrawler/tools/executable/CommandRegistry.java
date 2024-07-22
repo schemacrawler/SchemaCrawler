@@ -48,6 +48,7 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.CommandDescription;
 import us.fatehi.utility.string.StringFormat;
 
 /** Command registry for mapping command to executable. */

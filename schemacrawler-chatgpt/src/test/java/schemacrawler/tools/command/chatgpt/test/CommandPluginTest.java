@@ -4,8 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
+import us.fatehi.utility.property.CommandDescription;
 
 public class CommandPluginTest {
 

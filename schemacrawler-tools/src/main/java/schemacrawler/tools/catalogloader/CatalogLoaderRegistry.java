@@ -38,9 +38,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.CommandDescription;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for registered catalog orders, in order of priority. */

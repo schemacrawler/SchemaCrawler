@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.executable;
+package us.fatehi.utility.property;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;

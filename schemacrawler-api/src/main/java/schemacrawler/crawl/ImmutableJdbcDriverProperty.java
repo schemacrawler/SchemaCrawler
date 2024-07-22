@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.schema.JdbcDriverProperty;
+import us.fatehi.utility.property.AbstractProperty;
 
 /**
  * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call,

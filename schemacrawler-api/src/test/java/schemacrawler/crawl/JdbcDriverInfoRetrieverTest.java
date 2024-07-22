@@ -39,10 +39,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.property.Property;
 
 @WithTestDatabase
 @ResolveTestContext

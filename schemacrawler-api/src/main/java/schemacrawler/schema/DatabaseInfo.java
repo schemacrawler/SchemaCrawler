@@ -31,6 +31,7 @@ package schemacrawler.schema;
 import java.util.Collection;
 
 import schemacrawler.ProductVersion;
+import us.fatehi.utility.property.Property;
 
 /** Database and connection information. */
 public interface DatabaseInfo extends ProductVersion {

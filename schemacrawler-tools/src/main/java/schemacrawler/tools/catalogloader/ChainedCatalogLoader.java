@@ -37,9 +37,9 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.property.CommandDescription;
 import us.fatehi.utility.string.StringFormat;
 
 public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<CatalogLoader> {

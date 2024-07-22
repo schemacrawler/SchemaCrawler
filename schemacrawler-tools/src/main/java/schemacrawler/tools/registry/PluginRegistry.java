@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.registry;
 
 import java.util.Collection;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.property.CommandDescription;
 
 public interface PluginRegistry {
 

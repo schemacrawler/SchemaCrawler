@@ -12,11 +12,11 @@ import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.testcommand.TestCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.property.CommandDescription;
 
 public class CommandRegistryTest {
 
