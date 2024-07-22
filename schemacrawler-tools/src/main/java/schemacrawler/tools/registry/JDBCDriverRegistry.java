@@ -32,6 +32,7 @@ import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
@@ -60,7 +61,9 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
   }
 
   private static List<CommandDescription> loadJDBCDrivers() {
-    final List<CommandDescription> availableJDBCDrivers = new ArrayList<>();
+
+    // Use thread-safe list
+    final List<CommandDescription> availableJDBCDrivers = new CopyOnWriteArrayList<>();
     try {
       final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
       for (final Driver driver : drivers) {

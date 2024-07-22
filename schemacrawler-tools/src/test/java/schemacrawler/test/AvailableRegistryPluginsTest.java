@@ -73,7 +73,6 @@ public class AvailableRegistryPluginsTest {
     for (final CommandDescription commandDescription : commandDescriptions) {
       commands.add(commandDescription.getName());
     }
-    System.out.println(commands);
     return commands;
   }
 }

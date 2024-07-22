@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
@@ -66,7 +67,8 @@ public final class CatalogLoaderRegistry extends BasePluginRegistry {
 
   private static List<CatalogLoader> loadCatalogLoaderRegistry() {
 
-    final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
+    // Use thread-safe list
+    final List<CatalogLoader> catalogLoaderRegistry = new CopyOnWriteArrayList<>();
 
     try {
       final ServiceLoader<CatalogLoader> serviceLoader =

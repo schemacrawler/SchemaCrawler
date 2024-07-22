@@ -35,10 +35,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static us.fatehi.utility.Utility.isBlank;
@@ -74,7 +74,8 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
 
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry() {
 
-    final Map<String, DatabaseConnector> databaseConnectorRegistry = new HashMap<>();
+    // Use thread-safe map
+    final Map<String, DatabaseConnector> databaseConnectorRegistry = new ConcurrentHashMap<>();
 
     try {
       final ServiceLoader<DatabaseConnector> serviceLoader =

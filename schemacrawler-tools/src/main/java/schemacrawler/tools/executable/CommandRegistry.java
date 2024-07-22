@@ -37,6 +37,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -85,7 +86,8 @@ public final class CommandRegistry extends BasePluginRegistry {
 
   private static List<CommandProvider> loadCommandRegistry() {
 
-    final List<CommandProvider> commandProviders = new ArrayList<>();
+    // Use thread-safe list
+    final List<CommandProvider> commandProviders = new CopyOnWriteArrayList<>();
 
     try {
       final ServiceLoader<CommandProvider> serviceLoader =

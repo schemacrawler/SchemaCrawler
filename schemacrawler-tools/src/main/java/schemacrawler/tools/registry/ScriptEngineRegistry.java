@@ -31,6 +31,7 @@ package schemacrawler.tools.registry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngineFactory;
@@ -51,7 +52,9 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
   }
 
   private static List<CommandDescription> loadScriptEngines() {
-    final List<CommandDescription> availableScriptEngines = new ArrayList<>();
+
+    // Use thread-safe list
+    final List<CommandDescription> availableScriptEngines = new CopyOnWriteArrayList<>();
     try {
       final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
       final List<ScriptEngineFactory> engineFactories = scriptEngineManager.getEngineFactories();
@@ -66,8 +69,9 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
                       scriptEngineFactory.getExtensions())));
         }
       }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not list script engines", e);
+    } catch (final Throwable e) {
+      // NOTE: Do not hard fail if script engines cannot be loaded
+      LOGGER.log(Level.WARNING, "Could not load script engines", e);
     }
     return availableScriptEngines;
   }
