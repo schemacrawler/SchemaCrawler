@@ -49,8 +49,7 @@ abstract class BaseAvailableCommandDescriptions implements Iterable<String> {
   private static final Pattern metaCommand = Pattern.compile("<.*>");
   protected final Collection<PropertyName> commandDescriptions;
 
-  protected BaseAvailableCommandDescriptions(
-      final Collection<PropertyName> commandDescriptions) {
+  protected BaseAvailableCommandDescriptions(final Collection<PropertyName> commandDescriptions) {
     this.commandDescriptions =
         requireNonNull(commandDescriptions, "No command descriptions provided");
   }

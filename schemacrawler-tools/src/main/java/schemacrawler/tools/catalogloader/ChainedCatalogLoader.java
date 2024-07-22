@@ -50,8 +50,7 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
 
   public ChainedCatalogLoader(final List<CatalogLoader> chainedCatalogLoaders) {
     super(
-        new PropertyName(
-            "chainloader", "Chain of all catalog loaders, called in turn by priority"),
+        new PropertyName("chainloader", "Chain of all catalog loaders, called in turn by priority"),
         Integer.MIN_VALUE);
     requireNonNull(chainedCatalogLoaders);
     this.chainedCatalogLoaders = new ArrayList<>(chainedCatalogLoaders);

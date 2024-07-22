@@ -33,7 +33,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
-import static java.util.Objects.compare;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import java.io.Serializable;
 import java.util.Comparator;
@@ -43,9 +42,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
+import static java.util.Objects.compare;
 import schemacrawler.schema.DatabaseProperty;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.Property;
+import us.fatehi.utility.property.PropertyName;
 
 class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProperty {
 
@@ -73,22 +74,13 @@ class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProp
     acronyms = unmodifiableSet(acronymsMap.entrySet());
   }
 
-  private transient String description;
-
   ImmutableDatabaseProperty(final String name, final Object value) {
-    super(name, (Serializable) value);
+    super(new PropertyName(name, buildDescription(name)), (Serializable) value);
   }
 
   @Override
   public int compareTo(final Property otherProperty) {
     return compare(this, otherProperty, comparator);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getDescription() {
-    buildDescription();
-    return description;
   }
 
   @Override
@@ -100,14 +92,12 @@ class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProp
    * This function splits DatabaseMetaData method names into words. It is not intended to be a
    * general purpose word splitting algorithm.
    */
-  private void buildDescription() {
-    if (description != null) {
-      return;
-    }
+  private static String buildDescription(final String name) {
+
+    String description = name;
 
     // Remove leading "get"
     final String get = "get";
-    description = getName();
     if (description.startsWith(get)) {
       description = description.substring(get.length());
     }
@@ -137,5 +127,7 @@ class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProp
     }
 
     description = description.trim();
+
+    return description;
   }
 }

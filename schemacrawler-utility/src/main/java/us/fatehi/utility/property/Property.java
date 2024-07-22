@@ -30,10 +30,9 @@ package us.fatehi.utility.property;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
-import static java.util.Objects.compare;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import static java.util.Objects.compare;
 
 public interface Property extends Serializable, Comparable<Property> {
 
@@ -65,4 +64,11 @@ public interface Property extends Serializable, Comparable<Property> {
    * @return Value
    */
   Object getValue();
+
+  /**
+   * Gets the property name.
+   *
+   * @return Property name
+   */
+  PropertyName getPropertyName();
 }

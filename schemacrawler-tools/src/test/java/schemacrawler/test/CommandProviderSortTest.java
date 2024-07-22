@@ -24,8 +24,7 @@ public class CommandProviderSortTest {
   private final class OperationCommandProvider extends BaseCommandProvider {
     private OperationCommandProvider() {
       super(
-          Arrays.asList(
-              new PropertyName("OperationCommandProvider", "OperationCommandProvider")));
+          Arrays.asList(new PropertyName("OperationCommandProvider", "OperationCommandProvider")));
     }
 
     @Override

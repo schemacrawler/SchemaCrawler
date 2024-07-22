@@ -33,8 +33,7 @@ public class JDBCDriverRegistryTest {
   @Test
   public void commandDescriptions() {
     final JDBCDriverRegistry driverRegistry = JDBCDriverRegistry.getJDBCDriverRegistry();
-    final Collection<PropertyName> commandLineCommands =
-        driverRegistry.getCommandDescriptions();
+    final Collection<PropertyName> commandLineCommands = driverRegistry.getCommandDescriptions();
     assertThat(commandLineCommands, hasSize(2));
   }
 

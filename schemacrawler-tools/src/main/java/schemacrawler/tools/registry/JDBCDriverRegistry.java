@@ -53,8 +53,7 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
 
   public static void reload() {
     if (jdbcDriverRegistrySingleton != null) {
-      final Collection<PropertyName> registry =
-          jdbcDriverRegistrySingleton.commandDescriptions;
+      final Collection<PropertyName> registry = jdbcDriverRegistrySingleton.commandDescriptions;
       registry.clear();
       registry.addAll(loadJDBCDrivers());
     }

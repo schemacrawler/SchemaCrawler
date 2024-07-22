@@ -35,9 +35,7 @@ import us.fatehi.utility.property.PropertyName;
 public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
 
   public SchemaCrawlerCatalogLoader() {
-    super(
-        new PropertyName("schemacrawlerloader", "Loader for SchemaCrawler metadata catalog"),
-        0);
+    super(new PropertyName("schemacrawlerloader", "Loader for SchemaCrawler metadata catalog"), 0);
   }
 
   @Override

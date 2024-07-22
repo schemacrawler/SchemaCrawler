@@ -31,18 +31,17 @@ package us.fatehi.utility.property;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
-import static us.fatehi.utility.Utility.requireNotBlank;
+import static java.util.Objects.requireNonNull;
 
 public abstract class AbstractProperty implements Property {
 
   private static final long serialVersionUID = -7150431683440256142L;
 
-  private final String name;
+  private final PropertyName propertyName;
   private final Serializable value;
 
-  protected AbstractProperty(final String name, final Serializable value) {
-    requireNotBlank(name, "No property name provided");
-    this.name = name.trim();
+  protected AbstractProperty(final PropertyName name, final Serializable value) {
+    propertyName = requireNonNull(name, "No property name provided");
     if (value != null && value.getClass().isArray()) {
       this.value = (Serializable) Arrays.asList((Object[]) value);
     } else {
@@ -59,13 +58,26 @@ public abstract class AbstractProperty implements Property {
       return false;
     }
     final Property other = (Property) obj;
-    return Objects.equals(name, other.getName()) && Objects.equals(value, other.getValue());
+    return Objects.equals(propertyName, other.getPropertyName())
+        && Objects.equals(value, other.getValue());
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getName() {
-    return name;
+    return propertyName.getName();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final PropertyName getPropertyName() {
+    return propertyName;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getDescription() {
+    return propertyName.getDescription();
   }
 
   /** {@inheritDoc} */
@@ -76,7 +88,7 @@ public abstract class AbstractProperty implements Property {
 
   @Override
   public final int hashCode() {
-    return Objects.hash(name, value);
+    return Objects.hash(propertyName, value);
   }
 
   @Override

@@ -30,13 +30,12 @@ package us.fatehi.utility.property;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
-import static java.util.Objects.compare;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
+import static java.util.Objects.compare;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 public final class PropertyName implements Serializable, Comparable<PropertyName> {
 
@@ -49,12 +48,12 @@ public final class PropertyName implements Serializable, Comparable<PropertyName
   private final String description;
 
   public PropertyName(final String name, final String description) {
-    this.name = requireNotBlank(name, "Command name not provided");
+    this.name = requireNotBlank(name, "Command name not provided").trim();
 
     if (isBlank(description)) {
       this.description = null;
     } else {
-      this.description = description;
+      this.description = description.trim();
     }
   }
 
@@ -68,10 +67,7 @@ public final class PropertyName implements Serializable, Comparable<PropertyName
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof PropertyName)) {
+    if ((obj == null) || !(obj instanceof PropertyName)) {
       return false;
     }
     final PropertyName other = (PropertyName) obj;
@@ -91,10 +87,7 @@ public final class PropertyName implements Serializable, Comparable<PropertyName
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null ? 0 : name.hashCode());
-    return result;
+    return Objects.hash(name);
   }
 
   @Override
