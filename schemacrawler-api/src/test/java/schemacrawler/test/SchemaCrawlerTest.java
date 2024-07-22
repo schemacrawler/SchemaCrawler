@@ -48,7 +48,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -61,6 +60,7 @@ import java.util.TreeMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
@@ -72,7 +72,6 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -320,7 +319,7 @@ public class SchemaCrawlerTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final DatabaseInfo databaseInfo = catalog.getDatabaseInfo();
-      final Collection<DatabaseProperty> dbProperties = databaseInfo.getProperties();
+      final Collection<Property> dbProperties = databaseInfo.getProperties();
       final Collection<Property> serverInfo = databaseInfo.getServerInfo();
       assertThat("Server info property count does not match", serverInfo, is(empty()));
       out.println(String.format("username=%s", databaseInfo.getUserName()));
@@ -331,7 +330,7 @@ public class SchemaCrawlerTest {
         assertThat(serverInfoProperty, notNullValue());
         out.println(serverInfoProperty);
       }
-      for (final DatabaseProperty dbProperty : dbProperties) {
+      for (final Property dbProperty : dbProperties) {
         assertThat(dbProperty, notNullValue());
         out.println(dbProperty);
       }
@@ -570,7 +569,7 @@ public class SchemaCrawlerTest {
         out.println(String.format("  privilege: %s", privilege.getName()));
         final Collection<Grant<Table>> grants = privilege.getGrants();
         for (final Grant<Table> grant : grants) {
-          if (!privilege.getName().equals("SELECT")) {
+          if (!"SELECT".equals(privilege.getName())) {
             assertThat(grant.getGrantor(), is("_SYSTEM"));
             assertThat(grant.getGrantee(), is("SA"));
             assertThat(grant.isGrantable(), is(true));

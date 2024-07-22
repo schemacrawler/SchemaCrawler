@@ -43,12 +43,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 import static java.util.Objects.compare;
-import schemacrawler.schema.DatabaseProperty;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.property.PropertyName;
 
-class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProperty {
+class ImmutableDatabaseProperty extends AbstractProperty {
 
   private static final long serialVersionUID = -7150431683440256142L;
 

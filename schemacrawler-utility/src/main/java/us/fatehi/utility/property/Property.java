@@ -64,11 +64,4 @@ public interface Property extends Serializable, Comparable<Property> {
    * @return Value
    */
   Object getValue();
-
-  /**
-   * Gets the property name.
-   *
-   * @return Property name
-   */
-  PropertyName getPropertyName();
 }

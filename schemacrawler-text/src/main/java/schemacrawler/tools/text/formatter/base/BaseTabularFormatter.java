@@ -28,11 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.formatter.base;
 
-import static us.fatehi.utility.Utility.isBlank;
 import java.util.Collection;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schemacrawler.Identifiers;
@@ -140,11 +139,11 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
         "database user name", dbInfo.getUserName(), Alignment.inherit);
     formattingHelper.writeObjectEnd();
 
-    final Collection<DatabaseProperty> dbProperties = dbInfo.getProperties();
+    final Collection<Property> dbProperties = dbInfo.getProperties();
     if (!dbProperties.isEmpty()) {
       formattingHelper.writeHeader(DocumentHeaderType.section, "Database Characteristics");
       formattingHelper.writeObjectStart();
-      for (final DatabaseProperty property : dbProperties) {
+      for (final Property property : dbProperties) {
         final String name = property.getDescription();
         final Object value = property.getValue();
         formattingHelper.writeNameValueRow(
@@ -227,15 +226,16 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
 
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty) {
     final String required = (driverProperty.isRequired() ? "" : "not ") + "required";
-    String details = required;
+    final StringBuilder details = new StringBuilder();
+    details.append(required);
     if (driverProperty.getChoices() != null && !driverProperty.getChoices().isEmpty()) {
-      details = details + "; choices " + driverProperty.getChoices();
+      details.append("; choices ").append(driverProperty.getChoices());
     }
     final String value = driverProperty.getValue();
 
     formattingHelper.writeNameRow(driverProperty.getName(), "[driver property]");
     formattingHelper.writeDescriptionRow(driverProperty.getDescription());
-    formattingHelper.writeDescriptionRow(details);
+    formattingHelper.writeDescriptionRow(details.toString());
     formattingHelper.writeDetailRow("", "value", ObjectToString.listOrObjectToString(value));
   }
 }

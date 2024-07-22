@@ -57,21 +57,21 @@ public abstract class AbstractProperty implements Property {
     if ((obj == null) || !(obj instanceof Property)) {
       return false;
     }
+
     final Property other = (Property) obj;
-    return Objects.equals(propertyName, other.getPropertyName())
-        && Objects.equals(value, other.getValue());
+    boolean nameEquals;
+    if (obj instanceof AbstractProperty) {
+      nameEquals = Objects.equals(propertyName, ((AbstractProperty) obj).propertyName);
+    } else /* if (obj instanceof Property) */ {
+      nameEquals = Objects.equals(propertyName.getName(), other.getName());
+    }
+    return nameEquals && Objects.equals(value, other.getValue());
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getName() {
     return propertyName.getName();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final PropertyName getPropertyName() {
-    return propertyName;
   }
 
   /** {@inheritDoc} */
