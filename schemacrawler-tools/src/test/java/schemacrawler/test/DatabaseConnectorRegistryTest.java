@@ -136,4 +136,12 @@ public class DatabaseConnectorRegistryTest {
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands.stream().findFirst().get(), is(serverDescription));
   }
+
+  @Test
+  public void name() throws Exception {
+
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    assertThat(databaseConnectorRegistry.getName(), is("SchemaCrawler database server plugins"));
+  }
 }

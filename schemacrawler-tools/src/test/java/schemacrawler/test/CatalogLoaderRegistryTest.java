@@ -1,6 +1,7 @@
 package schemacrawler.test;
 
 import static java.util.stream.Collectors.toList;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -54,5 +55,12 @@ public class CatalogLoaderRegistryTest {
     final List<String> names =
         supportedCatalogLoaders.stream().map(CommandDescription::getName).collect(toList());
     assertThat(names, containsInAnyOrder("testloader", "schemacrawlerloader"));
+  }
+
+  @Test
+  public void name() throws Exception {
+    final CatalogLoaderRegistry catalogLoaderRegistry =
+        CatalogLoaderRegistry.getCatalogLoaderRegistry();
+    assertThat(catalogLoaderRegistry.getName(), is("SchemaCrawler catalog loaders"));
   }
 }

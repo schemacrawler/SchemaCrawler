@@ -71,4 +71,10 @@ public class CommandRegistryTest {
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands, is(testCommandProvider.getSupportedCommands()));
   }
+
+  @Test
+  public void name() {
+    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
+    assertThat(commandRegistry.getName(), is("SchemaCrawler commands"));
+  }
 }
