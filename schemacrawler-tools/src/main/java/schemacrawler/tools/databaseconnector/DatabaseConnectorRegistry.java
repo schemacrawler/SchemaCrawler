@@ -63,6 +63,15 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
     return databaseConnectorRegistrySingleton;
   }
 
+  public static void reload() {
+    if (databaseConnectorRegistrySingleton != null) {
+      final Map<String, DatabaseConnector> registry =
+          databaseConnectorRegistrySingleton.databaseConnectorRegistry;
+      registry.clear();
+      registry.putAll(loadDatabaseConnectorRegistry());
+    }
+  }
+
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry() {
 
     final Map<String, DatabaseConnector> databaseConnectorRegistry = new HashMap<>();
@@ -74,24 +83,16 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
       for (final DatabaseConnector databaseConnector : serviceLoader) {
         final String databaseSystemIdentifier =
             databaseConnector.getDatabaseServerType().getDatabaseSystemIdentifier();
-        try {
-          LOGGER.log(
-              Level.CONFIG,
-              new StringFormat(
-                  "Loading database connector, %s=%s",
-                  databaseSystemIdentifier, databaseConnector.getClass().getName()));
-          // Put in map
-          databaseConnectorRegistry.put(databaseSystemIdentifier, databaseConnector);
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.CONFIG,
-              e,
-              new StringFormat(
-                  "Could not load database connector, %s=%s",
-                  databaseSystemIdentifier, databaseConnector.getClass().getName()));
-        }
+
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat(
+                "Loading database connector, %s=%s",
+                databaseSystemIdentifier, databaseConnector.getClass().getName()));
+        // Put in map
+        databaseConnectorRegistry.put(databaseSystemIdentifier, databaseConnector);
       }
-    } catch (final Exception e) {
+    } catch (final Throwable e) {
       throw new InternalRuntimeException("Could not load database connector registry", e);
     }
 

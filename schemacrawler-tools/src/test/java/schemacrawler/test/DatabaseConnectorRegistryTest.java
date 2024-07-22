@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,10 +36,12 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -143,5 +146,18 @@ public class DatabaseConnectorRegistryTest {
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(databaseConnectorRegistry.getName(), is("SchemaCrawler database server plugins"));
+  }
+
+  @Test
+  public void loadError() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.setProperty(
+              TestDatabaseConnector.class.getName() + ".force-instantiation-failure", "throw");
+
+          assertThrows(InternalRuntimeException.class, () -> DatabaseConnectorRegistry.reload());
+        });
+    // Reset
+    DatabaseConnectorRegistry.reload();
   }
 }

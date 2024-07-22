@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility.testcommand;
 
 import java.io.PrintWriter;
-
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 
 public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {

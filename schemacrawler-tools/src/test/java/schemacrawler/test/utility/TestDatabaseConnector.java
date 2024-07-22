@@ -23,6 +23,7 @@ public final class TestDatabaseConnector extends DatabaseConnector {
         (schemaRetrievalOptionsBuilder, connection) -> {},
         limitOptionsBuilder -> {},
         () -> DatabaseConnectionSourceBuilder.builder("jdbc:test-db:${database}"));
+    forceInstantiationFailureIfConfigured();
   }
 
   @Override
@@ -33,5 +34,13 @@ public final class TestDatabaseConnector extends DatabaseConnector {
         String.class,
         "--server=test-db%n" + "Loads SchemaCrawler plug-in for Test Database");
     return pluginCommand;
+  }
+
+  private void forceInstantiationFailureIfConfigured() {
+    final String propertyValue =
+        System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
+    if (propertyValue != null) {
+      throw new RuntimeException("Forced instantiation error");
+    }
   }
 }

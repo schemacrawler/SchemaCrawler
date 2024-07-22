@@ -1,5 +1,6 @@
 package schemacrawler.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -76,5 +77,18 @@ public class CommandRegistryTest {
   public void name() {
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
     assertThat(commandRegistry.getName(), is("SchemaCrawler commands"));
+  }
+
+  @Test
+  public void loadError() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.setProperty(
+              TestCommandProvider.class.getName() + ".force-instantiation-failure", "throw");
+
+          assertThrows(InternalRuntimeException.class, () -> CommandRegistry.reload());
+        });
+    // Reset
+    CommandRegistry.reload();
   }
 }

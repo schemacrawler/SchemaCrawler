@@ -60,11 +60,11 @@ public final class CatalogLoaderRegistry extends BasePluginRegistry {
     if (catalogLoaderRegistrySingleton != null) {
       final List<CatalogLoader> registry = catalogLoaderRegistrySingleton.catalogLoaderRegistry;
       registry.clear();
-      registry.addAll(catalogLoaderRegistrySingleton.loadCatalogLoaderRegistry());
+      registry.addAll(loadCatalogLoaderRegistry());
     }
   }
 
-  private List<CatalogLoader> loadCatalogLoaderRegistry() {
+  private static List<CatalogLoader> loadCatalogLoaderRegistry() {
 
     final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
 

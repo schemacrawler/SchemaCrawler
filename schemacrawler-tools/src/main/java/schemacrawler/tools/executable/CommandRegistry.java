@@ -105,6 +105,14 @@ public final class CommandRegistry extends BasePluginRegistry {
     return commandProviders;
   }
 
+  public static void reload() {
+    if (commandRegistrySingleton != null) {
+      final List<CommandProvider> registry = commandRegistrySingleton.commandRegistry;
+      registry.clear();
+      registry.addAll(loadCommandRegistry());
+    }
+  }
+
   private final List<CommandProvider> commandRegistry;
 
   private CommandRegistry() {
