@@ -32,8 +32,8 @@ import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import us.fatehi.utility.database.DatabaseUtility;
 
@@ -50,6 +50,15 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
     return jdbcDriverRegistrySingleton;
   }
 
+  public static void reload() {
+    if (jdbcDriverRegistrySingleton != null) {
+      final Collection<CommandDescription> registry =
+          jdbcDriverRegistrySingleton.commandDescriptions;
+      registry.clear();
+      registry.addAll(loadJDBCDrivers());
+    }
+  }
+
   private static List<CommandDescription> loadJDBCDrivers() {
     final List<CommandDescription> availableJDBCDrivers = new ArrayList<>();
     try {
@@ -60,8 +69,8 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
             String.format("%2d.%d", driver.getMajorVersion(), driver.getMinorVersion());
         availableJDBCDrivers.add(new CommandDescription(driverName, driverDescription));
       }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not list JDBC drivers", e);
+    } catch (final Throwable e) {
+      throw new InternalRuntimeException("Could not load JDBC drivers", e);
     }
     return availableJDBCDrivers;
   }

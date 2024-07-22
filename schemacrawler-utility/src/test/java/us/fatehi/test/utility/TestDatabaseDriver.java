@@ -83,6 +83,10 @@ public class TestDatabaseDriver implements Driver {
             });
   }
 
+  public TestDatabaseDriver() {
+    forceInstantiationFailureIfConfigured();
+  }
+
   @Override
   public boolean acceptsURL(final String url) {
     return !isBlank(url) && url.startsWith(JDBC_URL_PREFIX);
@@ -120,5 +124,13 @@ public class TestDatabaseDriver implements Driver {
   @Override
   public boolean jdbcCompliant() {
     return false;
+  }
+
+  private void forceInstantiationFailureIfConfigured() {
+    final String propertyValue =
+        System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
+    if (propertyValue != null) {
+      throw new RuntimeException("Forced instantiation error");
+    }
   }
 }
