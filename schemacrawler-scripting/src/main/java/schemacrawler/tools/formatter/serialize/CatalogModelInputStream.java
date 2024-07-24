@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.formatter.serialize;
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidClassException;
@@ -40,7 +38,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
+import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 final class CatalogModelInputStream extends ObjectInputStream {
@@ -49,6 +47,7 @@ final class CatalogModelInputStream extends ObjectInputStream {
 
   private final List<Pattern> acceptPatterns =
       Arrays.asList(
+          Pattern.compile("us\\.fatehi\\.utility\\.property\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.(schema(crawler)?|crawl)\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.[A-Z].*"),
           Pattern.compile("(\\[L)?java\\.(lang|util)\\..*"),
