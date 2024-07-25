@@ -37,9 +37,9 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<CatalogLoader> {
@@ -50,8 +50,7 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
 
   public ChainedCatalogLoader(final List<CatalogLoader> chainedCatalogLoaders) {
     super(
-        new CommandDescription(
-            "chainloader", "Chain of all catalog loaders, called in turn by priority"),
+        new PropertyName("chainloader", "Chain of all catalog loaders, called in turn by priority"),
         Integer.MIN_VALUE);
     requireNonNull(chainedCatalogLoaders);
     this.chainedCatalogLoaders = new ArrayList<>(chainedCatalogLoaders);

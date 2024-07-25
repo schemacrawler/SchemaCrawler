@@ -41,9 +41,9 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.scheduler.TaskDefinition;
 import us.fatehi.utility.scheduler.TaskRunner;
 import us.fatehi.utility.scheduler.TaskRunners;
@@ -58,12 +58,12 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
   private static final String OPTION_INFER_EXTENSION_TABLES = "infer-extension-tables";
 
   public WeakAssociationsCatalogLoader() {
-    super(new CommandDescription("weakassociationsloader", "Loader for weak associations"), 3);
+    super(new PropertyName("weakassociationsloader", "Loader for weak associations"), 3);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final CommandDescription commandDescription = getCommandDescription();
+    final PropertyName commandDescription = getCommandDescription();
     final PluginCommand pluginCommand =
         PluginCommand.newCatalogLoaderCommand(
             commandDescription.getName(), commandDescription.getDescription());

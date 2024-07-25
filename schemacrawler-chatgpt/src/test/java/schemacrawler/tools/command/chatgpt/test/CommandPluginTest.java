@@ -4,8 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
+import us.fatehi.utility.property.PropertyName;
 
 public class CommandPluginTest {
 
@@ -16,8 +16,8 @@ public class CommandPluginTest {
   }
 
   private boolean isCommandSupported(final CommandRegistry registry, final String command) {
-    final Collection<CommandDescription> supportedCommands = registry.getSupportedCommands();
-    for (final CommandDescription supportedCommand : supportedCommands) {
+    final Collection<PropertyName> supportedCommands = registry.getCommandDescriptions();
+    for (final PropertyName supportedCommand : supportedCommands) {
       if (supportedCommand.getName().equals(command)) {
         return true;
       }

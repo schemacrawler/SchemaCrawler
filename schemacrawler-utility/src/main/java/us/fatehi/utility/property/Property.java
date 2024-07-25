@@ -26,23 +26,42 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package us.fatehi.utility.property;
 
-import schemacrawler.tools.registry.ScriptEngineRegistry;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsLast;
+import java.io.Serializable;
+import java.util.Comparator;
+import static java.util.Objects.compare;
 
-public class AvailableScriptEngines extends BaseAvailableCommandDescriptions implements Runnable {
+public interface Property extends Serializable, Comparable<Property> {
 
-  public AvailableScriptEngines() {
-    super(ScriptEngineRegistry.getScriptEngineRegistry().getCommandDescriptions());
-  }
-
-  @Override
-  public void run() {
-    print(System.out);
-  }
+  Comparator<Property> comparator =
+      nullsLast(comparing(Property::getName, String.CASE_INSENSITIVE_ORDER));
 
   @Override
-  protected String getName() {
-    return ScriptEngineRegistry.getScriptEngineRegistry().getName();
+  default int compareTo(final Property otherProperty) {
+    return compare(this, otherProperty, comparator);
   }
+
+  /**
+   * Gets the description of the property.
+   *
+   * @return Description
+   */
+  String getDescription();
+
+  /**
+   * Gets the name of the property.
+   *
+   * @return Name
+   */
+  String getName();
+
+  /**
+   * Gets the value of the property.
+   *
+   * @return Value
+   */
+  Object getValue();
 }

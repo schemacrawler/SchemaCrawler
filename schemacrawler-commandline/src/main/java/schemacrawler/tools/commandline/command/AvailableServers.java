@@ -28,33 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import java.util.ArrayList;
-import java.util.List;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.executable.CommandDescription;
 
 public class AvailableServers extends BaseAvailableCommandDescriptions {
 
-  private static List<CommandDescription> availableServers() {
-    final List<CommandDescription> availableServers = new ArrayList<>();
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType serverType : databaseConnectorRegistry) {
-      final CommandDescription serverDescription =
-          new CommandDescription(
-              serverType.getDatabaseSystemIdentifier(), serverType.getDatabaseSystemName());
-      availableServers.add(serverDescription);
-    }
-    return availableServers;
-  }
-
   public AvailableServers() {
-    super(availableServers());
+    super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getCommandDescriptions());
   }
 
   @Override
   protected String getName() {
-    return "SchemaCrawler database server plugins";
+    return DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getName();
   }
 }

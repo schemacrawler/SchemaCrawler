@@ -28,12 +28,15 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.endsWith;
+import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyCollectionOf;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -47,10 +50,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -63,6 +68,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.junit.jupiter.MockitoExtension;
 import us.fatehi.test.utility.DataSourceTestUtility;
+import us.fatehi.test.utility.TestDatabaseDriver;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.database.DatabaseUtility;
@@ -115,6 +121,15 @@ public class DatabaseUtilityTest {
             SQLException.class,
             () -> assertThat(DatabaseUtility.checkResultSet(results), is(nullValue())));
     assertThat(exception2.getMessage(), endsWith("Result-set is closed"));
+  }
+
+  @Test
+  public void getAvailableJdbcDrivers() throws SQLException {
+    final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
+    assertThat(drivers.size(), is(2));
+    assertThat(
+        drivers,
+        everyItem(is(anyOf(instanceOf(Driver.class), instanceOf(TestDatabaseDriver.class)))));
   }
 
   @BeforeAll

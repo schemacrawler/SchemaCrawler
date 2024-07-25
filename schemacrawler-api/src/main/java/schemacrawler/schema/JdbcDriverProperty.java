@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 import java.util.Collection;
+import us.fatehi.utility.property.Property;
 
 /** Represents a JDBC driver property, and it's value. */
 public interface JdbcDriverProperty extends Property {

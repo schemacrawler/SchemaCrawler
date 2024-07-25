@@ -26,40 +26,39 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.executable;
+package us.fatehi.utility.property;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Objects;
 import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
-import java.io.Serializable;
-import java.util.Comparator;
-import java.util.Objects;
-
-public final class CommandDescription implements Serializable, Comparable<CommandDescription> {
+public final class PropertyName implements Serializable, Comparable<PropertyName> {
 
   private static final long serialVersionUID = 2444083929278551904L;
 
-  private static Comparator<CommandDescription> comparator =
-      nullsLast(comparing(CommandDescription::getName, String.CASE_INSENSITIVE_ORDER));
+  private static Comparator<PropertyName> comparator =
+      nullsLast(comparing(PropertyName::getName, String.CASE_INSENSITIVE_ORDER));
 
   private final String name;
   private final String description;
 
-  public CommandDescription(final String name, final String description) {
-    this.name = requireNotBlank(name, "Command name not provided");
+  public PropertyName(final String name, final String description) {
+    this.name = requireNotBlank(name, "Command name not provided").trim();
 
     if (isBlank(description)) {
       this.description = null;
     } else {
-      this.description = description;
+      this.description = description.trim();
     }
   }
 
   @Override
-  public int compareTo(final CommandDescription otherProperty) {
+  public int compareTo(final PropertyName otherProperty) {
     return compare(this, otherProperty, comparator);
   }
 
@@ -68,13 +67,10 @@ public final class CommandDescription implements Serializable, Comparable<Comman
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
+    if ((obj == null) || !(obj instanceof PropertyName)) {
       return false;
     }
-    if (!(obj instanceof CommandDescription)) {
-      return false;
-    }
-    final CommandDescription other = (CommandDescription) obj;
+    final PropertyName other = (PropertyName) obj;
     if (!Objects.equals(name, other.name)) {
       return false;
     }
@@ -91,10 +87,7 @@ public final class CommandDescription implements Serializable, Comparable<Comman
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null ? 0 : name.hashCode());
-    return result;
+    return Objects.hash(name);
   }
 
   @Override

@@ -26,26 +26,22 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.crawl;
-
-import static us.fatehi.utility.Utility.requireNotBlank;
+package us.fatehi.utility.property;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schema.Property;
-
-abstract class AbstractProperty implements Property {
+public abstract class AbstractProperty implements Property {
 
   private static final long serialVersionUID = -7150431683440256142L;
 
-  private final String name;
+  private final PropertyName propertyName;
   private final Serializable value;
 
-  AbstractProperty(final String name, final Serializable value) {
-    requireNotBlank(name, "No property name provided");
-    this.name = name.trim();
+  protected AbstractProperty(final PropertyName name, final Serializable value) {
+    propertyName = requireNonNull(name, "No property name provided");
     if (value != null && value.getClass().isArray()) {
       this.value = (Serializable) Arrays.asList((Object[]) value);
     } else {
@@ -58,20 +54,30 @@ abstract class AbstractProperty implements Property {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
+    if ((obj == null) || !(obj instanceof Property)) {
       return false;
     }
-    if (!(obj instanceof Property)) {
-      return false;
-    }
+
     final Property other = (Property) obj;
-    return Objects.equals(name, other.getName()) && Objects.equals(value, other.getValue());
+    boolean nameEquals;
+    if (obj instanceof AbstractProperty) {
+      nameEquals = Objects.equals(propertyName, ((AbstractProperty) obj).propertyName);
+    } else /* if (obj instanceof Property) */ {
+      nameEquals = Objects.equals(propertyName.getName(), other.getName());
+    }
+    return nameEquals && Objects.equals(value, other.getValue());
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getName() {
-    return name;
+    return propertyName.getName();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getDescription() {
+    return propertyName.getDescription();
   }
 
   /** {@inheritDoc} */
@@ -82,6 +88,11 @@ abstract class AbstractProperty implements Property {
 
   @Override
   public final int hashCode() {
-    return Objects.hash(name, value);
+    return Objects.hash(propertyName, value);
+  }
+
+  @Override
+  public String toString() {
+    return getName() + " = " + getValue();
   }
 }

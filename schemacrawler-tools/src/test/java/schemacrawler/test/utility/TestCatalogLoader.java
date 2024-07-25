@@ -29,19 +29,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.property.PropertyName;
 
 public class TestCatalogLoader extends BaseCatalogLoader {
 
   public TestCatalogLoader() {
-    super(new CommandDescription("testloader", "Loader for testing"), 3);
+    super(new PropertyName("testloader", "Loader for testing"), 3);
     forceInstantiationFailureIfConfigured();
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final CommandDescription commandDescription = getCommandDescription();
+    final PropertyName commandDescription = getCommandDescription();
     final PluginCommand pluginCommand =
         PluginCommand.newCatalogLoaderCommand(
             commandDescription.getName(), commandDescription.getDescription());

@@ -51,11 +51,11 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static us.fatehi.utility.Utility.isBlank;
-import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.property.Property;
 import us.fatehi.utility.string.StringFormat;
 
 final class DatabaseInfoRetriever extends AbstractRetriever {

@@ -28,27 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static us.fatehi.utility.Utility.trimToEmpty;
+import us.fatehi.utility.property.AbstractProperty;
+import us.fatehi.utility.property.PropertyName;
 
 final class ImmutableServerInfoProperty extends AbstractProperty {
 
   private static final long serialVersionUID = -2744384718272515235L;
 
-  private final String description;
-
   ImmutableServerInfoProperty(final String name, final String value, final String description) {
-    super(name, value);
-
-    this.description = trimToEmpty(description);
-  }
-
-  @Override
-  public String getDescription() {
-    return description;
-  }
-
-  @Override
-  public String toString() {
-    return getName() + " = " + getValue();
+    super(new PropertyName(name, description), value);
   }
 }

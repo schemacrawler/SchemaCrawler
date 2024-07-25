@@ -1,5 +1,5 @@
 
-Available SchemaCrawler catalog loader plugins:
+Available SchemaCrawler catalog loaders:
  weakassociationsloader
                 Loader for weak associations
  testloader     Loader for testing

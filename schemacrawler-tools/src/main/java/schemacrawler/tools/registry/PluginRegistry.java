@@ -26,6 +26,21 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schema;
+package schemacrawler.tools.registry;
 
-public interface DatabaseProperty extends Property {}
+import java.util.Collection;
+import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.property.PropertyName;
+
+public interface PluginRegistry {
+
+  Collection<PluginCommand> getCommandLineCommands();
+
+  Collection<PluginCommand> getHelpCommands();
+
+  Collection<PropertyName> getCommandDescriptions();
+
+  void log();
+
+  String getName();
+}

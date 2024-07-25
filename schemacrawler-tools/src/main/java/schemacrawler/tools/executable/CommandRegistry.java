@@ -37,6 +37,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -46,10 +47,12 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Command registry for mapping command to executable. */
-public final class CommandRegistry {
+public final class CommandRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class.getName());
 
@@ -65,13 +68,14 @@ public final class CommandRegistry {
         final String typeName2 = commandProvider2.getClass().getSimpleName();
         if (typeName1.equals(typeName2)) {
           return 0;
-        } else if (typeName1.equals(fallbackProviderTypeName)) {
-          return 1;
-        } else if (typeName2.equals(fallbackProviderTypeName)) {
-          return -1;
-        } else {
-          return typeName1.compareTo(typeName2);
         }
+        if (fallbackProviderTypeName.equals(typeName1)) {
+          return 1;
+        }
+        if (fallbackProviderTypeName.equals(typeName2)) {
+          return -1;
+        }
+        return typeName1.compareTo(typeName2);
       };
 
   public static CommandRegistry getCommandRegistry() {
@@ -83,7 +87,8 @@ public final class CommandRegistry {
 
   private static List<CommandProvider> loadCommandRegistry() {
 
-    final List<CommandProvider> commandProviders = new ArrayList<>();
+    // Use thread-safe list
+    final List<CommandProvider> commandProviders = new CopyOnWriteArrayList<>();
 
     try {
       final ServiceLoader<CommandProvider> serviceLoader =
@@ -145,6 +150,7 @@ public final class CommandRegistry {
     return scCommand;
   }
 
+  @Override
   public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
@@ -153,6 +159,7 @@ public final class CommandRegistry {
     return commandLineCommands;
   }
 
+  @Override
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
@@ -161,13 +168,14 @@ public final class CommandRegistry {
     return commandLineCommands;
   }
 
-  public Collection<CommandDescription> getSupportedCommands() {
-    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
+  @Override
+  public Collection<PropertyName> getCommandDescriptions() {
+    final Collection<PropertyName> supportedCommandDescriptions = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
       supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
     }
 
-    final List<CommandDescription> supportedCommandsOrdered =
+    final List<PropertyName> supportedCommandsOrdered =
         new ArrayList<>(supportedCommandDescriptions);
     supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;
@@ -213,5 +221,10 @@ public final class CommandRegistry {
               "Output format <%s> not supported for command <%s>",
               outputOptions.getOutputFormatValue(), command));
     }
+  }
+
+  @Override
+  public String getName() {
+    return "SchemaCrawler commands";
   }
 }

@@ -28,38 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.registry.JDBCDriverRegistry;
 
 public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions implements Runnable {
 
-  private static final Logger LOGGER = Logger.getLogger(AvailableJDBCDrivers.class.getName());
-
-  private static List<CommandDescription> availableJDBCDrivers() {
-    final List<CommandDescription> availableJDBCDrivers = new ArrayList<>();
-    try {
-      final Enumeration<Driver> drivers = DriverManager.getDrivers();
-      while (drivers.hasMoreElements()) {
-        final Driver driver = drivers.nextElement();
-        final String driverName = driver.getClass().getName();
-        final String driverDescription =
-            String.format("%2d.%d", driver.getMajorVersion(), driver.getMinorVersion());
-        availableJDBCDrivers.add(new CommandDescription(driverName, driverDescription));
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not list JDBC drivers", e);
-    }
-    return availableJDBCDrivers;
-  }
-
   public AvailableJDBCDrivers() {
-    super(availableJDBCDrivers());
+    super(JDBCDriverRegistry.getJDBCDriverRegistry().getCommandDescriptions());
   }
 
   @Override
@@ -69,6 +43,6 @@ public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions imple
 
   @Override
   protected String getName() {
-    return "JDBC drivers";
+    return JDBCDriverRegistry.getJDBCDriverRegistry().getName();
   }
 }

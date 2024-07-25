@@ -33,17 +33,17 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newPlugin
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.PropertyName;
 
 public class SerializationCommandProvider extends BaseCommandProvider {
 
   private static final String DESCRIPTION_HEADER = "Create an offline catalog snapshot";
 
   public SerializationCommandProvider() {
-    super(new CommandDescription(SerializationCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new PropertyName(SerializationCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override

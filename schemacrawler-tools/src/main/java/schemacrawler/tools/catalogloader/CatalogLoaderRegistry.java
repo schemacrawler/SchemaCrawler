@@ -34,54 +34,33 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
-/** Registry for mapping database connectors from DatabaseConnector-line switch. */
-public final class CatalogLoaderRegistry {
+/** Registry for registered catalog orders, in order of priority. */
+public final class CatalogLoaderRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(CatalogLoaderRegistry.class.getName());
 
-  public Collection<PluginCommand> getCommandLineCommands() {
-    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
-    for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
-      commandLineCommands.add(catalogLoader.getCommandLineCommand());
+  private static CatalogLoaderRegistry catalogLoaderRegistrySingleton;
+
+  public static CatalogLoaderRegistry getCatalogLoaderRegistry() {
+    if (catalogLoaderRegistrySingleton == null) {
+      catalogLoaderRegistrySingleton = new CatalogLoaderRegistry();
     }
-    return commandLineCommands;
+    return catalogLoaderRegistrySingleton;
   }
 
-  public Collection<PluginCommand> getHelpCommands() {
-    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
-    for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
-      commandLineCommands.add(catalogLoader.getHelpCommand());
-    }
-    return commandLineCommands;
-  }
+  private static List<CatalogLoader> loadCatalogLoaderRegistry() {
 
-  public Collection<CommandDescription> getSupportedCatalogLoaders() {
-    final Collection<CommandDescription> commandLineCommands = new HashSet<>();
-    for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
-      final CommandDescription commandDescription = catalogLoader.getCommandDescription();
-      commandLineCommands.add(
-          new CommandDescription(
-              commandDescription.getName(), commandDescription.getDescription()));
-    }
-    return commandLineCommands;
-  }
-
-  public ChainedCatalogLoader newChainedCatalogLoader() {
-    final List<CatalogLoader> chainedCatalogLoaders = instantiateCatalogLoaders();
-    return new ChainedCatalogLoader(chainedCatalogLoaders);
-  }
-
-  private List<CatalogLoader> instantiateCatalogLoaders() {
-
-    final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
+    // Use thread-safe list
+    final List<CatalogLoader> catalogLoaderRegistry = new CopyOnWriteArrayList<>();
 
     try {
       final ServiceLoader<CatalogLoader> serviceLoader =
@@ -99,5 +78,50 @@ public final class CatalogLoaderRegistry {
 
     Collections.sort(catalogLoaderRegistry);
     return catalogLoaderRegistry;
+  }
+
+  private final List<CatalogLoader> catalogLoaderRegistry;
+
+  private CatalogLoaderRegistry() {
+    catalogLoaderRegistry = loadCatalogLoaderRegistry();
+  }
+
+  @Override
+  public Collection<PluginCommand> getCommandLineCommands() {
+    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
+    for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
+      commandLineCommands.add(catalogLoader.getCommandLineCommand());
+    }
+    return commandLineCommands;
+  }
+
+  @Override
+  public Collection<PluginCommand> getHelpCommands() {
+    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
+    for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
+      commandLineCommands.add(catalogLoader.getHelpCommand());
+    }
+    return commandLineCommands;
+  }
+
+  @Override
+  public Collection<PropertyName> getCommandDescriptions() {
+    final Collection<PropertyName> commandLineCommands = new HashSet<>();
+    for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
+      final PropertyName commandDescription = catalogLoader.getCommandDescription();
+      commandLineCommands.add(commandDescription);
+    }
+    return commandLineCommands;
+  }
+
+  public ChainedCatalogLoader newChainedCatalogLoader() {
+    // Make a defensive copy of the list of catalog loaders
+    final List<CatalogLoader> chainedCatalogLoaders = new ArrayList<>(catalogLoaderRegistry);
+    return new ChainedCatalogLoader(chainedCatalogLoaders);
+  }
+
+  @Override
+  public String getName() {
+    return "SchemaCrawler catalog loaders";
   }
 }

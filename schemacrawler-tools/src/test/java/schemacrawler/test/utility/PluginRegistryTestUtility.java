@@ -26,27 +26,35 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.catalogloader;
+package schemacrawler.test.utility;
 
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.Catalog;
-import us.fatehi.utility.property.PropertyName;
+import static org.junit.jupiter.api.Assertions.fail;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.tools.registry.PluginRegistry;
 
-public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
+public final class PluginRegistryTestUtility {
 
-  public SchemaCrawlerCatalogLoader() {
-    super(new PropertyName("schemacrawlerloader", "Loader for SchemaCrawler metadata catalog"), 0);
+  private PluginRegistryTestUtility() {
+    // Prevent instantiation
   }
 
-  @Override
-  public void loadCatalog() {
-    if (isLoaded()) {
-      return;
+  public static void reload(final Class<? extends PluginRegistry> registryClass) {
+    Constructor<? extends PluginRegistry> constructor = null;
+    try {
+      constructor = registryClass.getDeclaredConstructor();
+      constructor.setAccessible(true);
+      constructor.newInstance();
+    } catch (final NoSuchMethodException
+        | SecurityException
+        | InstantiationException
+        | IllegalAccessException
+        | InvocationTargetException e) {
+      if (e.getCause() instanceof InternalRuntimeException) {
+        throw (InternalRuntimeException) e.getCause();
+      }
+      fail(e);
     }
-
-    final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(getDataSource(), getSchemaRetrievalOptions(), getSchemaCrawlerOptions());
-    final Catalog catalog = schemaCrawler.crawl();
-    setCatalog(catalog);
   }
 }

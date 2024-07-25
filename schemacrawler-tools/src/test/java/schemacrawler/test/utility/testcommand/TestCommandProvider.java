@@ -29,12 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility.testcommand;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.PropertyName;
 
 public class TestCommandProvider extends BaseCommandProvider {
 
@@ -42,7 +41,8 @@ public class TestCommandProvider extends BaseCommandProvider {
       "Test command which is not deployed with the release";
 
   public TestCommandProvider() {
-    super(new CommandDescription(TestCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new PropertyName(TestCommand.COMMAND, DESCRIPTION_HEADER));
+    forceInstantiationFailureIfConfigured();
   }
 
   @Override
@@ -80,6 +80,14 @@ public class TestCommandProvider extends BaseCommandProvider {
       return true;
     }
     final String outputFormatValue = outputOptions.getOutputFormatValue();
-    return outputFormatValue.equals("text") || outputFormatValue.equals("txt");
+    return "text".equals(outputFormatValue) || "txt".equals(outputFormatValue);
+  }
+
+  private void forceInstantiationFailureIfConfigured() {
+    final String propertyValue =
+        System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
+    if (propertyValue != null) {
+      throw new RuntimeException("Forced instantiation error");
+    }
   }
 }

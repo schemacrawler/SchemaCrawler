@@ -38,16 +38,17 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.PropertyName;
 
 public abstract class BaseCommandProvider implements CommandProvider {
-  private final Collection<CommandDescription> supportedCommands;
+  private final Collection<PropertyName> supportedCommands;
 
-  public BaseCommandProvider(final Collection<CommandDescription> supportedCommands) {
+  public BaseCommandProvider(final Collection<PropertyName> supportedCommands) {
     this.supportedCommands = requireNonNull(supportedCommands, "No supported commands provided");
   }
 
-  public BaseCommandProvider(final CommandDescription supportedCommand) {
-    this(Arrays.asList(requireNonNull(supportedCommand, "No command provided")));
+  public BaseCommandProvider(final PropertyName command) {
+    this(Arrays.asList(requireNonNull(command, "No command provided")));
   }
 
   @Override
@@ -56,7 +57,7 @@ public abstract class BaseCommandProvider implements CommandProvider {
   }
 
   @Override
-  public final Collection<CommandDescription> getSupportedCommands() {
+  public final Collection<PropertyName> getSupportedCommands() {
     return new ArrayList<>(supportedCommands);
   }
 
@@ -73,7 +74,7 @@ public abstract class BaseCommandProvider implements CommandProvider {
     if (isBlank(command)) {
       return false;
     }
-    for (final CommandDescription commandDescription : supportedCommands) {
+    for (final PropertyName commandDescription : supportedCommands) {
       if (commandDescription == null) {
         continue;
       }

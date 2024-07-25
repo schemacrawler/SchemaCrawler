@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 import java.util.Collection;
-
 import schemacrawler.ProductVersion;
+import us.fatehi.utility.property.Property;
 
 /** Database and connection information. */
 public interface DatabaseInfo extends ProductVersion {
@@ -58,7 +58,7 @@ public interface DatabaseInfo extends ProductVersion {
    *
    * @return Database properties
    */
-  Collection<DatabaseProperty> getProperties();
+  Collection<Property> getProperties();
 
   /**
    * Gets the schema from the database connection.

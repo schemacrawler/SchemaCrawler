@@ -37,8 +37,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.DatabaseProperty;
-import schemacrawler.schema.Property;
+import us.fatehi.utility.property.Property;
 
 /**
  * Database and connection information. Created from metadata returned by a JDBC call, and other
@@ -51,7 +50,7 @@ final class MutableDatabaseInfo extends BaseProductVersion implements DatabaseIn
   private final String userName;
   // Mutable properties collection
   private final Set<Property> serverInfo;
-  private final Set<DatabaseProperty> databaseProperties;
+  private final Set<Property> databaseProperties;
 
   public MutableDatabaseInfo(
       final String databaseProductName,
@@ -66,8 +65,8 @@ final class MutableDatabaseInfo extends BaseProductVersion implements DatabaseIn
 
   /** {@inheritDoc} */
   @Override
-  public Collection<DatabaseProperty> getProperties() {
-    final List<DatabaseProperty> properties = new ArrayList<>(databaseProperties);
+  public Collection<Property> getProperties() {
+    final List<Property> properties = new ArrayList<>(databaseProperties);
     properties.sort(naturalOrder());
     return properties;
   }

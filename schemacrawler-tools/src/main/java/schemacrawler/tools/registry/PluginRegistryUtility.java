@@ -25,44 +25,24 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.tools.registry;
 
-package schemacrawler.schema;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.executable.CommandRegistry;
 
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.nullsLast;
-import static java.util.Objects.compare;
+public class PluginRegistryUtility {
 
-import java.io.Serializable;
-import java.util.Comparator;
-
-public interface Property extends Serializable, Comparable<Property> {
-
-  Comparator<Property> comparator =
-      nullsLast(comparing(Property::getName, String.CASE_INSENSITIVE_ORDER));
-
-  @Override
-  default int compareTo(final Property otherProperty) {
-    return compare(this, otherProperty, comparator);
+  /** Log all available plugins. */
+  public static void logAllPlugins() {
+    ScriptEngineRegistry.getScriptEngineRegistry().log();
+    JDBCDriverRegistry.getJDBCDriverRegistry().log();
+    DatabaseConnectorRegistry.getDatabaseConnectorRegistry().log();
+    CatalogLoaderRegistry.getCatalogLoaderRegistry().log();
+    CommandRegistry.getCommandRegistry().log();
   }
 
-  /**
-   * Gets the description of the property.
-   *
-   * @return Description
-   */
-  String getDescription();
-
-  /**
-   * Gets the name of the property.
-   *
-   * @return Name
-   */
-  String getName();
-
-  /**
-   * Gets the value of the property.
-   *
-   * @return Value
-   */
-  Object getValue();
+  private PluginRegistryUtility() {
+    // Prevent instantiation
+  }
 }

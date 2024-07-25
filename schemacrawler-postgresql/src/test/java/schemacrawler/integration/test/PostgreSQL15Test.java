@@ -51,7 +51,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
-import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -64,6 +63,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.property.Property;
 
 @HeavyDatabaseTest("postgresql")
 @Testcontainers

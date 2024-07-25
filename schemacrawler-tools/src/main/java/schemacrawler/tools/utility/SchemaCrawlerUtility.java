@@ -28,9 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.utility;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +36,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
@@ -55,6 +53,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.UnknownDatabaseConnector;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.registry.PluginRegistryUtility;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.database.DatabaseUtility;
@@ -95,10 +94,12 @@ public final class SchemaCrawlerUtility {
       final Config additionalConfig) {
 
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
+    PluginRegistryUtility.logAllPlugins();
 
     updateConnectionDataSource(dataSource, schemaRetrievalOptions);
 
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+    final CatalogLoaderRegistry catalogLoaderRegistry =
+        CatalogLoaderRegistry.getCatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();
 
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
@@ -248,7 +249,8 @@ public final class SchemaCrawlerUtility {
     }
     if (isBlank(urlDBServerType)) {
       return "";
-    } else if ("mariadb".equals(urlDBServerType)) {
+    }
+    if ("mariadb".equals(urlDBServerType)) {
       // Special case: MariaDB is handled by the MySQL plugin
       return "mysql";
     }

@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import us.fatehi.utility.graph.DirectedEdge;
 import us.fatehi.utility.graph.Vertex;
+import us.fatehi.utility.property.AbstractProperty;
 
 public class EqualsTest {
 

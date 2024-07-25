@@ -40,10 +40,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.property.PropertyName;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
 
@@ -52,14 +52,14 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
           .thenComparing(loader -> loader.getCommandDescription().getName());
 
   private final int priority;
-  private final CommandDescription commandDescription;
+  private final PropertyName commandDescription;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private Config additionalConfig;
   private DatabaseConnectionSource dataSource;
   private Catalog catalog;
 
-  protected BaseCatalogLoader(final CommandDescription commandDescription, final int priority) {
+  protected BaseCatalogLoader(final PropertyName commandDescription, final int priority) {
     this.commandDescription = requireNonNull(commandDescription, "No command description provided");
     this.priority = priority;
   }
@@ -75,7 +75,7 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public CommandDescription getCommandDescription() {
+  public PropertyName getCommandDescription() {
     return commandDescription;
   }
 

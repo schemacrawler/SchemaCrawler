@@ -29,16 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.DriverPropertyInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.JdbcDriverProperty;
+import us.fatehi.utility.property.AbstractProperty;
+import us.fatehi.utility.property.PropertyName;
 
 /**
  * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call,
@@ -48,12 +48,12 @@ final class ImmutableJdbcDriverProperty extends AbstractProperty implements Jdbc
 
   private static final long serialVersionUID = 8030156654422512161L;
   private final List<String> choices;
-  private final String description;
   private final boolean required;
 
   ImmutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo) {
-    super(driverPropertyInfo.name, driverPropertyInfo.value);
-    description = driverPropertyInfo.description;
+    super(
+        new PropertyName(driverPropertyInfo.name, driverPropertyInfo.description),
+        driverPropertyInfo.value);
     required = driverPropertyInfo.required;
 
     if (driverPropertyInfo.choices == null) {
@@ -68,16 +68,6 @@ final class ImmutableJdbcDriverProperty extends AbstractProperty implements Jdbc
   @Override
   public Collection<String> getChoices() {
     return new ArrayList<>(choices);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getDescription() {
-    if (description != null) {
-      return description;
-    } else {
-      return "";
-    }
   }
 
   /** {@inheritDoc} */

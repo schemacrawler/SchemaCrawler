@@ -1,24 +1,23 @@
 package schemacrawler.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
 import java.util.Collection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.testcommand.TestCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.property.PropertyName;
 
 public class CommandRegistryTest {
 
@@ -42,7 +41,7 @@ public class CommandRegistryTest {
   }
 
   @Test
-  public void getCommandLineCommands() {
+  public void commandLineCommands() {
 
     final TestCommandProvider testCommandProvider = new TestCommandProvider();
 
@@ -53,7 +52,7 @@ public class CommandRegistryTest {
   }
 
   @Test
-  public void getHelpCommands() {
+  public void helpCommands() {
 
     final TestCommandProvider testCommandProvider = new TestCommandProvider();
 
@@ -64,14 +63,32 @@ public class CommandRegistryTest {
   }
 
   @Test
-  public void getSupportedCommands() {
+  public void commandDescriptions() {
 
     final TestCommandProvider testCommandProvider = new TestCommandProvider();
 
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    final Collection<CommandDescription> commandLineCommands =
-        commandRegistry.getSupportedCommands();
+    final Collection<PropertyName> commandLineCommands = commandRegistry.getCommandDescriptions();
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands, is(testCommandProvider.getSupportedCommands()));
+  }
+
+  @Test
+  public void name() {
+    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
+    assertThat(commandRegistry.getName(), is("SchemaCrawler commands"));
+  }
+
+  @Test
+  public void loadError() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.setProperty(
+              TestCommandProvider.class.getName() + ".force-instantiation-failure", "throw");
+
+          assertThrows(InternalRuntimeException.class, () -> reload(CommandRegistry.class));
+        });
+    // Reset
+    reload(CommandRegistry.class);
   }
 }

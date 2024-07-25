@@ -28,16 +28,19 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.database;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
@@ -78,6 +81,31 @@ public final class DatabaseUtility {
     return connection.createStatement();
   }
 
+  /**
+   * Load registered database drivers, and throw exception if any driver cannot be loaded. Cycling
+   * through the service loader and loading driver classes allows for dependencies to be vetted out.
+   *
+   * <p>Do not use DriverManager.getDrivers(), since that swallows exceptions.
+   *
+   * @throws SQLException
+   */
+  public static Collection<Driver> getAvailableJdbcDrivers() throws SQLException {
+    final Collection<Driver> drivers = new ArrayList<>();
+    try {
+      final ServiceLoader<Driver> serviceLoader = ServiceLoader.load(Driver.class);
+      for (final Driver driver : serviceLoader) {
+        drivers.add(driver);
+      }
+    } catch (final Throwable e) {
+      throw new SQLException(
+          String.format("Could not load database drivers: %s", e.getMessage()), e);
+    }
+    if (drivers.isEmpty()) {
+      throw new SQLException("No database drivers are available");
+    }
+    return drivers;
+  }
+
   public static ResultSet executeSql(final Statement statement, final String sql)
       throws SQLException {
     if (statement == null) {
@@ -95,13 +123,12 @@ public final class DatabaseUtility {
       new UtilityLogger(LOGGER).logSQLWarnings(statement);
       if (hasResults) {
         return statement.getResultSet();
-      } else {
-        final int updateCount = statement.getUpdateCount();
-        LOGGER.log(
-            Level.FINE,
-            new StringFormat("No results. Update count of %d for query: %s", updateCount, sql));
-        return null;
       }
+      final int updateCount = statement.getUpdateCount();
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("No results. Update count of %d for query: %s", updateCount, sql));
+      return null;
 
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, e, new StringFormat("Error executing SQL <%s>", sql));

@@ -33,11 +33,11 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newPlugin
 import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.LanguageOptions;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.PropertyName;
 
 public class TemplateCommandProvider extends BaseCommandProvider {
 
@@ -45,7 +45,7 @@ public class TemplateCommandProvider extends BaseCommandProvider {
       "Process a template file, such as Freemarker, " + "against the database schema";
 
   public TemplateCommandProvider() {
-    super(new CommandDescription(TemplateCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new PropertyName(TemplateCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override

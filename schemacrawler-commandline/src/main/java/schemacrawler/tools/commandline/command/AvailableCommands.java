@@ -30,22 +30,22 @@ package schemacrawler.tools.commandline.command;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
+import us.fatehi.utility.property.PropertyName;
 
 public class AvailableCommands extends BaseAvailableCommandDescriptions {
 
-  private static Collection<CommandDescription> availableCommands() {
-    final Collection<CommandDescription> supportedCommands =
-        new ArrayList<>(CommandRegistry.getCommandRegistry().getSupportedCommands());
+  private static Collection<PropertyName> availableCommands() {
+    final Collection<PropertyName> supportedCommands =
+        new ArrayList<>(CommandRegistry.getCommandRegistry().getCommandDescriptions());
     // Add meta-commands
     supportedCommands.add(
-        new CommandDescription(
+        new PropertyName(
             "<query_name>",
             "Shows results of query <query_name>, "
                 + "as specified in the configuration properties file"));
     supportedCommands.add(
-        new CommandDescription(
+        new PropertyName(
             "<query>",
             String.join(
                 "\n",
@@ -64,6 +64,6 @@ public class AvailableCommands extends BaseAvailableCommandDescriptions {
 
   @Override
   protected String getName() {
-    return "SchemaCrawler commands";
+    return CommandRegistry.getCommandRegistry().getName();
   }
 }

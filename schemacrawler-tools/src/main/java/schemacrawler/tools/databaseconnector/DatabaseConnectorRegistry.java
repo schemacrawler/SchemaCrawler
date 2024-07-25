@@ -30,27 +30,27 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Comparator.naturalOrder;
 import static schemacrawler.tools.databaseconnector.UnknownDatabaseConnector.UNKNOWN;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */
-public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerType> {
+public final class DatabaseConnectorRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseConnectorRegistry.class.getName());
 
@@ -65,7 +65,8 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
 
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry() {
 
-    final Map<String, DatabaseConnector> databaseConnectorRegistry = new HashMap<>();
+    // Use thread-safe map
+    final Map<String, DatabaseConnector> databaseConnectorRegistry = new ConcurrentHashMap<>();
 
     try {
       final ServiceLoader<DatabaseConnector> serviceLoader =
@@ -74,24 +75,16 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
       for (final DatabaseConnector databaseConnector : serviceLoader) {
         final String databaseSystemIdentifier =
             databaseConnector.getDatabaseServerType().getDatabaseSystemIdentifier();
-        try {
-          LOGGER.log(
-              Level.CONFIG,
-              new StringFormat(
-                  "Loading database connector, %s=%s",
-                  databaseSystemIdentifier, databaseConnector.getClass().getName()));
-          // Put in map
-          databaseConnectorRegistry.put(databaseSystemIdentifier, databaseConnector);
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.CONFIG,
-              e,
-              new StringFormat(
-                  "Could not load database connector, %s=%s",
-                  databaseSystemIdentifier, databaseConnector.getClass().getName()));
-        }
+
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat(
+                "Loading database connector, %s=%s",
+                databaseSystemIdentifier, databaseConnector.getClass().getName()));
+        // Put in map
+        databaseConnectorRegistry.put(databaseSystemIdentifier, databaseConnector);
       }
-    } catch (final Exception e) {
+    } catch (final Throwable e) {
       throw new InternalRuntimeException("Could not load database connector registry", e);
     }
 
@@ -102,43 +95,9 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     return databaseConnectorRegistry;
   }
 
-  /**
-   * Load registered database drivers, and throw exception if any driver cannot be loaded. Cycling
-   * through the service loader and loading driver classes allows for dependencies to be vetted out.
-   */
-  private static void loadJdbcDrivers() {
-    final boolean log = LOGGER.isLoggable(Level.CONFIG);
-    int index = 0;
-    final StringBuilder buffer = new StringBuilder(1024);
-    try {
-      buffer.append("Registered JDBC drivers:").append(System.lineSeparator());
-      final ServiceLoader<Driver> serviceLoader =
-          ServiceLoader.load(Driver.class, DatabaseConnectorRegistry.class.getClassLoader());
-      for (final Driver driver : serviceLoader) {
-        index++;
-        if (log) {
-          buffer.append(String.format("%2d %50s", index, driver.getClass().getName()));
-          try {
-            buffer.append(
-                String.format(" %3d.%d", driver.getMajorVersion(), driver.getMinorVersion()));
-          } catch (final Exception e) {
-            // Ignore exceptions from badly behaved drivers
-          }
-          buffer.append(System.lineSeparator());
-        }
-      }
-    } catch (final Throwable e) {
-      throw new InternalRuntimeException("Could not load database drivers", e);
-    }
-    if (log) {
-      LOGGER.log(Level.CONFIG, buffer.toString());
-    }
-  }
-
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
   private DatabaseConnectorRegistry() {
-    loadJdbcDrivers();
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
   }
 
@@ -156,9 +115,8 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
       final String databaseSystemIdentifier) {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return databaseConnectorRegistry.get(databaseSystemIdentifier);
-    } else {
-      return UNKNOWN;
     }
+    return UNKNOWN;
   }
 
   public DatabaseConnector findDatabaseConnectorFromUrl(final String url) {
@@ -175,6 +133,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     return UNKNOWN;
   }
 
+  @Override
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineHelpCommands = new ArrayList<>();
     for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
@@ -188,12 +147,28 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
   }
 
   @Override
-  public Iterator<DatabaseServerType> iterator() {
+  public Collection<PropertyName> getCommandDescriptions() {
+    final List<PropertyName> availableServers = new ArrayList<>();
+    for (final DatabaseServerType serverType : getDatabaseServerTypes()) {
+      final PropertyName serverDescription =
+          new PropertyName(
+              serverType.getDatabaseSystemIdentifier(), serverType.getDatabaseSystemName());
+      availableServers.add(serverDescription);
+    }
+    return availableServers;
+  }
+
+  public List<DatabaseServerType> getDatabaseServerTypes() {
     final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
     for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
       databaseServerTypes.add(databaseConnector.getDatabaseServerType());
     }
     databaseServerTypes.sort(naturalOrder());
-    return databaseServerTypes.iterator();
+    return databaseServerTypes;
+  }
+
+  @Override
+  public String getName() {
+    return "SchemaCrawler database server plugins";
   }
 }
