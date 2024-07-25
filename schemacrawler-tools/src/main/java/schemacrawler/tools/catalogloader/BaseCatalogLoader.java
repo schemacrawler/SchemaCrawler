@@ -49,7 +49,7 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
 
   private static Comparator<CatalogLoader> comparator =
       nullsLast(comparingInt(CatalogLoader::getPriority))
-          .thenComparing(loader -> loader.getCommandDescription().getName());
+          .thenComparing(loader -> loader.getCatalogLoaderName().getName());
 
   private final int priority;
   private final PropertyName commandDescription;
@@ -75,7 +75,7 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public PropertyName getCommandDescription() {
+  public PropertyName getCatalogLoaderName() {
     return commandDescription;
   }
 

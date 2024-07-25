@@ -108,7 +108,7 @@ public final class CatalogLoaderRegistry extends BasePluginRegistry {
   public Collection<PropertyName> getRegisteredPlugins() {
     final Collection<PropertyName> commandLineCommands = new HashSet<>();
     for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
-      final PropertyName commandDescription = catalogLoader.getCommandDescription();
+      final PropertyName commandDescription = catalogLoader.getCatalogLoaderName();
       commandLineCommands.add(commandDescription);
     }
     return commandLineCommands;

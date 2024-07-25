@@ -58,7 +58,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final PropertyName commandDescription = getCommandDescription();
+    final PropertyName commandDescription = getCatalogLoaderName();
     final PluginCommand pluginCommand =
         PluginCommand.newCatalogLoaderCommand(
             commandDescription.getName(), commandDescription.getDescription());
