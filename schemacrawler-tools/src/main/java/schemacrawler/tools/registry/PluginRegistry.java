@@ -38,7 +38,7 @@ public interface PluginRegistry {
 
   Collection<PluginCommand> getHelpCommands();
 
-  Collection<PropertyName> getCommandDescriptions();
+  Collection<PropertyName> getRegisteredPlugins();
 
   void log();
 

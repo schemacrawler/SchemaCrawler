@@ -55,7 +55,7 @@ public class CatalogLoaderRegistryTest {
   @Test
   public void commandDescriptions() throws Exception {
     final Collection<PropertyName> supportedCatalogLoaders =
-        CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandDescriptions();
+        CatalogLoaderRegistry.getCatalogLoaderRegistry().getRegisteredPlugins();
     assertThat(supportedCatalogLoaders, hasSize(2));
     final List<String> names =
         supportedCatalogLoaders.stream().map(PropertyName::getName).collect(toList());

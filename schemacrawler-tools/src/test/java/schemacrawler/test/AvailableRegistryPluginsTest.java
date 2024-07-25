@@ -38,14 +38,14 @@ public class AvailableRegistryPluginsTest {
 
   @Test
   public void availableScriptEngines() throws UnsupportedEncodingException {
-    int size = ScriptEngineRegistry.getScriptEngineRegistry().getCommandDescriptions().size();
+    int size = ScriptEngineRegistry.getScriptEngineRegistry().getRegisteredPlugins().size();
     if (JRE.currentVersion() != JAVA_8 && size == 0) {
       // No script engines ship with Java versions later than 8
       return;
     }
 
     final String scriptEngineName =
-        ScriptEngineRegistry.getScriptEngineRegistry().getCommandDescriptions().stream()
+        ScriptEngineRegistry.getScriptEngineRegistry().getRegisteredPlugins().stream()
             .findAny()
             .get()
             .getName();
@@ -69,7 +69,7 @@ public class AvailableRegistryPluginsTest {
 
   private List<String> getCommands(final PluginRegistry registry) {
     final List<String> commands = new ArrayList<>();
-    final Collection<PropertyName> commandDescriptions = registry.getCommandDescriptions();
+    final Collection<PropertyName> commandDescriptions = registry.getRegisteredPlugins();
     for (final PropertyName commandDescription : commandDescriptions) {
       commands.add(commandDescription.getName());
     }

@@ -33,7 +33,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 public class AvailableServers extends BaseAvailableCommandDescriptions {
 
   public AvailableServers() {
-    super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getCommandDescriptions());
+    super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getRegisteredPlugins());
   }
 
   @Override

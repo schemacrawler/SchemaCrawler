@@ -76,7 +76,7 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
   }
 
   @Override
-  public Collection<PropertyName> getCommandDescriptions() {
+  public Collection<PropertyName> getRegisteredPlugins() {
     return new ArrayList<>(commandDescriptions);
   }
 

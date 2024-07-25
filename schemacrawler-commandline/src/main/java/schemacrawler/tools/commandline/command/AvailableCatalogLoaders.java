@@ -33,7 +33,7 @@ import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 public class AvailableCatalogLoaders extends BaseAvailableCommandDescriptions {
 
   public AvailableCatalogLoaders() {
-    super(CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandDescriptions());
+    super(CatalogLoaderRegistry.getCatalogLoaderRegistry().getRegisteredPlugins());
   }
 
   @Override

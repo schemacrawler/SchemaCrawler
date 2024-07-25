@@ -147,7 +147,7 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
   }
 
   @Override
-  public Collection<PropertyName> getCommandDescriptions() {
+  public Collection<PropertyName> getRegisteredPlugins() {
     final List<PropertyName> availableServers = new ArrayList<>();
     for (final DatabaseServerType serverType : getDatabaseServerTypes()) {
       final PropertyName serverDescription =

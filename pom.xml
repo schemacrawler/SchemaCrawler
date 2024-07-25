@@ -25,6 +25,7 @@
     <module>schemacrawler-text</module>
     <module>schemacrawler-diagram</module>
     <module>schemacrawler</module>
+	<!-- Additional functionality -->
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-scripting</module>
     <module>schemacrawler-lint</module>

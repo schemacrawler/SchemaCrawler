@@ -33,7 +33,7 @@ import schemacrawler.tools.registry.JDBCDriverRegistry;
 public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions implements Runnable {
 
   public AvailableJDBCDrivers() {
-    super(JDBCDriverRegistry.getJDBCDriverRegistry().getCommandDescriptions());
+    super(JDBCDriverRegistry.getJDBCDriverRegistry().getRegisteredPlugins());
   }
 
   @Override

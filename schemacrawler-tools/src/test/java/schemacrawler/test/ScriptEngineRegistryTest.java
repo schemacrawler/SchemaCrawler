@@ -35,7 +35,7 @@ public class ScriptEngineRegistryTest {
       return;
     }
     final ScriptEngineRegistry driverRegistry = ScriptEngineRegistry.getScriptEngineRegistry();
-    final Collection<PropertyName> commandLineCommands = driverRegistry.getCommandDescriptions();
+    final Collection<PropertyName> commandLineCommands = driverRegistry.getRegisteredPlugins();
     assertThat(commandLineCommands, hasSize(1));
   }
 

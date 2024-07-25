@@ -68,7 +68,7 @@ public class CommandRegistryTest {
     final TestCommandProvider testCommandProvider = new TestCommandProvider();
 
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    final Collection<PropertyName> commandLineCommands = commandRegistry.getCommandDescriptions();
+    final Collection<PropertyName> commandLineCommands = commandRegistry.getRegisteredPlugins();
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands, is(testCommandProvider.getSupportedCommands()));
   }
