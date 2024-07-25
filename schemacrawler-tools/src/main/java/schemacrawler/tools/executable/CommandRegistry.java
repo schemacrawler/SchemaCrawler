@@ -170,13 +170,13 @@ public final class CommandRegistry extends BasePluginRegistry {
 
   @Override
   public Collection<PropertyName> getRegisteredPlugins() {
-    final Collection<PropertyName> supportedCommandDescriptions = new HashSet<>();
+    final Collection<PropertyName> supportedCommands = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
-      supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
+      supportedCommands.addAll(commandProvider.getSupportedCommands());
     }
 
     final List<PropertyName> supportedCommandsOrdered =
-        new ArrayList<>(supportedCommandDescriptions);
+        new ArrayList<>(supportedCommands);
     supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;
   }
