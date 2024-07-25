@@ -33,7 +33,7 @@ import java.util.Collection;
 import schemacrawler.tools.executable.CommandRegistry;
 import us.fatehi.utility.property.PropertyName;
 
-public class AvailableCommands extends BaseAvailableCommandDescriptions {
+public class AvailableCommands extends BaseAvailableRegistryPlugins {
 
   private static Collection<PropertyName> availableCommands() {
     final Collection<PropertyName> supportedCommands =

@@ -30,7 +30,7 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.registry.ScriptEngineRegistry;
 
-public class AvailableScriptEngines extends BaseAvailableCommandDescriptions implements Runnable {
+public class AvailableScriptEngines extends BaseAvailableRegistryPlugins implements Runnable {
 
   public AvailableScriptEngines() {
     super(ScriptEngineRegistry.getScriptEngineRegistry().getRegisteredPlugins());
