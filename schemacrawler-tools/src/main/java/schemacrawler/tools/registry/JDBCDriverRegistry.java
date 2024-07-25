@@ -51,14 +51,6 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
     return jdbcDriverRegistrySingleton;
   }
 
-  public static void reload() {
-    if (jdbcDriverRegistrySingleton != null) {
-      final Collection<PropertyName> registry = jdbcDriverRegistrySingleton.commandDescriptions;
-      registry.clear();
-      registry.addAll(loadJDBCDrivers());
-    }
-  }
-
   private static List<PropertyName> loadJDBCDrivers() {
 
     // Use thread-safe list

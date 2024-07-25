@@ -37,6 +37,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
 import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -155,9 +156,10 @@ public class DatabaseConnectorRegistryTest {
           System.setProperty(
               TestDatabaseConnector.class.getName() + ".force-instantiation-failure", "throw");
 
-          assertThrows(InternalRuntimeException.class, () -> DatabaseConnectorRegistry.reload());
+          assertThrows(
+              InternalRuntimeException.class, () -> reload(DatabaseConnectorRegistry.class));
         });
     // Reset
-    DatabaseConnectorRegistry.reload();
+    reload(DatabaseConnectorRegistry.class);
   }
 }

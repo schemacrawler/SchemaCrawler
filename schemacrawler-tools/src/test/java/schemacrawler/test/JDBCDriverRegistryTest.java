@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
@@ -50,9 +51,9 @@ public class JDBCDriverRegistryTest {
           System.setProperty(
               TestDatabaseDriver.class.getName() + ".force-instantiation-failure", "throw");
 
-          assertThrows(InternalRuntimeException.class, () -> JDBCDriverRegistry.reload());
+          assertThrows(InternalRuntimeException.class, () -> reload(JDBCDriverRegistry.class));
         });
     // Reset
-    JDBCDriverRegistry.reload();
+    reload(JDBCDriverRegistry.class);
   }
 }

@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -75,9 +76,9 @@ public class CatalogLoaderRegistryTest {
           System.setProperty(
               TestCatalogLoader.class.getName() + ".force-instantiation-failure", "throw");
 
-          assertThrows(InternalRuntimeException.class, () -> CatalogLoaderRegistry.reload());
+          assertThrows(InternalRuntimeException.class, () -> reload(CatalogLoaderRegistry.class));
         });
     // Reset
-    CatalogLoaderRegistry.reload();
+    reload(CatalogLoaderRegistry.class);
   }
 }

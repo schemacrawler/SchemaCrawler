@@ -63,15 +63,6 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
     return databaseConnectorRegistrySingleton;
   }
 
-  public static void reload() {
-    if (databaseConnectorRegistrySingleton != null) {
-      final Map<String, DatabaseConnector> registry =
-          databaseConnectorRegistrySingleton.databaseConnectorRegistry;
-      registry.clear();
-      registry.putAll(loadDatabaseConnectorRegistry());
-    }
-  }
-
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry() {
 
     // Use thread-safe map

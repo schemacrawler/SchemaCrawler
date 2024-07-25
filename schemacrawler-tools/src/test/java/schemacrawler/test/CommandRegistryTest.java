@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
@@ -85,9 +86,9 @@ public class CommandRegistryTest {
           System.setProperty(
               TestCommandProvider.class.getName() + ".force-instantiation-failure", "throw");
 
-          assertThrows(InternalRuntimeException.class, () -> CommandRegistry.reload());
+          assertThrows(InternalRuntimeException.class, () -> reload(CommandRegistry.class));
         });
     // Reset
-    CommandRegistry.reload();
+    reload(CommandRegistry.class);
   }
 }
