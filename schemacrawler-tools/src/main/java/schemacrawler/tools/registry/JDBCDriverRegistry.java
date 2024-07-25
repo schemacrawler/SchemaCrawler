@@ -69,15 +69,15 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
     return availableJDBCDrivers;
   }
 
-  private final Collection<PropertyName> commandDescriptions;
+  private final Collection<PropertyName> jdbcDrivers;
 
   private JDBCDriverRegistry() {
-    commandDescriptions = loadJDBCDrivers();
+    jdbcDrivers = loadJDBCDrivers();
   }
 
   @Override
   public Collection<PropertyName> getRegisteredPlugins() {
-    return new ArrayList<>(commandDescriptions);
+    return new ArrayList<>(jdbcDrivers);
   }
 
   @Override

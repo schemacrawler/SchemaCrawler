@@ -124,7 +124,7 @@ public class DatabaseConnectorRegistryTest {
   }
 
   @Test
-  public void commandDescriptions() throws Exception {
+  public void registeredPlugins() throws Exception {
 
     final TestDatabaseConnector testDatabaseConnector = new TestDatabaseConnector();
     DatabaseServerType databaseServerType = testDatabaseConnector.getDatabaseServerType();

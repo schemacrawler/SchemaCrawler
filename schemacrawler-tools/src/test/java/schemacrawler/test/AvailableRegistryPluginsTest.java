@@ -26,14 +26,15 @@ public class AvailableRegistryPluginsTest {
   @Test
   public void availableCatalogLoaders() {
     assertThat(
-        getCommands(CatalogLoaderRegistry.getCatalogLoaderRegistry()),
+        getRegisteredPlugins(CatalogLoaderRegistry.getCatalogLoaderRegistry()),
         contains("testloader", "schemacrawlerloader"));
   }
 
   @Test
   public void availableCommands() {
     assertThat(
-        getCommands(CommandRegistry.getCommandRegistry()), containsInAnyOrder("test-command"));
+        getRegisteredPlugins(CommandRegistry.getCommandRegistry()),
+        containsInAnyOrder("test-command"));
   }
 
   @Test
@@ -56,22 +57,22 @@ public class AvailableRegistryPluginsTest {
   @Test
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     assertThat(
-        getCommands(JDBCDriverRegistry.getJDBCDriverRegistry()),
+        getRegisteredPlugins(JDBCDriverRegistry.getJDBCDriverRegistry()),
         containsInAnyOrder(JDBCDriver.class.getName(), TestDatabaseDriver.class.getName()));
   }
 
   @Test
   public void availableServers() {
     assertThat(
-        getCommands(DatabaseConnectorRegistry.getDatabaseConnectorRegistry()),
+        getRegisteredPlugins(DatabaseConnectorRegistry.getDatabaseConnectorRegistry()),
         containsInAnyOrder("test-db"));
   }
 
-  private List<String> getCommands(final PluginRegistry registry) {
+  private List<String> getRegisteredPlugins(final PluginRegistry registry) {
     final List<String> commands = new ArrayList<>();
-    final Collection<PropertyName> commandDescriptions = registry.getRegisteredPlugins();
-    for (final PropertyName commandDescription : commandDescriptions) {
-      commands.add(commandDescription.getName());
+    final Collection<PropertyName> registeredPlugins = registry.getRegisteredPlugins();
+    for (final PropertyName registeredPlugin : registeredPlugins) {
+      commands.add(registeredPlugin.getName());
     }
     return commands;
   }

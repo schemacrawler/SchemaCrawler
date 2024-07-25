@@ -175,8 +175,7 @@ public final class CommandRegistry extends BasePluginRegistry {
       supportedCommands.addAll(commandProvider.getSupportedCommands());
     }
 
-    final List<PropertyName> supportedCommandsOrdered =
-        new ArrayList<>(supportedCommands);
+    final List<PropertyName> supportedCommandsOrdered = new ArrayList<>(supportedCommands);
     supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;
   }

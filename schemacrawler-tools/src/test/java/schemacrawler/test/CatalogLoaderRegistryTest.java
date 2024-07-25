@@ -53,7 +53,7 @@ public class CatalogLoaderRegistryTest {
   }
 
   @Test
-  public void commandDescriptions() throws Exception {
+  public void registeredPlugins() throws Exception {
     final Collection<PropertyName> supportedCatalogLoaders =
         CatalogLoaderRegistry.getCatalogLoaderRegistry().getRegisteredPlugins();
     assertThat(supportedCatalogLoaders, hasSize(2));

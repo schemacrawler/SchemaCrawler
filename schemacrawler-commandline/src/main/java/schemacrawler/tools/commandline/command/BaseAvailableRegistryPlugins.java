@@ -47,15 +47,14 @@ import us.fatehi.utility.property.PropertyName;
 abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
 
   private static final Pattern metaCommand = Pattern.compile("<.*>");
-  protected final Collection<PropertyName> commandDescriptions;
+  protected final Collection<PropertyName> plugins;
 
-  protected BaseAvailableRegistryPlugins(final Collection<PropertyName> commandDescriptions) {
-    this.commandDescriptions =
-        requireNonNull(commandDescriptions, "No command descriptions provided");
+  protected BaseAvailableRegistryPlugins(final Collection<PropertyName> plugins) {
+    this.plugins = requireNonNull(plugins, "No plugins provided");
   }
 
   public final boolean isEmpty() {
-    return commandDescriptions.isEmpty();
+    return plugins.isEmpty();
   }
 
   @Override
@@ -72,13 +71,13 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
   }
 
   public int size() {
-    return commandDescriptions.size();
+    return plugins.size();
   }
 
   public final Stream<String> stream() {
-    return commandDescriptions.stream()
+    return plugins.stream()
         .filter(Objects::nonNull)
-        .filter(commandDescription -> !metaCommand.matcher(commandDescription.getName()).matches())
+        .filter(plugin -> !metaCommand.matcher(plugin.getName()).matches())
         .map(PropertyName::getName);
   }
 
@@ -91,8 +90,8 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
     final TextTable textTable =
         forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
 
-    for (final PropertyName commandDescription : commandDescriptions) {
-      textTable.addRowValues(commandDescription.getName(), commandDescription.getDescription());
+    for (final PropertyName plugin : plugins) {
+      textTable.addRowValues(plugin.getName(), plugin.getDescription());
     }
     return textTable;
   }

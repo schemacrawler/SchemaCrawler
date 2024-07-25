@@ -31,38 +31,36 @@ package us.fatehi.utility.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-
 import org.junit.jupiter.api.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import us.fatehi.utility.property.PropertyName;
 
 public class PropertyNameTest {
 
   @Test
-  public void commandDescription() {
+  public void propertyName() {
     EqualsVerifier.forClass(PropertyName.class).withIgnoredFields("description").verify();
   }
 
   @Test
   public void compare() {
-    final PropertyName commandDescription1 = new PropertyName("hello1", "world");
-    final PropertyName commandDescription2 = new PropertyName("hello", "  ");
-    assertThat(commandDescription1.compareTo(commandDescription2), is(equalTo(1)));
+    final PropertyName propertyName1 = new PropertyName("hello1", "world");
+    final PropertyName propertyName2 = new PropertyName("hello", "  ");
+    assertThat(propertyName1.compareTo(propertyName2), is(equalTo(1)));
 
-    assertThat(commandDescription1.compareTo(null), is(equalTo(-1)));
+    assertThat(propertyName1.compareTo(null), is(equalTo(-1)));
   }
 
   @Test
   public void testString() {
-    final PropertyName commandDescription1 = new PropertyName("hello", "world");
-    assertThat(commandDescription1.getName(), is(equalTo("hello")));
-    assertThat(commandDescription1.getDescription(), is(equalTo("world")));
-    assertThat(commandDescription1.toString(), is(equalTo("hello - world")));
+    final PropertyName propertyName1 = new PropertyName("hello", "world");
+    assertThat(propertyName1.getName(), is(equalTo("hello")));
+    assertThat(propertyName1.getDescription(), is(equalTo("world")));
+    assertThat(propertyName1.toString(), is(equalTo("hello - world")));
 
-    final PropertyName commandDescription2 = new PropertyName("hello", "  ");
-    assertThat(commandDescription2.getName(), is(equalTo("hello")));
-    assertThat(commandDescription2.getDescription(), is(equalTo("")));
-    assertThat(commandDescription2.toString(), is(equalTo("hello")));
+    final PropertyName propertyName2 = new PropertyName("hello", "  ");
+    assertThat(propertyName2.getName(), is(equalTo("hello")));
+    assertThat(propertyName2.getDescription(), is(equalTo("")));
+    assertThat(propertyName2.toString(), is(equalTo("hello")));
   }
 }

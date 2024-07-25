@@ -63,7 +63,7 @@ public class CommandRegistryTest {
   }
 
   @Test
-  public void commandDescriptions() {
+  public void registeredPlugins() {
 
     final TestCommandProvider testCommandProvider = new TestCommandProvider();
 

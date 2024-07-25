@@ -29,7 +29,7 @@ public class ScriptEngineRegistryTest {
   }
 
   @Test
-  public void commandDescriptions() {
+  public void registeredPlugins() {
     if (JRE.currentVersion() != JAVA_8) {
       // No script engines ship with Java versions later than 8
       return;
