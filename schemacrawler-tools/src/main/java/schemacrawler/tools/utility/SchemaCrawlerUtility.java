@@ -53,7 +53,6 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.UnknownDatabaseConnector;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.registry.PluginRegistryUtility;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.database.DatabaseUtility;
@@ -94,7 +93,6 @@ public final class SchemaCrawlerUtility {
       final Config additionalConfig) {
 
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
-    PluginRegistryUtility.logAllPlugins();
 
     updateConnectionDataSource(dataSource, schemaRetrievalOptions);
 

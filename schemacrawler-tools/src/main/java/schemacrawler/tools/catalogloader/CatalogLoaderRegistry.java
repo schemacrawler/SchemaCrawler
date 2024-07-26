@@ -54,6 +54,7 @@ public final class CatalogLoaderRegistry extends BasePluginRegistry {
     if (catalogLoaderRegistrySingleton == null) {
       catalogLoaderRegistrySingleton = new CatalogLoaderRegistry();
     }
+    catalogLoaderRegistrySingleton.log();
     return catalogLoaderRegistrySingleton;
   }
 

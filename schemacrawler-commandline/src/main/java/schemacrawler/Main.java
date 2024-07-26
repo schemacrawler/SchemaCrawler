@@ -21,9 +21,10 @@
 
 package schemacrawler;
 
-import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
@@ -32,6 +33,8 @@ import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.registry.JDBCDriverRegistry;
+import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.utility.UtilityLogger;
 
 /** Main class that takes arguments for a database for crawling a schema. */
@@ -46,10 +49,16 @@ public final class Main {
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.execute(args);
 
+    // Log details of runtime environment
+    LOGGER.log(Level.INFO, String.valueOf(Version.version()));
+    LOGGER.log(Level.INFO, String.valueOf(OperatingSystemInfo.operatingSystemInfo()));
+    LOGGER.log(Level.INFO, String.valueOf(JvmSystemInfo.jvmSystemInfo()));
     final UtilityLogger logger = new UtilityLogger(LOGGER);
     logger.logSafeArguments(args);
     logger.logSystemClasspath();
     logger.logSystemProperties();
+    JDBCDriverRegistry.getJDBCDriverRegistry().log();
+    ScriptEngineRegistry.getScriptEngineRegistry().log();
 
     final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);
@@ -58,10 +67,7 @@ public final class Main {
     if (isInteractive) {
       SchemaCrawlerShell.execute(args);
     } else {
-      if (showHelpIfRequested(args)) {
-        return;
-      }
-      if (showVersionIfRequested(args)) {
+      if (showHelpIfRequested(args) || showVersionIfRequested(args)) {
         return;
       }
       final int exitCode = SchemaCrawlerCommandLine.execute(args);

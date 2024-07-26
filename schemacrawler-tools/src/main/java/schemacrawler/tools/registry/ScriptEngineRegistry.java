@@ -48,6 +48,7 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
     if (scriptEngineRegistrySingleton == null) {
       scriptEngineRegistrySingleton = new ScriptEngineRegistry();
     }
+    scriptEngineRegistrySingleton.log();
     return scriptEngineRegistrySingleton;
   }
 

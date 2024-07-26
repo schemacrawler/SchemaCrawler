@@ -82,6 +82,7 @@ public final class CommandRegistry extends BasePluginRegistry {
     if (commandRegistrySingleton == null) {
       commandRegistrySingleton = new CommandRegistry();
     }
+    commandRegistrySingleton.log();
     return commandRegistrySingleton;
   }
 
