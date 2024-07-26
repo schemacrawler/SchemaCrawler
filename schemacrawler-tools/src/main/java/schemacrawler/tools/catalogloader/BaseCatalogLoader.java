@@ -30,11 +30,9 @@ package schemacrawler.tools.catalogloader;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.Comparator.nullsLast;
+import java.util.Comparator;
 import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
-
-import java.util.Comparator;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -49,18 +47,18 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
 
   private static Comparator<CatalogLoader> comparator =
       nullsLast(comparingInt(CatalogLoader::getPriority))
-          .thenComparing(loader -> loader.getCommandDescription().getName());
+          .thenComparing(loader -> loader.getCatalogLoaderName().getName());
 
   private final int priority;
-  private final PropertyName commandDescription;
+  private final PropertyName catalogLoaderName;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private Config additionalConfig;
   private DatabaseConnectionSource dataSource;
   private Catalog catalog;
 
-  protected BaseCatalogLoader(final PropertyName commandDescription, final int priority) {
-    this.commandDescription = requireNonNull(commandDescription, "No command description provided");
+  protected BaseCatalogLoader(final PropertyName catalogLoaderName, final int priority) {
+    this.catalogLoaderName = requireNonNull(catalogLoaderName, "No catalog loader name provided");
     this.priority = priority;
   }
 
@@ -75,8 +73,8 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public PropertyName getCommandDescription() {
-    return commandDescription;
+  public PropertyName getCatalogLoaderName() {
+    return catalogLoaderName;
   }
 
   @Override
@@ -98,18 +96,16 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   public SchemaCrawlerOptions getSchemaCrawlerOptions() {
     if (schemaCrawlerOptions == null) {
       return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    } else {
-      return schemaCrawlerOptions;
     }
+    return schemaCrawlerOptions;
   }
 
   @Override
   public SchemaRetrievalOptions getSchemaRetrievalOptions() {
     if (schemaRetrievalOptions == null) {
       return SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-    } else {
-      return schemaRetrievalOptions;
     }
+    return schemaRetrievalOptions;
   }
 
   /**
@@ -149,11 +145,11 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
         getSchemaRetrievalOptions().getDatabaseServerType().getDatabaseSystemIdentifier();
     if (actualDatabaseSystemIdentifier == null && databaseSystemIdentifier == null) {
       return true;
-    } else if (actualDatabaseSystemIdentifier != null) {
-      return actualDatabaseSystemIdentifier.equals(databaseSystemIdentifier);
-    } else {
-      return false;
     }
+    if (actualDatabaseSystemIdentifier != null) {
+      return actualDatabaseSystemIdentifier.equals(databaseSystemIdentifier);
+    }
+    return false;
   }
 
   protected boolean isLoaded() {

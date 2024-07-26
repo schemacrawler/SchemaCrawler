@@ -40,7 +40,7 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   Catalog getCatalog();
 
-  PropertyName getCommandDescription();
+  PropertyName getCatalogLoaderName();
 
   PluginCommand getCommandLineCommand();
 

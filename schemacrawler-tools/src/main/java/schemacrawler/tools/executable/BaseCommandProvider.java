@@ -74,11 +74,11 @@ public abstract class BaseCommandProvider implements CommandProvider {
     if (isBlank(command)) {
       return false;
     }
-    for (final PropertyName commandDescription : supportedCommands) {
-      if (commandDescription == null) {
+    for (final PropertyName supportedCommand : supportedCommands) {
+      if (supportedCommand == null) {
         continue;
       }
-      if (command.equalsIgnoreCase(commandDescription.getName())) {
+      if (command.equalsIgnoreCase(supportedCommand.getName())) {
         return true;
       }
     }

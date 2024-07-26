@@ -63,15 +63,14 @@ public abstract class BasePluginRegistry implements PluginRegistry {
     try {
       final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
       buffer.append("Registered ").append(getName()).append(":").append(System.lineSeparator());
-      Collection<PropertyName> commandDescriptions = getCommandDescriptions();
-      for (PropertyName commandDescription : commandDescriptions) {
+      for (final PropertyName registeredPlugin : getRegisteredPlugins()) {
         index++;
         if (log) {
           buffer
               .append(
                   String.format(
                       "%2d %50s %s",
-                      index, commandDescription.getName(), commandDescription.getDescription()))
+                      index, registeredPlugin.getName(), registeredPlugin.getDescription()))
               .append(System.lineSeparator());
         }
       }

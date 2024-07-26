@@ -124,7 +124,7 @@ public class DatabaseConnectorRegistryTest {
   }
 
   @Test
-  public void commandDescriptions() throws Exception {
+  public void registeredPlugins() throws Exception {
 
     final TestDatabaseConnector testDatabaseConnector = new TestDatabaseConnector();
     DatabaseServerType databaseServerType = testDatabaseConnector.getDatabaseServerType();
@@ -136,7 +136,7 @@ public class DatabaseConnectorRegistryTest {
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final Collection<PropertyName> commandLineCommands =
-        databaseConnectorRegistry.getCommandDescriptions();
+        databaseConnectorRegistry.getRegisteredPlugins();
     assertThat(commandLineCommands, hasSize(1));
     assertThat(commandLineCommands.stream().findFirst().get(), is(serverDescription));
   }

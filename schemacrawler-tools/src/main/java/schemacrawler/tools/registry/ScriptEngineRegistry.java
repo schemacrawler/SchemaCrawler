@@ -76,15 +76,15 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
     return availableScriptEngines;
   }
 
-  private final Collection<PropertyName> commandDescriptions;
+  private final Collection<PropertyName> scriptEngines;
 
   private ScriptEngineRegistry() {
-    commandDescriptions = loadScriptEngines();
+    scriptEngines = loadScriptEngines();
   }
 
   @Override
-  public Collection<PropertyName> getCommandDescriptions() {
-    return new ArrayList<>(commandDescriptions);
+  public Collection<PropertyName> getRegisteredPlugins() {
+    return new ArrayList<>(scriptEngines);
   }
 
   @Override

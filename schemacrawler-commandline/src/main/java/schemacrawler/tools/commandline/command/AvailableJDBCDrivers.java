@@ -30,10 +30,10 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 
-public class AvailableJDBCDrivers extends BaseAvailableCommandDescriptions implements Runnable {
+public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins implements Runnable {
 
   public AvailableJDBCDrivers() {
-    super(JDBCDriverRegistry.getJDBCDriverRegistry().getCommandDescriptions());
+    super(JDBCDriverRegistry.getJDBCDriverRegistry().getRegisteredPlugins());
   }
 
   @Override

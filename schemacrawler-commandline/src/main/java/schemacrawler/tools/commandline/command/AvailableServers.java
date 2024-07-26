@@ -30,10 +30,10 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class AvailableServers extends BaseAvailableCommandDescriptions {
+public class AvailableServers extends BaseAvailableRegistryPlugins {
 
   public AvailableServers() {
-    super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getCommandDescriptions());
+    super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getRegisteredPlugins());
   }
 
   @Override

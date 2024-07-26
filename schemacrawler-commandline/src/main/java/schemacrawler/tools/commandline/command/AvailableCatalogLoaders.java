@@ -30,10 +30,10 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 
-public class AvailableCatalogLoaders extends BaseAvailableCommandDescriptions {
+public class AvailableCatalogLoaders extends BaseAvailableRegistryPlugins {
 
   public AvailableCatalogLoaders() {
-    super(CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandDescriptions());
+    super(CatalogLoaderRegistry.getCatalogLoaderRegistry().getRegisteredPlugins());
   }
 
   @Override
