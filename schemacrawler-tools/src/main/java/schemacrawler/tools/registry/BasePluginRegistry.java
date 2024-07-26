@@ -28,13 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.registry;
 
-import java.sql.Driver;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.property.PropertyName;
 
 public abstract class BasePluginRegistry implements PluginRegistry {
@@ -61,7 +59,6 @@ public abstract class BasePluginRegistry implements PluginRegistry {
     int index = 0;
     final StringBuilder buffer = new StringBuilder(1024);
     try {
-      final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
       buffer.append("Registered ").append(getName()).append(":").append(System.lineSeparator());
       for (final PropertyName registeredPlugin : getRegisteredPlugins()) {
         index++;
