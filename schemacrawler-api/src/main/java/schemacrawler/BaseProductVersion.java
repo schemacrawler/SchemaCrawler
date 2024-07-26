@@ -29,15 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
-import java.util.Objects;
+import us.fatehi.utility.property.PropertyName;
 
-public class BaseProductVersion implements ProductVersion {
+public class BaseProductVersion extends PropertyName implements ProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
-
-  private final String productName;
-  private final String productVersion;
 
   public BaseProductVersion(final ProductVersion productVersion) {
     this(
@@ -46,41 +42,16 @@ public class BaseProductVersion implements ProductVersion {
   }
 
   public BaseProductVersion(final String productName, final String productVersion) {
-    this.productName = requireNotBlank(productName, "No product name provided");
-    this.productVersion = requireNotBlank(productVersion, "No product version provided");
-  }
-
-  @Override
-  public final boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null || !(obj instanceof BaseProductVersion)) {
-      return false;
-    }
-    final ProductVersion other = (ProductVersion) obj;
-    return Objects.equals(productName, other.getProductName())
-        && Objects.equals(productVersion, other.getProductVersion());
+    super(productName, productVersion);
   }
 
   @Override
   public String getProductName() {
-    return productName;
+    return getName();
   }
 
   @Override
   public String getProductVersion() {
-    return productVersion;
-  }
-
-  @Override
-  public final int hashCode() {
-    return Objects.hash(productName, productVersion);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    return String.format("%s %s", productName, productVersion);
+    return getDescription();
   }
 }

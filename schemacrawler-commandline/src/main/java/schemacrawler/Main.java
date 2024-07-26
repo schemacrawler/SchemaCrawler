@@ -57,8 +57,8 @@ public final class Main {
     logger.logSafeArguments(args);
     logger.logSystemClasspath();
     logger.logSystemProperties();
-    JDBCDriverRegistry.getJDBCDriverRegistry().log();
-    ScriptEngineRegistry.getScriptEngineRegistry().log();
+    JDBCDriverRegistry.getJDBCDriverRegistry(); // Will log
+    ScriptEngineRegistry.getScriptEngineRegistry().log(); // Will log
 
     final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);

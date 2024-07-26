@@ -37,7 +37,7 @@ import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
-public final class PropertyName implements Serializable, Comparable<PropertyName> {
+public class PropertyName implements Serializable, Comparable<PropertyName> {
 
   private static final long serialVersionUID = 2444083929278551904L;
 
