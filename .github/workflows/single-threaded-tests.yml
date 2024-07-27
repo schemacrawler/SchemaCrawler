@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [8, 17]
+        java: [8, 21]
     steps:
 
 # SETUP BUILD ENVIRONMENT

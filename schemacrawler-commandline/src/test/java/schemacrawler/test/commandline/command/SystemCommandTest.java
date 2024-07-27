@@ -21,6 +21,7 @@ import picocli.CommandLine;
 import schemacrawler.schema.Catalog;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -31,6 +32,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 @WithTestDatabase
 @CaptureSystemStreams
+@DisableLogging
 public class SystemCommandTest {
 
   private final String COMMAND_HELP = "command_help/";
