@@ -28,21 +28,19 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-
 import schemacrawler.Main;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -60,7 +58,6 @@ public class CommandLineSpecialCasesTest {
       "command_line_special_cases_output/";
 
   @Test
-  @ExpectSystemExitWithStatus(1)
   public void htmlxWithoutOutputFilename(
       final TestContext testContext,
       final DatabaseConnectionInfo connectionInfo,
@@ -71,7 +68,13 @@ public class CommandLineSpecialCasesTest {
     argsMap.put("--output-format", "htmlx");
     argsMap.put("--info-level", "standard");
 
-    run(testContext, argsMap, connectionInfo, streams);
+    restoreSystemProperties(
+        () -> {
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
+          assertThrows(
+              SchemaCrawlerException.class,
+              () -> run(testContext, argsMap, connectionInfo, streams));
+        });
   }
 
   private void run(

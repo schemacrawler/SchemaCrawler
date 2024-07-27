@@ -30,20 +30,17 @@ package schemacrawler.test;
 
 import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-
 import schemacrawler.Main;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -62,7 +59,6 @@ public class CommandLineNegativeTest {
   private static final String COMMAND_LINE_NEGATIVE_OUTPUT = "command_line_negative_output/";
 
   @Test
-  @ExpectSystemExitWithStatus(1)
   public void commandLine_BadCommand(
       final TestContext testContext,
       final DatabaseConnectionInfo connectionInfo,
@@ -74,15 +70,20 @@ public class CommandLineNegativeTest {
     restoreSystemProperties(
         () -> {
           System.setProperty(TestCatalogLoader.class.getName() + ".force-load-failure", "throw");
-          run(testContext, argsMapOverride, connectionInfo, streams);
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
+          assertThrows(
+              SchemaCrawlerException.class,
+              () -> run(testContext, argsMapOverride, connectionInfo, streams));
         });
   }
 
   @Test
-  @ExpectSystemExitWithStatus(1)
   public void mainNoArgs() throws Exception {
-
-    Main.main();
+    restoreSystemProperties(
+        () -> {
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
+          assertThrows(SchemaCrawlerException.class, () -> Main.main());
+        });
   }
 
   private void run(

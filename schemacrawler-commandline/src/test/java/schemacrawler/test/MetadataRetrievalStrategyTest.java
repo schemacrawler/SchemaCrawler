@@ -28,24 +28,21 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-import com.ginsberg.junit.exit.SystemExitPreventedException;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -71,7 +68,6 @@ public class MetadataRetrievalStrategyTest {
   }
 
   @Test
-  @ExpectSystemExitWithStatus(1)
   public void overrideMetadataRetrievalStrategyDataDictionary(
       final TestContext testContext,
       final DatabaseConnectionInfo connectionInfo,
@@ -91,15 +87,22 @@ public class MetadataRetrievalStrategyTest {
     argsMap.put("--info-level", infoLevel.name());
 
     // Check that System.err has an error, since the SQL for retrieving tables was not provided
-    try {
-      assertThat(
-          outputOf(
-              commandlineExecution(
-                  connectionInfo, schemaTextDetailType.name(), argsMap, config, outputFormat)),
-          hasNoContent());
-    } catch (final SystemExitPreventedException e) {
-      // Continue execution
-    }
+    restoreSystemProperties(
+        () -> {
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
+          assertThrows(
+              SchemaCrawlerException.class,
+              () ->
+                  assertThat(
+                      outputOf(
+                          commandlineExecution(
+                              connectionInfo,
+                              schemaTextDetailType.name(),
+                              argsMap,
+                              config,
+                              outputFormat)),
+                      hasNoContent()));
+        });
 
     assertThat(
         outputOf(streams.err()),
