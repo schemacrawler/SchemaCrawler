@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.script;
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -37,11 +35,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
@@ -60,6 +59,9 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
   @Override
   public void checkAvailability() {
+
+    ScriptEngineRegistry.getScriptEngineRegistry().log(); // Will log
+
     // Check availability of script
     commandOptions
         .getResource()

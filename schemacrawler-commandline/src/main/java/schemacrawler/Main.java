@@ -34,7 +34,6 @@ import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
-import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.utility.UtilityLogger;
 
 /** Main class that takes arguments for a database for crawling a schema. */
@@ -58,7 +57,6 @@ public final class Main {
     logger.logSystemClasspath();
     logger.logSystemProperties();
     JDBCDriverRegistry.getJDBCDriverRegistry(); // Will log
-    ScriptEngineRegistry.getScriptEngineRegistry().log(); // Will log
 
     final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);
