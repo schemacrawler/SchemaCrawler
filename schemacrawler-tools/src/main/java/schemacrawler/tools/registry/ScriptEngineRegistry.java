@@ -63,11 +63,10 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
         if (scriptEngineFactory != null) {
           availableScriptEngines.add(
               new PropertyName(
-                  scriptEngineFactory.getEngineName(),
                   String.format(
-                      "%-15s file extensions: %s",
-                      scriptEngineFactory.getEngineVersion(),
-                      scriptEngineFactory.getExtensions())));
+                      "%s %s",
+                      scriptEngineFactory.getEngineName(), scriptEngineFactory.getExtensions()),
+                  scriptEngineFactory.getEngineVersion()));
         }
       }
     } catch (final Throwable e) {
