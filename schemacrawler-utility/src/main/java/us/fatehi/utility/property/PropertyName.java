@@ -47,6 +47,10 @@ public final class PropertyName implements Serializable, Comparable<PropertyName
   private final String name;
   private final String description;
 
+  public PropertyName(final String name) {
+    this(name, null);
+  }
+
   public PropertyName(final String name, final String description) {
     this.name = requireNotBlank(name, "Command name not provided").trim();
 

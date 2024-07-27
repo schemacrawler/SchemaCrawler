@@ -146,7 +146,7 @@ public class DatabaseConnectorRegistryTest {
 
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    assertThat(databaseConnectorRegistry.getName(), is("SchemaCrawler database server plugins"));
+    assertThat(databaseConnectorRegistry.getName(), is("SchemaCrawler Database Server Plugins"));
   }
 
   @Test

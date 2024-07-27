@@ -3,6 +3,7 @@ package schemacrawler.test;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import java.io.ByteArrayOutputStream;
@@ -23,7 +24,7 @@ public class AvailablePluginsTest {
   public void availableCatalogLoaders() {
     assertThat(
         new AvailableCatalogLoaders(),
-        contains(
+        containsInAnyOrder(
             "weakassociationsloader",
             "testloader",
             "attributesloader",
@@ -56,7 +57,7 @@ public class AvailablePluginsTest {
     }
     final String data = baos.toString(utf8);
 
-    assertThat(data.replace("\r", ""), containsString("Available script engines:"));
+    assertThat(data.replace("\r", ""), containsString("Available Script Engines:"));
     assertThat(data.replace("\r", ""), containsString("Nashorn"));
   }
 
@@ -73,7 +74,7 @@ public class AvailablePluginsTest {
     }
     final String data = baos.toString(utf8);
 
-    assertThat(data.replace("\r", ""), containsString("Available JDBC drivers:"));
+    assertThat(data.replace("\r", ""), containsString("Available JDBC Drivers:"));
     assertThat(data.replace("\r", ""), containsString("org.hsqldb.jdbc.JDBCDriver"));
   }
 

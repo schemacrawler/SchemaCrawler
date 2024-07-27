@@ -25,24 +25,27 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.registry;
 
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.executable.CommandRegistry;
+package us.fatehi.utility.property;
 
-public class PluginRegistryUtility {
+import static java.util.Objects.requireNonNull;
 
-  /** Log all available plugins. */
-  public static void logAllPlugins() {
-    ScriptEngineRegistry.getScriptEngineRegistry().log();
-    JDBCDriverRegistry.getJDBCDriverRegistry().log();
-    DatabaseConnectorRegistry.getDatabaseConnectorRegistry().log();
-    CatalogLoaderRegistry.getCatalogLoaderRegistry().log();
-    CommandRegistry.getCommandRegistry().log();
+public class BaseProductVersion extends AbstractProperty implements ProductVersion {
+
+  private static final long serialVersionUID = 4051323422934251828L;
+
+  public BaseProductVersion(final ProductVersion productVersion) {
+    this(
+        requireNonNull(productVersion, "No product name provided").getProductName(),
+        productVersion.getProductVersion());
   }
 
-  private PluginRegistryUtility() {
-    // Prevent instantiation
+  public BaseProductVersion(final String productName, final String productVersion) {
+    super(new PropertyName(productName), productVersion);
+  }
+
+  @Override
+  public String toString() {
+    return getName() + " " + getValue();
   }
 }

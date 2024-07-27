@@ -37,19 +37,19 @@ import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
-import static java.util.Objects.requireNonNull;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.util.UUID;
-import schemacrawler.BaseProductVersion;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
-import schemacrawler.ProductVersion;
 import schemacrawler.Version;
 import schemacrawler.schema.CrawlInfo;
+import us.fatehi.utility.property.BaseProductVersion;
+import us.fatehi.utility.property.ProductVersion;
 
 /** SchemaCrawler crawl information. */
 final class MutableCrawlInfo implements CrawlInfo {
@@ -92,8 +92,8 @@ final class MutableCrawlInfo implements CrawlInfo {
     operatingSystemVersion = OperatingSystemInfo.operatingSystemInfo();
     jvmVersion = JvmSystemInfo.jvmSystemInfo();
 
-    this.databaseVersion = new BaseProductVersion(databaseInfo);
-    this.jdbcDriverVersion = new BaseProductVersion(jdbcDriverInfo);
+    databaseVersion = new BaseProductVersion(databaseInfo);
+    jdbcDriverVersion = new BaseProductVersion(jdbcDriverInfo);
 
     crawlTimestamp = Instant.now();
     runId = UUID.randomUUID();

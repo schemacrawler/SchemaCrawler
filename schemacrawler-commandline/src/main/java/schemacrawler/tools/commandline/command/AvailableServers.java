@@ -32,12 +32,15 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 public class AvailableServers extends BaseAvailableRegistryPlugins {
 
+  private final String name;
+
   public AvailableServers() {
     super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getRegisteredPlugins());
+    name = DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getName();
   }
 
   @Override
-  protected String getName() {
-    return DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getName();
+  public String getName() {
+    return name;
   }
 }

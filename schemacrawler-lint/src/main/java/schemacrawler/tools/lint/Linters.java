@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,7 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
@@ -57,9 +55,9 @@ public final class Linters implements Iterable<Linter> {
 
     linters = new ArrayList<>();
     collector = new LintCollector();
-    registry = new LinterRegistry();
+    registry = LinterRegistry.getLinterRegistry();
 
-    final Set<String> registeredLinters = registry.allRegisteredLinters();
+    final Set<String> registeredLinters = registry.getRegisteredLinters();
 
     // Add all configured linters, with as many instances as were
     // configured

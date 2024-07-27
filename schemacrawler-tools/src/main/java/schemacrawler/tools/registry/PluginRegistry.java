@@ -29,14 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.registry;
 
 import java.util.Collection;
-import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.property.PropertyName;
 
 public interface PluginRegistry {
-
-  Collection<PluginCommand> getCommandLineCommands();
-
-  Collection<PluginCommand> getHelpCommands();
 
   Collection<PropertyName> getRegisteredPlugins();
 

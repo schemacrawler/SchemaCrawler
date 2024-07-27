@@ -35,8 +35,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.DatabaseInfo;
+import us.fatehi.utility.property.BaseProductVersion;
 import us.fatehi.utility.property.Property;
 
 /**

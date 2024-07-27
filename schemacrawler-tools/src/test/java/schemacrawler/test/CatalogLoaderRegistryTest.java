@@ -66,7 +66,7 @@ public class CatalogLoaderRegistryTest {
   public void name() throws Exception {
     final CatalogLoaderRegistry catalogLoaderRegistry =
         CatalogLoaderRegistry.getCatalogLoaderRegistry();
-    assertThat(catalogLoaderRegistry.getName(), is("SchemaCrawler catalog loaders"));
+    assertThat(catalogLoaderRegistry.getName(), is("SchemaCrawler Catalog Loaders"));
   }
 
   @Test

@@ -26,21 +26,25 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package us.fatehi.utility.property;
 
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+public interface ProductVersion extends Property {
 
-public class AvailableCatalogLoaders extends BaseAvailableRegistryPlugins {
-
-  private final String name;
-
-  public AvailableCatalogLoaders() {
-    super(CatalogLoaderRegistry.getCatalogLoaderRegistry().getRegisteredPlugins());
-    name = CatalogLoaderRegistry.getCatalogLoaderRegistry().getName();
+  /**
+   * Gets the name of the product.
+   *
+   * @return Name of the product
+   */
+  default String getProductName() {
+    return getName();
   }
 
-  @Override
-  public String getName() {
-    return name;
+  /**
+   * Gets the version of the product.
+   *
+   * @return Version of the product
+   */
+  default String getProductVersion() {
+    return String.valueOf(getValue());
   }
 }

@@ -35,6 +35,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -46,11 +47,13 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.BasePluginRegistry;
+import schemacrawler.tools.registry.PluginCommandRegistry;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for database plugins. */
-public final class DatabaseConnectorRegistry extends BasePluginRegistry {
+public final class DatabaseConnectorRegistry extends BasePluginRegistry
+    implements PluginCommandRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseConnectorRegistry.class.getName());
 
@@ -60,6 +63,7 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
     if (databaseConnectorRegistrySingleton == null) {
       databaseConnectorRegistrySingleton = new DatabaseConnectorRegistry();
     }
+    databaseConnectorRegistrySingleton.log();
     return databaseConnectorRegistrySingleton;
   }
 
@@ -155,6 +159,7 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
               serverType.getDatabaseSystemIdentifier(), serverType.getDatabaseSystemName());
       availableServers.add(serverDescription);
     }
+    Collections.sort(availableServers);
     return availableServers;
   }
 
@@ -169,6 +174,6 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry {
 
   @Override
   public String getName() {
-    return "SchemaCrawler database server plugins";
+    return "SchemaCrawler Database Server Plugins";
   }
 }

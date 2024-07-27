@@ -1,5 +1,5 @@
 
-Available SchemaCrawler database server plugins:
+Available SchemaCrawler Database Server Plugins:
  test-db        Test Database
 
 Notes:

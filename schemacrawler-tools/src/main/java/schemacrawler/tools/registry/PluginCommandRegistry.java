@@ -26,23 +26,19 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler;
+package schemacrawler.tools.registry;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public interface ProductVersion extends Serializable {
+public interface PluginCommandRegistry extends PluginRegistry {
 
-  /**
-   * Gets the name of the product.
-   *
-   * @return Name of the product
-   */
-  String getProductName();
+  default Collection<PluginCommand> getCommandLineCommands() {
+    return Collections.emptyList();
+  }
 
-  /**
-   * Gets the version of the product.
-   *
-   * @return Version of the product
-   */
-  String getProductVersion();
+  default Collection<PluginCommand> getHelpCommands() {
+    return Collections.emptyList();
+  }
 }

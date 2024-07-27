@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
+import java.util.Collection;
 import java.util.function.Supplier;
+import us.fatehi.utility.property.PropertyName;
 
 public final class LinterHelp implements Supplier<String[]> {
 
@@ -52,16 +54,18 @@ public final class LinterHelp implements Supplier<String[]> {
       printHelpHeader(buffer);
     }
 
-    final LinterRegistry registry = new LinterRegistry();
-    for (final String linterId : registry) {
-      final Linter linter = registry.newLinter(linterId);
+    final LinterRegistry registry = LinterRegistry.getLinterRegistry();
+    Collection<PropertyName> registeredPlugins = registry.getRegisteredPlugins();
+    for (final PropertyName linterName : registeredPlugins) {
+      final String linterId = linterName.getName();
       if (generateMarkdown) {
-        printMarkdownLinterHeader(buffer, linter);
+        printMarkdownLinterHeader(buffer, linterId);
       } else {
-        printLinterHeader(buffer, linter);
+        printLinterHeader(buffer, linterId);
       }
       buffer
-          .append(linter.getDescription())
+          .append(linterName.getDescription())
+          .append(System.lineSeparator())
           .append(System.lineSeparator())
           .append(System.lineSeparator());
     }
@@ -77,8 +81,8 @@ public final class LinterHelp implements Supplier<String[]> {
         .append(System.lineSeparator());
   }
 
-  private void printLinterHeader(final StringBuilder buffer, final Linter linter) {
-    buffer.append("Linter: ").append(linter.getLinterId()).append(System.lineSeparator());
+  private void printLinterHeader(final StringBuilder buffer, final String linterId) {
+    buffer.append("Linter: ").append(linterId).append(System.lineSeparator());
   }
 
   private void printMarkdownHeader(final StringBuilder buffer) {
@@ -89,11 +93,7 @@ public final class LinterHelp implements Supplier<String[]> {
         .append(System.lineSeparator());
   }
 
-  private void printMarkdownLinterHeader(final StringBuilder buffer, final Linter linter) {
-    buffer
-        .append("### Linter: *")
-        .append(linter.getLinterId())
-        .append("*  ")
-        .append(System.lineSeparator());
+  private void printMarkdownLinterHeader(final StringBuilder buffer, final String linterId) {
+    buffer.append("### Linter: *").append(linterId).append("*  ").append(System.lineSeparator());
   }
 }

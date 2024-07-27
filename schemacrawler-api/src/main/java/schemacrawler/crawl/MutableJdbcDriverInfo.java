@@ -37,9 +37,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
+import us.fatehi.utility.property.BaseProductVersion;
 
 /**
  * JDBC driver information. Created from metadata returned by a JDBC call, and other sources of

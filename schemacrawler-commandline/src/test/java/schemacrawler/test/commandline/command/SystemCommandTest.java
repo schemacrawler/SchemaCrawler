@@ -175,11 +175,11 @@ public class SystemCommandTest {
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), containsString("Available JDBC drivers:"));
+    assertThat(contentsOf(streams.out()), containsString("Available JDBC Drivers:"));
     assertThat(
         contentsOf(streams.out()),
-        containsString("Available SchemaCrawler database server plugins:"));
-    assertThat(contentsOf(streams.out()), containsString("Available SchemaCrawler commands:"));
+        containsString("Available SchemaCrawler Database Server Plugins:"));
+    assertThat(contentsOf(streams.out()), containsString("Available SchemaCrawler Commands:"));
   }
 
   private void executeSystemCommand(final ShellState state, final String[] args) {

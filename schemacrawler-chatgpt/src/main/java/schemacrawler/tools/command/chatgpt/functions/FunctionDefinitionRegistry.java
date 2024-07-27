@@ -29,19 +29,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.chatgpt.functions;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.chatgpt.FunctionDefinition;
+import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Registry for function definitions. */
-public final class FunctionDefinitionRegistry implements Iterable<FunctionDefinition> {
+public final class FunctionDefinitionRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(FunctionDefinitionRegistry.class.getName());
 
@@ -51,6 +52,7 @@ public final class FunctionDefinitionRegistry implements Iterable<FunctionDefini
     if (functionDefinitionRegistrySingleton == null) {
       functionDefinitionRegistrySingleton = new FunctionDefinitionRegistry();
     }
+    functionDefinitionRegistrySingleton.log();
     return functionDefinitionRegistrySingleton;
   }
 
@@ -64,22 +66,9 @@ public final class FunctionDefinitionRegistry implements Iterable<FunctionDefini
               FunctionDefinition.class, FunctionDefinitionRegistry.class.getClassLoader());
       for (final FunctionDefinition functionDefinition : serviceLoader) {
         final String functionName = functionDefinition.getName();
-        try {
-          LOGGER.log(
-              Level.CONFIG,
-              new StringFormat(
-                  "Loading function definition, %s=%s",
-                  functionName, functionDefinition.getClass().getName()));
-          // Put in map
-          functionDefinitionRegistry.put(functionName, functionDefinition);
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.CONFIG,
-              e,
-              new StringFormat(
-                  "Could not load function definition, %s=%s",
-                  functionName, functionDefinition.getClass().getName()));
-        }
+        LOGGER.log(Level.CONFIG, new StringFormat("Loading function definition, %s", functionName));
+        // Put in map
+        functionDefinitionRegistry.put(functionName, functionDefinition);
       }
     } catch (final Exception e) {
       throw new InternalRuntimeException("Could not load function definition registry", e);
@@ -98,10 +87,22 @@ public final class FunctionDefinitionRegistry implements Iterable<FunctionDefini
     functionDefinitionRegistry = loadFunctionDefinitionRegistry();
   }
 
+  public Collection<FunctionDefinition> getFunctionDefinitions() {
+    return new ArrayList<>(functionDefinitionRegistry.values());
+  }
+
   @Override
-  public Iterator<FunctionDefinition> iterator() {
-    final List<FunctionDefinition> functionDefinitions =
-        new ArrayList<>(functionDefinitionRegistry.values());
-    return functionDefinitions.iterator();
+  public Collection<PropertyName> getRegisteredPlugins() {
+    final Collection<PropertyName> registeredPlugins = new ArrayList<>();
+    for (final FunctionDefinition<?> functionDefinition : functionDefinitionRegistry.values()) {
+      registeredPlugins.add(
+          new PropertyName(functionDefinition.getName(), functionDefinition.getDescription()));
+    }
+    return registeredPlugins;
+  }
+
+  @Override
+  public String getName() {
+    return "Function Definitions";
   }
 }

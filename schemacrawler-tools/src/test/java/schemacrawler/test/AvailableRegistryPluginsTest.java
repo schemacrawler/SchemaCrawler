@@ -1,7 +1,6 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
@@ -27,7 +26,7 @@ public class AvailableRegistryPluginsTest {
   public void availableCatalogLoaders() {
     assertThat(
         getRegisteredPlugins(CatalogLoaderRegistry.getCatalogLoaderRegistry()),
-        contains("testloader", "schemacrawlerloader"));
+        containsInAnyOrder("testloader", "schemacrawlerloader"));
   }
 
   @Test

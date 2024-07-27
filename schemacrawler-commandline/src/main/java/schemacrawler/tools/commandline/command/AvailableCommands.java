@@ -58,12 +58,15 @@ public class AvailableCommands extends BaseAvailableRegistryPlugins {
     return supportedCommands;
   }
 
+  private final String name;
+
   public AvailableCommands() {
     super(availableCommands());
+    name = CommandRegistry.getCommandRegistry().getName();
   }
 
   @Override
-  protected String getName() {
-    return CommandRegistry.getCommandRegistry().getName();
+  public String getName() {
+    return name;
   }
 }

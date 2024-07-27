@@ -69,7 +69,7 @@ public class ChatGPTUtility {
 
     final List<ChatFunction> chatFunctions = new ArrayList<>();
     for (final FunctionDefinition functionDefinition :
-        FunctionDefinitionRegistry.getFunctionDefinitionRegistry()) {
+        FunctionDefinitionRegistry.getFunctionDefinitionRegistry().getFunctionDefinitions()) {
       if (functionDefinition.getFunctionType() != FunctionType.USER) {
         continue;
       }
