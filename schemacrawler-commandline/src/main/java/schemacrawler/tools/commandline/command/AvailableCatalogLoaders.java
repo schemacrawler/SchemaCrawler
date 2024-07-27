@@ -32,12 +32,15 @@ import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 
 public class AvailableCatalogLoaders extends BaseAvailableRegistryPlugins {
 
+  private final String name;
+
   public AvailableCatalogLoaders() {
     super(CatalogLoaderRegistry.getCatalogLoaderRegistry().getRegisteredPlugins());
+    name = CatalogLoaderRegistry.getCatalogLoaderRegistry().getName();
   }
 
   @Override
-  protected String getName() {
-    return CatalogLoaderRegistry.getCatalogLoaderRegistry().getName();
+  public String getName() {
+    return name;
   }
 }

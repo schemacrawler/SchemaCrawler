@@ -32,8 +32,11 @@ import schemacrawler.tools.registry.JDBCDriverRegistry;
 
 public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins implements Runnable {
 
+  private final String name;
+
   public AvailableJDBCDrivers() {
     super(JDBCDriverRegistry.getJDBCDriverRegistry().getRegisteredPlugins());
+    name = JDBCDriverRegistry.getJDBCDriverRegistry().getName();
   }
 
   @Override
@@ -42,7 +45,7 @@ public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins implement
   }
 
   @Override
-  protected String getName() {
-    return JDBCDriverRegistry.getJDBCDriverRegistry().getName();
+  public String getName() {
+    return name;
   }
 }
