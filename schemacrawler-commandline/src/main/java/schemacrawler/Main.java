@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
@@ -34,12 +35,15 @@ import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
+import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityLogger;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
+  private static final String SC_EXIT_WITH_EXCEPTION = "SC_EXIT_WITH_EXCEPTION";
 
   public static void main(final String... args) throws Exception {
     requireNonNull(args, "No command-line arguments provided");
@@ -61,18 +65,36 @@ public final class Main {
     final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);
 
+    int exitCode = 0;
     final boolean isInteractive = interactiveShellOptions.isInteractive();
     if (isInteractive) {
-      SchemaCrawlerShell.execute(args);
+      exitCode = SchemaCrawlerShell.execute(args);
     } else {
       if (showHelpIfRequested(args) || showVersionIfRequested(args)) {
         return;
       }
-      final int exitCode = SchemaCrawlerCommandLine.execute(args);
-      if (exitCode != 0) {
-        System.exit(exitCode);
-      }
+      exitCode = SchemaCrawlerCommandLine.execute(args);
     }
+
+    if (exitCode == 0) {
+      return;
+    }
+    exit(exitCode);
+  }
+
+  /**
+   * Use an exit strategy to exit either by throwing a runtime exception or by calling System.exit.
+   *
+   * @param exitCode Exit code to exit with.
+   */
+  private static void exit(int exitCode) {
+    final String exitWithExceptionValue =
+        PropertiesUtility.getSystemConfigurationProperty(SC_EXIT_WITH_EXCEPTION, "false");
+    final boolean exitWithException = Boolean.parseBoolean(exitWithExceptionValue);
+    if (exitWithException) {
+      throw new SchemaCrawlerException(String.format("Exiting with code %d", exitCode));
+    }
+    System.exit(exitCode);
   }
 
   private static boolean showHelpIfRequested(final String[] args) {

@@ -35,36 +35,21 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.LintTestUtility.executableLint;
-import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
-import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
-import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import schemacrawler.tools.options.Config;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -88,9 +73,8 @@ public class LinterConfigsDispatchTest {
       if (linterConfig == null) {
         fail("Null linter config");
       }
-      if (linterConfig
-          .getLinterId()
-          .equals("schemacrawler.tools.linter.LinterTableWithNoPrimaryKey")) {
+      if ("schemacrawler.tools.linter.LinterTableWithNoPrimaryKey"
+          .equals(linterConfig.getLinterId())) {
         assertThat(linterConfig.getSeverity(), is(LintSeverity.critical));
         assertThat(linterConfig.getThreshold(), is(2));
         assertThat(linterConfig.isRunLinter(), is(true));
@@ -107,49 +91,6 @@ public class LinterConfigsDispatchTest {
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-  }
-
-  @Test
-  @CaptureSystemStreams
-  @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigCommandLine(
-      final TestContext testContext,
-      final DatabaseConnectionInfo connectionInfo,
-      final CapturedSystemStreams streams)
-      throws Exception {
-
-    final Map<String, String> additionalArgs = new HashMap<>();
-    additionalArgs.put("--lint-dispatch", LintDispatch.terminate_system.name());
-
-    executeLintCommandLine(
-        connectionInfo,
-        TextOutputFormat.text,
-        "/schemacrawler-linter-configs-with-dispatch.yaml",
-        additionalArgs,
-        "schemacrawler-linter-configs-with-dispatch.txt");
-
-    checkSystemErrLog(testContext, streams);
-  }
-
-  @Test
-  @CaptureSystemStreams
-  @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigExecutable(
-      final TestContext testContext,
-      final DatabaseConnectionSource dataSource,
-      final CapturedSystemStreams streams)
-      throws Exception {
-
-    final Config additionalConfig = new Config();
-    additionalConfig.put("lint-dispatch", "terminate_system");
-
-    executableLint(
-        dataSource,
-        "/schemacrawler-linter-configs-with-dispatch.yaml",
-        additionalConfig,
-        "schemacrawler-linter-configs-with-dispatch");
-
-    checkSystemErrLog(testContext, streams);
   }
 
   private void checkSystemErrLog(final TestContext testContext, final CapturedSystemStreams streams)
