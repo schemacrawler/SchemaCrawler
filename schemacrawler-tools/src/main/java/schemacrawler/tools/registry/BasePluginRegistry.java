@@ -55,7 +55,7 @@ public abstract class BasePluginRegistry implements PluginRegistry {
           maxNameLength = length;
         }
       }
-      final String format =String.format("%%2d %%%ds %%s", maxNameLength);
+      final String format = String.format("%%2d %%%ds %%s", maxNameLength);
 
       buffer.append("Registered ").append(getName()).append(":").append(System.lineSeparator());
       for (final PropertyName registeredPlugin : registeredPlugins) {
@@ -63,8 +63,7 @@ public abstract class BasePluginRegistry implements PluginRegistry {
         buffer
             .append(
                 String.format(
-                    format,
-                    index, registeredPlugin.getName(), registeredPlugin.getDescription()))
+                    format, index, registeredPlugin.getName(), registeredPlugin.getDescription()))
             .append(System.lineSeparator());
       }
     } catch (final Throwable e) {
