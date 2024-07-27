@@ -30,8 +30,7 @@ package schemacrawler.schema;
 
 import java.sql.SQLException;
 import java.util.Collection;
-
-import schemacrawler.ProductVersion;
+import us.fatehi.utility.property.ProductVersion;
 
 /** JDBC driver information. */
 public interface JdbcDriverInfo extends ProductVersion {

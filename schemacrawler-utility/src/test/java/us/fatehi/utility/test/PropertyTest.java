@@ -9,10 +9,16 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import us.fatehi.utility.property.AbstractProperty;
+import us.fatehi.utility.property.BaseProductVersion;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.property.PropertyName;
 
 public class PropertyTest {
+
+  @Test
+  public void baseProductVersion() {
+    EqualsVerifier.forClass(BaseProductVersion.class).verify();
+  }
 
   private static final class PropertyEx extends AbstractProperty {
     private PropertyEx(PropertyName name, Serializable value) {
@@ -43,7 +49,7 @@ public class PropertyTest {
   @Test
   public void arrayValue() {
     final Property arrayValueProperty =
-        new AbstractProperty(new PropertyName("name", "description"), new String[] {"v1", "v2"}) {};
+        new PropertyEx(new PropertyName("name", "description"), new String[] {"v1", "v2"});
     assertThat(arrayValueProperty.getName(), is("name"));
     assertThat(arrayValueProperty.getDescription(), is("description"));
     assertThat(arrayValueProperty.getValue(), is(Arrays.asList("v1", "v2")));
@@ -74,7 +80,7 @@ public class PropertyTest {
   @Test
   public void nullPropertyValue() {
     final Property nullValueProperty =
-        new AbstractProperty(new PropertyName("name", "description"), null) {};
+        new PropertyEx(new PropertyName("name", "description"), null);
     assertThat(nullValueProperty.getName(), is("name"));
     assertThat(nullValueProperty.getDescription(), is("description"));
     assertThat(nullValueProperty.getValue(), is(nullValue()));

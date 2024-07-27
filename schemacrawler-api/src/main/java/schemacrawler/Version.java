@@ -35,6 +35,7 @@ import java.io.BufferedReader;
 import java.util.List;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.property.BaseProductVersion;
 
 /**
  * Version information for this product. Has methods to obtain information about the product, as

@@ -26,12 +26,11 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler;
+package us.fatehi.utility.property;
 
 import static java.util.Objects.requireNonNull;
-import us.fatehi.utility.property.PropertyName;
 
-public class BaseProductVersion extends PropertyName implements ProductVersion {
+public class BaseProductVersion extends AbstractProperty implements ProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
@@ -42,16 +41,11 @@ public class BaseProductVersion extends PropertyName implements ProductVersion {
   }
 
   public BaseProductVersion(final String productName, final String productVersion) {
-    super(productName, productVersion);
+    super(new PropertyName(productName), productVersion);
   }
 
   @Override
-  public String getProductName() {
-    return getName();
-  }
-
-  @Override
-  public String getProductVersion() {
-    return getDescription();
+  public String toString() {
+    return getName() + " " + getValue();
   }
 }

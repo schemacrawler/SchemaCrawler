@@ -37,7 +37,7 @@ import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
-public class PropertyName implements Serializable, Comparable<PropertyName> {
+public final class PropertyName implements Serializable, Comparable<PropertyName> {
 
   private static final long serialVersionUID = 2444083929278551904L;
 
@@ -46,6 +46,10 @@ public class PropertyName implements Serializable, Comparable<PropertyName> {
 
   private final String name;
   private final String description;
+
+  public PropertyName(final String name) {
+    this(name, null);
+  }
 
   public PropertyName(final String name, final String description) {
     this.name = requireNotBlank(name, "Command name not provided").trim();

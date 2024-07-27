@@ -26,23 +26,25 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler;
+package us.fatehi.utility.property;
 
-import java.io.Serializable;
-
-public interface ProductVersion extends Serializable {
+public interface ProductVersion extends Property {
 
   /**
    * Gets the name of the product.
    *
    * @return Name of the product
    */
-  String getProductName();
+  default String getProductName() {
+    return getName();
+  }
 
   /**
    * Gets the version of the product.
    *
    * @return Version of the product
    */
-  String getProductVersion();
+  default String getProductVersion() {
+    return String.valueOf(getValue());
+  }
 }

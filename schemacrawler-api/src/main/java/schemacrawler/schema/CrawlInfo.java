@@ -30,8 +30,7 @@ package schemacrawler.schema;
 
 import java.io.Serializable;
 import java.time.Instant;
-
-import schemacrawler.ProductVersion;
+import us.fatehi.utility.property.ProductVersion;
 
 public interface CrawlInfo extends Serializable {
 

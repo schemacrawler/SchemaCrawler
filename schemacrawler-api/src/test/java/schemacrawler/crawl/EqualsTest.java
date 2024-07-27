@@ -29,10 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import org.junit.jupiter.api.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import schemacrawler.BaseProductVersion;
 import schemacrawler.crawl.MutablePrivilege.PrivilegeGrant;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
@@ -47,11 +45,6 @@ import us.fatehi.utility.graph.Vertex;
 import us.fatehi.utility.property.AbstractProperty;
 
 public class EqualsTest {
-
-  @Test
-  public void baseProductVersion() {
-    EqualsVerifier.forClass(BaseProductVersion.class).verify();
-  }
 
   @Test
   public void columnReference() {

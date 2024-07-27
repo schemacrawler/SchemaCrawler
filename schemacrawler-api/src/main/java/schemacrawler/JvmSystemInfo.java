@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
+import us.fatehi.utility.property.BaseProductVersion;
+
 /** JVM system information. */
 public final class JvmSystemInfo extends BaseProductVersion {
 
