@@ -30,6 +30,7 @@ package schemacrawler.tools.registry;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
@@ -73,6 +74,7 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
       // NOTE: Do not hard fail if script engines cannot be loaded
       LOGGER.log(Level.WARNING, "Could not load script engines", e);
     }
+    Collections.sort(availableScriptEngines);
     return availableScriptEngines;
   }
 
@@ -89,6 +91,6 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
 
   @Override
   public String getName() {
-    return "script engines";
+    return "Script Engines";
   }
 }

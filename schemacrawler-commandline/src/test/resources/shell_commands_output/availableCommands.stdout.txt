@@ -1,5 +1,5 @@
 
-Available SchemaCrawler commands:
+Available SchemaCrawler Commands:
  brief          Shows basic schema information, for tables, views and routines,
                   columns, primary keys, and foreign keys
  count          Shows counts of rows in the tables

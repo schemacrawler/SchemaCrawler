@@ -29,13 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.registry;
 
 import java.util.Collection;
-import us.fatehi.utility.property.PropertyName;
+import java.util.Collections;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public interface PluginRegistry {
+public interface PluginCommandRegistry extends PluginRegistry {
 
-  Collection<PropertyName> getRegisteredPlugins();
+  default Collection<PluginCommand> getCommandLineCommands() {
+    return Collections.emptyList();
+  }
 
-  void log();
-
-  String getName();
+  default Collection<PluginCommand> getHelpCommands() {
+    return Collections.emptyList();
+  }
 }

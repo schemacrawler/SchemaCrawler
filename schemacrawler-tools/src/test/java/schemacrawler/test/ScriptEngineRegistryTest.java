@@ -2,31 +2,15 @@ package schemacrawler.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.JRE;
-import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.utility.property.PropertyName;
 
 public class ScriptEngineRegistryTest {
-
-  @Test
-  public void commandLineCommands() {
-    final ScriptEngineRegistry driverRegistry = ScriptEngineRegistry.getScriptEngineRegistry();
-    final Collection<PluginCommand> commandLineCommands = driverRegistry.getCommandLineCommands();
-    assertThat(commandLineCommands, is(empty()));
-  }
-
-  @Test
-  public void helpCommands() {
-    final ScriptEngineRegistry driverRegistry = ScriptEngineRegistry.getScriptEngineRegistry();
-    final Collection<PluginCommand> commandLineCommands = driverRegistry.getHelpCommands();
-    assertThat(commandLineCommands, is(empty()));
-  }
 
   @Test
   public void registeredPlugins() {
@@ -42,6 +26,6 @@ public class ScriptEngineRegistryTest {
   @Test
   public void name() {
     final ScriptEngineRegistry driverRegistry = ScriptEngineRegistry.getScriptEngineRegistry();
-    assertThat(driverRegistry.getName(), is("script engines"));
+    assertThat(driverRegistry.getName(), is("Script Engines"));
   }
 }

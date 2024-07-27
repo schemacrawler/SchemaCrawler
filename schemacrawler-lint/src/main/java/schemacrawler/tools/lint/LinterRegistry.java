@@ -29,21 +29,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Linter registry for mapping linters by id. */
-public final class LinterRegistry implements Iterable<String> {
+public final class LinterRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
@@ -66,19 +70,32 @@ public final class LinterRegistry implements Iterable<String> {
         }
       };
 
-  private static Map<String, Class<Linter>> loadLinterRegistry() {
+  private static LinterRegistry linterRegistrySingleton;
 
-    final Map<String, Class<Linter>> linterRegistry = new HashMap<>();
+  public static LinterRegistry getLinterRegistry() {
+    if (linterRegistrySingleton == null) {
+      linterRegistrySingleton = new LinterRegistry();
+    }
+    linterRegistrySingleton.log();
+    return linterRegistrySingleton;
+  }
+
+  private static Map<String, LinterInfo> loadLinterRegistry() {
+
+    final Map<String, LinterInfo> linterRegistry = new HashMap<>();
     try {
       final ServiceLoader<Linter> serviceLoader =
           ServiceLoader.load(Linter.class, LinterRegistry.class.getClassLoader());
       for (final Linter linter : serviceLoader) {
         final String linterId = linter.getLinterId();
-        final Class<Linter> linterClass = (Class<Linter>) linter.getClass();
-        LOGGER.log(
-            Level.FINER,
-            new StringFormat("Loading linter, %s=%s", linterId, linterClass.getName()));
-        linterRegistry.put(linterId, linterClass);
+        final LinterInfo linterInfo =
+            new LinterInfo(
+                linterId,
+                linter.getSummary(),
+                linter.getDescription(),
+                linter.getClass().getName());
+        LOGGER.log(Level.FINER, new StringFormat("Loading linter, %s=%s", linterId, linterInfo));
+        linterRegistry.put(linterId, linterInfo);
       }
     } catch (final Exception e) {
       throw new InternalRuntimeException("Could not load linter registry", e);
@@ -87,42 +104,50 @@ public final class LinterRegistry implements Iterable<String> {
     return linterRegistry;
   }
 
-  private final Map<String, Class<Linter>> linterRegistry;
+  private final Map<String, LinterInfo> linterRegistry;
 
-  public LinterRegistry() {
+  private LinterRegistry() {
     linterRegistry = loadLinterRegistry();
   }
 
-  public Set<String> allRegisteredLinters() {
-    return new TreeSet<>(linterRegistry.keySet());
+  @Override
+  public String getName() {
+    return "Linters";
+  }
+
+  public Set<String> getRegisteredLinters() {
+    return new HashSet<>(linterRegistry.keySet());
+  }
+
+  @Override
+  public Collection<PropertyName> getRegisteredPlugins() {
+    final List<PropertyName> linters = new ArrayList<>();
+    for (final LinterInfo linterInfo : linterRegistry.values()) {
+      linters.add(new PropertyName(linterInfo.getLinterId(), linterInfo.getDescription()));
+    }
+    Collections.sort(linters);
+    return linters;
   }
 
   public boolean hasLinter(final String linterId) {
     return linterRegistry.containsKey(linterId);
   }
 
-  @Override
-  public Iterator<String> iterator() {
-    return allRegisteredLinters().iterator();
-  }
-
   public Linter newLinter(final String linterId) {
 
-    if (hasLinter(linterId)) {
-      final Class<Linter> linterClass = linterRegistry.get(linterId);
-      try {
-        final Linter linter = linterClass.newInstance();
-        return linter;
-      } catch (final Exception e) {
-        LOGGER.log(
-            Level.WARNING,
-            e,
-            new StringFormat("Could not instantiate linter <%s>", linterClass.getName()));
-        return NO_OP_LINTER;
-      }
-    } else {
+    if (!hasLinter(linterId)) {
       LOGGER.log(
           Level.WARNING, new StringFormat("Could not instantiate linter with id <%s>", linterId));
+      return NO_OP_LINTER;
+    }
+    final LinterInfo linterInfo = linterRegistry.get(linterId);
+    try {
+      final Class<Linter> linterClass = (Class<Linter>) Class.forName(linterInfo.getClassName());
+      final Linter linter = linterClass.newInstance();
+      return linter;
+    } catch (final Exception e) {
+      LOGGER.log(
+          Level.WARNING, e, new StringFormat("Could not instantiate linter <%s>", linterInfo));
       return NO_OP_LINTER;
     }
   }

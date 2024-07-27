@@ -31,12 +31,15 @@ package schemacrawler.tools.registry;
 import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.property.PropertyName;
+import us.fatehi.utility.string.StringFormat;
 
 public class JDBCDriverRegistry extends BasePluginRegistry {
 
@@ -60,6 +63,7 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
       final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
       for (final Driver driver : drivers) {
         final String driverName = driver.getClass().getName();
+        LOGGER.log(Level.FINE, new StringFormat("Found JDBC driver <%s>", driverName));
         final String driverDescription =
             String.format("%2d.%d", driver.getMajorVersion(), driver.getMinorVersion());
         availableJDBCDrivers.add(new PropertyName(driverName, driverDescription));
@@ -67,6 +71,7 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
     } catch (final Throwable e) {
       throw new InternalRuntimeException("Could not load JDBC drivers", e);
     }
+    Collections.sort(availableJDBCDrivers);
     return availableJDBCDrivers;
   }
 
@@ -83,6 +88,6 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
 
   @Override
   public String getName() {
-    return "JDBC drivers";
+    return "JDBC Drivers";
   }
 }

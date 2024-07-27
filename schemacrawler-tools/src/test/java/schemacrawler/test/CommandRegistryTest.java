@@ -76,7 +76,7 @@ public class CommandRegistryTest {
   @Test
   public void name() {
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    assertThat(commandRegistry.getName(), is("SchemaCrawler commands"));
+    assertThat(commandRegistry.getName(), is("SchemaCrawler Commands"));
   }
 
   @Test

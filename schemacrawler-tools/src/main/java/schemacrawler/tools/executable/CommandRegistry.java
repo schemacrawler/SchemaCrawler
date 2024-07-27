@@ -48,11 +48,12 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.registry.BasePluginRegistry;
+import schemacrawler.tools.registry.PluginCommandRegistry;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Command registry for mapping command to executable. */
-public final class CommandRegistry extends BasePluginRegistry {
+public final class CommandRegistry extends BasePluginRegistry implements PluginCommandRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class.getName());
 
@@ -225,6 +226,6 @@ public final class CommandRegistry extends BasePluginRegistry {
 
   @Override
   public String getName() {
-    return "SchemaCrawler commands";
+    return "SchemaCrawler Commands";
   }
 }
