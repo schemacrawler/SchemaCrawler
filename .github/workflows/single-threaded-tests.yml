@@ -28,7 +28,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.4.0
+      uses: sualeh/prepare-maven-build@v1.5.1
       with:
         java-version: ${{ matrix.java }}
     - id: install-graphviz
