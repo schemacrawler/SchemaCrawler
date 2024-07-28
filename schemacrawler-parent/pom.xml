@@ -481,10 +481,10 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <argLine>-XX:+EnableDynamicAgentLoading</argLine>
-            </configuration>
-            <systemPropertyVariables>
-              <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
-            </systemPropertyVariables>
+              <systemPropertyVariables>
+                <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
+              </systemPropertyVariables>
+            </configuration>			
           </plugin>
         </plugins>
       </build>
