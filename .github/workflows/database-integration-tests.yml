@@ -51,7 +51,7 @@ jobs:
       name: Restart Docker
       shell: bash
       run: |
-        # Restart Docker
+        # Restart Docker to take into account additional disk space
         # https://stackoverflow.com/a/71113148/100856
         sudo systemctl stop docker
         sudo rm -rf /var/lib/docker

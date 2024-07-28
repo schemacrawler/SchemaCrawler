@@ -127,18 +127,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.ginsberg</groupId>
-      <artifactId>junit5-system-exit</artifactId>
-      <version>1.1.2</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.junit.platform</groupId>
-          <artifactId>junit-platform-launcher</artifactId>
-        </exclusion>
-      </exclusions>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier</artifactId>
       <version>3.16.1</version>
@@ -478,5 +466,28 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>java21</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>21</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <argLine>-XX:+EnableDynamicAgentLoading</argLine>
+              <systemPropertyVariables>
+                <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
+              </systemPropertyVariables>
+            </configuration>			
+          </plugin>
+        </plugins>
+      </build>
+    </profile>	
   </profiles>
 </project>

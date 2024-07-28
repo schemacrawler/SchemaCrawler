@@ -34,11 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
 import org.junit.jupiter.api.Test;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.ResolveTestContext;
@@ -95,8 +91,8 @@ public class ShellCommandsTest {
   }
 
   @Test
-  @ExpectSystemExitWithStatus(0)
   public void exit(final TestContext testContext, final CapturedSystemStreams streams) {
+    // The exit command is a no-op
     new ExitCommand().run();
 
     assertThat(outputOf(streams.err()), hasNoContent());
@@ -105,7 +101,7 @@ public class ShellCommandsTest {
 
   @Test
   public void system(final TestContext testContext, final CapturedSystemStreams streams) {
-    final String[] args = new String[] {"--version"};
+    final String[] args = {"--version"};
 
     final ShellState state = new ShellState();
     newCommandLine(SystemCommand.class, new StateFactory(state)).execute(args);
@@ -121,7 +117,7 @@ public class ShellCommandsTest {
   @Test
   public void systemShowStackTrace(
       final TestContext testContext, final CapturedSystemStreams streams) {
-    final String[] args = new String[] {"--show-stacktrace"};
+    final String[] args = {"--show-stacktrace"};
 
     final RuntimeException exception = new RuntimeException("Test to display stacktrace");
     exception.setStackTrace(new StackTraceElement[0]);
@@ -142,7 +138,7 @@ public class ShellCommandsTest {
   @Test
   public void systemShowStackTraceWithoutException(
       final TestContext testContext, final CapturedSystemStreams streams) {
-    final String[] args = new String[] {"--show-stacktrace"};
+    final String[] args = {"--show-stacktrace"};
 
     final ShellState state = new ShellState();
 

@@ -29,9 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 import java.util.logging.Level;
-
-import picocli.CommandLine.Command;
 import java.util.logging.Logger;
+import picocli.CommandLine.Command;
 
 @Command(
     name = "exit",
@@ -47,7 +46,7 @@ public class ExitCommand implements Runnable {
   @Override
   public void run() {
     LOGGER.log(Level.INFO, "exit");
-
-    System.exit(0);
+    // No-op, since the shell will catch this command and exit with a status code of 0
+    // This command is registered only for the help message
   }
 }

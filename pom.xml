@@ -51,7 +51,6 @@
         </property>
       </activation>
       <modules>
-        <module>schemacrawler-diff</module>
         <module>schemacrawler-docs</module>
         <module>schemacrawler-distrib</module>
         <module>schemacrawler-docker</module>

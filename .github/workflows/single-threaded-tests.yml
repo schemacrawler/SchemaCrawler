@@ -18,24 +18,14 @@ permissions: read-all
 jobs:
   build:
     name: Build, run single-threaded database integration tests
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        java: [8, 17]
+        java: [8, 21]
+    runs-on: ubuntu-latest
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: maximize-build-space
-      name: Maximize build space
-      uses: easimon/maximize-build-space@master
-      with:
-        root-reserve-mb: '8192'
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
-        remove-docker-images: 'true'
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.4.0

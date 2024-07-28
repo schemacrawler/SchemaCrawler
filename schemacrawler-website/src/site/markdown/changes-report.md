@@ -2,6 +2,15 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.22.1"></a>
+## Release 16.22.1 - 2024-07-31
+
+- Standardize plugin registry code
+- Remove lint dispatch that allows system exit
+- Allow building both on Java 8 and Java 21
+- Move schemacrawler-diff proof of concept code to another project
+
+
 <a name="v16.21.4"></a>
 ## Release 16.21.4 - 2024-06-18
 

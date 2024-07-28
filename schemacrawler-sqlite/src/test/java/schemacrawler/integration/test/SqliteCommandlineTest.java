@@ -28,34 +28,31 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.io.FileMatchers.anExistingFile;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-import com.ginsberg.junit.exit.SystemExitPreventedException;
-
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
@@ -107,7 +104,6 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
   }
 
   @Test
-  @ExpectSystemExitWithStatus(1)
   public void testSqliteMainMissingDatabase(final CapturedSystemStreams streams) throws Exception {
 
     final Path sqliteDbFile =
@@ -126,18 +122,17 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
     argsMap.put("--command", "list");
     argsMap.put("--info-level", InfoLevel.minimum.name());
 
-    try {
-      Main.main(flattenCommandlineArgs(argsMap));
-    } catch (final SystemExitPreventedException e) {
+    restoreSystemProperties(
+        () -> {
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
+          assertThrows(
+              SchemaCrawlerException.class, () -> Main.main(flattenCommandlineArgs(argsMap)));
+        });
 
-      assertThat(
-          "An empty SQLite database should not be created when SchemaCrawler connects",
-          sqliteDbFile.toFile(),
-          not(anExistingFile()));
-
-      final int exitCode = e.getStatusCode();
-      assertThat(exitCode, is(1));
-    }
+    assertThat(
+        "An empty SQLite database should not be created when SchemaCrawler connects",
+        sqliteDbFile.toFile(),
+        not(anExistingFile()));
 
     assertThat(
         contentsOf(streams.err()),

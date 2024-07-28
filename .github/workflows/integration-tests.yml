@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [8, 17]
+        java: [8, 21]
         exclude:
           - os: macos-latest
             java: 8
@@ -38,7 +38,7 @@ jobs:
 
 # BUILD AND TEST
     - id: build-test
-      name: Build and run database integration tests
+      name: Build and run tests without Graphviz installed, using the Java library
       env:
         TZ: GMT
       shell: bash

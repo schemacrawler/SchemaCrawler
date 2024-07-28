@@ -80,7 +80,7 @@ public class ClasspathInputResource implements InputResource {
           String.format("Cannot open classpath resource <%s> for reading", classpathResource));
     }
     final Reader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
-    LOGGER.log(Level.INFO, "Opened input reader to classpath resource, " + classpathResource);
+    LOGGER.log(Level.FINE, "Opened input reader to classpath resource, " + classpathResource);
 
     return wrapReader(getDescription(), reader, true);
   }

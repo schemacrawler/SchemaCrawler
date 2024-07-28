@@ -8,8 +8,7 @@ For more information, see https://www.schemacrawler.com/lint.html
                           Optional, defaults to none
                           Corresponds to the configuration file setting:
                             schemacrawler.lint.lintdispatch
-                          Use one of none, write_err, throw_exception,
-                            terminate_system
+                          Use one of none, write_err, throw_exception
       --linter-configs=<linter-configs>
                           Path to the SchemaCrawler linter configuration file
       --output-format=<output-format>

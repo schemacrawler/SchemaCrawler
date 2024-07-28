@@ -30,7 +30,6 @@ package us.fatehi.utility.ioresource;
 
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.newBufferedReader;
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 import java.io.IOException;
@@ -40,6 +39,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 public class FileInputResource implements InputResource {
@@ -70,7 +70,7 @@ public class FileInputResource implements InputResource {
     }
 
     final Reader reader = newBufferedReader(inputFile, charset);
-    LOGGER.log(Level.INFO, new StringFormat("Opened input reader to file <%s>", inputFile));
+    LOGGER.log(Level.FINE, new StringFormat("Opened input reader to file <%s>", inputFile));
 
     return wrapReader(getDescription(), reader, true);
   }

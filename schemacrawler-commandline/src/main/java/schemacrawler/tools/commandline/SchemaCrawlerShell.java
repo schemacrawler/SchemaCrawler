@@ -28,13 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
-import static us.fatehi.utility.Utility.isBlank;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Supplier;
@@ -53,6 +51,8 @@ import org.jline.reader.impl.DefaultParser;
 import org.jline.reader.impl.LineReaderImpl;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine;
 import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliCommands;
@@ -66,7 +66,7 @@ public final class SchemaCrawlerShell {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerShell.class.getName());
 
-  public static void execute(final String[] args) {
+  public static int execute(final String[] args) {
 
     final ShellState state = new ShellState();
     try (final Terminal terminal = TerminalBuilder.builder().build()) {
@@ -127,8 +127,10 @@ public final class SchemaCrawlerShell {
             final ParsedLine pl = reader.getParser().parse(line, 0);
             final String[] arguments = pl.words().toArray(new String[0]);
             commandLine.execute(arguments);
-          } else if (line.equals("cls") || line.equals("clear")) {
+          } else if ("cls".equals(line) || "clear".equals(line)) {
             ((LineReaderImpl) reader).clearScreen();
+          } else if ("quit".equals(line) || "terminate".equals(line)) {
+            throw new EndOfFileException(line);
           } else {
             systemRegistry.execute(line);
           }
@@ -136,15 +138,19 @@ public final class SchemaCrawlerShell {
         } catch (final UserInterruptException e) {
           // Ignore
         } catch (final EndOfFileException e) {
-          return;
+          throw e;
         } catch (final Exception e) {
-          System.err.println("ERROR: " + e.getMessage());
           LOGGER.log(Level.WARNING, e.getMessage(), e);
           systemRegistry.trace(e);
         }
       }
+    } catch (final EndOfFileException e) {
+      // User-initiated exit
+      return 0;
     } catch (final Throwable throwable) {
+      // Exceptional exit
       handleFatalError(args, throwable, state);
+      return 1;
     } finally {
       state.close();
     }
@@ -172,8 +178,6 @@ public final class SchemaCrawlerShell {
     }
 
     printCommandLineErrorMessage(errorMessage, state);
-
-    System.exit(1);
   }
 
   private SchemaCrawlerShell() {

@@ -34,11 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import org.junit.jupiter.api.Test;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
@@ -58,14 +54,6 @@ public class LintDispatchTest {
   @AssertNoSystemOutOutput
   public void lintDispatchNone() {
     LintDispatch.none.dispatch();
-  }
-
-  @Test
-  @AssertNoSystemErrOutput
-  @AssertNoSystemOutOutput
-  @ExpectSystemExitWithStatus(1)
-  public void lintDispatchTerminateSystem() {
-    LintDispatch.terminate_system.dispatch();
   }
 
   @Test
