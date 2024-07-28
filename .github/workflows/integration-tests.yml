@@ -38,7 +38,7 @@ jobs:
 
 # BUILD AND TEST
     - id: build-test
-      name: Build and run database integration tests
+      name: Build and run tests without Graphviz installed, using the Java library
       env:
         TZ: GMT
       shell: bash
