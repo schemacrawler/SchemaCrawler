@@ -32,7 +32,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.5.1
+      uses: sualeh/prepare-maven-build@v1.5.2
       with:
         java-version: ${{ matrix.java }}
 
@@ -95,7 +95,7 @@ jobs:
         remove-docker-images: 'true'
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.5.1
+      uses: sualeh/prepare-maven-build@v1.5.2
       with:
         java-version: 8
     - id: install-graphviz
