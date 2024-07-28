@@ -8,6 +8,7 @@ SchemaCrawler release notes.
 - Standardize plugin registry code
 - Remove lint dispatch that allows system exit
 - Allow building both on Java 8 and Java 21
+- Move schemacrawler-diff proof of concept code to another project
 
 
 <a name="v16.21.4"></a>
