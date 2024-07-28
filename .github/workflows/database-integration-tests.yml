@@ -37,6 +37,29 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
+    - id: maximize-build-space
+      name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        root-reserve-mb: '8192'
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
+    - id: restart-docker
+      name: Restart Docker
+      shell: bash
+      run: |
+        # Restart Docker to take into account additional disk space
+        # https://stackoverflow.com/a/71113148/100856
+        sudo systemctl stop docker
+        sudo rm -rf /var/lib/docker
+        sudo systemctl start docker
+        echo "Docker used space:"
+        sudo du -sh /var/lib/docker
+        echo "Available storage:"
+        df -h
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.5.1
