@@ -482,6 +482,9 @@
             <configuration>
               <argLine>-XX:+EnableDynamicAgentLoading</argLine>
             </configuration>
+            <systemPropertyVariables>
+              <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
+            </systemPropertyVariables>
           </plugin>
         </plugins>
       </build>
