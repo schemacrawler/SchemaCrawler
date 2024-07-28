@@ -45,19 +45,6 @@ jobs:
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
-    - id: restart-docker
-      name: Restart Docker
-      shell: bash
-      run: |
-        # Restart Docker to take into account additional disk space
-        # https://stackoverflow.com/a/71113148/100856
-        sudo systemctl stop docker
-        sudo rm -rf /var/lib/docker
-        sudo systemctl start docker
-        echo "Docker used space:"
-        sudo du -sh /var/lib/docker
-        echo "Available storage:"
-        df -h
 
 # RUN DATABASE TESTS
     - id: build-test-databases
