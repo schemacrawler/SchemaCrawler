@@ -466,5 +466,25 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>java21</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>21</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <argLine>-XX:+EnableDynamicAgentLoading</argLine>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>	
   </profiles>
 </project>
