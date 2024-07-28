@@ -7,8 +7,6 @@ SchemaCrawler release notes.
 
 - Standardize plugin registry code
 - Remove lint dispatch that allows system exit
-- Allow exit from SchemaCrawler with System.exit or a runtime exception using configuration
-- Compile SchemaCrawler with both Java 8 and Java 21
 
 
 <a name="v16.21.4"></a>
