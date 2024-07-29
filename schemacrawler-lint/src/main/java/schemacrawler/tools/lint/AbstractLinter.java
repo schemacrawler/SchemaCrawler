@@ -46,7 +46,7 @@ import us.fatehi.utility.string.StringFormat;
  * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
  * state, but not for visiting a catalog. Includes code for dispatching a linter.
  */
-public abstract class AbstractLinter implements LinterProvider {
+public abstract class AbstractLinter implements Linter {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 
@@ -63,11 +63,11 @@ public abstract class AbstractLinter implements LinterProvider {
     threshold = Integer.MAX_VALUE; // default value
   }
 
+  @Override
   public final boolean exceedsThreshold() {
     return lintCount > threshold;
   }
 
-  @Override
   public String getDescription() {
     return linterName.getDescription();
   }
@@ -82,6 +82,7 @@ public abstract class AbstractLinter implements LinterProvider {
    *
    * @return Lint counts
    */
+  @Override
   public final int getLintCount() {
     return lintCount;
   }
@@ -91,6 +92,7 @@ public abstract class AbstractLinter implements LinterProvider {
    *
    * @return Identification of this linter instance
    */
+  @Override
   public final String getLinterInstanceId() {
     return linterInstanceId.toString();
   }
@@ -100,6 +102,7 @@ public abstract class AbstractLinter implements LinterProvider {
    *
    * @return Severity of the lints produced by this linter
    */
+  @Override
   public final LintSeverity getSeverity() {
     return severity;
   }
@@ -109,6 +112,7 @@ public abstract class AbstractLinter implements LinterProvider {
    *
    * @return Brief summary of this linter
    */
+  @Override
   public abstract String getSummary();
 
   @Override
@@ -171,11 +175,5 @@ public abstract class AbstractLinter implements LinterProvider {
 
   private void setThreshold(final int threshold) {
     this.threshold = threshold;
-  }
-
-  @Override
-  public PropertyName getPropertyName() {
-    // TODO Auto-generated method stub
-    return null;
   }
 }

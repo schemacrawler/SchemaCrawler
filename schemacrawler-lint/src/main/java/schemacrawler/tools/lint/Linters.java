@@ -96,7 +96,7 @@ public final class Linters implements Iterable<AbstractLinter> {
   }
 
   public boolean exceedsThreshold() {
-    for (final AbstractLinter linter : linters) {
+    for (final Linter linter : linters) {
       if (linter.exceedsThreshold()) {
         return true;
       }
@@ -142,7 +142,7 @@ public final class Linters implements Iterable<AbstractLinter> {
     linters.sort(new LinterComparator());
 
     final StringBuilder buffer = new StringBuilder(1024);
-    for (final AbstractLinter linter : linters) {
+    for (final Linter linter : linters) {
       if (linter.getLintCount() > 0) {
         buffer.append(
             String.format(
