@@ -28,24 +28,28 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintUtility;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterTooManyLobs extends BaseLinter {
 
   private int maxLargeObjectsInTable;
 
   public LinterTooManyLobs() {
+    super(
+        new PropertyName(
+            LinterTooManyLobs.class.getName(),
+            LintUtility.readDescription(LinterTooManyLobs.class.getName())));
     setSeverity(LintSeverity.low);
 
     maxLargeObjectsInTable = 1;

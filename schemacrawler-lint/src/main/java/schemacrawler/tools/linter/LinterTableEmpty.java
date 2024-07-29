@@ -28,12 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -41,6 +41,8 @@ import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableEmpty extends BaseLinter {
@@ -48,6 +50,10 @@ public class LinterTableEmpty extends BaseLinter {
   private static final Logger LOGGER = Logger.getLogger(LinterTableEmpty.class.getName());
 
   public LinterTableEmpty() {
+    super(
+        new PropertyName(
+            LinterTableEmpty.class.getName(),
+            LintUtility.readDescription(LinterTableEmpty.class.getName())));
     setSeverity(LintSeverity.low);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

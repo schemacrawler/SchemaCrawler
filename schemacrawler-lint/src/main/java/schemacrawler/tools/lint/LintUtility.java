@@ -28,9 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
+import static us.fatehi.utility.IOUtility.readResourceFully;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import us.fatehi.utility.UtilityMarker;
+import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
 public final class LintUtility {
@@ -49,4 +52,24 @@ public final class LintUtility {
   }
 
   private LintUtility() {}
+
+  /**
+   * Gets a lengthy description of the linter. By default, reads a resource file called
+   * /help/{linter-id}.txt and if that is not present, returns the summary. Can be overridden.
+   *
+   * @return Lengthy description of the linter
+   */
+  public static String readDescription(final String linterId) {
+    final String descriptionResource = String.format("/help/%s.txt", linterId);
+
+    final String descriptionText;
+    if (BaseLinterProvider.class.getResource(descriptionResource) == null) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Could not find description resource for linter {0}, at {1}", linterId));
+      return "";
+    }
+    descriptionText = readResourceFully(descriptionResource);
+    return descriptionText;
+  }
 }

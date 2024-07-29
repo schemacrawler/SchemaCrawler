@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import static java.util.Comparator.naturalOrder;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.convertForComparison;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,13 +38,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.convertForComparison;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintUtility;
 import us.fatehi.utility.Multimap;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterTableWithIncrementingColumns extends BaseLinter {
+
+  public LinterTableWithIncrementingColumns() {
+    super(
+        new PropertyName(
+            LinterTableWithIncrementingColumns.class.getName(),
+            LintUtility.readDescription(LinterTableWithIncrementingColumns.class.getName())));
+  }
 
   private static class IncrementingColumn {
     private final int columnIncrement;

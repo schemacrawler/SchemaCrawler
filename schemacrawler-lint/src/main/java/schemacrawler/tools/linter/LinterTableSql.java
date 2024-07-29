@@ -28,27 +28,34 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintUtility;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableSql extends BaseLinter {
 
   private static final Logger LOGGER = Logger.getLogger(LinterTableSql.class.getName());
+
+  public LinterTableSql() {
+    super(
+        new PropertyName(
+            LinterTableSql.class.getName(),
+            LintUtility.readDescription(LinterTableSql.class.getName())));
+  }
 
   private String message;
   private String sql;
@@ -58,9 +65,8 @@ public class LinterTableSql extends BaseLinter {
     if (isBlank(message)) {
       // Linter is not configured
       return "SQL statement based table linter";
-    } else {
-      return message;
     }
+    return message;
   }
 
   @Override

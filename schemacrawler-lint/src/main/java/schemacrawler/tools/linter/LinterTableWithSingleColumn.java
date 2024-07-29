@@ -28,16 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.List;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterTableWithSingleColumn extends BaseLinter {
+
+  public LinterTableWithSingleColumn() {
+    super(
+        new PropertyName(
+            LinterTableWithSingleColumn.class.getName(),
+            LintUtility.readDescription(LinterTableWithSingleColumn.class.getName())));
+  }
 
   @Override
   public String getSummary() {

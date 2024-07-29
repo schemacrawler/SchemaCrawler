@@ -28,17 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
 
   public LinterTableWithNoSurrogatePrimaryKey() {
+    super(
+        new PropertyName(
+            LinterTableWithNoSurrogatePrimaryKey.class.getName(),
+            LintUtility.readDescription(LinterTableWithNoSurrogatePrimaryKey.class.getName())));
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

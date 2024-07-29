@@ -28,14 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 
 /**
  * Check that tables and columns) have remarks.
@@ -45,6 +47,10 @@ import schemacrawler.tools.lint.LintSeverity;
 public class LinterTableWithNoRemarks extends BaseLinter {
 
   public LinterTableWithNoRemarks() {
+    super(
+        new PropertyName(
+            LinterTableWithNoRemarks.class.getName(),
+            LintUtility.readDescription(LinterTableWithNoRemarks.class.getName())));
     setSeverity(LintSeverity.low);
   }
 

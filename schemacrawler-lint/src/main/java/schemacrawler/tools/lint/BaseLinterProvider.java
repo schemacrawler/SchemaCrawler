@@ -28,48 +28,30 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static us.fatehi.utility.IOUtility.readResourceFully;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import us.fatehi.utility.string.StringFormat;
+import us.fatehi.utility.property.PropertyName;
 
 /**
- * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
- * state, but not for visiting a catalog. Includes code for dispatching a linter.
+ * Defines a linter, and allows the creation of a new one, since multiple instances of the same
+ * linter can be created.
  */
 public abstract class BaseLinterProvider implements LinterProvider {
 
+  private static final long serialVersionUID = -7188840789229724389L;
+
   private static final Logger LOGGER = Logger.getLogger(BaseLinterProvider.class.getName());
 
-  /**
-   * Gets a lengthy description of the linter. By default, reads a resource file called
-   * /help/{linter-id}.txt and if that is not present, returns the summary. Can be overridden.
-   *
-   * @return Lengthy description of the linter
-   */
-  @Override
-  public String getDescription() {
-    final String descriptionResource = String.format("/help/%s.txt", getLinterId());
+  private final PropertyName linterName;
 
-    final String descriptionText;
-    if (BaseLinterProvider.class.getResource(descriptionResource) == null) {
-      LOGGER.log(
-          Level.FINE,
-          new StringFormat(
-              "Could not find description resource for linter {0}, at {1}", getLinterId()));
-      return "";
-    }
-    descriptionText = readResourceFully(descriptionResource);
-    return descriptionText;
+  public BaseLinterProvider(final String linterId) {
+    linterName = new PropertyName(linterId, LintUtility.readDescription(linterId));
   }
 
   /**
-   * Gets the identification of this linter.
-   *
-   * @return Identification of this linter
+   * @{inheritDoc}
    */
   @Override
-  public String getLinterId() {
-    return getClass().getName();
+  public PropertyName getPropertyName() {
+    return linterName;
   }
 }

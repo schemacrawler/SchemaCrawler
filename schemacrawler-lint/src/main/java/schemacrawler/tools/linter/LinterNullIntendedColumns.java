@@ -28,19 +28,25 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterNullIntendedColumns extends BaseLinter {
 
   public LinterNullIntendedColumns() {
+    super(
+        new PropertyName(
+            LinterNullIntendedColumns.class.getName(),
+            LintUtility.readDescription(LinterNullIntendedColumns.class.getName())));
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
@@ -64,7 +70,7 @@ public class LinterNullIntendedColumns extends BaseLinter {
     final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
     for (final Column column : columns) {
       final String columnDefaultValue = column.getDefaultValue();
-      if (!isBlank(columnDefaultValue) && columnDefaultValue.trim().equalsIgnoreCase("NULL")) {
+      if (!isBlank(columnDefaultValue) && "NULL".equalsIgnoreCase(columnDefaultValue.trim())) {
         nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }

@@ -28,19 +28,33 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-public interface LinterProvider {
+import java.io.Serializable;
+import us.fatehi.utility.property.PropertyName;
+
+public interface LinterProvider extends Serializable {
 
   /**
    * Gets a description of the linter.
    *
    * @return Description of the linter
    */
-  String getDescription();
+  default String getDescription() {
+    return getPropertyName().getDescription();
+  }
 
   /**
    * Gets the identification of this linter.
    *
    * @return Identification of this linter
    */
-  String getLinterId();
+  default String getLinterId() {
+    return getPropertyName().getName();
+  }
+
+  /**
+   * Gets the name and description of the linter.
+   *
+   * @return Name and description of the linter
+   */
+  PropertyName getPropertyName();
 }

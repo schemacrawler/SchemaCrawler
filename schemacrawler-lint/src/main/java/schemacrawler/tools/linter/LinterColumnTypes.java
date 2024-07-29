@@ -28,21 +28,28 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintUtility;
 import us.fatehi.utility.Multimap;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterColumnTypes extends BaseLinter {
+
+  public LinterColumnTypes() {
+    super(
+        new PropertyName(
+            LinterColumnTypes.class.getName(),
+            LintUtility.readDescription(LinterColumnTypes.class.getName())));
+  }
 
   private Multimap<String, ColumnDataType> columnTypes;
 

@@ -52,12 +52,7 @@ public final class LinterRegistry extends BasePluginRegistry {
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
   private static final AbstractLinter NO_OP_LINTER =
-      new BaseLinter() {
-
-        @Override
-        public String getLinterId() {
-          return "schemacrawler.NO_OP_LINTER";
-        }
+      new BaseLinter(new PropertyName("schemacrawler.NO_OP_LINTER", "")) {
 
         @Override
         public String getSummary() {

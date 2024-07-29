@@ -28,21 +28,28 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintUtility;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterCatalogSql extends BaseLinter {
+
+  public LinterCatalogSql() {
+    super(
+        new PropertyName(
+            LinterCatalogSql.class.getName(),
+            LintUtility.readDescription(LinterCatalogSql.class.getName())));
+  }
 
   private String message;
   private String sql;
@@ -52,9 +59,8 @@ public class LinterCatalogSql extends BaseLinter {
     if (isBlank(message)) {
       // Linter is not configured
       return "SQL statement based catalog linter";
-    } else {
-      return message;
     }
+    return message;
   }
 
   @Override

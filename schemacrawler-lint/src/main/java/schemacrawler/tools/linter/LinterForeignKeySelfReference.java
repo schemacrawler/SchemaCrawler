@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -41,10 +39,16 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterForeignKeySelfReference extends BaseLinter {
 
   public LinterForeignKeySelfReference() {
+    super(
+        new PropertyName(
+            LinterForeignKeySelfReference.class.getName(),
+            LintUtility.readDescription(LinterForeignKeySelfReference.class.getName())));
     setSeverity(LintSeverity.critical);
   }
 

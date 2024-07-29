@@ -28,25 +28,29 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
 import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterForeignKeyWithNoIndexes extends BaseLinter {
 
   public LinterForeignKeyWithNoIndexes() {
+    super(
+        new PropertyName(
+            LinterForeignKeyWithNoIndexes.class.getName(),
+            LintUtility.readDescription(LinterForeignKeyWithNoIndexes.class.getName())));
     setSeverity(LintSeverity.low);
   }
 

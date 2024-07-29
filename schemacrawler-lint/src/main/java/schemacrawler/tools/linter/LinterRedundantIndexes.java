@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import java.sql.Connection;
 import java.util.Collection;
@@ -38,16 +37,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LintUtility;
 import schemacrawler.utility.MetaDataUtility;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterRedundantIndexes extends BaseLinter {
 
   public LinterRedundantIndexes() {
+    super(
+        new PropertyName(
+            LinterRedundantIndexes.class.getName(),
+            LintUtility.readDescription(LinterRedundantIndexes.class.getName())));
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

@@ -30,15 +30,20 @@ package schemacrawler.tools.linter;
 
 import java.sql.Connection;
 import java.util.Collection;
-
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintUtility;
+import us.fatehi.utility.property.PropertyName;
 
 public class LinterTableWithNoIndexes extends BaseLinter {
 
   public LinterTableWithNoIndexes() {
+    super(
+        new PropertyName(
+            LinterTableWithNoIndexes.class.getName(),
+            LintUtility.readDescription(LinterTableWithNoIndexes.class.getName())));
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 

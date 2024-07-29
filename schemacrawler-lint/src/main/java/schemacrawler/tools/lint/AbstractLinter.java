@@ -33,34 +33,48 @@ import java.sql.Connection;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /**
  * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
  * state, but not for visiting a catalog. Includes code for dispatching a linter.
  */
-public abstract class AbstractLinter extends BaseLinterProvider {
+public abstract class AbstractLinter implements LinterProvider {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 
+  private final PropertyName linterName;
   private static UUID linterInstanceId = UUID.randomUUID();
   private LintCollector collector;
   private LintSeverity severity;
   private int threshold;
   private int lintCount;
 
-  protected AbstractLinter() {
+  protected AbstractLinter(final PropertyName linterName) {
+    this.linterName = requireNonNull(linterName, "Linter name cannot be null");
     severity = LintSeverity.medium; // default value
     threshold = Integer.MAX_VALUE; // default value
   }
 
   public final boolean exceedsThreshold() {
     return lintCount > threshold;
+  }
+
+  @Override
+  public String getDescription() {
+    return linterName.getDescription();
+  }
+
+  @Override
+  public String getLinterId() {
+    return linterName.getName();
   }
 
   /**
@@ -157,5 +171,11 @@ public abstract class AbstractLinter extends BaseLinterProvider {
 
   private void setThreshold(final int threshold) {
     this.threshold = threshold;
+  }
+
+  @Override
+  public PropertyName getPropertyName() {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

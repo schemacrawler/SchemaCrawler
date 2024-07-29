@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static java.util.Objects.requireNonNull;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -45,6 +45,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.config.LinterConfig;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -61,7 +62,8 @@ public abstract class BaseLinter extends AbstractLinter {
   private InclusionRule columnInclusionRule;
   private TableTypesFilter tableTypesFilter;
 
-  protected BaseLinter() {
+  protected BaseLinter(final PropertyName linterName) {
+    super(linterName);
     setTableTypesFilter(null);
     setTableInclusionRule(null);
     setColumnInclusionRule(null);
