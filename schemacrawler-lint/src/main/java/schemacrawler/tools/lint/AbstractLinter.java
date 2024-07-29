@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static us.fatehi.utility.IOUtility.readResourceFully;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.AttributedObject;
@@ -48,6 +48,7 @@ public abstract class AbstractLinter extends BaseLinterProvider {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 
+  private static UUID linterInstanceId = UUID.randomUUID();
   private LintCollector collector;
   private LintSeverity severity;
   private int threshold;
@@ -63,24 +64,6 @@ public abstract class AbstractLinter extends BaseLinterProvider {
   }
 
   /**
-   * Gets a lengthy description of the linter. By default, reads a resource file called
-   * /help/{linter-id}.txt and if that is not present, returns the summary. Can be overridden.
-   *
-   * @return Lengthy description of the linter
-   */
-  @Override
-  public String getDescription() {
-    final String descriptionResource = String.format("/help/%s.txt", getLinterId());
-
-    final String descriptionText;
-    if (AbstractLinter.class.getResource(descriptionResource) == null) {
-      return getSummary();
-    }
-    descriptionText = readResourceFully(descriptionResource);
-    return descriptionText;
-  }
-
-  /**
    * Gets the number of lints produced by this linter.
    *
    * @return Lint counts
@@ -90,22 +73,12 @@ public abstract class AbstractLinter extends BaseLinterProvider {
   }
 
   /**
-   * Gets the identification of this linter.
-   *
-   * @return Identification of this linter
-   */
-  @Override
-  public String getLinterId() {
-    return getClass().getName();
-  }
-
-  /**
    * Gets the identification of this linter instance.
    *
    * @return Identification of this linter instance
    */
   public final String getLinterInstanceId() {
-    return super.toString();
+    return linterInstanceId.toString();
   }
 
   /**
