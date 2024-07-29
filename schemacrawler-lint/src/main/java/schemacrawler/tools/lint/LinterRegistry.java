@@ -51,7 +51,7 @@ public final class LinterRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
-  private static final Linter NO_OP_LINTER =
+  private static final AbstractLinter NO_OP_LINTER =
       new BaseLinter() {
 
         @Override
@@ -84,9 +84,9 @@ public final class LinterRegistry extends BasePluginRegistry {
 
     final Map<String, LinterInfo> linterRegistry = new HashMap<>();
     try {
-      final ServiceLoader<Linter> serviceLoader =
-          ServiceLoader.load(Linter.class, LinterRegistry.class.getClassLoader());
-      for (final Linter linter : serviceLoader) {
+      final ServiceLoader<AbstractLinter> serviceLoader =
+          ServiceLoader.load(AbstractLinter.class, LinterRegistry.class.getClassLoader());
+      for (final AbstractLinter linter : serviceLoader) {
         final String linterId = linter.getLinterId();
         final LinterInfo linterInfo =
             new LinterInfo(
@@ -133,7 +133,7 @@ public final class LinterRegistry extends BasePluginRegistry {
     return linterRegistry.containsKey(linterId);
   }
 
-  public Linter newLinter(final String linterId) {
+  public AbstractLinter newLinter(final String linterId) {
 
     if (!hasLinter(linterId)) {
       LOGGER.log(
@@ -142,8 +142,9 @@ public final class LinterRegistry extends BasePluginRegistry {
     }
     final LinterInfo linterInfo = linterRegistry.get(linterId);
     try {
-      final Class<Linter> linterClass = (Class<Linter>) Class.forName(linterInfo.getClassName());
-      final Linter linter = linterClass.newInstance();
+      final Class<AbstractLinter> linterClass =
+          (Class<AbstractLinter>) Class.forName(linterInfo.getClassName());
+      final AbstractLinter linter = linterClass.newInstance();
       return linter;
     } catch (final Exception e) {
       LOGGER.log(

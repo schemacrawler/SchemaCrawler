@@ -44,16 +44,16 @@ import us.fatehi.utility.string.StringFormat;
  * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
  * state, but not for visiting a catalog. Includes code for dispatching a linter.
  */
-public abstract class Linter {
+public abstract class AbstractLinter extends BaseLinterProvider {
 
-  private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 
   private LintCollector collector;
   private LintSeverity severity;
   private int threshold;
   private int lintCount;
 
-  protected Linter() {
+  protected AbstractLinter() {
     severity = LintSeverity.medium; // default value
     threshold = Integer.MAX_VALUE; // default value
   }
@@ -68,15 +68,15 @@ public abstract class Linter {
    *
    * @return Lengthy description of the linter
    */
+  @Override
   public String getDescription() {
     final String descriptionResource = String.format("/help/%s.txt", getLinterId());
 
     final String descriptionText;
-    if (Linter.class.getResource(descriptionResource) == null) {
+    if (AbstractLinter.class.getResource(descriptionResource) == null) {
       return getSummary();
-    } else {
-      descriptionText = readResourceFully(descriptionResource);
     }
+    descriptionText = readResourceFully(descriptionResource);
     return descriptionText;
   }
 
@@ -94,6 +94,7 @@ public abstract class Linter {
    *
    * @return Identification of this linter
    */
+  @Override
   public String getLinterId() {
     return getClass().getName();
   }

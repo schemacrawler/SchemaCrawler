@@ -52,7 +52,7 @@ import us.fatehi.utility.string.StringFormat;
  * creating states.Also contains utility methods for subclasses. Needs to be overridden by custom
  * linters.
  */
-public abstract class BaseLinter extends Linter {
+public abstract class BaseLinter extends AbstractLinter {
 
   private static final Logger LOGGER = Logger.getLogger(BaseLinter.class.getName());
 
