@@ -39,6 +39,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.Multimap;
 import us.fatehi.utility.property.PropertyName;
@@ -52,15 +53,15 @@ public class LinterProviderColumnTypes extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterColumnTypes(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterColumnTypes(getPropertyName(), lintCollector);
   }
 }
 
 class LinterColumnTypes extends BaseLinter {
 
-  LinterColumnTypes(final PropertyName linterName) {
-    super(linterName);
+  LinterColumnTypes(final PropertyName linterName, final LintCollector lintCollector) {
+    super(linterName, lintCollector);
   }
 
   private Multimap<String, ColumnDataType> columnTypes;

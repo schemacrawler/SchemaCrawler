@@ -43,6 +43,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
 import schemacrawler.utility.MetaDataUtility;
@@ -57,15 +58,15 @@ public class LinterProviderRedundantIndexes extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterRedundantIndexes(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterRedundantIndexes(getPropertyName(), lintCollector);
   }
 }
 
 class LinterRedundantIndexes extends BaseLinter {
 
-  LinterRedundantIndexes(final PropertyName propertyName) {
-    super(propertyName);
+  LinterRedundantIndexes(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

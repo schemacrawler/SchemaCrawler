@@ -40,6 +40,7 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.registry.BasePluginRegistry;
@@ -52,7 +53,7 @@ public final class LinterRegistry extends BasePluginRegistry {
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
   private static final Linter NO_OP_LINTER =
-      new BaseLinter(new PropertyName("schemacrawler.NO_OP_LINTER", "")) {
+      new BaseLinter(new PropertyName("schemacrawler.NO_OP_LINTER", ""), new LintCollector()) {
 
         @Override
         public String getSummary() {
@@ -122,14 +123,14 @@ public final class LinterRegistry extends BasePluginRegistry {
     return linterRegistry.containsKey(linterId);
   }
 
-  public Linter newLinter(final String linterId) {
-
+  public Linter newLinter(final String linterId, final LintCollector lintCollector) {
+    requireNonNull(lintCollector, "No lint collector provided");
     if (!hasLinter(linterId)) {
       LOGGER.log(
           Level.WARNING, new StringFormat("Could not instantiate linter with id <%s>", linterId));
       return NO_OP_LINTER;
     }
     final LinterProvider linterProvider = linterRegistry.get(linterId);
-    return linterProvider.newLinter();
+    return linterProvider.newLinter(lintCollector);
   }
 }

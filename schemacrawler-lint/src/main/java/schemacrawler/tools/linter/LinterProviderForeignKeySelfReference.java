@@ -39,6 +39,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
@@ -52,15 +53,16 @@ public class LinterProviderForeignKeySelfReference extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterForeignKeySelfReference(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterForeignKeySelfReference(getPropertyName(), lintCollector);
   }
 }
 
 class LinterForeignKeySelfReference extends BaseLinter {
 
-  LinterForeignKeySelfReference(final PropertyName propertyName) {
-    super(propertyName);
+  LinterForeignKeySelfReference(
+      final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.critical);
   }
 

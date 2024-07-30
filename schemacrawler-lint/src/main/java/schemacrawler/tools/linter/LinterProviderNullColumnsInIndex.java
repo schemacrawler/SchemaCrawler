@@ -39,6 +39,7 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
@@ -51,15 +52,15 @@ public class LinterProviderNullColumnsInIndex extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterNullColumnsInIndex(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterNullColumnsInIndex(getPropertyName(), lintCollector);
   }
 }
 
 class LinterNullColumnsInIndex extends BaseLinter {
 
-  LinterNullColumnsInIndex(final PropertyName propertyName) {
-    super(propertyName);
+  LinterNullColumnsInIndex(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
   }
 
   @Override

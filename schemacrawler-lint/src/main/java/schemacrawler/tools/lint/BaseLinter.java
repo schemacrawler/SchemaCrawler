@@ -62,8 +62,8 @@ public abstract class BaseLinter extends AbstractLinter {
   private InclusionRule columnInclusionRule;
   private TableTypesFilter tableTypesFilter;
 
-  protected BaseLinter(final PropertyName linterName) {
-    super(linterName);
+  protected BaseLinter(final PropertyName linterName, final LintCollector lintCollector) {
+    super(linterName, lintCollector);
     setTableTypesFilter(null);
     setTableInclusionRule(null);
     setColumnInclusionRule(null);

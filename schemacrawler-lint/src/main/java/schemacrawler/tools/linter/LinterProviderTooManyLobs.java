@@ -37,6 +37,7 @@ import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
 import schemacrawler.tools.options.Config;
@@ -51,8 +52,8 @@ public class LinterProviderTooManyLobs extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterTooManyLobs(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTooManyLobs(getPropertyName(), lintCollector);
   }
 }
 
@@ -60,8 +61,8 @@ class LinterTooManyLobs extends BaseLinter {
 
   private int maxLargeObjectsInTable;
 
-  LinterTooManyLobs(final PropertyName propertyName) {
-    super(propertyName);
+  LinterTooManyLobs(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.low);
 
     maxLargeObjectsInTable = 1;

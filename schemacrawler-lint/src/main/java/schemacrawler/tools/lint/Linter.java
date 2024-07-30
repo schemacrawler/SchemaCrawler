@@ -41,6 +41,4 @@ public interface Linter {
   void configure(final LinterConfig linterConfig);
 
   void lint(final Catalog catalog, final Connection connection);
-
-  void setLintCollector(LintCollector lintCollector);
 }

@@ -45,6 +45,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.Multimap;
 import us.fatehi.utility.property.PropertyName;
@@ -58,8 +59,8 @@ public class LinterProviderTableWithIncrementingColumns extends BaseLinterProvid
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterTableWithIncrementingColumns(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithIncrementingColumns(getPropertyName(), lintCollector);
   }
 }
 
@@ -90,8 +91,9 @@ class LinterTableWithIncrementingColumns extends BaseLinter {
     }
   }
 
-  LinterTableWithIncrementingColumns(final PropertyName propertyName) {
-    super(propertyName);
+  LinterTableWithIncrementingColumns(
+      final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
   }
 
   @Override

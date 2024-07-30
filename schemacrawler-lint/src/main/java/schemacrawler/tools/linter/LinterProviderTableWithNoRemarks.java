@@ -36,6 +36,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
@@ -49,8 +50,8 @@ public class LinterProviderTableWithNoRemarks extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterTableWithNoRemarks(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithNoRemarks(getPropertyName(), lintCollector);
   }
 }
 
@@ -61,8 +62,8 @@ public class LinterProviderTableWithNoRemarks extends BaseLinterProvider {
  */
 class LinterTableWithNoRemarks extends BaseLinter {
 
-  LinterTableWithNoRemarks(final PropertyName propertyName) {
-    super(propertyName);
+  LinterTableWithNoRemarks(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.low);
   }
 

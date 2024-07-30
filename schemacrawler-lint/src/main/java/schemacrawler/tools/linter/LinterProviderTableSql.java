@@ -42,6 +42,7 @@ import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linter;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;
@@ -56,8 +57,8 @@ public class LinterProviderTableSql extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterTableSql(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableSql(getPropertyName(), lintCollector);
   }
 }
 
@@ -68,8 +69,8 @@ class LinterTableSql extends BaseLinter {
   private String message;
   private String sql;
 
-  LinterTableSql(final PropertyName propertyName) {
-    super(propertyName);
+  LinterTableSql(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
   }
 
   @Override

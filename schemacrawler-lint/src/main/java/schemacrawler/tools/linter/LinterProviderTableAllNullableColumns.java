@@ -36,6 +36,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
@@ -48,15 +49,16 @@ public class LinterProviderTableAllNullableColumns extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterTableAllNullableColumns(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableAllNullableColumns(getPropertyName(), lintCollector);
   }
 }
 
 class LinterTableAllNullableColumns extends BaseLinter {
 
-  LinterTableAllNullableColumns(final PropertyName propertyName) {
-    super(propertyName);
+  LinterTableAllNullableColumns(
+      final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
   }
 
   @Override

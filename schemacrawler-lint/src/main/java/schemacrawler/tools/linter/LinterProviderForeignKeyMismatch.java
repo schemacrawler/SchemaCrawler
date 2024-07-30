@@ -39,6 +39,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
@@ -52,15 +53,15 @@ public class LinterProviderForeignKeyMismatch extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterForeignKeyMismatch(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterForeignKeyMismatch(getPropertyName(), lintCollector);
   }
 }
 
 class LinterForeignKeyMismatch extends BaseLinter {
 
-  LinterForeignKeyMismatch(final PropertyName linterName) {
-    super(linterName);
+  LinterForeignKeyMismatch(final PropertyName linterName, final LintCollector lintCollector) {
+    super(linterName, lintCollector);
     setSeverity(LintSeverity.high);
   }
 

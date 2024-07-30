@@ -35,6 +35,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
@@ -48,15 +49,15 @@ public class LinterProviderTableWithNoPrimaryKey extends BaseLinterProvider {
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterTableWithNoPrimaryKey(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithNoPrimaryKey(getPropertyName(), lintCollector);
   }
 }
 
 class LinterTableWithNoPrimaryKey extends BaseLinter {
 
-  LinterTableWithNoPrimaryKey(final PropertyName propertyName) {
-    super(propertyName);
+  LinterTableWithNoPrimaryKey(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

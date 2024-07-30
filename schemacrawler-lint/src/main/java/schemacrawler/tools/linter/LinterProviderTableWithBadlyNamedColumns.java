@@ -39,6 +39,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linter;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;
@@ -52,8 +53,8 @@ public class LinterProviderTableWithBadlyNamedColumns extends BaseLinterProvider
   }
 
   @Override
-  public Linter newLinter() {
-    return new LinterTableWithBadlyNamedColumns(getPropertyName());
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithBadlyNamedColumns(getPropertyName(), lintCollector);
   }
 }
 
@@ -61,8 +62,9 @@ class LinterTableWithBadlyNamedColumns extends BaseLinter {
 
   private InclusionRule columnNames;
 
-  LinterTableWithBadlyNamedColumns(final PropertyName propertyName) {
-    super(propertyName);
+  LinterTableWithBadlyNamedColumns(
+      final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
   }
 
   @Override

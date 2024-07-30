@@ -77,12 +77,9 @@ public final class Linters implements Iterable<Linter> {
         continue;
       }
 
-      final Linter linter = registry.newLinter(linterId);
+      final Linter linter = registry.newLinter(linterId, collector);
       if (linter != null) {
-        // Configure linter
-        linter.setLintCollector(collector);
         linter.configure(linterConfig);
-
         linters.add(linter);
       }
     }
@@ -90,8 +87,7 @@ public final class Linters implements Iterable<Linter> {
     if (runAllLinters) {
       // Add in all remaining linters that were not configured
       for (final String linterId : registeredLinters) {
-        final Linter linter = registry.newLinter(linterId);
-        linter.setLintCollector(collector);
+        final Linter linter = registry.newLinter(linterId, collector);
         linters.add(linter);
       }
     }

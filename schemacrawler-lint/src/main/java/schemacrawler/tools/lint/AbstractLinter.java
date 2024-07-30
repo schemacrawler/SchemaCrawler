@@ -49,14 +49,17 @@ public abstract class AbstractLinter implements Linter {
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 
   private final PropertyName linterName;
-  private static UUID linterInstanceId = UUID.randomUUID();
-  private LintCollector collector;
+  private final UUID linterInstanceId;
+  private final LintCollector collector;
   private LintSeverity severity;
   private int threshold;
   private int lintCount;
 
-  protected AbstractLinter(final PropertyName linterName) {
+  protected AbstractLinter(final PropertyName linterName, final LintCollector lintCollector) {
     this.linterName = requireNonNull(linterName, "Linter name cannot be null");
+    linterInstanceId = UUID.randomUUID();
+    collector = requireNonNull(lintCollector, "Lint collector cannot be null");
+
     severity = LintSeverity.medium; // default value
     threshold = Integer.MAX_VALUE; // default value
   }
@@ -164,11 +167,6 @@ public abstract class AbstractLinter implements Linter {
       setThreshold(linterConfig.getThreshold());
       configure(linterConfig.getConfig());
     }
-  }
-
-  @Override
-  public final void setLintCollector(final LintCollector lintCollector) {
-    collector = lintCollector;
   }
 
   private void setThreshold(final int threshold) {
