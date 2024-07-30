@@ -28,17 +28,39 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithQuotedNames extends BaseLinter {
+public class LinterProviderTableWithQuotedNames extends BaseLinterProvider {
+
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithQuotedNames() {
+    super(LinterTableWithQuotedNames.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithQuotedNames(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableWithQuotedNames extends BaseLinter {
+
+  LinterTableWithQuotedNames(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
+  }
 
   @Override
   public String getSummary() {

@@ -28,26 +28,45 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
-public class LinterTableEmpty extends BaseLinter {
+public class LinterProviderTableEmpty extends BaseLinterProvider {
+
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableEmpty() {
+    super(LinterTableEmpty.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableEmpty(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableEmpty extends BaseLinter {
 
   private static final Logger LOGGER = Logger.getLogger(LinterTableEmpty.class.getName());
 
-  public LinterTableEmpty() {
+  public LinterTableEmpty(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.low);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

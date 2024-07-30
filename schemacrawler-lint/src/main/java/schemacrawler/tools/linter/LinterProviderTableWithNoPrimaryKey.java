@@ -28,42 +28,66 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
+public class LinterProviderTableWithNoPrimaryKey extends BaseLinterProvider {
 
-  public LinterTableWithNoSurrogatePrimaryKey() {
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoPrimaryKey() {
+    super(LinterTableWithNoPrimaryKey.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithNoPrimaryKey(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableWithNoPrimaryKey extends BaseLinter {
+
+  LinterTableWithNoPrimaryKey(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "primary key may not be a surrogate";
+    return "no primary key";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (hasNoSurrogatePrimaryKey(table)) {
+    if (hasNoPrimaryKey(table)) {
       addTableLint(table, getSummary());
     }
   }
 
-  private boolean hasNoSurrogatePrimaryKey(final Table table) {
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null) {
-      final int pkColumnCount = primaryKey.getConstrainedColumns().size();
-      return pkColumnCount > 1;
+  private boolean hasNoPrimaryKey(final Table table) {
+    if (table.getPrimaryKey() == null) {
+      boolean hasDataColumn = false;
+      for (final Column column : getColumns(table)) {
+        if (!column.isPartOfForeignKey()) {
+          hasDataColumn = true;
+          break;
+        }
+      }
+      return hasDataColumn;
     }
 
-    return true;
+    return false;
   }
 }

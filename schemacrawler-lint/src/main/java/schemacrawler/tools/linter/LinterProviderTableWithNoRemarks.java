@@ -28,23 +28,42 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
+
+public class LinterProviderTableWithNoRemarks extends BaseLinterProvider {
+
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoRemarks() {
+    super(LinterTableWithNoRemarks.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithNoRemarks(getPropertyName(), lintCollector);
+  }
+}
 
 /**
  * Check that tables and columns) have remarks.
  *
  * <p>(Based on an idea from Michèle Barré)
  */
-public class LinterTableWithNoRemarks extends BaseLinter {
+class LinterTableWithNoRemarks extends BaseLinter {
 
-  public LinterTableWithNoRemarks() {
+  LinterTableWithNoRemarks(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.low);
   }
 

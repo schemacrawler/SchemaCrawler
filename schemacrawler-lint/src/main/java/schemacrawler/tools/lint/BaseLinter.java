@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static java.util.Objects.requireNonNull;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -45,6 +45,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.config.LinterConfig;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -52,7 +53,7 @@ import us.fatehi.utility.string.StringFormat;
  * creating states.Also contains utility methods for subclasses. Needs to be overridden by custom
  * linters.
  */
-public abstract class BaseLinter extends Linter {
+public abstract class BaseLinter extends AbstractLinter {
 
   private static final Logger LOGGER = Logger.getLogger(BaseLinter.class.getName());
 
@@ -61,10 +62,11 @@ public abstract class BaseLinter extends Linter {
   private InclusionRule columnInclusionRule;
   private TableTypesFilter tableTypesFilter;
 
-  protected BaseLinter() {
+  protected BaseLinter(final PropertyName linterName, final LintCollector lintCollector) {
+    super(linterName, lintCollector);
     setTableTypesFilter(null);
-    setTableInclusionRule(null);
-    setColumnInclusionRule(null);
+    tableInclusionRule = new IncludeAll();
+    columnInclusionRule = new IncludeAll();
   }
 
   protected final void addCatalogLint(final String message) {
@@ -135,16 +137,16 @@ public abstract class BaseLinter extends Linter {
   }
 
   @Override
-  final void configure(final LinterConfig linterConfig) {
+  public final void configure(final LinterConfig linterConfig) {
     super.configure(linterConfig);
     if (linterConfig != null) {
-      setTableInclusionRule(linterConfig.getTableInclusionRule());
-      setColumnInclusionRule(linterConfig.getColumnInclusionRule());
+      tableInclusionRule = linterConfig.getTableInclusionRule();
+      columnInclusionRule = linterConfig.getColumnInclusionRule();
     }
   }
 
   @Override
-  final void lint(final Catalog catalog, final Connection connection) {
+  public final void lint(final Catalog catalog, final Connection connection) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
 
     start(connection);
@@ -159,21 +161,5 @@ public abstract class BaseLinter extends Linter {
     }
     end(connection);
     this.catalog = null;
-  }
-
-  private final void setColumnInclusionRule(final InclusionRule columnInclusionRule) {
-    if (columnInclusionRule == null) {
-      this.columnInclusionRule = new IncludeAll();
-    } else {
-      this.columnInclusionRule = columnInclusionRule;
-    }
-  }
-
-  private final void setTableInclusionRule(final InclusionRule tableInclusionRule) {
-    if (tableInclusionRule == null) {
-      this.tableInclusionRule = new IncludeAll();
-    } else {
-      this.tableInclusionRule = tableInclusionRule;
-    }
   }
 }

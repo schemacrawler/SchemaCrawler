@@ -28,33 +28,52 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.QueryUtility;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.Linter;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterCatalogSql extends BaseLinter {
+public class LinterProviderCatalogSql extends BaseLinterProvider {
+
+  private static final long serialVersionUID = 7775205295917734672L;
+
+  public LinterProviderCatalogSql() {
+    super(LinterCatalogSql.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterCatalogSql(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterCatalogSql extends BaseLinter {
 
   private String message;
   private String sql;
+
+  LinterCatalogSql(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
+  }
 
   @Override
   public String getSummary() {
     if (isBlank(message)) {
       // Linter is not configured
       return "SQL statement based catalog linter";
-    } else {
-      return message;
     }
+    return message;
   }
 
   @Override
@@ -85,7 +104,7 @@ public class LinterCatalogSql extends BaseLinter {
 
     try {
       final Query query = new Query(message, sql);
-      final Object queryResult = executeForScalar(query, connection);
+      final Object queryResult = QueryUtility.executeForScalar(query, connection);
       if (queryResult != null) {
         addCatalogLint(getSummary() + " " + queryResult, true);
       }

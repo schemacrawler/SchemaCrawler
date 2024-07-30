@@ -28,63 +28,61 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Collection;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterTooManyLobs extends BaseLinter {
+public class LinterProviderTableAllNullableColumns extends BaseLinterProvider {
 
-  private int maxLargeObjectsInTable;
+  private static final long serialVersionUID = -7901644028908017034L;
 
-  public LinterTooManyLobs() {
-    setSeverity(LintSeverity.low);
+  public LinterProviderTableAllNullableColumns() {
+    super(LinterTableAllNullableColumns.class.getName());
+  }
 
-    maxLargeObjectsInTable = 1;
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableAllNullableColumns(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableAllNullableColumns extends BaseLinter {
+
+  LinterTableAllNullableColumns(
+      final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
   }
 
   @Override
   public String getSummary() {
-    return "too many binary objects";
-  }
-
-  @Override
-  protected void configure(final Config config) {
-    requireNonNull(config, "No configuration provided");
-
-    maxLargeObjectsInTable = config.getIntegerValue("max-large-objects", 1);
+    return "no non-nullable data columns";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final ArrayList<Column> lobColumns = findLobColumns(getColumns(table));
-    if (lobColumns.size() > maxLargeObjectsInTable) {
-      addTableLint(table, getSummary(), lobColumns);
+    if (!(table instanceof View) && hasAllNullableColumns(getColumns(table))) {
+      addTableLint(table, getSummary());
     }
   }
 
-  private ArrayList<Column> findLobColumns(final List<Column> columns) {
-    final ArrayList<Column> lobColumns = new ArrayList<>();
+  private boolean hasAllNullableColumns(final Collection<Column> columns) {
+    boolean hasAllNullableColumns = true;
     for (final Column column : columns) {
-      if (!column.isColumnDataTypeKnown()) {
-        continue;
-      }
-      final JavaSqlTypeGroup javaSqlTypeGroup =
-          column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
-      if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object) {
-        lobColumns.add(column);
+      if (!column.isPartOfPrimaryKey() && !column.isNullable()) {
+        hasAllNullableColumns = false;
+        break;
       }
     }
-    return lobColumns;
+    return hasAllNullableColumns;
   }
 }

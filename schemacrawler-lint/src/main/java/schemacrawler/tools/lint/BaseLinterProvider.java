@@ -26,31 +26,32 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.linter;
+package schemacrawler.tools.lint;
 
-import static java.util.Objects.requireNonNull;
+import java.util.logging.Logger;
+import us.fatehi.utility.property.PropertyName;
 
-import java.sql.Connection;
-import java.util.List;
+/**
+ * Defines a linter, and allows the creation of a new one, since multiple instances of the same
+ * linter can be created.
+ */
+public abstract class BaseLinterProvider implements LinterProvider {
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+  private static final long serialVersionUID = -7188840789229724389L;
 
-public class LinterTableWithSingleColumn extends BaseLinter {
+  private static final Logger LOGGER = Logger.getLogger(BaseLinterProvider.class.getName());
 
-  @Override
-  public String getSummary() {
-    return "single column";
+  private final PropertyName linterName;
+
+  public BaseLinterProvider(final String linterId) {
+    linterName = new PropertyName(linterId, LintUtility.readDescription(linterId));
   }
 
+  /**
+   * @{inheritDoc}
+   */
   @Override
-  protected void lint(final Table table, final Connection connection) {
-    requireNonNull(table, "No table provided");
-
-    final List<Column> columns = getColumns(table);
-    if (columns.size() <= 1) {
-      addTableLint(table, getSummary());
-    }
+  public PropertyName getPropertyName() {
+    return linterName;
   }
 }

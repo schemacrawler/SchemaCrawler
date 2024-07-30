@@ -26,34 +26,37 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.linter;
+package schemacrawler.tools.lint;
 
-import java.sql.Connection;
-import java.util.Collection;
+import java.io.Serializable;
+import us.fatehi.utility.property.PropertyName;
 
-import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.Index;
-import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+public interface LinterProvider extends Serializable {
 
-public class LinterTableWithNoIndexes extends BaseLinter {
-
-  public LinterTableWithNoIndexes() {
-    setTableTypesFilter(new TableTypesFilter("TABLE"));
+  /**
+   * Gets a description of the linter.
+   *
+   * @return Description of the linter
+   */
+  default String getDescription() {
+    return getPropertyName().getDescription();
   }
 
-  @Override
-  public String getSummary() {
-    return "no indexes";
+  /**
+   * Gets the identification of this linter.
+   *
+   * @return Identification of this linter
+   */
+  default String getLinterId() {
+    return getPropertyName().getName();
   }
 
-  @Override
-  protected void lint(final Table table, final Connection connection) {
-    if (table != null) {
-      final Collection<Index> indexes = table.getIndexes();
-      if (table.getPrimaryKey() == null && indexes.isEmpty()) {
-        addTableLint(table, getSummary());
-      }
-    }
-  }
+  /**
+   * Gets the name and description of the linter.
+   *
+   * @return Name and description of the linter
+   */
+  PropertyName getPropertyName();
+
+  Linter newLinter(LintCollector lintCollector);
 }

@@ -28,19 +28,38 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterNullIntendedColumns extends BaseLinter {
+public class LinterProviderNullIntendedColumns extends BaseLinterProvider {
 
-  public LinterNullIntendedColumns() {
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderNullIntendedColumns() {
+    super(LinterNullIntendedColumns.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterNullIntendedColumns(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterNullIntendedColumns extends BaseLinter {
+
+  LinterNullIntendedColumns(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
@@ -64,7 +83,7 @@ public class LinterNullIntendedColumns extends BaseLinter {
     final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
     for (final Column column : columns) {
       final String columnDefaultValue = column.getDefaultValue();
-      if (!isBlank(columnDefaultValue) && columnDefaultValue.trim().equalsIgnoreCase("NULL")) {
+      if (!isBlank(columnDefaultValue) && "NULL".equalsIgnoreCase(columnDefaultValue.trim())) {
         nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }

@@ -28,65 +28,62 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import java.sql.Connection;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.Index;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.utility.MetaDataUtility;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterRedundantIndexes extends BaseLinter {
+public class LinterProviderTableWithNoSurrogatePrimaryKey extends BaseLinterProvider {
 
-  public LinterRedundantIndexes() {
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoSurrogatePrimaryKey() {
+    super(LinterTableWithNoSurrogatePrimaryKey.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithNoSurrogatePrimaryKey(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
+
+  LinterTableWithNoSurrogatePrimaryKey(
+      final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "redundant index";
+    return "primary key may not be a surrogate";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final Set<Index> redundantIndexes = findRedundantIndexes(table.getIndexes());
-    for (final Index index : redundantIndexes) {
-      addTableLint(table, getSummary(), index);
+    if (hasNoSurrogatePrimaryKey(table)) {
+      addTableLint(table, getSummary());
     }
   }
 
-  private Set<Index> findRedundantIndexes(final Collection<Index> indexes) {
-    final Set<Index> redundantIndexes = new HashSet<>();
-
-    if (indexes == null || indexes.isEmpty()) {
-      return redundantIndexes;
+  private boolean hasNoSurrogatePrimaryKey(final Table table) {
+    final PrimaryKey primaryKey = table.getPrimaryKey();
+    if (primaryKey != null) {
+      final int pkColumnCount = primaryKey.getConstrainedColumns().size();
+      return pkColumnCount > 1;
     }
 
-    final Map<Index, List<String>> indexColumns = new HashMap<>(indexes.size());
-    for (final Index index : indexes) {
-      indexColumns.put(index, MetaDataUtility.columnNames(index));
-    }
-
-    for (final Entry<Index, List<String>> indexColumnEntry1 : indexColumns.entrySet()) {
-      for (final Entry<Index, List<String>> indexColumnEntry2 : indexColumns.entrySet()) {
-        if (!indexColumnEntry1.equals(indexColumnEntry2)
-            && listStartsWith(indexColumnEntry1.getValue(), indexColumnEntry2.getValue())) {
-          redundantIndexes.add(indexColumnEntry2.getKey());
-        }
-      }
-    }
-    return redundantIndexes;
+    return true;
   }
 }

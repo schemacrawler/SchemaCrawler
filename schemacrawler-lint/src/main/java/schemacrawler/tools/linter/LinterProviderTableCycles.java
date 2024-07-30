@@ -28,23 +28,43 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.TarjanStronglyConnectedComponentFinder;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableCycles extends BaseLinter {
+public class LinterProviderTableCycles extends BaseLinterProvider {
+
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableCycles() {
+    super(LinterTableCycles.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableCycles(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableCycles extends BaseLinter {
 
   private DirectedGraph<Table> tablesGraph;
+
+  LinterTableCycles(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
+  }
 
   @Override
   public String getSummary() {

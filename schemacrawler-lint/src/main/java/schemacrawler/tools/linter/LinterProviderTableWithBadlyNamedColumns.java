@@ -28,23 +28,44 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.Linter;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithBadlyNamedColumns extends BaseLinter {
+public class LinterProviderTableWithBadlyNamedColumns extends BaseLinterProvider {
+
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithBadlyNamedColumns() {
+    super(LinterTableWithBadlyNamedColumns.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithBadlyNamedColumns(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableWithBadlyNamedColumns extends BaseLinter {
 
   private InclusionRule columnNames;
+
+  LinterTableWithBadlyNamedColumns(
+      final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
+  }
 
   @Override
   public String getSummary() {

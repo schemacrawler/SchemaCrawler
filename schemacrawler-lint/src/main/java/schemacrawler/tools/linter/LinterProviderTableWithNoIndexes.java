@@ -28,42 +28,49 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
-
+import java.util.Collection;
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithPrimaryKeyNotFirst extends BaseLinter {
+public class LinterProviderTableWithNoIndexes extends BaseLinterProvider {
 
-  public LinterTableWithPrimaryKeyNotFirst() {
-    setSeverity(LintSeverity.low);
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoIndexes() {
+    super(LinterTableWithNoIndexes.class.getName());
+  }
+
+  @Override
+  public Linter newLinter(final LintCollector lintCollector) {
+    return new LinterTableWithNoIndexes(getPropertyName(), lintCollector);
+  }
+}
+
+class LinterTableWithNoIndexes extends BaseLinter {
+
+  LinterTableWithNoIndexes(final PropertyName propertyName, final LintCollector lintCollector) {
+    super(propertyName, lintCollector);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "primary key not first";
+    return "no indexes";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
-    requireNonNull(table, "No table provided");
-
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey == null) {
-      return;
-    }
-
-    for (final TableConstraintColumn pkColumn : primaryKey.getConstrainedColumns()) {
-      if (pkColumn.getTableConstraintOrdinalPosition() != pkColumn.getOrdinalPosition()) {
+    if (table != null) {
+      final Collection<Index> indexes = table.getIndexes();
+      if (table.getPrimaryKey() == null && indexes.isEmpty()) {
         addTableLint(table, getSummary());
-        break;
       }
     }
   }

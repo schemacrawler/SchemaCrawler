@@ -77,11 +77,9 @@ public final class Linters implements Iterable<Linter> {
         continue;
       }
 
-      final Linter linter = newLinter(linterId);
+      final Linter linter = registry.newLinter(linterId, collector);
       if (linter != null) {
-        // Configure linter
         linter.configure(linterConfig);
-
         linters.add(linter);
       }
     }
@@ -89,7 +87,7 @@ public final class Linters implements Iterable<Linter> {
     if (runAllLinters) {
       // Add in all remaining linters that were not configured
       for (final String linterId : registeredLinters) {
-        final Linter linter = newLinter(linterId);
+        final Linter linter = registry.newLinter(linterId, collector);
         linters.add(linter);
       }
     }
@@ -192,15 +190,5 @@ public final class Linters implements Iterable<Linter> {
   @Override
   public String toString() {
     return linters.toString();
-  }
-
-  private Linter newLinter(final String linterId) {
-    final Linter linter = registry.newLinter(linterId);
-    if (linter != null) {
-      linter.setLintCollector(collector);
-    } else {
-      LOGGER.log(Level.FINE, new StringFormat("Cannot find linter <%s>", linterId));
-    }
-    return linter;
   }
 }
