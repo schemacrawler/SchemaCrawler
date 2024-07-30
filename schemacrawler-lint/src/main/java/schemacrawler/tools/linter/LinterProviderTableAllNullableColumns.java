@@ -29,52 +29,58 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import java.sql.Connection;
+import java.util.Collection;
 import static java.util.Objects.requireNonNull;
-import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithNoPrimaryKey extends BaseLinter {
+public class LinterProviderTableAllNullableColumns extends BaseLinterProvider {
 
-  public LinterTableWithNoPrimaryKey() {
-    super(
-        new PropertyName(
-            LinterTableWithNoPrimaryKey.class.getName(),
-            LintUtility.readDescription(LinterTableWithNoPrimaryKey.class.getName())));
-    setSeverity(LintSeverity.high);
-    setTableTypesFilter(new TableTypesFilter("TABLE"));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableAllNullableColumns() {
+    super(LinterTableAllNullableColumns.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableAllNullableColumns(getPropertyName());
+  }
+}
+
+class LinterTableAllNullableColumns extends BaseLinter {
+
+  LinterTableAllNullableColumns(final PropertyName propertyName) {
+    super(propertyName);
   }
 
   @Override
   public String getSummary() {
-    return "no primary key";
+    return "no non-nullable data columns";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (hasNoPrimaryKey(table)) {
+    if (!(table instanceof View) && hasAllNullableColumns(getColumns(table))) {
       addTableLint(table, getSummary());
     }
   }
 
-  private boolean hasNoPrimaryKey(final Table table) {
-    if (table.getPrimaryKey() == null) {
-      boolean hasDataColumn = false;
-      for (final Column column : getColumns(table)) {
-        if (!column.isPartOfForeignKey()) {
-          hasDataColumn = true;
-          break;
-        }
+  private boolean hasAllNullableColumns(final Collection<Column> columns) {
+    boolean hasAllNullableColumns = true;
+    for (final Column column : columns) {
+      if (!column.isPartOfPrimaryKey() && !column.isNullable()) {
+        hasAllNullableColumns = false;
+        break;
       }
-      return hasDataColumn;
     }
-
-    return false;
+    return hasAllNullableColumns;
   }
 }

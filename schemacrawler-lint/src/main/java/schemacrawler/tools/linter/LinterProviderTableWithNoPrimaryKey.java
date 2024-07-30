@@ -31,44 +31,62 @@ package schemacrawler.tools.linter;
 import java.sql.Connection;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithPrimaryKeyNotFirst extends BaseLinter {
+public class LinterProviderTableWithNoPrimaryKey extends BaseLinterProvider {
 
-  public LinterTableWithPrimaryKeyNotFirst() {
-    super(
-        new PropertyName(
-            LinterTableWithPrimaryKeyNotFirst.class.getName(),
-            LintUtility.readDescription(LinterTableWithPrimaryKeyNotFirst.class.getName())));
-    setSeverity(LintSeverity.low);
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoPrimaryKey() {
+    super(LinterTableWithNoPrimaryKey.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithNoPrimaryKey(getPropertyName());
+  }
+}
+
+class LinterTableWithNoPrimaryKey extends BaseLinter {
+
+  LinterTableWithNoPrimaryKey(final PropertyName propertyName) {
+    super(propertyName);
+    setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "primary key not first";
+    return "no primary key";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey == null) {
-      return;
+    if (hasNoPrimaryKey(table)) {
+      addTableLint(table, getSummary());
+    }
+  }
+
+  private boolean hasNoPrimaryKey(final Table table) {
+    if (table.getPrimaryKey() == null) {
+      boolean hasDataColumn = false;
+      for (final Column column : getColumns(table)) {
+        if (!column.isPartOfForeignKey()) {
+          hasDataColumn = true;
+          break;
+        }
+      }
+      return hasDataColumn;
     }
 
-    for (final TableConstraintColumn pkColumn : primaryKey.getConstrainedColumns()) {
-      if (pkColumn.getTableConstraintOrdinalPosition() != pkColumn.getOrdinalPosition()) {
-        addTableLint(table, getSummary());
-        break;
-      }
-    }
+    return false;
   }
 }

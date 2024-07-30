@@ -29,51 +29,58 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.Column;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterNullIntendedColumns extends BaseLinter {
+public class LinterProviderTableWithPrimaryKeyNotFirst extends BaseLinterProvider {
 
-  public LinterNullIntendedColumns() {
-    super(
-        new PropertyName(
-            LinterNullIntendedColumns.class.getName(),
-            LintUtility.readDescription(LinterNullIntendedColumns.class.getName())));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithPrimaryKeyNotFirst() {
+    super(LinterTableWithPrimaryKeyNotFirst.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithPrimaryKeyNotFirst(getPropertyName());
+  }
+}
+
+class LinterTableWithPrimaryKeyNotFirst extends BaseLinter {
+
+  LinterTableWithPrimaryKeyNotFirst(final PropertyName propertyName) {
+    super(propertyName);
+    setSeverity(LintSeverity.low);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "column where NULL may be intended";
+    return "primary key not first";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final List<Column> nullDefaultValueMayBeIntendedColumns =
-        findNullDefaultValueMayBeIntendedColumns(getColumns(table));
-    for (final Column column : nullDefaultValueMayBeIntendedColumns) {
-      addTableLint(table, getSummary(), column);
+    final PrimaryKey primaryKey = table.getPrimaryKey();
+    if (primaryKey == null) {
+      return;
     }
-  }
 
-  private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns) {
-    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
-    for (final Column column : columns) {
-      final String columnDefaultValue = column.getDefaultValue();
-      if (!isBlank(columnDefaultValue) && "NULL".equalsIgnoreCase(columnDefaultValue.trim())) {
-        nullDefaultValueMayBeIntendedColumns.add(column);
+    for (final TableConstraintColumn pkColumn : primaryKey.getConstrainedColumns()) {
+      if (pkColumn.getTableConstraintOrdinalPosition() != pkColumn.getOrdinalPosition()) {
+        addTableLint(table, getSummary());
+        break;
       }
     }
-    return nullDefaultValueMayBeIntendedColumns;
   }
 }

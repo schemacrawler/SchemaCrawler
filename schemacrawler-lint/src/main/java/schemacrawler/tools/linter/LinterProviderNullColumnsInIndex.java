@@ -38,16 +38,28 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterNullColumnsInIndex extends BaseLinter {
+public class LinterProviderNullColumnsInIndex extends BaseLinterProvider {
 
-  public LinterNullColumnsInIndex() {
-    super(
-        new PropertyName(
-            LinterNullColumnsInIndex.class.getName(),
-            LintUtility.readDescription(LinterNullColumnsInIndex.class.getName())));
+  private static final long serialVersionUID = 7775205295917734672L;
+
+  public LinterProviderNullColumnsInIndex() {
+    super(LinterNullColumnsInIndex.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterNullColumnsInIndex(getPropertyName());
+  }
+}
+
+class LinterNullColumnsInIndex extends BaseLinter {
+
+  LinterNullColumnsInIndex(final PropertyName propertyName) {
+    super(propertyName);
   }
 
   @Override

@@ -57,4 +57,6 @@ public interface LinterProvider extends Serializable {
    * @return Name and description of the linter
    */
   PropertyName getPropertyName();
+
+  Linter newLinter();
 }

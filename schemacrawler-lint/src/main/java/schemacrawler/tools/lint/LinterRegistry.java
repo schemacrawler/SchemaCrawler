@@ -51,7 +51,7 @@ public final class LinterRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
-  private static final AbstractLinter NO_OP_LINTER =
+  private static final Linter NO_OP_LINTER =
       new BaseLinter(new PropertyName("schemacrawler.NO_OP_LINTER", "")) {
 
         @Override
@@ -75,22 +75,16 @@ public final class LinterRegistry extends BasePluginRegistry {
     return linterRegistrySingleton;
   }
 
-  private static Map<String, LinterInfo> loadLinterRegistry() {
+  private static Map<String, LinterProvider> loadLinterRegistry() {
 
-    final Map<String, LinterInfo> linterRegistry = new HashMap<>();
+    final Map<String, LinterProvider> linterRegistry = new HashMap<>();
     try {
-      final ServiceLoader<AbstractLinter> serviceLoader =
-          ServiceLoader.load(AbstractLinter.class, LinterRegistry.class.getClassLoader());
-      for (final AbstractLinter linter : serviceLoader) {
-        final String linterId = linter.getLinterId();
-        final LinterInfo linterInfo =
-            new LinterInfo(
-                linterId,
-                linter.getSummary(),
-                linter.getDescription(),
-                linter.getClass().getName());
-        LOGGER.log(Level.FINER, new StringFormat("Loading linter, %s=%s", linterId, linterInfo));
-        linterRegistry.put(linterId, linterInfo);
+      final ServiceLoader<LinterProvider> serviceLoader =
+          ServiceLoader.load(LinterProvider.class, LinterRegistry.class.getClassLoader());
+      for (final LinterProvider linterProvider : serviceLoader) {
+        final String linterId = linterProvider.getLinterId();
+        LOGGER.log(Level.FINER, new StringFormat("Loading linter, %s", linterId));
+        linterRegistry.put(linterId, linterProvider);
       }
     } catch (final Exception e) {
       throw new InternalRuntimeException("Could not load linter registry", e);
@@ -99,7 +93,7 @@ public final class LinterRegistry extends BasePluginRegistry {
     return linterRegistry;
   }
 
-  private final Map<String, LinterInfo> linterRegistry;
+  private final Map<String, LinterProvider> linterRegistry;
 
   private LinterRegistry() {
     linterRegistry = loadLinterRegistry();
@@ -117,8 +111,8 @@ public final class LinterRegistry extends BasePluginRegistry {
   @Override
   public Collection<PropertyName> getRegisteredPlugins() {
     final List<PropertyName> linters = new ArrayList<>();
-    for (final LinterInfo linterInfo : linterRegistry.values()) {
-      linters.add(new PropertyName(linterInfo.getLinterId(), linterInfo.getDescription()));
+    for (final LinterProvider linterInfo : linterRegistry.values()) {
+      linters.add(linterInfo.getPropertyName());
     }
     Collections.sort(linters);
     return linters;
@@ -128,23 +122,14 @@ public final class LinterRegistry extends BasePluginRegistry {
     return linterRegistry.containsKey(linterId);
   }
 
-  public AbstractLinter newLinter(final String linterId) {
+  public Linter newLinter(final String linterId) {
 
     if (!hasLinter(linterId)) {
       LOGGER.log(
           Level.WARNING, new StringFormat("Could not instantiate linter with id <%s>", linterId));
       return NO_OP_LINTER;
     }
-    final LinterInfo linterInfo = linterRegistry.get(linterId);
-    try {
-      final Class<AbstractLinter> linterClass =
-          (Class<AbstractLinter>) Class.forName(linterInfo.getClassName());
-      final AbstractLinter linter = linterClass.newInstance();
-      return linter;
-    } catch (final Exception e) {
-      LOGGER.log(
-          Level.WARNING, e, new StringFormat("Could not instantiate linter <%s>", linterInfo));
-      return NO_OP_LINTER;
-    }
+    final LinterProvider linterProvider = linterRegistry.get(linterId);
+    return linterProvider.newLinter();
   }
 }

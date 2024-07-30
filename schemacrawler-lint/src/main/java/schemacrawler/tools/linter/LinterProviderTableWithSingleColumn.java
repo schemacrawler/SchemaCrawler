@@ -29,59 +29,47 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithQuotedNames extends BaseLinter {
+public class LinterProviderTableWithSingleColumn extends BaseLinterProvider {
 
-  public LinterTableWithQuotedNames() {
-    super(
-        new PropertyName(
-            LinterTableWithQuotedNames.class.getName(),
-            LintUtility.readDescription(LinterTableWithQuotedNames.class.getName())));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithSingleColumn() {
+    super(LinterTableWithSingleColumn.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithSingleColumn(getPropertyName());
+  }
+}
+
+class LinterTableWithSingleColumn extends BaseLinter {
+
+  LinterTableWithSingleColumn(final PropertyName propertyName) {
+    super(propertyName);
   }
 
   @Override
   public String getSummary() {
-    return "spaces in name, or reserved word";
+    return "single column";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final Identifiers identifiers =
-        IdentifiersBuilder.builder().fromConnection(connection).toOptions();
-
-    final String tableName = table.getName();
-    if (identifiers.isToBeQuoted(tableName)) {
+    final List<Column> columns = getColumns(table);
+    if (columns.size() <= 1) {
       addTableLint(table, getSummary());
     }
-
-    final List<String> spacesInNamesList =
-        findColumnsWithQuotedNames(getColumns(table), identifiers);
-    for (final String spacesInName : spacesInNamesList) {
-      addTableLint(table, getSummary(), spacesInName);
-    }
-  }
-
-  private List<String> findColumnsWithQuotedNames(
-      final List<Column> columns, final Identifiers identifiers) {
-    final List<String> columnsWithQuotedNames = new ArrayList<>();
-    for (final Column column : columns) {
-      final String columnName = column.getName();
-      if (identifiers.isToBeQuoted(columnName)) {
-        columnsWithQuotedNames.add(columnName);
-      }
-    }
-    return columnsWithQuotedNames;
   }
 }

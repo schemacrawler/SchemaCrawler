@@ -32,63 +32,60 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTooManyLobs extends BaseLinter {
+public class LinterProviderNullIntendedColumns extends BaseLinterProvider {
 
-  private int maxLargeObjectsInTable;
+  private static final long serialVersionUID = -7901644028908017034L;
 
-  public LinterTooManyLobs() {
-    super(
-        new PropertyName(
-            LinterTooManyLobs.class.getName(),
-            LintUtility.readDescription(LinterTooManyLobs.class.getName())));
-    setSeverity(LintSeverity.low);
+  public LinterProviderNullIntendedColumns() {
+    super(LinterNullIntendedColumns.class.getName());
+  }
 
-    maxLargeObjectsInTable = 1;
+  @Override
+  public Linter newLinter() {
+    return new LinterNullIntendedColumns(getPropertyName());
+  }
+}
+
+class LinterNullIntendedColumns extends BaseLinter {
+
+  LinterNullIntendedColumns(final PropertyName propertyName) {
+    super(propertyName);
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "too many binary objects";
-  }
-
-  @Override
-  protected void configure(final Config config) {
-    requireNonNull(config, "No configuration provided");
-
-    maxLargeObjectsInTable = config.getIntegerValue("max-large-objects", 1);
+    return "column where NULL may be intended";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final ArrayList<Column> lobColumns = findLobColumns(getColumns(table));
-    if (lobColumns.size() > maxLargeObjectsInTable) {
-      addTableLint(table, getSummary(), lobColumns);
+    final List<Column> nullDefaultValueMayBeIntendedColumns =
+        findNullDefaultValueMayBeIntendedColumns(getColumns(table));
+    for (final Column column : nullDefaultValueMayBeIntendedColumns) {
+      addTableLint(table, getSummary(), column);
     }
   }
 
-  private ArrayList<Column> findLobColumns(final List<Column> columns) {
-    final ArrayList<Column> lobColumns = new ArrayList<>();
+  private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns) {
+    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
     for (final Column column : columns) {
-      if (!column.isColumnDataTypeKnown()) {
-        continue;
-      }
-      final JavaSqlTypeGroup javaSqlTypeGroup =
-          column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
-      if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object) {
-        lobColumns.add(column);
+      final String columnDefaultValue = column.getDefaultValue();
+      if (!isBlank(columnDefaultValue) && "NULL".equalsIgnoreCase(columnDefaultValue.trim())) {
+        nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }
-    return lobColumns;
+    return nullDefaultValueMayBeIntendedColumns;
   }
 }

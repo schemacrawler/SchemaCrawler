@@ -137,7 +137,7 @@ public abstract class BaseLinter extends AbstractLinter {
   }
 
   @Override
-  final void configure(final LinterConfig linterConfig) {
+  public final void configure(final LinterConfig linterConfig) {
     super.configure(linterConfig);
     if (linterConfig != null) {
       setTableInclusionRule(linterConfig.getTableInclusionRule());
@@ -146,7 +146,7 @@ public abstract class BaseLinter extends AbstractLinter {
   }
 
   @Override
-  final void lint(final Catalog catalog, final Connection connection) {
+  public final void lint(final Catalog catalog, final Connection connection) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
 
     start(connection);

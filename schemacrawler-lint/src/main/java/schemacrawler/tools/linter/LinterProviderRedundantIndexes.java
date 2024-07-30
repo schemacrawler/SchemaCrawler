@@ -42,18 +42,30 @@ import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.Linter;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterRedundantIndexes extends BaseLinter {
+public class LinterProviderRedundantIndexes extends BaseLinterProvider {
 
-  public LinterRedundantIndexes() {
-    super(
-        new PropertyName(
-            LinterRedundantIndexes.class.getName(),
-            LintUtility.readDescription(LinterRedundantIndexes.class.getName())));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderRedundantIndexes() {
+    super(LinterRedundantIndexes.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterRedundantIndexes(getPropertyName());
+  }
+}
+
+class LinterRedundantIndexes extends BaseLinter {
+
+  LinterRedundantIndexes(final PropertyName propertyName) {
+    super(propertyName);
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

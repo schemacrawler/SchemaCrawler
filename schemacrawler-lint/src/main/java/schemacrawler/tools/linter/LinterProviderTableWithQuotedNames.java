@@ -34,52 +34,66 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-/**
- * Check that tables and columns) have remarks.
- *
- * <p>(Based on an idea from Michèle Barré)
- */
-public class LinterTableWithNoRemarks extends BaseLinter {
+public class LinterProviderTableWithQuotedNames extends BaseLinterProvider {
 
-  public LinterTableWithNoRemarks() {
-    super(
-        new PropertyName(
-            LinterTableWithNoRemarks.class.getName(),
-            LintUtility.readDescription(LinterTableWithNoRemarks.class.getName())));
-    setSeverity(LintSeverity.low);
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithQuotedNames() {
+    super(LinterTableWithQuotedNames.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithQuotedNames(getPropertyName());
+  }
+}
+
+class LinterTableWithQuotedNames extends BaseLinter {
+
+  LinterTableWithQuotedNames(final PropertyName propertyName) {
+    super(propertyName);
   }
 
   @Override
   public String getSummary() {
-    return "should have remarks";
+    return "spaces in name, or reserved word";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (!table.hasRemarks()) {
+    final Identifiers identifiers =
+        IdentifiersBuilder.builder().fromConnection(connection).toOptions();
+
+    final String tableName = table.getName();
+    if (identifiers.isToBeQuoted(tableName)) {
       addTableLint(table, getSummary());
     }
 
-    final ArrayList<String> columnsWithNoRemarks = findColumnsWithNoRemarks(getColumns(table));
-    if (!columnsWithNoRemarks.isEmpty()) {
-      addTableLint(table, getSummary(), columnsWithNoRemarks);
+    final List<String> spacesInNamesList =
+        findColumnsWithQuotedNames(getColumns(table), identifiers);
+    for (final String spacesInName : spacesInNamesList) {
+      addTableLint(table, getSummary(), spacesInName);
     }
   }
 
-  private ArrayList<String> findColumnsWithNoRemarks(final List<Column> columns) {
-    final ArrayList<String> names = new ArrayList<>();
+  private List<String> findColumnsWithQuotedNames(
+      final List<Column> columns, final Identifiers identifiers) {
+    final List<String> columnsWithQuotedNames = new ArrayList<>();
     for (final Column column : columns) {
-      if (!column.hasRemarks()) {
-        names.add(column.getName());
+      final String columnName = column.getName();
+      if (identifiers.isToBeQuoted(columnName)) {
+        columnsWithQuotedNames.add(columnName);
       }
     }
-    return names;
+    return columnsWithQuotedNames;
   }
 }

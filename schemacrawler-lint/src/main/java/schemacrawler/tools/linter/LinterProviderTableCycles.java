@@ -37,20 +37,32 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.TarjanStronglyConnectedComponentFinder;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableCycles extends BaseLinter {
+public class LinterProviderTableCycles extends BaseLinterProvider {
+
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableCycles() {
+    super(LinterTableCycles.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableCycles(getPropertyName());
+  }
+}
+
+class LinterTableCycles extends BaseLinter {
 
   private DirectedGraph<Table> tablesGraph;
 
-  public LinterTableCycles() {
-    super(
-        new PropertyName(
-            LinterTableCycles.class.getName(),
-            LintUtility.readDescription(LinterTableCycles.class.getName())));
+  LinterTableCycles(final PropertyName propertyName) {
+    super(propertyName);
   }
 
   @Override

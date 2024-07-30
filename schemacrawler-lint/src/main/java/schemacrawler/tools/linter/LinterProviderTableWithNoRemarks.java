@@ -29,68 +29,69 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
-import us.fatehi.utility.Multimap;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterColumnTypes extends BaseLinter {
+public class LinterProviderTableWithNoRemarks extends BaseLinterProvider {
 
-  public LinterColumnTypes() {
-    super(
-        new PropertyName(
-            LinterColumnTypes.class.getName(),
-            LintUtility.readDescription(LinterColumnTypes.class.getName())));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoRemarks() {
+    super(LinterTableWithNoRemarks.class.getName());
   }
 
-  private Multimap<String, ColumnDataType> columnTypes;
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithNoRemarks(getPropertyName());
+  }
+}
+
+/**
+ * Check that tables and columns) have remarks.
+ *
+ * <p>(Based on an idea from Michèle Barré)
+ */
+class LinterTableWithNoRemarks extends BaseLinter {
+
+  LinterTableWithNoRemarks(final PropertyName propertyName) {
+    super(propertyName);
+    setSeverity(LintSeverity.low);
+  }
 
   @Override
   public String getSummary() {
-    return "column with same name but different data types";
-  }
-
-  @Override
-  protected void end(final Connection connection) {
-    requireNonNull(columnTypes, "Not initialized");
-
-    for (final Entry<String, List<ColumnDataType>> entry : columnTypes.entrySet()) {
-      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry.getValue());
-      if (currentColumnTypes.size() > 1) {
-        addCatalogLint(getSummary(), entry.getKey() + " " + currentColumnTypes);
-      }
-    }
-
-    columnTypes = null;
-
-    super.end(connection);
+    return "should have remarks";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
-    requireNonNull(columnTypes, "Not initialized");
 
-    for (final Column column : getColumns(table)) {
-      if (!column.isColumnDataTypeKnown()) {
-        continue;
-      }
-      columnTypes.add(column.getName(), column.getColumnDataType());
+    if (!table.hasRemarks()) {
+      addTableLint(table, getSummary());
+    }
+
+    final ArrayList<String> columnsWithNoRemarks = findColumnsWithNoRemarks(getColumns(table));
+    if (!columnsWithNoRemarks.isEmpty()) {
+      addTableLint(table, getSummary(), columnsWithNoRemarks);
     }
   }
 
-  @Override
-  protected void start(final Connection connection) {
-    super.start(connection);
-
-    columnTypes = new Multimap<>();
+  private ArrayList<String> findColumnsWithNoRemarks(final List<Column> columns) {
+    final ArrayList<String> names = new ArrayList<>();
+    for (final Column column : columns) {
+      if (!column.hasRemarks()) {
+        names.add(column.getName());
+      }
+    }
+    return names;
   }
 }

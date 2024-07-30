@@ -28,43 +28,49 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.linter;
 
-import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.QueryUtility;
+import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;
-import us.fatehi.utility.string.StringFormat;
 
-public class LinterTableSql extends BaseLinter {
+public class LinterProviderCatalogSql extends BaseLinterProvider {
 
-  private static final Logger LOGGER = Logger.getLogger(LinterTableSql.class.getName());
+  private static final long serialVersionUID = 7775205295917734672L;
 
-  public LinterTableSql() {
-    super(
-        new PropertyName(
-            LinterTableSql.class.getName(),
-            LintUtility.readDescription(LinterTableSql.class.getName())));
+  public LinterProviderCatalogSql() {
+    super(LinterCatalogSql.class.getName());
   }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterCatalogSql(getPropertyName());
+  }
+}
+
+class LinterCatalogSql extends BaseLinter {
 
   private String message;
   private String sql;
+
+  LinterCatalogSql(final PropertyName propertyName) {
+    super(propertyName);
+  }
 
   @Override
   public String getSummary() {
     if (isBlank(message)) {
       // Linter is not configured
-      return "SQL statement based table linter";
+      return "SQL statement based catalog linter";
     }
     return message;
   }
@@ -82,26 +88,28 @@ public class LinterTableSql extends BaseLinter {
 
   @Override
   protected void lint(final Table table, final Connection connection) {
+    // No-op, since the actual linting is done in the start method
+  }
+
+  @Override
+  protected void start(final Connection connection) {
+    super.start(connection);
+
     if (isBlank(sql)) {
       return;
     }
 
-    requireNonNull(table, "No table provided");
     requireNonNull(connection, "No connection provided");
 
-    final Query query = new Query(message, sql);
     try {
-      final Identifiers identifiers =
-          IdentifiersBuilder.builder().fromConnection(connection).toOptions();
-      final Object queryResult = executeForScalar(query, connection, table, identifiers);
+      final Query query = new Query(message, sql);
+      final Object queryResult = QueryUtility.executeForScalar(query, connection);
       if (queryResult != null) {
-        addTableLint(table, getSummary() + " " + queryResult);
+        addCatalogLint(getSummary() + " " + queryResult, true);
       }
     } catch (final SQLException e) {
-      LOGGER.log(
-          Level.WARNING,
-          e,
-          new StringFormat("Could not execute SQL for table lints, for table", table));
+      throw new DatabaseAccessException(
+          String.format("Could not execute SQL for catalog lints%n%s", sql), e);
     }
   }
 }

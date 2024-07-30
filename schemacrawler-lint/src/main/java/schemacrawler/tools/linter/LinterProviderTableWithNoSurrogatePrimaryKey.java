@@ -29,35 +29,59 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import java.sql.Connection;
-import java.util.List;
 import static java.util.Objects.requireNonNull;
-import schemacrawler.schema.Column;
+import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithSingleColumn extends BaseLinter {
+public class LinterProviderTableWithNoSurrogatePrimaryKey extends BaseLinterProvider {
 
-  public LinterTableWithSingleColumn() {
-    super(
-        new PropertyName(
-            LinterTableWithSingleColumn.class.getName(),
-            LintUtility.readDescription(LinterTableWithSingleColumn.class.getName())));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoSurrogatePrimaryKey() {
+    super(LinterTableWithNoSurrogatePrimaryKey.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithNoSurrogatePrimaryKey(getPropertyName());
+  }
+}
+
+class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
+
+  LinterTableWithNoSurrogatePrimaryKey(final PropertyName propertyName) {
+    super(propertyName);
+    setSeverity(LintSeverity.high);
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "single column";
+    return "primary key may not be a surrogate";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final List<Column> columns = getColumns(table);
-    if (columns.size() <= 1) {
+    if (hasNoSurrogatePrimaryKey(table)) {
       addTableLint(table, getSummary());
     }
+  }
+
+  private boolean hasNoSurrogatePrimaryKey(final Table table) {
+    final PrimaryKey primaryKey = table.getPrimaryKey();
+    if (primaryKey != null) {
+      final int pkColumnCount = primaryKey.getConstrainedColumns().size();
+      return pkColumnCount > 1;
+    }
+
+    return true;
   }
 }

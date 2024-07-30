@@ -38,17 +38,29 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterForeignKeyMismatch extends BaseLinter {
+public class LinterProviderForeignKeyMismatch extends BaseLinterProvider {
 
-  public LinterForeignKeyMismatch() {
-    super(
-        new PropertyName(
-            LinterForeignKeyMismatch.class.getName(),
-            LintUtility.readDescription(LinterForeignKeyMismatch.class.getName())));
+  private static final long serialVersionUID = 7775205295917734672L;
+
+  public LinterProviderForeignKeyMismatch() {
+    super(LinterForeignKeyMismatch.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterForeignKeyMismatch(getPropertyName());
+  }
+}
+
+class LinterForeignKeyMismatch extends BaseLinter {
+
+  LinterForeignKeyMismatch(final PropertyName linterName) {
+    super(linterName);
     setSeverity(LintSeverity.high);
   }
 

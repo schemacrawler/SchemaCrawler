@@ -40,20 +40,32 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
-public class LinterTableEmpty extends BaseLinter {
+public class LinterProviderTableEmpty extends BaseLinterProvider {
+
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableEmpty() {
+    super(LinterTableEmpty.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableEmpty(getPropertyName());
+  }
+}
+
+class LinterTableEmpty extends BaseLinter {
 
   private static final Logger LOGGER = Logger.getLogger(LinterTableEmpty.class.getName());
 
-  public LinterTableEmpty() {
-    super(
-        new PropertyName(
-            LinterTableEmpty.class.getName(),
-            LintUtility.readDescription(LinterTableEmpty.class.getName())));
+  public LinterTableEmpty(final PropertyName propertyName) {
+    super(propertyName);
     setSeverity(LintSeverity.low);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }

@@ -1,6 +1,8 @@
 package schemacrawler.tools.lint;
 
-
+import java.sql.Connection;
+import schemacrawler.schema.Catalog;
+import schemacrawler.tools.lint.config.LinterConfig;
 
 public interface Linter {
 
@@ -36,4 +38,9 @@ public interface Linter {
    */
   String getSummary();
 
+  void configure(final LinterConfig linterConfig);
+
+  void lint(final Catalog catalog, final Connection connection);
+
+  void setLintCollector(LintCollector lintCollector);
 }

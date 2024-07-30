@@ -44,18 +44,26 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.Multimap;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithIncrementingColumns extends BaseLinter {
+public class LinterProviderTableWithIncrementingColumns extends BaseLinterProvider {
 
-  public LinterTableWithIncrementingColumns() {
-    super(
-        new PropertyName(
-            LinterTableWithIncrementingColumns.class.getName(),
-            LintUtility.readDescription(LinterTableWithIncrementingColumns.class.getName())));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithIncrementingColumns() {
+    super(LinterTableWithIncrementingColumns.class.getName());
   }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithIncrementingColumns(getPropertyName());
+  }
+}
+
+class LinterTableWithIncrementingColumns extends BaseLinter {
 
   private static class IncrementingColumn {
     private final int columnIncrement;
@@ -80,6 +88,10 @@ public class LinterTableWithIncrementingColumns extends BaseLinter {
     public int getColumnIncrement() {
       return columnIncrement;
     }
+  }
+
+  LinterTableWithIncrementingColumns(final PropertyName propertyName) {
+    super(propertyName);
   }
 
   @Override

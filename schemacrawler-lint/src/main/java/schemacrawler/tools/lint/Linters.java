@@ -42,11 +42,11 @@ import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import us.fatehi.utility.string.StringFormat;
 
-public final class Linters implements Iterable<AbstractLinter> {
+public final class Linters implements Iterable<Linter> {
 
   private static final Logger LOGGER = Logger.getLogger(Linters.class.getName());
 
-  private final List<AbstractLinter> linters;
+  private final List<Linter> linters;
   private final LintCollector collector;
   private final LinterRegistry registry;
 
@@ -77,9 +77,10 @@ public final class Linters implements Iterable<AbstractLinter> {
         continue;
       }
 
-      final AbstractLinter linter = newLinter(linterId);
+      final Linter linter = registry.newLinter(linterId);
       if (linter != null) {
         // Configure linter
+        linter.setLintCollector(collector);
         linter.configure(linterConfig);
 
         linters.add(linter);
@@ -89,7 +90,8 @@ public final class Linters implements Iterable<AbstractLinter> {
     if (runAllLinters) {
       // Add in all remaining linters that were not configured
       for (final String linterId : registeredLinters) {
-        final AbstractLinter linter = newLinter(linterId);
+        final Linter linter = registry.newLinter(linterId);
+        linter.setLintCollector(collector);
         linters.add(linter);
       }
     }
@@ -109,9 +111,9 @@ public final class Linters implements Iterable<AbstractLinter> {
   }
 
   public String getLintSummary() {
-    final class LinterComparator implements Comparator<AbstractLinter> {
+    final class LinterComparator implements Comparator<Linter> {
       @Override
-      public int compare(final AbstractLinter linter1, final AbstractLinter linter2) {
+      public int compare(final Linter linter1, final Linter linter2) {
         if (linter1 == null) {
           return -1;
         }
@@ -138,7 +140,7 @@ public final class Linters implements Iterable<AbstractLinter> {
       }
     }
 
-    final List<AbstractLinter> linters = new ArrayList<>(this.linters);
+    final List<Linter> linters = new ArrayList<>(this.linters);
     linters.sort(new LinterComparator());
 
     final StringBuilder buffer = new StringBuilder(1024);
@@ -162,12 +164,12 @@ public final class Linters implements Iterable<AbstractLinter> {
   }
 
   @Override
-  public Iterator<AbstractLinter> iterator() {
+  public Iterator<Linter> iterator() {
     return linters.iterator();
   }
 
   public void lint(final Catalog catalog, final Connection connection) {
-    for (final AbstractLinter linter : linters) {
+    for (final Linter linter : linters) {
       LOGGER.log(Level.CONFIG, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
       try {
         linter.lint(catalog, connection);
@@ -192,15 +194,5 @@ public final class Linters implements Iterable<AbstractLinter> {
   @Override
   public String toString() {
     return linters.toString();
-  }
-
-  private AbstractLinter newLinter(final String linterId) {
-    final AbstractLinter linter = registry.newLinter(linterId);
-    if (linter != null) {
-      linter.setLintCollector(collector);
-    } else {
-      LOGGER.log(Level.FINE, new StringFormat("Cannot find linter <%s>", linterId));
-    }
-    return linter;
   }
 }

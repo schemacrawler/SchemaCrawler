@@ -29,47 +29,48 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import java.sql.Connection;
-import static java.util.Objects.requireNonNull;
+import java.util.Collection;
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
+import schemacrawler.tools.lint.BaseLinterProvider;
+import schemacrawler.tools.lint.Linter;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
+public class LinterProviderTableWithNoIndexes extends BaseLinterProvider {
 
-  public LinterTableWithNoSurrogatePrimaryKey() {
-    super(
-        new PropertyName(
-            LinterTableWithNoSurrogatePrimaryKey.class.getName(),
-            LintUtility.readDescription(LinterTableWithNoSurrogatePrimaryKey.class.getName())));
-    setSeverity(LintSeverity.high);
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderTableWithNoIndexes() {
+    super(LinterTableWithNoIndexes.class.getName());
+  }
+
+  @Override
+  public Linter newLinter() {
+    return new LinterTableWithNoIndexes(getPropertyName());
+  }
+}
+
+class LinterTableWithNoIndexes extends BaseLinter {
+
+  LinterTableWithNoIndexes(final PropertyName propertyName) {
+    super(propertyName);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
   public String getSummary() {
-    return "primary key may not be a surrogate";
+    return "no indexes";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection) {
-    requireNonNull(table, "No table provided");
-
-    if (hasNoSurrogatePrimaryKey(table)) {
-      addTableLint(table, getSummary());
+    if (table != null) {
+      final Collection<Index> indexes = table.getIndexes();
+      if (table.getPrimaryKey() == null && indexes.isEmpty()) {
+        addTableLint(table, getSummary());
+      }
     }
-  }
-
-  private boolean hasNoSurrogatePrimaryKey(final Table table) {
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null) {
-      final int pkColumnCount = primaryKey.getConstrainedColumns().size();
-      return pkColumnCount > 1;
-    }
-
-    return true;
   }
 }

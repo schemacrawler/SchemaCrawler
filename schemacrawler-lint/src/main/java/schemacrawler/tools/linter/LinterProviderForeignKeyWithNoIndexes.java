@@ -40,17 +40,28 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintUtility;
 import us.fatehi.utility.property.PropertyName;
 
-public class LinterForeignKeyWithNoIndexes extends BaseLinter {
+public class LinterProviderForeignKeyWithNoIndexes extends BaseLinterProvider {
 
-  public LinterForeignKeyWithNoIndexes() {
-    super(
-        new PropertyName(
-            LinterForeignKeyWithNoIndexes.class.getName(),
-            LintUtility.readDescription(LinterForeignKeyWithNoIndexes.class.getName())));
+  private static final long serialVersionUID = -7901644028908017034L;
+
+  public LinterProviderForeignKeyWithNoIndexes() {
+    super(LinterForeignKeyWithNoIndexes.class.getName());
+  }
+
+  @Override
+  public BaseLinter newLinter() {
+    return new LinterForeignKeyWithNoIndexes(getPropertyName());
+  }
+}
+
+class LinterForeignKeyWithNoIndexes extends BaseLinter {
+
+  public LinterForeignKeyWithNoIndexes(final PropertyName propertyName) {
+    super(propertyName);
     setSeverity(LintSeverity.low);
   }
 

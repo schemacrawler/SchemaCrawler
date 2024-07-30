@@ -29,13 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.AttributedObject;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.options.Config;
@@ -159,7 +157,8 @@ public abstract class AbstractLinter implements Linter {
     }
   }
 
-  void configure(final LinterConfig linterConfig) {
+  @Override
+  public void configure(final LinterConfig linterConfig) {
     if (linterConfig != null) {
       setSeverity(linterConfig.getSeverity());
       setThreshold(linterConfig.getThreshold());
@@ -167,9 +166,8 @@ public abstract class AbstractLinter implements Linter {
     }
   }
 
-  abstract void lint(Catalog catalog, Connection connection);
-
-  final void setLintCollector(final LintCollector lintCollector) {
+  @Override
+  public final void setLintCollector(final LintCollector lintCollector) {
     collector = lintCollector;
   }
 
