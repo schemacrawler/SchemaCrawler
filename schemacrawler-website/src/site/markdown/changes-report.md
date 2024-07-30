@@ -9,6 +9,7 @@ SchemaCrawler release notes.
 - Remove lint dispatch that allows system exit
 - Allow building both on Java 8 and Java 21
 - Move schemacrawler-diff proof of concept code to another project
+- Split linters into linter providers in the registry, and actual linters that are instantiated when needed
 
 
 <a name="v16.21.4"></a>
