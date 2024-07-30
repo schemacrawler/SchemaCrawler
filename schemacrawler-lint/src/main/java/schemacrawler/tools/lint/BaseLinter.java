@@ -65,8 +65,8 @@ public abstract class BaseLinter extends AbstractLinter {
   protected BaseLinter(final PropertyName linterName, final LintCollector lintCollector) {
     super(linterName, lintCollector);
     setTableTypesFilter(null);
-    setTableInclusionRule(null);
-    setColumnInclusionRule(null);
+    tableInclusionRule = new IncludeAll();
+    columnInclusionRule = new IncludeAll();
   }
 
   protected final void addCatalogLint(final String message) {
@@ -140,8 +140,8 @@ public abstract class BaseLinter extends AbstractLinter {
   public final void configure(final LinterConfig linterConfig) {
     super.configure(linterConfig);
     if (linterConfig != null) {
-      setTableInclusionRule(linterConfig.getTableInclusionRule());
-      setColumnInclusionRule(linterConfig.getColumnInclusionRule());
+      tableInclusionRule = linterConfig.getTableInclusionRule();
+      columnInclusionRule = linterConfig.getColumnInclusionRule();
     }
   }
 
@@ -161,21 +161,5 @@ public abstract class BaseLinter extends AbstractLinter {
     }
     end(connection);
     this.catalog = null;
-  }
-
-  private final void setColumnInclusionRule(final InclusionRule columnInclusionRule) {
-    if (columnInclusionRule == null) {
-      this.columnInclusionRule = new IncludeAll();
-    } else {
-      this.columnInclusionRule = columnInclusionRule;
-    }
-  }
-
-  private final void setTableInclusionRule(final InclusionRule tableInclusionRule) {
-    if (tableInclusionRule == null) {
-      this.tableInclusionRule = new IncludeAll();
-    } else {
-      this.tableInclusionRule = tableInclusionRule;
-    }
   }
 }

@@ -50,7 +50,7 @@ public abstract class AbstractLinter implements Linter {
 
   private final PropertyName linterName;
   private final UUID linterInstanceId;
-  private final LintCollector collector;
+  private final LintCollector lintCollector;
   private LintSeverity severity;
   private int threshold;
   private int lintCount;
@@ -58,30 +58,38 @@ public abstract class AbstractLinter implements Linter {
   protected AbstractLinter(final PropertyName linterName, final LintCollector lintCollector) {
     this.linterName = requireNonNull(linterName, "Linter name cannot be null");
     linterInstanceId = UUID.randomUUID();
-    collector = requireNonNull(lintCollector, "Lint collector cannot be null");
+    this.lintCollector = requireNonNull(lintCollector, "Lint collector cannot be null");
 
     severity = LintSeverity.medium; // default value
     threshold = Integer.MAX_VALUE; // default value
   }
 
+  /**
+   * @{@inheritDoc}
+   */
   @Override
   public final boolean exceedsThreshold() {
     return lintCount > threshold;
   }
 
+  /**
+   * @{@inheritDoc}
+   */
+  @Override
   public String getDescription() {
     return linterName.getDescription();
   }
 
+  /**
+   * @{@inheritDoc}
+   */
   @Override
   public String getLinterId() {
     return linterName.getName();
   }
 
   /**
-   * Gets the number of lints produced by this linter.
-   *
-   * @return Lint counts
+   * @{@inheritDoc}
    */
   @Override
   public final int getLintCount() {
@@ -89,9 +97,7 @@ public abstract class AbstractLinter implements Linter {
   }
 
   /**
-   * Gets the identification of this linter instance.
-   *
-   * @return Identification of this linter instance
+   * @{@inheritDoc}
    */
   @Override
   public final String getLinterInstanceId() {
@@ -99,9 +105,7 @@ public abstract class AbstractLinter implements Linter {
   }
 
   /**
-   * Gets the severity of the lints produced by this linter.
-   *
-   * @return Severity of the lints produced by this linter
+   * @{@inheritDoc}
    */
   @Override
   public final LintSeverity getSeverity() {
@@ -116,8 +120,11 @@ public abstract class AbstractLinter implements Linter {
   @Override
   public abstract String getSummary();
 
+  /**
+   * @{@inheritDoc}
+   */
   @Override
-  public String toString() {
+  public final String toString() {
     return String.format("%s [%s] - %s", getLinterInstanceId(), getSeverity(), getSummary());
   }
 
@@ -125,7 +132,7 @@ public abstract class AbstractLinter implements Linter {
       final LintObjectType objectType, final N namedObject, final String message, final V value) {
     LOGGER.log(
         Level.FINE, new StringFormat("Found lint for %s: %s --> %s", namedObject, message, value));
-    if (collector != null) {
+    if (lintCollector != null) {
       final Lint<V> lint =
           new Lint<>(
               getLinterId(),
@@ -135,7 +142,7 @@ public abstract class AbstractLinter implements Linter {
               getSeverity(),
               message,
               value);
-      collector.addLint(namedObject, lint);
+      lintCollector.addLint(namedObject, lint);
       lintCount = lintCount + 1;
     }
   }
@@ -164,12 +171,8 @@ public abstract class AbstractLinter implements Linter {
   public void configure(final LinterConfig linterConfig) {
     if (linterConfig != null) {
       setSeverity(linterConfig.getSeverity());
-      setThreshold(linterConfig.getThreshold());
+      threshold = linterConfig.getThreshold();
       configure(linterConfig.getConfig());
     }
-  }
-
-  private void setThreshold(final int threshold) {
-    this.threshold = threshold;
   }
 }

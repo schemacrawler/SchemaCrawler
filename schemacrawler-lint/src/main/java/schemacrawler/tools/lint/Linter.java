@@ -8,6 +8,12 @@ public interface Linter {
 
   boolean exceedsThreshold();
 
+  /**
+   * Gets the identification of the linter. A linter can be instantiated multiple times with
+   * different configuration.
+   *
+   * @return Identification of the linter.
+   */
   String getLinterId();
 
   /**
@@ -41,4 +47,9 @@ public interface Linter {
   void configure(final LinterConfig linterConfig);
 
   void lint(final Catalog catalog, final Connection connection);
+
+  /**
+   * @{@inheritDoc}
+   */
+  String getDescription();
 }
