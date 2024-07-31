@@ -33,9 +33,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.Version;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
@@ -47,7 +45,7 @@ public class VersionTest {
   public void version(final CapturedSystemStreams streams) throws Exception {
     Version.main(new String[0]);
 
-    assertThat(contentsOf(streams.out()), startsWith("SchemaCrawler 16.21."));
+    assertThat(contentsOf(streams.out()), startsWith("SchemaCrawler 16.22."));
     assertThat(outputOf(streams.err()), hasNoContent());
   }
 }
