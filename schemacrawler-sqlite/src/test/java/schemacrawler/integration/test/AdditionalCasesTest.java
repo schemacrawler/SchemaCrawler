@@ -33,9 +33,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -65,6 +63,11 @@ public class AdditionalCasesTest extends BaseSqliteTest {
   @Test
   public void renameTable(final TestContext testContext) throws Exception {
     run(testContext.testMethodFullName(), "/rename_table.sql", "details");
+  }
+
+  @Test
+  public void generatedColumn(final TestContext testContext) throws Exception {
+    run(testContext.testMethodFullName(), "/generated_column.sql", "schema");
   }
 
   private void run(
