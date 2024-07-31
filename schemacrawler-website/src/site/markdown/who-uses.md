@@ -21,7 +21,7 @@ on how to [Manage a monolithic database](https://cloud.google.com/architecture/m
 - [mbarre/schemacrawler-additional-lints](https://github.com/mbarre/schemacrawler-additional-lints) is maintained by
 Michèle Barré <Michele.Barre at GMail> and [Adrien Sales]
 - [assertj-schemacrawler](https://github.com/bekoenig/assertj-schemacrawler) is maintained by [Benjamin König](https://github.com/bekoenig),
-anf provides fluent assertions with SchemaCrawler for use in unit tests.
+and provides fluent assertions with SchemaCrawler for use in unit tests.
 - [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://community.chocolatey.org/packages/schemacrawler)
 The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-schemacrawler) is maintained by
 [Adrien Sales]
