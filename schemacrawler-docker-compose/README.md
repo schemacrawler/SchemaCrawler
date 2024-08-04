@@ -153,7 +153,7 @@ Connect to the IBM DB2 container if needed, run
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --url jdbc:cassandra://cassandra:9042/books --info-level minimum -c list`
+  `schemacrawler --url jdbc:cassandra://cassandra:9042/books?localdatacenter=datacenter1 --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
 
 Connect to the Cassandra container if needed, run

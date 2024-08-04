@@ -1,5 +1,3 @@
-version: "3.7"
-
 # jdbc:trino://trino:8080/tpch/sf1?user=trino
 services:
   trino:
