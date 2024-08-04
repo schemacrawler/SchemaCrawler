@@ -59,7 +59,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @HeavyDatabaseTest("cassandra")
 @Testcontainers
-public class CassandraTest extends BaseAdditionalDatabaseTest {
+public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
 
   private final DockerImageName imageName = DockerImageName.parse("cassandra");
 

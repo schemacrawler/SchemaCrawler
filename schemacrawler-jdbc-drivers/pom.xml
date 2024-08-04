@@ -101,17 +101,6 @@
       <version>453</version>
     </dependency>
     <dependency>
-      <groupId>com.ing.data</groupId>
-      <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>4.12.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.github.jnr</groupId>
-          <artifactId>jnr-posix</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.duckdb</groupId>
       <artifactId>duckdb_jdbc</artifactId>
       <version>1.0.0</version>

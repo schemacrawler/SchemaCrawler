@@ -23,7 +23,10 @@
     description="Package SchemaCrawler distributable" />
 
 
+
   <target name="make-base-distribution">
+
+    <echo message="Running ant target: make-base-distribution" />
 
     <property
         name="distribution.assembly"
@@ -101,6 +104,8 @@
 
   <target name="make-expanded-distribution">
 
+    <echo message="Running ant target: make-expanded-distribution" />
+
     <property
         name="distribution.downloader"
         location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources/_downloader" />
@@ -174,6 +179,8 @@
 
 
   <target name="make-binary-distribution-zip">
+
+    <echo message="Running ant target: make-binary-distribution-zip" />
 
     <property name="binary-distribution.staging.dir" location="${distribution.target}/_expanded-distribution" />
     <property name="binary-distribution.stem"

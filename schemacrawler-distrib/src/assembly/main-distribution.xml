@@ -30,6 +30,8 @@
 
   <target name="make-main-distribution">
 
+    <echo message="Running ant target: make-main-distribution" />
+
     <property name="main-distribution.staging.dir" location="${distribution.target}/_main-distribution" />
     <property name="main-distribution.stem"
       value="schemacrawler-${SchemaCrawler.version}-distribution" />
@@ -110,6 +112,8 @@
 
 
   <target name="make-main-distribution-zip">
+
+    <echo message="Running ant target: make-main-distribution-zip" />
 
     <property name="main-distribution.staging.dir" location="${distribution.target}/_main-distribution" />
     <property name="main-distribution.stem"

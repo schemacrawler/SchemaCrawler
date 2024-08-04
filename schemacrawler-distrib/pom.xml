@@ -190,7 +190,11 @@
                   location=".." />
                 <property name="SchemaCrawler.version"
                   value="${project.version}" />
-                <ant antfile="src\assembly\distribution.xml"
+
+                <echo message="$${SchemaCrawler.home}: ${SchemaCrawler.home}" />
+                <echo message="$${SchemaCrawler.version}: ${project.version}" />
+
+                <ant antfile="./src/assembly/distribution.xml"
                   target="make" />
               </target>
             </configuration>
@@ -208,6 +212,10 @@
                   location=".." />
                 <property name="SchemaCrawler.version"
                   value="${project.version}" />
+
+                <echo message="$${SchemaCrawler.home}: ${SchemaCrawler.home}" />
+                <echo message="$${SchemaCrawler.version}: ${project.version}" />
+
                 <ant antfile="src\assembly\main-distribution.xml"
                   target="make" />
               </target>
