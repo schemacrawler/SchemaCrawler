@@ -3,7 +3,14 @@
 SchemaCrawler release notes.
 
 <a name="v16.22.2"></a>
-## Release 16.22.2 - 2024-07-31
+## Release 16.22.2 - 2024-08-04
+
+- Fix issue #1560 - do nto distribute the Cassandra JDBC driver
+- Update dependencies
+
+
+<a name="v16.22.1"></a>
+## Release 16.22.1 - 2024-07-31
 
 - Standardize plugin registry code
 - Remove lint dispatch that allows system exit
