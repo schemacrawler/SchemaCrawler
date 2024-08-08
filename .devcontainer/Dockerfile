@@ -1,8 +1,10 @@
-FROM mcr.microsoft.com/vscode/devcontainers/java:0-8
+FROM mcr.microsoft.com/devcontainers/java:8
 
 ARG MAVEN_VERSION=""
 RUN \
-  su vscode -c "umask 0002 && . /usr/local/sdkman/bin/sdkman-init.sh && sdk install maven \"${MAVEN_VERSION}\""
+  su vscode -c "umask 0002 && \
+  . /usr/local/sdkman/bin/sdkman-init.sh && \
+  sdk install maven \"${MAVEN_VERSION}\""
 
 RUN \
   apt-get update && \
