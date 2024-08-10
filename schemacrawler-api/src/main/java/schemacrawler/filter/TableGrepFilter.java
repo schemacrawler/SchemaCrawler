@@ -77,45 +77,9 @@ class TableGrepFilter implements Predicate<Table> {
       return true;
     }
 
-    boolean includeForTables = false;
-    boolean includeForColumns = false;
-    boolean includeForDefinitions = false;
-
-    if (checkIncludeForTables && grepTableInclusionRule.test(table.getFullName())) {
-      includeForTables = true;
-    }
-
-    final List<Column> columns = table.getColumns();
-    // Check if info-level=minimum, and no columns were retrieved
-    if (columns.isEmpty()) {
-      includeForColumns = true;
-      includeForDefinitions = true;
-    }
-    for (final Column column : columns) {
-      if (checkIncludeForColumns && grepColumnInclusionRule.test(column.getFullName())) {
-        includeForColumns = true;
-        break;
-      }
-      if (checkIncludeForDefinitions && grepDefinitionInclusionRule.test(column.getRemarks())) {
-        includeForDefinitions = true;
-        break;
-      }
-    }
-    // Additional include checks for definitions
-    if (checkIncludeForDefinitions) {
-      if (grepDefinitionInclusionRule.test(table.getRemarks())) {
-        includeForDefinitions = true;
-      }
-      if (grepDefinitionInclusionRule.test(table.getDefinition())) {
-        includeForDefinitions = true;
-      }
-      for (final Trigger trigger : table.getTriggers()) {
-        if (grepDefinitionInclusionRule.test(trigger.getActionStatement())) {
-          includeForDefinitions = true;
-          break;
-        }
-      }
-    }
+    boolean includeForTables = checkIncludeForTables(table);
+    boolean includeForColumns = checkIncludeForColumns(table);
+    boolean includeForDefinitions = checkIncludeForDefinitions(table);
 
     boolean include =
         checkIncludeForTables && includeForTables
@@ -129,5 +93,39 @@ class TableGrepFilter implements Predicate<Table> {
       LOGGER.log(Level.FINE, new StringFormat("Excluding table <%s>", table));
     }
     return include;
+  }
+
+  private boolean checkIncludeForTables(final Table table) {
+    return grepTableInclusionRule != null && grepTableInclusionRule.test(table.getFullName());
+  }
+
+  private boolean checkIncludeForColumns(final Table table) {
+    final List<Column> columns = table.getColumns();
+    if (columns.isEmpty()) {
+      return true;
+    }
+    for (final Column column : columns) {
+      if (grepColumnInclusionRule != null && grepColumnInclusionRule.test(column.getFullName())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean checkIncludeForDefinitions(final Table table) {
+    if (grepDefinitionInclusionRule != null) {
+      if (grepDefinitionInclusionRule.test(table.getRemarks())) {
+        return true;
+      }
+      if (grepDefinitionInclusionRule.test(table.getDefinition())) {
+        return true;
+      }
+      for (final Trigger trigger : table.getTriggers()) {
+        if (grepDefinitionInclusionRule.test(trigger.getActionStatement())) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
