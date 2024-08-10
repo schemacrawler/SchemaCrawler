@@ -28,11 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.filter;
 
-import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
@@ -74,6 +74,14 @@ class TableGrepFilter implements Predicate<Table> {
     final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
 
     if (!checkIncludeForTables && !checkIncludeForColumns && !checkIncludeForDefinitions) {
+      if (invertMatch) {
+        LOGGER.log(
+            Level.FINE,
+            new StringFormat(
+                "Ignoring the invert match setting for table <%s>, "
+                    + "since no inclusion rules are set",
+                table));
+      }
       return true;
     }
 
@@ -114,10 +122,8 @@ class TableGrepFilter implements Predicate<Table> {
 
   private boolean checkIncludeForDefinitions(final Table table) {
     if (grepDefinitionInclusionRule != null) {
-      if (grepDefinitionInclusionRule.test(table.getRemarks())) {
-        return true;
-      }
-      if (grepDefinitionInclusionRule.test(table.getDefinition())) {
+      if (grepDefinitionInclusionRule.test(table.getRemarks())
+          || grepDefinitionInclusionRule.test(table.getDefinition())) {
         return true;
       }
       for (final Trigger trigger : table.getTriggers()) {
