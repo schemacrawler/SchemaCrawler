@@ -29,13 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.formatter.serialize;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.serialize.model.CatalogDocument;
@@ -44,14 +43,12 @@ import schemacrawler.tools.command.serialize.model.CompactCatalogUtility;
 /** Decorates a database to allow for serialization to a compact JSON format. */
 public final class CompactSerializedCatalog implements CatalogSerializer {
 
-  private static final Logger LOGGER = Logger.getLogger(CompactSerializedCatalog.class.getName());
-
   private final Catalog catalog;
   private final CatalogDocument catalogDescription;
 
   public CompactSerializedCatalog(final Catalog catalog) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
-    this.catalogDescription = CompactCatalogUtility.createCatalogDocument(catalog);
+    catalogDescription = CompactCatalogUtility.createCatalogDocument(catalog);
   }
 
   @Override

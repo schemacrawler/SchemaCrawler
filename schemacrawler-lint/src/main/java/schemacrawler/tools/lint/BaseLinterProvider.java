@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import java.util.logging.Logger;
 import us.fatehi.utility.property.PropertyName;
 
 /**
@@ -38,8 +37,6 @@ import us.fatehi.utility.property.PropertyName;
 public abstract class BaseLinterProvider implements LinterProvider {
 
   private static final long serialVersionUID = -7188840789229724389L;
-
-  private static final Logger LOGGER = Logger.getLogger(BaseLinterProvider.class.getName());
 
   private final PropertyName linterName;
 
