@@ -40,13 +40,11 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -72,7 +70,8 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
   protected void testOracleWithConnection(
       final DatabaseConnectionSource dataSource,
       final String expectedResource,
-      final int numDatabaseUsers)
+      final int numDatabaseUsers,
+      final boolean noInfo)
       throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -90,7 +89,11 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+    if (noInfo) {
+      textOptionsBuilder.noInfo();
+    } else {
+      textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+    }
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
