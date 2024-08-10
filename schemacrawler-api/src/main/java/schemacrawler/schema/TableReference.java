@@ -79,7 +79,7 @@ public interface TableReference
 
   /**
    * @deprecated
-   * @see {@link #getDependentTable()}
+   * @see #getDependentTable()
    */
   @Deprecated
   default Table getReferencingTable() {

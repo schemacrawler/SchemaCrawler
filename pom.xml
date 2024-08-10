@@ -25,11 +25,11 @@
     <module>schemacrawler-text</module>
     <module>schemacrawler-diagram</module>
     <module>schemacrawler</module>
-	<!-- Additional functionality -->
+    <!-- Additional functionality -->
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-scripting</module>
     <module>schemacrawler-lint</module>
-	<module>schemacrawler-chatgpt</module>
+    <module>schemacrawler-chatgpt</module>
     <!-- Database plugins -->
     <module>schemacrawler-dbtest</module>
     <module>schemacrawler-db2</module>

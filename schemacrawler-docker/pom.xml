@@ -20,7 +20,7 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-distrib</artifactId>
       <version>${project.version}</version>
-	  <type>pom</type>
+      <type>pom</type>
     </dependency>
   </dependencies>    
   <build>

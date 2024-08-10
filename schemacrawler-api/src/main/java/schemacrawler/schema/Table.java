@@ -122,7 +122,7 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
 
   /**
    * @deprecated
-   * @see {@link #getDependentTables()}
+   * @see #getDependentTables()
    */
   @Deprecated
   default Collection<Table> getReferencingTables() {
