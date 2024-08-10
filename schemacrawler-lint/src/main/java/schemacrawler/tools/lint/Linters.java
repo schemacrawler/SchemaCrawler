@@ -48,15 +48,14 @@ public final class Linters implements Iterable<Linter> {
 
   private final List<Linter> linters;
   private final LintCollector collector;
-  private final LinterRegistry registry;
 
   public Linters(final LinterConfigs linterConfigs, final boolean runAllLinters) {
     requireNonNull(linterConfigs, "No linter configs provided");
 
     linters = new ArrayList<>();
     collector = new LintCollector();
-    registry = LinterRegistry.getLinterRegistry();
 
+    final LinterRegistry registry = LinterRegistry.getLinterRegistry();
     final Set<String> registeredLinters = registry.getRegisteredLinters();
 
     // Add all configured linters, with as many instances as were

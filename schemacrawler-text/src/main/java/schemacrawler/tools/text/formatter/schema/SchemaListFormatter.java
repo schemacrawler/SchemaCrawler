@@ -32,9 +32,9 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
-import static us.fatehi.utility.Utility.isBlank;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -45,7 +45,6 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -301,7 +300,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handleSynonymsStart() {
-    if (options.is(HideDatabaseObjectsType.hideSynonyms)) {
+    if (options.is(hideSynonyms)) {
       LOGGER.log(Level.FINER, "Not showing synonyms");
       return;
     }
