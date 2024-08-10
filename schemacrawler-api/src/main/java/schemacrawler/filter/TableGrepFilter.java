@@ -108,6 +108,7 @@ class TableGrepFilter implements Predicate<Table> {
   }
 
   private boolean checkIncludeForColumns(final Table table) {
+
     final List<Column> columns = table.getColumns();
     if (columns.isEmpty()) {
       return true;

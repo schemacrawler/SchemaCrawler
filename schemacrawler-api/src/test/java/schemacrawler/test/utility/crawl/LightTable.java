@@ -37,6 +37,7 @@ public final class LightTable implements Table {
   private final String name;
   private final List<Column> columns;
   private final Map<String, Object> attributes;
+  private final Collection<Trigger> triggers;
   private String definition;
   private String remarks;
 
@@ -45,6 +46,7 @@ public final class LightTable implements Table {
     this.name = requireNotBlank(name, "No table name provided");
     attributes = new HashMap<>();
     columns = new ArrayList<>();
+    triggers = new ArrayList<>();
   }
 
   public LightTable(final String name) {
@@ -55,6 +57,12 @@ public final class LightTable implements Table {
     final LightColumn column = new LightColumn(this, name);
     columns.add(column);
     return column;
+  }
+
+  public void addTrigger(final Trigger trigger) {
+    if (trigger != null) {
+      triggers.add(trigger);
+    }
   }
 
   @Override
@@ -99,7 +107,7 @@ public final class LightTable implements Table {
 
   @Override
   public List<Column> getColumns() {
-    return columns;
+    return new ArrayList<>(columns);
   }
 
   @Override
@@ -180,7 +188,7 @@ public final class LightTable implements Table {
 
   @Override
   public Collection<Trigger> getTriggers() {
-    return Collections.emptyList();
+    return new ArrayList<>(triggers);
   }
 
   @Override
