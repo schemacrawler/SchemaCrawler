@@ -35,13 +35,11 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
@@ -74,8 +72,6 @@ public class TableCellTest {
         Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
     final Element td = doc.select("td").first();
 
-    System.out.println(renderedHtml);
-    System.out.println(td.attributes());
     assertThat(td.attr("sometag"), is("customvalue"));
     assertThat(td.attr("bgcolor"), is("#FF0064"));
     assertThat(td.attr("class"), is("class"));
@@ -105,8 +101,6 @@ public class TableCellTest {
     final Element td = doc.select("td").first();
 
     assertThat(renderedHtml, not(nullValue()));
-    System.out.println(renderedHtml);
-    System.out.println(td.attributes());
     assertThat(td.attr("sometag"), is("custom&value"));
     assertThat(td.attr("colspan"), is("2"));
     assertThat(td.attr("align"), is("right"));
@@ -142,8 +136,6 @@ public class TableCellTest {
         Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
     final Element th = doc.select("th").first();
 
-    System.out.println(renderedHtml);
-    System.out.println(th.attributes());
     assertThat(th.attr("sometag"), is("customvalue"));
     assertThat(th.attr("bgcolor"), is("#FF0064"));
     assertThat(th.attr("class"), is("class"));

@@ -137,7 +137,6 @@ public class Tag {
       if (value != null) {
         buffer.append("='").append(value).append("'");
       }
-      buffer.append(" ");
     }
   }
 
@@ -231,7 +230,6 @@ public class Tag {
     buffer.append(escapeText ? escapeHtml(text) : text);
 
     if (!innerTags.isEmpty()) {
-      buffer.append(System.lineSeparator());
       appendInnerTags(buffer);
     }
 

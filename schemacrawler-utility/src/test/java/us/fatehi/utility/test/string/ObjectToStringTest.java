@@ -3,11 +3,8 @@ package us.fatehi.utility.test.string;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.nio.file.AccessMode;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.test.utility.TestObject;
 import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.utility.ObjectToString;
@@ -40,14 +37,6 @@ public class ObjectToStringTest {
         ObjectToString.listOrObjectToString(TestObjectUtility.makeTestObject())
             .replaceAll("\\R", ""),
         containsString(TestObject.class.getName()));
-  }
-
-  @Test
-  public void serialize() {
-
-    final TestObject testObject = TestObjectUtility.makeTestObject();
-
-    System.out.println(ObjectToString.toString(testObject));
   }
 
   @Test
