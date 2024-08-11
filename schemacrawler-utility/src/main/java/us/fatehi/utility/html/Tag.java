@@ -28,16 +28,14 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.html;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagOutputFormat.html;
 import static us.fatehi.utility.html.TagOutputFormat.tsv;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.Color;
 
 public class Tag {
@@ -79,11 +77,10 @@ public class Tag {
   }
 
   public String addAttribute(final String key, final String value) {
-    if (!isBlank(key) && !isBlank(value)) {
+    if (!isBlank(key)) {
       return attributes.put(key, value);
-    } else {
-      return value;
     }
+    return value;
   }
 
   public Tag addInnerTag(final Tag tag) {
@@ -133,6 +130,56 @@ public class Tag {
     return getTagName();
   }
 
+  private void appendAttributes(final StringBuilder buffer) {
+    for (final Entry<String, String> attribute : attributes.entrySet()) {
+      final String value = attribute.getValue();
+      buffer.append(" ").append(attribute.getKey());
+      if (value != null) {
+        buffer.append("='").append(value).append("'");
+      }
+      buffer.append(" ");
+    }
+  }
+
+  private void appendBgColor(final StringBuilder buffer) {
+    if (bgColor != null && !bgColor.equals(Color.white)) {
+      buffer.append(" bgcolor='").append(bgColor).append("'");
+    }
+  }
+
+  private void appendClosingTag(final StringBuilder buffer) {
+    if (emphasizeText) {
+      buffer.append("</i></b>");
+    }
+    if (indent) {
+      buffer.append("\t");
+    }
+    buffer.append("</").append(getTagName()).append(">");
+  }
+
+  private void appendEmphasizedText(final StringBuilder buffer) {
+    if (emphasizeText) {
+      buffer.append("<b><i>");
+    }
+  }
+
+  private void appendInnerTags(final StringBuilder buffer) {
+    for (final Tag innerTag : innerTags) {
+      if (indent) {
+        buffer.append("\t");
+      }
+      buffer.append("\t").append(innerTag.render(html)).append(System.lineSeparator());
+    }
+  }
+
+  private void appendStyleClass(final StringBuilder buffer) {
+    if (!isBlank(styleClass)) {
+      buffer.append(" class='").append(styleClass).append("'");
+    } else if (align != null && align != Alignment.inherit) {
+      buffer.append(" align='").append(align).append("'");
+    }
+  }
+
   /**
    * Escapes the characters in text for use in HTML.
    *
@@ -161,56 +208,6 @@ public class Tag {
     return buffer.toString();
   }
 
-  private void appendAttributes(StringBuilder buffer) {
-    for (final Entry<String, String> attribute : attributes.entrySet()) {
-      buffer
-          .append(" ")
-          .append(attribute.getKey())
-          .append("='")
-          .append(attribute.getValue())
-          .append("'");
-    }
-  }
-
-  private void appendBgColor(StringBuilder buffer) {
-    if (bgColor != null && !bgColor.equals(Color.white)) {
-      buffer.append(" bgcolor='").append(bgColor).append("'");
-    }
-  }
-
-  private void appendStyleClass(StringBuilder buffer) {
-    if (!isBlank(styleClass)) {
-      buffer.append(" class='").append(styleClass).append("'");
-    } else if (align != null && align != Alignment.inherit) {
-      buffer.append(" align='").append(align).append("'");
-    }
-  }
-
-  private void appendEmphasizedText(StringBuilder buffer) {
-    if (emphasizeText) {
-      buffer.append("<b><i>");
-    }
-  }
-
-  private void appendInnerTags(StringBuilder buffer) {
-    for (final Tag innerTag : innerTags) {
-      if (indent) {
-        buffer.append("\t");
-      }
-      buffer.append("\t").append(innerTag.render(html)).append(System.lineSeparator());
-    }
-  }
-
-  private void appendClosingTag(StringBuilder buffer) {
-    if (emphasizeText) {
-      buffer.append("</i></b>");
-    }
-    if (indent) {
-      buffer.append("\t");
-    }
-    buffer.append("</").append(getTagName()).append(">");
-  }
-
   /**
    * Converts the tag to HTML.
    *
@@ -228,12 +225,12 @@ public class Tag {
     buffer.append(">");
     appendEmphasizedText(buffer);
 
-    if (innerTags.isEmpty()) {
-      if (indent) {
-        buffer.append(System.lineSeparator());
-      }
-      buffer.append(escapeText ? escapeHtml(text) : text);
-    } else {
+    if (indent) {
+      buffer.append(System.lineSeparator());
+    }
+    buffer.append(escapeText ? escapeHtml(text) : text);
+
+    if (!innerTags.isEmpty()) {
       buffer.append(System.lineSeparator());
       appendInnerTags(buffer);
     }
@@ -277,17 +274,15 @@ public class Tag {
    * @return Text
    */
   private String toPlainTextString() {
-    if (innerTags.isEmpty()) {
-      if (characterWidth > 0) {
-        final String format =
-            String.format("%%%s%ds", align == Alignment.right ? "" : "-", characterWidth);
-        return String.format(format, text);
-      } else {
-        return text;
-      }
-    } else {
+    if (!innerTags.isEmpty()) {
       return toInnerTagsPlainTextString();
     }
+    if (characterWidth > 0) {
+      final String format =
+          String.format("%%%s%ds", align == Alignment.right ? "" : "-", characterWidth);
+      return String.format(format, text);
+    }
+    return text;
   }
 
   /**
@@ -298,8 +293,7 @@ public class Tag {
   private String toTsvString() {
     if (innerTags.isEmpty()) {
       return text;
-    } else {
-      return toInnerTagsTsvString();
     }
+    return toInnerTagsTsvString();
   }
 }

@@ -34,9 +34,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
@@ -87,7 +85,7 @@ public class TableRowTest {
 
     assertThat(
         row.render(TagOutputFormat.html).replace(System.lineSeparator(), "~"),
-        is("\t<tr>~\t\t<td>display text</td>~\t\t<td>display text</td>~\t</tr>"));
+        is("\t<tr>~~\t\t<td>display text</td>~\t\t<td>display text</td>~\t</tr>"));
     assertThat(row.render(TagOutputFormat.text), is("display text  display text"));
     assertThat(row.render(TagOutputFormat.tsv), is("display text\tdisplay text"));
   }
