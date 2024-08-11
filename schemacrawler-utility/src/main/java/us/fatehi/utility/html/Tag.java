@@ -161,6 +161,56 @@ public class Tag {
     return buffer.toString();
   }
 
+  private void appendAttributes(StringBuilder buffer) {
+    for (final Entry<String, String> attribute : attributes.entrySet()) {
+      buffer
+          .append(" ")
+          .append(attribute.getKey())
+          .append("='")
+          .append(attribute.getValue())
+          .append("'");
+    }
+  }
+
+  private void appendBgColor(StringBuilder buffer) {
+    if (bgColor != null && !bgColor.equals(Color.white)) {
+      buffer.append(" bgcolor='").append(bgColor).append("'");
+    }
+  }
+
+  private void appendStyleClass(StringBuilder buffer) {
+    if (!isBlank(styleClass)) {
+      buffer.append(" class='").append(styleClass).append("'");
+    } else if (align != null && align != Alignment.inherit) {
+      buffer.append(" align='").append(align).append("'");
+    }
+  }
+
+  private void appendEmphasizedText(StringBuilder buffer) {
+    if (emphasizeText) {
+      buffer.append("<b><i>");
+    }
+  }
+
+  private void appendInnerTags(StringBuilder buffer) {
+    for (final Tag innerTag : innerTags) {
+      if (indent) {
+        buffer.append("\t");
+      }
+      buffer.append("\t").append(innerTag.render(html)).append(System.lineSeparator());
+    }
+  }
+
+  private void appendClosingTag(StringBuilder buffer) {
+    if (emphasizeText) {
+      buffer.append("</i></b>");
+    }
+    if (indent) {
+      buffer.append("\t");
+    }
+    buffer.append("</").append(getTagName()).append(">");
+  }
+
   /**
    * Converts the tag to HTML.
    *
@@ -172,26 +222,11 @@ public class Tag {
       buffer.append("\t");
     }
     buffer.append("<").append(getTagName());
-    for (final Entry<String, String> attribute : attributes.entrySet()) {
-      buffer
-          .append(" ")
-          .append(attribute.getKey())
-          .append("='")
-          .append(attribute.getValue())
-          .append("'");
-    }
-    if (bgColor != null && !bgColor.equals(Color.white)) {
-      buffer.append(" bgcolor='").append(bgColor).append("'");
-    }
-    if (!isBlank(styleClass)) {
-      buffer.append(" class='").append(styleClass).append("'");
-    } else if (align != null && align != Alignment.inherit) {
-      buffer.append(" align='").append(align).append("'");
-    }
+    appendAttributes(buffer);
+    appendBgColor(buffer);
+    appendStyleClass(buffer);
     buffer.append(">");
-    if (emphasizeText) {
-      buffer.append("<b><i>");
-    }
+    appendEmphasizedText(buffer);
 
     if (innerTags.isEmpty()) {
       if (indent) {
@@ -200,21 +235,10 @@ public class Tag {
       buffer.append(escapeText ? escapeHtml(text) : text);
     } else {
       buffer.append(System.lineSeparator());
-      for (final Tag innerTag : innerTags) {
-        if (indent) {
-          buffer.append("\t");
-        }
-        buffer.append("\t").append(innerTag.render(html)).append(System.lineSeparator());
-      }
+      appendInnerTags(buffer);
     }
 
-    if (emphasizeText) {
-      buffer.append("</i></b>");
-    }
-    if (indent) {
-      buffer.append("\t");
-    }
-    buffer.append("</").append(getTagName()).append(">");
+    appendClosingTag(buffer);
 
     return buffer.toString();
   }
