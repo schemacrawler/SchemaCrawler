@@ -34,13 +34,11 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.caption;
 import static us.fatehi.utility.html.TagBuilder.span;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
@@ -73,7 +71,7 @@ public class CaptionTest {
     assertThat(captionElement.attr("sometag"), is("customvalue"));
     assertThat(captionElement.attr("bgcolor"), is("#FF0064"));
     assertThat(captionElement.attr("class"), is("class"));
-    assertThat(captionElement.text(), is("display text"));
+    assertThat(captionElement.text(), is("display text display text"));
     assertThat(captionElement.select("span").text(), is("display text"));
 
     assertThat(caption.render(TagOutputFormat.text), is("display text"));

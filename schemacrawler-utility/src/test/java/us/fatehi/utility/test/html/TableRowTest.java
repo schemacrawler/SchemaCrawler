@@ -34,9 +34,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
