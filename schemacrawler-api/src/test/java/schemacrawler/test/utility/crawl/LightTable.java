@@ -1,9 +1,5 @@
 package schemacrawler.test.utility.crawl;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,7 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
@@ -38,12 +37,16 @@ public final class LightTable implements Table {
   private final String name;
   private final List<Column> columns;
   private final Map<String, Object> attributes;
+  private final Collection<Trigger> triggers;
+  private String definition;
+  private String remarks;
 
   public LightTable(final Schema schema, final String name) {
     this.schema = requireNonNull(schema, "No schema provided");
     this.name = requireNotBlank(name, "No table name provided");
     attributes = new HashMap<>();
     columns = new ArrayList<>();
+    triggers = new ArrayList<>();
   }
 
   public LightTable(final String name) {
@@ -56,6 +59,12 @@ public final class LightTable implements Table {
     return column;
   }
 
+  public void addTrigger(final Trigger trigger) {
+    if (trigger != null) {
+      triggers.add(trigger);
+    }
+  }
+
   @Override
   public int compareTo(final NamedObject o) {
     return name.compareTo(o.getName());
@@ -66,10 +75,7 @@ public final class LightTable implements Table {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if ((obj == null) || (getClass() != obj.getClass())) {
       return false;
     }
     final LightTable other = (LightTable) obj;
@@ -90,9 +96,8 @@ public final class LightTable implements Table {
   public <T> T getAttribute(final String name, final T defaultValue) throws ClassCastException {
     if (hasAttribute(name)) {
       return getAttribute(name);
-    } else {
-      return defaultValue;
     }
+    return defaultValue;
   }
 
   @Override
@@ -102,12 +107,12 @@ public final class LightTable implements Table {
 
   @Override
   public List<Column> getColumns() {
-    return columns;
+    return new ArrayList<>(columns);
   }
 
   @Override
   public String getDefinition() {
-    return "";
+    return trimToEmpty(definition);
   }
 
   @Override
@@ -163,7 +168,7 @@ public final class LightTable implements Table {
 
   @Override
   public String getRemarks() {
-    return "";
+    return trimToEmpty(remarks);
   }
 
   @Override
@@ -183,7 +188,7 @@ public final class LightTable implements Table {
 
   @Override
   public Collection<Trigger> getTriggers() {
-    return Collections.emptyList();
+    return new ArrayList<>(triggers);
   }
 
   @Override
@@ -286,8 +291,14 @@ public final class LightTable implements Table {
     attributes.put(name, value);
   }
 
+  public void setDefinition(String definition) {
+    this.definition = definition;
+  }
+
   @Override
-  public void setRemarks(final String remarks) {}
+  public void setRemarks(final String remarks) {
+    this.remarks = remarks;
+  }
 
   @Override
   public String toString() {
