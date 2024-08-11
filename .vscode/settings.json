@@ -1,6 +1,9 @@
 {
     "github.codespaces.defaultExtensions": [
         "vscjava.vscode-java-pack",
+        "vscjava.vscode-maven",
+        "vscjava.vscode-java-test",
+        "editorconfig.editorconfig",
         "GitHub.codespaces",
         "GitHub.vscode-pull-request-github"
     ],
