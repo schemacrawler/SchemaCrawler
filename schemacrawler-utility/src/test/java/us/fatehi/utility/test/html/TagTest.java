@@ -66,14 +66,9 @@ public class TagTest {
     assertThat(tag.render(text), is("display text"));
     assertThat(tag.render(tsv), is("display text"));
 
-    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
-    // relying on the order that they are generated
-    final String renderedHtml = tag.render(html);
-    assertThat(renderedHtml, is(not(nullValue())));
+    final Element span = parseRenderedHtml(tag);
 
-    final Document doc = Jsoup.parseBodyFragment(renderedHtml);
-    final Element span = doc.select("span").first();
-
+    assertThat(span.attributesSize(), is(5));
     assertThat(span.attr("sometag"), is("customvalue"));
     assertThat(span.attr("nulltag"), is(""));
     assertThat(span.attr("emptytag"), is(""));
@@ -82,13 +77,13 @@ public class TagTest {
     assertThat(span.text(), is("display text"));
   }
 
-  @DisplayName("toHtmlString: escape text, emphasize, and allow free width")
+  @DisplayName("toHtmlString: escape text, emphasize, and allow free width left aligned")
   @Test
   public void toHtmlString_escapeEmphasize() {
     final Tag tag =
         TagBuilder.span()
             .withEscapedText("display & text")
-            .withAlignment(Alignment.right)
+            .withAlignment(Alignment.left)
             .withEmphasis()
             .make();
     tag.addAttribute("sometag", "custom&value");
@@ -96,16 +91,10 @@ public class TagTest {
     assertThat(tag.render(text), is("display & text"));
     assertThat(tag.render(tsv), is("display & text"));
 
-    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
-    // relying on the order that they are generated
-    final String renderedHtml = tag.render(html);
-    assertThat(renderedHtml, is(not(nullValue())));
-
-    final Document doc = Jsoup.parseBodyFragment(renderedHtml);
-    final Element span = doc.select("span").first();
+    final Element span = parseRenderedHtml(tag);
 
     assertThat(span.attr("sometag"), is("custom&value"));
-    assertThat(span.attr("align"), is("right"));
+    assertThat(span.attr("align"), is("left"));
     assertThat(span.text(), is("display & text"));
     assertThat(span.select("b").first().outerHtml(), is("<b><i>display &amp; text</i></b>"));
   }
@@ -132,13 +121,7 @@ public class TagTest {
     assertThat(outerTag.render(text), is("inner text"));
     assertThat(outerTag.render(tsv), is("inner text"));
 
-    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
-    // relying on the order that they are generated
-    final String renderedHtml = outerTag.render(html);
-    assertThat(renderedHtml, is(not(nullValue())));
-
-    final Document doc = Jsoup.parseBodyFragment(renderedHtml);
-    final Element outerSpan = doc.select("span").first();
+    final Element outerSpan = parseRenderedHtml(outerTag);
     final Element innerSpan = outerSpan.select("span").get(1);
 
     assertThat(outerSpan.attr("sometag"), is("customvalue"));
@@ -147,5 +130,71 @@ public class TagTest {
     assertThat(outerSpan.text(), is("outer text inner text"));
 
     assertThat(innerSpan.text(), is("inner text"));
+  }
+
+  @DisplayName("toHtmlString: bgcolor")
+  @Test
+  public void toHtmlString_bgcolor() {
+
+    // Test with color
+
+    final Tag tagBgColor =
+        TagBuilder.span()
+            .withText("text - color")
+            .withBackground(Color.fromRGB(255, 0, 100))
+            .make();
+
+    assertThat(tagBgColor.render(text), is("text - color"));
+    assertThat(tagBgColor.render(tsv), is("text - color"));
+
+    final Element spanBgColor = parseRenderedHtml(tagBgColor);
+
+    assertThat(spanBgColor.attributesSize(), is(1));
+    assertThat(spanBgColor.attr("bgcolor"), is("#FF0064"));
+    assertThat(spanBgColor.text(), is("text - color"));
+
+    // Test with no color
+
+    final Tag tagNoBg = TagBuilder.span().withText("text - no color").make();
+
+    assertThat(tagNoBg.render(text), is("text - no color"));
+    assertThat(tagNoBg.render(tsv), is("text - no color"));
+
+    final Element spanNoBg = parseRenderedHtml(tagNoBg);
+
+    assertThat(spanNoBg.attributesSize(), is(0));
+    assertThat(spanNoBg.attr("bgcolor"), is(""));
+    assertThat(spanNoBg.text(), is("text - no color"));
+
+    // Test with white
+
+    final Tag tagBgWhite =
+        TagBuilder.span().withText("text - white").withBackground(Color.white).make();
+
+    assertThat(tagBgWhite.render(text), is("text - white"));
+    assertThat(tagBgWhite.render(tsv), is("text - white"));
+
+    final Element spanBgWhite = parseRenderedHtml(tagBgWhite);
+
+    assertThat(spanBgWhite.attributesSize(), is(0));
+    assertThat(spanBgWhite.attr("bgcolor"), is(""));
+    assertThat(spanBgWhite.text(), is("text - white"));
+  }
+
+  /**
+   * Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without relying
+   * on the order that they are generated
+   *
+   * @param tag Tag to render
+   * @return Top level HTML element
+   */
+  private Element parseRenderedHtml(final Tag tag) {
+
+    final String renderedHtml = tag.render(html);
+    assertThat(renderedHtml, is(not(nullValue())));
+
+    final Document doc = Jsoup.parseBodyFragment(renderedHtml);
+    final Element span = doc.select(tag.getTagName()).first();
+    return span;
   }
 }
