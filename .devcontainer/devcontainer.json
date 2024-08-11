@@ -1,44 +1,21 @@
 {
   "name": "SchemaCrawler",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "INSTALL_MAVEN": "true",
-      "INSTALL_GRADLE": "true",
-      "NODE_VERSION": "none"
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": "true"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+      },
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "editorconfig.editorconfig"
+      ]
     }
   },
-  "settings": {
-    "workbench.startupEditor": "none",
-    "java.home": "/docker-java-home",
-    "java.import.gradle.java.home": "/usr/local/sdkman/candidates/java/current",
-    "java.configuration.runtimes": [
-      {
-        "default": true,
-        "name": "JavaSE-1.8",
-        "path": "/usr/local/sdkman/candidates/java/current"
-      }
-    ],
-    "files.exclude": {
-      "workspace": true
-    },
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.format.settings.profile": "GoogleStyle",
-    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
-    "editor.tabSize": 2,
-    "editor.foldingImportsByDefault": true,
-    "files.trimTrailingWhitespace": true,
-    "git.enableCommitSigning": true
-  },
-  "extensions": [
-    "vscjava.vscode-java-pack",
-    "shengchen.vscode-checkstyle",
-    "editorconfig.editorconfig",
-    "pivotal.vscode-boot-dev-pack",
-    "pivotal.vscode-spring-boot",
-    "redhat.vscode-xml",
-    "jebbs.markdown-extended",
-    "davidanson.vscode-markdownlint"
-  ],
-  "remoteUser": "vscode"
+  "postCreateCommand": "mvn dependency:resolve"
 }
