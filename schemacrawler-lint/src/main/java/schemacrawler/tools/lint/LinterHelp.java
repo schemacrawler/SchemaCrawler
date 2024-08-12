@@ -55,7 +55,7 @@ public final class LinterHelp implements Supplier<String[]> {
     }
 
     final LinterRegistry registry = LinterRegistry.getLinterRegistry();
-    Collection<PropertyName> registeredPlugins = registry.getRegisteredPlugins();
+    final Collection<PropertyName> registeredPlugins = registry.getRegisteredPlugins();
     for (final PropertyName linterName : registeredPlugins) {
       final String linterId = linterName.getName();
       if (generateMarkdown) {

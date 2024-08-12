@@ -31,8 +31,8 @@ package schemacrawler.testdb;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.concurrent.Callable;
-
 import picocli.CommandLine;
+import us.fatehi.utility.SystemExitException;
 import us.fatehi.utility.database.SqlScript;
 
 @CommandLine.Command(
@@ -47,7 +47,10 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
   }
 
   public static void main(final String... args) {
-    System.exit(call(args));
+    final int exitCode = call(args);
+    if (exitCode != 0) {
+      throw new SystemExitException(exitCode, TestSchemaCreatorMain.class + " has exited with an error");
+    }
   }
 
   @CommandLine.Option(
@@ -106,10 +109,9 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
       throw new IllegalArgumentException("No connection URL provided");
     }
     final String[] splitUrl = connectionUrl.split(":");
-    if (splitUrl.length >= 2) {
-      scriptsresource = String.format("/%s.scripts.txt", splitUrl[1]);
-    } else {
+    if (splitUrl.length < 2) {
       throw new IllegalArgumentException("No connection URL provided");
     }
+    scriptsresource = String.format("/%s.scripts.txt", splitUrl[1]);
   }
 }
