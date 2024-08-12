@@ -26,7 +26,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
@@ -36,6 +35,7 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 import us.fatehi.utility.PropertiesUtility;
+import us.fatehi.utility.SystemExitException;
 import us.fatehi.utility.UtilityLogger;
 
 /** Main class that takes arguments for a database for crawling a schema. */
@@ -92,7 +92,7 @@ public final class Main {
         PropertiesUtility.getSystemConfigurationProperty(SC_EXIT_WITH_EXCEPTION, "false");
     final boolean exitWithException = Boolean.parseBoolean(exitWithExceptionValue);
     if (exitWithException) {
-      throw new SchemaCrawlerException(String.format("Exiting with code %d", exitCode));
+      throw new SystemExitException(exitCode, "SchemaCrawler has exited with an error");
     }
     System.exit(exitCode);
   }
