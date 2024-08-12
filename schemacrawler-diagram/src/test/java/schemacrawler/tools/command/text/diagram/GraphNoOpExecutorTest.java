@@ -28,11 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.diagram;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
@@ -40,7 +39,7 @@ public class GraphNoOpExecutorTest {
 
   @Test
   public void canGenerate() {
-    assertTrue(new GraphNoOpExecutor(DiagramOutputFormat.scdot).canGenerate());
+    assertThat(new GraphNoOpExecutor(DiagramOutputFormat.scdot).canGenerate(), is(true));
   }
 
   @Test

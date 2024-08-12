@@ -2,7 +2,7 @@ package us.fatehi.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.collections.CircularBoundedList;
@@ -21,7 +21,7 @@ public class CircularBoundedListTest {
     list.add(2);
     list.add(3);
 
-    Assertions.assertEquals(3, list.size());
+    assertThat(list.size(), is(3));
   }
 
   @Test
@@ -47,7 +47,7 @@ public class CircularBoundedListTest {
     final int[] expectedInitialContents = {1, 2, 3, 4, 5};
     int index = 0;
     for (final Integer element : list) {
-      Assertions.assertEquals(expectedInitialContents[index], element);
+      assertThat(element, is(expectedInitialContents[index]));
       index++;
     }
 
@@ -58,7 +58,7 @@ public class CircularBoundedListTest {
     final int[] expectedContentsAfterAddingMore = {3, 4, 5, 6, 7};
     index = 0;
     for (final Integer element : list) {
-      Assertions.assertEquals(expectedContentsAfterAddingMore[index], element);
+      assertThat(element, is(expectedContentsAfterAddingMore[index]));
       index++;
     }
 
@@ -71,7 +71,7 @@ public class CircularBoundedListTest {
     final int[] expectedContentsAfterExceedingCapacity = {7, 8, 9, 10, 11};
     index = 0;
     for (final Integer element : list) {
-      Assertions.assertEquals(expectedContentsAfterExceedingCapacity[index], element);
+      assertThat(element, is(expectedContentsAfterExceedingCapacity[index]));
       index++;
     }
   }
@@ -82,9 +82,9 @@ public class CircularBoundedListTest {
     list.add(2);
     list.add(3);
 
-    Assertions.assertEquals(1, list.get(0));
-    Assertions.assertEquals(2, list.get(1));
-    Assertions.assertEquals(3, list.get(2));
+    assertThat(list.get(0), is(1));
+    assertThat(list.get(1), is(2));
+    assertThat(list.get(2), is(3));
   }
 
   @Test
@@ -93,8 +93,8 @@ public class CircularBoundedListTest {
     list.add(2);
     list.add(3);
 
-    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1));
-    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> list.get(3));
+    assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1));
+    assertThrows(IndexOutOfBoundsException.class, () -> list.get(3));
   }
 
   @Test
@@ -110,11 +110,11 @@ public class CircularBoundedListTest {
       sb.append(element).append(" ");
     }
 
-    Assertions.assertEquals("1 2 3 4 5 ", sb.toString());
+    assertThat(sb.toString(), is("1 2 3 4 5 "));
   }
 
   @Test
   public void testIteratorWithEmptyList() {
-    Assertions.assertFalse(list.iterator().hasNext());
+    assertThat(list.iterator().hasNext(), is(false));
   }
 }
