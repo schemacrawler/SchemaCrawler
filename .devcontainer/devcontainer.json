@@ -1,5 +1,8 @@
 {
   "name": "SchemaCrawler",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
       "version": "21",
@@ -9,13 +12,12 @@
   },
   "customizations": {
     "vscode": {
-      "settings": {
-      },
+      "settings": {},
       "extensions": [
         "vscjava.vscode-java-pack",
         "editorconfig.editorconfig"
       ]
     }
   },
-  "postCreateCommand": "mvn dependency:resolve"
+  "postCreateCommand": "mvn dependency:resolve dependency:sources -Dclassifier=javadoc"
 }
