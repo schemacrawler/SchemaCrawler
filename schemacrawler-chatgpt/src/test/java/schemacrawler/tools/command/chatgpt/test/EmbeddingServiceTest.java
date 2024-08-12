@@ -28,7 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.chatgpt.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +60,7 @@ public class EmbeddingServiceTest {
         org.junit.jupiter.api.Assertions.assertThrows(
             IllegalArgumentException.class, () -> embeddingService.embed(text));
 
-    assertEquals("No text provided", exception.getMessage());
+    assertThat(exception.getMessage(), is("No text provided"));
   }
 
   @Test
@@ -68,6 +69,6 @@ public class EmbeddingServiceTest {
 
     final List<Double> actualEmbedding = embeddingService.embed(text).getEmbedding();
 
-    assertEquals(expectedEmbedding, actualEmbedding);
+    assertThat(actualEmbedding, is(expectedEmbedding));
   }
 }

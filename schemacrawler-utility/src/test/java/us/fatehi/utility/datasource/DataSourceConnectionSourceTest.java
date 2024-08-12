@@ -28,13 +28,12 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.sql.Connection;
-import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,29 +41,30 @@ import org.mockito.Mockito;
 class DataSourceConnectionSourceTest {
 
   @Test
-  void get() throws SQLException {
+  void get() throws Exception {
     // Arrange
-    DataSource dataSource = Mockito.mock(DataSource.class);
-    Connection connection = Mockito.mock(Connection.class);
+    final DataSource dataSource = Mockito.mock(DataSource.class);
+    final Connection connection = Mockito.mock(Connection.class);
     when(dataSource.getConnection()).thenReturn(connection);
 
-    DataSourceConnectionSource dataSourceConnectionSource =
+    final DataSourceConnectionSource dataSourceConnectionSource =
         new DataSourceConnectionSource(dataSource);
 
     // Act
-    Connection result = dataSourceConnectionSource.get();
+    final Connection result = dataSourceConnectionSource.get();
 
     // Assert
-    assertEquals(connection, result);
+    assertThat(result, is(connection));
+
   }
 
   @Test
   void close() throws Exception {
     // Arrange
     abstract class CloseableDataSource implements DataSource, AutoCloseable {}
-    CloseableDataSource dataSource = Mockito.mock(CloseableDataSource.class);
+    final CloseableDataSource dataSource = Mockito.mock(CloseableDataSource.class);
 
-    DataSourceConnectionSource dataSourceConnectionSource =
+    final DataSourceConnectionSource dataSourceConnectionSource =
         new DataSourceConnectionSource(dataSource);
 
     // Act
@@ -75,18 +75,19 @@ class DataSourceConnectionSourceTest {
   }
 
   @Test
-  void releaseConnection() throws SQLException {
+  void releaseConnection() throws Exception {
     // Arrange
-    DataSource dataSource = Mockito.mock(DataSource.class);
-    Connection connection = Mockito.mock(Connection.class);
-    DataSourceConnectionSource dataSourceConnectionSource =
+    final DataSource dataSource = Mockito.mock(DataSource.class);
+    final Connection connection = Mockito.mock(Connection.class);
+    final DataSourceConnectionSource dataSourceConnectionSource =
         new DataSourceConnectionSource(dataSource);
 
     // Act
-    boolean result = dataSourceConnectionSource.releaseConnection(connection);
+    final boolean result = dataSourceConnectionSource.releaseConnection(connection);
 
     // Assert
-    assertTrue(result);
+    assertThat(result, is(true));
     verify(connection, times(1)).close();
+
   }
 }
