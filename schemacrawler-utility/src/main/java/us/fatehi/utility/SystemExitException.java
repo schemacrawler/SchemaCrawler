@@ -85,5 +85,4 @@ public class SystemExitException extends RuntimeException {
   public String toString() {
     return messagePrinter.get();
   }
-
 }

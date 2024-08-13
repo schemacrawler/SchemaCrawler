@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import schemacrawler.Main;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -50,6 +49,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
+import us.fatehi.utility.SystemExitException;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -72,7 +72,7 @@ public class CommandLineNegativeTest {
           System.setProperty(TestCatalogLoader.class.getName() + ".force-load-failure", "throw");
           System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
           assertThrows(
-              SchemaCrawlerException.class,
+              SystemExitException.class,
               () -> run(testContext, argsMapOverride, connectionInfo, streams));
         });
   }
@@ -82,7 +82,7 @@ public class CommandLineNegativeTest {
     restoreSystemProperties(
         () -> {
           System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
-          assertThrows(SchemaCrawlerException.class, () -> Main.main());
+          assertThrows(SystemExitException.class, () -> Main.main());
         });
   }
 

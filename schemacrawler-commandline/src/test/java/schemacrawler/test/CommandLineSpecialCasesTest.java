@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import schemacrawler.Main;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -48,6 +47,7 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.utility.SystemExitException;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -72,8 +72,7 @@ public class CommandLineSpecialCasesTest {
         () -> {
           System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
           assertThrows(
-              SchemaCrawlerException.class,
-              () -> run(testContext, argsMap, connectionInfo, streams));
+              SystemExitException.class, () -> run(testContext, argsMap, connectionInfo, streams));
         });
   }
 

@@ -55,7 +55,6 @@ class DataSourceConnectionSourceTest {
 
     // Assert
     assertThat(result, is(connection));
-
   }
 
   @Test
@@ -88,6 +87,5 @@ class DataSourceConnectionSourceTest {
     // Assert
     assertThat(result, is(true));
     verify(connection, times(1)).close();
-
   }
 }

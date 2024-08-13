@@ -42,15 +42,17 @@ public class SystemExitExceptionTest {
   public void testSystemExitExceptionNoPrint() {
     final SystemExitException systemExitException = new SystemExitException(1, "message");
 
-    assertDoesNotThrow(() -> {
-      systemExitException.printStackTrace();
-    });
-    assertDoesNotThrow(() -> {
-      systemExitException.printStackTrace((PrintStream) null);
-    });
-    assertDoesNotThrow(() -> {
-      systemExitException.printStackTrace((PrintWriter) null);
-    });
+    assertDoesNotThrow(
+        () -> {
+          systemExitException.printStackTrace();
+        });
+    assertDoesNotThrow(
+        () -> {
+          systemExitException.printStackTrace((PrintStream) null);
+        });
+    assertDoesNotThrow(
+        () -> {
+          systemExitException.printStackTrace((PrintWriter) null);
+        });
   }
-
 }

@@ -49,7 +49,8 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
   public static void main(final String... args) {
     final int exitCode = call(args);
     if (exitCode != 0) {
-      throw new SystemExitException(exitCode, TestSchemaCreatorMain.class + " has exited with an error");
+      throw new SystemExitException(
+          exitCode, TestSchemaCreatorMain.class + " has exited with an error");
     }
   }
 

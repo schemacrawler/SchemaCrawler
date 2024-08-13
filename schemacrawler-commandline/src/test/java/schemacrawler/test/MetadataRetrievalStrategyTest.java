@@ -42,7 +42,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
-import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -53,6 +52,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.SystemExitException;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -91,7 +91,7 @@ public class MetadataRetrievalStrategyTest {
         () -> {
           System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
           assertThrows(
-              SchemaCrawlerException.class,
+              SystemExitException.class,
               () ->
                   assertThat(
                       outputOf(
