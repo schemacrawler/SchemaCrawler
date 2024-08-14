@@ -30,6 +30,7 @@ package schemacrawler.test.utility;
 
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.utility.SystemExitException;
 import us.fatehi.utility.property.PropertyName;
 
 public class TestCatalogLoader extends BaseCatalogLoader {
@@ -66,11 +67,10 @@ public class TestCatalogLoader extends BaseCatalogLoader {
   }
 
   private void forceLoadFailureIfConfigured() {
-    final String propertyValue =
-        System.getProperty(this.getClass().getName() + ".force-load-failure");
+    final String key = this.getClass().getName() + ".force-load-failure";
+    final String propertyValue = System.getProperty(key);
     if (propertyValue != null) {
-      // Hard fail, do not throw, since exceptions are caught
-      System.exit(2);
+      throw new SystemExitException(2, key);
     }
   }
 }

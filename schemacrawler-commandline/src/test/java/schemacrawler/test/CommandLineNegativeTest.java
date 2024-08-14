@@ -59,13 +59,31 @@ public class CommandLineNegativeTest {
   private static final String COMMAND_LINE_NEGATIVE_OUTPUT = "command_line_negative_output/";
 
   @Test
-  public void commandLine_BadCommand(
+  public void mainBadCommand(
       final TestContext testContext,
       final DatabaseConnectionInfo connectionInfo,
       final CapturedSystemStreams streams)
       throws Exception {
     final Map<String, String> argsMapOverride = new HashMap<>();
     argsMapOverride.put("--command", "badcommand");
+
+    restoreSystemProperties(
+        () -> {
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
+          assertThrows(
+              SystemExitException.class,
+              () -> run(testContext, argsMapOverride, connectionInfo, streams));
+        });
+  }
+
+  @Test
+  public void mainForceCatalogError(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo,
+      final CapturedSystemStreams streams)
+      throws Exception {
+
+    final Map<String, String> argsMapOverride = new HashMap<>();
 
     restoreSystemProperties(
         () -> {
