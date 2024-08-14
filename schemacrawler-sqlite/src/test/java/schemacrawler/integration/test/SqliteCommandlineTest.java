@@ -47,7 +47,6 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-import javax.transaction.SystemException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,6 +58,7 @@ import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import us.fatehi.utility.SystemExitException;
 
 @CaptureSystemStreams
 public class SqliteCommandlineTest extends BaseSqliteTest {
@@ -126,7 +126,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
         () -> {
           System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
           assertThrows(
-              SystemException.class, () -> Main.main(flattenCommandlineArgs(argsMap)));
+              SystemExitException.class, () -> Main.main(flattenCommandlineArgs(argsMap)));
         });
 
     assertThat(
