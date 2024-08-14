@@ -125,8 +125,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
     restoreSystemProperties(
         () -> {
           System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
-          assertThrows(
-              SystemExitException.class, () -> Main.main(flattenCommandlineArgs(argsMap)));
+          assertThrows(SystemExitException.class, () -> Main.main(flattenCommandlineArgs(argsMap)));
         });
 
     assertThat(
