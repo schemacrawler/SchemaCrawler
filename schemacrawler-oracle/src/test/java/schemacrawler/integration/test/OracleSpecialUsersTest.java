@@ -127,7 +127,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
     final String expectedResource =
         String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 34, true);
+    testOracleWithConnection(dataSource, expectedResource, 34, false);
 
     final DatabaseAccessException sqlException =
         assertThrows(
