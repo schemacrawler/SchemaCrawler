@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test.utility;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -59,7 +60,8 @@ public final class OracleTestUtility {
 
     final DockerImageName imageName =
         DockerImageName.parse("gvenzl/oracle-free").asCompatibleSubstituteFor("gvenzl/oracle-xe");
-    return new OracleFreeContainer(imageName.withTag(version));
+    return new OracleFreeContainer(imageName.withTag(version))
+        .withStartupTimeout(Duration.ofMinutes(3));
   }
 
   private OracleTestUtility() {
