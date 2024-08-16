@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.TemplatingUtility.expandTemplate;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForLong;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForScalar;
@@ -44,6 +42,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
@@ -63,7 +63,8 @@ public final class QueryUtility {
       final Query query, final Statement statement, final Map<String, InclusionRule> limitMap)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query, limitMap);
+    final Map<String, String> variablesMap = makeVariablesMap(limitMap);
+    final String sql = getQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -78,7 +79,9 @@ public final class QueryUtility {
     requireNonNull(query, "No query provided");
     requireNonNull(identifiers, "No identifiers provided");
 
-    final String sql = getQuery(query, table, isAlphabeticalSortForTableColumns, identifiers);
+    final Map<String, String> variablesMap =
+        makeVariablesMap(table, isAlphabeticalSortForTableColumns, identifiers);
+    final String sql = getQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -90,7 +93,8 @@ public final class QueryUtility {
       final Identifiers identifiers)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query, table, true, identifiers);
+    final Map<String, String> variablesMap = makeVariablesMap(table, true, identifiers);
+    final String sql = getQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForLong(connection, sql);
   }
@@ -110,7 +114,8 @@ public final class QueryUtility {
       final Identifiers identifiers)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query, table, true, identifiers);
+    final Map<String, String> variablesMap = makeVariablesMap(table, true, identifiers);
+    final String sql = getQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForScalar(connection, sql);
   }
@@ -132,7 +137,15 @@ public final class QueryUtility {
   }
 
   private static String getQuery(final Query query) {
-    return expandTemplate(query.getQuery());
+    return getQuery(query, null);
+  }
+
+  private static String getQuery(final Query query, final Map<String, String> variablesMap) {
+    String sql = query.getQuery();
+    if (variablesMap != null && !variablesMap.isEmpty()) {
+      sql = expandTemplate(sql, variablesMap);
+    }
+    return expandTemplate(sql);
   }
 
   /**
@@ -141,26 +154,24 @@ public final class QueryUtility {
    * @param schemaInclusionRule Schema inclusion rule
    * @return Ready-to-execute query
    */
-  private static String getQuery(final Query query, final Map<String, InclusionRule> limitMap) {
-    final Map<String, String> properties = new HashMap<>();
+  private static Map<String, String> makeVariablesMap(final Map<String, InclusionRule> limitMap) {
 
-    requireNonNull(query, "No query provided");
     requireNonNull(limitMap, "No limit map provided");
 
+    final Map<String, String> variablesMap = new HashMap<>();
+
     for (final Entry<String, InclusionRule> limit : limitMap.entrySet()) {
-      addInclusionRule(limit.getKey(), limit.getValue(), properties);
+      addInclusionRule(limit.getKey(), limit.getValue(), variablesMap);
     }
 
-    String sql = query.getQuery();
-    sql = expandTemplate(sql, properties);
-    return expandTemplate(sql);
+    return variablesMap;
   }
 
-  private static String getQuery(
-      final Query query,
+  private static Map<String, String> makeVariablesMap(
       final Table table,
       final boolean isAlphabeticalSortForTableColumns,
       final Identifiers identifiers) {
+
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null) {
       final NamedObjectSort columnsSort =
@@ -181,9 +192,7 @@ public final class QueryUtility {
       tableProperties.put("tabletype", table.getTableType().toString());
     }
 
-    String sql = query.getQuery();
-    sql = expandTemplate(sql, tableProperties);
-    return expandTemplate(sql);
+    return tableProperties;
   }
 
   private QueryUtility() {
