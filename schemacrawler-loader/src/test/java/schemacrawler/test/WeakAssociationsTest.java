@@ -28,19 +28,19 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.emptyString;
+import static schemacrawler.schema.TableConstraintType.weak_association;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
@@ -104,15 +104,20 @@ public class WeakAssociationsTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
-          for (final WeakAssociation foreignKey : table.getWeakAssociations()) {
-            out.println("    weak association: " + foreignKey.getName());
+          for (final WeakAssociation weakAssociation : table.getWeakAssociations()) {
+            out.println("    weak association: " + weakAssociation.getName());
             out.println("      column references: ");
-            final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
+            final List<ColumnReference> columnReferences = weakAssociation.getColumnReferences();
             for (int i = 0; i < columnReferences.size(); i++) {
               final ColumnReference columnReference = columnReferences.get(i);
               out.println("        key sequence: " + (i + 1));
               out.println("          " + columnReference);
             }
+            assertThat(weakAssociation.getDefinition(), is(emptyString()));
+            assertThat(weakAssociation.getType(), is(weak_association));
+            assertThat(weakAssociation.hasDefinition(), is(false));
+            assertThat(weakAssociation.isDeferrable(), is(false));
+            assertThat(weakAssociation.isInitiallyDeferred(), is(false));
           }
         }
       }
