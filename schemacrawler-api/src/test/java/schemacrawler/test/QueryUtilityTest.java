@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -61,6 +62,14 @@ import schemacrawler.test.utility.WithTestDatabase;
 @WithTestDatabase
 @ResolveTestContext
 public class QueryUtilityTest {
+
+  @Test
+  public void getQueryFromResource() throws Exception {
+    final Query query =
+        QueryUtility.getQueryFromResource("Query title", "/EXT_HIDDEN_TABLE_COLUMNS.sql");
+    assertThat(query.getName(), is("Query title"));
+    assertThat(query.getQuery(), containsString("INFORMATION_SCHEMA.COLUMNS"));
+  }
 
   @Test
   public void executeAgainstColumnDataType() throws Exception {
