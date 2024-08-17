@@ -40,35 +40,6 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public class EnumUtility {
 
-  public static <E extends Enum<E>> Set<E> enumValues(
-      final String values, final String splitBy, final E defaultValue) {
-    requireNonNull(defaultValue, "No default value provided");
-
-    final EnumSet<E> enumValues = EnumSet.of(defaultValue);
-
-    if (isBlank(values)) {
-      return enumValues;
-    }
-
-    // Split into multiple event manipulation types
-    final String[] valueStrings;
-    if (isBlank(splitBy)) {
-      valueStrings = new String[] {values};
-    } else {
-      valueStrings = values.split(splitBy);
-    }
-
-    for (String valueString : valueStrings) {
-      final E enumValue = enumValue(valueString, defaultValue);
-      enumValues.add(enumValue);
-    }
-    if (enumValues.size() > 1) {
-      enumValues.remove(defaultValue);
-    }
-
-    return enumValues;
-  }
-
   public static <E extends Enum<E>> E enumValue(final String value, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     E enumValue;
@@ -102,6 +73,35 @@ public class EnumUtility {
       // Ignore
     }
     return defaultValue;
+  }
+
+  public static <E extends Enum<E>> Set<E> enumValues(
+      final String values, final String splitBy, final E defaultValue) {
+    requireNonNull(defaultValue, "No default value provided");
+
+    final EnumSet<E> enumValues = EnumSet.of(defaultValue);
+
+    if (isBlank(values)) {
+      return enumValues;
+    }
+
+    // Split into multiple event manipulation types
+    final String[] valueStrings;
+    if (isBlank(splitBy)) {
+      valueStrings = new String[] {values};
+    } else {
+      valueStrings = values.split(splitBy);
+    }
+
+    for (String valueString : valueStrings) {
+      final E enumValue = enumValue(valueString, defaultValue);
+      enumValues.add(enumValue);
+    }
+    if (enumValues.size() > 1) {
+      enumValues.remove(defaultValue);
+    }
+
+    return enumValues;
   }
 
   private EnumUtility() {

@@ -100,15 +100,15 @@ final class ColumnPartial extends AbstractDependantObject<Table>
     throw new NotLoadedException(this);
   }
 
-  @Override
-  public boolean isColumnDataTypeKnown() {
-    return false;
-  }
-
   /** {@inheritDoc} */
   @Override
   public boolean isAutoIncremented() {
     throw new NotLoadedException(this);
+  }
+
+  @Override
+  public boolean isColumnDataTypeKnown() {
+    return false;
   }
 
   /** {@inheritDoc} */

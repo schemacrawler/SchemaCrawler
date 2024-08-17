@@ -103,10 +103,6 @@ class TableGrepFilter implements Predicate<Table> {
     return include;
   }
 
-  private boolean checkIncludeForTables(final Table table) {
-    return grepTableInclusionRule != null && grepTableInclusionRule.test(table.getFullName());
-  }
-
   private boolean checkIncludeForColumns(final Table table) {
 
     final List<Column> columns = table.getColumns();
@@ -134,5 +130,9 @@ class TableGrepFilter implements Predicate<Table> {
       }
     }
     return false;
+  }
+
+  private boolean checkIncludeForTables(final Table table) {
+    return grepTableInclusionRule != null && grepTableInclusionRule.test(table.getFullName());
   }
 }

@@ -83,6 +83,72 @@ final class IndexRetriever extends AbstractRetriever {
     }
   }
 
+  /**
+   * Retrieves index information from the database, in the INFORMATION_SCHEMA format.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  void retrieveIndexInformation() throws SQLException {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasQuery(EXT_INDEXES)) {
+      LOGGER.log(
+          Level.INFO, "Not retrieving additional index information, since this was not requested");
+      LOGGER.log(Level.FINE, "Indexes information SQL statement was not provided");
+      return;
+    }
+
+    LOGGER.log(Level.INFO, "Retrieving additional index information");
+
+    final Query extIndexesInformationSql = informationSchemaViews.getQuery(EXT_INDEXES);
+    try (final Connection connection = getRetrieverConnection().getConnection();
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(extIndexesInformationSql, statement, getLimitMap()); ) {
+
+      while (results.next()) {
+        final String catalogName = normalizeCatalogName(results.getString("INDEX_CATALOG"));
+        final String schemaName = normalizeSchemaName(results.getString("INDEX_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
+        final String indexName = results.getString("INDEX_NAME");
+
+        final Optional<MutableTable> tableOptional =
+            lookupTable(catalogName, schemaName, tableName);
+        if (!tableOptional.isPresent()) {
+          LOGGER.log(
+              Level.FINE,
+              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, indexName));
+          continue;
+        }
+
+        LOGGER.log(Level.FINER, new StringFormat("Retrieving index information <%s>", indexName));
+        final MutableTable table = tableOptional.get();
+        final Optional<MutableIndex> indexOptional = table.lookupIndex(indexName);
+        if (!indexOptional.isPresent()) {
+          LOGGER.log(
+              Level.FINE,
+              new StringFormat(
+                  "Cannot find index <%s.%s.%s.%s>",
+                  catalogName, schemaName, tableName, indexName));
+          continue;
+        }
+
+        final MutableIndex index = indexOptional.get();
+
+        final String definition = results.getString("INDEX_DEFINITION");
+        final String remarks = results.getString("REMARKS");
+
+        index.appendDefinition(definition);
+        index.setRemarks(remarks);
+
+        index.addAttributes(results.getAttributes());
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve index information", e);
+    }
+  }
+
   private void createIndexes(final MutableTable table, final MetadataResultSet results)
       throws SQLException {
     while (results.next()) {
@@ -215,72 +281,6 @@ final class IndexRetriever extends AbstractRetriever {
         logPossiblyUnsupportedSQLFeature(
             new StringFormat("Could not retrieve indexes for table <%s>", table), e);
       }
-    }
-  }
-
-  /**
-   * Retrieves index information from the database, in the INFORMATION_SCHEMA format.
-   *
-   * @throws SQLException On a SQL exception
-   */
-  void retrieveIndexInformation() throws SQLException {
-    final InformationSchemaViews informationSchemaViews =
-        getRetrieverConnection().getInformationSchemaViews();
-
-    if (!informationSchemaViews.hasQuery(EXT_INDEXES)) {
-      LOGGER.log(
-          Level.INFO, "Not retrieving additional index information, since this was not requested");
-      LOGGER.log(Level.FINE, "Indexes information SQL statement was not provided");
-      return;
-    }
-
-    LOGGER.log(Level.INFO, "Retrieving additional index information");
-
-    final Query extIndexesInformationSql = informationSchemaViews.getQuery(EXT_INDEXES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(extIndexesInformationSql, statement, getLimitMap()); ) {
-
-      while (results.next()) {
-        final String catalogName = normalizeCatalogName(results.getString("INDEX_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("INDEX_SCHEMA"));
-        final String tableName = results.getString("TABLE_NAME");
-        final String indexName = results.getString("INDEX_NAME");
-
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, indexName));
-          continue;
-        }
-
-        LOGGER.log(Level.FINER, new StringFormat("Retrieving index information <%s>", indexName));
-        final MutableTable table = tableOptional.get();
-        final Optional<MutableIndex> indexOptional = table.lookupIndex(indexName);
-        if (!indexOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat(
-                  "Cannot find index <%s.%s.%s.%s>",
-                  catalogName, schemaName, tableName, indexName));
-          continue;
-        }
-
-        final MutableIndex index = indexOptional.get();
-
-        final String definition = results.getString("INDEX_DEFINITION");
-        final String remarks = results.getString("REMARKS");
-
-        index.appendDefinition(definition);
-        index.setRemarks(remarks);
-
-        index.addAttributes(results.getAttributes());
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve index information", e);
     }
   }
 }
