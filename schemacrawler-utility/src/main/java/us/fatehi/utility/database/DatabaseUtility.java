@@ -183,21 +183,22 @@ public final class DatabaseUtility {
   }
 
   /**
-   * Reads a single column result set as a list.
+   * Reads a column in a result set as a list. Blank values are ignored.
    *
    * @param results Result set
-   * @return List
+   * @return List of string values
    * @throws SQLException On an exception
    */
-  public static List<String> readResultsVector(final ResultSet results) throws SQLException {
+  public static List<String> readResultsVector(final ResultSet results, final int columnNumber)
+      throws SQLException {
     final List<String> values = new ArrayList<>();
-    if (results == null) {
+    if ((results == null) || (columnNumber <= 0)) {
       return values;
     }
 
     try {
       while (results.next()) {
-        final String value = results.getString(1);
+        final String value = results.getString(columnNumber);
         if (!results.wasNull() && !isBlank(value)) {
           values.add(value.trim());
         }
@@ -206,6 +207,17 @@ public final class DatabaseUtility {
       results.close();
     }
     return values;
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   *
+   * @param results Result set
+   * @return List
+   * @throws SQLException On an exception
+   */
+  public static List<String> readResultsVector(final ResultSet results) throws SQLException {
+    return readResultsVector(results, 1);
   }
 
   private DatabaseUtility() {

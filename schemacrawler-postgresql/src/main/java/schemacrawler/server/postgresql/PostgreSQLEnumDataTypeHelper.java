@@ -63,7 +63,7 @@ public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
     try (final Statement statement = connection.createStatement(); ) {
       final ResultSet resultSet =
           QueryUtility.executeAgainstColumnDataType(query, statement, columnDataType);
-      final List<String> enumValues = readResultsVector(resultSet);
+      final List<String> enumValues = readResultsVector(resultSet, 4);
       return enumValues;
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, e, new StringFormat("Error executing <%s>", query));
