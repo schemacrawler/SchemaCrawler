@@ -47,6 +47,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.MetaDataUtility;
@@ -58,6 +59,16 @@ import us.fatehi.utility.string.StringFormat;
 public final class QueryUtility {
 
   private static final Logger LOGGER = Logger.getLogger(QueryUtility.class.getName());
+
+  public static ResultSet executeAgainstColumnDataType(
+      final Query query, final Statement statement, final ColumnDataType columnDataType)
+      throws SQLException {
+    requireNonNull(query, "No query provided");
+    final Map<String, String> variablesMap = makeVariablesMap(columnDataType);
+    final String sql = getQuery(query, variablesMap);
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    return executeSql(statement, sql);
+  }
 
   public static ResultSet executeAgainstSchema(
       final Query query, final Statement statement, final Map<String, InclusionRule> limitMap)
@@ -77,8 +88,6 @@ public final class QueryUtility {
       final Identifiers identifiers)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    requireNonNull(identifiers, "No identifiers provided");
-
     final Map<String, String> variablesMap =
         makeVariablesMap(table, isAlphabeticalSortForTableColumns, identifiers);
     final String sql = getQuery(query, variablesMap);
@@ -148,14 +157,15 @@ public final class QueryUtility {
     return expandTemplate(sql);
   }
 
-  /**
-   * Gets the query with parameters substituted.
-   *
-   * @param schemaInclusionRule Schema inclusion rule
-   * @return Ready-to-execute query
-   */
-  private static Map<String, String> makeVariablesMap(final Map<String, InclusionRule> limitMap) {
+  private static Map<String, String> makeVariablesMap(final ColumnDataType columnDataType) {
+    requireNonNull(columnDataType, "No column data type provided");
 
+    final Map<String, String> variablesMap = new HashMap<>();
+    variablesMap.put("column-data-type", columnDataType.getName());
+    return variablesMap;
+  }
+
+  private static Map<String, String> makeVariablesMap(final Map<String, InclusionRule> limitMap) {
     requireNonNull(limitMap, "No limit map provided");
 
     final Map<String, String> variablesMap = new HashMap<>();
@@ -171,6 +181,7 @@ public final class QueryUtility {
       final Table table,
       final boolean isAlphabeticalSortForTableColumns,
       final Identifiers identifiers) {
+    requireNonNull(identifiers, "No identifiers provided");
 
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null) {

@@ -32,6 +32,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -43,8 +47,10 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.QueryUtility;
 import schemacrawler.test.utility.ResolveTestContext;
@@ -55,6 +61,37 @@ import schemacrawler.test.utility.WithTestDatabase;
 @WithTestDatabase
 @ResolveTestContext
 public class QueryUtilityTest {
+
+  @Test
+  public void executeAgainstColumnDataType() throws Exception {
+
+    final Connection mockConnection = mock(Connection.class);
+    final Statement mockStatement = mock(java.sql.Statement.class);
+    when(mockConnection.createStatement()).thenReturn(mockStatement);
+    when(mockStatement.execute(anyString())).thenReturn(true);
+    when(mockStatement.getResultSet()).thenReturn(mock(ResultSet.class));
+    when(mockStatement.getUpdateCount()).thenReturn(0);
+    when(mockStatement.execute(anyString())).thenReturn(true);
+    final ColumnDataType mockColumnDataType = mock(ColumnDataType.class);
+    when(mockColumnDataType.getName()).thenReturn("mock-column-data-type-name");
+
+    final Query query =
+        new Query(
+            "SQL with column data type",
+            "SELECT * FROM SOME_TABLE WHERE SOME_COLUMN_HAS = '${column-data-type}')");
+
+    final Statement statement = mockConnection.createStatement();
+    final ResultSet results =
+        QueryUtility.executeAgainstColumnDataType(query, statement, mockColumnDataType);
+
+    final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+    verify(mockStatement).execute(captor.capture());
+    final String expandedSQL = captor.getValue();
+
+    assertThat(
+        expandedSQL,
+        is("SELECT * FROM SOME_TABLE WHERE SOME_COLUMN_HAS = 'mock-column-data-type-name')"));
+  }
 
   @Test
   public void executeAgainstSchema(final TestContext testContext, final Connection cxn)

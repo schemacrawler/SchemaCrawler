@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.server.postgresql;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,46 +41,41 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.QueryUtility;
 import us.fatehi.utility.string.StringFormat;
 
 public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
   private static final Logger LOGGER =
       Logger.getLogger(PostgreSQLEnumDataTypeHelper.class.getName());
 
-  private static String constructEnumSql(final ColumnDataType columnDataType) {
-    final String columnDataTypeName = columnDataType.getName();
-    final String sql =
-        String.format(
-            "SELECT  \n"
-                // + "  NULL AS TYPE_CATALOG,  \n"
-                // + "  n.nspname AS TYPE_SCHEMA,  \n"
-                // + "  t.typname AS TYPE_NAME,  \n"
-                + "  e.enumlabel AS ENUM_LABEL  \n"
-                + "FROM  \n"
-                + "  pg_enum e  \n"
-                + "  INNER JOIN pg_type t  \n"
-                + "    ON e.enumtypid = t.oid  \n"
-                + "  INNER JOIN pg_catalog.pg_namespace n  \n"
-                + "    ON n.oid = t.typnamespace  \n"
-                + "WHERE  \n"
-                + "  t.typname = '%s'  \n"
-                + "",
-            columnDataTypeName);
-    // NOTE: No check is made on the column data type schema
-    return sql;
-  }
+  private static final String sql =
+      "SELECT  \n"
+          // + "  NULL AS TYPE_CATALOG,  \n"
+          // + "  n.nspname AS TYPE_SCHEMA,  \n"
+          // + "  t.typname AS TYPE_NAME,  \n"
+          + "  e.enumlabel AS ENUM_LABEL  \n"
+          + "FROM  \n"
+          + "  pg_enum e  \n"
+          + "  INNER JOIN pg_type t  \n"
+          + "    ON e.enumtypid = t.oid  \n"
+          + "  INNER JOIN pg_catalog.pg_namespace n  \n"
+          + "    ON n.oid = t.typnamespace  \n"
+          + "WHERE  \n"
+          + "  t.typname = '${column-data-type}'  \n";
 
   private static List<String> getEnumValues(
       final ColumnDataType columnDataType, final Connection connection) {
     requireNonNull(columnDataType, "No column provided");
-    final String sql = constructEnumSql(columnDataType);
+    final Query query = new Query("Get enum values for column data type", sql);
     try (final Statement statement = connection.createStatement(); ) {
+      QueryUtility.executeAgainstColumnDataType(query, statement, columnDataType);
       final ResultSet resultSet = executeSql(statement, sql);
       final List<String> enumValues = readResultsVector(resultSet);
       return enumValues;
@@ -95,7 +88,7 @@ public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
   private final Set<ColumnDataType> visitedDataTypes;
 
   public PostgreSQLEnumDataTypeHelper() {
-    this.visitedDataTypes = ConcurrentHashMap.newKeySet();
+    visitedDataTypes = ConcurrentHashMap.newKeySet();
   }
 
   @Override
