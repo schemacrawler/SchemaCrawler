@@ -43,17 +43,16 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static us.fatehi.utility.IOUtility.isFileReadable;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.io.BufferedReader;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -77,6 +76,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -88,10 +90,8 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.condition.JRE;
 import org.opentest4j.TestAbortedException;
@@ -99,7 +99,8 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -198,6 +199,37 @@ public final class TestUtility {
     }
   }
 
+  public static ResultSet createMockResultSet(final String[] columnNames, final Object[][] data)
+      throws SQLException {
+    final ResultSet rs = mock(ResultSet.class);
+    final ResultSetMetaData rsmd = mock(ResultSetMetaData.class);
+
+    // Mock ResultSetMetaData
+    when(rs.getMetaData()).thenReturn(rsmd);
+    when(rsmd.getColumnCount()).thenReturn(columnNames.length);
+    for (int i = 0; i < columnNames.length; i++) {
+      when(rsmd.getColumnName(i + 1)).thenReturn(columnNames[i]);
+    }
+
+    // Mock ResultSet data
+    final int[] rowIndex = {-1};
+    when(rs.next())
+        .thenAnswer(
+            invocation -> {
+              rowIndex[0]++;
+              return rowIndex[0] < data.length;
+            });
+
+    for (int i = 0; i < columnNames.length; i++) {
+      final int columnIndex = i;
+      when(rs.getObject(columnIndex + 1)).thenAnswer(invocation -> data[rowIndex[0]][columnIndex]);
+      when(rs.getString(columnIndex + 1))
+          .thenAnswer(invocation -> (String) data[rowIndex[0]][columnIndex]);
+    }
+
+    return rs;
+  }
+
   public static void deleteIfPossible(final Path testOutputTargetFilePath) {
     try {
       deleteIfExists(testOutputTargetFilePath);
@@ -244,9 +276,8 @@ public final class TestUtility {
   public static String javaVersion() {
     if (JRE.currentVersion() == JAVA_8) {
       return "8";
-    } else {
-      return "LTE";
     }
+    return "LTE";
   }
 
   /**
@@ -373,12 +404,12 @@ public final class TestUtility {
       if (actualLinesIterator.hasNext()) {
         failures.add(lineMiscompare("<<end of stream>>", actualLinesIterator.next()));
         return false;
-      } else if (expectedLinesIterator.hasNext()) {
+      }
+      if (expectedLinesIterator.hasNext()) {
         failures.add(lineMiscompare(expectedLinesIterator.next(), "<<end of stream>>"));
         return false;
-      } else {
-        return true;
       }
+      return true;
     }
   }
 
