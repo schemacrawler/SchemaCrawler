@@ -25,10 +25,9 @@ public class PostgreSQLEnumDataTypeHelperTest {
   @Test
   public void testGetEnumDataTypeInfo() throws Exception {
     final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mock(ColumnDataType.class);
+    final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
     final Connection connection = mock(Connection.class);
 
-    when(columnDataType.getName()).thenReturn("enum_type");
     when(connection.createStatement()).thenReturn(mock(java.sql.Statement.class));
     when(connection.createStatement().executeQuery(anyString()))
         .thenReturn(mock(java.sql.ResultSet.class));
@@ -46,32 +45,43 @@ public class PostgreSQLEnumDataTypeHelperTest {
 
   @Test
   public void testGetEnumValues() throws Exception {
-    final String columnDataTypeName = "enum_type";
     final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mock(ColumnDataType.class);
+    final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
     final Connection connection = mock(Connection.class);
     final Statement mockStatement = mock(java.sql.Statement.class);
     final ResultSet mockResultSet =
         TestUtility.createMockResultSet(
             new String[] {"TYPE_CATALOG", "TYPE_SCHEMA", "TYPE_NAME", "ENUM_LABEL"},
             new Object[][] {
-              {null, "", columnDataTypeName, "Moe"},
-              {null, "", columnDataTypeName, "Larry"},
-              {null, "", columnDataTypeName, "Curly"}
+              {null, "", columnDataType.getName(), "Moe"},
+              {null, "", columnDataType.getName(), "Larry"},
+              {null, "", columnDataType.getName(), "Curly"}
             });
 
-    when(columnDataType.getName()).thenReturn(columnDataTypeName);
     when(connection.createStatement()).thenReturn(mockStatement);
     when(mockStatement.execute(anyString())).thenReturn(true);
     when(mockStatement.getResultSet()).thenReturn(mockResultSet);
 
     final PostgreSQLEnumDataTypeHelper helper = new PostgreSQLEnumDataTypeHelper();
-    final EnumDataTypeInfo enumDataTypeInfo =
-        helper.getEnumDataTypeInfo(column, columnDataType, connection);
+
+    EnumDataTypeInfo enumDataTypeInfo;
+    List<String> enumValues;
+    // Test column data type first time
+    enumDataTypeInfo = helper.getEnumDataTypeInfo(column, columnDataType, connection);
 
     assertThat(enumDataTypeInfo.getType(), is(enumerated_data_type));
 
-    final List<String> enumValues = enumDataTypeInfo.getEnumValues();
+    enumValues = enumDataTypeInfo.getEnumValues();
+
+    assertThat(enumValues.size(), is(3));
+    assertThat(enumValues, containsInAnyOrder("Moe", "Larry", "Curly"));
+
+    // Test column data type second time
+    enumDataTypeInfo = helper.getEnumDataTypeInfo(column, columnDataType, connection);
+
+    assertThat(enumDataTypeInfo.getType(), is(enumerated_data_type));
+
+    enumDataTypeInfo.getEnumValues();
 
     assertThat(enumValues.size(), is(3));
     assertThat(enumValues, containsInAnyOrder("Moe", "Larry", "Curly"));
@@ -80,10 +90,9 @@ public class PostgreSQLEnumDataTypeHelperTest {
   @Test
   public void testSQLException() throws Exception {
     final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mock(ColumnDataType.class);
+    final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
     final Connection connection = mock(Connection.class);
 
-    when(columnDataType.getName()).thenReturn("enum_type");
     when(connection.createStatement()).thenThrow(SQLException.class);
 
     final PostgreSQLEnumDataTypeHelper helper = new PostgreSQLEnumDataTypeHelper();
@@ -95,5 +104,13 @@ public class PostgreSQLEnumDataTypeHelperTest {
     final List<String> enumValues = enumDataTypeInfo.getEnumValues();
 
     assertThat(enumValues.size(), is(0));
+  }
+
+  private ColumnDataType mockColumnDataType(
+      final String columnDataTypeName, final boolean isEnumerated) {
+    final ColumnDataType columnDataType = mock(ColumnDataType.class);
+    when(columnDataType.getName()).thenReturn(columnDataTypeName);
+    when(columnDataType.isEnumerated()).thenReturn(isEnumerated);
+    return columnDataType;
   }
 }
