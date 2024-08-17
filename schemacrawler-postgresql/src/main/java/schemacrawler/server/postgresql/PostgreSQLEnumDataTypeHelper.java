@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
-import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -55,32 +54,19 @@ public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
   private static final Logger LOGGER =
       Logger.getLogger(PostgreSQLEnumDataTypeHelper.class.getName());
 
-  private static final String sql =
-      "SELECT  \n"
-          // + "  NULL AS TYPE_CATALOG,  \n"
-          // + "  n.nspname AS TYPE_SCHEMA,  \n"
-          // + "  t.typname AS TYPE_NAME,  \n"
-          + "  e.enumlabel AS ENUM_LABEL  \n"
-          + "FROM  \n"
-          + "  pg_enum e  \n"
-          + "  INNER JOIN pg_type t  \n"
-          + "    ON e.enumtypid = t.oid  \n"
-          + "  INNER JOIN pg_catalog.pg_namespace n  \n"
-          + "    ON n.oid = t.typnamespace  \n"
-          + "WHERE  \n"
-          + "  t.typname = '${column-data-type}'  \n";
-
   private static List<String> getEnumValues(
       final ColumnDataType columnDataType, final Connection connection) {
     requireNonNull(columnDataType, "No column provided");
-    final Query query = new Query("Get enum values for column data type", sql);
+    final Query query =
+        QueryUtility.getQueryFromResource(
+            "Get enum values for column data type", "/postgresql.information_schema/PG_ENUM.sql");
     try (final Statement statement = connection.createStatement(); ) {
-      QueryUtility.executeAgainstColumnDataType(query, statement, columnDataType);
-      final ResultSet resultSet = executeSql(statement, sql);
+      final ResultSet resultSet =
+          QueryUtility.executeAgainstColumnDataType(query, statement, columnDataType);
       final List<String> enumValues = readResultsVector(resultSet);
       return enumValues;
     } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, e, new StringFormat("Error executing SQL <%s>", sql));
+      LOGGER.log(Level.WARNING, e, new StringFormat("Error executing <%s>", query));
     }
     return new ArrayList<>();
   }

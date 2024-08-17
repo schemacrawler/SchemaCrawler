@@ -52,6 +52,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
 
@@ -65,7 +66,7 @@ public final class QueryUtility {
       throws SQLException {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap = makeVariablesMap(columnDataType);
-    final String sql = getQuery(query, variablesMap);
+    final String sql = expandQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -75,7 +76,7 @@ public final class QueryUtility {
       throws SQLException {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap = makeVariablesMap(limitMap);
-    final String sql = getQuery(query, variablesMap);
+    final String sql = expandQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -90,7 +91,7 @@ public final class QueryUtility {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap =
         makeVariablesMap(table, isAlphabeticalSortForTableColumns, identifiers);
-    final String sql = getQuery(query, variablesMap);
+    final String sql = expandQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -103,7 +104,7 @@ public final class QueryUtility {
       throws SQLException {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap = makeVariablesMap(table, true, identifiers);
-    final String sql = getQuery(query, variablesMap);
+    final String sql = expandQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForLong(connection, sql);
   }
@@ -111,7 +112,7 @@ public final class QueryUtility {
   public static Object executeForScalar(final Query query, final Connection connection)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query);
+    final String sql = expandQuery(query);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForScalar(connection, sql);
   }
@@ -124,9 +125,14 @@ public final class QueryUtility {
       throws SQLException {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap = makeVariablesMap(table, true, identifiers);
-    final String sql = getQuery(query, variablesMap);
+    final String sql = expandQuery(query, variablesMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForScalar(connection, sql);
+  }
+
+  public static Query getQueryFromResource(final String name, final String resource) {
+    final String sql = IOUtility.readResourceFully(resource);
+    return new Query(name, sql);
   }
 
   protected static void addInclusionRule(
@@ -145,11 +151,11 @@ public final class QueryUtility {
     }
   }
 
-  private static String getQuery(final Query query) {
-    return getQuery(query, null);
+  private static String expandQuery(final Query query) {
+    return expandQuery(query, null);
   }
 
-  private static String getQuery(final Query query, final Map<String, String> variablesMap) {
+  private static String expandQuery(final Query query, final Map<String, String> variablesMap) {
     String sql = query.getQuery();
     if (variablesMap != null && !variablesMap.isEmpty()) {
       sql = expandTemplate(sql, variablesMap);
