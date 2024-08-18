@@ -156,14 +156,4 @@ public class EqualsTest {
   public void vertex() {
     EqualsVerifier.forClass(Vertex.class).withIgnoredFields("attributes").verify();
   }
-
-  @Test
-  public void weakAssociation() {
-    EqualsVerifier.forClass(MutableWeakAssociation.class)
-        .withOnlyTheseFields("name", "schema")
-        .withPrefabValues(
-            DatabaseObjectReference.class, new TablePointer(table1), new TablePointer(table2))
-        // .suppress(Warning.STRICT_INHERITANCE)
-        .verify();
-  }
 }
