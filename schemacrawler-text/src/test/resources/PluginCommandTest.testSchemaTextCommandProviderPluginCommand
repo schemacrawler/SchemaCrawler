@@ -1,3 +1,5 @@
+command:schema
+
 ** Generate text output to show details of a schema
 Applies to all commands that show schema information
 
