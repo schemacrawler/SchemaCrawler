@@ -24,8 +24,6 @@ jobs:
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.4.0
       with:
-        # jacoco uses a dynamic agent, which will be disabled in a later	        java-version: 21
-        # Java release
         java-version: 21
     - id: install-graphviz
       name: Install Graphviz
