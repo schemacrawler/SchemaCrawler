@@ -29,95 +29,9 @@ public class LightTrigger implements Trigger {
     this.name = name;
   }
 
-  public void setActionStatement(String actionStatement) {
-    this.actionStatement = actionStatement;
-  }
-
-  @Override
-  public String getShortName() {
-    return name;
-  }
-
-  @Override
-  public boolean isParentPartial() {
-    return true;
-  }
-
-  @Override
-  public Schema getSchema() {
-    return schema;
-  }
-
-  @Override
-  public void withQuoting(Identifiers identifiers) {}
-
-  @Override
-  public String getFullName() {
-    return name;
-  }
-
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public NamedObjectKey key() {
-    return null;
-  }
-
   @Override
   public int compareTo(NamedObject o) {
     return 0;
-  }
-
-  @Override
-  public <T> T getAttribute(String name) {
-    return null;
-  }
-
-  @Override
-  public <T> T getAttribute(String name, T defaultValue) throws ClassCastException {
-    return null;
-  }
-
-  @Override
-  public Map<String, Object> getAttributes() {
-    return null;
-  }
-
-  @Override
-  public boolean hasAttribute(String name) {
-    return false;
-  }
-
-  @Override
-  public <T> Optional<T> lookupAttribute(String name) {
-    return Optional.empty();
-  }
-
-  @Override
-  public void removeAttribute(String name) {}
-
-  @Override
-  public <T> void setAttribute(String name, T value) {}
-
-  @Override
-  public String getRemarks() {
-    return null;
-  }
-
-  @Override
-  public boolean hasRemarks() {
-    return false;
-  }
-
-  @Override
-  public void setRemarks(String remarks) {}
-
-  @Override
-  public Table getParent() {
-    return table;
   }
 
   @Override
@@ -141,6 +55,21 @@ public class LightTrigger implements Trigger {
   }
 
   @Override
+  public <T> T getAttribute(String name) {
+    return null;
+  }
+
+  @Override
+  public <T> T getAttribute(String name, T defaultValue) throws ClassCastException {
+    return null;
+  }
+
+  @Override
+  public Map<String, Object> getAttributes() {
+    return null;
+  }
+
+  @Override
   public ConditionTimingType getConditionTiming() {
     return null;
   }
@@ -149,4 +78,75 @@ public class LightTrigger implements Trigger {
   public Set<EventManipulationType> getEventManipulationTypes() {
     return null;
   }
+
+  @Override
+  public String getFullName() {
+    return name;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public Table getParent() {
+    return table;
+  }
+
+  @Override
+  public String getRemarks() {
+    return null;
+  }
+
+  @Override
+  public Schema getSchema() {
+    return schema;
+  }
+
+  @Override
+  public String getShortName() {
+    return name;
+  }
+
+  @Override
+  public boolean hasAttribute(String name) {
+    return false;
+  }
+
+  @Override
+  public boolean hasRemarks() {
+    return false;
+  }
+
+  @Override
+  public boolean isParentPartial() {
+    return true;
+  }
+
+  @Override
+  public NamedObjectKey key() {
+    return null;
+  }
+
+  @Override
+  public <T> Optional<T> lookupAttribute(String name) {
+    return Optional.empty();
+  }
+
+  @Override
+  public void removeAttribute(String name) {}
+
+  public void setActionStatement(String actionStatement) {
+    this.actionStatement = actionStatement;
+  }
+
+  @Override
+  public <T> void setAttribute(String name, T value) {}
+
+  @Override
+  public void setRemarks(String remarks) {}
+
+  @Override
+  public void withQuoting(Identifiers identifiers) {}
 }

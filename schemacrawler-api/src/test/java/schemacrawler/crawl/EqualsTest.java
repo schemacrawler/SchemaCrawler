@@ -46,6 +46,9 @@ import us.fatehi.utility.property.AbstractProperty;
 
 public class EqualsTest {
 
+  private final Table table1 = new MutableTable(new SchemaReference("catalog", "schema"), "table1");
+  private final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
+
   @Test
   public void columnReference() {
     EqualsVerifier.forClass(ImmutableColumnReference.class)
@@ -79,8 +82,6 @@ public class EqualsTest {
   @Test
   public void grants() {
 
-    final Table table1 = new MutableTable(new SchemaReference("catalog", "schema"), "table1");
-    final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
     final MutablePrivilege<Table> privilege1 =
         new MutablePrivilege<>(new TablePointer(table1), "privilege1");
     final MutablePrivilege<Table> privilege2 =
@@ -120,8 +121,6 @@ public class EqualsTest {
 
   @Test
   public void privilege() {
-    final Table table1 = new MutableTable(new SchemaReference("catalog", "schema"), "table1");
-    final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
 
     EqualsVerifier.forClass(MutablePrivilege.class)
         .withIgnoredFields("key", "grants", "parent", "attributeMap")

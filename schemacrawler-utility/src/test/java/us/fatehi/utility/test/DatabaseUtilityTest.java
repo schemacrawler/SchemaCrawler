@@ -246,6 +246,15 @@ public class DatabaseUtilityTest {
             SQLException.class,
             () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL2, COL3 FROM TABLE1"));
     assertThat(exception.getMessage(), startsWith("Too many columns"));
+    // Empty result set
+    final Connection mockConnection = mock(Connection.class);
+    final Statement mockStatement = mock(Statement.class);
+    when(mockConnection.createStatement()).thenReturn(mockStatement);
+    when(mockStatement.execute(anyString())).thenReturn(true);
+
+    final Object scalar =
+        DatabaseUtility.executeSqlForScalar(mockConnection, "SELECT COL3 FROM TABLE1");
+    assertThat(scalar, is(nullValue()));
   }
 
   @Test
@@ -342,5 +351,15 @@ public class DatabaseUtilityTest {
     assertThat(
         DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL3 FROM TABLE1")),
         containsInAnyOrder("2"));
+    // Read other column
+    assertThat(
+        DatabaseUtility.readResultsVector(
+            statement.executeQuery("SELECT COL3, COL1, COL2 FROM TABLE1"), 2),
+        containsInAnyOrder("ABC", "XYZ"));
+    // Read other column with bad column number
+    assertThat(
+        DatabaseUtility.readResultsVector(
+            statement.executeQuery("SELECT COL3, COL1, COL2 FROM TABLE1"), 0),
+        is(emptyCollectionOf(String.class)));
   }
 }
