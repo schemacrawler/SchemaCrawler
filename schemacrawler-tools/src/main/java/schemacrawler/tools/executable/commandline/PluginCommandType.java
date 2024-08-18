@@ -38,9 +38,8 @@ public enum PluginCommandType {
 
   public String toPluginCommandName(final String command) {
     if (isBlank(command)) {
-      return null;
-    } else {
-      return toString() + ":" + command;
+      return "";
     }
+    return toString() + ":" + command;
   }
 }

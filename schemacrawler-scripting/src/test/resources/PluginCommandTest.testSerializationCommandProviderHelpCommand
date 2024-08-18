@@ -1,0 +1,12 @@
+command:serialize
+
+** Create an offline catalog snapshot
+For more information, see https://www.schemacrawler.com/serialize.html %n
+
+output-format
+Supported serialization formats
+<output-format> is one of ${COMPLETION-CANDIDATES}
+Optional, inferred from the extension of the output file
+
+Deserialization is possible with the "offline" command for Java serialization
+Add command options to the `execute` command in the SchemaCrawler Shell

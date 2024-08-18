@@ -29,7 +29,7 @@ public class CatalogLoaderRegistryTest {
     assertThat(commandLineCommands, hasSize(2));
     final List<String> names =
         commandLineCommands.stream().map(PluginCommand::getName).collect(toList());
-    assertThat(names, containsInAnyOrder("loader:testloader", null));
+    assertThat(names, containsInAnyOrder("loader:testloader", "unknown:unknown"));
   }
 
   @Test
@@ -38,7 +38,7 @@ public class CatalogLoaderRegistryTest {
         CatalogLoaderRegistry.getCatalogLoaderRegistry().getHelpCommands();
     assertThat(String.valueOf(helpCommands), helpCommands, hasSize(2));
     final List<String> names = helpCommands.stream().map(PluginCommand::getName).collect(toList());
-    assertThat(names, containsInAnyOrder("loader:testloader", null));
+    assertThat(names, containsInAnyOrder("loader:testloader", "unknown:unknown"));
   }
 
   @Test

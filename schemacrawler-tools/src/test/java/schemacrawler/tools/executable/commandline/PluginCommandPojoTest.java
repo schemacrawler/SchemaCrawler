@@ -35,16 +35,14 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-
 import org.junit.jupiter.api.Test;
-
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -54,10 +52,10 @@ public class PluginCommandPojoTest {
   public void emptyCommand() {
 
     final PluginCommand pluginCommand = PluginCommand.empty();
-    assertThat(pluginCommand.toString(), is("PluginCommand[name='null', options=[]]"));
-    assertThat(pluginCommand.getName(), is(nullValue()));
-    assertThat(pluginCommand.getHelpHeader(), is(nullValue()));
-    assertThat(pluginCommand.getHelpDescription(), is(nullValue()));
+    assertThat(pluginCommand.toString(), is("PluginCommand[name='unknown', options=[]]"));
+    assertThat(pluginCommand.getName(), is("unknown:unknown"));
+    assertThat(pluginCommand.getHelpHeader(), is(""));
+    assertThat(pluginCommand.getHelpDescription(), is(not(nullValue())));
     assertThat(pluginCommand.getHelpFooter().get(), is(arrayWithSize(0)));
     assertThat(pluginCommand.getOptions(), is(empty()));
     assertThat(pluginCommand.hasHelpDescription(), is(false));
@@ -170,7 +168,7 @@ public class PluginCommandPojoTest {
             "PluginCommand[name='name', options=[PluginCommandOption[name='option1', valueClass=java.lang.Object]]]"));
     assertThat(pluginCommand.getName(), endsWith(":name"));
     assertThat(pluginCommand.getHelpHeader(), is("helpHeader"));
-    assertThat(pluginCommand.getHelpDescription(), is(nullValue()));
+    assertThat(pluginCommand.getHelpDescription(), is(not(nullValue())));
     assertThat(pluginCommand.getHelpFooter().get(), is(arrayContaining(standardFooter)));
     assertThat(pluginCommand.getOptions(), contains(option));
     assertThat(pluginCommand.hasHelpDescription(), is(false));

@@ -2,7 +2,8 @@ name: Lint Code Base
 
 on:
   workflow_dispatch:
-  push:
+  schedule:
+    - cron: '5 4 2,16 * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

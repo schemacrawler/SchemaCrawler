@@ -26,30 +26,13 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package us.fatehi.utility;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.junit.jupiter.api.Test;
-
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.command.lint.LintCommandProvider;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
-
-public class TestCommandProvider {
-
-  @Test
-  public void testCommandProvider() throws Exception {
-    final LintCommandProvider lintCommandProvider = new LintCommandProvider();
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
-    assertThat(
-        lintCommandProvider.supportsSchemaCrawlerCommand(
-            "lint", schemaCrawlerOptions, null, outputOptions),
-        is(true));
-  }
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD})
+public @interface Nullable {}

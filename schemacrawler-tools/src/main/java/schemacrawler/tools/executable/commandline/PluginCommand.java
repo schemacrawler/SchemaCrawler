@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable.commandline;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.command;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.loader;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.unknown;
-import static us.fatehi.utility.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,11 +40,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.trimToEmpty;
+import us.fatehi.utility.Nullable;
 
 public class PluginCommand implements Iterable<PluginCommandOption> {
 
   public static PluginCommand empty() {
-    return new PluginCommand(unknown, null, null, null, null);
+    return new PluginCommand(unknown, "unknown", null, null, null);
   }
 
   public static PluginCommand newCatalogLoaderCommand(final String name, final String helpHeader) {
@@ -64,8 +65,8 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   public static PluginCommand newPluginCommand(
       final String name,
       final String helpHeader,
-      final Supplier<String[]> helpDescription,
-      final Supplier<String[]> helpFooter) {
+      @Nullable final Supplier<String[]> helpDescription,
+      @Nullable final Supplier<String[]> helpFooter) {
     return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter);
   }
 
@@ -85,22 +86,15 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       final PluginCommandType type,
       final String name,
       final String helpHeader,
-      final Supplier<String[]> helpDescription,
-      final Supplier<String[]> helpFooter) {
+      @Nullable final Supplier<String[]> helpDescription,
+      @Nullable final Supplier<String[]> helpFooter) {
 
     this.type = requireNonNull(type, "No plugin command type provided");
-    this.options = new ArrayList<>();
+    options = new ArrayList<>();
 
-    this.name = name;
-
-    if (isBlank(helpHeader)) {
-      this.helpHeader = null;
-    } else {
-      this.helpHeader = helpHeader;
-    }
-
+    this.name = trimToEmpty(name);
+    this.helpHeader = trimToEmpty(helpHeader);
     this.helpDescription = helpDescription;
-
     this.helpFooter = helpFooter;
   }
 
@@ -124,6 +118,9 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public Supplier<String[]> getHelpDescription() {
+    if (helpDescription == null) {
+      return () -> new String[0];
+    }
     return helpDescription;
   }
 
@@ -157,7 +154,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public boolean isEmpty() {
-    return isBlank(name) && options.isEmpty();
+    return type == unknown && options.isEmpty();
   }
 
   @Override
