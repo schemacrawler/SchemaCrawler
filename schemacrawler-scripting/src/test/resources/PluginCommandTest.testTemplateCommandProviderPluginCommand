@@ -1,0 +1,11 @@
+command:template
+
+** Process a template file, such as Freemarker, against the database schema
+
+template
+Path to the template file or to the CLASSPATH resource
+
+templating-language
+Templating language
+
+Add command options to the `execute` command in the SchemaCrawler Shell

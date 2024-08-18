@@ -1,0 +1,138 @@
+command:lint
+
+** Find lints (non-adherence to coding standards and conventions) in the database schema
+For more information, see https://www.schemacrawler.com/lint.html %n
+
+linter-configs
+Path to the SchemaCrawler linter configuration file
+
+lint-dispatch
+Specifies how to fail if a linter threshold is exceeded%nOptional, defaults to none%nCorresponds to the configuration file setting: schemacrawler.lint.lintdispatch
+
+run-all-linters
+Whether to run all linters, including running the ones that are not explicitly configured with their default settings%nOptional, defaults to true%nCorresponds to the configuration file setting: schemacrawler.lint.runalllinters
+
+
+Available SchemaCrawler linters:
+
+Linter: schemacrawler.tools.linter.LinterCatalogSql
+Allows you to run SQL against the database. The SQL statement must return exactly one column and one row of data in the results. If one row is returned, it means that the lint has detected a problem. However, if no rows of data are returned, it means that there are no issues. 
+Example configuration:
+
+```yaml
+- id: schemacrawler.tools.linter.LinterCatalogSql
+  config:
+    message: message for SQL catalog lint
+    sql: SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES
+```
+
+
+Linter: schemacrawler.tools.linter.LinterColumnTypes
+Looks for columns in different tables, that have the same name but have different data types.
+
+
+Linter: schemacrawler.tools.linter.LinterForeignKeyMismatch
+Checks tables where the foreign key column data type is different from the referenced primary key column data type.
+
+
+Linter: schemacrawler.tools.linter.LinterForeignKeySelfReference
+Checks tables where the foreign key self-references the primary key. This means that a record in the table references itself, and cannot be deleted.
+
+
+Linter: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
+Checks for tables where foreign keys have no indexes. This may cause inefficient lookups.
+
+
+Linter: schemacrawler.tools.linter.LinterNullColumnsInIndex
+Checks for tables that have nullable columns in a unique index.
+
+
+Linter: schemacrawler.tools.linter.LinterNullIntendedColumns
+Checks for tables where the default value is 'NULL' instead of NULL, since this may indicate a error when creating a table.
+
+
+Linter: schemacrawler.tools.linter.LinterRedundantIndexes
+Checks for tables with redundant indexes. A redundant index is one where the sequence of columns is the same as the first few columns of another index. For example, the index `INDEX_B(COL1)` is not needed when you have another index, `INDEX_A(COL1, COL2)``.
+
+
+Linter: schemacrawler.tools.linter.LinterTableAllNullableColumns
+Tables that have all columns besides the primary key that are nullable, may contain no useful data, and could indicate a schema design smell.
+
+
+Linter: schemacrawler.tools.linter.LinterTableCycles
+Checks for cyclical relationships between tables, which could cause issues with deletes and inserts.
+
+
+Linter: schemacrawler.tools.linter.LinterTableEmpty
+Checks for empty tables with no data.
+
+
+Linter: schemacrawler.tools.linter.LinterTableSql
+Allows you to run SQL against the database. The SQL statement must return exactly one column and one row of data in the results. If one row is returned, it means that the lint has detected a problem. However, if no rows of data are returned, it means that there are no issues. Notice the use of `${table}` to indicate the name of the table the lint is running against.
+Example configuration:
+
+```yaml
+- id: schemacrawler.tools.linter.LinterTableSql
+  table-exclusion-pattern: .*BOOKS
+  config:
+    message: message for custom SQL lint
+    sql: SELECT TOP 1 1 FROM ${table}
+```
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns
+Checks for columns that should not be named according to certain patterns. For example, you may have a policy that no column can be named `ID`, because you want columns with complete names, such as `ORDER_ID`. If you want to detect columns named `ID`, you could use configuration as shown in the example below.
+Example configuration:
+
+```yaml
+- id: schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns
+  config:
+    bad-column-names: .*\.ID
+```
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+Checks for tables with incrementing column names, for example, a table with column names like `CONTACT1`, `CONTACT2` and so on can indicate de-normalization. Additionally, SchemaCrawler Lint will check that the data-types of all incrementing columns are the same, and that no numbers are skipped.
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithNoIndexes
+Checks for tables with no indexes.
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithNoPrimaryKey
+Checks for tables with no primary keys. Tables that purely model relationships, without any attributes are ignored.
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithNoRemarks
+Checks for tables and columns with no remarks.
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey
+Checks for tables that have more than one column as a primary key, and recommends that a surrogate key column be used as a primary key instead.
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst
+Checks for tables where the primary key columns are not first, since this is the convention.
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithQuotedNames
+Checks for tables that have spaces in table or column names, or names that are reserved words in the ANSI SQL standard.
+
+
+Linter: schemacrawler.tools.linter.LinterTableWithSingleColumn
+Checks for tables with no columns at all, or just a single column, since that could indicate a schema design smell.
+
+
+Linter: schemacrawler.tools.linter.LinterTooManyLobs
+Checks for tables that have too many large objects (CLOBs or BLOBs), since these could result in additional reads when returning query results. By default, this is more than one such column.
+Example configuration:
+
+```yaml
+- id: schemacrawler.tools.linter.LinterTooManyLobs
+  config:
+    max-large-objects: 3
+```
+
+
+
+Add command options to the `execute` command in the SchemaCrawler Shell

@@ -1,0 +1,11 @@
+command:script
+
+** Process a script file, such as JavaScript, against the database schema
+
+script
+Path to the script file or to the CLASSPATH resource
+
+script-language
+Scripting language
+
+Add command options to the `execute` command in the SchemaCrawler Shell
