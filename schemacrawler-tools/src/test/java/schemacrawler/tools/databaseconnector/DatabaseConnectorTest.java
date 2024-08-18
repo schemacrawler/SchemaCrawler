@@ -33,9 +33,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.DisableLogging;
@@ -106,7 +104,7 @@ public class DatabaseConnectorTest {
 
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     assertThat(helpCommand, is(notNullValue()));
-    assertThat(helpCommand.getName(), is(nullValue()));
+    assertThat(helpCommand.getName(), is(""));
 
     assertThat(
         databaseConnector.getDatabaseServerType().getDatabaseSystemIdentifier(), is(nullValue()));

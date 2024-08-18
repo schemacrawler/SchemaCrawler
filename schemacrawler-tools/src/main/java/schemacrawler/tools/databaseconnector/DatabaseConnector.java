@@ -28,17 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.databaseconnector;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newDatabasePluginCommand;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -90,7 +89,7 @@ public abstract class DatabaseConnector implements Options {
     this.limitOptionsBuildProcess =
         requireNonNull(limitOptionsBuildProcess, "No limit options build process provided");
 
-    this.dbConnectionSourceBuildProcess =
+    dbConnectionSourceBuildProcess =
         requireNonNull(
             connectionSourceBuildProcess, "No database connection source builder provided");
   }
@@ -104,7 +103,7 @@ public abstract class DatabaseConnector implements Options {
     final PluginCommand pluginCommand =
         newDatabasePluginCommand(
             dbServerType.getDatabaseSystemIdentifier(),
-            "** Connect to " + dbServerType.getDatabaseSystemName());
+            "** Connect to " + trimToEmpty(dbServerType.getDatabaseSystemName()));
     return pluginCommand;
   }
 
@@ -199,8 +198,7 @@ public abstract class DatabaseConnector implements Options {
   public String toString() {
     if (dbServerType.isUnknownDatabaseSystem()) {
       return "Database connector for unknown database system type";
-    } else {
-      return "Database connector for " + dbServerType;
     }
+    return "Database connector for " + dbServerType;
   }
 }

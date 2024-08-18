@@ -41,12 +41,13 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+import us.fatehi.utility.Nullable;
 
 public class PluginCommand implements Iterable<PluginCommandOption> {
 
   public static PluginCommand empty() {
-    return new PluginCommand(unknown, null, null, null, null);
+    return new PluginCommand(unknown, "unknown", null, null, null);
   }
 
   public static PluginCommand newCatalogLoaderCommand(final String name, final String helpHeader) {
@@ -64,8 +65,8 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   public static PluginCommand newPluginCommand(
       final String name,
       final String helpHeader,
-      final Supplier<String[]> helpDescription,
-      final Supplier<String[]> helpFooter) {
+      @Nullable final Supplier<String[]> helpDescription,
+      @Nullable final Supplier<String[]> helpFooter) {
     return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter);
   }
 
@@ -85,31 +86,16 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       final PluginCommandType type,
       final String name,
       final String helpHeader,
-      final Supplier<String[]> helpDescription,
-      final Supplier<String[]> helpFooter) {
+      @Nullable final Supplier<String[]> helpDescription,
+      @Nullable final Supplier<String[]> helpFooter) {
 
     this.type = requireNonNull(type, "No plugin command type provided");
     options = new ArrayList<>();
 
-    this.name = name;
-
-    if (isBlank(helpHeader)) {
-      this.helpHeader = null;
-    } else {
-      this.helpHeader = helpHeader;
-    }
-
-    if (helpDescription != null) {
-      this.helpDescription = helpDescription;
-    } else {
-      this.helpDescription = () -> new String[0];
-    }
-
-    if (helpFooter != null) {
-      this.helpFooter = helpFooter;
-    } else {
-      this.helpFooter = () -> new String[0];
-    }
+    this.name = trimToEmpty(name);
+    this.helpHeader = trimToEmpty(helpHeader);
+    this.helpDescription = helpDescription;
+    this.helpFooter = helpFooter;
   }
 
   public PluginCommand addOption(
@@ -132,6 +118,9 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public Supplier<String[]> getHelpDescription() {
+    if (helpDescription == null) {
+      return () -> new String[0];
+    }
     return helpDescription;
   }
 
@@ -165,7 +154,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public boolean isEmpty() {
-    return isBlank(name) && options.isEmpty();
+    return type == unknown && options.isEmpty();
   }
 
   @Override

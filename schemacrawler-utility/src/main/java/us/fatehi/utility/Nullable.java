@@ -26,20 +26,13 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.executable.commandline;
+package us.fatehi.utility;
 
-import static us.fatehi.utility.Utility.isBlank;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public enum PluginCommandType {
-  unknown,
-  loader,
-  command,
-  server;
-
-  public String toPluginCommandName(final String command) {
-    if (isBlank(command)) {
-      return "";
-    }
-    return toString() + ":" + command;
-  }
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD})
+public @interface Nullable {}
