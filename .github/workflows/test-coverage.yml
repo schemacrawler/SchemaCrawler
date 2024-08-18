@@ -26,7 +26,7 @@ jobs:
       with:
         # jacoco uses a dynamic agent, which will be disabled in a later	        java-version: 21
         # Java release
-        java-version: 17
+        java-version: 21
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
