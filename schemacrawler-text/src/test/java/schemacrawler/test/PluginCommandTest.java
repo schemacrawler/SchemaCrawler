@@ -15,4 +15,10 @@ public class PluginCommandTest {
     final PluginCommand pluginCommand = new SchemaTextCommandProvider().getCommandLineCommand();
     PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
   }
+
+  @Test
+  public void testSchemaTextCommandProviderHelpCommand(final TestContext testContext) {
+    final PluginCommand pluginCommand = new SchemaTextCommandProvider().getHelpCommand();
+    PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
+  }
 }

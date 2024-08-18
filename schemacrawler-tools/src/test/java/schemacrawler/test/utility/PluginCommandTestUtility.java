@@ -11,8 +11,8 @@ import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class PluginCommandTestUtility {
 
-  public static void testPluginCommand(final TestContext testContext,
-      final PluginCommand pluginCommand) {
+  public static void testPluginCommand(
+      final TestContext testContext, final PluginCommand pluginCommand) {
     requireNonNull(testContext, "No test context provided");
     requireNonNull(pluginCommand, "No plugin command provided");
 
@@ -34,8 +34,8 @@ public class PluginCommandTestUtility {
       final String[] helpFooter = pluginCommand.getHelpFooter().get();
       writeStringArray(out, helpFooter);
     }
-    assertThat(outputOf(testout),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   private static void writeStringArray(final TestWriter out, final String[] helpText) {
@@ -47,6 +47,4 @@ public class PluginCommandTestUtility {
   private PluginCommandTestUtility() {
     // Prevent instantiation
   }
-
 }
-

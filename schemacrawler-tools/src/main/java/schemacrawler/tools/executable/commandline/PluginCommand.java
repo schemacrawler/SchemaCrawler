@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable.commandline;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.command;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.loader;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.unknown;
-import static us.fatehi.utility.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,6 +40,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 public class PluginCommand implements Iterable<PluginCommandOption> {
 
@@ -89,7 +89,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       final Supplier<String[]> helpFooter) {
 
     this.type = requireNonNull(type, "No plugin command type provided");
-    this.options = new ArrayList<>();
+    options = new ArrayList<>();
 
     this.name = name;
 
@@ -99,9 +99,17 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       this.helpHeader = helpHeader;
     }
 
-    this.helpDescription = helpDescription;
+    if (helpDescription != null) {
+      this.helpDescription = helpDescription;
+    } else {
+      this.helpDescription = () -> new String[0];
+    }
 
-    this.helpFooter = helpFooter;
+    if (helpFooter != null) {
+      this.helpFooter = helpFooter;
+    } else {
+      this.helpFooter = () -> new String[0];
+    }
   }
 
   public PluginCommand addOption(
