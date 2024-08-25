@@ -8,7 +8,7 @@
   </configurations>
   <dependencies>
     <dependency org="org.python" name="jython-slim"
-                rev="2.7.3" conf="binaries->default" />
+                rev="2.7.4" conf="binaries->default" />
 
     <exclude  org="jline" />
     <exclude  org="io.netty" />

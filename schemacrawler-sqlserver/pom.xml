@@ -51,7 +51,7 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>12.8.0.jre8</version>
+      <version>12.8.1.jre8</version>
       <exclusions>
         <exclusion>
           <groupId>com.microsoft.azure</groupId>
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc_auth</artifactId>
-      <version>12.8.0.x64</version>
+      <version>12.8.1.x64</version>
       <type>dll</type>
     </dependency>
 
