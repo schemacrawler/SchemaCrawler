@@ -20,6 +20,7 @@ MD029: false                  # Ordered list item prefix
 MD033: false                  # Allow inline HTML
 MD036: false                  # Emphasis used instead of a heading
 MD040: false                  # Fenced code blocks should have a language specified
+MD045: false                  # Images should have alternate text (alt text)
 
 # Rules by tags
 blank_lines: false  # Error on blank lines
