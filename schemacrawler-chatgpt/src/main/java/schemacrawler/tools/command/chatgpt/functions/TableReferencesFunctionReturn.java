@@ -63,7 +63,7 @@ public class TableReferencesFunctionReturn implements FunctionReturn {
       case CHILD:
         return renderTableRelationships(TableReferenceType.CHILD);
       case ALL:
-        // Fall-through
+      // Fall-through
       default:
         return renderTableRelationships(TableReferenceType.PARENT)
             + NEW_LINE

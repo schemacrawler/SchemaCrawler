@@ -84,7 +84,7 @@ public class OfflineConnectionUtility {
             final OfflineConnection otherOfflineConnection = (OfflineConnection) args[0];
             return otherOfflineConnection.hashCode() == offlineDatabasePath.hashCode();
           }
-          // Fall through
+        // Fall through
         default:
           throw new SQLFeatureNotSupportedException(
               String.format(
