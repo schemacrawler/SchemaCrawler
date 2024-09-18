@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Collections.addAll;
 import static java.util.Collections.sort;
 import static java.util.Collections.unmodifiableList;
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
@@ -53,6 +52,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -161,7 +161,12 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
             final String value = (String) methodReturnValue;
             final String[] valuesArray = value == null ? new String[0] : value.split(",");
             final List<String> valuesList = new ArrayList<>();
-            addAll(valuesList, valuesArray);
+            for (final String valueSplit : valuesArray) {
+              final String trimmedValue = trimToEmpty(valueSplit);
+              if (!trimmedValue.isEmpty()) {
+                valuesList.add(trimmedValue);
+              }
+            }
             sort(valuesList);
             dbProperties.add(
                 new ImmutableDatabaseProperty(methodName, unmodifiableList(valuesList)));
