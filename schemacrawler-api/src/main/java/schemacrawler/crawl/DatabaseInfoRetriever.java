@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Collections.sort;
+import static java.util.Collections.unmodifiableList;
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
 import java.lang.reflect.InvocationTargetException;
@@ -44,13 +46,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -145,7 +147,8 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       final Method[] methods = DatabaseMetaData.class.getMethods();
       for (final Method method : methods) {
         try {
-          if (method.getParameterTypes().length > 0 || ignoreMethods.contains(method.getName())) {
+          final String methodName = method.getName();
+          if (method.getParameterTypes().length > 0 || ignoreMethods.contains(methodName)) {
             continue;
           }
 
@@ -156,17 +159,25 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
           final Object methodReturnValue = method.invoke(dbMetaData);
           if (isDatabasePropertyListMethod(method)) {
             final String value = (String) methodReturnValue;
-            final String[] list = value == null ? new String[0] : value.split(",");
-            dbProperties.add(new ImmutableDatabaseProperty(method.getName(), list));
+            final String[] valuesArray = value == null ? new String[0] : value.split(",");
+            final List<String> valuesList = new ArrayList<>();
+            for (final String valueSplit : valuesArray) {
+              final String trimmedValue = trimToEmpty(valueSplit);
+              if (!trimmedValue.isEmpty()) {
+                valuesList.add(trimmedValue);
+              }
+            }
+            sort(valuesList);
+            dbProperties.add(
+                new ImmutableDatabaseProperty(methodName, unmodifiableList(valuesList)));
           } else if (isDatabasePropertyMethod(method)) {
-            dbProperties.add(new ImmutableDatabaseProperty(method.getName(), methodReturnValue));
+            dbProperties.add(new ImmutableDatabaseProperty(methodName, methodReturnValue));
           } else if (isDatabasePropertiesResultSetMethod(method)) {
             final ResultSet results = (ResultSet) methodReturnValue;
-            final List<String> resultsList = DatabaseUtility.readResultsVector(results);
-            Collections.sort(resultsList);
+            final List<String> valuesList = DatabaseUtility.readResultsVector(results);
+            sort(valuesList);
             dbProperties.add(
-                new ImmutableDatabaseProperty(
-                    method.getName(), resultsList.toArray(new String[0])));
+                new ImmutableDatabaseProperty(methodName, unmodifiableList(valuesList)));
           }
 
         } catch (final IllegalAccessException | InvocationTargetException e) {
