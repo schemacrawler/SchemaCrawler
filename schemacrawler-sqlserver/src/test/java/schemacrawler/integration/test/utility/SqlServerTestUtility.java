@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test.utility;
 
+import java.time.Duration;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -44,7 +45,8 @@ public final class SqlServerTestUtility {
     final DockerImageName imageName = DockerImageName.parse("mcr.microsoft.com/mssql/server");
     return new MSSQLServerContainer<>(imageName.withTag(version))
         .withUrlParam("encrypt", "false")
-        .acceptLicense();
+        .acceptLicense()
+        .withStartupTimeout(Duration.ofMinutes(3));
   }
 
   private SqlServerTestUtility() {
