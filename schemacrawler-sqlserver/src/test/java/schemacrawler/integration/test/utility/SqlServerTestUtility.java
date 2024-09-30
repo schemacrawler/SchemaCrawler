@@ -37,7 +37,7 @@ public final class SqlServerTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newSqlServer2019Container() {
-    return newSqlServerContainer("2019-CU9-ubuntu-18.04");
+    return newSqlServerContainer("2019-CU28-ubuntu-20.04");
   }
 
   @SuppressWarnings("resource")
@@ -46,6 +46,7 @@ public final class SqlServerTestUtility {
     return new MSSQLServerContainer<>(imageName.withTag(version))
         .withUrlParam("encrypt", "false")
         .acceptLicense()
+        .withEnv("MSSQL_PID", "Express")
         .withStartupTimeout(Duration.ofMinutes(3));
   }
 
