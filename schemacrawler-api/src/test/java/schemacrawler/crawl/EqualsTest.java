@@ -123,7 +123,7 @@ public class EqualsTest {
   public void privilege() {
 
     EqualsVerifier.forClass(MutablePrivilege.class)
-        .withIgnoredFields("key", "grants", "parent", "attributeMap")
+        .withIgnoredFields("key", "grants", "attributeMap")
         .withPrefabValues(
             DatabaseObjectReference.class, new TablePointer(table1), new TablePointer(table2))
         .suppress(Warning.STRICT_INHERITANCE)
