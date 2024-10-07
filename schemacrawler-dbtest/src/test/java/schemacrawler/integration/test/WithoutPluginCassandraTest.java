@@ -65,7 +65,7 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final CassandraContainer<?> dbContainer =
-      new CassandraContainer<>(imageName.withTag("5.0"))
+      new CassandraContainer<>(imageName.withTag("5"))
           .withConfigurationOverride("cassandra_config_override")
           .withCopyFileToContainer(
               MountableFile.forClasspathResource("cassandra.keystore"),
