@@ -113,11 +113,9 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    // -- Schema output tests
-    final String expectedResource = String.format("testDB2Dump.txt", javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource(expectedResource)));
+        hasSameContentAs(classpathResource("testDB2Dump.txt")));
   }
 
   @Test
