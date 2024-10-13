@@ -1,0 +1,461 @@
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  ID                                NUMBER(38, 0) NOT NULL      
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+  ADDRESS1                          VARCHAR2(255)               
+  ADDRESS2                          VARCHAR2(255)               
+  CITY                              VARCHAR2(50)                
+  STATE                             CHAR(2)                     
+  POSTALCODE                        VARCHAR2(10)                
+  COUNTRY                           VARCHAR2(50)                
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+                                                      [non-unique index]
+  CITY                              ascending                   
+  "SYS_NC00010$"                    descending                  
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Triggers
+
+                                                               [trigger]
+  after insert or delete, per row
+                                                      [action statement]
+BEGIN
+  UPDATE Publishers 
+    SET Publisher = 'Jacob' 
+    WHERE Publisher = 'John';
+END;
+
+Table Constraints
+
+                                                      [check constraint]
+  STATE                                                         
+
+                                                      [check constraint]
+  ID                                                            
+
+                                                      [check constraint]
+  FIRSTNAME                                                     
+
+                                                      [check constraint]
+  LASTNAME                                                      
+
+
+
+AUTHORSCOUNTRIES                                     [materialized view]
+------------------------------------------------------------------------
+snapshot table for snapshot BOOKS.AUTHORSCOUNTRIES
+  ID                                NUMBER(38, 0) NOT NULL      
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+  COUNTRY                           VARCHAR2(50)                
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ID                                                            
+
+                                                      [check constraint]
+  FIRSTNAME                                                     
+
+                                                      [check constraint]
+  LASTNAME                                                      
+
+
+
+AUTHORSLIST                                                       [view]
+------------------------------------------------------------------------
+  ID                                NUMBER(38, 0) NOT NULL      
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+
+
+
+BOOKAUTHORS                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  BOOKID                            NUMBER(38, 0) NOT NULL      
+  AUTHORID                          NUMBER(38, 0) NOT NULL      
+  SOMEDATA                          VARCHAR2(30)                
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  AUTHORID (0..many)--> AUTHORS.ID                              
+
+                                       [foreign key, on delete restrict]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+Indexes
+
+                                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  BOOKID                                                        
+
+                                                      [check constraint]
+  AUTHORID                                                      
+
+
+
+BOOKS                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                NUMBER(38, 0) NOT NULL      
+                                    Unique (internal) id for book
+  TITLE                             VARCHAR2(255) NOT NULL      
+                                    Book title                  
+  DESCRIPTION                       VARCHAR2(255)               
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  PUBLISHERID                       NUMBER(38, 0) NOT NULL      
+                                    Foreign key to the book publisher
+  PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
+  PRICE                             FLOAT(126, 0)               
+                                    Current price for the book  
+  PREVIOUSEDITIONID                 NUMBER(38, 0)               
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                          [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+  PREVIOUSEDITIONID                                             
+
+                                                      [check constraint]
+  ID                                                            
+
+                                                      [check constraint]
+  TITLE                                                         
+
+                                                      [check constraint]
+  PUBLISHERID                                                   
+
+
+
+"Celebrities"                                                    [table]
+------------------------------------------------------------------------
+  "Id"                              NUMBER(38, 0) NOT NULL      
+  NAME                              VARCHAR2(20)                
+
+Primary Key
+
+                                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Id"                              ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  "Id"                                                          
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    NUMBER(38, 0) NOT NULL      
+  "UPDATE"                          VARCHAR2(20)                
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Celebrity Id"                    ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  "Celebrity Id"                                                
+
+
+
+COUPONS                                                          [table]
+------------------------------------------------------------------------
+  ID                                NUMBER(38, 0) NOT NULL      
+  DATA                              CLOB                        
+  COUPONS                           NUMBER(38, 0)               
+  BOOKS                             VARCHAR2(20)                
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ID                                                            
+
+
+
+PUBLISHERS                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  ID                                NUMBER(38, 0) NOT NULL      
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+  PUBLISHER                         VARCHAR2(255)               
+                                    Name of book publisher      
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ID                                                            
+
+
+
+TEMP_AUTHOR_LIST                                                 [table]
+------------------------------------------------------------------------
+  ID                                NUMBER(38, 0) NOT NULL      
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ID                                                            
+
+                                                      [check constraint]
+  FIRSTNAME                                                     
+
+                                                      [check constraint]
+  LASTNAME                                                      
+
+
+
+X_CUSTOMERS                                                      [table]
+------------------------------------------------------------------------
+  CUSTOMERID                        NUMBER(38, 0) NOT NULL      
+  CUSTOMER_NAME                     VARCHAR2(80)                
+
+Table Constraints
+
+                                                      [check constraint]
+  CUSTOMERID                                                    
+
+
+
+X_EMPLOYEES                                                      [table]
+------------------------------------------------------------------------
+  EMPLOYEEID                        NUMBER(38, 0) NOT NULL      
+  EMPLOYEE_NAME                     VARCHAR2(30)                
+  START_DATE                        DATE                        
+  END_DATE                          DATE                        
+  ANNUAL_SALARY                     NUMBER(38, 0)               
+  HOURLY_RATE                       NUMBER                      
+                                    generated                   
+  ACTIVE                            CHAR(1)                     
+                                    generated                   
+
+Table Constraints
+
+                                                      [check constraint]
+  EMPLOYEEID                                                    
+
+
+
+ΒΙΒΛΊΑ                                                           [table]
+------------------------------------------------------------------------
+  ΜΟΝΑΔΙΚΌΣ                         NUMBER(38, 0) NOT NULL      
+  ΤΊΤΛΟΣ                            VARCHAR2(255) NOT NULL      
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR2(255)               
+  ΕΚΔΌΤΗΣ                           NUMBER(38, 0) NOT NULL      
+
+Primary Key
+
+                                                           [primary key]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+
+Indexes
+
+                                                          [unique index]
+  ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+                                                      [check constraint]
+  ΤΊΤΛΟΣ                                                        
+
+                                                      [check constraint]
+  ΕΚΔΌΤΗΣ                                                       
+
+
+
+Routines
+========================================================================
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+  NEWPUBLISHER                      VARCHAR2, in                
+  PUBLISHER                         VARCHAR2, out               
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               NUMBER(22, 38), in          
+  TWO                               NUMBER(22, 38), in          
+
+
+
+Sequences
+========================================================================
+
+
+
+"ISEQ$$_71828"                                                [sequence]
+------------------------------------------------------------------------
+  increment                         1                           
+  start value                                                   
+  minimum value                     1                           
+  maximum value                     9999999999999999999999999999
+  cycle                             false                       
+
+
+
+PUBLISHER_ID_SEQ                                              [sequence]
+------------------------------------------------------------------------
+  increment                         1                           
+  start value                                                   
+  minimum value                     1                           
+  maximum value                     9999999999999999999999999999
+  cycle                             false                       
+
+
+
+Synonyms
+========================================================================
+
+
+
+OTHER_TABLE                                                    [synonym]
+------------------------------------------------------------------------
+  OTHER_TABLE --> FAKE_TABLE                                    
+
+
+
+PUBLICATIONS                                                   [synonym]
+------------------------------------------------------------------------
+  PUBLICATIONS --> BOOKS                                        
+
