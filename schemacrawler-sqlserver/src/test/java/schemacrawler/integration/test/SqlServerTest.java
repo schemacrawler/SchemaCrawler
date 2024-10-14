@@ -262,8 +262,9 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executableDetails.setAdditionalConfiguration(config);
 
+    final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
-        hasSameContentAs(classpathResource(testContext.testMethodName() + ".txt")));
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

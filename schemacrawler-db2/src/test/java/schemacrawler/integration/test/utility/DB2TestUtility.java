@@ -36,12 +36,12 @@ public final class DB2TestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newDB211Container() {
-    return newDB2Container("11.5.8.0");
+    return newDB2Container("11.5.9.0");
   }
 
   @SuppressWarnings("resource")
   private static JdbcDatabaseContainer<?> newDB2Container(final String version) {
-    final DockerImageName imageName = DockerImageName.parse("ibmcom/db2");
+    final DockerImageName imageName = DockerImageName.parse("icr.io/db2_community/db2");
     return new Db2Container(imageName.withTag(version)).acceptLicense();
   }
 

@@ -116,8 +116,9 @@ public class OracleTest extends BaseOracleWithConnectionTest {
     executable.setAdditionalConfiguration(config);
 
     // -- Schema output tests
+    final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
         outputOf(executableExecution(dataSource, executable)),
-        hasSameContentAs(classpathResource(testContext.testMethodName() + ".txt")));
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

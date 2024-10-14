@@ -144,12 +144,12 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 
     // -- Schema output tests for "details" command
     final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("details");
     executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executableDetails.setAdditionalConfiguration(
-        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executableDetails.setAdditionalConfiguration(config);
 
     final String expectedResource = String.format("testDB2WithConnection.%s.txt", javaVersion());
     assertThat(
@@ -240,8 +240,9 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executableDetails.setAdditionalConfiguration(config);
 
+    final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
-        hasSameContentAs(classpathResource(testContext.testMethodName() + ".txt")));
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

@@ -51,20 +51,25 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 
 @HeavyDatabaseTest("db2")
 @Testcontainers
+@ResolveTestContext
 public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
 
-  final DockerImageName imageName = DockerImageName.parse("ibmcom/db2");
+  private final DockerImageName imageName =
+      DockerImageName.parse("icr.io/db2_community/db2");
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new Db2Container(imageName.withTag("11.5.7.0")).acceptLicense();
+      new Db2Container(imageName.withTag("11.5.9.0")).acceptLicense();
 
   @BeforeEach
   public void createDatabase() {
@@ -107,6 +112,39 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
 
     // -- Schema output tests
     final String expectedResource = String.format("testDB2WithConnection.%s.txt", javaVersion());
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "db2")
+  public void testDB2Portable(final TestContext testContext) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
+            .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
+
+    // -- Schema output tests
+    final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
