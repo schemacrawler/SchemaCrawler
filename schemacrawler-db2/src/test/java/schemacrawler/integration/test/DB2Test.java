@@ -45,8 +45,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -63,18 +65,23 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.Property;
 
+@TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("db2")
 @Testcontainers
+@ResolveTestContext
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB211Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newDB211Container();
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
@@ -204,5 +211,37 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
             "DATAACCESSAUTH",
             "ACCESSCTRLAUTH",
             "CREATESECUREAUTH"));
+  }
+
+  @Test
+  public void testDB2Portable(final TestContext testContext) throws Exception {
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
+            .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
+    // -- Schema output tests for "details" command
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("schema");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(config);
+
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executableDetails)),
+        hasSameContentAs(classpathResource(testContext.testMethodName() + ".txt")));
   }
 }
