@@ -18,14 +18,6 @@
   </properties>
 
   <dependencies>
-    <!--
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-jdbc-drivers</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    -->
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-utility</artifactId>
