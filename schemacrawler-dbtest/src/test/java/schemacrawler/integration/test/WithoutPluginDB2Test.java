@@ -64,8 +64,7 @@ import schemacrawler.tools.options.Config;
 @ResolveTestContext
 public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName =
-      DockerImageName.parse("icr.io/db2_community/db2");
+  private final DockerImageName imageName = DockerImageName.parse("icr.io/db2_community/db2");
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
