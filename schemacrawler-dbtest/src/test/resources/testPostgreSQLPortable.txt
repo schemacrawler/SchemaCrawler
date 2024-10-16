@@ -43,30 +43,6 @@ Indexes
   postalcode                        ascending                   
   country                           ascending                   
 
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> otheruser                                            
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
-
 
 
 authorscountries                                     [materialized view]
@@ -76,29 +52,6 @@ authorscountries                                     [materialized view]
   lastname                          varchar(20)                 
   country                           varchar(50)                 
 
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
-
 
 
 authorslist                                                       [view]
@@ -106,29 +59,6 @@ authorslist                                                       [view]
   id                                int4                        
   firstname                         varchar(20)                 
   lastname                          varchar(20)                 
-
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
 
 
 
@@ -153,29 +83,6 @@ Indexes
                                                           [unique index]
   bookid                            ascending                   
   authorid                          ascending                   
-
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
 
 
 
@@ -218,29 +125,6 @@ Indexes
                                                           [unique index]
   previouseditionid                 ascending                   
 
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
-
 
 
 "Celebrities"                                                    [table]
@@ -262,29 +146,6 @@ Indexes
 
                                                           [unique index]
   "Id"                              ascending                   
-
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
 
 
 
@@ -308,29 +169,6 @@ Indexes
                                                           [unique index]
   "Celebrity Id"                    ascending                   
 
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
-
 
 
 coupons                                                          [table]
@@ -350,29 +188,6 @@ Indexes
                                                           [unique index]
   id                                ascending                   
 
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
-
 
 
 customerdata                                                     [table]
@@ -389,29 +204,6 @@ Indexes
 
                                                           [unique index]
   id                                ascending                   
-
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
 
 
 
@@ -432,29 +224,6 @@ Indexes
                                                           [unique index]
   id                                ascending                   
 
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
-
 
 
 person                                                           [table]
@@ -462,29 +231,6 @@ person                                                           [table]
   name                              varchar(40)                 
   tshirt                            tshirt_type                 
   mood                              mood_type                   
-
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
 
 
 
@@ -512,29 +258,6 @@ Indexes
                                                           [unique index]
   id                                ascending                   
 
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
-
 
 
 "Βιβλία"                                                         [table]
@@ -558,29 +281,6 @@ Indexes
 
                                                           [unique index]
   "Μοναδικός"                       ascending                   
-
-Privileges and Grants
-
-DELETE                                                       [privilege]
-  test --> test (grantable)                                     
-
-INSERT                                                       [privilege]
-  test --> test (grantable)                                     
-
-REFERENCES                                                   [privilege]
-  test --> test (grantable)                                     
-
-SELECT                                                       [privilege]
-  test --> test (grantable)                                     
-
-TRIGGER                                                      [privilege]
-  test --> test (grantable)                                     
-
-TRUNCATE                                                     [privilege]
-  test --> test (grantable)                                     
-
-UPDATE                                                       [privilege]
-  test --> test (grantable)                                     
 
 
 
