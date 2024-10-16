@@ -59,13 +59,18 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @HeavyDatabaseTest("oracle")
 @Testcontainers
+@ResolveTestContext
 public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
   final DockerImageName imageName =
@@ -87,7 +92,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleFreeContainer(imageName.withTag("23-slim-faststart"));
+      new OracleFreeContainer(imageName.withTag("23.5-slim-faststart"));
 
   @BeforeEach
   public void createDatabase() {
@@ -140,8 +145,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
             .includeAllSequences()
             .includeAllSynonyms()
-            .includeTables(table -> !table.contains("Global")) // NOTE: Index
-            // retrieval fails
+            .includeTables(table -> !table.contains("Global")) // NOTE: Index retrieval fails
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
             .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
     final LoadOptionsBuilder loadOptionsBuilder =
@@ -163,6 +167,41 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "oracle")
+  public void testOraclePortable(final TestContext testContext) throws Exception {
+    final DatabaseConnectionSource dataSource = getDataSource();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
+
+    // -- Schema output tests
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }
