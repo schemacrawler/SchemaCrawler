@@ -11,6 +11,7 @@ import java.util.List;
 import org.hsqldb.jdbc.JDBCDriver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.JRE;
+import org.testcontainers.jdbc.ContainerDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -57,7 +58,10 @@ public class AvailableRegistryPluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     assertThat(
         getRegisteredPlugins(JDBCDriverRegistry.getJDBCDriverRegistry()),
-        containsInAnyOrder(JDBCDriver.class.getName(), TestDatabaseDriver.class.getName()));
+        containsInAnyOrder(
+            JDBCDriver.class.getName(),
+            TestDatabaseDriver.class.getName(),
+            ContainerDatabaseDriver.class.getName()));
   }
 
   @Test
