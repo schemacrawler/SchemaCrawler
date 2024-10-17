@@ -35,7 +35,6 @@ import org.testcontainers.utility.DockerImageName;
 
 public final class SqlServerTestUtility {
 
-  @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newSqlServer2019Container() {
     return newSqlServerContainer("2019-CU28-ubuntu-20.04");
   }

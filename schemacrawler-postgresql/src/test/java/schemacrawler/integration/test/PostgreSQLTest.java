@@ -206,5 +206,4 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
-
 }
