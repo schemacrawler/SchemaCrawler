@@ -110,6 +110,13 @@
       <artifactId>mariadb-java-client</artifactId>
       <version>3.4.1</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mssqlserver</artifactId>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
   <build>
     <pluginManagement>
