@@ -26,8 +26,7 @@ jobs:
         npm --version
         diff --version
         npm install -g diff2html-cli
-        export PATH=$PATH:$(npm bin -g)
-        diff2html-cli --version
+        diff2html --version
 
     - id: generate-diff
       name: Compare files and generate diff
