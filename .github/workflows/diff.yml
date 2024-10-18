@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - id: setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+
     - id: checkout-code
       name: Checkout code
       uses: actions/checkout@v4
@@ -17,8 +22,10 @@ jobs:
       shell: bash
       run: |
         # Install diff2html-cli
-        npm install -g diff2html-cli
+        npm config set fund false
+        npm --version
         diff --version
+        npm install -g diff2html-cli
         diff2html-cli --version
 
     - id: generate-diff
