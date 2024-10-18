@@ -33,7 +33,8 @@ jobs:
       shell: bash
       run: |
         # Generate diff in HTML
-        mkdir diffs
+        pwd
+        mkdir --verbose diffs
         diff \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
