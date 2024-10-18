@@ -44,7 +44,13 @@ jobs:
           --text \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
-          | tee ./diffs/oracle.txt
+        | diff2html \
+          --colorScheme light \
+          --format html \
+          --style side \
+          --title "Oracle - Portable versus Standard" \
+          --input stdin \
+          --file diffs/oracle.html
 
     - id: upload-diffs
       name: Upload diffs
