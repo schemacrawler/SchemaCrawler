@@ -33,7 +33,7 @@ jobs:
       shell: bash
       run: |
         # Generate diff in HTML
-        mkdir diffs
+        mkdir diffs/
         diff \
           --unified \
           --new-file \
@@ -44,20 +44,12 @@ jobs:
           --text \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
-          > oracle.txt
-        diff2html \
-          --colorScheme light \
-          --format html \
-          --style side \
-          --title "Oracle - Portable versus Standard" \
-          --input file \
-          --file diffs/oracle.html \
-          oracle.txt
+          > ./diffs/oracle.txt
 
     - id: upload-diffs
       name: Upload diffs
       uses: actions/upload-artifact@v4
       with:
         name: diffs
-        path: ./diffs.zip
+        path: ./diffs/
         retention-days: 5
