@@ -35,7 +35,7 @@ jobs:
         # Generate diff in HTML
         pwd
         mkdir --verbose diffs
-        diff \
+        sudo diff \
           --unified \
           --new-file \
           --unidirectional-new-file \
