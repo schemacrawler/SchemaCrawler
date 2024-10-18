@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - id: setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+
     - id: checkout-code
       name: Checkout code
       uses: actions/checkout@v4
