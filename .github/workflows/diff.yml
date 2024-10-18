@@ -34,12 +34,10 @@ jobs:
       run: |
         # Generate diff in HTML
         pwd
-        ls -1
         mkdir --verbose diffs
         diff \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
-          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
-          > ./diffs/oracle.txt
+          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt
 
     - id: upload-diffs
       name: Upload diffs
