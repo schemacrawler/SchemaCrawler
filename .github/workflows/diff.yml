@@ -11,7 +11,7 @@ jobs:
     - id: setup-node
       uses: actions/setup-node@v4
       with:
-        node-version: 24
+        node-version: latest
 
     - id: checkout-code
       name: Checkout code
