@@ -40,7 +40,6 @@ jobs:
           --unidirectional-new-file \
           --ignore-case \
           --ignore-all-space \
-          --ignore-blank-lines \
           --text \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt > ./diffs/oracle.txt
