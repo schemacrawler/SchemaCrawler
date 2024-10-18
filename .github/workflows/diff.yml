@@ -17,8 +17,10 @@ jobs:
       shell: bash
       run: |
         # Install diff2html-cli
-        npm install -g diff2html-cli
+        npm config set fund false
+        npm --version
         diff --version
+        npm install -g diff2html-cli
         diff2html-cli --version
 
     - id: generate-diff
