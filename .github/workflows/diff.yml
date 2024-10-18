@@ -35,7 +35,7 @@ jobs:
         # Generate diff in HTML
         pwd
         mkdir --verbose diffs
-        sudo diff \
+        diff \
           --unified \
           --new-file \
           --unidirectional-new-file \
@@ -43,7 +43,7 @@ jobs:
           --ignore-all-space \
           --text \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
-          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt > ./diffs/oracle.txt
+          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt > /home/runner/work/SchemaCrawler/SchemaCrawler/diffs/oracle.txt
 
     - id: upload-diffs
       name: Upload diffs
