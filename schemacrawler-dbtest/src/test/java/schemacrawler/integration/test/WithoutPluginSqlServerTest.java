@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServer2019Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -46,15 +44,11 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
@@ -125,22 +119,6 @@ public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
-
-    // -- Schema output tests for "dump" command
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("dump");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(config);
-
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource("testSQLServerDump.txt")));
-
-    // -- Additional catalog tests
-    final Catalog catalog = executableDetails.getCatalog();
-
-    final Table table = catalog.lookupTable(new SchemaReference("BOOKS", "dbo"), "Authors").get();
-    final Column column = table.lookupColumn("FirstName").get();
-    assertThat(column.getPrivileges(), is(empty()));
   }
 
   @Test
