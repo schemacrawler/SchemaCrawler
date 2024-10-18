@@ -34,6 +34,7 @@ jobs:
       run: |
         # Generate diff in HTML
         pwd
+        ls -1
         mkdir --verbose diffs
         diff \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
