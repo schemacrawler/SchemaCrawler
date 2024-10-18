@@ -33,16 +33,11 @@ jobs:
       shell: bash
       run: |
         # Generate diff in HTML
-        mkdir diffs/
+        mkdir diffs
         diff \
-          --unified \
-          --new-file \
-          --unidirectional-new-file \
-          --ignore-case \
-          --ignore-all-space \
-          --text \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
-          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt > ./diffs/oracle.txt
+          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
+          > ./diffs/oracle.txt
 
     - id: upload-diffs
       name: Upload diffs
