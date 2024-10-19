@@ -30,10 +30,9 @@ jobs:
 
     - id: generate-diff
       name: Compare files and generate diff
-      shell: bash
+      shell: sh
       run: |
         # Generate diff in HTML
-        set -eo pipefail
         pwd
         mkdir --verbose diffs
         diff \
