@@ -34,17 +34,17 @@ jobs:
       run: |
         # Generate diff in HTML
         pwd
-        mkdir --verbose diffs/
+        mkdir --verbose diff-output/
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
-          ./diffs/oracle-portable-standard.html \
+          ./diff-output/oracle-portable-standard.html \
           "Oracle - Portable versus Standard"
 
-    - id: upload-diffs
-      name: Upload diffs
+    - id: upload-diff-output
+      name: Upload diff-output
       uses: actions/upload-artifact@v4
       with:
-        name: diffs
-        path: ./diffs/
+        name: diff-output
+        path: ./diff-output/
         retention-days: 5
