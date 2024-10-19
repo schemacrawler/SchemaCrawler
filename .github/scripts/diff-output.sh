@@ -47,13 +47,11 @@ head "$temp_diff_file"
 
 # Convert the diff to HTML
 diff2html \
-  --colorScheme light \
   --format html \
   --style side \
-  --title "Diff - $file1 vs $file2" \
-  --input file \
   --file "$output_html" \
-  -- -M "$temp_diff_file"
+  --input file \
+  -- "$temp_diff_file"
 
 
 # Clean up temporary file
