@@ -12,6 +12,17 @@ file2=$2
 output_html=$3
 temp_diff_file=$(mktemp)
 
+# Check if files to diff exist
+if [ ! -e "$file1" ]; then
+  echo "$file1 does not exist. Exiting script."
+  exit 1
+fi
+if [ ! -e "$file2" ]; then
+  echo "$file2 does not exist. Exiting script."
+  exit 1
+fi
+
+
 # Perform the diff and save to a temporary file
 diff \
   --unified \
@@ -24,6 +35,14 @@ diff \
   "$file2" \
   > "$temp_diff_file"
 
+# Check that the output file was created
+if [ ! -e "$temp_diff_file" ]; then
+  echo "$temp_diff_file does not exist. Exiting script."
+  exit 1
+fi
+echo "$temp_diff_file exists. Proceeding with the script."
+
+
 # Convert the diff to HTML
 diff2html \
   --colorScheme light \
@@ -33,6 +52,7 @@ diff2html \
   --input file \
   --file "$output_html" \
   "$temp_diff_file"
+
 
 # Clean up temporary file
 rm "$temp_diff_file"
