@@ -40,7 +40,9 @@ if [ ! -e "$temp_diff_file" ]; then
   echo "$temp_diff_file does not exist. Exiting script."
   exit 1
 fi
+# DEBUG
 echo "$temp_diff_file exists. Proceeding with the script."
+head "$temp_diff_file"
 
 
 # Convert the diff to HTML
@@ -51,7 +53,7 @@ diff2html \
   --title "Diff - $file1 vs $file2" \
   --input file \
   --file "$output_html" \
-  "$temp_diff_file"
+  -- "$temp_diff_file"
 
 
 # Clean up temporary file
