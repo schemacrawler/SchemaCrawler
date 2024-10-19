@@ -1,0 +1,49 @@
+name: Compare Database Schema Outputs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diff-output:
+    runs-on: ubuntu-latest
+
+    steps:
+    - id: setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: latest
+
+    - id: checkout-code
+      name: Checkout code
+      uses: actions/checkout@v4
+
+    - id: install-diff2html
+      name: Install diff2html
+      shell: bash
+      run: |
+        # Install diff2html-cli
+        npm config set fund false
+        npm --version
+        diff --version
+        npm install -g diff2html-cli
+        diff2html --version
+
+    - id: generate-diff
+      name: Compare files and generate diff
+      shell: sh
+      run: |
+        # Generate diff in HTML
+        pwd
+        mkdir --verbose diffs/
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \        
+          ./diffs/oracle.html
+
+    - id: upload-diffs
+      name: Upload diffs
+      uses: actions/upload-artifact@v4
+      with:
+        name: diffs
+        path: ./diffs/
+        retention-days: 5
