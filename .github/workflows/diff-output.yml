@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  compare-files:
+  diff-output:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,17 +34,11 @@ jobs:
       run: |
         # Generate diff in HTML
         pwd
-        mkdir --verbose diffs
-        diff \
-          --unified \
-          --new-file \
-          --unidirectional-new-file \
-          --ignore-case \
-          --ignore-all-space \
-          --text \
+        mkdir --verbose diffs/
+        ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
-          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
-          > ./diffs/oracle.txt
+          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \        
+          ./diffs/oracle.html
 
     - id: upload-diffs
       name: Upload diffs
