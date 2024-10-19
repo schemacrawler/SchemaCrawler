@@ -37,8 +37,9 @@ jobs:
         mkdir --verbose diffs/
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
-          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \        
-          ./diffs/oracle.html
+          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
+          ./diffs/oracle-portable-standard.html \
+          "Oracle - Portable versus Standard"
 
     - id: upload-diffs
       name: Upload diffs
