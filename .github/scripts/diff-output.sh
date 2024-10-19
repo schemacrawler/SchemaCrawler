@@ -53,7 +53,7 @@ diff2html \
   --title "Diff - $file1 vs $file2" \
   --input file \
   --file "$output_html" \
-  -- "$temp_diff_file"
+  -- -M "$temp_diff_file"
 
 
 # Clean up temporary file
