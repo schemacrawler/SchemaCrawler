@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle23Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -41,16 +42,12 @@ import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -73,26 +70,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
-  final DockerImageName imageName =
-      DockerImageName.parse("gvenzl/oracle-free").asCompatibleSubstituteFor("gvenzl/oracle-xe");
-
-  private static class OracleFreeContainer extends OracleContainer {
-    OracleFreeContainer(final DockerImageName dockerImageName) {
-      super(dockerImageName);
-      List<Integer> ports = new ArrayList<>();
-      ports.add(1521);
-      setExposedPorts(ports);
-    }
-
-    @Override
-    public String getDatabaseName() {
-      return "freepdb1";
-    }
-  }
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleFreeContainer(imageName.withTag("23.5-slim-faststart"));
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle23Container();
 
   @BeforeEach
   public void createDatabase() {
