@@ -32,7 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle23Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracleContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -70,7 +70,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracle23Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
   @BeforeEach
   public void createDatabase() {

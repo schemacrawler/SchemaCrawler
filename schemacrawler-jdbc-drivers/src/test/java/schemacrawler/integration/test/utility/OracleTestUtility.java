@@ -38,7 +38,7 @@ import org.testcontainers.utility.DockerImageName;
 public final class OracleTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newOracle23Container() {
+  public static JdbcDatabaseContainer<?> newOracleContainer() {
     return newOracleContainer("23.5-slim-faststart");
   }
 
