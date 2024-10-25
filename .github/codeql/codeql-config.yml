@@ -1,7 +1,7 @@
 name: "SchemaCrawler CodeQL Configuration"
 version: "1.0.0"
 queries:
-  - name: "Security and Quality"
+  - name: "Java code"
     uses: codeql/java-queries@latest
     include:
       - "java"
