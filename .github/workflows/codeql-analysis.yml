@@ -2,9 +2,11 @@ name: "CodeQL Analysis"
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+    paths:
+      - '**/*.java'   
   schedule:
     - cron: '15 0 15 * *'
 
@@ -20,14 +22,14 @@ jobs:
 
     - id: init-codeql
       name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: java
         config-file: .github/codeql/codeql-config.yml
 
     - id: perform-codeql-analysis
       name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
     - id: upload-codeql-results
       name: Upload CodeQL results
