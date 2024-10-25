@@ -44,6 +44,12 @@ jobs:
         #
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-mysql/src/test/resources/testMySQLPortable.txt \
+          ./diff-output/oracle-mysql.html \
+          "Oracle - MySQL"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
           ./diff-output/oracle-portable-standard.html \
           "Oracle - Portable versus Standard"
@@ -53,6 +59,12 @@ jobs:
           schemacrawler-sqlserver/src/test/resources/testSQLServerWithConnection.8.txt \
           ./diff-output/sqlserver-portable-standard.html \
           "SQL Server - Portable versus Standard"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-mysql/src/test/resources/testMySQLPortable.txt \
+          schemacrawler-mysql/src/test/resources/testMySQLWithConnection.8.txt \
+          ./diff-output/mysql-portable-standard.html \
+          "MySQL - Portable versus Standard"
 
     - id: upload-diff-output
       name: Upload diff-output

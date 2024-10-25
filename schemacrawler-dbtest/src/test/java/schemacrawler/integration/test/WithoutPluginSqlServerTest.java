@@ -65,8 +65,7 @@ import schemacrawler.tools.options.Config;
 @ResolveTestContext
 public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
   public void createDatabase() {

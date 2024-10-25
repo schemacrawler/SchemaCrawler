@@ -67,8 +67,7 @@ import us.fatehi.utility.database.SqlScript;
 @Testcontainers
 public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
   public void createDatabase() {

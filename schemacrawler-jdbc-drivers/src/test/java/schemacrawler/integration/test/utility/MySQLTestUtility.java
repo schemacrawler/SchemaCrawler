@@ -34,9 +34,8 @@ import org.testcontainers.utility.DockerImageName;
 
 public final class MySQLTestUtility {
 
-  @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newMySQL8Container() {
-    return newMySQLContainer("8.0.31");
+  public static JdbcDatabaseContainer<?> newMySQLContainer() {
+    return newMySQLContainer("9.1.0");
   }
 
   @SuppressWarnings("resource")
@@ -45,7 +44,7 @@ public final class MySQLTestUtility {
     return new MySQLContainer<>(imageName.withTag(version))
         .withCommand(
             "mysqld",
-            "--skip-ssl",
+            // "--skip-ssl", (Needed for MySQL 8)
             "--lower_case_table_names=1",
             "--log_bin_trust_function_creators=1");
   }

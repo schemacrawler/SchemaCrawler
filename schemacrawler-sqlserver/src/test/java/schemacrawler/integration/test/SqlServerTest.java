@@ -89,8 +89,7 @@ import us.fatehi.utility.property.Property;
 @ResolveTestContext
 public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
   public void createDatabase() {
