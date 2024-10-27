@@ -34,15 +34,17 @@ import org.testcontainers.utility.DockerImageName;
 
 public final class DB2TestUtility {
 
-  @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newDB211Container() {
+  public static JdbcDatabaseContainer<?> newDB2Container() {
     return newDB2Container("11.5.9.0");
   }
 
   @SuppressWarnings("resource")
   private static JdbcDatabaseContainer<?> newDB2Container(final String version) {
     final DockerImageName imageName = DockerImageName.parse("icr.io/db2_community/db2");
-    return new Db2Container(imageName.withTag(version)).acceptLicense();
+    return new Db2Container(imageName.withTag(version))
+        .acceptLicense()
+        .withEnv("TO_CREATE_SAMPLEDB", "false")
+        .withEnv("REPODB", "false");
   }
 
   private DB2TestUtility() {

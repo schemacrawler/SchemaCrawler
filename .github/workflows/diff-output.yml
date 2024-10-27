@@ -50,6 +50,14 @@ jobs:
         #
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-db2/src/test/resources/testDB2Portable.txt \
+          ./diff-output/oracle-db2.html \
+          "Oracle - IBM DB2"
+        #
+        #
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
           ./diff-output/oracle-portable-standard.html \
           "Oracle - Portable versus Standard"
@@ -65,6 +73,12 @@ jobs:
           schemacrawler-mysql/src/test/resources/testMySQLWithConnection.8.txt \
           ./diff-output/mysql-portable-standard.html \
           "MySQL - Portable versus Standard"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-db2/src/test/resources/testDB2Portable.txt \
+          schemacrawler-db2/src/test/resources/testDB2WithConnection.8.txt \
+          ./diff-output/db2-portable-standard.html \
+          "IBM DB2 - Portable versus Standard"
 
     - id: upload-diff-output
       name: Upload diff-output

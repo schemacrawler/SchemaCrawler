@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.DB2TestUtility.newDB211Container;
+import static schemacrawler.integration.test.utility.DB2TestUtility.newDB2Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -45,10 +45,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -73,15 +71,14 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.Property;
 
-@TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("db2")
 @Testcontainers
 @ResolveTestContext
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
-  @Container private static final JdbcDatabaseContainer<?> dbContainer = newDB211Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
 
-  @BeforeAll
+  @BeforeEach
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {

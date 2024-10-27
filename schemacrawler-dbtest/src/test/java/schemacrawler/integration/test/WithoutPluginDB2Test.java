@@ -30,19 +30,17 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.DB2TestUtility.newDB2Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -64,11 +62,7 @@ import schemacrawler.tools.options.Config;
 @ResolveTestContext
 public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse("icr.io/db2_community/db2");
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new Db2Container(imageName.withTag("11.5.9.0")).acceptLicense();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
 
   @BeforeEach
   public void createDatabase() {
@@ -84,8 +78,8 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  @DisplayName("Issue #658 - Failure in scanning a DB2 database in z/os")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "db2")
+  // See Issue #658 - Failure in scanning a DB2 database in z/os
   public void testDB2WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
