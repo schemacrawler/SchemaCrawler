@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL12Container;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -81,7 +81,7 @@ import us.fatehi.utility.property.Property;
 @ResolveTestContext
 public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL12Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer();
 
   @BeforeEach
   public void createDatabase() {

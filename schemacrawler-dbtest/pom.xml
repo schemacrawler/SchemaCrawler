@@ -63,7 +63,7 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!-- NOTE: Cassandra driver is repeated here to 
+    <!-- NOTE: Cassandra driver is repeated here to
          override dependencies from Testcontainters Cassandra container -->
     <dependency>
       <groupId>com.ing.data</groupId>
@@ -79,13 +79,7 @@
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>    
-    
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mssqlserver</artifactId>
-      <scope>test</scope>
-    </dependency>    
+    </dependency>
 
     <dependency>
       <groupId>org.testcontainers</groupId>
@@ -101,6 +95,11 @@
       <groupId>org.firebirdsql</groupId>
       <artifactId>firebird-testcontainers-java</artifactId>
       <version>1.4.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mssqlserver</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -133,7 +132,7 @@
       <artifactId>cassandra</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <!-- Teiid -->
     <dependency>
       <groupId>org.teiid</groupId>
@@ -145,7 +144,7 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
         </exclusion>
-      </exclusions>      
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.teiid.connectors</groupId>
@@ -159,7 +158,7 @@
       <version>16.0.0</version>
       <scope>test</scope>
     </dependency>
-    
+
     <!-- Calcite -->
     <dependency>
       <groupId>org.apache.calcite.avatica</groupId>
@@ -171,7 +170,7 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
         </exclusion>
-      </exclusions>      
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.calcite</groupId>
@@ -183,7 +182,7 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
         </exclusion>
-      </exclusions>      
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>

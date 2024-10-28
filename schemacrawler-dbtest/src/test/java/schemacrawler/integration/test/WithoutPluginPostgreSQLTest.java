@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -38,10 +39,8 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -63,11 +62,7 @@ import schemacrawler.tools.options.Config;
 @ResolveTestContext
 public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse(PostgreSQLContainer.IMAGE);
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new PostgreSQLContainer<>(imageName.withTag("15.4"));
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer();
 
   @BeforeEach
   public void createDatabase() {

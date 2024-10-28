@@ -54,6 +54,12 @@ jobs:
           ./diff-output/oracle-db2.html \
           "Oracle - IBM DB2"
         #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-postgresql/src/test/resources/testDB2Portable.txt \
+          ./diff-output/oracle-postgresql.html \
+          "Oracle - PostgreSQL"
+        #
         #
         #
         ./.github/scripts/diff-output.sh \
@@ -79,6 +85,12 @@ jobs:
           schemacrawler-db2/src/test/resources/testDB2WithConnection.8.txt \
           ./diff-output/db2-portable-standard.html \
           "IBM DB2 - Portable versus Standard"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-postgresql/src/test/resources/testPostgreSQLPortable.txt \
+          schemacrawler-postgresql/src/test/resources/testPostgreSQLWithConnection.8.txt \
+          ./diff-output/postgresql-portable-standard.html \
+          "PostgreSQL - Portable versus Standard"
 
     - id: upload-diff-output
       name: Upload diff-output

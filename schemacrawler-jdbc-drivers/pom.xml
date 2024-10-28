@@ -130,7 +130,12 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>db2</artifactId>
       <scope>test</scope>
-    </dependency>    
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>cassandra</artifactId>
@@ -160,7 +165,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>    
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>

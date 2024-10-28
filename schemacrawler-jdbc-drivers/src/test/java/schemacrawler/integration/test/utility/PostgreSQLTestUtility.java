@@ -34,19 +34,12 @@ import org.testcontainers.utility.DockerImageName;
 
 public final class PostgreSQLTestUtility {
 
-  @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newPostgreSQL11Container() {
     return newPostgreSQLContainer("11.16-alpine");
   }
 
-  @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newPostgreSQL12Container() {
-    return newPostgreSQLContainer("12.16-alpine");
-  }
-
-  @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newPostgreSQL15Container() {
-    return newPostgreSQLContainer("15.4-alpine");
+  public static JdbcDatabaseContainer<?> newPostgreSQLContainer() {
+    return newPostgreSQLContainer("16.4-bookworm");
   }
 
   @SuppressWarnings("resource")
