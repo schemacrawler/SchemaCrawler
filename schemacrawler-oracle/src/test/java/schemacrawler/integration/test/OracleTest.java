@@ -71,7 +71,6 @@ public class OracleTest extends BaseOracleWithConnectionTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    System.out.println(jdbcUrl);
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(jdbcUrl, "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
