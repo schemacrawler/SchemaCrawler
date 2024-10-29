@@ -61,7 +61,7 @@ public final class OracleTestUtility {
     final DockerImageName imageName =
         DockerImageName.parse("gvenzl/oracle-free").asCompatibleSubstituteFor("gvenzl/oracle-xe");
     return new OracleFreeContainer(imageName.withTag(version))
-        .withStartupTimeout(Duration.ofMinutes(3));
+        .withStartupTimeout(Duration.ofMinutes(5));
   }
 
   private OracleTestUtility() {
