@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracleContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -41,16 +42,12 @@ import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -59,35 +56,21 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @HeavyDatabaseTest("oracle")
 @Testcontainers
+@ResolveTestContext
 public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 
-  final DockerImageName imageName =
-      DockerImageName.parse("gvenzl/oracle-free").asCompatibleSubstituteFor("gvenzl/oracle-xe");
-
-  private static class OracleFreeContainer extends OracleContainer {
-    OracleFreeContainer(final DockerImageName dockerImageName) {
-      super(dockerImageName);
-      List<Integer> ports = new ArrayList<>();
-      ports.add(1521);
-      setExposedPorts(ports);
-    }
-
-    @Override
-    public String getDatabaseName() {
-      return "freepdb1";
-    }
-  }
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleFreeContainer(imageName.withTag("23-slim-faststart"));
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
   @BeforeEach
   public void createDatabase() {
@@ -140,8 +123,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
             .includeAllSequences()
             .includeAllSynonyms()
-            .includeTables(table -> !table.contains("Global")) // NOTE: Index
-            // retrieval fails
+            .includeTables(table -> !table.contains("Global")) // NOTE: Index retrieval fails
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
             .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
     final LoadOptionsBuilder loadOptionsBuilder =
@@ -163,6 +145,41 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "oracle")
+  public void testOraclePortable(final TestContext testContext) throws Exception {
+    final DatabaseConnectionSource dataSource = getDataSource();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
+
+    // -- Schema output tests
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(
+        outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

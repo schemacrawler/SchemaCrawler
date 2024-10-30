@@ -29,28 +29,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL15Container;
+import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServerContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -60,19 +53,21 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.utility.property.Property;
+import schemacrawler.tools.options.Config;
 
-@HeavyDatabaseTest("postgresql")
+@TestInstance(Lifecycle.PER_CLASS)
+@HeavyDatabaseTest("sqlserver")
 @Testcontainers
 @ResolveTestContext
-public class PostgreSQL15Test extends BaseAdditionalDatabaseTest {
+public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL15Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
@@ -82,14 +77,21 @@ public class PostgreSQL15Test extends BaseAdditionalDatabaseTest {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
-    createDatabase("/postgresql.scripts.txt");
+    createDatabase("/sqlserver.scripts.txt");
+
+    createDataSource(
+        dbContainer.getJdbcUrl(),
+        dbContainer.getUsername(),
+        dbContainer.getPassword(),
+        "database=BOOKS");
   }
 
   @Test
-  public void testPostgreSQL15WithConnection(final TestContext testContext) throws Exception {
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "sqlserver")
+  public void testSQLServerWithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("books"))
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
             .includeAllSequences()
             .includeAllSynonyms()
             .includeAllRoutines()
@@ -104,41 +106,50 @@ public class PostgreSQL15Test extends BaseAdditionalDatabaseTest {
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    // -- Schema output tests for "details" command
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("details");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(config);
 
-    // -- Schema output tests
-    final String expectedResultsResource =
-        String.format("%s.%s.txt", testContext.testMethodName(), javaVersion());
+    final String expectedResource =
+        String.format("testSQLServerWithConnection.%s.txt", javaVersion());
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource(expectedResultsResource)));
+        outputOf(executableExecution(getDataSource(), executableDetails)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
 
-    // -- Additional catalog tests
-    final Catalog catalog = executable.getCatalog();
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "sqlserver")
+  public void testSQLServerPortable(final TestContext testContext) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines()
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
-    assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
-    assertThat(serverInfo.get(0).getValue(), equalTo("test"));
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 
-    final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
-    assertThat(databaseUsers, hasSize(2));
+    // -- Schema output tests for "details" command
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("schema");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(config);
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
-        hasItems("otheruser", "test"));
-    assertThat(
-        databaseUsers.stream()
-            .map(databaseUser -> databaseUser.getAttributes().size())
-            .collect(Collectors.toList()),
-        hasItems(3));
-    assertThat(
-        databaseUsers.stream()
-            .map(databaseUser -> databaseUser.getAttributes().keySet())
-            .flatMap(Collection::stream)
-            .collect(Collectors.toSet()),
-        hasItems("USESYSID", "USESUPER", "PASSWD"));
+        outputOf(executableExecution(getDataSource(), executableDetails)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

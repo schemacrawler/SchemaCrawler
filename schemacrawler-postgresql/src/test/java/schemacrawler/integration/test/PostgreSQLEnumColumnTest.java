@@ -38,7 +38,7 @@ import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.collection.IsEmptyCollection.emptyCollectionOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL12Container;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -67,8 +67,11 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -77,7 +80,7 @@ import schemacrawler.tools.options.OutputFormat;
 @DisplayName("Test for issue #284 - support enum values")
 public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
-  @Container private static final JdbcDatabaseContainer<?> dbContainer = newPostgreSQL12Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer();
 
   @Test
   public void columnWithEnum() throws Exception {
@@ -110,9 +113,15 @@ public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
     final SchemaCrawlerExecutable executable;
     executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
 
     for (final OutputFormat outputFormat :
         new OutputFormat[] {

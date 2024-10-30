@@ -35,9 +35,8 @@ import org.testcontainers.utility.DockerImageName;
 
 public final class SqlServerTestUtility {
 
-  @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newSqlServer2019Container() {
-    return newSqlServerContainer("2019-CU28-ubuntu-20.04");
+  public static JdbcDatabaseContainer<?> newSqlServerContainer() {
+    return newSqlServerContainer("2022-CU9-ubuntu-20.04");
   }
 
   @SuppressWarnings("resource")
@@ -45,6 +44,7 @@ public final class SqlServerTestUtility {
     final DockerImageName imageName = DockerImageName.parse("mcr.microsoft.com/mssql/server");
     return new MSSQLServerContainer<>(imageName.withTag(version))
         .withUrlParam("encrypt", "false")
+        .withPassword("$ch3maCr@wl3r")
         .acceptLicense()
         .withEnv("MSSQL_PID", "Express")
         .withStartupTimeout(Duration.ofMinutes(3));

@@ -57,6 +57,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -101,6 +102,7 @@ public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
   }
 
   @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "mysql")
   public void specialNames(final TestContext testContext) throws Exception {
 
     final Identifiers identifiers =

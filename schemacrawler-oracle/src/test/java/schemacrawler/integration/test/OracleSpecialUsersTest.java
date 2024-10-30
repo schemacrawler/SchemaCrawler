@@ -32,18 +32,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracle23Container;
+import static schemacrawler.integration.test.utility.OracleTestUtility.newOracleContainer;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -53,19 +51,18 @@ import schemacrawler.test.utility.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
-@TestInstance(PER_CLASS)
 @HeavyDatabaseTest("oracle")
 @Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracle23Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;
   private DataSource catalogUserDataSource;
   private DataSource noAccessUserDataSource;
 
-  @BeforeAll
+  @BeforeEach
   public void createDatabase() {
 
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
@@ -93,7 +90,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(catalogUserDataSource);
     final String expectedResource =
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 34, true);
+    testOracleWithConnection(dataSource, expectedResource, 33, true);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -127,7 +124,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
     final String expectedResource =
         String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 34, false);
+    testOracleWithConnection(dataSource, expectedResource, 33, false);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -151,7 +148,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource);
     final String expectedResource =
         String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 34, true);
+    testOracleWithConnection(dataSource, expectedResource, 33, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
@@ -169,7 +166,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     final String expectedResource =
         String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
-    testOracleWithConnection(dataSource, expectedResource, 34, true);
+    testOracleWithConnection(dataSource, expectedResource, 33, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 

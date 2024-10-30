@@ -28,29 +28,26 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test.utility;
 
+import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
-public final class MySQLTestUtility {
+public final class DB2TestUtility {
 
-  @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newMySQL8Container() {
-    return newMySQLContainer("8.0.31");
+  public static JdbcDatabaseContainer<?> newDB2Container() {
+    return newDB2Container("11.5.9.0");
   }
 
   @SuppressWarnings("resource")
-  private static JdbcDatabaseContainer<?> newMySQLContainer(final String version) {
-    final DockerImageName imageName = DockerImageName.parse(MySQLContainer.NAME);
-    return new MySQLContainer<>(imageName.withTag(version))
-        .withCommand(
-            "mysqld",
-            "--skip-ssl",
-            "--lower_case_table_names=1",
-            "--log_bin_trust_function_creators=1");
+  private static JdbcDatabaseContainer<?> newDB2Container(final String version) {
+    final DockerImageName imageName = DockerImageName.parse("icr.io/db2_community/db2");
+    return new Db2Container(imageName.withTag(version))
+        .acceptLicense()
+        .withEnv("TO_CREATE_SAMPLEDB", "false")
+        .withEnv("REPODB", "false");
   }
 
-  private MySQLTestUtility() {
+  private DB2TestUtility() {
     // Prevent instantiation
   }
 }

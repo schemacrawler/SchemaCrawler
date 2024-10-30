@@ -1,0 +1,412 @@
+
+
+Tables
+========================================================================
+
+
+
+authors                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  id                                int4 not null               
+  firstname                         varchar(20) not null        
+  lastname                          varchar(20) not null        
+  address1                          varchar(255)                
+  address2                          varchar(255)                
+  city                              varchar(50)                 
+  state                             bpchar(2)                   
+  postalcode                        varchar(10)                 
+  country                           varchar(50)                 
+
+Primary Key
+
+                                                           [primary key]
+  id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+Foreign key marking relationship of authors to books
+  id <--(0..many) bookauthors.authorid                              
+
+Indexes
+
+                                                          [unique index]
+  id                                ascending                   
+
+                                                      [non-unique index]
+  lastname                          ascending                   
+  firstname                         ascending                   
+
+                                                      [non-unique index]
+Index on author's location
+  city                              ascending                   
+  state                             descending                  
+  postalcode                        ascending                   
+  country                           ascending                   
+
+Triggers
+
+                                                               [trigger]
+  before insert or delete, per row
+                                                      [action statement]
+EXECUTE FUNCTION books.trg_authors()
+
+Table Constraints
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+
+
+authorscountries                                     [materialized view]
+------------------------------------------------------------------------
+  id                                int4                        
+  firstname                         varchar(20)                 
+  lastname                          varchar(20)                 
+  country                           varchar(50)                 
+
+
+
+authorslist                                                       [view]
+------------------------------------------------------------------------
+  id                                int4                        
+  firstname                         varchar(20)                 
+  lastname                          varchar(20)                 
+
+
+
+bookauthors                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  bookid                            int4 not null               
+  authorid                          int4 not null               
+  somedata                          varchar(30)                 
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+Foreign key marking relationship of authors to books
+  authorid (0..many)--> authors.id                              
+
+                                           [foreign key, with no action]
+  bookid (0..many)--> books.id                                  
+
+Indexes
+
+                                                          [unique index]
+  bookid                            ascending                   
+  authorid                          ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+
+
+books                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  id                                int4 not null               
+                                    Unique (internal) id for book
+  title                             varchar(255) not null       
+                                    Book title                  
+  description                       varchar(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  publisherid                       int4 not null               
+                                    Foreign key to the book publisher
+  publicationdate                   date                        
+                                    Book publication date       
+  price                             float8(17, 17)              
+                                    Current price for the book  
+  previouseditionid                 int4                        
+
+Primary Key
+
+                                                           [primary key]
+  id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  id <--(0..many) bookauthors.bookid                              
+
+                                           [foreign key, with no action]
+  id <--(0..1) previouseditionid                                
+
+Indexes
+
+                                                          [unique index]
+  id                                ascending                   
+
+                                                          [unique index]
+  previouseditionid                 ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+Unique constraint on previous edition of books
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+
+
+"Celebrities"                                                    [table]
+------------------------------------------------------------------------
+  "Id"                              int4 not null               
+  name                              varchar(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Id"                              ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    int4 not null               
+  "UPDATE"                          varchar(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Celebrity Id"                    ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+
+
+coupons                                                          [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  data                              text                        
+  coupons                           int4                        
+  books                             varchar(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  id                                                            
+
+Indexes
+
+                                                          [unique index]
+  id                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+
+
+customerdata                                                     [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  data                              valid_string                
+
+Primary Key
+
+                                                           [primary key]
+  id                                                            
+
+Indexes
+
+                                                          [unique index]
+  id                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+
+
+customers                                                        [table]
+------------------------------------------------------------------------
+  id                                int4 not null               
+  firstname                         name_type not null          
+  lastname                          name_type not null          
+  age                               age_type                    
+
+Primary Key
+
+                                                           [primary key]
+  id                                                            
+
+Indexes
+
+                                                          [unique index]
+  id                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+
+
+person                                                           [table]
+------------------------------------------------------------------------
+  name                              varchar(40)                 
+  tshirt                            tshirt_type                 
+                                    'small', medium', large'    
+  mood                              mood_type                   
+                                    'sad', ok', happy'          
+
+
+
+publishers                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  id                                serial not null             
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+  publisher                         varchar(255)                
+                                    Name of book publisher      
+
+Primary Key
+
+                                                           [primary key]
+  id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  id <--(0..many) "Βιβλία"."Εκδότης"                              
+
+Indexes
+
+                                                          [unique index]
+  id                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+
+
+"Βιβλία"                                                         [table]
+------------------------------------------------------------------------
+  "Μοναδικός"                       int2 not null               
+  "Τίτλος"                          varchar(255) not null       
+  "Περιγραφή"                       varchar(255)                
+  "Εκδότης"                         int2 not null               
+
+Primary Key
+
+                                                           [primary key]
+  "Μοναδικός"                                                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Εκδότης" (0..many)--> publishers.id                              
+
+Indexes
+
+                                                          [unique index]
+Primary key constraint on βιβλία
+  "Μοναδικός"                       ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+                                                      [check constraint]
+
+
+
+Routines
+========================================================================
+
+
+
+customadd                            [function, does not return a table]
+------------------------------------------------------------------------
+Add '1' to a number
+  "returnValue"                     int4, return                
+  one                               int4, in                    
+
+
+
+customadd                            [function, does not return a table]
+------------------------------------------------------------------------
+  "returnValue"                     int4, return                
+  one                               int4, in                    
+  two                               int4, in                    
+
+
+
+trg_authors                          [function, does not return a table]
+------------------------------------------------------------------------
+  "returnValue"                     trigger, return             
+
+
+
+Sequences
+========================================================================
+
+
+
+publisher_id_seq                                              [sequence]
+------------------------------------------------------------------------
+  increment                         1                           
+  start value                                                   
+  minimum value                     1                           
+  maximum value                     9223372036854775807         
+  cycle                             false                       
+
+
+
+publishers_id_seq                                             [sequence]
+------------------------------------------------------------------------
+  increment                         1                           
+  start value                                                   
+  minimum value                     1                           
+  maximum value                     2147483647                  
+  cycle                             false                       
+

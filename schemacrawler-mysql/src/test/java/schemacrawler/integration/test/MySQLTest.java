@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -59,17 +59,21 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 
 @HeavyDatabaseTest("mysql")
 @Testcontainers
+@ResolveTestContext
 public class MySQLTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      newMySQL8Container().withUsername("schemacrawler").withDatabaseName("books");
+      newMySQLContainer().withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase() {
@@ -159,5 +163,36 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
     // INFO: Current user has no access to MYSQL.USER
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(0));
+  }
+
+  @Test
+  public void testMySQLPortable(final TestContext testContext) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("books"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
+    // -- Schema output tests
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("schema");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(config);
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executableDetails)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

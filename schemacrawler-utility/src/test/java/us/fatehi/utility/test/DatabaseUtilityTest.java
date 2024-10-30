@@ -126,7 +126,7 @@ public class DatabaseUtilityTest {
   @Test
   public void getAvailableJdbcDrivers() throws SQLException {
     final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
-    assertThat(drivers.size(), is(2));
+    assertThat(drivers.size(), is(3));
     assertThat(
         drivers,
         everyItem(is(anyOf(instanceOf(Driver.class), instanceOf(TestDatabaseDriver.class)))));

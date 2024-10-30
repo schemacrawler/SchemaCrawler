@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServer2019Container;
+import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServerContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -73,6 +73,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.sqlserver.SqlServerDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -84,10 +86,10 @@ import us.fatehi.utility.property.Property;
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("sqlserver")
 @Testcontainers
+@ResolveTestContext
 public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private static final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
   public void createDatabase() {
@@ -231,5 +233,37 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     final Table table = catalog.lookupTable(new SchemaReference("BOOKS", "dbo"), "Authors").get();
     final Column column = table.lookupColumn("FirstName").get();
     assertThat(column.getPrivileges(), is(empty()));
+  }
+
+  @Test
+  public void testSQLServerPortable(final TestContext testContext) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines()
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
+    // -- Schema output tests for "details" command
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("schema");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(config);
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executableDetails)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

@@ -28,24 +28,43 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test.utility;
 
-import org.testcontainers.containers.Db2Container;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
 
-public final class DB2TestUtility {
+public final class OracleTestUtility {
 
   @SuppressWarnings("resource")
-  public static JdbcDatabaseContainer<?> newDB211Container() {
-    return newDB2Container("11.5.8.0");
+  public static JdbcDatabaseContainer<?> newOracleContainer() {
+    return newOracleContainer("23.5-slim-faststart");
   }
 
   @SuppressWarnings("resource")
-  private static JdbcDatabaseContainer<?> newDB2Container(final String version) {
-    final DockerImageName imageName = DockerImageName.parse("ibmcom/db2");
-    return new Db2Container(imageName.withTag(version)).acceptLicense();
+  private static OracleContainer newOracleContainer(final String version) {
+    class OracleFreeContainer extends OracleContainer {
+      OracleFreeContainer(final DockerImageName dockerImageName) {
+        super(dockerImageName);
+        List<Integer> ports = new ArrayList<>();
+        ports.add(1521);
+        setExposedPorts(ports);
+      }
+
+      @Override
+      public String getDatabaseName() {
+        return "freepdb1";
+      }
+    }
+
+    final DockerImageName imageName =
+        DockerImageName.parse("gvenzl/oracle-free").asCompatibleSubstituteFor("gvenzl/oracle-xe");
+    return new OracleFreeContainer(imageName.withTag(version))
+        .withStartupTimeout(Duration.ofMinutes(5));
   }
 
-  private DB2TestUtility() {
+  private OracleTestUtility() {
     // Prevent instantiation
   }
 }

@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.DB2TestUtility.newDB211Container;
+import static schemacrawler.integration.test.utility.DB2TestUtility.newDB2Container;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -63,16 +63,20 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.Property;
 
 @HeavyDatabaseTest("db2")
 @Testcontainers
+@ResolveTestContext
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB211Container();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
 
   @BeforeEach
   public void createDatabase() {
@@ -113,11 +117,9 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    // -- Schema output tests
-    final String expectedResource = String.format("testDB2Dump.txt", javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource(expectedResource)));
+        hasSameContentAs(classpathResource("testDB2Dump.txt")));
   }
 
   @Test
@@ -139,12 +141,12 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 
     // -- Schema output tests for "details" command
     final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("details");
     executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executableDetails.setAdditionalConfiguration(
-        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executableDetails.setAdditionalConfiguration(config);
 
     final String expectedResource = String.format("testDB2WithConnection.%s.txt", javaVersion());
     assertThat(
@@ -206,5 +208,38 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
             "DATAACCESSAUTH",
             "ACCESSCTRLAUTH",
             "CREATESECUREAUTH"));
+  }
+
+  @Test
+  public void testDB2Portable(final TestContext testContext) throws Exception {
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
+            .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo().portableNames();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+
+    // -- Schema output tests for "details" command
+    final SchemaCrawlerExecutable executableDetails = new SchemaCrawlerExecutable("schema");
+    executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executableDetails.setAdditionalConfiguration(config);
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executableDetails)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

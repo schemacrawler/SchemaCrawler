@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQL8Container;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -73,7 +73,7 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private static final JdbcDatabaseContainer<?> dbContainer =
-      newMySQL8Container().withUsername("schemacrawler");
+      newMySQLContainer().withUsername("schemacrawler");
 
   @Test
   public void columnWithEnum() throws Exception {

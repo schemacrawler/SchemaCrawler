@@ -1,0 +1,258 @@
+
+
+Tables
+========================================================================
+
+
+
+authors                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  `Id`                              INT NOT NULL                
+  `FirstName`                       VARCHAR(20) NOT NULL        
+  `LastName`                        VARCHAR(20) NOT NULL        
+  `Address1`                        VARCHAR(255)                
+  `Address2`                        VARCHAR(255)                
+  `City`                            VARCHAR(50)                 
+  `State`                           CHAR(2)                     
+  `PostalCode`                      VARCHAR(10)                 
+  `Country`                         VARCHAR(50)                 
+
+Primary Key
+
+                                                           [primary key]
+  `Id`                                                          
+
+Foreign Keys
+
+                                            [foreign key, with restrict]
+  `Id` <--(0..many) bookauthors.`AuthorId`                              
+
+Indexes
+
+                                                          [unique index]
+  `Id`                              ascending                   
+
+                                                      [non-unique index]
+  `LastName`                        ascending                   
+  `FirstName`                       ascending                   
+
+                                                      [non-unique index]
+  `City`                            ascending                   
+  `State`                           ascending                   
+  `PostalCode`                      ascending                   
+  `Country`                         ascending                   
+
+
+
+authorslist                                                       [view]
+------------------------------------------------------------------------
+VIEW
+  `Id`                              INT NOT NULL                
+  `FirstName`                       VARCHAR(20) NOT NULL        
+  `LastName`                        VARCHAR(20) NOT NULL        
+
+
+
+bookauthors                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  `BookId`                          INT NOT NULL                
+  `AuthorId`                        INT NOT NULL                
+  `SomeData`                        VARCHAR(30)                 
+
+Foreign Keys
+
+                                            [foreign key, with restrict]
+  `AuthorId` (0..many)--> authors.`Id`                              
+
+                                            [foreign key, with restrict]
+  `BookId` (0..many)--> books.`Id`                              
+
+Indexes
+
+                                                      [non-unique index]
+  `AuthorId`                        ascending                   
+
+                                                          [unique index]
+  `BookId`                          ascending                   
+  `AuthorId`                        ascending                   
+
+
+
+books                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  `Id`                              INT NOT NULL                
+                                    Unique (internal) id for book
+  `Title`                           VARCHAR(255) NOT NULL       
+                                    Book title                  
+  `Description`                     VARCHAR(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  `PublisherId`                     INT NOT NULL                
+                                    Foreign key to the book publisher
+  `PublicationDate`                 DATE                        
+                                    Book publication date       
+  `Price`                           FLOAT(12, 0)                
+                                    Current price for the book  
+  `PreviousEditionId`               INT                         
+
+Primary Key
+
+                                                           [primary key]
+  `Id`                                                          
+
+Foreign Keys
+
+                                            [foreign key, with restrict]
+  `Id` <--(0..many) bookauthors.`BookId`                              
+
+                                            [foreign key, with restrict]
+  `Id` <--(0..1) `PreviousEditionId`                              
+
+Indexes
+
+                                                          [unique index]
+  `Id`                              ascending                   
+
+                                                          [unique index]
+  `PreviousEditionId`               ascending                   
+
+
+
+celebrities                                                      [table]
+------------------------------------------------------------------------
+  `Id`                              INT NOT NULL                
+  `Name`                            VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  `Id`                                                          
+
+Foreign Keys
+
+                                            [foreign key, with restrict]
+  `Id` <--(0..1) `celebrity updates`.`Celebrity Id`                              
+
+Indexes
+
+                                                          [unique index]
+  `Id`                              ascending                   
+
+
+
+`celebrity updates`                                              [table]
+------------------------------------------------------------------------
+  `Celebrity Id`                    INT NOT NULL                
+  `UPDATE`                          VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  `Celebrity Id`                                                
+
+Foreign Keys
+
+                                            [foreign key, with restrict]
+  `Celebrity Id` (0..1)--> celebrities.`Id`                              
+
+Indexes
+
+                                                          [unique index]
+  `Celebrity Id`                    ascending                   
+
+
+
+coupons                                                          [table]
+------------------------------------------------------------------------
+  `Id`                              INT NOT NULL                
+  `Data`                            TEXT(65535)                 
+  `Coupons`                         INT                         
+  `Books`                           VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  `Id`                                                          
+
+Indexes
+
+                                                          [unique index]
+  `Id`                              ascending                   
+
+
+
+person                                                           [table]
+------------------------------------------------------------------------
+  name                              VARCHAR(40)                 
+  tshirt                            ENUM(6)                     
+  mood                              ENUM(5)                     
+
+
+
+publishers                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  `Id`                              BIGINT UNSIGNED NOT NULL    
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+  `Publisher`                       VARCHAR(255)                
+                                    Name of book publisher      
+
+Primary Key
+
+                                                           [primary key]
+  `Id`                                                          
+
+Indexes
+
+                                                          [unique index]
+  `Id`                              ascending                   
+
+                                                          [unique index]
+  `Id`                              ascending                   
+
+
+
+x_customers                                                      [table]
+------------------------------------------------------------------------
+  CUSTOMERID                        INT NOT NULL                
+  CUSTOMER_NAME                     VARCHAR(80)                 
+  SOCIAL_SECURITY_NUMBER            CHAR(9)                     
+
+
+
+x_employees                                                      [table]
+------------------------------------------------------------------------
+  EMPLOYEEID                        INT NOT NULL                
+  EMPLOYEE_NAME                     VARCHAR(30)                 
+  START_DATE                        DATE                        
+  END_DATE                          DATE                        
+  ANNUAL_SALARY                     INT                         
+  HOURLY_RATE                       DOUBLE(22, 0)               
+                                    generated                   
+  ACTIVE                            CHAR(1)                     
+                                    generated                   
+
+
+
+Routines
+========================================================================
+
+
+
+`New_Publisher`                                   [procedure, no result]
+------------------------------------------------------------------------
+Force name to 'New Publisher'
+  `NewPublisher`                    VARCHAR(50), in             
+  `Publisher`                       VARCHAR(50), out            
+
+
+
+`CustomAdd`                          [function, does not return a table]
+------------------------------------------------------------------------
+  `One`                             INT, in                     
+

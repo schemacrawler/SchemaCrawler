@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServer2019Container;
+import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServerContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -67,8 +67,7 @@ import us.fatehi.utility.database.SqlScript;
 @Testcontainers
 public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private static final JdbcDatabaseContainer<?> dbContainer = newSqlServer2019Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
   public void createDatabase() {

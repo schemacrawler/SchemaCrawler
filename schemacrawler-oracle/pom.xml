@@ -17,10 +17,23 @@
 
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-jdbc-drivers</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-jdbc-drivers</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
@@ -46,27 +59,6 @@
       <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.oracle.database.jdbc.debug</groupId>
-      <artifactId>ojdbc8_g</artifactId>
-      <version>21.15.0.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.oracle.database.jdbc</groupId>
-          <artifactId>ojdbc8dms</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.oracle.database.jdbc.debug</groupId>
-          <artifactId>ojdbc8dms_g</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.oracle.database.observability</groupId>
-          <artifactId>dms</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>

@@ -1,0 +1,326 @@
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
+  STATE                             CHAR(2)                     
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+                                                      [non-unique index]
+  CITY                              ascending                   
+  STATE                             descending                  
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+
+
+AUTHORSCOUNTRIES                              [materialized query table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  COUNTRY                           VARCHAR(50)                 
+
+
+
+AUTHORSLIST                                                       [view]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+
+
+
+BOOKAUTHORS                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
+  SOMEDATA                          VARCHAR(30)                 
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  AUTHORID (0..many)--> AUTHORS.ID                              
+
+                                           [foreign key, with no action]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+Indexes
+
+                                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+
+
+
+BOOKS                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
+  TITLE                             VARCHAR(255) NOT NULL       
+                                    Book title                  
+  DESCRIPTION                       VARCHAR(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  PUBLISHERID                       INTEGER NOT NULL            
+                                    Foreign key to the book publisher
+  PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
+  PRICE                             DOUBLE(53, 0)               
+                                    Current price for the book  
+  PREVIOUSEDITIONID                 INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+                                           [foreign key, with no action]
+  ID <-- PUBLICATIONS.PREVIOUSEDITIONID                              
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                          [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+
+
+"Celebrities"                                                    [table]
+------------------------------------------------------------------------
+  "Id"                              INTEGER NOT NULL            
+  NAME                              VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Id"                              ascending                   
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+  "UPDATE"                          VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Celebrity Id"                    ascending                   
+
+
+
+COUPONS                                                          [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  DATA                              CLOB                        
+  COUPONS                           INTEGER                     
+  BOOKS                             VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+
+
+CUSTOMERS                                                        [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         NAME_TYPE NOT NULL          
+  LASTNAME                          NAME_TYPE NOT NULL          
+  AGE                               AGE_TYPE                    
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+
+
+PUBLISHERS                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  ID                                INTEGER NOT NULL            
+                                    auto-incremented            
+                                    generated                   
+                                    Unique (internal) id for book publisher
+  PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) ΒΙΒΛΊΑ."ΕΚΔΌΤΗς"                              
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+
+
+X_CUSTOMERS                                                      [table]
+------------------------------------------------------------------------
+  CUSTOMERID                        INTEGER NOT NULL            
+  CUSTOMER_NAME                     VARCHAR(80)                 
+  SOCIAL_SECURITY_NUMBER            CHAR(9)                     
+
+
+
+X_EMPLOYEES                                                      [table]
+------------------------------------------------------------------------
+  EMPLOYEEID                        INTEGER NOT NULL            
+  EMPLOYEE_NAME                     VARCHAR(30)                 
+  START_DATE                        DATE                        
+  END_DATE                          DATE                        
+  ANNUAL_SALARY                     INTEGER                     
+  HOURLY_RATE                       INTEGER                     
+                                    generated                   
+
+
+
+ΒΙΒΛΊΑ                                                           [table]
+------------------------------------------------------------------------
+  "ΜΟΝΑΔΙΚΌς"                       SMALLINT NOT NULL           
+  "ΤΊΤΛΟς"                          VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  "ΕΚΔΌΤΗς"                         SMALLINT NOT NULL           
+
+Primary Key
+
+                                                           [primary key]
+  "ΜΟΝΑΔΙΚΌς"                                                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "ΕΚΔΌΤΗς" (0..many)--> PUBLISHERS.ID                              
+
+Indexes
+
+                                                          [unique index]
+  "ΜΟΝΑΔΙΚΌς"                       ascending                   
+
+
+
+Routines
+========================================================================
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+  PUBLISHER                         VARCHAR(50), out            
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+  NEWPUBLISHER                      VARCHAR(50), in             
+  PUBLISHER                         VARCHAR(50), out            
+
+
+
+AGE_TYPE                                      [function, result unknown]
+------------------------------------------------------------------------
+
+
+
+AGE_TYPE                                      [function, result unknown]
+------------------------------------------------------------------------
+
+
+
+CUSTOMADD                                     [function, result unknown]
+------------------------------------------------------------------------
+
+
+
+CUSTOMADD                                     [function, result unknown]
+------------------------------------------------------------------------
+
+
+
+NAME_TYPE                                     [function, result unknown]
+------------------------------------------------------------------------
+

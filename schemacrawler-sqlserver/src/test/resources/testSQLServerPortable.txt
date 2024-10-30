@@ -1,0 +1,337 @@
+
+
+Tables
+========================================================================
+
+
+
+Authors                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  Id                                int not null                
+  FirstName                         varchar(20) not null        
+  LastName                          varchar(20) not null        
+  Address1                          varchar(255)                
+  Address2                          varchar(255)                
+  City                              varchar(50)                 
+  State                             char(2)                     
+  PostalCode                        varchar(10)                 
+  Country                           varchar(50)                 
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) BookAuthors.AuthorId                              
+
+Indexes
+
+                                                [unique clustered index]
+  Id                                ascending                   
+
+                                                      [non-unique index]
+  LastName                          ascending                   
+  FirstName                         ascending                   
+
+                                                      [non-unique index]
+  City                              ascending                   
+  State                             descending                  
+  PostalCode                        ascending                   
+  Country                           ascending                   
+
+Triggers
+
+                                                               [trigger]
+  after insert or delete, per statement
+                                                      [action statement]
+-- Triggers
+-- Microsoft SQL Server syntax
+CREATE TRIGGER TRG_Authors 
+  ON Authors 
+  AFTER INSERT, DELETE 
+  AS 
+    UPDATE Publishers 
+      SET Publisher = 'Jacob' 
+      WHERE Publisher = 'John'
+
+Table Constraints
+
+                                                      [check constraint]
+  State                                                         
+
+
+
+AuthorsCountries                                                  [view]
+------------------------------------------------------------------------
+  Id                                int not null                
+  FirstName                         varchar(20) not null        
+  LastName                          varchar(20) not null        
+  Country                           varchar(50)                 
+
+Indexes
+
+                                                [unique clustered index]
+  FirstName                         ascending                   
+  LastName                          ascending                   
+
+
+
+AuthorsList                                                       [view]
+------------------------------------------------------------------------
+  Id                                int not null                
+  FirstName                         varchar(20) not null        
+  LastName                          varchar(20) not null        
+
+
+
+BookAuthors                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  BookId                            int not null                
+  AuthorId                          int not null                
+  SomeData                          varchar(30)                 
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  AuthorId (0..many)--> Authors.Id                              
+
+                                           [foreign key, with no action]
+  BookId (0..many)--> Books.Id                                  
+
+Indexes
+
+                                                          [unique index]
+  BookId                            ascending                   
+  AuthorId                          ascending                   
+
+
+
+Books                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  Id                                int not null                
+                                    Unique (internal) id for book
+  Title                             varchar(255) not null       
+                                    Book title                  
+  Description                       varchar(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  PublisherId                       int not null                
+                                    Foreign key to the book publisher
+  PublicationDate                   date                        
+                                    Book publication date       
+  Price                             float(53, 0)                
+                                    Current price for the book  
+  PreviousEditionId                 int                         
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) BookAuthors.BookId                              
+
+                                           [foreign key, with no action]
+  Id <--(0..1) PreviousEditionId                                
+
+Indexes
+
+                                                [unique clustered index]
+  Id                                ascending                   
+
+                                                          [unique index]
+  PreviousEditionId                 ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+  PreviousEditionId                                             
+
+
+
+Celebrities                                                      [table]
+------------------------------------------------------------------------
+  Id                                int not null                
+  Name                              varchar(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+                                                [unique clustered index]
+  Id                                ascending                   
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    int not null                
+  "UPDATE"                          varchar(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..1)--> Celebrities.Id                              
+
+Indexes
+
+                                                [unique clustered index]
+  "Celebrity Id"                    ascending                   
+
+
+
+Customers                                                        [table]
+------------------------------------------------------------------------
+  Id                                int not null                
+  FirstName                         NAME_TYPE(100) NOT NULL     
+  LastName                          NAME_TYPE(100) NOT NULL     
+  Age                               AGE_TYPE                    
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Indexes
+
+                                                [unique clustered index]
+  Id                                ascending                   
+
+
+
+Publishers                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  Id                                int identity not null       
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+  Publisher                         varchar(255)                
+                                    Name of book publisher      
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) Βιβλία.Εκδότης                                
+
+Indexes
+
+                                                [unique clustered index]
+  Id                                ascending                   
+
+
+
+X_EMPLOYEES                                                      [table]
+------------------------------------------------------------------------
+  EMPLOYEEID                        int not null                
+  EMPLOYEE_NAME                     varchar(30)                 
+  START_DATE                        date                        
+  END_DATE                          date                        
+  ANNUAL_SALARY                     int                         
+  HOURLY_RATE                       int                         
+                                    generated                   
+  ACTIVE                            varchar(1) not null         
+                                    generated                   
+
+
+
+Βιβλία                                                           [table]
+------------------------------------------------------------------------
+  Μοναδικός                         smallint not null           
+  Τίτλος                            varchar(255) not null       
+  Περιγραφή                         varchar(255)                
+  Εκδότης                           int not null                
+
+Primary Key
+
+                                                           [primary key]
+  Μοναδικός                                                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Εκδότης (0..many)--> Publishers.Id                              
+
+Indexes
+
+                                                [unique clustered index]
+  Μοναδικός                         ascending                   
+
+
+
+Routines
+========================================================================
+
+
+
+"CustomAdd;0"                                  [function, returns table]
+------------------------------------------------------------------------
+  "@RETURN_VALUE"                   int, result                 
+  "@One"                            int, in                     
+  "@Two"                            int, in                     
+
+
+
+"New_Publisher;1"                              [function, returns table]
+------------------------------------------------------------------------
+  "@RETURN_VALUE"                   int, result                 
+  "@Publisher"                      varchar(50), in             
+
+
+
+Sequences
+========================================================================
+
+
+
+Publisher_Id_Seq                                              [sequence]
+------------------------------------------------------------------------
+  increment                         1                           
+  start value                       1                           
+  minimum value                     -9223372036854775808        
+  maximum value                     9223372036854775807         
+  cycle                             false                       
+
+
+
+Synonyms
+========================================================================
+
+
+
+OTHER_TABLE                                                    [synonym]
+------------------------------------------------------------------------
+  OTHER_TABLE --> FAKE_TABLE                                    
+
+
+
+Publications                                                   [synonym]
+------------------------------------------------------------------------
+  Publications --> Books                                        
+

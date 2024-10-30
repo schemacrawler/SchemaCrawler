@@ -1,0 +1,292 @@
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS                                                          [table]
+------------------------------------------------------------------------
+  ID                                NUMBER NOT NULL             
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+  ADDRESS1                          VARCHAR2(255)               
+  ADDRESS2                          VARCHAR2(255)               
+  CITY                              VARCHAR2(50)                
+  STATE                             CHAR(2)                     
+  POSTALCODE                        VARCHAR2(10)                
+  COUNTRY                           VARCHAR2(50)                
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+
+Indexes
+
+                                                [unique clustered index]
+  ID                                unknown                     
+
+                                            [non-unique clustered index]
+  LASTNAME                          unknown                     
+  FIRSTNAME                         unknown                     
+
+                                            [non-unique clustered index]
+  CITY                              unknown                     
+  "SYS_NC00010$"                    unknown                     
+  POSTALCODE                        unknown                     
+  COUNTRY                           unknown                     
+
+
+
+AUTHORSCOUNTRIES                                                 [table]
+------------------------------------------------------------------------
+  ID                                NUMBER NOT NULL             
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+  COUNTRY                           VARCHAR2(50)                
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                [unique clustered index]
+  ID                                unknown                     
+
+
+
+AUTHORSLIST                                                       [view]
+------------------------------------------------------------------------
+  ID                                NUMBER NOT NULL             
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+
+
+
+BOOKAUTHORS                                                      [table]
+------------------------------------------------------------------------
+  BOOKID                            NUMBER NOT NULL             
+  AUTHORID                          NUMBER NOT NULL             
+  SOMEDATA                          VARCHAR2(30)                
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  AUTHORID (0..many)--> AUTHORS.ID                              
+
+                                       [foreign key, on delete restrict]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+Indexes
+
+                                                [unique clustered index]
+  BOOKID                            unknown                     
+  AUTHORID                          unknown                     
+
+
+
+BOOKS                                                            [table]
+------------------------------------------------------------------------
+  ID                                NUMBER NOT NULL             
+  TITLE                             VARCHAR2(255) NOT NULL      
+  DESCRIPTION                       VARCHAR2(255)               
+  PUBLISHERID                       NUMBER NOT NULL             
+  PUBLICATIONDATE                   DATE                        
+  PRICE                             FLOAT(126, 0)               
+  PREVIOUSEDITIONID                 NUMBER                      
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indexes
+
+                                                [unique clustered index]
+  ID                                unknown                     
+
+                                                [unique clustered index]
+  PREVIOUSEDITIONID                 unknown                     
+
+
+
+"Celebrities"                                                    [table]
+------------------------------------------------------------------------
+  "Id"                              NUMBER NOT NULL             
+  NAME                              VARCHAR2(20)                
+
+Primary Key
+
+                                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  "Id" <--(0..many) "Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+                                                [unique clustered index]
+  "Id"                              unknown                     
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    NUMBER NOT NULL             
+  "UPDATE"                          VARCHAR2(20)                
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  "Celebrity Id" (0..many)--> "Celebrities"."Id"                              
+
+
+
+COUPONS                                                          [table]
+------------------------------------------------------------------------
+  ID                                NUMBER NOT NULL             
+  DATA                              CLOB                        
+  COUPONS                           NUMBER                      
+  BOOKS                             VARCHAR2(20)                
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                [unique clustered index]
+  ID                                unknown                     
+
+
+
+PUBLISHERS                                                       [table]
+------------------------------------------------------------------------
+  ID                                NUMBER NOT NULL             
+  PUBLISHER                         VARCHAR2(255)               
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+
+Indexes
+
+                                                [unique clustered index]
+  ID                                unknown                     
+
+
+
+TEMP_AUTHOR_LIST                                                 [table]
+------------------------------------------------------------------------
+  ID                                NUMBER NOT NULL             
+  FIRSTNAME                         VARCHAR2(20) NOT NULL       
+  LASTNAME                          VARCHAR2(20) NOT NULL       
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                [unique clustered index]
+  ID                                unknown                     
+
+
+
+X_CUSTOMERS                                                      [table]
+------------------------------------------------------------------------
+  SOCIAL_SECURITY_NUMBER            CHAR(9)                     
+  CUSTOMERID                        NUMBER NOT NULL             
+  CUSTOMER_NAME                     VARCHAR2(80)                
+
+
+
+X_EMPLOYEES                                                      [table]
+------------------------------------------------------------------------
+  EMPLOYEEID                        NUMBER NOT NULL             
+  EMPLOYEE_NAME                     VARCHAR2(30)                
+  START_DATE                        DATE                        
+  END_DATE                          DATE                        
+  ANNUAL_SALARY                     NUMBER                      
+  HOURLY_RATE                       NUMBER                      
+                                    generated                   
+  ACTIVE                            CHAR(1)                     
+                                    generated                   
+
+
+
+ΒΙΒΛΊΑ                                                           [table]
+------------------------------------------------------------------------
+  ΜΟΝΑΔΙΚΌΣ                         NUMBER NOT NULL             
+  ΤΊΤΛΟΣ                            VARCHAR2(255) NOT NULL      
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR2(255)               
+  ΕΚΔΌΤΗΣ                           NUMBER NOT NULL             
+
+Primary Key
+
+                                                           [primary key]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+Foreign Keys
+
+                                       [foreign key, on delete restrict]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+
+Indexes
+
+                                                [unique clustered index]
+  ΜΟΝΑΔΙΚΌΣ                         unknown                     
+
+
+
+Routines
+========================================================================
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+Standalone procedure or function
+  NEWPUBLISHER                      VARCHAR2, in                
+  PUBLISHER                         VARCHAR2, out               
+
+
+
+CUSTOMADD                                     [function, result unknown]
+------------------------------------------------------------------------
+Standalone function
+  "<return value>"                  NUMBER, result              
+  ONE                               NUMBER, in                  
+  TWO                               NUMBER, in                  
+

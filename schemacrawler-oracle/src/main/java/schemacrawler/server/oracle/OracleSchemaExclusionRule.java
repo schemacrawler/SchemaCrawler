@@ -30,7 +30,6 @@ package schemacrawler.server.oracle;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.ListExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -100,7 +99,8 @@ public final class OracleSchemaExclusionRule implements InclusionRule {
                   "XDB",
                   "XS$NULL"))
           .and(new RegularExpressionExclusionRule("APEX_[0-9]{6}"))
-          .and(new RegularExpressionExclusionRule("FLOWS_[0-9]{5,6}"));
+          .and(new RegularExpressionExclusionRule("FLOWS_[0-9]{5,6}"))
+          .and(new RegularExpressionExclusionRule("OPS\\$ORACLE"));
 
   /** {@inheritDoc} */
   @Override

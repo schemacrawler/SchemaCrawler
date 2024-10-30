@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.CassandraTestUtility.newCassandraContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -39,11 +40,9 @@ import java.net.InetSocketAddress;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.CassandraContainer;
+import org.testcontainers.cassandra.CassandraContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
-import org.testcontainers.utility.MountableFile;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -61,19 +60,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @Testcontainers
 public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse("cassandra");
-
-  @Container
-  private final CassandraContainer<?> dbContainer =
-      new CassandraContainer<>(imageName.withTag("5"))
-          .withConfigurationOverride("cassandra_config_override")
-          .withCopyFileToContainer(
-              MountableFile.forClasspathResource("cassandra.keystore"),
-              "/security/cassandra.keystore")
-          .withCopyFileToContainer(
-              MountableFile.forClasspathResource("cassandra.truststore"),
-              "/security/cassandra.truststore")
-          .withInitScript("create-cassandra-database.cql");
+  @Container private final CassandraContainer dbContainer = newCassandraContainer();
 
   @BeforeEach
   public void createDatabase() {

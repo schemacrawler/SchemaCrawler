@@ -33,17 +33,69 @@ jobs:
       shell: sh
       run: |
         # Generate diff in HTML
-        pwd
-        mkdir --verbose diffs/
+        #
+        mkdir --verbose diff-output/
+        #
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
-          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \        
-          ./diffs/oracle.html
+          schemacrawler-sqlserver/src/test/resources/testSQLServerPortable.txt \
+          ./diff-output/oracle-sqlserver.html \
+          "Oracle - SQL Server"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-mysql/src/test/resources/testMySQLPortable.txt \
+          ./diff-output/oracle-mysql.html \
+          "Oracle - MySQL"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-db2/src/test/resources/testDB2Portable.txt \
+          ./diff-output/oracle-db2.html \
+          "Oracle - IBM DB2"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-postgresql/src/test/resources/testDB2Portable.txt \
+          ./diff-output/oracle-postgresql.html \
+          "Oracle - PostgreSQL"
+        #
+        #
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-oracle/src/test/resources/testOracleWithConnection.8.txt \
+          ./diff-output/oracle-portable-standard.html \
+          "Oracle - Portable versus Standard"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-sqlserver/src/test/resources/testSQLServerPortable.txt \
+          schemacrawler-sqlserver/src/test/resources/testSQLServerWithConnection.8.txt \
+          ./diff-output/sqlserver-portable-standard.html \
+          "SQL Server - Portable versus Standard"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-mysql/src/test/resources/testMySQLPortable.txt \
+          schemacrawler-mysql/src/test/resources/testMySQLWithConnection.8.txt \
+          ./diff-output/mysql-portable-standard.html \
+          "MySQL - Portable versus Standard"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-db2/src/test/resources/testDB2Portable.txt \
+          schemacrawler-db2/src/test/resources/testDB2WithConnection.8.txt \
+          ./diff-output/db2-portable-standard.html \
+          "IBM DB2 - Portable versus Standard"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-postgresql/src/test/resources/testPostgreSQLPortable.txt \
+          schemacrawler-postgresql/src/test/resources/testPostgreSQLWithConnection.8.txt \
+          ./diff-output/postgresql-portable-standard.html \
+          "PostgreSQL - Portable versus Standard"
 
-    - id: upload-diffs
-      name: Upload diffs
+    - id: upload-diff-output
+      name: Upload diff-output
       uses: actions/upload-artifact@v4
       with:
-        name: diffs
-        path: ./diffs/
+        name: diff-output
+        path: ./diff-output/
         retention-days: 5

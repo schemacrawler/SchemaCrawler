@@ -117,9 +117,9 @@ schema_a_b.a_b_view1                                              [view]
 
 Definition
                                                             [definition]
-SELECT a_a_table2.id,
-    a_a_table2.name,
-    a_a_table2.fk_col_to_a_a
+SELECT id,
+    name,
+    fk_col_to_a_a
    FROM schema_a_a.a_a_table2;
 
 Table Usage
