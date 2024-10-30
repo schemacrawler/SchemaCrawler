@@ -1,0 +1,40 @@
+name: "CodeQL Analysis"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.java'   
+  schedule:
+    - cron: '15 0 15 * *'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+    - id: checkout-repo
+      name: Checkout repository
+      uses: actions/checkout@v4
+
+    - id: init-codeql
+      name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: java
+        config-file: .github/codeql/codeql-config.yml
+
+    - id: perform-codeql-analysis
+      name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+
+    - id: upload-codeql-results
+      name: Upload CodeQL results
+      uses: actions/upload-artifact@v4
+      with:
+        name: codeql-results
+        path: ./codeql-results
+        retention-days: 5

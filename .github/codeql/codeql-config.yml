@@ -1,0 +1,17 @@
+name: "SchemaCrawler CodeQL Configuration"
+version: "1.0.0"
+
+queries:
+  - name: "java-code"
+    uses: codeql/java-queries@latest
+    include:
+      - "java"
+    exclude:
+      - "test/**"
+query-filters:
+- exclude:
+    problem.severity:
+      - warning
+      - recommendation
+paths:
+  - "**/src/main/*"
