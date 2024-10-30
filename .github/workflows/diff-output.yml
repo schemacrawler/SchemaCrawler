@@ -56,7 +56,7 @@ jobs:
         #
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
-          schemacrawler-postgresql/src/test/resources/testDB2Portable.txt \
+          schemacrawler-postgresql/src/test/resources/testPostgreSQLPortable.txt \
           ./diff-output/oracle-postgresql.html \
           "Oracle - PostgreSQL"
         #

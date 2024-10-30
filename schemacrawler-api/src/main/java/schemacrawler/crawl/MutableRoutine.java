@@ -28,10 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.List;
-
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Routine;
@@ -79,14 +77,13 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     if (obj instanceof Routine) {
       final Routine other = (Routine) obj;
       if (comparison == 0) {
+        comparison = getSpecificName().compareTo(other.getSpecificName());
+      }
+      if (comparison == 0) {
         final List<RoutineParameter<? extends Routine>> thisParameters = getParameters();
         final List<RoutineParameter<? extends Routine>> otherParameters = other.getParameters();
 
         comparison = CompareUtility.compareLists(thisParameters, otherParameters);
-      }
-
-      if (comparison == 0) {
-        comparison = this.getSpecificName().compareTo(other.getSpecificName());
       }
     }
 
@@ -114,9 +111,8 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   public final String getSpecificName() {
     if (isBlank(specificName)) {
       return getName();
-    } else {
-      return specificName;
     }
+    return specificName;
   }
 
   /** {@inheritDoc} */
@@ -150,6 +146,6 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     if (key != null) {
       return;
     }
-    this.key = super.key().with(specificName);
+    key = super.key().with(specificName);
   }
 }
