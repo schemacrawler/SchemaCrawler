@@ -39,26 +39,26 @@ jobs:
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-sqlserver/src/test/resources/testSQLServerPortable.txt \
-          ./diff-output/oracle-sqlserver.html \
-          "Oracle - SQL Server"
+          ./diff-output/compare-oracle-sqlserver.html \
+          "Compare Oracle - SQL Server"
         #
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-mysql/src/test/resources/testMySQLPortable.txt \
-          ./diff-output/oracle-mysql.html \
-          "Oracle - MySQL"
+          ./diff-output/compare-oracle-mysql.html \
+          "Compare Oracle - MySQL"
         #
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-db2/src/test/resources/testDB2Portable.txt \
-          ./diff-output/oracle-db2.html \
-          "Oracle - IBM DB2"
+          ./diff-output/compare-oracle-db2.html \
+          "Compare Oracle - IBM DB2"
         #
         ./.github/scripts/diff-output.sh \
           schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
           schemacrawler-postgresql/src/test/resources/testPostgreSQLPortable.txt \
-          ./diff-output/oracle-postgresql.html \
-          "Oracle - PostgreSQL"
+          ./diff-output/compare-oracle-postgresql.html \
+          "Compare Oracle - PostgreSQL"
         #
         #
         #
