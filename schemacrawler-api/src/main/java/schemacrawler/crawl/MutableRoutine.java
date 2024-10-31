@@ -77,13 +77,14 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     if (obj instanceof Routine) {
       final Routine other = (Routine) obj;
       if (comparison == 0) {
-        comparison = getSpecificName().compareTo(other.getSpecificName());
-      }
-      if (comparison == 0) {
         final List<RoutineParameter<? extends Routine>> thisParameters = getParameters();
         final List<RoutineParameter<? extends Routine>> otherParameters = other.getParameters();
 
         comparison = CompareUtility.compareLists(thisParameters, otherParameters);
+      }
+
+      if (comparison == 0) {
+        comparison = getSpecificName().compareTo(other.getSpecificName());
       }
     }
 
