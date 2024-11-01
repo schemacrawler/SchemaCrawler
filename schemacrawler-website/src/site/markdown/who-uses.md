@@ -89,6 +89,5 @@ SchemaCrawler in the press, and in online articles and blogs.
 - [Adrien Sales](https://www.linkedin.com/in/adrien-sales)' presentation, [database continuous deployment and development](https://dsi-ville-noumea.github.io/presentation-continuous-database/)
 - Tobias Weis' blog, [Short: Schema diagram from an existing sqlite database](http://www.tobias-weis.de/short-schema-diagram-from-an-existing-sqlite-database/)
 - Joost Hietbrink's article [Create a database ERD in your CI/CD pipeline](https://www.webuildinternet.com/2018/01/21/create_database_erd_in_your_ci_cd_pipeline/)
-- Knut Behrends's [Soccer-Database: Generating schema diagrams](https://kbehrends.netlify.com/post/2017/12/soccerdb-schema-diagrams/)
 - [What is SchemaCrawler and Why would you need it? | by Kulasangar Gowrisangar | Geek Culture | Jul, 2021 | Medium](https://medium.com/geekculture/what-is-schemacrawler-and-why-would-you-need-it-b9c496054533)
 
