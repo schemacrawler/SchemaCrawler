@@ -18,8 +18,10 @@ import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.server.postgresql.PostgreSQLEnumDataTypeHelper;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.TestUtility;
 
+@DisableLogging
 public class PostgreSQLEnumDataTypeHelperTest {
 
   @Test
