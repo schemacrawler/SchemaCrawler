@@ -4,7 +4,7 @@
 
 ### Pre-requisites for Installation
 
-- Install the latest version of [Java](https://www.java.com/en/)
+- Install the latest version of [Java](https://www.oracle.com/java/technologies/)
 - Optionally, install [Graphviz] if you want to create schema diagrams
 - Optionally, install [Apache ant] and [Apache Maven] if you want to try out the examples
 
