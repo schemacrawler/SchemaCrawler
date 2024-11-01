@@ -55,7 +55,7 @@ You can create the  SchemaCrawler distribution by running `mvn -Ddistrib package
 ## Eclipse and IntelliJ IDEA
 Before importing the various SchemaCrawler projects into [Eclipse] or [IntelliJ IDEA], make sure that you have a successful [Apache Maven] build. [Apache Maven] will download all the dependencies needed to build SchemaCrawler.
 
-[Java]: https://www.java.com/
+[Java]: https://www.java.com/en/
 [Eclipse]: https://www.eclipse.org/downloads/eclipse-packages/
 [IntelliJ IDEA]: https://www.jetbrains.com/idea/download/
 [SchemaCrawler jars]: https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name
