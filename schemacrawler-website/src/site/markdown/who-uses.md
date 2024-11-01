@@ -48,8 +48,6 @@ The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-sch
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler is awesome for working with a db&#39;s metadata</p>&mdash; Stig KleppeJørgensen (@stigkj) <a href="https://twitter.com/stigkj/status/70973992479109121?ref_src=twsrc%5Etfw">May 18, 2011</a></blockquote>
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler is an excelent tool to explore a database schema. It&#39;s a layer on top of JDBC: https://bit.ly/aVqIVZ. Give it a try.</p>&mdash; William Chinelato (@willchinelato) <a href="https://twitter.com/willchinelato/status/12117092941?ref_src=twsrc%5Etfw">April 13, 2010</a></blockquote>
-
 > Architect at Nestlé Nespresso SA:
 "I run a daily cron to export the content (metadata and data) of a
 schema, and I compare it to another reference schema to check which

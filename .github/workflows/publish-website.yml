@@ -50,7 +50,7 @@ jobs:
       with:
         args: >
           --verbose
-          --accept 200,999
+          --accept 200,999,429
           --no-progress
           --base .
           --exclude '.*purl.org/.*'
