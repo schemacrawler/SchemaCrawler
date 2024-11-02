@@ -11,8 +11,6 @@ any browser with no software or plugins needed.
 
 To read more about SchemaCrawler, you can read:
 
-- Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](https://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)
-- Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](https://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
 - The SchemaCrawler API [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/) .
 - Download the [SchemaCrawler
   examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/)

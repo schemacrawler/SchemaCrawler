@@ -4,7 +4,7 @@
 
 ### Pre-requisites for Installation
 
-- Install the latest version of [Java](https://www.java.com/)
+- Install the latest version of [Java](https://www.oracle.com/java/technologies/)
 - Optionally, install [Graphviz] if you want to create schema diagrams
 - Optionally, install [Apache ant] and [Apache Maven] if you want to try out the examples
 
@@ -15,7 +15,7 @@ distribution with examples] zip file, and unzip it into a directory. You will ha
 distribution in a directory called `_schemacrawler`. There are detailed instructions with the download.
 
 You can extend the SchemaCrawler distribution by downloading additional libraries that SchemaCrawler
-integrates with, such as the pure Java Graphviz library, [Spring Framework](https://www.springsource.org/spring-framework), [Groovy], [Ruby], [Python] and so
+integrates with, such as the pure Java Graphviz library, [Spring Framework](https://spring.io/projects/spring-framework), [Groovy], [Ruby], [Python] and so
 on. You can also download additional JDBC drivers, and have SchemaCrawler pick them up automatically.
 Once you are happy with the customization of your installation, you can copy the `_schemacrawler`
 folder to any location on your system, and use it from there.

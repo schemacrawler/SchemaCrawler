@@ -29,7 +29,7 @@ The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-sch
 - [Goldman Sachs Obevo](https://github.com/goldmansachs/obevo) project, a database deployment tool
   that handles enterprise-scale schemas
 - [SQLDelight from Square, Inc.](https://github.com/cashapp/sqldelight) uses SchemaCrawler internally
-- [Streamliner from phData, Inc.](https://docs.customer.phdata.io/docs/streamliner/) uses SchemaCrawler internally
+- [Streamliner from phData, Inc.](https://www.phdata.io/case-studies/prominent-professional-services-company-migrates-from-hadoop-to-snowflake/) uses SchemaCrawler internally
 - [Atlassian JIRA database schema](https://developer.atlassian.com/server/jira/platform/database-schema/)
 - [RedG test data generation library](https://btc-ag.github.io/redg/)
 - [Data Platform at Zoomcar](https://medium.com/@shanker.sneh/https-medium-com-shanker-sneh-data-platform-at-zoomcar-a-narrative-part-i-f2455e3e2ae5)
@@ -46,11 +46,7 @@ The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-sch
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">use <a href="https://t.co/JFm542dT">https://t.co/JFm542dT</a> for easy working with database metadata &amp; generation of your own code artifacts</p>&mdash; Marek Tomáš (@marektomas) <a href="https://twitter.com/marektomas/status/240462380365119489?ref_src=twsrc%5Etfw">August 28, 2012</a></blockquote>
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Thanks SchemaCrawler! (database schema discovery and comprehension, and schema documentation tool) <a href="https://t.co/8lV6pIB2">https://t.co/8lV6pIB2</a></p>&mdash; Claudio Bastos Iorio (@selecters75) <a href="https://twitter.com/selecters75/status/218357126823817218?ref_src=twsrc%5Etfw">June 28, 2012</a></blockquote>
-
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler is awesome for working with a db&#39;s metadata</p>&mdash; Stig KleppeJørgensen (@stigkj) <a href="https://twitter.com/stigkj/status/70973992479109121?ref_src=twsrc%5Etfw">May 18, 2011</a></blockquote>
-
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler is an excelent tool to explore a database schema. It&#39;s a layer on top of JDBC: https://bit.ly/aVqIVZ. Give it a try.</p>&mdash; William Chinelato (@willchinelato) <a href="https://twitter.com/willchinelato/status/12117092941?ref_src=twsrc%5Etfw">April 13, 2010</a></blockquote>
 
 > Architect at Nestlé Nespresso SA:
 "I run a daily cron to export the content (metadata and data) of a
@@ -86,13 +82,10 @@ SchemaCrawler in the press, and in online articles and blogs.
 - Java Mon Amour's post on [SchemaCrawler for Oracle DB diff](https://www.javamonamour.org/2013/06/schemacrawler-for-oracle-db-diff.html)
 - Pierluigi Vernetto's post [SchemaCrawler for Oracle DB Diff](https://www.javamonamour.org/2013/06/schemacrawler-for-oracle-db-diff.html)
 - Mike Zhukovskiy's exploration of ERD tools, [Twitter ERD](https://rubyrailsmz.blogspot.com/2014/08/blog-post.html)
-- Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](https://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)
-- Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](https://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
 - Stefan Pröll's blog post, [Create an ER Diagram of an Existing SQLite Database (or many other RDBMS)](https://www.stefanproell.at/2016/01/11/create-an-er-diagram-of-an-existing-sqlite-database-or-manyoother-rdbms/)
 - Allison Tharp's blog post, [Using SchemaCrawler to Generate a SQLite DB Graph](https://www.techtrek.io/using-schemacrawler-to-generate-a-sqlite-db-graph/)
 - [Adrien Sales](https://www.linkedin.com/in/adrien-sales)' presentation, [database continuous deployment and development](https://dsi-ville-noumea.github.io/presentation-continuous-database/)
 - Tobias Weis' blog, [Short: Schema diagram from an existing sqlite database](http://www.tobias-weis.de/short-schema-diagram-from-an-existing-sqlite-database/)
 - Joost Hietbrink's article [Create a database ERD in your CI/CD pipeline](https://www.webuildinternet.com/2018/01/21/create_database_erd_in_your_ci_cd_pipeline/)
-- Knut Behrends's [Soccer-Database: Generating schema diagrams](https://kbehrends.netlify.com/post/2017/12/soccerdb-schema-diagrams/)
 - [What is SchemaCrawler and Why would you need it? | by Kulasangar Gowrisangar | Geek Culture | Jul, 2021 | Medium](https://medium.com/geekculture/what-is-schemacrawler-and-why-would-you-need-it-b9c496054533)
 

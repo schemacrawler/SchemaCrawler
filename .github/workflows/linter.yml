@@ -5,11 +5,11 @@ on:
   schedule:
     - cron: '5 4 2,16 * *'
 
+permissions: read-all
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-
-permissions: read-all
 
 jobs:
   build:
