@@ -1,0 +1,64 @@
+name: Check Website Links
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '5 4 2,16 * *'
+
+permissions: read-all
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Check Website Links
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.4.0
+      with:
+        java-version: 8
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.3
+
+# BUILD FOR DISTRIBUTION
+    - id: build
+      name: Build and test for distribution
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          clean install
+
+# CHECK WEBSITE LINKS
+    - id: check-links
+      name: Check website links
+      uses: lycheeverse/lychee-action@v2.0.2
+      with:
+        args: >
+          --verbose
+          --accept 200,999
+          --no-progress
+          --base .
+          --exclude '.*purl.org/.*'
+          --exclude '.*.vimeo.com/.*'
+          './schemacrawler-website/target/_website/**/*.html'
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - id: upload-link-check-report
+      name: Upload website link check report
+      uses: actions/upload-artifact@v4
+      with:
+        path: ./lychee/out.md
+        name: website-link-check-report.md
+        retention-days: 15
