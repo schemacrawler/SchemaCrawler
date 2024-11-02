@@ -50,10 +50,11 @@ jobs:
       with:
         args: >
           --verbose
-          --accept 200,999,429
+          --accept 200,999
           --no-progress
           --base .
           --exclude '.*purl.org/.*'
+          --exclude '.*.vimeo.com/.*'
           './schemacrawler-website/target/_website/**/*.html'
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
