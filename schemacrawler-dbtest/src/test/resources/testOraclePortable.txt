@@ -7,15 +7,15 @@ Tables
 
 AUTHORS                                                          [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER NOT NULL             
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
-  ADDRESS1                          VARCHAR2(255)               
-  ADDRESS2                          VARCHAR2(255)               
-  CITY                              VARCHAR2(50)                
+  ID                                BIT NOT NULL                
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
   STATE                             CHAR(2)                     
-  POSTALCODE                        VARCHAR2(10)                
-  COUNTRY                           VARCHAR2(50)                
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
 
 Primary Key
 
@@ -46,10 +46,10 @@ Indexes
 
 AUTHORSCOUNTRIES                                                 [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER NOT NULL             
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
-  COUNTRY                           VARCHAR2(50)                
+  ID                                BIT NOT NULL                
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  COUNTRY                           VARCHAR(50)                 
 
 Primary Key
 
@@ -65,17 +65,17 @@ Indexes
 
 AUTHORSLIST                                                       [view]
 ------------------------------------------------------------------------
-  ID                                NUMBER NOT NULL             
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
+  ID                                BIT NOT NULL                
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
 
 
 
 BOOKAUTHORS                                                      [table]
 ------------------------------------------------------------------------
-  BOOKID                            NUMBER NOT NULL             
-  AUTHORID                          NUMBER NOT NULL             
-  SOMEDATA                          VARCHAR2(30)                
+  BOOKID                            BIT NOT NULL                
+  AUTHORID                          BIT NOT NULL                
+  SOMEDATA                          VARCHAR(30)                 
 
 Foreign Keys
 
@@ -95,13 +95,13 @@ Indexes
 
 BOOKS                                                            [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER NOT NULL             
-  TITLE                             VARCHAR2(255) NOT NULL      
-  DESCRIPTION                       VARCHAR2(255)               
-  PUBLISHERID                       NUMBER NOT NULL             
-  PUBLICATIONDATE                   DATE                        
+  ID                                BIT NOT NULL                
+  TITLE                             VARCHAR(255) NOT NULL       
+  DESCRIPTION                       VARCHAR(255)                
+  PUBLISHERID                       BIT NOT NULL                
+  PUBLICATIONDATE                   TIME                        
   PRICE                             FLOAT(126, 0)               
-  PREVIOUSEDITIONID                 NUMBER                      
+  PREVIOUSEDITIONID                 BIT                         
 
 Primary Key
 
@@ -128,8 +128,8 @@ Indexes
 
 "Celebrities"                                                    [table]
 ------------------------------------------------------------------------
-  "Id"                              NUMBER NOT NULL             
-  NAME                              VARCHAR2(20)                
+  "Id"                              BIT NOT NULL                
+  NAME                              VARCHAR(20)                 
 
 Primary Key
 
@@ -150,8 +150,8 @@ Indexes
 
 "Celebrity Updates"                                              [table]
 ------------------------------------------------------------------------
-  "Celebrity Id"                    NUMBER NOT NULL             
-  "UPDATE"                          VARCHAR2(20)                
+  "Celebrity Id"                    BIT NOT NULL                
+  "UPDATE"                          VARCHAR(20)                 
 
 Primary Key
 
@@ -167,10 +167,10 @@ Foreign Keys
 
 COUPONS                                                          [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER NOT NULL             
+  ID                                BIT NOT NULL                
   DATA                              CLOB                        
-  COUPONS                           NUMBER                      
-  BOOKS                             VARCHAR2(20)                
+  COUPONS                           BIT                         
+  BOOKS                             VARCHAR(20)                 
 
 Primary Key
 
@@ -186,8 +186,8 @@ Indexes
 
 PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER NOT NULL             
-  PUBLISHER                         VARCHAR2(255)               
+  ID                                BIT NOT NULL                
+  PUBLISHER                         VARCHAR(255)                
 
 Primary Key
 
@@ -208,9 +208,9 @@ Indexes
 
 TEMP_AUTHOR_LIST                                                 [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER NOT NULL             
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
+  ID                                BIT NOT NULL                
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
 
 Primary Key
 
@@ -227,19 +227,19 @@ Indexes
 X_CUSTOMERS                                                      [table]
 ------------------------------------------------------------------------
   SOCIAL_SECURITY_NUMBER            CHAR(9)                     
-  CUSTOMERID                        NUMBER NOT NULL             
-  CUSTOMER_NAME                     VARCHAR2(80)                
+  CUSTOMERID                        BIT NOT NULL                
+  CUSTOMER_NAME                     VARCHAR(80)                 
 
 
 
 X_EMPLOYEES                                                      [table]
 ------------------------------------------------------------------------
-  EMPLOYEEID                        NUMBER NOT NULL             
-  EMPLOYEE_NAME                     VARCHAR2(30)                
-  START_DATE                        DATE                        
-  END_DATE                          DATE                        
-  ANNUAL_SALARY                     NUMBER                      
-  HOURLY_RATE                       NUMBER                      
+  EMPLOYEEID                        BIT NOT NULL                
+  EMPLOYEE_NAME                     VARCHAR(30)                 
+  START_DATE                        TIME                        
+  END_DATE                          TIME                        
+  ANNUAL_SALARY                     BIT                         
+  HOURLY_RATE                       BIT                         
                                     generated                   
   ACTIVE                            CHAR(1)                     
                                     generated                   
@@ -248,10 +248,10 @@ X_EMPLOYEES                                                      [table]
 
 ΒΙΒΛΊΑ                                                           [table]
 ------------------------------------------------------------------------
-  ΜΟΝΑΔΙΚΌΣ                         NUMBER NOT NULL             
-  ΤΊΤΛΟΣ                            VARCHAR2(255) NOT NULL      
-  ΠΕΡΙΓΡΑΦΉ                         VARCHAR2(255)               
-  ΕΚΔΌΤΗΣ                           NUMBER NOT NULL             
+  ΜΟΝΑΔΙΚΌΣ                         BIT NOT NULL                
+  ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  ΕΚΔΌΤΗΣ                           BIT NOT NULL                
 
 Primary Key
 
@@ -278,15 +278,15 @@ Routines
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
 Standalone procedure or function
-  NEWPUBLISHER                      VARCHAR2, in                
-  PUBLISHER                         VARCHAR2, out               
+  NEWPUBLISHER                      VARCHAR, in                 
+  PUBLISHER                         VARCHAR, out                
 
 
 
 CUSTOMADD                                     [function, result unknown]
 ------------------------------------------------------------------------
 Standalone function
-  "<return value>"                  NUMBER, result              
-  ONE                               NUMBER, in                  
-  TWO                               NUMBER, in                  
+  "<return value>"                  BIT, result                 
+  ONE                               BIT, in                     
+  TWO                               BIT, in                     
 

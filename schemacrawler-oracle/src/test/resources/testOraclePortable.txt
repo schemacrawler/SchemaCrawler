@@ -8,15 +8,15 @@ Tables
 AUTHORS                                                          [table]
 ------------------------------------------------------------------------
 Contact details for book authors
-  ID                                NUMBER(38, 0) NOT NULL      
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
-  ADDRESS1                          VARCHAR2(255)               
-  ADDRESS2                          VARCHAR2(255)               
-  CITY                              VARCHAR2(50)                
+  ID                                NUMERIC(38, 0) NOT NULL     
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
   STATE                             CHAR(2)                     
-  POSTALCODE                        VARCHAR2(10)                
-  COUNTRY                           VARCHAR2(50)                
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
 
 Primary Key
 
@@ -73,10 +73,10 @@ Table Constraints
 AUTHORSCOUNTRIES                                     [materialized view]
 ------------------------------------------------------------------------
 snapshot table for snapshot BOOKS.AUTHORSCOUNTRIES
-  ID                                NUMBER(38, 0) NOT NULL      
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
-  COUNTRY                           VARCHAR2(50)                
+  ID                                NUMERIC(38, 0) NOT NULL     
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  COUNTRY                           VARCHAR(50)                 
 
 Primary Key
 
@@ -103,9 +103,9 @@ Table Constraints
 
 AUTHORSLIST                                                       [view]
 ------------------------------------------------------------------------
-  ID                                NUMBER(38, 0) NOT NULL      
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
+  ID                                NUMERIC(38, 0) NOT NULL     
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
 
 
 
@@ -113,9 +113,9 @@ BOOKAUTHORS                                                      [table]
 ------------------------------------------------------------------------
 Relationship between books and their authors, 
 along with the latest updated information
-  BOOKID                            NUMBER(38, 0) NOT NULL      
-  AUTHORID                          NUMBER(38, 0) NOT NULL      
-  SOMEDATA                          VARCHAR2(30)                
+  BOOKID                            NUMERIC(38, 0) NOT NULL     
+  AUTHORID                          NUMERIC(38, 0) NOT NULL     
+  SOMEDATA                          VARCHAR(30)                 
 
 Foreign Keys
 
@@ -144,20 +144,20 @@ Table Constraints
 BOOKS                                                            [table]
 ------------------------------------------------------------------------
 Details for published books
-  ID                                NUMBER(38, 0) NOT NULL      
+  ID                                NUMERIC(38, 0) NOT NULL     
                                     Unique (internal) id for book
-  TITLE                             VARCHAR2(255) NOT NULL      
+  TITLE                             VARCHAR(255) NOT NULL       
                                     Book title                  
-  DESCRIPTION                       VARCHAR2(255)               
+  DESCRIPTION                       VARCHAR(255)                
                                     Book description
 (Usually the blurb from the book jacket or promotional materials)
-  PUBLISHERID                       NUMBER(38, 0) NOT NULL      
+  PUBLISHERID                       NUMERIC(38, 0) NOT NULL     
                                     Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
                                     Book publication date       
   PRICE                             FLOAT(126, 0)               
                                     Current price for the book  
-  PREVIOUSEDITIONID                 NUMBER(38, 0)               
+  PREVIOUSEDITIONID                 NUMERIC(38, 0)              
 
 Primary Key
 
@@ -198,8 +198,8 @@ Table Constraints
 
 "Celebrities"                                                    [table]
 ------------------------------------------------------------------------
-  "Id"                              NUMBER(38, 0) NOT NULL      
-  NAME                              VARCHAR2(20)                
+  "Id"                              NUMERIC(38, 0) NOT NULL     
+  NAME                              VARCHAR(20)                 
 
 Primary Key
 
@@ -225,8 +225,8 @@ Table Constraints
 
 "Celebrity Updates"                                              [table]
 ------------------------------------------------------------------------
-  "Celebrity Id"                    NUMBER(38, 0) NOT NULL      
-  "UPDATE"                          VARCHAR2(20)                
+  "Celebrity Id"                    NUMERIC(38, 0) NOT NULL     
+  "UPDATE"                          VARCHAR(20)                 
 
 Primary Key
 
@@ -252,10 +252,10 @@ Table Constraints
 
 COUPONS                                                          [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER(38, 0) NOT NULL      
+  ID                                NUMERIC(38, 0) NOT NULL     
   DATA                              CLOB                        
-  COUPONS                           NUMBER(38, 0)               
-  BOOKS                             VARCHAR2(20)                
+  COUPONS                           NUMERIC(38, 0)              
+  BOOKS                             VARCHAR(20)                 
 
 Primary Key
 
@@ -277,10 +277,10 @@ Table Constraints
 PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
 List of book publishers
-  ID                                NUMBER(38, 0) NOT NULL      
+  ID                                NUMERIC(38, 0) NOT NULL     
                                     auto-incremented            
                                     Unique (internal) id for book publisher
-  PUBLISHER                         VARCHAR2(255)               
+  PUBLISHER                         VARCHAR(255)                
                                     Name of book publisher      
 
 Primary Key
@@ -307,9 +307,9 @@ Table Constraints
 
 TEMP_AUTHOR_LIST                                                 [table]
 ------------------------------------------------------------------------
-  ID                                NUMBER(38, 0) NOT NULL      
-  FIRSTNAME                         VARCHAR2(20) NOT NULL       
-  LASTNAME                          VARCHAR2(20) NOT NULL       
+  ID                                NUMERIC(38, 0) NOT NULL     
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
 
 Primary Key
 
@@ -336,8 +336,8 @@ Table Constraints
 
 X_CUSTOMERS                                                      [table]
 ------------------------------------------------------------------------
-  CUSTOMERID                        NUMBER(38, 0) NOT NULL      
-  CUSTOMER_NAME                     VARCHAR2(80)                
+  CUSTOMERID                        NUMERIC(38, 0) NOT NULL     
+  CUSTOMER_NAME                     VARCHAR(80)                 
 
 Table Constraints
 
@@ -348,12 +348,12 @@ Table Constraints
 
 X_EMPLOYEES                                                      [table]
 ------------------------------------------------------------------------
-  EMPLOYEEID                        NUMBER(38, 0) NOT NULL      
-  EMPLOYEE_NAME                     VARCHAR2(30)                
+  EMPLOYEEID                        NUMERIC(38, 0) NOT NULL     
+  EMPLOYEE_NAME                     VARCHAR(30)                 
   START_DATE                        DATE                        
   END_DATE                          DATE                        
-  ANNUAL_SALARY                     NUMBER(38, 0)               
-  HOURLY_RATE                       NUMBER                      
+  ANNUAL_SALARY                     NUMERIC(38, 0)              
+  HOURLY_RATE                       NUMERIC                     
                                     generated                   
   ACTIVE                            CHAR(1)                     
                                     generated                   
@@ -367,10 +367,10 @@ Table Constraints
 
 ΒΙΒΛΊΑ                                                           [table]
 ------------------------------------------------------------------------
-  ΜΟΝΑΔΙΚΌΣ                         NUMBER(38, 0) NOT NULL      
-  ΤΊΤΛΟΣ                            VARCHAR2(255) NOT NULL      
-  ΠΕΡΙΓΡΑΦΉ                         VARCHAR2(255)               
-  ΕΚΔΌΤΗΣ                           NUMBER(38, 0) NOT NULL      
+  ΜΟΝΑΔΙΚΌΣ                         NUMERIC(38, 0) NOT NULL     
+  ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  ΕΚΔΌΤΗΣ                           NUMERIC(38, 0) NOT NULL     
 
 Primary Key
 
@@ -407,15 +407,15 @@ Routines
 
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-  NEWPUBLISHER                      VARCHAR2, in                
-  PUBLISHER                         VARCHAR2, out               
+  NEWPUBLISHER                      VARCHAR, in                 
+  PUBLISHER                         VARCHAR, out                
 
 
 
 CUSTOMADD                            [function, does not return a table]
 ------------------------------------------------------------------------
-  ONE                               NUMBER(22, 38), in          
-  TWO                               NUMBER(22, 38), in          
+  ONE                               NUMERIC(22, 38), in         
+  TWO                               NUMERIC(22, 38), in         
 
 
 
@@ -424,7 +424,7 @@ Sequences
 
 
 
-"ISEQ$$_71828"                                                [sequence]
+"ISEQ$$_71735"                                                [sequence]
 ------------------------------------------------------------------------
   increment                         1                           
   start value                                                   

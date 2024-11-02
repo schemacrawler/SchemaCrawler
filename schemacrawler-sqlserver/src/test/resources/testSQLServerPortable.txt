@@ -8,15 +8,15 @@ Tables
 Authors                                                          [table]
 ------------------------------------------------------------------------
 Contact details for book authors
-  Id                                int not null                
-  FirstName                         varchar(20) not null        
-  LastName                          varchar(20) not null        
-  Address1                          varchar(255)                
-  Address2                          varchar(255)                
-  City                              varchar(50)                 
-  State                             char(2)                     
-  PostalCode                        varchar(10)                 
-  Country                           varchar(50)                 
+  Id                                INTEGER NOT NULL            
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
+  Address1                          VARCHAR(255)                
+  Address2                          VARCHAR(255)                
+  City                              VARCHAR(50)                 
+  State                             CHAR(2)                     
+  PostalCode                        VARCHAR(10)                 
+  Country                           VARCHAR(50)                 
 
 Primary Key
 
@@ -67,10 +67,10 @@ Table Constraints
 
 AuthorsCountries                                                  [view]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  FirstName                         varchar(20) not null        
-  LastName                          varchar(20) not null        
-  Country                           varchar(50)                 
+  Id                                INTEGER NOT NULL            
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
+  Country                           VARCHAR(50)                 
 
 Indexes
 
@@ -82,9 +82,9 @@ Indexes
 
 AuthorsList                                                       [view]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  FirstName                         varchar(20) not null        
-  LastName                          varchar(20) not null        
+  Id                                INTEGER NOT NULL            
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
 
 
 
@@ -92,9 +92,9 @@ BookAuthors                                                      [table]
 ------------------------------------------------------------------------
 Relationship between books and their authors, 
 along with the latest updated information
-  BookId                            int not null                
-  AuthorId                          int not null                
-  SomeData                          varchar(30)                 
+  BookId                            INTEGER NOT NULL            
+  AuthorId                          INTEGER NOT NULL            
+  SomeData                          VARCHAR(30)                 
 
 Foreign Keys
 
@@ -115,20 +115,20 @@ Indexes
 Books                                                            [table]
 ------------------------------------------------------------------------
 Details for published books
-  Id                                int not null                
+  Id                                INTEGER NOT NULL            
                                     Unique (internal) id for book
-  Title                             varchar(255) not null       
+  Title                             VARCHAR(255) NOT NULL       
                                     Book title                  
-  Description                       varchar(255)                
+  Description                       VARCHAR(255)                
                                     Book description
 (Usually the blurb from the book jacket or promotional materials)
-  PublisherId                       int not null                
+  PublisherId                       INTEGER NOT NULL            
                                     Foreign key to the book publisher
-  PublicationDate                   date                        
+  PublicationDate                   DATE                        
                                     Book publication date       
-  Price                             float(53, 0)                
+  Price                             DOUBLE(53, 0)               
                                     Current price for the book  
-  PreviousEditionId                 int                         
+  PreviousEditionId                 INTEGER                     
 
 Primary Key
 
@@ -160,8 +160,8 @@ Table Constraints
 
 Celebrities                                                      [table]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  Name                              varchar(20)                 
+  Id                                INTEGER NOT NULL            
+  Name                              VARCHAR(20)                 
 
 Primary Key
 
@@ -182,8 +182,8 @@ Indexes
 
 "Celebrity Updates"                                              [table]
 ------------------------------------------------------------------------
-  "Celebrity Id"                    int not null                
-  "UPDATE"                          varchar(20)                 
+  "Celebrity Id"                    INTEGER NOT NULL            
+  "UPDATE"                          VARCHAR(20)                 
 
 Primary Key
 
@@ -204,10 +204,10 @@ Indexes
 
 Customers                                                        [table]
 ------------------------------------------------------------------------
-  Id                                int not null                
-  FirstName                         NAME_TYPE(100) NOT NULL     
-  LastName                          NAME_TYPE(100) NOT NULL     
-  Age                               AGE_TYPE                    
+  Id                                INTEGER NOT NULL            
+  FirstName                         VARCHAR(100) NOT NULL       
+  LastName                          VARCHAR(100) NOT NULL       
+  Age                               SMALLINT                    
 
 Primary Key
 
@@ -224,10 +224,10 @@ Indexes
 Publishers                                                       [table]
 ------------------------------------------------------------------------
 List of book publishers
-  Id                                int identity not null       
+  Id                                INTEGER NOT NULL            
                                     auto-incremented            
                                     Unique (internal) id for book publisher
-  Publisher                         varchar(255)                
+  Publisher                         VARCHAR(255)                
                                     Name of book publisher      
 
 Primary Key
@@ -249,24 +249,24 @@ Indexes
 
 X_EMPLOYEES                                                      [table]
 ------------------------------------------------------------------------
-  EMPLOYEEID                        int not null                
-  EMPLOYEE_NAME                     varchar(30)                 
-  START_DATE                        date                        
-  END_DATE                          date                        
-  ANNUAL_SALARY                     int                         
-  HOURLY_RATE                       int                         
+  EMPLOYEEID                        INTEGER NOT NULL            
+  EMPLOYEE_NAME                     VARCHAR(30)                 
+  START_DATE                        DATE                        
+  END_DATE                          DATE                        
+  ANNUAL_SALARY                     INTEGER                     
+  HOURLY_RATE                       INTEGER                     
                                     generated                   
-  ACTIVE                            varchar(1) not null         
+  ACTIVE                            VARCHAR(1) NOT NULL         
                                     generated                   
 
 
 
 Βιβλία                                                           [table]
 ------------------------------------------------------------------------
-  Μοναδικός                         smallint not null           
-  Τίτλος                            varchar(255) not null       
-  Περιγραφή                         varchar(255)                
-  Εκδότης                           int not null                
+  Μοναδικός                         SMALLINT NOT NULL           
+  Τίτλος                            VARCHAR(255) NOT NULL       
+  Περιγραφή                         VARCHAR(255)                
+  Εκδότης                           INTEGER NOT NULL            
 
 Primary Key
 
@@ -292,16 +292,16 @@ Routines
 
 "CustomAdd;0"                                  [function, returns table]
 ------------------------------------------------------------------------
-  "@RETURN_VALUE"                   int, result                 
-  "@One"                            int, in                     
-  "@Two"                            int, in                     
+  "@RETURN_VALUE"                   INTEGER, result             
+  "@One"                            INTEGER, in                 
+  "@Two"                            INTEGER, in                 
 
 
 
 "New_Publisher;1"                              [function, returns table]
 ------------------------------------------------------------------------
-  "@RETURN_VALUE"                   int, result                 
-  "@Publisher"                      varchar(50), in             
+  "@RETURN_VALUE"                   INTEGER, result             
+  "@Publisher"                      VARCHAR(50), in             
 
 
 

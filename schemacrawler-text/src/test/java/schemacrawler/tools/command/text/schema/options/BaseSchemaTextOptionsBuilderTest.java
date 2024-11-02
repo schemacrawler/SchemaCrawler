@@ -33,7 +33,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
-import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideDatabaseSpecificTypes;
 import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideEmptyTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideTriggerActionStatements;
 import org.junit.jupiter.api.Test;
@@ -109,41 +108,6 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
     builder.fromOptions(null);
     assertThat(builder.toOptions().is(hideAlternateKeyNames), is(true));
-  }
-
-  @Test
-  public void noDatabaseSpecificTypes() {
-    final Config config = SchemaTextOptionsBuilder.builder().noDatabaseSpecificTypes().toConfig();
-    final SchemaTextOptions options =
-        SchemaTextOptionsBuilder.builder().noDatabaseSpecificTypes().toOptions();
-
-    SchemaTextOptionsBuilder builder;
-
-    // On and off
-    builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
-    builder.noDatabaseSpecificTypes();
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
-    builder.noDatabaseSpecificTypes(false);
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
-    builder.noDatabaseSpecificTypes(true);
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
-
-    // From config
-    builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
-    builder.fromConfig(config);
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
-    builder.fromConfig(null);
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
-
-    // From options
-    builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
-    builder.fromOptions(options);
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
-    builder.fromOptions(null);
-    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
   }
 
   @Test

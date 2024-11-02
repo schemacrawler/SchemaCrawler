@@ -53,6 +53,8 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
+import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideEmptyTableConstraints;
+import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideTriggerActionStatements;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -892,25 +894,38 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeWideRow("Table Constraints", "section");
 
     for (final TableConstraint constraint : constraints) {
-      if (constraint != null) {
-        String constraintName = "";
-        if (!options.is(hideTableConstraintNames)) {
-          LOGGER.log(
-              Level.FINER,
-              new StringFormat("Not showing table constraint name for <%s>", constraint));
-          constraintName = identifiers.quoteName(constraint);
-        }
-        final String constraintType = constraint.getType().getValue().toLowerCase();
-        final String constraintDetails = "[" + constraintType + " constraint]";
-        formattingHelper.writeEmptyRow();
-        formattingHelper.writeNameRow(constraintName, constraintDetails);
-
-        printRemarks(constraint);
-        if (!isBrief()) {
-          printTableColumns(constraint.getConstrainedColumns(), false);
-        }
-        printDependantObjectDefinition(constraint);
+      if (constraint == null) {
+        continue;
       }
+      final String constraintName;
+      if (!options.is(hideTableConstraintNames)) {
+        LOGGER.log(
+            Level.FINER,
+            new StringFormat("Not showing table constraint name for <%s>", constraint));
+        constraintName = identifiers.quoteName(constraint);
+      } else {
+        constraintName = "";
+      }
+
+      final List<TableConstraintColumn> constrainedColumns = constraint.getConstrainedColumns();
+      if (options.is(hideTableConstraintNames)
+          && constrainedColumns.isEmpty()
+          && options.is(hideEmptyTableConstraints)) {
+        // There is no point in showing a constraint if there is no information
+        // about the constrained columns, and the name is hidden
+        continue;
+      }
+
+      final String constraintType = constraint.getType().getValue().toLowerCase();
+      final String constraintDetails = "[" + constraintType + " constraint]";
+      formattingHelper.writeEmptyRow();
+      formattingHelper.writeNameRow(constraintName, constraintDetails);
+
+      printRemarks(constraint);
+      if (!isBrief()) {
+        printTableColumns(constrainedColumns, false);
+      }
+      printDependantObjectDefinition(constraint);
     }
   }
 
@@ -983,7 +998,11 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeNameRow(triggerName, triggerType);
         formattingHelper.writeDescriptionRow(timing);
 
-        if (!isBlank(actionStatement)) {
+        if (options.is(hideTriggerActionStatements) || isBlank(actionStatement)) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Not showing trigger action statement for <%s>", trigger));
+        } else {
           formattingHelper.writeNameRow("", "[action statement]");
           formattingHelper.writeWideRow(actionStatement, "definition");
         }

@@ -50,7 +50,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
-import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideDatabaseSpecificTypes;
 import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideEmptyTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideTriggerActionStatements;
 import java.util.EnumMap;
@@ -203,15 +202,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   public final B noConstraintNames(final boolean value) {
     hideNames.put(hideTableConstraintNames, value);
-    return (B) this;
-  }
-
-  public final B noDatabaseSpecificTypes() {
-    return noDatabaseSpecificTypes(true);
-  }
-
-  public final B noDatabaseSpecificTypes(final boolean value) {
-    hideOtherDetails.put(hideDatabaseSpecificTypes, value);
     return (B) this;
   }
 
@@ -428,6 +418,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
       hideNames.put(databaseObjectNamesType, value);
     }
     isShowUnqualifiedNames = value;
+    isShowStandardColumnTypeNames = value;
 
     return (B) this;
   }

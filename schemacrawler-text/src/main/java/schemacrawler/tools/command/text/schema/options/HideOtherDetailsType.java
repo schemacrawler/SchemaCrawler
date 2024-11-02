@@ -30,7 +30,6 @@ package schemacrawler.tools.command.text.schema.options;
 
 public enum HideOtherDetailsType {
   hideTriggerActionStatements("hide_trigger_action_statements"),
-  hideDatabaseSpecificTypes("hide_database_specific_types"),
   hideEmptyTableConstraints("hide_empty_table_constraints"),
   ;
 
