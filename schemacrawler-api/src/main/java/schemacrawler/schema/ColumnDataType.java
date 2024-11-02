@@ -55,7 +55,18 @@ public interface ColumnDataType extends DatabaseObject, TypedObject<DataTypeType
    *
    * @return Database specific data type name
    */
-  String getDatabaseSpecificTypeName();
+  default String getDatabaseSpecificTypeName() {
+    return getName();
+  }
+
+  /**
+   * Gets the database specific data type name.
+   *
+   * @return Database specific data type name
+   */
+  default String getStandardTypeName() {
+    return getJavaSqlType().getName();
+  }
 
   /**
    * Get list of enum values if the data type is enumerated.

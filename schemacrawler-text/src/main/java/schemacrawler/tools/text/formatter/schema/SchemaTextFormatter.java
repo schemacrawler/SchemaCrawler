@@ -730,7 +730,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     for (final RoutineParameter<?> parameter : parameters) {
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames()) {
-        columnTypeName = parameter.getColumnDataType().getJavaSqlType().getName();
+        columnTypeName = parameter.getColumnDataType().getStandardTypeName();
       } else {
         columnTypeName = parameter.getColumnDataType().getDatabaseSpecificTypeName();
       }
@@ -837,7 +837,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       } else {
         final String columnTypeName;
         if (options.isShowStandardColumnTypeNames()) {
-          columnTypeName = column.getColumnDataType().getJavaSqlType().getName();
+          columnTypeName = column.getColumnDataType().getStandardTypeName();
         } else {
           columnTypeName = column.getColumnDataType().getDatabaseSpecificTypeName();
         }

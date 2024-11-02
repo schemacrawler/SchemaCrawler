@@ -34,14 +34,11 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -91,7 +88,7 @@ public class ExcludeTest {
             out.println("    column: " + column.getFullName());
             out.println(
                 "      database type: " + column.getColumnDataType().getDatabaseSpecificTypeName());
-            out.println("      type: " + column.getColumnDataType().getJavaSqlType().getName());
+            out.println("      type: " + column.getColumnDataType().getStandardTypeName());
           }
         }
       }

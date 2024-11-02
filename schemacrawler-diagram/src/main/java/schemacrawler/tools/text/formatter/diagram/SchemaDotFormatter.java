@@ -659,7 +659,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames()) {
-        columnTypeName = column.getColumnDataType().getJavaSqlType().getName();
+        columnTypeName = column.getColumnDataType().getStandardTypeName();
       } else {
         columnTypeName = column.getColumnDataType().getDatabaseSpecificTypeName();
       }
