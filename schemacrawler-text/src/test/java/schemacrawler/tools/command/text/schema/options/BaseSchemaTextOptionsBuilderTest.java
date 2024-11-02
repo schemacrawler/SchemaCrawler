@@ -1,13 +1,3 @@
-package schemacrawler.tools.command.text.schema.options;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
-import org.junit.jupiter.api.Test;
-import schemacrawler.tools.options.Config;
-
 /*
 ========================================================================
 SchemaCrawler
@@ -35,6 +25,20 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
+package schemacrawler.tools.command.text.schema.options;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
+import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideDatabaseSpecificTypes;
+import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideEmptyTableConstraints;
+import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideTriggerActionStatements;
+import org.junit.jupiter.api.Test;
+import schemacrawler.tools.options.Config;
+
 public class BaseSchemaTextOptionsBuilderTest {
 
   @Test
@@ -108,6 +112,76 @@ public class BaseSchemaTextOptionsBuilderTest {
   }
 
   @Test
+  public void noDatabaseSpecificTypes() {
+    final Config config = SchemaTextOptionsBuilder.builder().noDatabaseSpecificTypes().toConfig();
+    final SchemaTextOptions options =
+        SchemaTextOptionsBuilder.builder().noDatabaseSpecificTypes().toOptions();
+
+    SchemaTextOptionsBuilder builder;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
+    builder.noDatabaseSpecificTypes();
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
+    builder.noDatabaseSpecificTypes(false);
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
+    builder.noDatabaseSpecificTypes(true);
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
+
+    // From config
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
+    builder.fromConfig(config);
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
+    builder.fromConfig(null);
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
+
+    // From options
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(false));
+    builder.fromOptions(options);
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
+    builder.fromOptions(null);
+    assertThat(builder.toOptions().is(hideDatabaseSpecificTypes), is(true));
+  }
+
+  @Test
+  public void noEmptyTableConstraints() {
+    final Config config = SchemaTextOptionsBuilder.builder().noEmptyTableConstraints().toConfig();
+    final SchemaTextOptions options =
+        SchemaTextOptionsBuilder.builder().noEmptyTableConstraints().toOptions();
+
+    SchemaTextOptionsBuilder builder;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(false));
+    builder.noEmptyTableConstraints();
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(true));
+    builder.noEmptyTableConstraints(false);
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(false));
+    builder.noEmptyTableConstraints(true);
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(true));
+
+    // From config
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(false));
+    builder.fromConfig(config);
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(true));
+    builder.fromConfig(null);
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(true));
+
+    // From options
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(false));
+    builder.fromOptions(options);
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(true));
+    builder.fromOptions(null);
+    assertThat(builder.toOptions().is(hideEmptyTableConstraints), is(true));
+  }
+
+  @Test
   public void noRoutineSpecificNames() {
     final Config config = SchemaTextOptionsBuilder.builder().noRoutineSpecificNames().toConfig();
     final SchemaTextOptions options =
@@ -140,6 +214,41 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
     builder.fromOptions(null);
     assertThat(builder.toOptions().is(hideRoutineSpecificNames), is(true));
+  }
+
+  @Test
+  public void noTriggerActionStatements() {
+    final Config config = SchemaTextOptionsBuilder.builder().noTriggerActionStatements().toConfig();
+    final SchemaTextOptions options =
+        SchemaTextOptionsBuilder.builder().noTriggerActionStatements().toOptions();
+
+    SchemaTextOptionsBuilder builder;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(false));
+    builder.noTriggerActionStatements();
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(true));
+    builder.noTriggerActionStatements(false);
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(false));
+    builder.noTriggerActionStatements(true);
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(true));
+
+    // From config
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(false));
+    builder.fromConfig(config);
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(true));
+    builder.fromConfig(null);
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(true));
+
+    // From options
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(false));
+    builder.fromOptions(options);
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(true));
+    builder.fromOptions(null);
+    assertThat(builder.toOptions().is(hideTriggerActionStatements), is(true));
   }
 
   @Test
