@@ -40,10 +40,10 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isShowOrdinalNumbers;
   private final boolean isShowStandardColumnTypeNames;
   private final boolean isHideTableRowCounts;
+  private final boolean isHideTriggerActionStatements;
   private final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
   private final Map<HideDependantDatabaseObjectsType, Boolean> hideDependantDatabaseObjects;
   private final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
-  private final Map<HideOtherDetailsType, Boolean> hideOtherDetails;
 
   protected SchemaTextOptions(
       final BaseSchemaTextOptionsBuilder<?, ? extends SchemaTextOptions> builder) {
@@ -55,6 +55,7 @@ public class SchemaTextOptions extends BaseTextOptions {
     isShowOrdinalNumbers = builder.isShowOrdinalNumbers;
     isShowStandardColumnTypeNames = builder.isShowStandardColumnTypeNames;
     isHideTableRowCounts = builder.isHideTableRowCounts;
+    isHideTriggerActionStatements = builder.isHideTriggerActionStatements;
 
     hideDatabaseObjects = new EnumMap<>(HideDatabaseObjectsType.class);
     for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
@@ -75,11 +76,6 @@ public class SchemaTextOptions extends BaseTextOptions {
       hideNames.put(
           databaseObjectNamesType, builder.hideNames.getOrDefault(databaseObjectNamesType, false));
     }
-    hideOtherDetails = new EnumMap<>(HideOtherDetailsType.class);
-    for (final HideOtherDetailsType otherDetails : HideOtherDetailsType.values()) {
-      hideOtherDetails.put(
-          otherDetails, builder.hideOtherDetails.getOrDefault(otherDetails, false));
-    }
   }
 
   public boolean is(final HideDatabaseObjectNamesType key) {
@@ -92,10 +88,6 @@ public class SchemaTextOptions extends BaseTextOptions {
 
   public boolean is(final HideDependantDatabaseObjectsType key) {
     return hideDependantDatabaseObjects.getOrDefault(key, false);
-  }
-
-  public boolean is(final HideOtherDetailsType key) {
-    return hideOtherDetails.getOrDefault(key, false);
   }
 
   public boolean isAlphabeticalSortForForeignKeys() {
@@ -112,6 +104,10 @@ public class SchemaTextOptions extends BaseTextOptions {
 
   public boolean isHideTableRowCounts() {
     return isHideTableRowCounts;
+  }
+
+  public boolean isHideTriggerActionStatements() {
+    return isHideTriggerActionStatements;
   }
 
   public boolean isShowOrdinalNumbers() {

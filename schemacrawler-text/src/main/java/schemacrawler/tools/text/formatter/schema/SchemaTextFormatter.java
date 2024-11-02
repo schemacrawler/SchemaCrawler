@@ -53,8 +53,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
-import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideEmptyTableConstraints;
-import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideTriggerActionStatements;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -890,6 +888,27 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     Collections.sort(
         constraints, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
 
+    // There is no point in showing a constraint if there is no information
+    // about the constrained columns, and the name is hidden
+    boolean canDisplayTableConstraints = false;
+    for (final TableConstraint constraint : constraints) {
+      if (constraint == null) {
+        continue;
+      }
+      final List<TableConstraintColumn> constrainedColumns = constraint.getConstrainedColumns();
+      final boolean cannotDisplayTableConstraints =
+          (options.is(hideTableConstraintNames)
+              && constrainedColumns.isEmpty()
+              && !constraint.hasRemarks());
+      if (!cannotDisplayTableConstraints) {
+        canDisplayTableConstraints = true;
+        break;
+      }
+    }
+    if (!canDisplayTableConstraints) {
+      return;
+    }
+
     formattingHelper.writeEmptyRow();
     formattingHelper.writeWideRow("Table Constraints", "section");
 
@@ -910,7 +929,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final List<TableConstraintColumn> constrainedColumns = constraint.getConstrainedColumns();
       if (options.is(hideTableConstraintNames)
           && constrainedColumns.isEmpty()
-          && options.is(hideEmptyTableConstraints)) {
+          && !constraint.hasRemarks()) {
         // There is no point in showing a constraint if there is no information
         // about the constrained columns, and the name is hidden
         continue;
@@ -998,7 +1017,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeNameRow(triggerName, triggerType);
         formattingHelper.writeDescriptionRow(timing);
 
-        if (options.is(hideTriggerActionStatements) || isBlank(actionStatement)) {
+        if (options.isHideTriggerActionStatements() || isBlank(actionStatement)) {
           LOGGER.log(
               Level.FINER,
               new StringFormat("Not showing trigger action statement for <%s>", trigger));

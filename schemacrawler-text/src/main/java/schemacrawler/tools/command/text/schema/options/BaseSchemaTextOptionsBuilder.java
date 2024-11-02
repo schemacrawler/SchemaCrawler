@@ -50,8 +50,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
-import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideEmptyTableConstraints;
-import static schemacrawler.tools.command.text.schema.options.HideOtherDetailsType.hideTriggerActionStatements;
 import java.util.EnumMap;
 import java.util.Map;
 import schemacrawler.tools.options.Config;
@@ -67,6 +65,8 @@ public abstract class BaseSchemaTextOptionsBuilder<
       SCHEMACRAWLER_FORMAT_PREFIX + "show_standard_column_type_names";
   private static final String HIDE_TABLE_ROW_COUNTS =
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_table_row_counts";
+  private static final String HIDE_TRIGGER_ACTION_STATEMENTS =
+      SCHEMACRAWLER_FORMAT_PREFIX + "hide_trigger_action_statements";
 
   private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX + "hide_remarks";
 
@@ -81,16 +81,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
   protected boolean isShowOrdinalNumbers;
   protected boolean isShowStandardColumnTypeNames;
   protected boolean isHideTableRowCounts;
+  protected boolean isHideTriggerActionStatements;
   protected final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
   protected final Map<HideDependantDatabaseObjectsType, Boolean> hideDependantDatabaseObjects;
   protected final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
-  protected final Map<HideOtherDetailsType, Boolean> hideOtherDetails;
 
   public BaseSchemaTextOptionsBuilder() {
     hideDatabaseObjects = new EnumMap<>(HideDatabaseObjectsType.class);
     hideDependantDatabaseObjects = new EnumMap<>(HideDependantDatabaseObjectsType.class);
     hideNames = new EnumMap<>(HideDatabaseObjectNamesType.class);
-    hideOtherDetails = new EnumMap<>(HideOtherDetailsType.class);
   }
 
   @Override
@@ -103,6 +102,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isShowStandardColumnTypeNames = config.getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
     isShowOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
     isHideTableRowCounts = config.getBooleanValue(HIDE_TABLE_ROW_COUNTS);
+    isHideTriggerActionStatements = config.getBooleanValue(HIDE_TRIGGER_ACTION_STATEMENTS);
 
     isHideRemarks = config.getBooleanValue(HIDE_REMARKS);
 
@@ -124,10 +124,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
       final boolean isHidden = config.getBooleanValue(databaseObjectNamesType.getKey());
       hideNames.put(databaseObjectNamesType, isHidden);
     }
-    for (final HideOtherDetailsType otherDetailsType : HideOtherDetailsType.values()) {
-      final boolean isHidden = config.getBooleanValue(otherDetailsType.getKey());
-      hideOtherDetails.put(otherDetailsType, isHidden);
-    }
 
     // Override values from command line
     fromConfigCommandLineOverride(config);
@@ -145,7 +141,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isShowStandardColumnTypeNames = options.isShowStandardColumnTypeNames();
     isShowOrdinalNumbers = options.isShowOrdinalNumbers();
     isHideTableRowCounts = options.isHideTableRowCounts();
-
+    isHideTriggerActionStatements = options.isHideTriggerActionStatements();
     isHideRemarks = options.isHideRemarks();
 
     isAlphabeticalSortForForeignKeys = options.isAlphabeticalSortForForeignKeys();
@@ -162,9 +158,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
         HideDatabaseObjectNamesType.values()) {
       hideNames.put(databaseObjectNamesType, options.is(databaseObjectNamesType));
     }
-    for (final HideOtherDetailsType otherDetailsType : HideOtherDetailsType.values()) {
-      hideOtherDetails.put(otherDetailsType, options.is(otherDetailsType));
-    }
 
     return (B) this;
   }
@@ -175,6 +168,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   public final B hideRowCounts(final boolean value) {
     isHideTableRowCounts = value;
+    return (B) this;
+  }
+
+  public final B noTriggerActionStatements() {
+    return noTriggerActionStatements(true);
+  }
+
+  public final B noTriggerActionStatements(final boolean value) {
+    isHideTriggerActionStatements = value;
     return (B) this;
   }
 
@@ -202,15 +204,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   public final B noConstraintNames(final boolean value) {
     hideNames.put(hideTableConstraintNames, value);
-    return (B) this;
-  }
-
-  public final B noEmptyTableConstraints() {
-    return noEmptyTableConstraints(true);
-  }
-
-  public final B noEmptyTableConstraints(final boolean value) {
-    hideOtherDetails.put(hideEmptyTableConstraints, value);
     return (B) this;
   }
 
@@ -360,15 +353,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
-  public final B noTriggerActionStatements() {
-    return noTriggerActionStatements(true);
-  }
-
-  public final B noTriggerActionStatements(final boolean value) {
-    hideOtherDetails.put(hideTriggerActionStatements, value);
-    return (B) this;
-  }
-
   public final B noTriggerNames() {
     return noTriggerNames(true);
   }
@@ -418,7 +402,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
       hideNames.put(databaseObjectNamesType, value);
     }
     isShowUnqualifiedNames = value;
-    isShowStandardColumnTypeNames = value;
 
     return (B) this;
   }
@@ -466,7 +449,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     config.put(SHOW_STANDARD_COLUMN_TYPE_NAMES, isShowStandardColumnTypeNames);
     config.put(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
     config.put(HIDE_TABLE_ROW_COUNTS, isHideTableRowCounts);
-
+    config.put(HIDE_TRIGGER_ACTION_STATEMENTS, isHideTriggerActionStatements);
     config.put(HIDE_REMARKS, isHideRemarks);
 
     config.put(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
@@ -487,11 +470,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
         HideDatabaseObjectNamesType.values()) {
       config.put(
           databaseObjectNamesType.getKey(), hideNames.getOrDefault(databaseObjectNamesType, false));
-    }
-    for (final HideOtherDetailsType hideOtherDetailsType : HideOtherDetailsType.values()) {
-      config.put(
-          hideOtherDetailsType.getKey(),
-          hideOtherDetails.getOrDefault(hideOtherDetailsType, false));
     }
 
     return config;

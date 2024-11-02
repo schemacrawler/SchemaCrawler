@@ -49,18 +49,6 @@ Triggers
 
                                                                [trigger]
   before insert or delete, per row
-                                                      [action statement]
-EXECUTE FUNCTION books.trg_authors()
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 
@@ -103,12 +91,6 @@ Indexes
                                                           [unique index]
   bookid                            ascending                   
   authorid                          ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 
@@ -156,12 +138,6 @@ Table Constraints
                                                      [unique constraint]
 Unique constraint on previous edition of books
 
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
 
 
 "Celebrities"                                                    [table]
@@ -183,10 +159,6 @@ Indexes
 
                                                           [unique index]
   "Id"                              ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
 
 
 
@@ -210,10 +182,6 @@ Indexes
                                                           [unique index]
   "Celebrity Id"                    ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 coupons                                                          [table]
@@ -233,10 +201,6 @@ Indexes
                                                           [unique index]
   id                                ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 customerdata                                                     [table]
@@ -253,10 +217,6 @@ Indexes
 
                                                           [unique index]
   id                                ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
 
 
 
@@ -276,14 +236,6 @@ Indexes
 
                                                           [unique index]
   id                                ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 
@@ -321,10 +273,6 @@ Indexes
                                                           [unique index]
   id                                ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 "Βιβλία"                                                         [table]
@@ -349,14 +297,6 @@ Indexes
                                                           [unique index]
 Primary key constraint on βιβλία
   "Μοναδικός"                       ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 

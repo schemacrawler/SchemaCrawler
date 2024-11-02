@@ -228,7 +228,11 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noInfo().portableNames();
+    textOptionsBuilder
+        .noInfo()
+        .portableNames()
+        .showStandardColumnTypeNames()
+        .noTriggerActionStatements();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
     final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 

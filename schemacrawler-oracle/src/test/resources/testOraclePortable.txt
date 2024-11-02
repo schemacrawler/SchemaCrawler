@@ -47,12 +47,6 @@ Triggers
 
                                                                [trigger]
   after insert or delete, per row
-                                                      [action statement]
-BEGIN
-  UPDATE Publishers 
-    SET Publisher = 'Jacob' 
-    WHERE Publisher = 'John';
-END;
 
 Table Constraints
 

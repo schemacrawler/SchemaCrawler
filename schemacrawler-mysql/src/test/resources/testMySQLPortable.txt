@@ -48,14 +48,6 @@ Triggers
 
                                                                [trigger]
   after delete, per row
-                                                      [action statement]
-UPDATE Publishers 
-      SET Publisher = 'Jacob' 
-      WHERE Publisher = 'John'
-
-Table Constraints
-
-                                                      [check constraint]
 
 
 
@@ -92,10 +84,6 @@ Indexes
                                                           [unique index]
   `BookId`                          ascending                   
   `AuthorId`                        ascending                   
-
-Table Constraints
-
-                                                     [unique constraint]
 
 
 
@@ -137,10 +125,6 @@ Indexes
 
                                                           [unique index]
   `PreviousEditionId`               ascending                   
-
-Table Constraints
-
-                                                     [unique constraint]
 
 
 
@@ -238,10 +222,6 @@ Indexes
 
                                                           [unique index]
   `Id`                              ascending                   
-
-Table Constraints
-
-                                                     [unique constraint]
 
 
 
