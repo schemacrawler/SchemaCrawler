@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
-import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -42,16 +41,14 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.Test;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -64,6 +61,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -73,7 +72,39 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
+@ResolveTestContext
 public class HsqldbTest {
+
+  @Test
+  public void testHsqldbPortable(
+      final DatabaseConnectionInfo connectionInfo, final TestContext testContext) throws Exception {
+
+    final OutputFormat outputFormat = TextOutputFormat.text;
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("--server", "hsqldb");
+      argsMap.put("--port", String.valueOf(connectionInfo.getPort()));
+      argsMap.put("--database", connectionInfo.getDatabase());
+      argsMap.put("--user", "sa");
+      argsMap.put("--password", "");
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--portable-names", Boolean.TRUE.toString());
+      argsMap.put("--command", "schema");
+      argsMap.put("--info-level", "maximum");
+      argsMap.put("--table-types", "VIEW, TABLE, GLOBAL TEMPORARY");
+      argsMap.put("--synonyms", ".*");
+      argsMap.put("--routines", ".*");
+      argsMap.put("--output-file", out.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+    }
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(
+        outputOf(testout),
+        hasSameContentAndTypeAs(classpathResource(expectedResource), outputFormat.getFormat()));
+  }
 
   @Test
   public void testHsqldbMain(final DatabaseConnectionInfo connectionInfo) throws Exception {

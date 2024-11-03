@@ -1,0 +1,220 @@
+
+
+Tables
+========================================================================
+
+
+
+Authors                                                          [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
+  Address1                          VARCHAR(255)                
+  Address2                          VARCHAR(255)                
+  City                              VARCHAR(50)                 
+  State                             CHAR(2)                     
+  PostalCode                        VARCHAR(10)                 
+  Country                           VARCHAR(50)                 
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) BookAuthors.AuthorId                              
+
+Indexes
+
+                                                      [non-unique index]
+  LastName                          unknown                     
+  FirstName                         unknown                     
+
+                                                      [non-unique index]
+  City                              unknown                     
+  State                             unknown                     
+  PostalCode                        unknown                     
+  Country                           unknown                     
+
+Triggers
+
+                                                               [trigger]
+  after, per row
+                                                      [action statement]
+CREATE TRIGGER TRG_Authors 
+AFTER DELETE 
+ON Authors 
+FOR EACH ROW 
+BEGIN
+  UPDATE Publishers 
+    SET Publisher = 'Jacob' 
+    WHERE Publisher = 'John';
+END
+
+
+
+AuthorsList                                                       [view]
+------------------------------------------------------------------------
+  Id                                INTEGER                     
+  FirstName                         VARCHAR(20)                 
+  LastName                          VARCHAR(20)                 
+
+
+
+BookAuthors                                                      [table]
+------------------------------------------------------------------------
+  BookId                            INTEGER NOT NULL            
+  AuthorId                          INTEGER NOT NULL            
+  SomeData                          VARCHAR(30)                 
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  AuthorId (0..many)--> Authors.Id                              
+
+                                           [foreign key, with no action]
+  BookId (0..many)--> Books.Id                                  
+
+Indexes
+
+                                                          [unique index]
+  BookId                            unknown                     
+  AuthorId                          unknown                     
+
+
+
+Books                                                            [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+  Title                             VARCHAR(255) NOT NULL       
+  Description                       VARCHAR(255)                
+  PublisherId                       INTEGER NOT NULL            
+  PublicationDate                   DATE                        
+  Price                             FLOAT                       
+  PreviousEditionId                 INTEGER                     
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) BookAuthors.BookId                              
+
+                                           [foreign key, with no action]
+  Id <--(0..1) PreviousEditionId                                
+
+Indexes
+
+                                                          [unique index]
+  PreviousEditionId                 unknown                     
+
+
+
+Celebrities                                                      [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+  Name                              VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) "Celebrity Updates"."Celebrity Id"                              
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+  "UPDATE"                          VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..many)--> Celebrities.Id                              
+
+
+
+Coupons                                                          [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+  Data                              CLOB                        
+  Coupons                           INTEGER                     
+  Books                             VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+
+
+Publishers                                                       [table]
+------------------------------------------------------------------------
+  Id                                INTEGER NOT NULL            
+                                    auto-incremented            
+  Publisher                         VARCHAR(255)                
+
+Primary Key
+
+                                                           [primary key]
+  Id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) Βιβλία.Εκδότης                                
+
+
+
+X_EMPLOYEES                                                      [table]
+------------------------------------------------------------------------
+  EMPLOYEEID                        INTEGER NOT NULL            
+  EMPLOYEE_NAME                     VARCHAR2(30)                
+  START_DATE                        DATE                        
+  END_DATE                          DATE                        
+  ANNUAL_SALARY                     INTEGER                     
+  HOURLY_RATE                                                   
+                                    generated                   
+  ACTIVE                                                        
+                                    generated                   
+
+
+
+Βιβλία                                                           [table]
+------------------------------------------------------------------------
+  Μοναδικός                         SMALLINT NOT NULL           
+  Τίτλος                            VARCHAR(255) NOT NULL       
+  Περιγραφή                         VARCHAR(255)                
+  Εκδότης                           SMALLINT NOT NULL           
+
+Primary Key
+
+                                                           [primary key]
+  Μοναδικός                                                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Εκδότης (0..many)--> Publishers.Id                              
+
+Indexes
+
+                                                          [unique index]
+  Μοναδικός                         unknown                     
+
