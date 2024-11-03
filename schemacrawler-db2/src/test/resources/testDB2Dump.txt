@@ -5,7 +5,7 @@ Dump
 
 
 
-DB2INST1.AUTHORS                                                        
+BOOKS.AUTHORS                                                           
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 1	Oren	Shaffer	900-2273 Integer Avenue		Farmer City	MD	37032	Cook Islands
@@ -31,13 +31,13 @@ ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY
 
 
 
-DB2INST1.AUTHORSCOUNTRIES                                               
+BOOKS.AUTHORSCOUNTRIES                                                  
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	COUNTRY
 
 
 
-DB2INST1.AUTHORSLIST                                                    
+BOOKS.AUTHORSLIST                                                       
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME
 1	Oren	Shaffer
@@ -63,7 +63,7 @@ ID	FIRSTNAME	LASTNAME
 
 
 
-DB2INST1.BOOKAUTHORS                                                    
+BOOKS.BOOKAUTHORS                                                       
 ------------------------------------------------------------------------
 BOOKID	AUTHORID	SOMEDATA
 1	7	This is the latest update
@@ -89,7 +89,7 @@ BOOKID	AUTHORID	SOMEDATA
 
 
 
-DB2INST1.BOOKS                                                          
+BOOKS.BOOKS                                                             
 ------------------------------------------------------------------------
 ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 1	Neque. In Ornare Sagittis	Dis Parturient Montes, Nascetur Ridiculus Mus.	18	2000-10-27	69.99	1
@@ -115,7 +115,7 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
-DB2INST1."Celebrities"                                                  
+BOOKS."Celebrities"                                                     
 ------------------------------------------------------------------------
 "Id"	NAME
 1	Hop Whitney
@@ -126,7 +126,7 @@ DB2INST1."Celebrities"
 
 
 
-DB2INST1."Celebrity Updates"                                            
+BOOKS."Celebrity Updates"                                               
 ------------------------------------------------------------------------
 "Celebrity Id"	"UPDATE"
 1	Abbot
@@ -137,7 +137,7 @@ DB2INST1."Celebrity Updates"
 
 
 
-DB2INST1.COUPONS                                                        
+BOOKS.COUPONS                                                           
 ------------------------------------------------------------------------
 ID	DATA	COUPONS	BOOKS
 1	<binary>	NULL	NULL
@@ -153,13 +153,13 @@ ID	DATA	COUPONS	BOOKS
 
 
 
-DB2INST1.CUSTOMERS                                                      
+BOOKS.CUSTOMERS                                                         
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	AGE
 
 
 
-DB2INST1.PUBLISHERS                                                     
+BOOKS.PUBLISHERS                                                        
 ------------------------------------------------------------------------
 ID	PUBLISHER
 1	Dalton Lewis
@@ -185,19 +185,19 @@ ID	PUBLISHER
 
 
 
-DB2INST1.X_CUSTOMERS                                                    
+BOOKS.X_CUSTOMERS                                                       
 ------------------------------------------------------------------------
 CUSTOMERID	CUSTOMER_NAME
 
 
 
-DB2INST1.X_EMPLOYEES                                                    
+BOOKS.X_EMPLOYEES                                                       
 ------------------------------------------------------------------------
 EMPLOYEEID	EMPLOYEE_NAME	START_DATE	END_DATE	ANNUAL_SALARY	HOURLY_RATE
 
 
 
-DB2INST1.ΒΙΒΛΊΑ                                                         
+BOOKS.ΒΙΒΛΊΑ                                                            
 ------------------------------------------------------------------------
 "ΜΟΝΑΔΙΚΌς"	"ΤΊΤΛΟς"	ΠΕΡΙΓΡΑΦΉ	"ΕΚΔΌΤΗς"
 
