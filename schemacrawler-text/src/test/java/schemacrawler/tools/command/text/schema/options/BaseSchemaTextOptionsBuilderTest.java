@@ -214,6 +214,38 @@ public class BaseSchemaTextOptionsBuilderTest {
   }
 
   @Test
+  public void portable() {
+
+    SchemaTextOptionsBuilder builder;
+    SchemaTextOptions options;
+
+    builder = SchemaTextOptionsBuilder.builder();
+    options = builder.toOptions();
+    assertPortableNames(options, false);
+    assertPortableBroad(options, false);
+
+    builder.portable(PortableType.broad);
+    options = builder.toOptions();
+    assertPortableNames(options, true);
+    assertPortableBroad(options, true);
+
+    builder.portable(PortableType.names);
+    options = builder.toOptions();
+    assertPortableNames(options, true);
+    assertPortableBroad(options, false);
+
+    builder.portable(PortableType.none);
+    options = builder.toOptions();
+    assertPortableNames(options, false);
+    assertPortableBroad(options, false);
+
+    builder.portable(null);
+    options = builder.toOptions();
+    assertPortableNames(options, false);
+    assertPortableBroad(options, false);
+  }
+
+  @Test
   public void portableNames() {
 
     SchemaTextOptionsBuilder builder;
@@ -222,35 +254,19 @@ public class BaseSchemaTextOptionsBuilderTest {
     // On and off
     builder = SchemaTextOptionsBuilder.builder();
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(false));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(false));
-    }
+    assertPortableNames(options, false);
 
     builder.portableNames();
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(true));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(true));
-    }
+    assertPortableNames(options, true);
 
     builder.portableNames(false);
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(false));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(false));
-    }
+    assertPortableNames(options, false);
 
     builder.portableNames(true);
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(true));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(true));
-    }
+    assertPortableNames(options, true);
   }
 
   @Test
@@ -315,5 +331,18 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
+  }
+
+  private void assertPortableNames(final SchemaTextOptions options, final boolean value) {
+    assertThat(options.isShowUnqualifiedNames(), is(value));
+    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      assertThat(options.is(hideDatabaseObjectNamesType), is(value));
+    }
+  }
+
+  private void assertPortableBroad(final SchemaTextOptions options, final boolean value) {
+    assertThat(options.isShowStandardColumnTypeNames(), is(value));
+    assertThat(options.isHideTriggerActionStatements(), is(value));
   }
 }

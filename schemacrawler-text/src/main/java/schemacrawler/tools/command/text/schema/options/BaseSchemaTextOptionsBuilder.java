@@ -52,12 +52,17 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
 public abstract class BaseSchemaTextOptionsBuilder<
         B extends BaseSchemaTextOptionsBuilder<B, O>, O extends SchemaTextOptions>
     extends BaseTextOptionsBuilder<BaseSchemaTextOptionsBuilder<B, O>, O> {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(BaseSchemaTextOptionsBuilder.class.getName());
 
   private static final String SHOW_ORDINAL_NUMBERS =
       SCHEMACRAWLER_FORMAT_PREFIX + "show_ordinal_numbers";
@@ -168,15 +173,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   public final B hideRowCounts(final boolean value) {
     isHideTableRowCounts = value;
-    return (B) this;
-  }
-
-  public final B noTriggerActionStatements() {
-    return noTriggerActionStatements(true);
-  }
-
-  public final B noTriggerActionStatements(final boolean value) {
-    isHideTriggerActionStatements = value;
     return (B) this;
   }
 
@@ -353,6 +349,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
+  public final B noTriggerActionStatements() {
+    return noTriggerActionStatements(true);
+  }
+
+  public final B noTriggerActionStatements(final boolean value) {
+    isHideTriggerActionStatements = value;
+    return (B) this;
+  }
+
   public final B noTriggerNames() {
     return noTriggerNames(true);
   }
@@ -389,20 +394,42 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
-  /** Corresponds to the --portable-names command-line argument. */
-  public final B portableNames() {
-    return portableNames(true);
+  /** Corresponds to the --portable=&lt;value&gt; command-line argument. */
+  public final B portable(final PortableType value) {
+
+    // Turn everything off first
+    withPortableNames(false);
+    withPortableBroad(false);
+
+    if (value != null && value != PortableType.none) {
+      withPortableNames(true);
+      if (value == PortableType.broad) {
+        withPortableBroad(true);
+      }
+    }
+
+    return (B) this;
   }
 
-  /** Corresponds to the --portable-names=&lt;boolean&gt; command-line argument. */
+  /**
+   * Corresponds to the --portable-names command-line argument.
+   *
+   * @see #portable()
+   */
+  @Deprecated
+  public final B portableNames() {
+    withPortableNames(true);
+    return (B) this;
+  }
+
+  /**
+   * Corresponds to the --portable-names=&lt;boolean&gt; command-line argument.
+   *
+   * @see #portable()
+   */
+  @Deprecated
   public final B portableNames(final boolean value) {
-
-    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      hideNames.put(databaseObjectNamesType, value);
-    }
-    isShowUnqualifiedNames = value;
-
+    withPortableNames(value);
     return (B) this;
   }
 
@@ -484,7 +511,29 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
     final String portablenamesKey = "portable-names";
     if (config.containsKey(portablenamesKey)) {
-      portableNames(config.getBooleanValue(portablenamesKey));
+      LOGGER.log(
+          Level.WARNING, "The --portable-names option is deprecated - use --portable instead");
+      final boolean isPortableNames = config.getBooleanValue(portablenamesKey, true);
+      portableNames(isPortableNames);
     }
+
+    final String portableKey = "portable";
+    if (config.containsKey(portableKey)) {
+      final PortableType portableType = config.getEnumValue(portableKey, PortableType.none);
+      portable(portableType);
+    }
+  }
+
+  private void withPortableBroad(boolean value) {
+    isShowStandardColumnTypeNames = value;
+    isHideTriggerActionStatements = value;
+  }
+
+  private void withPortableNames(final boolean value) {
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      hideNames.put(databaseObjectNamesType, value);
+    }
+    isShowUnqualifiedNames = value;
   }
 }

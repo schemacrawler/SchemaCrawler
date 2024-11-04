@@ -65,6 +65,7 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.OutputFormat;
@@ -76,25 +77,37 @@ import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 public class HsqldbTest {
 
   @Test
-  public void testHsqldbPortable(
+  public void testHsqldbMain(final DatabaseConnectionInfo connectionInfo) throws Exception {
+
+    final OutputFormat outputFormat = TextOutputFormat.text;
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Map<String, String> argsMap = createArgsMaps(connectionInfo);
+      argsMap.put("--command", "details");
+      argsMap.put("--no-info", Boolean.FALSE.toString());
+      argsMap.put("--output-file", out.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+    }
+
+    final String expectedResource =
+        String.format("hsqldb.main.%s.%s", javaVersion(), outputFormat.getFormat());
+    assertThat(
+        outputOf(testout),
+        hasSameContentAndTypeAs(classpathResource(expectedResource), outputFormat.getFormat()));
+  }
+
+  @Test
+  public void testHsqldbPortableBroad(
       final DatabaseConnectionInfo connectionInfo, final TestContext testContext) throws Exception {
 
     final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("--server", "hsqldb");
-      argsMap.put("--port", String.valueOf(connectionInfo.getPort()));
-      argsMap.put("--database", connectionInfo.getDatabase());
-      argsMap.put("--user", "sa");
-      argsMap.put("--password", "");
-      argsMap.put("--no-info", Boolean.TRUE.toString());
-      argsMap.put("--portable-names", Boolean.TRUE.toString());
+      final Map<String, String> argsMap = createArgsMaps(connectionInfo);
       argsMap.put("--command", "schema");
-      argsMap.put("--info-level", "maximum");
-      argsMap.put("--table-types", "VIEW, TABLE, GLOBAL TEMPORARY");
-      argsMap.put("--synonyms", ".*");
-      argsMap.put("--routines", ".*");
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--portable", PortableType.broad.name());
       argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
@@ -107,30 +120,22 @@ public class HsqldbTest {
   }
 
   @Test
-  public void testHsqldbMain(final DatabaseConnectionInfo connectionInfo) throws Exception {
+  public void testHsqldbPortableNames(
+      final DatabaseConnectionInfo connectionInfo, final TestContext testContext) throws Exception {
 
     final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("--server", "hsqldb");
-      argsMap.put("--port", String.valueOf(connectionInfo.getPort()));
-      argsMap.put("--database", connectionInfo.getDatabase());
-      argsMap.put("--user", "sa");
-      argsMap.put("--password", "");
-      argsMap.put("--no-info", Boolean.FALSE.toString());
-      argsMap.put("--command", "details");
-      argsMap.put("--info-level", "maximum");
-      argsMap.put("--table-types", "VIEW, TABLE, GLOBAL TEMPORARY");
-      argsMap.put("--synonyms", ".*");
-      argsMap.put("--routines", ".*");
+      final Map<String, String> argsMap = createArgsMaps(connectionInfo);
+      argsMap.put("--command", "schema");
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--portable", PortableType.names.name());
       argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource =
-        String.format("hsqldb.main.%s.%s", javaVersion(), outputFormat.getFormat());
+    final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
         outputOf(testout),
         hasSameContentAndTypeAs(classpathResource(expectedResource), outputFormat.getFormat()));
@@ -185,5 +190,19 @@ public class HsqldbTest {
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
         hasItems("AUTHENTICATION", "PASSWORD_DIGEST", "ADMIN"));
+  }
+
+  private Map<String, String> createArgsMaps(final DatabaseConnectionInfo connectionInfo) {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--server", "hsqldb");
+    argsMap.put("--port", String.valueOf(connectionInfo.getPort()));
+    argsMap.put("--database", connectionInfo.getDatabase());
+    argsMap.put("--user", "sa");
+    argsMap.put("--password", "");
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--table-types", "VIEW, TABLE, GLOBAL TEMPORARY");
+    argsMap.put("--synonyms", ".*");
+    argsMap.put("--routines", ".*");
+    return argsMap;
   }
 }

@@ -50,6 +50,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -106,11 +107,7 @@ public class OracleTest extends BaseOracleWithConnectionTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-        .noInfo()
-        .portableNames()
-        .showStandardColumnTypeNames()
-        .noTriggerActionStatements();
+    textOptionsBuilder.noInfo().portable(PortableType.broad);
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
     final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 

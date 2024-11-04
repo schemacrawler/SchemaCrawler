@@ -34,12 +34,9 @@ import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -200,7 +197,7 @@ public class CommandLineTest {
     argsMap.put("--portable-names", Boolean.FALSE.toString());
 
     final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.no_remarks", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.hide_remarks", Boolean.TRUE.toString());
     config.put("schemacrawler.format.show_unqualified_names", Boolean.TRUE.toString());
     config.put("schemacrawler.format.show_standard_column_type_names", Boolean.TRUE.toString());
     config.put("schemacrawler.format.show_ordinal_numbers", Boolean.TRUE.toString());
