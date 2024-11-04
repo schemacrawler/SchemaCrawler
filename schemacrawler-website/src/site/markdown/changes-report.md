@@ -2,10 +2,17 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.22.3"></a>
+## Release 16.22.3 - 2024-11-04
+
+- Deprecate `--portable-names` option in favor of `--portable`, 
+  which allows a better diff across different systems
+
+
 <a name="v16.22.2"></a>
 ## Release 16.22.2 - 2024-08-04
 
-- Fix issue #1560 - do nto distribute the Cassandra JDBC driver
+- Fix issue #1560 - do not distribute the Cassandra JDBC driver
 - Update dependencies
 
 
