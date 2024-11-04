@@ -1,0 +1,327 @@
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  CITY                              VARCHAR(50)                 
+  STATE                             CHARACTER(2)                
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+
+
+
+AUTHORSLIST                                                       [view]
+------------------------------------------------------------------------
+
+
+
+BOOKAUTHORS                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  AUTHORID (0..many)--> AUTHORS.ID                              
+
+                                           [foreign key, with no action]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+
+
+BOOKS                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
+  PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) SALES.BOOKID                                  
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+
+
+"Celebrities"                                                    [table]
+------------------------------------------------------------------------
+  "Id"                              INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+
+
+
+COUPONS                                                          [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+
+
+CUSTOMERDATA                                                     [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+
+
+CUSTOMERS                                                        [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+
+
+PUBLISHERS                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  ID                                INTEGER NOT NULL            
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+
+
+
+ΒΙΒΛΊΑ                                                           [table]
+------------------------------------------------------------------------
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
+
+Primary Key
+
+                                                           [primary key]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+
+
+
+REGIONS                                                          [table]
+------------------------------------------------------------------------
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+
+Primary Key
+
+                                                           [primary key]
+  POSTALCODE                                                    
+  COUNTRY                                                       
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  POSTALCODE <--(0..many) SALES.POSTALCODE                              
+  COUNTRY <--(0..many) SALES.COUNTRY                              
+
+
+
+SALES                                                            [table]
+------------------------------------------------------------------------
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+  BOOKID                            INTEGER                     
+  SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+                                           [foreign key, with no action]
+  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
+
+                                           [foreign key, with no action]
+  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> REGIONS.COUNTRY                              
+
+
+
+SALESDATA                                                        [table]
+------------------------------------------------------------------------
+  SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  SALESDATAID <--(0..many) SALES.SALESDATAID                              
+
+
+
+Routines
+========================================================================
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+
+
+
+ALLOC_BLOCKS                                      [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+ALLOC_SINGLE_BLOCK                                [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+CONVERT_BLOCK                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+CREATE_EMPTY_BLOCK                                [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_BLOCKS                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_LOB                                        [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_UNUSED                                     [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DELETE_UNUSED_LOBS                                [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+DIVIDE_BLOCK                                      [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+MERGE_EMPTY_BLOCKS                                [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+Sequences
+========================================================================
+
+
+
+PUBLISHER_ID_SEQ                                              [sequence]
+------------------------------------------------------------------------
+
+
+
+LOB_ID                                                        [sequence]
+------------------------------------------------------------------------
+
+
+
+Synonyms
+========================================================================
+
+
+
+PUBLICATIONS                                                   [synonym]
+------------------------------------------------------------------------
+

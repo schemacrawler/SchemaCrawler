@@ -5,7 +5,7 @@ Tables
 
 
 
-AUTHORS                                                          [table]
+PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
 Contact details for book authors
   ID                                INTEGER NOT NULL            
@@ -18,22 +18,22 @@ Contact details for book authors
 
 Primary Key
 
-                                                           [primary key]
+PK_AUTHORS                                                 [primary key]
   ID                                                            
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+Z_FK_AUTHOR                                [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 
 
-AUTHORSLIST                                                       [view]
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
 
 
 
-BOOKAUTHORS                                                      [table]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 Relationship between books and their authors, 
 along with the latest updated information
@@ -42,15 +42,15 @@ along with the latest updated information
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  AUTHORID (0..many)--> AUTHORS.ID                              
+Z_FK_AUTHOR                                [foreign key, with no action]
+  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-                                           [foreign key, with no action]
-  BOOKID (0..many)--> BOOKS.ID                                  
+SYS_FK_10118                               [foreign key, with no action]
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 
 
-BOOKS                                                            [table]
+PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 Details for published books
   ID                                INTEGER NOT NULL            
@@ -59,88 +59,88 @@ Details for published books
 
 Primary Key
 
-                                                           [primary key]
+PK_BOOKS                                                   [primary key]
   ID                                                            
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  ID <--(0..many) SALES.BOOKID                                  
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-                                           [foreign key, with no action]
-  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+SYS_FK_10118                               [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-                                           [foreign key, with no action]
+FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
 
 
-"Celebrities"                                                    [table]
+PUBLIC.BOOKS."Celebrities"                                       [table]
 ------------------------------------------------------------------------
   "Id"                              INTEGER NOT NULL            
 
 Primary Key
 
-                                                           [primary key]
+"PK_Celebrities"                                           [primary key]
   "Id"                                                          
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+SYS_FK_10128                               [foreign key, with no action]
+  "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 
 
-"Celebrity Updates"                                              [table]
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 ------------------------------------------------------------------------
   "Celebrity Id"                    INTEGER NOT NULL            
 
 Primary Key
 
-                                                           [primary key]
+"PK Celebrity Updates"                                     [primary key]
   "Celebrity Id"                                                
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+SYS_FK_10128                               [foreign key, with no action]
+  "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 
 
-COUPONS                                                          [table]
+PUBLIC.BOOKS.COUPONS                                             [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
 
 Primary Key
 
-                                                           [primary key]
+PK_COUPONS                                                 [primary key]
   ID                                                            
 
 
 
-CUSTOMERDATA                                                     [table]
+PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
 
 Primary Key
 
-                                                           [primary key]
+PK_CUSTOMERDATA                                            [primary key]
   ID                                                            
 
 
 
-CUSTOMERS                                                        [table]
+PUBLIC.BOOKS.CUSTOMERS                                           [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
 
 Primary Key
 
-                                                           [primary key]
+PK_CUSTOMERS                                               [primary key]
   ID                                                            
 
 
 
-PUBLISHERS                                                       [table]
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
 ------------------------------------------------------------------------
 List of book publishers
   ID                                INTEGER NOT NULL            
@@ -149,53 +149,53 @@ List of book publishers
 
 Primary Key
 
-                                                           [primary key]
+SYS_PK_10124                                               [primary key]
   ID                                                            
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
 
 
 
-ΒΙΒΛΊΑ                                                           [table]
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
   ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
   ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
 
 Primary Key
 
-                                                           [primary key]
+PK_ΒΙΒΛΊΑ                                                  [primary key]
   ΜΟΝΑΔΙΚΌΣ                                                     
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 
 
-REGIONS                                                          [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
 
 Primary Key
 
-                                                           [primary key]
+PK_CUSTOMERS                                               [primary key]
   POSTALCODE                                                    
   COUNTRY                                                       
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  POSTALCODE <--(0..many) SALES.POSTALCODE                              
-  COUNTRY <--(0..many) SALES.COUNTRY                              
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
 
 
-SALES                                                            [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
@@ -204,24 +204,24 @@ SALES                                                            [table]
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  BOOKID (0..many)--> BOOKS.ID                                  
+FK_SALES_BOOK                              [foreign key, with no action]
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
-                                           [foreign key, with no action]
-  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
+FK_SALES_SALESDATA                         [foreign key, with no action]
+  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
-                                           [foreign key, with no action]
-  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
-  COUNTRY (0..many)--> REGIONS.COUNTRY                              
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
 
 
-SALESDATA                                                        [table]
+PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 ------------------------------------------------------------------------
   SALESDATAID                       INTEGER                     
 
 Foreign Keys
 
-                                           [foreign key, with no action]
-  SALESDATAID <--(0..many) SALES.SALESDATAID                              
+FK_SALES_SALESDATA                         [foreign key, with no action]
+  SALESDATAID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.SALESDATAID                              
 

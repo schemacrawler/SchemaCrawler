@@ -18,12 +18,12 @@ Contact details for book authors
 
 Primary Key
 
-PK_AUTHORS                                                 [primary key]
+                                                           [primary key]
   ID                                                            
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 
@@ -42,10 +42,10 @@ along with the latest updated information
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-                                           [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 
@@ -59,18 +59,18 @@ Details for published books
 
 Primary Key
 
-PK_BOOKS                                                   [primary key]
+                                                           [primary key]
   ID                                                            
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+FK_SALES_BOOK                              [foreign key, with no action]
   ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-                                           [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-                                           [foreign key, with no action]
+FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
 
@@ -81,12 +81,12 @@ PUBLIC.BOOKS."Celebrities"                                       [table]
 
 Primary Key
 
-"PK_Celebrities"                                           [primary key]
+                                                           [primary key]
   "Id"                                                          
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 
@@ -97,12 +97,12 @@ PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 
 Primary Key
 
-"PK Celebrity Updates"                                     [primary key]
+                                                           [primary key]
   "Celebrity Id"                                                
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 
@@ -113,7 +113,7 @@ PUBLIC.BOOKS.COUPONS                                             [table]
 
 Primary Key
 
-PK_COUPONS                                                 [primary key]
+                                                           [primary key]
   ID                                                            
 
 
@@ -124,7 +124,7 @@ PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 
 Primary Key
 
-PK_CUSTOMERDATA                                            [primary key]
+                                                           [primary key]
   ID                                                            
 
 
@@ -135,7 +135,7 @@ PUBLIC.BOOKS.CUSTOMERS                                           [table]
 
 Primary Key
 
-PK_CUSTOMERS                                               [primary key]
+                                                           [primary key]
   ID                                                            
 
 
@@ -149,12 +149,12 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10126                                               [primary key]
+                                                           [primary key]
   ID                                                            
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
 
 
@@ -166,12 +166,12 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 
 Primary Key
 
-PK_ΒΙΒΛΊΑ                                                  [primary key]
+                                                           [primary key]
   ΜΟΝΑΔΙΚΌΣ                                                     
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
   ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 
@@ -183,13 +183,13 @@ PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 
 Primary Key
 
-PK_CUSTOMERS                                               [primary key]
+                                                           [primary key]
   POSTALCODE                                                    
   COUNTRY                                                       
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
   COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
@@ -204,13 +204,13 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+FK_SALES_BOOK                              [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
-                                           [foreign key, with no action]
+FK_SALES_SALESDATA                         [foreign key, with no action]
   SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
-                                           [foreign key, with no action]
+FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
@@ -222,6 +222,6 @@ PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 
 Foreign Keys
 
-                                           [foreign key, with no action]
+FK_SALES_SALESDATA                         [foreign key, with no action]
   SALESDATAID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.SALESDATAID                              
 
