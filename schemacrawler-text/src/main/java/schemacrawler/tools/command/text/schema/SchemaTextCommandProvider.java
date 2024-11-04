@@ -82,7 +82,7 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
                 + "trigger names, specific names for routines, "
                 + "or index and primary key names, "
                 + "and fully-qualified table names",
-            "--portable-names=<portable-type>",
+            "<portable> is one of ${COMPLETION-CANDIDATES}",
             "Optional, defaults to none")
         .addOption(
             "portable-names",

@@ -29,7 +29,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.text.schema.options;
 
 public enum PortableType {
-  none,
-  names,
-  broad
+  none("Show fully-qualified names for database objects"),
+  names(
+      "Do not show fully-qualified names, "
+          + "so that output can be diff-ed with "
+          + "other databases of the same type"),
+  broad(
+      "Do not show fully-qualified names, "
+          + "and hide trigger action statements, "
+          + "so that output can be diff-ed with "
+          + "different types of databases"),
+  ;
+
+  private final String description;
+
+  private PortableType(final String description) {
+    this.description = description;
+  }
+
+  public String getDescription() {
+    return description;
+  }
 }

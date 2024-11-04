@@ -17,7 +17,7 @@ Optional, defaults to false
 
 portable
 Allow for easy comparison between databases, by hiding or showing foreign key names, constraint names, trigger names, specific names for routines, or index and primary key names, and fully-qualified table names
---portable-names=<portable-type>
+<portable> is one of ${COMPLETION-CANDIDATES}
 Optional, defaults to none
 
 portable-names
