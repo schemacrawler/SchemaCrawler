@@ -308,7 +308,13 @@ Options:
                            trigger names, specific names for routines, or index
                            and primary key names, and fully-qualified table
                            names
-                         Use one of none, names, broad
+                         Use one of [none] Show fully-qualified names for
+                           database objects, [names] Do not show
+                           fully-qualified names, so that output can be diff-ed
+                           with other databases of the same type, [broad] Do
+                           not show fully-qualified names, and hide trigger
+                           action statements, so that output can be diff-ed
+                           with different types of databases
       --portable-names   DEPRECATED. Use --portable instead
                          Allow for easy comparison between databases, by hiding
                            or showing foreign key names, constraint names,

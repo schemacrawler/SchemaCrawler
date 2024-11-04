@@ -54,11 +54,9 @@ public class CommandLineHelpTest {
     new CommandLineHelpCommand().run();
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(
-        outputOf(streams.out()),
-        hasSameContentAs(
-            classpathResource(
-                COMMANDLINE_HELP_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
+    final String expectedResource =
+        COMMANDLINE_HELP_OUTPUT + testContext.testMethodName() + ".stdout.txt";
+    assertThat(outputOf(streams.out()), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
@@ -101,11 +99,9 @@ public class CommandLineHelpTest {
 
     assertThat(outputOf(streams.err()), hasNoContent());
     if (hasHelpMessage) {
-      assertThat(
-          outputOf(streams.out()),
-          hasSameContentAs(
-              classpathResource(
-                  COMMANDLINE_HELP_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
+      final String expectedResource =
+          COMMANDLINE_HELP_OUTPUT + testContext.testMethodName() + ".stdout.txt";
+      assertThat(outputOf(streams.out()), hasSameContentAs(classpathResource(expectedResource)));
     } else {
       assertThat(outputOf(streams.out()), hasNoContent());
     }

@@ -50,4 +50,9 @@ public enum PortableType {
   public String getDescription() {
     return description;
   }
+
+  @Override
+  public String toString() {
+    return String.format("[%s] %s", name(), description);
+  }
 }
