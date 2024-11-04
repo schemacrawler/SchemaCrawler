@@ -173,7 +173,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     assertThat(serverInfo.size(), equalTo(6));
     final Property property = serverInfo.get(0);
     assertThat(property.getName(), equalTo("CURRENT_SERVER"));
-    assertThat(property.getValue(), equalTo("TEST"));
+    assertThat(property.getValue(), equalTo("SCHCRWLR"));
 
     final Table table = catalog.lookupTable(new SchemaReference(null, schemaName), "AUTHORS").get();
     final Column column = table.lookupColumn("FIRSTNAME").get();
@@ -183,7 +183,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     assertThat(databaseUsers, hasSize(1));
     assertThat(
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
-        hasItems(dbContainer.getUsername()));
+        hasItems(dbContainer.getUsername().toUpperCase()));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())

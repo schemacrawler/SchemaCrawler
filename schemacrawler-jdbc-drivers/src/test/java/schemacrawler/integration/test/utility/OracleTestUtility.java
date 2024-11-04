@@ -29,10 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test.utility;
 
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.OracleContainer;
+import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
 import org.testcontainers.utility.DockerImageName;
 
 public final class OracleTestUtility {
@@ -50,6 +52,11 @@ public final class OracleTestUtility {
         List<Integer> ports = new ArrayList<>();
         ports.add(1521);
         setExposedPorts(ports);
+        waitStrategy =
+            new LogMessageWaitStrategy()
+                .withRegEx(".*DATABASE IS READY TO USE!.*\\s")
+                .withTimes(1)
+                .withStartupTimeout(Duration.of(5, ChronoUnit.MINUTES));
       }
 
       @Override
