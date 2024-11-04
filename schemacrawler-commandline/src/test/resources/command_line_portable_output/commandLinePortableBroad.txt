@@ -14,7 +14,7 @@ Contact details for book authors
   ADDRESS1                          VARCHAR(255)                
   ADDRESS2                          VARCHAR(255)                
   CITY                              VARCHAR(50)                 
-  STATE                             CHARACTER(2)                
+  STATE                             CHAR(2)                     
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 
@@ -47,8 +47,6 @@ Triggers
 
                                                                [trigger]
   after delete, per row
-                                                      [action statement]
-UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
 
 Table Constraints
 
@@ -234,8 +232,8 @@ COUPONS                                                          [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
   DATA                              CLOB                        
-  COUPONS                           INTEGER ARRAY               
-  BOOKS                             VARCHAR(20) ARRAY[10]       
+  COUPONS                           ARRAY                       
+  BOOKS                             ARRAY                       
 
 Primary Key
 
@@ -257,7 +255,7 @@ Table Constraints
 CUSTOMERDATA                                                     [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
-  DATA                              VALID_STRING(20)            
+  DATA                              VARCHAR(20)                 
 
 Primary Key
 
@@ -279,9 +277,9 @@ Table Constraints
 CUSTOMERS                                                        [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
-  FIRSTNAME                         NAME_TYPE NOT NULL          
-  LASTNAME                          NAME_TYPE NOT NULL          
-  AGE                               AGE_TYPE                    
+  FIRSTNAME                         DISTINCT NOT NULL           
+  LASTNAME                          DISTINCT NOT NULL           
+  AGE                               DISTINCT                    
 
 Primary Key
 
@@ -484,14 +482,14 @@ Routines
 
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-  PUBLISHER                         CHARACTER VARYING, out      
+  PUBLISHER                         VARCHAR, out                
 
 
 
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-  NEWPUBLISHER                      CHARACTER VARYING, in       
-  PUBLISHER                         CHARACTER VARYING, out      
+  NEWPUBLISHER                      VARCHAR, in                 
+  PUBLISHER                         VARCHAR, out                
 
 
 
@@ -558,7 +556,7 @@ DELETE_LOB                                        [procedure, no result]
 
 DELETE_UNUSED                                     [procedure, no result]
 ------------------------------------------------------------------------
-  L_IDS                             BIGINT ARRAY, in            
+  L_IDS                             ARRAY, in                   
 
 
 

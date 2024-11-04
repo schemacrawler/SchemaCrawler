@@ -106,6 +106,32 @@ public class CommandLinePortableTest {
   }
 
   @Test
+  public void commandLinePortableBroad(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--portable", PortableType.broad.name());
+    argsMap.put("--tables", ".*");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sequences", ".*");
+    argsMap.put("--synonyms", ".*");
+
+    run(testContext, connectionInfo, argsMap, "schema");
+  }
+
+  @Test
+  public void commandLinePortableNames(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--portable", PortableType.names.name());
+    argsMap.put("--tables", ".*");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sequences", ".*");
+    argsMap.put("--synonyms", ".*");
+
+    run(testContext, connectionInfo, argsMap, "schema");
+  }
+
+  @Test
   public void commandLinePortableOverridesConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
@@ -121,19 +147,6 @@ public class CommandLinePortableTest {
     config.put("schemacrawler.format.show_ordinal_numbers", Boolean.TRUE.toString());
 
     run(testContext, connectionInfo, argsMap, config, "schema");
-  }
-
-  @Test
-  public void commandLinePortableNames(
-      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--portable", PortableType.names.name());
-    argsMap.put("--tables", ".*");
-    argsMap.put("--routines", ".*");
-    argsMap.put("--sequences", ".*");
-    argsMap.put("--synonyms", ".*");
-
-    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
