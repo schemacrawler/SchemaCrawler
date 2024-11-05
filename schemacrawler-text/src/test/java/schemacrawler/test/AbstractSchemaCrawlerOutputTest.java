@@ -55,6 +55,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -77,6 +78,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   private static final String HIDE_DATABASE_OBJECTS_OUTPUT = "hide_database_objects_output/";
   private static final String HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT =
       "hide_dependant_database_objects_output/";
+  private static final String PORTABLE_OUTPUT = "portable_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
@@ -254,6 +256,22 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                     () -> {
                       compareOrdinalOutput(dataSource, textOptions, outputFormat);
                     }));
+  }
+
+  @Test
+  public void comparePortableOutput(final DatabaseConnectionSource dataSource) throws Exception {
+    clean(PORTABLE_OUTPUT);
+
+    assertAll(
+        () -> {
+          comparePortableOutput(dataSource, null);
+        },
+        () -> {
+          comparePortableOutput(dataSource, PortableType.names);
+        },
+        () -> {
+          comparePortableOutput(dataSource, PortableType.broad);
+        });
   }
 
   @Test
@@ -559,6 +577,40 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     assertThat(
         outputOf(executableExecution(dataSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(ORDINAL_OUTPUT + referenceFile), outputFormat));
+  }
+
+  private void comparePortableOutput(
+      final DatabaseConnectionSource dataSource, final PortableType portableType) throws Exception {
+
+    final String referenceFile =
+        String.format("portable.%s.txt", portableType == null ? "null" : portableType.name());
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .includeAllSequences()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    schemaTextOptionsBuilder.noInfo().sortTables(true).portable(portableType);
+
+    final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+
+    final OutputFormat outputFormat = TextOutputFormat.text;
+
+    assertThat(
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        hasSameContentAndTypeAs(classpathResource(PORTABLE_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareRoutinesOutput(
