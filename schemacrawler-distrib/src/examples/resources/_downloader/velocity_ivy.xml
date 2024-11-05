@@ -8,9 +8,9 @@
   </configurations>
   <dependencies>
     <dependency org="org.apache.velocity"
-                name="velocity-engine-scripting" rev="2.4" conf="binaries->default" />
+                name="velocity-engine-scripting" rev="2.4.1" conf="binaries->default" />
     <dependency org="org.apache.velocity"
-                name="velocity-engine-core" rev="2.4" conf="binaries->default" />
+                name="velocity-engine-core" rev="2.4.1" conf="binaries->default" />
 
     <exclude org="org.slf4j" module="slf4j-simple" />
     <exclude org="org.slf4j" module="slf4j-api" />
