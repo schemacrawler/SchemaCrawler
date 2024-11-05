@@ -98,7 +98,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>460</version>
+      <version>464</version>
     </dependency>
     <dependency>
       <groupId>org.duckdb</groupId>
@@ -108,7 +108,7 @@
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
-      <version>3.4.1</version>
+      <version>3.5.0</version>
     </dependency>
 
     <dependency>
