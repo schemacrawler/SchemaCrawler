@@ -13,7 +13,7 @@
     <override org="com.github.jnr" module="jnr-ffi"
               rev="2.2.17" />
     <override org="com.github.jnr" module="jnr-posix"
-              rev="3.1.19" />
+              rev="3.1.20" />
     <override org="org.ow2.asm"
               rev="9.7.1" />
 
