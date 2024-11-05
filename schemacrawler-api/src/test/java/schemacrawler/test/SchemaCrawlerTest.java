@@ -133,7 +133,7 @@ public class SchemaCrawlerTest {
     final String literalSuffixText =
         isBlank(literalSuffix) ? "no literal suffix" : "literal suffix " + literalSuffix;
 
-    final String javaSqlType = "java.sql.Types: " + columnDataType.getJavaSqlType().getName();
+    final String javaSqlType = "java.sql.Types: " + columnDataType.getStandardTypeName();
 
     final String precision = "precision " + columnDataType.getPrecision();
     final String minimumScale = "minimum scale " + columnDataType.getMinimumScale();

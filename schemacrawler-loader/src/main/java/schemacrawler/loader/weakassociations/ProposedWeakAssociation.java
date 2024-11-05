@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.weakassociations;
 
 import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -75,18 +74,16 @@ public final class ProposedWeakAssociation implements ColumnReference {
 
     final boolean isPkColumnPartial = primaryKeyColumn instanceof PartialDatabaseObject;
     final boolean isFkColumnPartial = foreignKeyColumn instanceof PartialDatabaseObject;
-    if (isFkColumnPartial && isPkColumnPartial) {
-      return false;
-    }
-
-    if (!primaryKeyColumn.isColumnDataTypeKnown() || !foreignKeyColumn.isColumnDataTypeKnown()) {
+    if ((isFkColumnPartial && isPkColumnPartial)
+        || !primaryKeyColumn.isColumnDataTypeKnown()
+        || !foreignKeyColumn.isColumnDataTypeKnown()) {
       return false;
     }
 
     final ColumnDataType fkColumnType = foreignKeyColumn.getColumnDataType();
     final ColumnDataType pkColumnType = primaryKeyColumn.getColumnDataType();
     final boolean isValid =
-        fkColumnType.getJavaSqlType().getName().equals(pkColumnType.getJavaSqlType().getName());
+        fkColumnType.getStandardTypeName().equals(pkColumnType.getStandardTypeName());
     return isValid;
   }
 

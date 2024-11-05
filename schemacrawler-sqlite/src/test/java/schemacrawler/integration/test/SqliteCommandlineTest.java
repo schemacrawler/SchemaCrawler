@@ -55,12 +55,15 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import us.fatehi.utility.SystemExitException;
 
 @CaptureSystemStreams
+@ResolveTestContext
 public class SqliteCommandlineTest extends BaseSqliteTest {
 
   private DatabaseConnector dbConnector;
@@ -85,7 +88,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
   }
 
   @Test
-  public void testSqliteMain() throws Exception {
+  public void testSqliteMainList(final TestContext testContext) throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Path sqliteDbFile = createTestDatabase();
@@ -100,7 +103,31 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource("sqlite.main.list.txt")));
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  public void testSqlitePortable(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Path sqliteDbFile = createTestDatabase();
+
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("--server", "sqlite");
+      argsMap.put("--database", sqliteDbFile.toString());
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--command", "schema");
+      argsMap.put("--info-level", InfoLevel.maximum.name());
+      argsMap.put("--portable-names", Boolean.TRUE.toString());
+      argsMap.put("--output-file", out.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+    }
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test

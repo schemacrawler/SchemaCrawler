@@ -14,7 +14,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,6 +26,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schemacrawler.InformationSchemaKey;
@@ -71,7 +71,7 @@ public class DataTypeRetrieverTest {
     final String literalSuffixText =
         isBlank(literalSuffix) ? "no literal suffix" : "literal suffix " + literalSuffix;
 
-    final String javaSqlType = "java.sql.Types: " + columnDataType.getJavaSqlType().getName();
+    final String javaSqlType = "java.sql.Types: " + columnDataType.getStandardTypeName();
 
     final String precision = "precision " + columnDataType.getPrecision();
     final String minimumScale = "minimum scale " + columnDataType.getMinimumScale();

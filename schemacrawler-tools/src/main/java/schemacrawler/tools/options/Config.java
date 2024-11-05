@@ -28,15 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.options;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.EnumUtility.enumValue;
-import static us.fatehi.utility.Utility.isBlank;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.Options;
@@ -98,6 +98,17 @@ public final class Config implements Options {
    */
   public <E extends Enum<E>> E getEnumValue(final String propertyName, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
+
+    // Check if this can be looked up
+    if (!configMap.containsKey(propertyName)) {
+      return defaultValue;
+    }
+    // Attempt to get as an object
+    final Object objValue = configMap.get(propertyName);
+    if (objValue != null && (objValue.getClass() == defaultValue.getClass())) {
+      return (E) objValue;
+    }
+    // Otherwise attempt to match as a string
     final String value = getStringValue(propertyName, defaultValue.name());
     return enumValue(value, defaultValue);
   }
@@ -130,9 +141,8 @@ public final class Config implements Options {
     final String excludePattern = getStringValue(excludePatternProperty, null);
     if (isBlank(includePattern) && isBlank(excludePattern)) {
       return Optional.empty();
-    } else {
-      return Optional.of(new RegularExpressionRule(includePattern, excludePattern));
     }
+    return Optional.of(new RegularExpressionRule(includePattern, excludePattern));
   }
 
   /**
@@ -146,9 +156,8 @@ public final class Config implements Options {
     final Object value = configMap.get(propertyName);
     if (value == null) {
       return defaultValue;
-    } else {
-      return value.toString();
     }
+    return value.toString();
   }
 
   public Map<String, Object> getSubMap(final String propertyName) {
@@ -173,7 +182,7 @@ public final class Config implements Options {
     if (config == null) {
       return;
     }
-    this.configMap.putAll(config.configMap);
+    configMap.putAll(config.configMap);
   }
 
   /**

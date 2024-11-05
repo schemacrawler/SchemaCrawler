@@ -1,4 +1,4 @@
-SchemaCrawler 16.21.4
+SchemaCrawler 16.22.2
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2024, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -302,7 +302,21 @@ Options:
                          --no-remarks=<boolean>
                          <boolean> can be true or false
                          Optional, defaults to false
-      --portable-names   Allow for easy comparison between databases, by hiding
+      --portable=<portable>
+                         Allow for easy comparison between databases, by hiding
+                           or showing foreign key names, constraint names,
+                           trigger names, specific names for routines, or index
+                           and primary key names, and fully-qualified table
+                           names
+                         Use one of [none] Show fully-qualified names for
+                           database objects, [names] Do not show
+                           fully-qualified names, so that output can be diff-ed
+                           with other databases of the same type, [broad] Do
+                           not show fully-qualified names, and hide trigger
+                           action statements, so that output can be diff-ed
+                           with different types of databases
+      --portable-names   DEPRECATED. Use --portable instead
+                         Allow for easy comparison between databases, by hiding
                            or showing foreign key names, constraint names,
                            trigger names, specific names for routines, or index
                            and primary key names, and fully-qualified table

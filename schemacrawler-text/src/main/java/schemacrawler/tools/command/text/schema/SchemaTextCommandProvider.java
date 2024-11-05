@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.text.schema;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-
 import schemacrawler.tools.command.text.schema.options.CommandProviderUtility;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -75,8 +75,19 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
             "<boolean> can be true or false",
             "Optional, defaults to false")
         .addOption(
+            "portable",
+            PortableType.class,
+            "Allow for easy comparison between databases, "
+                + "by hiding or showing foreign key names, constraint names, "
+                + "trigger names, specific names for routines, "
+                + "or index and primary key names, "
+                + "and fully-qualified table names",
+            "<portable> is one of ${COMPLETION-CANDIDATES}",
+            "Optional, defaults to none")
+        .addOption(
             "portable-names",
             Boolean.class,
+            "DEPRECATED. Use --portable instead",
             "Allow for easy comparison between databases, "
                 + "by hiding or showing foreign key names, constraint names, "
                 + "trigger names, specific names for routines, "

@@ -34,12 +34,9 @@ import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -180,35 +177,6 @@ public class CommandLineTest {
   }
 
   @Test
-  public void commandLineOverridesWithSomePortableNames(
-      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--portable-names", Boolean.FALSE.toString());
-
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
-    config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
-
-    run(testContext, connectionInfo, argsMap, config, "brief");
-  }
-
-  @Test
-  public void commandLineOverridesWithTextShowOptionsConfig(
-      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--no-remarks", Boolean.FALSE.toString());
-    argsMap.put("--portable-names", Boolean.FALSE.toString());
-
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.no_remarks", Boolean.TRUE.toString());
-    config.put("schemacrawler.format.show_unqualified_names", Boolean.TRUE.toString());
-    config.put("schemacrawler.format.show_standard_column_type_names", Boolean.TRUE.toString());
-    config.put("schemacrawler.format.show_ordinal_numbers", Boolean.TRUE.toString());
-
-    run(testContext, connectionInfo, argsMap, config, "brief");
-  }
-
-  @Test
   public void commandLineRoutinesWithColumnsSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
@@ -331,7 +299,6 @@ public class CommandLineTest {
   public void commandLineWithDefaults(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--portable-names", Boolean.TRUE.toString());
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
@@ -354,7 +321,6 @@ public class CommandLineTest {
   public void commandLineWithNonDefaults(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--portable-names", Boolean.TRUE.toString());
     argsMap.put("--tables", "");
     argsMap.put("--routines", ".*");
     argsMap.put("--sequences", ".*");
@@ -396,30 +362,6 @@ public class CommandLineTest {
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.identifier_quoting_strategy", "quote_all");
-
-    run(testContext, connectionInfo, argsMap, config, "brief");
-  }
-
-  @Test
-  public void commandLineWithSomePortableNames1(
-      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> argsMap = new HashMap<>();
-    // argsMap.put("--portable-names", Boolean.TRUE.toString());
-
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
-
-    run(testContext, connectionInfo, argsMap, config, "brief");
-  }
-
-  @Test
-  public void commandLineWithSomePortableNames2(
-      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> argsMap = new HashMap<>();
-    // argsMap.put("--portable-names", Boolean.TRUE.toString());
-
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
 
     run(testContext, connectionInfo, argsMap, config, "brief");
   }

@@ -148,7 +148,7 @@ public final class CommandLineHelpCommand implements Runnable {
     final Optional<CommandLine> lookupCommand = lookupCommand(parent, command);
     if (lookupCommand.isPresent()) {
       final CommandLine subCommand = lookupCommand.get();
-      subCommand.usage(System.out, Help.Ansi.AUTO);
+      subCommand.usage(System.out, Help.Ansi.OFF);
       if (isAvailabilityCommand) {
         final CommandSpec commandSpec = subCommand.getCommandSpec();
         final Object userObject = commandSpec.userObject();

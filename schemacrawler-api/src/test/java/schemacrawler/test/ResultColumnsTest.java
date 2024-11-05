@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -42,9 +41,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -99,7 +96,7 @@ public class ResultColumnsTest {
           }
           out.println(
               "  database type: " + column.getColumnDataType().getDatabaseSpecificTypeName());
-          out.println("  type: " + column.getColumnDataType().getJavaSqlType().getName());
+          out.println("  type: " + column.getColumnDataType().getStandardTypeName());
         }
 
         out.println();

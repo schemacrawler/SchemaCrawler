@@ -131,7 +131,7 @@ jobs:
           --also-make \
           clean package
         # Save expected results files
-        .github/scripts/unit-tests-results-output.sh
+        .github/scripts/unit-tests-results-output.sh $(realpath .)
     - id: upload-unit-tests-results-output
       name: Upload expected results files
       uses: actions/upload-artifact@v4

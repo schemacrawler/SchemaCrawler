@@ -196,9 +196,9 @@ Indexes
 CUSTOMERS                                                        [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
-  FIRSTNAME                         NAME_TYPE NOT NULL          
-  LASTNAME                          NAME_TYPE NOT NULL          
-  AGE                               AGE_TYPE                    
+  FIRSTNAME                         DISTINCT NOT NULL           
+  LASTNAME                          DISTINCT NOT NULL           
+  AGE                               DISTINCT                    
 
 Primary Key
 

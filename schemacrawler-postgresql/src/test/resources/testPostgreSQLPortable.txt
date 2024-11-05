@@ -8,15 +8,15 @@ Tables
 authors                                                          [table]
 ------------------------------------------------------------------------
 Contact details for book authors
-  id                                int4 not null               
-  firstname                         varchar(20) not null        
-  lastname                          varchar(20) not null        
-  address1                          varchar(255)                
-  address2                          varchar(255)                
-  city                              varchar(50)                 
-  state                             bpchar(2)                   
-  postalcode                        varchar(10)                 
-  country                           varchar(50)                 
+  id                                INTEGER NOT NULL            
+  firstname                         VARCHAR(20) NOT NULL        
+  lastname                          VARCHAR(20) NOT NULL        
+  address1                          VARCHAR(255)                
+  address2                          VARCHAR(255)                
+  city                              VARCHAR(50)                 
+  state                             CHAR(2)                     
+  postalcode                        VARCHAR(10)                 
+  country                           VARCHAR(50)                 
 
 Primary Key
 
@@ -49,35 +49,23 @@ Triggers
 
                                                                [trigger]
   before insert or delete, per row
-                                                      [action statement]
-EXECUTE FUNCTION books.trg_authors()
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 
 authorscountries                                     [materialized view]
 ------------------------------------------------------------------------
-  id                                int4                        
-  firstname                         varchar(20)                 
-  lastname                          varchar(20)                 
-  country                           varchar(50)                 
+  id                                INTEGER                     
+  firstname                         VARCHAR(20)                 
+  lastname                          VARCHAR(20)                 
+  country                           VARCHAR(50)                 
 
 
 
 authorslist                                                       [view]
 ------------------------------------------------------------------------
-  id                                int4                        
-  firstname                         varchar(20)                 
-  lastname                          varchar(20)                 
+  id                                INTEGER                     
+  firstname                         VARCHAR(20)                 
+  lastname                          VARCHAR(20)                 
 
 
 
@@ -85,9 +73,9 @@ bookauthors                                                      [table]
 ------------------------------------------------------------------------
 Relationship between books and their authors, 
 along with the latest updated information
-  bookid                            int4 not null               
-  authorid                          int4 not null               
-  somedata                          varchar(30)                 
+  bookid                            INTEGER NOT NULL            
+  authorid                          INTEGER NOT NULL            
+  somedata                          VARCHAR(30)                 
 
 Foreign Keys
 
@@ -104,31 +92,25 @@ Indexes
   bookid                            ascending                   
   authorid                          ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
 
 
 books                                                            [table]
 ------------------------------------------------------------------------
 Details for published books
-  id                                int4 not null               
+  id                                INTEGER NOT NULL            
                                     Unique (internal) id for book
-  title                             varchar(255) not null       
+  title                             VARCHAR(255) NOT NULL       
                                     Book title                  
-  description                       varchar(255)                
+  description                       VARCHAR(255)                
                                     Book description
 (Usually the blurb from the book jacket or promotional materials)
-  publisherid                       int4 not null               
+  publisherid                       INTEGER NOT NULL            
                                     Foreign key to the book publisher
-  publicationdate                   date                        
+  publicationdate                   DATE                        
                                     Book publication date       
-  price                             float8(17, 17)              
+  price                             DOUBLE(17, 17)              
                                     Current price for the book  
-  previouseditionid                 int4                        
+  previouseditionid                 INTEGER                     
 
 Primary Key
 
@@ -156,18 +138,12 @@ Table Constraints
                                                      [unique constraint]
 Unique constraint on previous edition of books
 
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
 
 
 "Celebrities"                                                    [table]
 ------------------------------------------------------------------------
-  "Id"                              int4 not null               
-  name                              varchar(20)                 
+  "Id"                              INTEGER NOT NULL            
+  name                              VARCHAR(20)                 
 
 Primary Key
 
@@ -184,16 +160,12 @@ Indexes
                                                           [unique index]
   "Id"                              ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 "Celebrity Updates"                                              [table]
 ------------------------------------------------------------------------
-  "Celebrity Id"                    int4 not null               
-  "UPDATE"                          varchar(20)                 
+  "Celebrity Id"                    INTEGER NOT NULL            
+  "UPDATE"                          VARCHAR(20)                 
 
 Primary Key
 
@@ -210,18 +182,14 @@ Indexes
                                                           [unique index]
   "Celebrity Id"                    ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 coupons                                                          [table]
 ------------------------------------------------------------------------
-  id                                int4 not null               
-  data                              text                        
-  coupons                           int4                        
-  books                             varchar(20)                 
+  id                                INTEGER NOT NULL            
+  data                              VARCHAR                     
+  coupons                           INTEGER                     
+  books                             VARCHAR(20)                 
 
 Primary Key
 
@@ -232,17 +200,13 @@ Indexes
 
                                                           [unique index]
   id                                ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
 
 
 
 customerdata                                                     [table]
 ------------------------------------------------------------------------
-  id                                int4 not null               
-  data                              valid_string                
+  id                                INTEGER NOT NULL            
+  data                              DISTINCT                    
 
 Primary Key
 
@@ -253,19 +217,15 @@ Indexes
 
                                                           [unique index]
   id                                ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
 
 
 
 customers                                                        [table]
 ------------------------------------------------------------------------
-  id                                int4 not null               
-  firstname                         name_type not null          
-  lastname                          name_type not null          
-  age                               age_type                    
+  id                                INTEGER NOT NULL            
+  firstname                         STRUCT NOT NULL             
+  lastname                          STRUCT NOT NULL             
+  age                               STRUCT                      
 
 Primary Key
 
@@ -277,22 +237,14 @@ Indexes
                                                           [unique index]
   id                                ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
 
 
 person                                                           [table]
 ------------------------------------------------------------------------
-  name                              varchar(40)                 
-  tshirt                            tshirt_type                 
+  name                              VARCHAR(40)                 
+  tshirt                            VARCHAR                     
                                     'small', medium', large'    
-  mood                              mood_type                   
+  mood                              VARCHAR                     
                                     'sad', ok', happy'          
 
 
@@ -300,10 +252,10 @@ person                                                           [table]
 publishers                                                       [table]
 ------------------------------------------------------------------------
 List of book publishers
-  id                                serial not null             
+  id                                INTEGER NOT NULL            
                                     auto-incremented            
                                     Unique (internal) id for book publisher
-  publisher                         varchar(255)                
+  publisher                         VARCHAR(255)                
                                     Name of book publisher      
 
 Primary Key
@@ -321,18 +273,14 @@ Indexes
                                                           [unique index]
   id                                ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 "Βιβλία"                                                         [table]
 ------------------------------------------------------------------------
-  "Μοναδικός"                       int2 not null               
-  "Τίτλος"                          varchar(255) not null       
-  "Περιγραφή"                       varchar(255)                
-  "Εκδότης"                         int2 not null               
+  "Μοναδικός"                       SMALLINT NOT NULL           
+  "Τίτλος"                          VARCHAR(255) NOT NULL       
+  "Περιγραφή"                       VARCHAR(255)                
+  "Εκδότης"                         SMALLINT NOT NULL           
 
 Primary Key
 
@@ -350,14 +298,6 @@ Indexes
 Primary key constraint on βιβλία
   "Μοναδικός"                       ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
 
 
 Routines
@@ -368,22 +308,22 @@ Routines
 customadd                            [function, does not return a table]
 ------------------------------------------------------------------------
 Add '1' to a number
-  "returnValue"                     int4, return                
-  one                               int4, in                    
+  "returnValue"                     INTEGER, return             
+  one                               INTEGER, in                 
 
 
 
 customadd                            [function, does not return a table]
 ------------------------------------------------------------------------
-  "returnValue"                     int4, return                
-  one                               int4, in                    
-  two                               int4, in                    
+  "returnValue"                     INTEGER, return             
+  one                               INTEGER, in                 
+  two                               INTEGER, in                 
 
 
 
 trg_authors                          [function, does not return a table]
 ------------------------------------------------------------------------
-  "returnValue"                     trigger, return             
+  "returnValue"                     OTHER, return               
 
 
 

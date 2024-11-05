@@ -49,23 +49,8 @@ Triggers
 
                                                                [trigger]
   after delete, per row
-                                                      [action statement]
--- Triggers
--- HyperSQL, MySQL and DB2 syntax
-CREATE TRIGGER TRG_Authors 
-  AFTER DELETE ON Authors 
-  FOR EACH ROW 
-    UPDATE Publishers 
-      SET Publisher = 'Jacob' 
-      WHERE Publisher = 'John'
 
 Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
                                                       [check constraint]
   STATE                                                         
@@ -111,12 +96,6 @@ Indexes
                                                           [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 
@@ -168,14 +147,6 @@ Table Constraints
 Unique constraint on previous edition of books
   PREVIOUSEDITIONID                                             
 
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
 
 
 "Celebrities"                                                    [table]
@@ -197,10 +168,6 @@ Indexes
 
                                                           [unique index]
   "Id"                              ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
 
 
 
@@ -224,10 +191,6 @@ Indexes
                                                           [unique index]
   "Celebrity Id"                    ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 COUPONS                                                          [table]
@@ -247,18 +210,14 @@ Indexes
                                                           [unique index]
   ID                                ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 CUSTOMERS                                                        [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
-  FIRSTNAME                         NAME_TYPE NOT NULL          
-  LASTNAME                          NAME_TYPE NOT NULL          
-  AGE                               AGE_TYPE                    
+  FIRSTNAME                         DISTINCT NOT NULL           
+  LASTNAME                          DISTINCT NOT NULL           
+  AGE                               DISTINCT                    
 
 Primary Key
 
@@ -269,14 +228,6 @@ Indexes
 
                                                           [unique index]
   ID                                ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 
@@ -305,20 +256,12 @@ Indexes
                                                           [unique index]
   ID                                ascending                   
 
-Table Constraints
-
-                                                      [check constraint]
-
 
 
 X_CUSTOMERS                                                      [table]
 ------------------------------------------------------------------------
   CUSTOMERID                        INTEGER NOT NULL            
   CUSTOMER_NAME                     VARCHAR(80)                 
-
-Table Constraints
-
-                                                      [check constraint]
 
 
 
@@ -333,8 +276,6 @@ X_EMPLOYEES                                                      [table]
                                     generated                   
 
 Table Constraints
-
-                                                      [check constraint]
 
                                                       [check constraint]
   ANNUAL_SALARY                                                 
@@ -364,14 +305,6 @@ Indexes
 
                                                           [unique index]
   "ΜΟΝΑΔΙΚΌς"                       ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
-
-                                                      [check constraint]
-
-                                                      [check constraint]
 
 
 

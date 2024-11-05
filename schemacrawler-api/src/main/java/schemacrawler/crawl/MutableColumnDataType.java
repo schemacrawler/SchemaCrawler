@@ -28,14 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;
@@ -126,12 +124,6 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   @Override
   public String getCreateParameters() {
     return createParameters;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getDatabaseSpecificTypeName() {
-    return getName();
   }
 
   /** {@inheritDoc} */
@@ -357,10 +349,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   }
 
   private void buildFullName(final Identifiers identifiers) {
-    if (identifiers == null) {
-      return;
-    }
-    if (fullName != null) {
+    if ((identifiers == null) || (fullName != null)) {
       return;
     }
     final Schema schema = getSchema();

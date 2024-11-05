@@ -5,72 +5,72 @@ Routines
 
 
 
-NEW_PUBLISHER                                     [procedure, no result]
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-NEW_PUBLISHER                                     [procedure, no result]
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-CUSTOMADD                            [function, does not return a table]
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
 
 
 
-CUSTOMADD                            [function, does not return a table]
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
 
 
 
-ALLOC_BLOCKS                                      [procedure, no result]
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-ALLOC_SINGLE_BLOCK                                [procedure, no result]
+PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-CONVERT_BLOCK                                     [procedure, no result]
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-CREATE_EMPTY_BLOCK                                [procedure, no result]
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-DELETE_BLOCKS                                     [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-DELETE_LOB                                        [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-DELETE_UNUSED                                     [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-DELETE_UNUSED_LOBS                                [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-DIVIDE_BLOCK                                      [procedure, no result]
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
-MERGE_EMPTY_BLOCKS                                [procedure, no result]
+PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS             [procedure, no result]
 ------------------------------------------------------------------------
 
 
@@ -80,12 +80,12 @@ Sequences
 
 
 
-PUBLISHER_ID_SEQ                                              [sequence]
+PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
 ------------------------------------------------------------------------
 
 
 
-LOB_ID                                                        [sequence]
+PUBLIC.SYSTEM_LOBS.LOB_ID                                     [sequence]
 ------------------------------------------------------------------------
 
 
@@ -95,6 +95,6 @@ Synonyms
 
 
 
-PUBLICATIONS                                                   [synonym]
+PUBLIC.BOOKS.PUBLICATIONS                                      [synonym]
 ------------------------------------------------------------------------
 

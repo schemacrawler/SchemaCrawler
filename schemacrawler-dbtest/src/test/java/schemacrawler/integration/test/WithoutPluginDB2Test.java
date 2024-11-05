@@ -52,6 +52,7 @@ import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithSystemProperty;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -63,6 +64,7 @@ import schemacrawler.tools.options.Config;
 public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
+  private String schemaName;
 
   @BeforeEach
   public void createDatabase() {
@@ -71,8 +73,9 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final String username = dbContainer.getUsername();
+    createDataSource(dbContainer.getJdbcUrl(), username, dbContainer.getPassword());
+    schemaName = username.toUpperCase();
 
     createDatabase("/db2.scripts.txt");
   }
@@ -83,7 +86,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
   public void testDB2WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeSchemas(new RegularExpressionInclusionRule(schemaName))
             .includeAllSequences()
             .includeAllSynonyms()
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
@@ -115,7 +118,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
   public void testDB2Portable(final TestContext testContext) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeSchemas(new RegularExpressionInclusionRule(schemaName))
             .includeAllSequences()
             .includeAllSynonyms()
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
@@ -128,7 +131,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noInfo().portableNames();
+    textOptionsBuilder.noInfo().portable(PortableType.broad);
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
     final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 

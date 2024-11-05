@@ -7,7 +7,6 @@ Tables
 
 Authors                                                          [table]
 ------------------------------------------------------------------------
-Contact details for book authors
   Id                                INTEGER NOT NULL            
   FirstName                         VARCHAR(20) NOT NULL        
   LastName                          VARCHAR(20) NOT NULL        
@@ -30,58 +29,43 @@ Foreign Keys
 
 Indexes
 
-                                                [unique clustered index]
-  Id                                ascending                   
+                                                      [non-unique index]
+  LastName                          unknown                     
+  FirstName                         unknown                     
 
                                                       [non-unique index]
-  LastName                          ascending                   
-  FirstName                         ascending                   
-
-                                                      [non-unique index]
-  City                              ascending                   
-  State                             descending                  
-  PostalCode                        ascending                   
-  Country                           ascending                   
+  City                              unknown                     
+  State                             unknown                     
+  PostalCode                        unknown                     
+  Country                           unknown                     
 
 Triggers
 
                                                                [trigger]
-  after insert or delete, per statement
-
-Table Constraints
-
-                                                      [check constraint]
-  State                                                         
-
-
-
-AuthorsCountries                                                  [view]
-------------------------------------------------------------------------
-  Id                                INTEGER NOT NULL            
-  FirstName                         VARCHAR(20) NOT NULL        
-  LastName                          VARCHAR(20) NOT NULL        
-  Country                           VARCHAR(50)                 
-
-Indexes
-
-                                                [unique clustered index]
-  FirstName                         ascending                   
-  LastName                          ascending                   
+  after, per row
+                                                      [action statement]
+CREATE TRIGGER TRG_Authors 
+AFTER DELETE 
+ON Authors 
+FOR EACH ROW 
+BEGIN
+  UPDATE Publishers 
+    SET Publisher = 'Jacob' 
+    WHERE Publisher = 'John';
+END
 
 
 
 AuthorsList                                                       [view]
 ------------------------------------------------------------------------
-  Id                                INTEGER NOT NULL            
-  FirstName                         VARCHAR(20) NOT NULL        
-  LastName                          VARCHAR(20) NOT NULL        
+  Id                                INTEGER                     
+  FirstName                         VARCHAR(20)                 
+  LastName                          VARCHAR(20)                 
 
 
 
 BookAuthors                                                      [table]
 ------------------------------------------------------------------------
-Relationship between books and their authors, 
-along with the latest updated information
   BookId                            INTEGER NOT NULL            
   AuthorId                          INTEGER NOT NULL            
   SomeData                          VARCHAR(30)                 
@@ -97,27 +81,19 @@ Foreign Keys
 Indexes
 
                                                           [unique index]
-  BookId                            ascending                   
-  AuthorId                          ascending                   
+  BookId                            unknown                     
+  AuthorId                          unknown                     
 
 
 
 Books                                                            [table]
 ------------------------------------------------------------------------
-Details for published books
   Id                                INTEGER NOT NULL            
-                                    Unique (internal) id for book
   Title                             VARCHAR(255) NOT NULL       
-                                    Book title                  
   Description                       VARCHAR(255)                
-                                    Book description
-(Usually the blurb from the book jacket or promotional materials)
   PublisherId                       INTEGER NOT NULL            
-                                    Foreign key to the book publisher
   PublicationDate                   DATE                        
-                                    Book publication date       
-  Price                             DOUBLE(53, 0)               
-                                    Current price for the book  
+  Price                             FLOAT                       
   PreviousEditionId                 INTEGER                     
 
 Primary Key
@@ -135,16 +111,8 @@ Foreign Keys
 
 Indexes
 
-                                                [unique clustered index]
-  Id                                ascending                   
-
                                                           [unique index]
-  PreviousEditionId                 ascending                   
-
-Table Constraints
-
-                                                     [unique constraint]
-  PreviousEditionId                                             
+  PreviousEditionId                 unknown                     
 
 
 
@@ -161,12 +129,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(0..1) "Celebrity Updates"."Celebrity Id"                              
-
-Indexes
-
-                                                [unique clustered index]
-  Id                                ascending                   
+  Id <--(0..many) "Celebrity Updates"."Celebrity Id"                              
 
 
 
@@ -183,42 +146,29 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Celebrity Id" (0..1)--> Celebrities.Id                              
-
-Indexes
-
-                                                [unique clustered index]
-  "Celebrity Id"                    ascending                   
+  "Celebrity Id" (0..many)--> Celebrities.Id                              
 
 
 
-Customers                                                        [table]
+Coupons                                                          [table]
 ------------------------------------------------------------------------
   Id                                INTEGER NOT NULL            
-  FirstName                         VARCHAR(100) NOT NULL       
-  LastName                          VARCHAR(100) NOT NULL       
-  Age                               SMALLINT                    
+  Data                              CLOB                        
+  Coupons                           INTEGER                     
+  Books                             VARCHAR(20)                 
 
 Primary Key
 
                                                            [primary key]
   Id                                                            
 
-Indexes
-
-                                                [unique clustered index]
-  Id                                ascending                   
-
 
 
 Publishers                                                       [table]
 ------------------------------------------------------------------------
-List of book publishers
   Id                                INTEGER NOT NULL            
                                     auto-incremented            
-                                    Unique (internal) id for book publisher
   Publisher                         VARCHAR(255)                
-                                    Name of book publisher      
 
 Primary Key
 
@@ -230,23 +180,18 @@ Foreign Keys
                                            [foreign key, with no action]
   Id <--(0..many) Βιβλία.Εκδότης                                
 
-Indexes
-
-                                                [unique clustered index]
-  Id                                ascending                   
-
 
 
 X_EMPLOYEES                                                      [table]
 ------------------------------------------------------------------------
   EMPLOYEEID                        INTEGER NOT NULL            
-  EMPLOYEE_NAME                     VARCHAR(30)                 
+  EMPLOYEE_NAME                     VARCHAR2(30)                
   START_DATE                        DATE                        
   END_DATE                          DATE                        
   ANNUAL_SALARY                     INTEGER                     
-  HOURLY_RATE                       INTEGER                     
+  HOURLY_RATE                                                   
                                     generated                   
-  ACTIVE                            VARCHAR(1) NOT NULL         
+  ACTIVE                                                        
                                     generated                   
 
 
@@ -256,7 +201,7 @@ X_EMPLOYEES                                                      [table]
   Μοναδικός                         SMALLINT NOT NULL           
   Τίτλος                            VARCHAR(255) NOT NULL       
   Περιγραφή                         VARCHAR(255)                
-  Εκδότης                           INTEGER NOT NULL            
+  Εκδότης                           SMALLINT NOT NULL           
 
 Primary Key
 
@@ -270,58 +215,6 @@ Foreign Keys
 
 Indexes
 
-                                                [unique clustered index]
-  Μοναδικός                         ascending                   
-
-
-
-Routines
-========================================================================
-
-
-
-"CustomAdd;0"                                  [function, returns table]
-------------------------------------------------------------------------
-  "@RETURN_VALUE"                   INTEGER, result             
-  "@One"                            INTEGER, in                 
-  "@Two"                            INTEGER, in                 
-
-
-
-"New_Publisher;1"                              [function, returns table]
-------------------------------------------------------------------------
-  "@RETURN_VALUE"                   INTEGER, result             
-  "@Publisher"                      VARCHAR(50), in             
-
-
-
-Sequences
-========================================================================
-
-
-
-Publisher_Id_Seq                                              [sequence]
-------------------------------------------------------------------------
-  increment                         1                           
-  start value                       1                           
-  minimum value                     -9223372036854775808        
-  maximum value                     9223372036854775807         
-  cycle                             false                       
-
-
-
-Synonyms
-========================================================================
-
-
-
-OTHER_TABLE                                                    [synonym]
-------------------------------------------------------------------------
-  OTHER_TABLE --> FAKE_TABLE                                    
-
-
-
-Publications                                                   [synonym]
-------------------------------------------------------------------------
-  Publications --> Books                                        
+                                                          [unique index]
+  Μοναδικός                         unknown                     
 

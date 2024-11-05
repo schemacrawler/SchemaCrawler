@@ -65,6 +65,7 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -77,6 +78,7 @@ import us.fatehi.utility.property.Property;
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
+  private String schemaName;
 
   @BeforeEach
   public void createDatabase() {
@@ -90,8 +92,9 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     // final String traceProperties = ":traceDirectory=C:\\Java" + ";traceFile=trace3" +
     // ";traceFileAppend=false" + ";traceLevel=" + (DB2BaseDataSource.TRACE_ALL) + ";";
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final String username = dbContainer.getUsername();
+    createDataSource(dbContainer.getJdbcUrl(), username, dbContainer.getPassword());
+    schemaName = username.toUpperCase();
 
     createDatabase("/db2.scripts.txt");
   }
@@ -100,7 +103,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
   public void testDB2Dump() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeSchemas(new RegularExpressionInclusionRule(schemaName))
             .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
@@ -126,7 +129,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
   public void testDB2WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeSchemas(new RegularExpressionInclusionRule(schemaName))
             .includeAllSequences()
             .includeAllSynonyms()
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
@@ -170,9 +173,9 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     assertThat(serverInfo.size(), equalTo(6));
     final Property property = serverInfo.get(0);
     assertThat(property.getName(), equalTo("CURRENT_SERVER"));
-    assertThat(property.getValue(), equalTo("TEST"));
+    assertThat(property.getValue(), equalTo("SCHCRWLR"));
 
-    final Table table = catalog.lookupTable(new SchemaReference(null, "DB2INST1"), "AUTHORS").get();
+    final Table table = catalog.lookupTable(new SchemaReference(null, schemaName), "AUTHORS").get();
     final Column column = table.lookupColumn("FIRSTNAME").get();
     assertThat(column.getPrivileges(), is(empty()));
 
@@ -180,7 +183,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     assertThat(databaseUsers, hasSize(1));
     assertThat(
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
-        hasItems("DB2INST1"));
+        hasItems(dbContainer.getUsername().toUpperCase()));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
@@ -215,7 +218,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+            .includeSchemas(new RegularExpressionInclusionRule(schemaName))
             .includeAllSequences()
             .includeAllSynonyms()
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
@@ -228,7 +231,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noInfo().portableNames();
+    textOptionsBuilder.noInfo().portable(PortableType.broad);
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
     final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 

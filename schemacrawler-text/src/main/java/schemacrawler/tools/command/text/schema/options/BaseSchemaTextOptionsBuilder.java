@@ -52,6 +52,8 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
@@ -59,12 +61,17 @@ public abstract class BaseSchemaTextOptionsBuilder<
         B extends BaseSchemaTextOptionsBuilder<B, O>, O extends SchemaTextOptions>
     extends BaseTextOptionsBuilder<BaseSchemaTextOptionsBuilder<B, O>, O> {
 
+  private static final Logger LOGGER =
+      Logger.getLogger(BaseSchemaTextOptionsBuilder.class.getName());
+
   private static final String SHOW_ORDINAL_NUMBERS =
       SCHEMACRAWLER_FORMAT_PREFIX + "show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES =
       SCHEMACRAWLER_FORMAT_PREFIX + "show_standard_column_type_names";
   private static final String HIDE_TABLE_ROW_COUNTS =
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_table_row_counts";
+  private static final String HIDE_TRIGGER_ACTION_STATEMENTS =
+      SCHEMACRAWLER_FORMAT_PREFIX + "hide_trigger_action_statements";
 
   private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX + "hide_remarks";
 
@@ -79,6 +86,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   protected boolean isShowOrdinalNumbers;
   protected boolean isShowStandardColumnTypeNames;
   protected boolean isHideTableRowCounts;
+  protected boolean isHideTriggerActionStatements;
   protected final Map<HideDatabaseObjectsType, Boolean> hideDatabaseObjects;
   protected final Map<HideDependantDatabaseObjectsType, Boolean> hideDependantDatabaseObjects;
   protected final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
@@ -99,6 +107,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isShowStandardColumnTypeNames = config.getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
     isShowOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
     isHideTableRowCounts = config.getBooleanValue(HIDE_TABLE_ROW_COUNTS);
+    isHideTriggerActionStatements = config.getBooleanValue(HIDE_TRIGGER_ACTION_STATEMENTS);
 
     isHideRemarks = config.getBooleanValue(HIDE_REMARKS);
 
@@ -107,18 +116,18 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isAlphabeticalSortForIndexes = config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
 
     for (final HideDatabaseObjectsType databaseObjectsType : HideDatabaseObjectsType.values()) {
-      final boolean booleanValue = config.getBooleanValue(databaseObjectsType.getKey());
-      hideDatabaseObjects.put(databaseObjectsType, booleanValue);
+      final boolean isHidden = config.getBooleanValue(databaseObjectsType.getKey());
+      hideDatabaseObjects.put(databaseObjectsType, isHidden);
     }
     for (final HideDependantDatabaseObjectsType databaseObjectsType :
         HideDependantDatabaseObjectsType.values()) {
-      final boolean booleanValue = config.getBooleanValue(databaseObjectsType.getKey());
-      hideDependantDatabaseObjects.put(databaseObjectsType, booleanValue);
+      final boolean isHidden = config.getBooleanValue(databaseObjectsType.getKey());
+      hideDependantDatabaseObjects.put(databaseObjectsType, isHidden);
     }
     for (final HideDatabaseObjectNamesType databaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
-      final boolean booleanValue = config.getBooleanValue(databaseObjectNamesType.getKey());
-      hideNames.put(databaseObjectNamesType, booleanValue);
+      final boolean isHidden = config.getBooleanValue(databaseObjectNamesType.getKey());
+      hideNames.put(databaseObjectNamesType, isHidden);
     }
 
     // Override values from command line
@@ -137,7 +146,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isShowStandardColumnTypeNames = options.isShowStandardColumnTypeNames();
     isShowOrdinalNumbers = options.isShowOrdinalNumbers();
     isHideTableRowCounts = options.isHideTableRowCounts();
-
+    isHideTriggerActionStatements = options.isHideTriggerActionStatements();
     isHideRemarks = options.isHideRemarks();
 
     isAlphabeticalSortForForeignKeys = options.isAlphabeticalSortForForeignKeys();
@@ -340,6 +349,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
+  public final B noTriggerActionStatements() {
+    return noTriggerActionStatements(true);
+  }
+
+  public final B noTriggerActionStatements(final boolean value) {
+    isHideTriggerActionStatements = value;
+    return (B) this;
+  }
+
   public final B noTriggerNames() {
     return noTriggerNames(true);
   }
@@ -376,20 +394,42 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
-  /** Corresponds to the --portable-names command-line argument. */
-  public final B portableNames() {
-    return portableNames(true);
+  /** Corresponds to the --portable=&lt;value&gt; command-line argument. */
+  public final B portable(final PortableType value) {
+
+    // Turn everything off first
+    withPortableNames(false);
+    withPortableBroad(false);
+
+    if (value != null && value != PortableType.none) {
+      withPortableNames(true);
+      if (value == PortableType.broad) {
+        withPortableBroad(true);
+      }
+    }
+
+    return (B) this;
   }
 
-  /** Corresponds to the --portable-names=&lt;boolean&gt; command-line argument. */
+  /**
+   * Corresponds to the --portable-names command-line argument.
+   *
+   * @see #portable()
+   */
+  @Deprecated
+  public final B portableNames() {
+    withPortableNames(true);
+    return (B) this;
+  }
+
+  /**
+   * Corresponds to the --portable-names=&lt;boolean&gt; command-line argument.
+   *
+   * @see #portable()
+   */
+  @Deprecated
   public final B portableNames(final boolean value) {
-
-    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      hideNames.put(databaseObjectNamesType, value);
-    }
-    isShowUnqualifiedNames = value;
-
+    withPortableNames(value);
     return (B) this;
   }
 
@@ -436,7 +476,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     config.put(SHOW_STANDARD_COLUMN_TYPE_NAMES, isShowStandardColumnTypeNames);
     config.put(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
     config.put(HIDE_TABLE_ROW_COUNTS, isHideTableRowCounts);
-
+    config.put(HIDE_TRIGGER_ACTION_STATEMENTS, isHideTriggerActionStatements);
     config.put(HIDE_REMARKS, isHideRemarks);
 
     config.put(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
@@ -471,7 +511,29 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
     final String portablenamesKey = "portable-names";
     if (config.containsKey(portablenamesKey)) {
-      portableNames(config.getBooleanValue(portablenamesKey));
+      LOGGER.log(
+          Level.WARNING, "The --portable-names option is deprecated - use --portable instead");
+      final boolean isPortableNames = config.getBooleanValue(portablenamesKey, true);
+      portableNames(isPortableNames);
     }
+
+    final String portableKey = "portable";
+    if (config.containsKey(portableKey)) {
+      final PortableType portableType = config.getEnumValue(portableKey, PortableType.none);
+      portable(portableType);
+    }
+  }
+
+  private void withPortableBroad(boolean value) {
+    isShowStandardColumnTypeNames = value;
+    isHideTriggerActionStatements = value;
+  }
+
+  private void withPortableNames(final boolean value) {
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      hideNames.put(databaseObjectNamesType, value);
+    }
+    isShowUnqualifiedNames = value;
   }
 }

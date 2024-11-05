@@ -15,7 +15,13 @@ Hide or show table and column remarks
 <boolean> can be true or false
 Optional, defaults to false
 
+portable
+Allow for easy comparison between databases, by hiding or showing foreign key names, constraint names, trigger names, specific names for routines, or index and primary key names, and fully-qualified table names
+<portable> is one of ${COMPLETION-CANDIDATES}
+Optional, defaults to none
+
 portable-names
+DEPRECATED. Use --portable instead
 Allow for easy comparison between databases, by hiding or showing foreign key names, constraint names, trigger names, specific names for routines, or index and primary key names, and fully-qualified table names
 --portable-names=<boolean>
 <boolean> can be true or false

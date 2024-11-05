@@ -1,13 +1,3 @@
-package schemacrawler.tools.command.text.schema.options;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
-import org.junit.jupiter.api.Test;
-import schemacrawler.tools.options.Config;
-
 /*
 ========================================================================
 SchemaCrawler
@@ -35,6 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
+package schemacrawler.tools.command.text.schema.options;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
+import org.junit.jupiter.api.Test;
+import schemacrawler.tools.options.Config;
+
 public class BaseSchemaTextOptionsBuilderTest {
 
   @Test
@@ -143,6 +144,41 @@ public class BaseSchemaTextOptionsBuilderTest {
   }
 
   @Test
+  public void noTriggerActionStatements() {
+    final Config config = SchemaTextOptionsBuilder.builder().noTriggerActionStatements().toConfig();
+    final SchemaTextOptions options =
+        SchemaTextOptionsBuilder.builder().noTriggerActionStatements().toOptions();
+
+    SchemaTextOptionsBuilder builder;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(false));
+    builder.noTriggerActionStatements();
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(true));
+    builder.noTriggerActionStatements(false);
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(false));
+    builder.noTriggerActionStatements(true);
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(true));
+
+    // From config
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(false));
+    builder.fromConfig(config);
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(true));
+    builder.fromConfig(null);
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(true));
+
+    // From options
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(false));
+    builder.fromOptions(options);
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(true));
+    builder.fromOptions(null);
+    assertThat(builder.toOptions().isHideTriggerActionStatements(), is(true));
+  }
+
+  @Test
   public void noTriggerNames() {
     final Config config = SchemaTextOptionsBuilder.builder().noTriggerNames().toConfig();
     final SchemaTextOptions options =
@@ -178,6 +214,38 @@ public class BaseSchemaTextOptionsBuilderTest {
   }
 
   @Test
+  public void portable() {
+
+    SchemaTextOptionsBuilder builder;
+    SchemaTextOptions options;
+
+    builder = SchemaTextOptionsBuilder.builder();
+    options = builder.toOptions();
+    assertPortableNames(options, false);
+    assertPortableBroad(options, false);
+
+    builder.portable(PortableType.broad);
+    options = builder.toOptions();
+    assertPortableNames(options, true);
+    assertPortableBroad(options, true);
+
+    builder.portable(PortableType.names);
+    options = builder.toOptions();
+    assertPortableNames(options, true);
+    assertPortableBroad(options, false);
+
+    builder.portable(PortableType.none);
+    options = builder.toOptions();
+    assertPortableNames(options, false);
+    assertPortableBroad(options, false);
+
+    builder.portable(null);
+    options = builder.toOptions();
+    assertPortableNames(options, false);
+    assertPortableBroad(options, false);
+  }
+
+  @Test
   public void portableNames() {
 
     SchemaTextOptionsBuilder builder;
@@ -186,35 +254,19 @@ public class BaseSchemaTextOptionsBuilderTest {
     // On and off
     builder = SchemaTextOptionsBuilder.builder();
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(false));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(false));
-    }
+    assertPortableNames(options, false);
 
     builder.portableNames();
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(true));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(true));
-    }
+    assertPortableNames(options, true);
 
     builder.portableNames(false);
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(false));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(false));
-    }
+    assertPortableNames(options, false);
 
     builder.portableNames(true);
     options = builder.toOptions();
-    assertThat(options.isShowUnqualifiedNames(), is(true));
-    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
-        HideDatabaseObjectNamesType.values()) {
-      assertThat(options.is(hideDatabaseObjectNamesType), is(true));
-    }
+    assertPortableNames(options, true);
   }
 
   @Test
@@ -279,5 +331,18 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
+  }
+
+  private void assertPortableNames(final SchemaTextOptions options, final boolean value) {
+    assertThat(options.isShowUnqualifiedNames(), is(value));
+    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      assertThat(options.is(hideDatabaseObjectNamesType), is(value));
+    }
+  }
+
+  private void assertPortableBroad(final SchemaTextOptions options, final boolean value) {
+    assertThat(options.isShowStandardColumnTypeNames(), is(value));
+    assertThat(options.isHideTriggerActionStatements(), is(value));
   }
 }

@@ -11,10 +11,10 @@ services:
     privileged: true
     environment:
       LICENSE: accept
-      DB2INSTANCE: schcrwlr
-      DB2INST1_PASSWORD: schemacrawler
       DBNAME: schcrwlr
+      DB2INSTANCE: books
+      DB2INST1_PASSWORD: SchemaCrawler
       ARCHIVE_LOGS: false
       AUTOCONFIG: false
-      TO_CREATE_SAMPLEDB: true
+      TO_CREATE_SAMPLEDB: false
       REPODB: false

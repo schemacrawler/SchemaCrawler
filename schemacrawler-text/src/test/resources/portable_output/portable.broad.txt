@@ -8,7 +8,7 @@ Tables
 AUTHORS                                                          [table]
 ------------------------------------------------------------------------
 Contact details for book authors
-  ID                                NUMERIC(38, 0) NOT NULL     
+  ID                                INTEGER NOT NULL            
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
   ADDRESS1                          VARCHAR(255)                
@@ -25,7 +25,7 @@ Primary Key
 
 Foreign Keys
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
   ID <--(0..many) BOOKAUTHORS.AUTHORID                              
 
 Indexes
@@ -39,14 +39,14 @@ Indexes
 
                                                       [non-unique index]
   CITY                              ascending                   
-  "SYS_NC00010$"                    descending                  
+  STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
 Triggers
 
                                                                [trigger]
-  after insert or delete, per row
+  after delete, per row
 
 Table Constraints
 
@@ -64,42 +64,11 @@ Table Constraints
 
 
 
-AUTHORSCOUNTRIES                                     [materialized view]
-------------------------------------------------------------------------
-snapshot table for snapshot BOOKS.AUTHORSCOUNTRIES
-  ID                                NUMERIC(38, 0) NOT NULL     
-  FIRSTNAME                         VARCHAR(20) NOT NULL        
-  LASTNAME                          VARCHAR(20) NOT NULL        
-  COUNTRY                           VARCHAR(50)                 
-
-Primary Key
-
-                                                           [primary key]
-  ID                                                            
-
-Indexes
-
-                                                          [unique index]
-  ID                                ascending                   
-
-Table Constraints
-
-                                                      [check constraint]
-  ID                                                            
-
-                                                      [check constraint]
-  FIRSTNAME                                                     
-
-                                                      [check constraint]
-  LASTNAME                                                      
-
-
-
 AUTHORSLIST                                                       [view]
 ------------------------------------------------------------------------
-  ID                                NUMERIC(38, 0) NOT NULL     
-  FIRSTNAME                         VARCHAR(20) NOT NULL        
-  LASTNAME                          VARCHAR(20) NOT NULL        
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
 
 
 
@@ -107,19 +76,25 @@ BOOKAUTHORS                                                      [table]
 ------------------------------------------------------------------------
 Relationship between books and their authors, 
 along with the latest updated information
-  BOOKID                            NUMERIC(38, 0) NOT NULL     
-  AUTHORID                          NUMERIC(38, 0) NOT NULL     
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
   SOMEDATA                          VARCHAR(30)                 
 
 Foreign Keys
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
   AUTHORID (0..many)--> AUTHORS.ID                              
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
   BOOKID (0..many)--> BOOKS.ID                                  
 
 Indexes
+
+                                                      [non-unique index]
+  AUTHORID                          ascending                   
+
+                                                      [non-unique index]
+  BOOKID                            ascending                   
 
                                                           [unique index]
   BOOKID                            ascending                   
@@ -138,20 +113,20 @@ Table Constraints
 BOOKS                                                            [table]
 ------------------------------------------------------------------------
 Details for published books
-  ID                                NUMERIC(38, 0) NOT NULL     
+  ID                                INTEGER NOT NULL            
                                     Unique (internal) id for book
   TITLE                             VARCHAR(255) NOT NULL       
                                     Book title                  
   DESCRIPTION                       VARCHAR(255)                
                                     Book description
 (Usually the blurb from the book jacket or promotional materials)
-  PUBLISHERID                       NUMERIC(38, 0) NOT NULL     
+  PUBLISHERID                       INTEGER NOT NULL            
                                     Foreign key to the book publisher
   PUBLICATIONDATE                   DATE                        
                                     Book publication date       
-  PRICE                             FLOAT(126, 0)               
+  PRICE                             DOUBLE(64, 0)               
                                     Current price for the book  
-  PREVIOUSEDITIONID                 NUMERIC(38, 0)              
+  PREVIOUSEDITIONID                 INTEGER                     
 
 Primary Key
 
@@ -160,10 +135,13 @@ Primary Key
 
 Foreign Keys
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
+  ID <--(0..many) SALES.BOOKID                                  
+
+                                           [foreign key, with no action]
   ID <--(0..many) BOOKAUTHORS.BOOKID                              
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
 Indexes
@@ -172,6 +150,9 @@ Indexes
   ID                                ascending                   
 
                                                           [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+                                                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
 Table Constraints
@@ -192,7 +173,7 @@ Table Constraints
 
 "Celebrities"                                                    [table]
 ------------------------------------------------------------------------
-  "Id"                              NUMERIC(38, 0) NOT NULL     
+  "Id"                              INTEGER NOT NULL            
   NAME                              VARCHAR(20)                 
 
 Primary Key
@@ -202,7 +183,7 @@ Primary Key
 
 Foreign Keys
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
   "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
 
 Indexes
@@ -219,7 +200,7 @@ Table Constraints
 
 "Celebrity Updates"                                              [table]
 ------------------------------------------------------------------------
-  "Celebrity Id"                    NUMERIC(38, 0) NOT NULL     
+  "Celebrity Id"                    INTEGER NOT NULL            
   "UPDATE"                          VARCHAR(20)                 
 
 Primary Key
@@ -229,12 +210,15 @@ Primary Key
 
 Foreign Keys
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
   "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
 
 Indexes
 
                                                           [unique index]
+  "Celebrity Id"                    ascending                   
+
+                                                      [non-unique index]
   "Celebrity Id"                    ascending                   
 
 Table Constraints
@@ -246,10 +230,10 @@ Table Constraints
 
 COUPONS                                                          [table]
 ------------------------------------------------------------------------
-  ID                                NUMERIC(38, 0) NOT NULL     
+  ID                                INTEGER NOT NULL            
   DATA                              CLOB                        
-  COUPONS                           NUMERIC(38, 0)              
-  BOOKS                             VARCHAR(20)                 
+  COUPONS                           ARRAY                       
+  BOOKS                             ARRAY                       
 
 Primary Key
 
@@ -268,24 +252,15 @@ Table Constraints
 
 
 
-PUBLISHERS                                                       [table]
+CUSTOMERDATA                                                     [table]
 ------------------------------------------------------------------------
-List of book publishers
-  ID                                NUMERIC(38, 0) NOT NULL     
-                                    auto-incremented            
-                                    Unique (internal) id for book publisher
-  PUBLISHER                         VARCHAR(255)                
-                                    Name of book publisher      
+  ID                                INTEGER NOT NULL            
+  DATA                              VARCHAR(20)                 
 
 Primary Key
 
                                                            [primary key]
   ID                                                            
-
-Foreign Keys
-
-                                       [foreign key, on delete restrict]
-  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
 
 Indexes
 
@@ -299,11 +274,12 @@ Table Constraints
 
 
 
-TEMP_AUTHOR_LIST                                                 [table]
+CUSTOMERS                                                        [table]
 ------------------------------------------------------------------------
-  ID                                NUMERIC(38, 0) NOT NULL     
-  FIRSTNAME                         VARCHAR(20) NOT NULL        
-  LASTNAME                          VARCHAR(20) NOT NULL        
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         DISTINCT NOT NULL           
+  LASTNAME                          DISTINCT NOT NULL           
+  AGE                               DISTINCT                    
 
 Primary Key
 
@@ -328,43 +304,38 @@ Table Constraints
 
 
 
-X_CUSTOMERS                                                      [table]
+PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
-  CUSTOMERID                        NUMERIC(38, 0) NOT NULL     
-  CUSTOMER_NAME                     VARCHAR(80)                 
+List of book publishers
+  ID                                INTEGER NOT NULL            
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+  PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
 
-Table Constraints
+Primary Key
 
-                                                      [check constraint]
-  CUSTOMERID                                                    
+                                                           [primary key]
+  ID                                                            
 
+Foreign Keys
 
+                                           [foreign key, with no action]
+  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
 
-X_EMPLOYEES                                                      [table]
-------------------------------------------------------------------------
-  EMPLOYEEID                        NUMERIC(38, 0) NOT NULL     
-  EMPLOYEE_NAME                     VARCHAR(30)                 
-  START_DATE                        DATE                        
-  END_DATE                          DATE                        
-  ANNUAL_SALARY                     NUMERIC(38, 0)              
-  HOURLY_RATE                       NUMERIC                     
-                                    generated                   
-  ACTIVE                            CHAR(1)                     
-                                    generated                   
+Indexes
 
-Table Constraints
-
-                                                      [check constraint]
-  EMPLOYEEID                                                    
+                                                          [unique index]
+  ID                                ascending                   
 
 
 
 ΒΙΒΛΊΑ                                                           [table]
 ------------------------------------------------------------------------
-  ΜΟΝΑΔΙΚΌΣ                         NUMERIC(38, 0) NOT NULL     
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
   ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
   ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
-  ΕΚΔΌΤΗΣ                           NUMERIC(38, 0) NOT NULL     
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
 
 Primary Key
 
@@ -373,10 +344,13 @@ Primary Key
 
 Foreign Keys
 
-                                       [foreign key, on delete restrict]
+                                           [foreign key, with no action]
   ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
 
 Indexes
+
+                                                      [non-unique index]
+  ΕΚΔΌΤΗΣ                           ascending                   
 
                                                           [unique index]
   ΜΟΝΑΔΙΚΌΣ                         ascending                   
@@ -394,8 +368,121 @@ Table Constraints
 
 
 
+REGIONS                                                          [table]
+------------------------------------------------------------------------
+  CITY                              VARCHAR(50) NOT NULL        
+  STATE                             VARCHAR(2) NOT NULL         
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+
+Primary Key
+
+                                                           [primary key]
+  POSTALCODE                                                    
+  COUNTRY                                                       
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  POSTALCODE <--(0..many) SALES.POSTALCODE                              
+  COUNTRY <--(0..many) SALES.COUNTRY                              
+
+Indexes
+
+                                                          [unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  CITY                                                          
+
+                                                      [check constraint]
+  STATE                                                         
+
+                                                      [check constraint]
+  POSTALCODE                                                    
+
+                                                      [check constraint]
+  COUNTRY                                                       
+
+
+
+SALES                                                            [table]
+------------------------------------------------------------------------
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+  BOOKID                            INTEGER                     
+  COUPON_ID                         INTEGER                     
+  PERIODENDDATE                     DATE                        
+  TOTALAMOUNT                       DOUBLE(64, 0)               
+  SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+                                           [foreign key, with no action]
+  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
+
+                                           [foreign key, with no action]
+  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> REGIONS.COUNTRY                              
+
+Indexes
+
+                                                      [non-unique index]
+  BOOKID                            ascending                   
+
+                                                      [non-unique index]
+  SALESDATAID                       ascending                   
+
+                                                      [non-unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  POSTALCODE                                                    
+
+                                                      [check constraint]
+  COUNTRY                                                       
+
+
+
+SALESDATA                                                        [table]
+------------------------------------------------------------------------
+  SALESDATAID                       INTEGER                     
+  YEARLYAMOUNT                      DOUBLE(64, 0)               
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  SALESDATAID <--(0..many) SALES.SALESDATAID                              
+
+Indexes
+
+                                                          [unique index]
+  SALESDATAID                       ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+  SALESDATAID                                                   
+
+
+
 Routines
 ========================================================================
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+  PUBLISHER                         VARCHAR, out                
 
 
 
@@ -408,8 +495,14 @@ NEW_PUBLISHER                                     [procedure, no result]
 
 CUSTOMADD                            [function, does not return a table]
 ------------------------------------------------------------------------
-  ONE                               NUMERIC(22, 38), in         
-  TWO                               NUMERIC(22, 38), in         
+  ONE                               INTEGER, in                 
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
 
 
 
@@ -418,38 +511,11 @@ Sequences
 
 
 
-"ISEQ$$_71735"                                                [sequence]
-------------------------------------------------------------------------
-  increment                         1                           
-  start value                                                   
-  minimum value                     1                           
-  maximum value                     9999999999999999999999999999
-  cycle                             false                       
-
-
-
 PUBLISHER_ID_SEQ                                              [sequence]
 ------------------------------------------------------------------------
   increment                         1                           
-  start value                                                   
-  minimum value                     1                           
-  maximum value                     9999999999999999999999999999
+  start value                       1                           
+  minimum value                     -2147483648                 
+  maximum value                     2147483647                  
   cycle                             false                       
-
-
-
-Synonyms
-========================================================================
-
-
-
-OTHER_TABLE                                                    [synonym]
-------------------------------------------------------------------------
-  OTHER_TABLE --> FAKE_TABLE                                    
-
-
-
-PUBLICATIONS                                                   [synonym]
-------------------------------------------------------------------------
-  PUBLICATIONS --> BOOKS                                        
 
