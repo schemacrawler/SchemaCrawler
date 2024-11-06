@@ -1,12 +1,13 @@
 name: "CodeQL Analysis"
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
     branches: [main]
     paths:
-      - '**/*.java'   
+      - '**/*.java'
   schedule:
     - cron: '15 0 15 * *'
 
@@ -14,6 +15,11 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
 
     steps:
     - id: checkout-repo
@@ -25,11 +31,13 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: java
-        config-file: .github/codeql/codeql-config.yml
+        # config-file: .github/codeql/codeql-config.yml
 
     - id: perform-codeql-analysis
       name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:java"
 
     - id: upload-codeql-results
       name: Upload CodeQL results
