@@ -22,10 +22,17 @@ jobs:
       security-events: write
 
     steps:
-    - id: checkout-repo
-      name: Checkout repository
-      uses: actions/checkout@v4
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.4.0
+      with:
+        java-version: 8
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.3
 
+# INIT CODEQL
     - id: init-codeql
       name: Initialize CodeQL
       uses: github/codeql-action/init@v3
@@ -33,12 +40,23 @@ jobs:
         languages: java
         # config-file: .github/codeql/codeql-config.yml
 
+# BUILD AND TEST
+    - id: build-test
+      name: Build all modules and run tests
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          clean package
+          
+# ANALYZE          
     - id: perform-codeql-analysis
       name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:java"
-
+      with:
+        category: "/language:java"
     - id: upload-codeql-results
       name: Upload CodeQL results
       uses: actions/upload-artifact@v4
