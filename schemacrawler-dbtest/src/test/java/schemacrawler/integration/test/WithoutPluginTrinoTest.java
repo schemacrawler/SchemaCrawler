@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.TrinoTestUtility.newTrinoContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -39,10 +40,8 @@ import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.TrinoContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -57,12 +56,9 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @HeavyDatabaseTest("trino")
 @Testcontainers
-public class TrinoTest extends BaseAdditionalDatabaseTest {
+public class WithoutPluginTrinoTest extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse("trinodb/trino");
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer = new TrinoContainer(imageName.withTag("460"));
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newTrinoContainer();
 
   @BeforeEach
   public void createDatabase() {

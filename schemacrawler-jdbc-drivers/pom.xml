@@ -141,6 +141,11 @@
       <artifactId>cassandra</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>trino</artifactId>
+      <scope>test</scope>
+    </dependency>    
 
   </dependencies>
   <build>
