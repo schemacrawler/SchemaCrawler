@@ -3,7 +3,7 @@
 SchemaCrawler release notes.
 
 <a name="v16.22.3"></a>
-## Release 16.22.3 - 2024-11-04
+## Release 16.22.3 - 2024-11-06
 
 - Deprecate `--portable-names` option in favor of `--portable`, 
   which allows a better diff across different systems
@@ -109,8 +109,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.22.2"></a>
-## Release 16.22.2 - 2023-06-03
+<a name="v16.22.3"></a>
+## Release 16.22.3 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
