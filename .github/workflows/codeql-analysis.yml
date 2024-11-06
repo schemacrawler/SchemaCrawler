@@ -38,7 +38,6 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: java
-        # config-file: .github/codeql/codeql-config.yml
 
 # BUILD AND TEST
     - id: build-test
@@ -57,10 +56,3 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:java"
-    - id: upload-codeql-results
-      name: Upload CodeQL results
-      uses: actions/upload-artifact@v4
-      with:
-        name: codeql-results
-        path: ./codeql-results
-        retention-days: 5
