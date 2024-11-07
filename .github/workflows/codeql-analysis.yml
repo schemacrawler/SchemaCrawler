@@ -56,3 +56,10 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:java"
+    - id: upload-results
+      name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: java_sarif
+        path: .results/java.sarif
+        retention-days: 5
