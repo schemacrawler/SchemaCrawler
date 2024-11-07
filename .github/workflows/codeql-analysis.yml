@@ -48,7 +48,7 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -DskipTests
+          -DskipTests \
           clean package
           
 # ANALYZE          
