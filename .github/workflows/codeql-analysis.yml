@@ -63,9 +63,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: java_sarif
-<<<<<<< HEAD
-        path: .results/java.sarif
-=======
         path: ./results/java.sarif
->>>>>>> 3f7f14107 (Fix upload path)
         retention-days: 5
