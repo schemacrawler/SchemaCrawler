@@ -16,6 +16,7 @@
 ;,/db/books/34_indexes_A.sql
 #,/db/books/35_generated_columns_A.sql
 #,/db/books/36_hidden_columns_A.sql
+#,/db/books/37_views_json_relational_duality_A.sql
 #,/db/books/40_procedures_A.sql
 #,/db/books/41_functions_A.sql
 @,/db/books/50_triggers_A.sql
