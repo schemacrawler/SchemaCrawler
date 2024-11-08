@@ -29,8 +29,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -46,13 +44,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
+import static us.fatehi.utility.Utility.isBlank;
 
 public class DatabaseScriptsTest {
 
@@ -87,10 +85,7 @@ public class DatabaseScriptsTest {
       if (this == obj) {
         return true;
       }
-      if (obj == null) {
-        return false;
-      }
-      if (getClass() != obj.getClass()) {
+      if ((obj == null) || (getClass() != obj.getClass())) {
         return false;
       }
       final DatabaseScriptSection other = (DatabaseScriptSection) obj;
@@ -113,18 +108,16 @@ public class DatabaseScriptsTest {
     public boolean matches(final String line) {
       if (line != null) {
         return line.contains(toString());
-      } else {
-        return false;
       }
+      return false;
     }
 
     @Override
     public String toString() {
       if (section[1] == 0) {
         return String.format("%02d_%s", section[0], name[0]);
-      } else {
-        return String.format("%02d_%s_%02d_%s", section[0], name[0], section[1], name[1]);
       }
+      return String.format("%02d_%s_%02d_%s", section[0], name[0], section[1], name[1]);
     }
 
     private DatabaseScriptsTest getEnclosingInstance() {
@@ -190,7 +183,7 @@ public class DatabaseScriptsTest {
   @BeforeEach
   public void setup() throws IOException {
     booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
-    assertThat(booksDatabaseScriptSections.size(), is(31));
+    assertThat(booksDatabaseScriptSections.size(), is(32));
   }
 
   private String getScriptName(final String path) {
