@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>16.22.3</version>
+    <version>16.23.1</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler</artifactId>
@@ -100,7 +100,7 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2000-2024 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright © 2000-2025 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
               <skip>false</skip>
             </configuration>
@@ -136,7 +136,7 @@
                     <Product>SchemaCrawler</Product>
                     <Version>${project.version}</Version>
                     <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
-                    <Copyright>Copyright (c) 2000-2024, Sualeh Fatehi</Copyright>
+                    <Copyright>Copyright (c) 2000-2025, Sualeh Fatehi</Copyright>
                     <Website>https://www.SchemaCrawler.com</Website>
                   </manifestEntries>
                 </transformer>

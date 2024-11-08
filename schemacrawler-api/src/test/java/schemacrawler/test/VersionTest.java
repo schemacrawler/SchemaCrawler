@@ -2,7 +2,7 @@
 ========================================================================
 SchemaCrawler
 http://www.schemacrawler.com
-Copyright (c) 2000-2024, Sualeh Fatehi <sualeh@hotmail.com>.
+Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ public class VersionTest {
   public void version(final CapturedSystemStreams streams) throws Exception {
     Version.main(new String[0]);
 
-    assertThat(contentsOf(streams.out()), startsWith("SchemaCrawler 16.22."));
+    assertThat(contentsOf(streams.out()), startsWith("SchemaCrawler 16.23."));
     assertThat(outputOf(streams.err()), hasNoContent());
   }
 }
