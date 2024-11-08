@@ -22,7 +22,7 @@
   `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-tables ".*\.Employee" --children 1 --output-file share/employee-table-children.pdf`
 - Show variations of the diagram
   - Tables only with `--table-types table`
-  - Portable names with `--portable-names` - schema colors are preserved
+  - Portable names with `--portable=names` - schema colors are preserved
   - Diagram title with `--title "Employee and Related Tables"`
   - Show only important columns with `--command brief`
   - Show indexes on the diagram with `--command details`

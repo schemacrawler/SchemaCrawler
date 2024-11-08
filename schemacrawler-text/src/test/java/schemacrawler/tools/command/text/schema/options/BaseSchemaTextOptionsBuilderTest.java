@@ -246,30 +246,6 @@ public class BaseSchemaTextOptionsBuilderTest {
   }
 
   @Test
-  public void portableNames() {
-
-    SchemaTextOptionsBuilder builder;
-    SchemaTextOptions options;
-
-    // On and off
-    builder = SchemaTextOptionsBuilder.builder();
-    options = builder.toOptions();
-    assertPortableNames(options, false);
-
-    builder.portableNames();
-    options = builder.toOptions();
-    assertPortableNames(options, true);
-
-    builder.portableNames(false);
-    options = builder.toOptions();
-    assertPortableNames(options, false);
-
-    builder.portableNames(true);
-    options = builder.toOptions();
-    assertPortableNames(options, true);
-  }
-
-  @Test
   public void sorts() {
     final Config config =
         SchemaTextOptionsBuilder.builder()

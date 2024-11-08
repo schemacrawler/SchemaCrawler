@@ -84,18 +84,6 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
                 + "and fully-qualified table names",
             "<portable> is one of ${COMPLETION-CANDIDATES}",
             "Optional, defaults to none")
-        .addOption(
-            "portable-names",
-            Boolean.class,
-            "DEPRECATED. Use --portable instead",
-            "Allow for easy comparison between databases, "
-                + "by hiding or showing foreign key names, constraint names, "
-                + "trigger names, specific names for routines, "
-                + "or index and primary key names, "
-                + "and fully-qualified table names",
-            "--portable-names=<boolean>",
-            "<boolean> can be true or false",
-            "Optional, defaults to false")
         // Sort options
         .addOption(
             "sort-columns",
