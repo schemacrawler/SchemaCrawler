@@ -28,7 +28,7 @@ options to change what you see on the database diagram. Here are a few
 variations, with examples in SchemaCrawler's HTML output format:
 
 - Suppress schema names and foreign key names, using the
-  `--portable-names` command-line option [(see
+  `--portable=names` command-line option [(see
   HTML output)](html-examples/html_2_portablenames.html).
 - Show significant columns, such as primary and foreign key columns,
   and columns that are part of unique indexes. Use the

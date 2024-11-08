@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.23.3"></a>
+## Release 16.23.3 - 2024-11-06
+
+- Remove deprecated `--portable-names` option 
+
+
 <a name="v16.22.3"></a>
 ## Release 16.22.3 - 2024-11-06
 

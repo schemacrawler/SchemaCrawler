@@ -58,6 +58,7 @@ import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import us.fatehi.utility.SystemExitException;
@@ -120,7 +121,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
       argsMap.put("--no-info", Boolean.TRUE.toString());
       argsMap.put("--command", "schema");
       argsMap.put("--info-level", InfoLevel.maximum.name());
-      argsMap.put("--portable-names", Boolean.TRUE.toString());
+      argsMap.put("--portable", PortableType.names.name());
       argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));

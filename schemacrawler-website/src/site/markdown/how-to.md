@@ -156,7 +156,7 @@ diff friendly output.
 
 ### <a name="portable-names">How to hide display of object names that can change from server to server</a>
 
-Use the `--portable-names=true` command-line option to allow for easy comparison between
+Use the `--portable=names` or `--portable=broad` command-line option to allow for easy comparison between
 databases, by hiding foreign key names, constraint names, trigger names, specific names for
 procedures, and index and primary key names, and not showing the fully-qualified table name.
 
@@ -186,7 +186,7 @@ and primary key names are not explicitly provided while creating a schema, most 
 systems assign default names. These names can show up as spurious diffs in SchemaCrawler
 output. Change the configuration for the following properties in your
 `schemacrawler.config.properties` file. All of these names can be hidden by using the
-`--portable-names` command-line option.
+`--portable=names` command-line option.
 
 ```
 schemacrawler.format.hide_primarykey_names=false

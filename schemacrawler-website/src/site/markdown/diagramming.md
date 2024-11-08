@@ -43,7 +43,7 @@ SchemaCrawler allows editing diagram via third-party applications. See below for
 
 SchemaCrawler offers several options to change what you see on the database diagram. Here are a few variations:
 
-- Suppress schema names and foreign key names, using the `--portable-names` command-line option.
+- Suppress schema names and foreign key names, using the `--portable=names` command-line option.
 <br />
 <a href="diagram-examples/diagram_2_portablenames.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_2_portablenames.png" style="width: 200px;" />

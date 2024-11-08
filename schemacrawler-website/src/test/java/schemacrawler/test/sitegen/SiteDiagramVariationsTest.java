@@ -36,23 +36,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-
+import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.OnlyRunWithGraphviz;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
+import schemacrawler.tools.command.text.schema.options.PortableType;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -97,7 +96,7 @@ public class SiteDiagramVariationsTest {
   public void diagram(final TestContext testContext, final DatabaseConnectionInfo connectionInfo)
       throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "maximum");
+    argsMap.put("--info-level", InfoLevel.maximum.name());
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
@@ -106,11 +105,11 @@ public class SiteDiagramVariationsTest {
   public void diagram_10_no_schema_colors(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--info-level", InfoLevel.standard.name());
+    argsMap.put("--portable", PortableType.names.name());
 
     final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.no_schema_colors", "true");
+    config.put("schemacrawler.format.no_schema_colors", Boolean.TRUE.toString());
 
     run(connectionInfo, "schema", argsMap, config, diagramPath(testContext));
   }
@@ -119,7 +118,7 @@ public class SiteDiagramVariationsTest {
   public void diagram_11_title(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
+    argsMap.put("--info-level", InfoLevel.standard.name());
     argsMap.put("--title", "Books and Publishers Schema");
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
@@ -129,8 +128,8 @@ public class SiteDiagramVariationsTest {
   public void diagram_12_graphviz_attributes(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--info-level", InfoLevel.standard.name());
+    argsMap.put("--portable", PortableType.names.name());
 
     final Map<String, String> config = new HashMap<>();
     final String GRAPH = "schemacrawler.graph.graphviz.graph.";
@@ -154,7 +153,7 @@ public class SiteDiagramVariationsTest {
   public void diagram_13_indexes(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
+    argsMap.put("--info-level", InfoLevel.standard.name());
 
     run(connectionInfo, "details", argsMap, null, diagramPath(testContext));
   }
@@ -163,8 +162,8 @@ public class SiteDiagramVariationsTest {
   public void diagram_14_weak_associations(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
-    argsMap.put("--weak-associations", "true");
+    argsMap.put("--info-level", InfoLevel.standard.name());
+    argsMap.put("--weak-associations", Boolean.TRUE.toString());
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
@@ -173,8 +172,8 @@ public class SiteDiagramVariationsTest {
   public void diagram_2_portablenames(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "maximum");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--info-level", InfoLevel.maximum.name());
+    argsMap.put("--portable", PortableType.names.name());
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
@@ -183,9 +182,9 @@ public class SiteDiagramVariationsTest {
   public void diagram_3_important_columns(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
+    argsMap.put("--info-level", InfoLevel.standard.name());
     argsMap.put("c", "brief");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--portable", PortableType.names.name());
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
@@ -194,11 +193,11 @@ public class SiteDiagramVariationsTest {
   public void diagram_4_ordinals(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--info-level", InfoLevel.standard.name());
+    argsMap.put("--portable", PortableType.names.name());
 
     final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.show_ordinal_numbers", "true");
+    config.put("schemacrawler.format.show_ordinal_numbers", Boolean.TRUE.toString());
 
     run(connectionInfo, "schema", argsMap, config, diagramPath(testContext));
   }
@@ -207,9 +206,9 @@ public class SiteDiagramVariationsTest {
   public void diagram_5_alphabetical(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
-    argsMap.put("--portable-names", "true");
-    argsMap.put("--sort-columns", "true");
+    argsMap.put("--info-level", InfoLevel.standard.name());
+    argsMap.put("--portable", PortableType.names.name());
+    argsMap.put("--sort-columns", Boolean.TRUE.toString());
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
@@ -218,8 +217,8 @@ public class SiteDiagramVariationsTest {
   public void diagram_6_grep(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "maximum");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--info-level", InfoLevel.maximum.name());
+    argsMap.put("--portable", PortableType.names.name());
     argsMap.put("--grep-columns", ".*\\.BOOKS\\..*\\.ID");
     argsMap.put("--table-types", "TABLE");
 
@@ -230,12 +229,12 @@ public class SiteDiagramVariationsTest {
   public void diagram_8_no_cardinality(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "standard");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--info-level", InfoLevel.standard.name());
+    argsMap.put("--portable", PortableType.names.name());
 
     final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
-    config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
+    config.put("schemacrawler.graph.show.primarykey.cardinality", Boolean.FALSE.toString());
+    config.put("schemacrawler.graph.show.foreignkey.cardinality", Boolean.FALSE.toString());
 
     run(connectionInfo, "schema", argsMap, config, diagramPath(testContext));
   }
@@ -244,9 +243,9 @@ public class SiteDiagramVariationsTest {
   public void diagram_9_row_counts(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "maximum");
-    argsMap.put("--load-row-counts", "true");
-    argsMap.put("--portable-names", "true");
+    argsMap.put("--info-level", InfoLevel.maximum.name());
+    argsMap.put("--load-row-counts", Boolean.TRUE.toString());
+    argsMap.put("--portable", PortableType.names.name());
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }

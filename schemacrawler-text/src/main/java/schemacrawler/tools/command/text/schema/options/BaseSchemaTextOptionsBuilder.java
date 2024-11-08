@@ -52,7 +52,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
@@ -411,28 +410,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
-  /**
-   * Corresponds to the --portable-names command-line argument.
-   *
-   * @see #portable()
-   */
-  @Deprecated
-  public final B portableNames() {
-    withPortableNames(true);
-    return (B) this;
-  }
-
-  /**
-   * Corresponds to the --portable-names=&lt;boolean&gt; command-line argument.
-   *
-   * @see #portable()
-   */
-  @Deprecated
-  public final B portableNames(final boolean value) {
-    withPortableNames(value);
-    return (B) this;
-  }
-
   public final B showOrdinalNumbers() {
     return showOrdinalNumbers(true);
   }
@@ -507,14 +484,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     final String noremarksKey = "no-remarks";
     if (config.containsKey(noremarksKey)) {
       noRemarks(config.getBooleanValue(noremarksKey));
-    }
-
-    final String portablenamesKey = "portable-names";
-    if (config.containsKey(portablenamesKey)) {
-      LOGGER.log(
-          Level.WARNING, "The --portable-names option is deprecated - use --portable instead");
-      final boolean isPortableNames = config.getBooleanValue(portablenamesKey, true);
-      portableNames(isPortableNames);
     }
 
     final String portableKey = "portable";
