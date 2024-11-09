@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.MariaDBTestUtility.newMariaDBContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -38,10 +39,8 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -59,19 +58,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @Testcontainers
 public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse(MariaDBContainer.NAME);
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new MariaDBContainer<>(imageName.withTag("11.5.2-noble"))
-          .withEnv("MARIADB_DATABASE", "books")
-          .withEnv("MARIADB_ROOT_USER", "root")
-          .withEnv("MARIADB_ROOT_PASSWORD", "schemacrawler")
-          .withEnv("MARIADB_USER", "schemacrawler")
-          .withEnv("MARIADB_PASSWORD", "schemacrawler")
-          .withDatabaseName("books")
-          .withUsername("root")
-          .withPassword("schemacrawler");
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newMariaDBContainer();
 
   @BeforeEach
   public void createDatabase() {
