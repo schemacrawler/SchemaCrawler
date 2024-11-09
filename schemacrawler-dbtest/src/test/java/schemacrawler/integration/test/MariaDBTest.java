@@ -63,11 +63,15 @@ public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new MariaDBContainer<>(imageName.withTag("10.7.3"))
-          .withCommand(
-              "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
-          .withUsername("schemacrawler")
-          .withDatabaseName("books");
+      new MariaDBContainer<>(imageName.withTag("11.5.2-noble"))
+          .withEnv("MARIADB_DATABASE", "books")
+          .withEnv("MARIADB_ROOT_USER", "root")
+          .withEnv("MARIADB_ROOT_PASSWORD", "schemacrawler")
+          .withEnv("MARIADB_USER", "schemacrawler")
+          .withEnv("MARIADB_PASSWORD", "schemacrawler")
+          .withDatabaseName("books")
+          .withUsername("root")
+          .withPassword("schemacrawler");
 
   @BeforeEach
   public void createDatabase() {
@@ -87,7 +91,7 @@ public class MariaDBTest extends BaseAdditionalDatabaseTest {
   public void testMariaDBWithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("books"))
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
             .includeAllSequences()
             .includeAllSynonyms()
             .includeAllRoutines();
