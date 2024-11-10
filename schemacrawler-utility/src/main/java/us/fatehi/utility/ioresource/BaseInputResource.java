@@ -41,8 +41,6 @@ abstract class BaseInputResource implements InputResource {
 
   private static final Logger LOGGER = Logger.getLogger(BaseInputResource.class.getName());
 
-  protected abstract InputStream openNewInputStream() throws IOException;
-
   @Override
   public final BufferedReader openNewInputReader(final Charset charset) throws IOException {
     requireNonNull(charset, "No input charset provided");

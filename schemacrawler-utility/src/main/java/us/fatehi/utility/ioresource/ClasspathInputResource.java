@@ -52,7 +52,7 @@ public class ClasspathInputResource extends BaseInputResource {
   }
 
   @Override
-  protected InputStream openNewInputStream() throws IOException {
+  public InputStream openNewInputStream() throws IOException {
     final InputStream inputStream = url.openStream();
     return inputStream;
   }

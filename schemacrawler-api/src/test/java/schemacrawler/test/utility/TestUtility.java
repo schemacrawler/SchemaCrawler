@@ -35,7 +35,6 @@ import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -56,17 +55,12 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -94,7 +88,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -171,14 +164,12 @@ public final class TestUtility {
   }
 
   public static Path copyResourceToTempFile(final String resource) throws IOException {
-    if (isBlank(resource)) {
-      throw new IOException("Cannot read empty resource");
-    }
+    final InputResource inputResource = new ClasspathInputResource(resource);
+    final Path tempFile =
+        IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
+    Files.copy(inputResource.openNewInputStream(), tempFile);
 
-    try (final InputStream resourceStream = TestUtility.class.getResourceAsStream(resource)) {
-      requireNonNull(resourceStream, "Resource not found, " + resource);
-      return writeToTempFile(resourceStream);
-    }
+    return tempFile;
   }
 
   public static ResultSet createMockResultSet(final String[] columnNames, final Object[][] data)
@@ -218,11 +209,6 @@ public final class TestUtility {
     } catch (final IOException e) {
       // Ignore exception
     }
-  }
-
-  public static <V> V failTestSetup(final String message) {
-    testAborted(message, null);
-    return null;
   }
 
   public static <V> V failTestSetup(final String message, final Exception e) {
@@ -411,26 +397,6 @@ public final class TestUtility {
     return null;
   }
 
-  private static void fastChannelCopy(final ReadableByteChannel src, final WritableByteChannel dest)
-      throws IOException {
-    final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
-    while (src.read(buffer) != -1) {
-      // prepare the buffer to be drained
-      buffer.flip();
-      // write to the channel, may block
-      dest.write(buffer);
-      // If partial transfer, shift remainder down
-      // If buffer is empty, same as doing clear()
-      buffer.compact();
-    }
-    // EOF will leave buffer in fill state
-    buffer.flip();
-    // make sure the buffer is fully drained.
-    while (buffer.hasRemaining()) {
-      dest.write(buffer);
-    }
-  }
-
   private static String lineMiscompare(final String expectedline, final String actualLine) {
     final StringBuilder buffer = new StringBuilder();
     buffer.append(">> expected followed by actual:").append("\n");
@@ -479,18 +445,6 @@ public final class TestUtility {
         });
     final Reader reader = new FileInputResource(testOutputFile).openNewInputReader(UTF_8);
     builder.parse(new InputSource(reader));
-  }
-
-  private static Path writeToTempFile(final InputStream resourceStream) throws IOException {
-    final Path tempFile =
-        IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
-
-    try (final OutputStream tempFileStream =
-        newOutputStream(tempFile, WRITE, TRUNCATE_EXISTING, CREATE)) {
-      fastChannelCopy(Channels.newChannel(resourceStream), Channels.newChannel(tempFileStream));
-    }
-
-    return tempFile;
   }
 
   private TestUtility() {

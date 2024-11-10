@@ -48,7 +48,7 @@ public class FileInputResource extends BaseInputResource {
   }
 
   @Override
-  protected InputStream openNewInputStream() throws IOException {
+  public InputStream openNewInputStream() throws IOException {
     final InputStream reader = newInputStream(inputFile);
     return reader;
   }
