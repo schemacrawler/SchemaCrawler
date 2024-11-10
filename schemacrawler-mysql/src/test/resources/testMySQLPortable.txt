@@ -85,6 +85,12 @@ Indexes
   `BookId`                          ascending                   
   `AuthorId`                        ascending                   
 
+Table Constraints
+
+                                                     [unique constraint]
+  `BookId`                                                      
+  `AuthorId`                                                    
+
 
 
 books                                                            [table]
@@ -125,6 +131,11 @@ Indexes
 
                                                           [unique index]
   `PreviousEditionId`               ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+  `PreviousEditionId`                                           
 
 
 
@@ -222,6 +233,11 @@ Indexes
 
                                                           [unique index]
   `Id`                              ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+  `Id`                                                          
 
 
 
