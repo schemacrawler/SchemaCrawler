@@ -253,16 +253,14 @@ public final class TestUtility {
    *
    * @param inputResource Properties resource.
    * @return Properties
+   * @throws IOException
    */
-  public static Properties loadProperties(final InputResource inputResource) {
-    requireNonNull(inputResource, "No input resource provided");
-
+  public static Properties loadPropertiesFromClasspath(final String resource) throws IOException {
+    final InputResource inputResource = new ClasspathInputResource(resource);
     try (final Reader reader = inputResource.openNewInputReader(UTF_8); ) {
       final Properties properties = new Properties();
       properties.load(reader);
       return properties;
-    } catch (final IOException e) {
-      return new Properties();
     }
   }
 
