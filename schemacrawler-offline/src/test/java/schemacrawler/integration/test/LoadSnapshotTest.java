@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
+import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.size;
+import static java.nio.file.StandardOpenOption.READ;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
@@ -38,15 +40,11 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -64,8 +62,8 @@ public class LoadSnapshotTest {
 
   @Test
   public void loadSnapshot() throws Exception {
-    final FileInputStream inputFileStream = new FileInputStream(serializedCatalogFile.toFile());
-    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(inputFileStream);
+    final JavaSerializedCatalog serializedCatalog =
+        new JavaSerializedCatalog(newInputStream(serializedCatalogFile, READ));
     final Catalog catalog = serializedCatalog.getCatalog();
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);

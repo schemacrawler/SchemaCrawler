@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.serialize;
 
+import static java.nio.file.Files.newInputStream;
+import static java.nio.file.StandardOpenOption.READ;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -38,12 +40,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -79,7 +78,7 @@ public class CatalogJavaSerializationTest {
     assertThat(fileHeaderOf(testOutputFile), is("ACED"));
 
     final JavaSerializedCatalog javaSerializedCatalogForLoad =
-        new JavaSerializedCatalog(Files.newInputStream(testOutputFile));
+        new JavaSerializedCatalog(newInputStream(testOutputFile, READ));
     final Catalog catalogDeserialized = javaSerializedCatalogForLoad.getCatalog();
 
     final Schema schemaDeserialized = catalogDeserialized.lookupSchema("PUBLIC.BOOKS").orElse(null);

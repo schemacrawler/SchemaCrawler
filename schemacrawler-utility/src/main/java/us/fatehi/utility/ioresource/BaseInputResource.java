@@ -35,7 +35,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipInputStream;
+import java.util.zip.GZIPInputStream;
 import static java.util.Objects.requireNonNull;
 
 abstract class BaseInputResource implements InputResource {
@@ -60,7 +60,7 @@ abstract class BaseInputResource implements InputResource {
     requireNonNull(charset, "No input charset provided");
 
     final InputStream inputStream;
-    if (isCompressed) {
+    if (!isCompressed) {
       inputStream = openNewInputStream();
       requireNonNull(charset, "No input stream provided");
     } else {
@@ -75,8 +75,7 @@ abstract class BaseInputResource implements InputResource {
 
   private static InputStream openNewCompressedInputStream(final InputStream inputStream)
       throws IOException {
-    final ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-    zipInputStream.getNextEntry();
+    final GZIPInputStream zipInputStream = new GZIPInputStream(inputStream);
     return zipInputStream;
   }
 }
