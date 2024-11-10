@@ -35,6 +35,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipInputStream;
 import static java.util.Objects.requireNonNull;
 
 abstract class BaseInputResource implements InputResource {
@@ -45,14 +46,37 @@ abstract class BaseInputResource implements InputResource {
 
   @Override
   public final BufferedReader openNewInputReader(final Charset charset) throws IOException {
+    return openNewInputReader(charset, false);
+  }
+
+  @Override
+  public final BufferedReader openNewCompressedInputReader(final Charset charset)
+      throws IOException {
+    return openNewInputReader(charset, true);
+  }
+
+  private BufferedReader openNewInputReader(final Charset charset, final boolean isCompressed)
+      throws IOException {
     requireNonNull(charset, "No input charset provided");
 
-    InputStream inputStream = openNewInputStream();
-    requireNonNull(charset, "No input stream provided");
+    final InputStream inputStream;
+    if (isCompressed) {
+      inputStream = openNewInputStream();
+      requireNonNull(charset, "No input stream provided");
+    } else {
+      inputStream = openNewCompressedInputStream(openNewInputStream());
+    }
 
     final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
     LOGGER.log(Level.FINE, String.format("Opened resource <%s> for reading", getDescription()));
 
     return reader;
+  }
+
+  private static InputStream openNewCompressedInputStream(final InputStream inputStream)
+      throws IOException {
+    final ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+    zipInputStream.getNextEntry();
+    return zipInputStream;
   }
 }

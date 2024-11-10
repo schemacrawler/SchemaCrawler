@@ -34,9 +34,7 @@ import static java.nio.file.Files.delete;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.move;
-import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -59,7 +57,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
@@ -70,12 +67,10 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -89,7 +84,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import java.util.zip.ZipInputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.FileUtils;
@@ -107,6 +101,8 @@ import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.FileInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 
 public final class TestUtility {
@@ -146,14 +142,16 @@ public final class TestUtility {
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final Reader referenceReader = readerForResource(referenceFile, isCompressed);
+    final Reader referenceReader =
+        readerForInputResource(new ClasspathInputResource(referenceFile), isCompressed);
     if (referenceReader == null) {
       failures.add("Reference file not available, " + referenceFile);
       contentEquals = false;
     } else if ("png".equals(outputFormat)) {
       contentEquals = true;
     } else {
-      final Reader fileReader = readerForFile(testOutputTempFile, isCompressed);
+      final Reader fileReader =
+          readerForInputResource(new FileInputResource(testOutputTempFile), isCompressed);
       final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
       final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
       contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
@@ -454,48 +452,16 @@ public final class TestUtility {
     return lineMiscompare;
   }
 
-  private static Reader openNewCompressedInputReader(
-      final InputStream inputStream, final Charset charset) throws IOException {
-    final ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-    zipInputStream.getNextEntry();
-    return new InputStreamReader(zipInputStream, charset);
-  }
-
-  private static Reader readerForFile(final Path testOutputTempFile) throws IOException {
-    return readerForFile(testOutputTempFile, false);
-  }
-
-  private static Reader readerForFile(final Path testOutputTempFile, final boolean isCompressed)
-      throws IOException {
-
-    final BufferedReader bufferedReader;
-    if (isCompressed) {
-      final ZipInputStream inputStream =
-          new ZipInputStream(newInputStream(testOutputTempFile, StandardOpenOption.READ));
-      inputStream.getNextEntry();
-
-      bufferedReader = new BufferedReader(new InputStreamReader(inputStream, UTF_8));
-    } else {
-      bufferedReader = newBufferedReader(testOutputTempFile, UTF_8);
-    }
-    return bufferedReader;
-  }
-
-  private static Reader readerForResource(final String resource, final boolean isCompressed)
-      throws IOException {
-    final InputStream inputStream = TestUtility.class.getResourceAsStream("/" + resource);
-    final Reader reader;
-    if (inputStream != null) {
-      final Charset charset = UTF_8;
+  private static Reader readerForInputResource(
+      final InputResource inputResource, final boolean isCompressed) {
+    try {
       if (isCompressed) {
-        reader = openNewCompressedInputReader(inputStream, charset);
-      } else {
-        reader = new InputStreamReader(inputStream, charset);
+        return inputResource.openNewCompressedInputReader(UTF_8);
       }
-    } else {
-      reader = null;
+      return inputResource.openNewInputReader(UTF_8);
+    } catch (final IOException e) {
+      return null;
     }
-    return reader;
   }
 
   private static void testAborted(final String message, final Exception e) {
@@ -526,7 +492,8 @@ public final class TestUtility {
             failures.add(e.getMessage());
           }
         });
-    builder.parse(new InputSource(readerForFile(testOutputFile)));
+    final Reader reader = new FileInputResource(testOutputFile).openNewInputReader(UTF_8);
+    builder.parse(new InputSource(reader));
   }
 
   private static Path writeToTempFile(final InputStream resourceStream) throws IOException {

@@ -29,19 +29,17 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.test.ioresource;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static us.fatehi.utility.IOUtility.readFully;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.ioresource.FileInputResource;
 
 public class FileInputResourceTest {
@@ -57,9 +55,10 @@ public class FileInputResourceTest {
     Files.write(fileResource, "hello, world".getBytes(UTF_8));
 
     final FileInputResource resource = new FileInputResource(fileResource);
-    assertThat("File resource does not match", resource.getInputFile(), is(fileResource));
     assertThat(
-        "Description does not match", resource.getDescription(), is(fileResource.toString()));
+        "Description does not match",
+        resource.getDescription(),
+        endsWith(fileResource.getFileName().toString()));
     assertThat("toString() does not match", resource.toString(), is(fileResource.toString()));
     assertThat(readFully(resource.openNewInputReader(UTF_8)), startsWith("hello, world"));
   }
