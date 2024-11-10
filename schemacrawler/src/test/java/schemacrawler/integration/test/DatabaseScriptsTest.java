@@ -31,7 +31,6 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -51,6 +50,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
 import static us.fatehi.utility.Utility.isBlank;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public class DatabaseScriptsTest {
 
@@ -138,11 +138,8 @@ public class DatabaseScriptsTest {
     final List<String> failedScripts = new ArrayList<>();
     for (final String scriptName : scripts) {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
-      final String scriptsResource = "/" + scriptName;
       try (final BufferedReader reader =
-          new BufferedReader(
-              new InputStreamReader(
-                  DatabaseScriptsTest.class.getResourceAsStream(scriptsResource), UTF_8))) {
+          new BufferedReader(new ClasspathInputResource(scriptName).openNewInputReader(UTF_8))) {
         final List<String> lines =
             reader.lines().filter(line -> !isBlank(line)).collect(Collectors.toList());
         assertThat(lines, is(not(empty())));

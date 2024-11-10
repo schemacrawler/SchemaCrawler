@@ -31,7 +31,6 @@ package schemacrawler.testdb;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.SQLRuntimeException;
@@ -71,7 +70,7 @@ public class TestSchemaCreator implements Runnable {
 
     try (final BufferedReader scriptReader =
         new BufferedReader(
-            new InputStreamReader(SqlScript.class.getResourceAsStream(scriptResource), UTF_8)); ) {
+            new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)); ) {
       new SqlScript(scriptReader, delimiter, connection).run();
     } catch (final IOException e) {
       throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
