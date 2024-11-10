@@ -441,8 +441,9 @@ public final class TestUtility {
             failures.add(e.getMessage());
           }
         });
-    final Reader reader = new FileInputResource(testOutputFile).openNewInputReader(UTF_8);
-    builder.parse(new InputSource(reader));
+    try (final Reader reader = new FileInputResource(testOutputFile).openNewInputReader(UTF_8); ) {
+      builder.parse(new InputSource(reader));
+    }
   }
 
   private TestUtility() {
