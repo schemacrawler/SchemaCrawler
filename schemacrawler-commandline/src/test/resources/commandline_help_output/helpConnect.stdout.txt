@@ -6,17 +6,31 @@ first, before running SchemaCrawler
 
       --password=<password>
                           Database password
+      --password=<password>
+                          Database password
+      --password:env=<environment variable name>
+                          Database password, from an environmental variable
+                            value
       --password:env=<environment variable name>
                           Database password, from an environmental variable
                             value
       --password:file=<path to password file>
                           Database password, read from a file
+      --password:file=<path to password file>
+                          Database password, read from a file
+      --password:prompt   Database password, prompted from the console
       --password:prompt   Database password, prompted from the console
       --user=<user>       Database user
+      --user=<user>       Database user
+      --user:env=<environment variable name>
+                          Database user, from an environmental variable value
       --user:env=<environment variable name>
                           Database user, from an environmental variable value
       --user:file=<path to user file>
                           Database user, read from a file
+      --user:file=<path to user file>
+                          Database user, read from a file
+      --user:prompt       Database user, prompted from the console
       --user:prompt       Database user, prompted from the console
 
 For connecting to specific databases, use
