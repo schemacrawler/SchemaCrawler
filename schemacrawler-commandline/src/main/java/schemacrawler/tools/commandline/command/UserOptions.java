@@ -40,25 +40,25 @@ public final class UserOptions {
 
   @Option(
       names = "--user:env",
-      description = "Database username, from an environmental variable value",
+      description = "Database user name, from an environmental variable value",
       paramLabel = "<environment variable name>")
   private String userEnvironmentVariable;
 
   @Option(
       names = "--user:file",
-      description = "Database username, read from a file",
+      description = "Database user name, read from a file",
       paramLabel = "<path to user file>")
   private Path userFile;
 
   @Option(
       names = "--user:prompt",
       interactive = true,
-      description = "Database username, prompted from the console")
+      description = "Database user name, prompted from the console")
   private String userPrompted;
 
   @Option(
       names = {"--user"},
-      description = "Database username",
+      description = "Database user name",
       paramLabel = "<user>")
   private String userProvided;
 

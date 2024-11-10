@@ -61,13 +61,13 @@ If your database does not have a SchemaCrawler plug-in, use
       --url=<connectionUrl>
                           JDBC connection URL to the database
 Specify the database user name using one of these options
-      --user=<user>       Database username
+      --user=<user>       Database user name
       --user:env=<environment variable name>
-                          Database username, from an environmental variable
+                          Database user name, from an environmental variable
                             value
       --user:file=<path to user file>
-                          Database username, read from a file
-      --user:prompt       Database username, prompted from the console
+                          Database user name, read from a file
+      --user:prompt       Database user name, prompted from the console
 Specify the database password using one of these options
       --password=<password>
                           Database password
