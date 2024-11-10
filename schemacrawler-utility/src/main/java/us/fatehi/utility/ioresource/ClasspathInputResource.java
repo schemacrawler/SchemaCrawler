@@ -34,22 +34,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Converts a provided classpath resource into an input resource. NOTE: Always assumes that
+ * resources are absolute. Leading slashes are not required, but ignored if provided.
+ */
 public class ClasspathInputResource implements InputResource {
 
   private static final Logger LOGGER = Logger.getLogger(ClasspathInputResource.class.getName());
 
   private final String classpathResource;
+  private URL url;
 
   public ClasspathInputResource(final String classpathResource) throws IOException {
     this.classpathResource = requireNonNull(classpathResource, "No classpath resource provided");
-    if (ClasspathInputResource.class.getResource(this.classpathResource) == null) {
-      final IOException e =
-          new IOException("Cannot read classpath resource, " + this.classpathResource);
+    url = locateResource();
+    if (url == null) {
+      final IOException e = new IOException("Cannot read classpath resource, " + classpathResource);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
@@ -61,32 +67,44 @@ public class ClasspathInputResource implements InputResource {
 
   @Override
   public String getDescription() {
-    String url;
-    try {
-      url = ClasspathInputResource.class.getResource(classpathResource).toExternalForm();
-    } catch (final Exception e) {
-      url = classpathResource;
-    }
-    return url;
+    return url.toExternalForm();
   }
 
   @Override
   public Reader openNewInputReader(final Charset charset) {
     requireNonNull(charset, "No input charset provided");
-    final InputStream inputStream =
-        ClasspathInputResource.class.getResourceAsStream(classpathResource);
-    if (inputStream == null) {
+    try {
+      final InputStream inputStream = url.openStream();
+      final Reader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
+      LOGGER.log(Level.FINE, "Opened input reader to classpath resource, " + classpathResource);
+
+      return wrapReader(getDescription(), reader, true);
+    } catch (final IOException e) {
+      LOGGER.log(Level.FINE, "Could not read classpath resource", e);
       throw new NullPointerException(
           String.format("Cannot open classpath resource <%s> for reading", classpathResource));
     }
-    final Reader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
-    LOGGER.log(Level.FINE, "Opened input reader to classpath resource, " + classpathResource);
-
-    return wrapReader(getDescription(), reader, true);
   }
 
   @Override
   public String toString() {
     return classpathResource;
+  }
+
+  /**
+   * Locates the resource bases on the current thread's classloader. Always assumes that resources
+   * are absolute.
+   *
+   * @return URL for the located resource, or null if not found
+   */
+  private URL locateResource() {
+    final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    final String resolvedClasspathResource;
+    if (classpathResource.startsWith("/")) {
+      resolvedClasspathResource = classpathResource.substring(1);
+    } else {
+      resolvedClasspathResource = classpathResource;
+    }
+    return classLoader.getResource(resolvedClasspathResource);
   }
 }

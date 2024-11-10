@@ -30,6 +30,7 @@ package schemacrawler.testdb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import us.fatehi.utility.SystemExitException;
@@ -47,6 +48,7 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
   }
 
   public static void main(final String... args) {
+    System.out.printf("args=%s%n", Arrays.asList(args));
     final int exitCode = call(args);
     if (exitCode != 0) {
       throw new SystemExitException(

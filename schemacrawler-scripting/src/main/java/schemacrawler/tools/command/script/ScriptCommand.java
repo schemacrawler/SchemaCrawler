@@ -64,7 +64,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
     // Check availability of script
     commandOptions
-        .getResource()
+        .getInputResource()
         .orElseThrow(
             () ->
                 new ConfigurationException(
@@ -102,7 +102,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     requireNonNull(scriptExecutor, "Scripting engine not found");
     try {
       final Charset inputCharset = outputOptions.getInputCharset();
-      final InputResource inputResource = commandOptions.getResource().get();
+      final InputResource inputResource = commandOptions.getInputResource().get();
       final Reader reader = inputResource.openNewInputReader(inputCharset);
       final Writer writer = outputOptions.openNewOutputWriter();
 

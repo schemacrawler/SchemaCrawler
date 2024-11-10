@@ -50,7 +50,7 @@ public abstract class LanguageOptions implements CommandOptions {
     return language;
   }
 
-  public final Optional<InputResource> getResource() {
+  public final Optional<InputResource> getInputResource() {
     return createInputResource(script);
   }
 
