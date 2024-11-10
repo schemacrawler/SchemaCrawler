@@ -137,6 +137,7 @@ Table Constraints
 
                                                      [unique constraint]
 Unique constraint on previous edition of books
+  previouseditionid                                             
 
 
 

@@ -6,6 +6,7 @@ SchemaCrawler release notes.
 ## Release 16.23.3 - 2024-11-06
 
 - Remove deprecated `--portable-names` option 
+- Add constraint column usage for MySQL and PostgreSQL
 
 
 <a name="v16.22.3"></a>

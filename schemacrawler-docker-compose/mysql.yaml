@@ -1,7 +1,7 @@
 services:
 
   mysql:
-    image: mysql:8.0.31
+    image: mysql:9.1.0
     container_name: mysql
     command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
     ports:
