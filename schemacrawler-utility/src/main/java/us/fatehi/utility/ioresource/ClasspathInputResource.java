@@ -28,65 +28,38 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 
 /**
  * Converts a provided classpath resource into an input resource. NOTE: Always assumes that
  * resources are absolute. Leading slashes are not required, but ignored if provided.
  */
-public class ClasspathInputResource implements InputResource {
+public class ClasspathInputResource extends BaseInputResource {
 
-  private static final Logger LOGGER = Logger.getLogger(ClasspathInputResource.class.getName());
-
-  private final String classpathResource;
   private URL url;
 
   public ClasspathInputResource(final String classpathResource) throws IOException {
-    this.classpathResource = requireNonNull(classpathResource, "No classpath resource provided");
-    url = locateResource();
+    requireNonNull(classpathResource, "No classpath resource provided");
+    url = locateResource(classpathResource);
     if (url == null) {
-      final IOException e = new IOException("Cannot read classpath resource, " + classpathResource);
-      LOGGER.log(Level.FINE, e.getMessage(), e);
+      final IOException e =
+          new IOException(String.format("Cannot read classpath resource, <%s>", classpathResource));
       throw e;
     }
   }
 
-  public String getClasspathResource() {
-    return classpathResource;
-  }
-
   @Override
-  public String getDescription() {
-    return url.toExternalForm();
-  }
-
-  @Override
-  public BufferedReader openNewInputReader(final Charset charset) {
-    requireNonNull(charset, "No input charset provided");
-    try {
-      final InputStream inputStream = url.openStream();
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
-      LOGGER.log(Level.FINE, "Opened input reader to classpath resource, " + classpathResource);
-
-      return reader;
-    } catch (final IOException e) {
-      LOGGER.log(Level.FINE, "Could not read classpath resource", e);
-      throw new NullPointerException(
-          String.format("Cannot open classpath resource <%s> for reading", classpathResource));
-    }
+  protected InputStream openNewInputStream() throws IOException {
+    final InputStream inputStream = url.openStream();
+    return inputStream;
   }
 
   @Override
   public String toString() {
-    return classpathResource;
+    return url.toExternalForm();
   }
 
   /**
@@ -95,7 +68,7 @@ public class ClasspathInputResource implements InputResource {
    *
    * @return URL for the located resource, or null if not found
    */
-  private URL locateResource() {
+  private static URL locateResource(final String classpathResource) {
     final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     final String resolvedClasspathResource;
     if (classpathResource.startsWith("/")) {

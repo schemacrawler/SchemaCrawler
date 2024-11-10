@@ -28,33 +28,31 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import static java.nio.file.Files.newInputStream;
-import static us.fatehi.utility.IOUtility.isFileReadable;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 
-public class FileInputResource extends BaseInputResource {
+abstract class BaseInputResource implements InputResource {
 
-  private final Path inputFile;
+  private static final Logger LOGGER = Logger.getLogger(BaseInputResource.class.getName());
 
-  public FileInputResource(final Path filePath) throws IOException {
-    inputFile = requireNonNull(filePath, "No file path provided").normalize().toAbsolutePath();
-    if (!isFileReadable(inputFile)) {
-      final IOException e = new IOException(String.format("Cannot read file, <%s>", inputFile));
-      throw e;
-    }
-  }
+  protected abstract InputStream openNewInputStream() throws IOException;
 
   @Override
-  protected InputStream openNewInputStream() throws IOException {
-    final InputStream reader = newInputStream(inputFile);
+  public final BufferedReader openNewInputReader(final Charset charset) throws IOException {
+    requireNonNull(charset, "No input charset provided");
+
+    InputStream inputStream = openNewInputStream();
+    requireNonNull(charset, "No input stream provided");
+
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
+    LOGGER.log(Level.FINE, String.format("Opened resource <%s> for reading", getDescription()));
+
     return reader;
-  }
-
-  @Override
-  public String toString() {
-    return inputFile.toString();
   }
 }
