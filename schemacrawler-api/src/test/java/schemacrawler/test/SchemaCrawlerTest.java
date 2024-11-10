@@ -322,7 +322,7 @@ public class SchemaCrawlerTest {
       final Collection<Property> dbProperties = databaseInfo.getProperties();
       final Collection<Property> serverInfo = databaseInfo.getServerInfo();
       assertThat("Server info property count does not match", serverInfo, is(empty()));
-      out.println(String.format("username=%s", databaseInfo.getUserName()));
+      out.println(String.format("user name=%s", databaseInfo.getUserName()));
       out.println(String.format("product name=%s", databaseInfo.getProductName()));
       out.println(String.format("product version=%s", databaseInfo.getProductVersion()));
       out.println(String.format("catalog=%s", catalog.getName()));
