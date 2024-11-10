@@ -29,13 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.serialize;
 
 import static java.nio.file.Files.newOutputStream;
-
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
@@ -87,7 +88,8 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand<Seriali
       outputOptions =
           OutputOptionsBuilder.builder(outputOptions).withOutputFile(outputFile).toOptions();
 
-      try (final OutputStream out = new GZIPOutputStream(newOutputStream(outputFile))) {
+      try (final OutputStream out =
+          new GZIPOutputStream(newOutputStream(outputFile, WRITE, CREATE, TRUNCATE_EXISTING))) {
         catalogSerializer.save(out);
       } catch (final IOException e) {
         throw new IORuntimeException("Could not save catalog", e);

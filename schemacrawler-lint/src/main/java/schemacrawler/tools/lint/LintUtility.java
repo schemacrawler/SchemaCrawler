@@ -28,16 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static us.fatehi.utility.IOUtility.readFully;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import static us.fatehi.utility.IOUtility.readResourceFully;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import us.fatehi.utility.UtilityMarker;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.InputResource;
-import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
 public final class LintUtility {
@@ -65,16 +59,7 @@ public final class LintUtility {
    */
   public static String readDescription(final String linterId) {
     final String descriptionResource = String.format("/help/%s.txt", linterId);
-    try {
-      final InputResource inputResource = new ClasspathInputResource(descriptionResource);
-      final String descriptionText =
-          readFully(inputResource.openNewInputReader(StandardCharsets.UTF_8));
-      return descriptionText;
-    } catch (final IOException e) {
-      LOGGER.log(
-          Level.FINE,
-          new StringFormat("Could not find description resource for linter {0}, at {1}", linterId));
-      return "";
-    }
+    final String descriptionText = readResourceFully(descriptionResource);
+    return descriptionText;
   }
 }

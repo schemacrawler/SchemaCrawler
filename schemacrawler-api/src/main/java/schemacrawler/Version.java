@@ -50,8 +50,7 @@ public final class Version extends BaseProductVersion {
 
   static {
     try (final BufferedReader reader =
-        new BufferedReader(
-            new ClasspathInputResource("/help/SchemaCrawler.txt").openNewInputReader(UTF_8))) {
+        new ClasspathInputResource("/help/SchemaCrawler.txt").openNewInputReader(UTF_8)) {
 
       final List<String> lines = reader.lines().collect(toList());
       lines.add("");

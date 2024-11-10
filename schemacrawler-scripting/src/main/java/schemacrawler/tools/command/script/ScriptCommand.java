@@ -103,20 +103,21 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     try {
       final Charset inputCharset = outputOptions.getInputCharset();
       final InputResource inputResource = commandOptions.getInputResource().get();
-      final Reader reader = inputResource.openNewInputReader(inputCharset);
-      final Writer writer = outputOptions.openNewOutputWriter();
+      try (final Reader reader = inputResource.openNewInputReader(inputCharset);
+          final Writer writer = outputOptions.openNewOutputWriter(); ) {
 
-      LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
+        LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
 
-      // Set up the context
-      final Map<String, Object> context = new HashMap<>();
-      context.put("title", outputOptions.getTitle());
-      context.put("catalog", catalog);
-      context.put("connection", connection);
-      context.put("chain", new CommandChain(this));
+        // Set up the context
+        final Map<String, Object> context = new HashMap<>();
+        context.put("title", outputOptions.getTitle());
+        context.put("catalog", catalog);
+        context.put("connection", connection);
+        context.put("chain", new CommandChain(this));
 
-      scriptExecutor.initialize(context, reader, writer);
-      scriptExecutor.run();
+        scriptExecutor.initialize(context, reader, writer);
+        scriptExecutor.run();
+      }
     } catch (final Exception e) {
       throw new InternalRuntimeException("Could not execute script", e);
     }

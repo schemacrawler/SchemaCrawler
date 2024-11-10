@@ -40,8 +40,6 @@ import static java.util.UUID.randomUUID;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -157,15 +155,6 @@ public final class IOUtility {
         && exists(parentPath)
         && isDirectory(parentPath)
         && isWritable(parentPath);
-  }
-
-  public static String readFully(final InputStream stream) {
-    if (stream == null) {
-      LOGGER.log(Level.FINE, "Cannot read null stream");
-      return "";
-    }
-    final Reader reader = new InputStreamReader(stream, UTF_8);
-    return readFully(reader);
   }
 
   /**

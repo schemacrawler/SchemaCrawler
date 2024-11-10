@@ -29,15 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.template;
 
 import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
-
+import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
@@ -58,11 +56,9 @@ public final class MustacheRenderer extends BaseTemplateRenderer {
                     new ConfigurationException(
                         String.format("Mustache template not found <%s>", templateLocation)));
 
-    try {
+    try (final Reader reader = inputResource.openNewInputReader(StandardCharsets.UTF_8)) {
       final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
-      final Mustache mustache =
-          mustacheFactory.compile(
-              inputResource.openNewInputReader(StandardCharsets.UTF_8), templateLocation);
+      final Mustache mustache = mustacheFactory.compile(reader, templateLocation);
 
       try (final Writer writer = outputOptions.openNewOutputWriter()) {
         // Evaluate the template

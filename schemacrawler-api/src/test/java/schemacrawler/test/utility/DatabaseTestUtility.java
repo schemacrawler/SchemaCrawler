@@ -33,7 +33,6 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.Properties;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -45,7 +44,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class DatabaseTestUtility {
 
@@ -75,15 +73,13 @@ public final class DatabaseTestUtility {
 
   public static Map<String, String> loadHsqldbConfig() throws IOException {
     final Properties properties =
-        TestUtility.loadProperties(
-            new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        TestUtility.loadPropertiesFromClasspath("/hsqldb.INFORMATION_SCHEMA.config.properties");
     return PropertiesUtility.propertiesMap(properties);
   }
 
   public static Path tempHsqldbConfig() throws IOException {
     final Properties properties =
-        TestUtility.loadProperties(
-            new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        TestUtility.loadPropertiesFromClasspath("/hsqldb.INFORMATION_SCHEMA.config.properties");
     return TestUtility.savePropertiesToTempFile(properties);
   }
 

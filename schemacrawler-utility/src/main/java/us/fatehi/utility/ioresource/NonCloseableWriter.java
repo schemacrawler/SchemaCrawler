@@ -28,32 +28,24 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
-import java.io.BufferedReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
+import java.io.FilterWriter;
+import java.io.IOException;
+import java.io.Writer;
 
-public class ReaderInputResource implements InputResource {
+final class NonCloseableWriter extends FilterWriter {
 
-  private static final Logger LOGGER = Logger.getLogger(ReaderInputResource.class.getName());
-
-  private final Reader reader;
-
-  public ReaderInputResource(final Reader reader) {
-    this.reader = requireNonNull(reader, "No reader provided");
+  NonCloseableWriter(final Writer out) {
+    super(out);
   }
 
+  /** Flush but do not close. */
   @Override
-  public Reader openNewInputReader(final Charset charset) {
-    LOGGER.log(Level.FINE, "Input to provided reader");
-    return wrapReader(getDescription(), new BufferedReader(reader), false);
+  public void close() throws IOException {
+    super.flush();
   }
 
   @Override
   public String toString() {
-    return "<reader>";
+    return out.toString();
   }
 }

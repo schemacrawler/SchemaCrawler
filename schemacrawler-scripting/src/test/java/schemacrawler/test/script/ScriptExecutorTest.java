@@ -28,21 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.script;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.command.script.GraalJSScriptExecutor;
 import schemacrawler.tools.command.script.ScriptEngineExecutor;
 import schemacrawler.tools.command.script.ScriptExecutor;
-import us.fatehi.utility.ioresource.StringInputResource;
 
 public class ScriptExecutorTest {
 
@@ -56,9 +52,8 @@ public class ScriptExecutorTest {
 
     scriptExecutor.initialize(
         context,
-        new StringInputResource(
-                "if (javaObj instanceof Java.type('java.lang.Object')) { print(\"Hello, World!\"); }")
-            .openNewInputReader(UTF_8),
+        new StringReader(
+            "if (javaObj instanceof Java.type('java.lang.Object')) { print(\"Hello, World!\"); }"),
         writer);
 
     assertThat(scriptExecutor.canGenerate(), is(true));
@@ -79,9 +74,7 @@ public class ScriptExecutorTest {
     final StringWriter writer = new StringWriter();
     final ScriptExecutor scriptExecutor = new ScriptEngineExecutor("python");
     scriptExecutor.initialize(
-        Collections.emptyMap(),
-        new StringInputResource("print(\"Hello, World!\")").openNewInputReader(UTF_8),
-        writer);
+        Collections.emptyMap(), new StringReader("print(\"Hello, World!\")"), writer);
 
     assertThat(scriptExecutor.canGenerate(), is(true));
 

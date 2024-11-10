@@ -28,51 +28,29 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newInputStream;
 import static us.fatehi.utility.IOUtility.isFileReadable;
-import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.nio.charset.Charset;
+import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
-import us.fatehi.utility.string.StringFormat;
 
-public class FileInputResource implements InputResource {
-
-  private static final Logger LOGGER = Logger.getLogger(FileInputResource.class.getName());
+public class FileInputResource extends BaseInputResource {
 
   private final Path inputFile;
 
   public FileInputResource(final Path filePath) throws IOException {
     inputFile = requireNonNull(filePath, "No file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(inputFile)) {
-      final IOException e = new IOException("Cannot read file, " + inputFile);
-      LOGGER.log(Level.FINE, e.getMessage(), e);
+      final IOException e = new IOException(String.format("Cannot read file, <%s>", inputFile));
       throw e;
     }
   }
 
-  public Path getInputFile() {
-    return inputFile;
-  }
-
   @Override
-  public Reader openNewInputReader(final Charset charset) throws IOException {
-    requireNonNull(charset, "No input charset provided");
-
-    if (!exists(inputFile)) {
-      return new StringReader("");
-    }
-
-    final Reader reader = newBufferedReader(inputFile, charset);
-    LOGGER.log(Level.FINE, new StringFormat("Opened input reader to file <%s>", inputFile));
-
-    return wrapReader(getDescription(), reader, true);
+  public InputStream openNewInputStream() throws IOException {
+    final InputStream reader = newInputStream(inputFile);
+    return reader;
   }
 
   @Override

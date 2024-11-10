@@ -139,7 +139,7 @@ public class DatabaseScriptsTest {
     for (final String scriptName : scripts) {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
       try (final BufferedReader reader =
-          new BufferedReader(new ClasspathInputResource(scriptName).openNewInputReader(UTF_8))) {
+          new ClasspathInputResource(scriptName).openNewInputReader(UTF_8)) {
         final List<String> lines =
             reader.lines().filter(line -> !isBlank(line)).collect(Collectors.toList());
         assertThat(lines, is(not(empty())));

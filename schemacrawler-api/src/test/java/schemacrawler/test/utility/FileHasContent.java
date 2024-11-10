@@ -156,7 +156,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
       } else {
         // Check file contents
         final String outputFormatValue = getNonNullOutputFormatValue();
-        failures = compareOutput(referenceFile, file, outputFormatValue, false);
+        failures = compareOutput(referenceFile, file, outputFormatValue);
         return failures != null && failures.isEmpty();
       }
     } catch (final Exception e) {

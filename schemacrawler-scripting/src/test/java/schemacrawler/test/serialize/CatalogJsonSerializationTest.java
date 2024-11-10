@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.serialize;
 
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -41,23 +44,18 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.MissingNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -96,7 +94,8 @@ public class CatalogJsonSerializationTest {
         getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");
-    try (final OutputStream out = new FileOutputStream(testOutputFile.toFile())) {
+    try (final OutputStream out =
+        Files.newOutputStream(testOutputFile, WRITE, CREATE, TRUNCATE_EXISTING)) {
       new JsonSerializedCatalog(catalog).save(out);
     }
     assertThat("Catalog was not serialized", Files.size(testOutputFile), greaterThan(0L));

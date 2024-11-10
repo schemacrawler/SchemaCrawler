@@ -28,16 +28,18 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 
-@FunctionalInterface
 public interface InputResource {
 
   default String getDescription() {
     return toString();
   }
 
-  Reader openNewInputReader(Charset charset) throws IOException;
+  InputStream openNewInputStream() throws IOException;
+
+  BufferedReader openNewInputReader(Charset charset) throws IOException;
 }

@@ -52,7 +52,6 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.PropertiesUtility;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public class SchemaCrawlerOptionsConfigTest {
 
@@ -121,8 +120,7 @@ public class SchemaCrawlerOptionsConfigTest {
 
   private Map<String, String> loadConfig(final String configResource) {
     try {
-      final Properties properties =
-          TestUtility.loadProperties(new ClasspathInputResource(configResource));
+      final Properties properties = TestUtility.loadPropertiesFromClasspath(configResource);
       return PropertiesUtility.propertiesMap(properties);
     } catch (final IOException e) {
       fail("Could not load " + configResource, e);

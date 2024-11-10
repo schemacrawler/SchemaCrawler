@@ -69,8 +69,7 @@ public class TestSchemaCreator implements Runnable {
     }
 
     try (final BufferedReader scriptReader =
-        new BufferedReader(
-            new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)); ) {
+        new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)) {
       new SqlScript(scriptReader, delimiter, connection).run();
     } catch (final IOException e) {
       throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
@@ -89,7 +88,7 @@ public class TestSchemaCreator implements Runnable {
   @Override
   public void run() {
     try (final BufferedReader reader =
-        new BufferedReader(new ClasspathInputResource(scriptsResource).openNewInputReader(UTF_8))) {
+        new ClasspathInputResource(scriptsResource).openNewInputReader(UTF_8)) {
       reader.lines().forEach(line -> executeScriptLine(line, connection));
     } catch (final IOException e) {
       throw new RuntimeException(e.getMessage(), e);
