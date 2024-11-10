@@ -32,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+@FunctionalInterface
 public interface InputResource {
 
   default String getDescription() {
@@ -39,6 +40,4 @@ public interface InputResource {
   }
 
   BufferedReader openNewInputReader(Charset charset) throws IOException;
-
-  BufferedReader openNewCompressedInputReader(Charset charset) throws IOException;
 }

@@ -113,9 +113,7 @@ public final class TestUtility {
   }
 
   public static List<String> compareOutput(
-      final String referenceFile,
-      final Path testOutputTempFile,
-      final String outputFormat)
+      final String referenceFile, final Path testOutputTempFile, final String outputFormat)
       throws Exception {
 
     requireNonNull(referenceFile, "Reference file is not defined");
@@ -137,8 +135,7 @@ public final class TestUtility {
     } else if ("png".equals(outputFormat)) {
       contentEquals = true;
     } else {
-      final Reader fileReader =
-          readerForInputResource(new FileInputResource(testOutputTempFile));
+      final Reader fileReader = readerForInputResource(new FileInputResource(testOutputTempFile));
       final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
       final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
       contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
@@ -439,8 +436,7 @@ public final class TestUtility {
     return lineMiscompare;
   }
 
-  private static Reader readerForInputResource(
-      final InputResource inputResource) {
+  private static Reader readerForInputResource(final InputResource inputResource) {
     try {
       return inputResource.openNewInputReader(UTF_8);
     } catch (final IOException e) {
