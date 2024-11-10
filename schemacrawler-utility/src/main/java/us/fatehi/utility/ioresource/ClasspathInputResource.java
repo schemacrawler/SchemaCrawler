@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,7 +77,7 @@ public class ClasspathInputResource implements InputResource {
       final Reader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
       LOGGER.log(Level.FINE, "Opened input reader to classpath resource, " + classpathResource);
 
-      return wrapReader(getDescription(), reader, true);
+      return reader;
     } catch (final IOException e) {
       LOGGER.log(Level.FINE, "Could not read classpath resource", e);
       throw new NullPointerException(

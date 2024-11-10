@@ -31,7 +31,6 @@ package us.fatehi.utility.ioresource;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.newBufferedReader;
 import static us.fatehi.utility.IOUtility.isFileReadable;
-import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -72,7 +71,7 @@ public class FileInputResource implements InputResource {
     final Reader reader = newBufferedReader(inputFile, charset);
     LOGGER.log(Level.FINE, new StringFormat("Opened input reader to file <%s>", inputFile));
 
-    return wrapReader(getDescription(), reader, true);
+    return reader;
   }
 
   @Override
