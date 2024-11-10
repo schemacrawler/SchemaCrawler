@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import static java.nio.file.Files.exists;
 import static java.nio.file.Files.newBufferedReader;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -61,14 +59,10 @@ public class FileInputResource implements InputResource {
   }
 
   @Override
-  public Reader openNewInputReader(final Charset charset) throws IOException {
+  public BufferedReader openNewInputReader(final Charset charset) throws IOException {
     requireNonNull(charset, "No input charset provided");
 
-    if (!exists(inputFile)) {
-      return new StringReader("");
-    }
-
-    final Reader reader = newBufferedReader(inputFile, charset);
+    final BufferedReader reader = newBufferedReader(inputFile, charset);
     LOGGER.log(Level.FINE, new StringFormat("Opened input reader to file <%s>", inputFile));
 
     return reader;

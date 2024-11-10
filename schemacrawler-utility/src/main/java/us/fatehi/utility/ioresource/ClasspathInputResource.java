@@ -32,7 +32,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
@@ -70,11 +69,11 @@ public class ClasspathInputResource implements InputResource {
   }
 
   @Override
-  public Reader openNewInputReader(final Charset charset) {
+  public BufferedReader openNewInputReader(final Charset charset) {
     requireNonNull(charset, "No input charset provided");
     try {
       final InputStream inputStream = url.openStream();
-      final Reader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
+      final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
       LOGGER.log(Level.FINE, "Opened input reader to classpath resource, " + classpathResource);
 
       return reader;

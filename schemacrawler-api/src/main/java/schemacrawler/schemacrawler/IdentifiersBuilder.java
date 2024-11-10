@@ -31,8 +31,7 @@ public class IdentifiersBuilder implements OptionsBuilder<IdentifiersBuilder, Id
   private static Collection<String> loadSql2003ReservedWords() {
     final Set<String> reservedWords = new HashSet<>();
     try (final BufferedReader reader =
-        new BufferedReader(
-            new ClasspathInputResource("/sql2003_reserved_words.txt").openNewInputReader(UTF_8))) {
+        new ClasspathInputResource("/sql2003_reserved_words.txt").openNewInputReader(UTF_8)) {
       String line;
       while ((line = reader.readLine()) != null) {
         reservedWords.add(line);
