@@ -112,23 +112,10 @@ public final class TestUtility {
         buildDirectory().resolve("unit_tests_results_output").resolve(dirname).toFile());
   }
 
-  public static List<String> compareCompressedOutput(
-      final String referenceFile, final Path testOutputTempFile, final String outputFormat)
-      throws Exception {
-    return compareOutput(referenceFile, testOutputTempFile, outputFormat, true);
-  }
-
-  public static List<String> compareOutput(
-      final String referenceFile, final Path testOutputTempFile, final String outputFormat)
-      throws Exception {
-    return compareOutput(referenceFile, testOutputTempFile, outputFormat, false);
-  }
-
   public static List<String> compareOutput(
       final String referenceFile,
       final Path testOutputTempFile,
-      final String outputFormat,
-      final boolean isCompressed)
+      final String outputFormat)
       throws Exception {
 
     requireNonNull(referenceFile, "Reference file is not defined");
@@ -143,7 +130,7 @@ public final class TestUtility {
 
     final boolean contentEquals;
     final Reader referenceReader =
-        readerForInputResource(new ClasspathInputResource(referenceFile), isCompressed);
+        readerForInputResource(new ClasspathInputResource(referenceFile));
     if (referenceReader == null) {
       failures.add("Reference file not available, " + referenceFile);
       contentEquals = false;
@@ -151,7 +138,7 @@ public final class TestUtility {
       contentEquals = true;
     } else {
       final Reader fileReader =
-          readerForInputResource(new FileInputResource(testOutputTempFile), isCompressed);
+          readerForInputResource(new FileInputResource(testOutputTempFile));
       final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
       final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
       contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
@@ -453,11 +440,8 @@ public final class TestUtility {
   }
 
   private static Reader readerForInputResource(
-      final InputResource inputResource, final boolean isCompressed) {
+      final InputResource inputResource) {
     try {
-      if (isCompressed) {
-        return inputResource.openNewCompressedInputReader(UTF_8);
-      }
       return inputResource.openNewInputReader(UTF_8);
     } catch (final IOException e) {
       return null;
