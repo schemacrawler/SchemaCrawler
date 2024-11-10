@@ -38,16 +38,12 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
+import static schemacrawler.test.utility.TestUtility.readFileFully;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
-import static us.fatehi.utility.IOUtility.readFully;
-
-import java.io.FileReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -114,7 +110,7 @@ public class SchemaCrawlerExecutableChainTest {
     executable.execute();
 
     assertThat(
-        readFully(new FileReader(testOutputFile.toFile())).replaceAll("\\R", ""),
+        readFileFully(testOutputFile).replaceAll("\\R", ""),
         is("Created files \"schema.txt\" and \"schema.png\""));
 
     final Path schemaFile = Paths.get("schema.txt");

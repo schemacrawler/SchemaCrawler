@@ -39,14 +39,10 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
+import static schemacrawler.test.utility.TestUtility.readFileFully;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
-import static us.fatehi.utility.IOUtility.readFully;
-
-import java.io.FileReader;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -89,7 +85,7 @@ public class SchemaCrawlerExecutableTest {
             + lineSeparator()
             + "TestOptions [testCommandParameter=]"
             + lineSeparator(),
-        equalTo(readFully(new FileReader(testOutputFile.toFile()))));
+        equalTo(readFileFully(testOutputFile)));
     assertThat(executable.toString(), is("test-command"));
 
     assertThat(executable.getOutputOptions(), is(outputOptions));
@@ -202,7 +198,7 @@ public class SchemaCrawlerExecutableTest {
             + lineSeparator()
             + "TestOptions [testCommandParameter=]"
             + lineSeparator(),
-        equalTo(readFully(new FileReader(testOutputFile.toFile()))));
+        equalTo(readFileFully(testOutputFile)));
     assertThat(executable.toString(), is("test-command"));
 
     assertThat(executable.getCatalog(), is(sameInstance(mockCatalog)));

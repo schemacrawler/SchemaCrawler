@@ -304,6 +304,11 @@ public final class TestUtility {
         .toOptions();
   }
 
+  public static String readFileFully(final Path filePath) throws IOException {
+    final byte[] bytes = Files.readAllBytes(filePath);
+    return new String(bytes, UTF_8);
+  }
+
   public static Path savePropertiesToTempFile(final Properties properties) throws IOException {
     requireNonNull(properties, "No properties provided");
     final Path propertiesFile = Files.createTempFile("schemacrawler", ".properties");
