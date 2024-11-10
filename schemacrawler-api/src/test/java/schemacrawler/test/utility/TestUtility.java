@@ -146,7 +146,7 @@ public final class TestUtility {
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final Reader referenceReader = readerForResource(referenceFile, UTF_8, isCompressed);
+    final Reader referenceReader = readerForResource(referenceFile, isCompressed);
     if (referenceReader == null) {
       failures.add("Reference file not available, " + referenceFile);
       contentEquals = false;
@@ -322,11 +322,6 @@ public final class TestUtility {
         .toOptions();
   }
 
-  public static Reader readerForResource(final String resource, final Charset encoding)
-      throws IOException {
-    return readerForResource(resource, encoding, false);
-  }
-
   public static Path savePropertiesToTempFile(final Properties properties) throws IOException {
     requireNonNull(properties, "No properties provided");
     final Path propertiesFile = Files.createTempFile("schemacrawler", ".properties");
@@ -486,18 +481,12 @@ public final class TestUtility {
     return bufferedReader;
   }
 
-  private static Reader readerForResource(
-      final String resource, final Charset encoding, final boolean isCompressed)
+  private static Reader readerForResource(final String resource, final boolean isCompressed)
       throws IOException {
     final InputStream inputStream = TestUtility.class.getResourceAsStream("/" + resource);
     final Reader reader;
     if (inputStream != null) {
-      final Charset charset;
-      if (encoding == null) {
-        charset = UTF_8;
-      } else {
-        charset = encoding;
-      }
+      final Charset charset = UTF_8;
       if (isCompressed) {
         reader = openNewCompressedInputReader(inputStream, charset);
       } else {

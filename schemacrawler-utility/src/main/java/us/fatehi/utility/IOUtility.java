@@ -48,6 +48,8 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.InputResource;
 
 @UtilityMarker
 public final class IOUtility {
@@ -104,10 +106,9 @@ public final class IOUtility {
   public static String getFileExtension(final Path file) {
     if (file == null) {
       return "";
-    } else {
-      final String fileName = file.toString();
-      return getFileExtension(fileName == null ? "" : fileName);
     }
+    final String fileName = file.toString();
+    return getFileExtension(fileName == null ? "" : fileName);
   }
 
   public static String getFileExtension(final String fileName) {
@@ -192,7 +193,13 @@ public final class IOUtility {
   }
 
   public static String readResourceFully(final String resource) {
-    return readFully(IOUtility.class.getResourceAsStream(resource));
+    try {
+      final InputResource inputResource = new ClasspathInputResource(resource);
+      return readFully(inputResource.openNewInputReader(UTF_8));
+    } catch (final IOException e) {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      return "";
+    }
   }
 
   private IOUtility() {

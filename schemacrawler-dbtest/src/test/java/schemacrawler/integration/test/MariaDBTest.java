@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.MariaDBTestUtility.newMariaDBContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -38,10 +39,8 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -59,15 +58,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @Testcontainers
 public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse(MariaDBContainer.NAME);
-
-  @Container
-  private final JdbcDatabaseContainer<?> dbContainer =
-      new MariaDBContainer<>(imageName.withTag("10.7.3"))
-          .withCommand(
-              "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
-          .withUsername("schemacrawler")
-          .withDatabaseName("books");
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newMariaDBContainer();
 
   @BeforeEach
   public void createDatabase() {
@@ -87,7 +78,7 @@ public class MariaDBTest extends BaseAdditionalDatabaseTest {
   public void testMariaDBWithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("books"))
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
             .includeAllSequences()
             .includeAllSynonyms()
             .includeAllRoutines();

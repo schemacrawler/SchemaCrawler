@@ -1,18 +1,18 @@
 services:
 
   mysql:
-    image: mysql:8.0.31
-    container_name: mysql
-    command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
+    image: mariadb:11.5.2-noble
+    container_name: mariadb
+    # command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
     ports:
       - target: 3306
         published: 3306
         protocol: tcp
         mode: host
     environment:
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: schemacrawler
-      MYSQL_DATABASE: books
-      MYSQL_USER: schemacrawler
-      MYSQL_PASSWORD: schemacrawler
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MARIADB_ROOT_USER: root
+      MARIADB_ROOT_PASSWORD: schemacrawler
+      MARIADB_DATABASE: books
+      MARIADB_USER: schemacrawler
+      MARIADB_PASSWORD: schemacrawler
+      MARIADB_ALLOW_EMPTY_PASSWORD: "yes"
