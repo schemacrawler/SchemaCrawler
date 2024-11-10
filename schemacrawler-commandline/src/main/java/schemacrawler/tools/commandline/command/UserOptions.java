@@ -28,13 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
+import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 
@@ -42,25 +40,25 @@ public final class UserOptions {
 
   @Option(
       names = "--user:env",
-      description = "Database user, from an environmental variable value",
+      description = "Database username, from an environmental variable value",
       paramLabel = "<environment variable name>")
   private String userEnvironmentVariable;
 
   @Option(
       names = "--user:file",
-      description = "Database user, read from a file",
+      description = "Database username, read from a file",
       paramLabel = "<path to user file>")
   private Path userFile;
 
   @Option(
       names = "--user:prompt",
       interactive = true,
-      description = "Database user, prompted from the console")
+      description = "Database username, prompted from the console")
   private String userPrompted;
 
   @Option(
       names = {"--user"},
-      description = "Database user",
+      description = "Database username",
       paramLabel = "<user>")
   private String userProvided;
 
