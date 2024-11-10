@@ -30,7 +30,10 @@ package schemacrawler.integration.test;
 
 import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.size;
+import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.READ;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
@@ -40,8 +43,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -92,7 +95,8 @@ public class LoadSnapshotTest {
       serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
 
       final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
-      serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
+      serializedCatalog.save(
+          Files.newOutputStream(serializedCatalogFile, WRITE, CREATE, TRUNCATE_EXISTING));
       assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
     } catch (final IOException e) {
       failTestSetup("Could not serialize catalog", e);

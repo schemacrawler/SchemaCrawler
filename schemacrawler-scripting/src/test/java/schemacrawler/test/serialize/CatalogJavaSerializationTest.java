@@ -29,7 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.serialize;
 
 import static java.nio.file.Files.newInputStream;
+import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.READ;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -73,7 +76,8 @@ public class CatalogJavaSerializationTest {
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_java_serialization", "ser");
     final JavaSerializedCatalog javaSerializedCatalogForSave = new JavaSerializedCatalog(catalog);
-    javaSerializedCatalogForSave.save(Files.newOutputStream(testOutputFile));
+    javaSerializedCatalogForSave.save(
+        Files.newOutputStream(testOutputFile, WRITE, CREATE, TRUNCATE_EXISTING));
     assertThat("Catalog was not serialized", Files.size(testOutputFile), greaterThan(0L));
     assertThat(fileHeaderOf(testOutputFile), is("ACED"));
 

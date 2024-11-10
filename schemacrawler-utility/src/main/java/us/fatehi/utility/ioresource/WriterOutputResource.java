@@ -28,13 +28,11 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.ioresource.InputResourceUtility.wrapWriter;
-
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 
 public final class WriterOutputResource implements OutputResource {
 
@@ -49,7 +47,9 @@ public final class WriterOutputResource implements OutputResource {
   @Override
   public Writer openNewOutputWriter(final Charset charset, final boolean appendOutput) {
     LOGGER.log(Level.FINE, "Output to provided writer");
-    return wrapWriter(getDescription(), writer, false);
+    // Since the original write was provided to us,
+    // we should not allow it to be closed
+    return new NonCloseableWriter(writer);
   }
 
   @Override

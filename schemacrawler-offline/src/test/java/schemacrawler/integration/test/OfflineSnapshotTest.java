@@ -29,6 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static java.nio.file.Files.size;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
@@ -219,7 +222,8 @@ public class OfflineSnapshotTest {
       serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
       final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
       final OutputStream outputStream =
-          new GZIPOutputStream(Files.newOutputStream(serializedCatalogFile));
+          new GZIPOutputStream(
+              Files.newOutputStream(serializedCatalogFile, WRITE, CREATE, TRUNCATE_EXISTING));
       serializedCatalog.save(outputStream);
       assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
     } catch (final IOException e) {
