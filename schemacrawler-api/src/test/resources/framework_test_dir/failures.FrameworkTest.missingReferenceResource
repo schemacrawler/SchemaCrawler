@@ -1,5 +1,5 @@
 >>>>> FrameworkTest.missingReferenceResource
-Expected: <classpath: </framework_test_dir/FrameworkTest.missingReferenceResource>>
+Expected: <framework_test_dir/FrameworkTest.missingReferenceResource>
      but: mismatched on:
 >> reference file not available:
 framework_test_dir/FrameworkTest.missingReferenceResource

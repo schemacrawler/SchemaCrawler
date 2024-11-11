@@ -1,5 +1,5 @@
 >>>>> FrameworkTest.outputNotMatching
-Expected: <classpath: </framework_test_dir/FrameworkTest.outputNotMatching>>
+Expected: <framework_test_dir/FrameworkTest.outputNotMatching>
      but: mismatched on:
 >> expected followed by actual:
 goodbye, world

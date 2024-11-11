@@ -30,26 +30,26 @@ package schemacrawler.test.utility;
 
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.size;
-import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 public class FileHasContent extends BaseMatcher<TestResource> {
 
   public static TestResource classpathResource(final String classpathResource) {
-    requireNonNull(classpathResource, "No classpath resource provided");
-    return new TestResource("/" + classpathResource);
+    requireNotBlank(classpathResource, "No classpath resource provided");
+    return TestResource.fromClasspath(classpathResource);
   }
 
   public static String contentsOf(final TestOutputCapture testoutput) {
@@ -70,17 +70,14 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     return hasSameContentAndTypeAs(classpathTestResource, null, false);
   }
 
+  /** MARK FOR INLINING */
   public static Matcher<TestResource> hasSameContentAsClasspathResource(
       final String classpathTestResource) {
-    return hasSameContentAndTypeAs(new TestResource(classpathTestResource), null, false);
+    return hasSameContentAndTypeAs(classpathResource(classpathTestResource), null, false);
   }
 
   public static TestResource outputOf(final Path filePath) {
-    if (filePath == null) {
-      return new TestResource();
-    } else {
-      return new TestResource(filePath);
-    }
+    return TestResource.fromFilePath(filePath);
   }
 
   public static TestResource outputOf(final TestOutputCapture testoutput) {
@@ -118,7 +115,12 @@ public class FileHasContent extends BaseMatcher<TestResource> {
       String value;
       if (item instanceof TestResource) {
         try {
-          final Path fileResource = ((TestResource) item).getFileResource().orElse(null);
+          final TestResource testResource = (TestResource) item;
+          if (!testResource.isAvailable()) {
+            throw new IOException(
+                String.format("Expected output file <%s> is not available", testResource));
+          }
+          final Path fileResource = Paths.get(testResource.getResourceString());
           value = Files.lines(fileResource).limit(5).collect(Collectors.joining("\n"));
         } catch (final IOException e) {
           value = "<some output>";
@@ -153,12 +155,11 @@ public class FileHasContent extends BaseMatcher<TestResource> {
       if (isBlank(referenceFile)) {
         // Check if the file contents are empty
         return !exists(file) || size(file) == 0;
-      } else {
-        // Check file contents
-        final String outputFormatValue = getNonNullOutputFormatValue();
-        failures = compareOutput(referenceFile, file, outputFormatValue);
-        return failures != null && failures.isEmpty();
       }
+      // Check file contents
+      final String outputFormatValue = getNonNullOutputFormatValue();
+      failures = compareOutput(referenceFile, file, outputFormatValue);
+      return failures != null && failures.isEmpty();
     } catch (final Exception e) {
       return fail(e);
     }
@@ -168,10 +169,8 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     if (actualValue == null || !(actualValue instanceof TestResource)) {
       throw new RuntimeException("No file input resource provided");
     }
-    final Path file =
-        ((TestResource) actualValue)
-            .getFileResource()
-            .orElseThrow(() -> new RuntimeException("No file input resource provided"));
+    final TestResource testResource = (TestResource) actualValue;
+    final Path file = Paths.get(testResource.getResourceString());
     return file;
   }
 
@@ -190,11 +189,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     if (referenceFileResource == null) {
       referenceFile = null;
     } else {
-      referenceFile =
-          referenceFileResource
-              .getClasspathResource()
-              .map(resource -> resource.substring(1))
-              .orElse(null);
+      referenceFile = referenceFileResource.getResourceString();
     }
     return referenceFile;
   }

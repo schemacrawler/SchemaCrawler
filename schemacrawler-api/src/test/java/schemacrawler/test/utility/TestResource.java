@@ -28,48 +28,73 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Optional;
-import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.InputResource;
 
 public final class TestResource {
-  private final Path path;
-  private final String resource;
 
-  public TestResource() {
-    path = null;
-    resource = null;
+  static TestResource fromClasspath(final String resource) {
+    final String resourceString;
+    if (!isBlank(resource)) {
+      resourceString = resource;
+    } else {
+      resourceString = null;
+    }
+
+    boolean isAvailable = true;
+    try {
+      // Check that classpath resource is available
+      final InputResource inputResource = new ClasspathInputResource(resource);
+    } catch (IOException e) {
+      isAvailable = false;
+    }
+
+    return new TestResource(resourceString, isAvailable);
   }
 
-  TestResource(final Path path) {
-    requireNonNull(path, "No path provided");
-    this.path = path;
-    resource = null;
+  /**
+   * Records the expected file path. The output file may or may not exist at the time this is
+   * created.
+   *
+   * @param filePath Expected path
+   * @return Test resource
+   */
+  static TestResource fromFilePath(final Path filePath) {
+    final String resourceString;
+    if (filePath != null) {
+      resourceString = filePath.toString();
+    } else {
+      resourceString = null;
+    }
+
+    final boolean isAvailable = IOUtility.isFileReadable(filePath);
+
+    return new TestResource(resourceString, isAvailable);
   }
 
-  TestResource(final String resource) {
-    requireNonNull(resource, "No resource provided");
-    path = null;
-    this.resource = resource;
+  private final String resourceString;
+  private final boolean isAvailable;
+
+  private TestResource(String resourceString, boolean isAvailable) {
+    this.resourceString = resourceString;
+    this.isAvailable = isAvailable;
   }
 
-  public Optional<String> getClasspathResource() {
-    return Optional.ofNullable(resource);
+  public String getResourceString() {
+    return resourceString;
   }
 
-  public Optional<Path> getFileResource() {
-    return Optional.ofNullable(path);
+  public boolean isAvailable() {
+    return isAvailable;
   }
 
   @Override
   public String toString() {
-    if (path != null) {
-      return String.format("file: <%s>", path);
-    }
-    if (resource != null) {
-      return String.format("classpath: <%s>", resource);
-    } else {
-      return "<empty>";
-    }
+    return trimToEmpty(resourceString);
   }
 }

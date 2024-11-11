@@ -114,12 +114,10 @@ public class FrameworkTest {
     try (final TestWriter out = testout) {
       out.println(description);
     }
-    final String expectedFailuresResource = TEST_DIR + "failures." + testContext.testMethodFullName();
+    final String expectedFailuresResource =
+        TEST_DIR + "failures." + testContext.testMethodFullName();
     final List<String> failures =
-        TestUtility.compareOutput(
-            expectedFailuresResource,
-            testout.getFilePath(),
-            "text");
+        TestUtility.compareOutput(expectedFailuresResource, testout.getFilePath(), "text");
     if (!failures.isEmpty()) {
       System.err.println(failures);
       fail(failures.toString());
