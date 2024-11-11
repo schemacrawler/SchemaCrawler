@@ -159,7 +159,12 @@ public final class TestUtility {
       failures.add(
           String.format(
               ">> actual output in:%n%s",
-              buildDirectory.getParent().getParent().relativize(testOutputTargetFilePath)));
+              buildDirectory
+                  .getParent()
+                  .getParent()
+                  .relativize(testOutputTargetFilePath)
+                  .toString()
+                  .replaceAll("\\", "/")));
     } else {
       delete(testOutputTempFile);
     }
