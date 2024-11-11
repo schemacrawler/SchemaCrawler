@@ -28,12 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import static java.util.Objects.requireNonNull;
-
 import java.nio.file.Path;
 import java.util.Optional;
+import static java.util.Objects.requireNonNull;
 
-final class TestResource {
+public final class TestResource {
   private final Path path;
   private final String resource;
 
@@ -66,7 +65,8 @@ final class TestResource {
   public String toString() {
     if (path != null) {
       return String.format("file: <%s>", path);
-    } else if (resource != null) {
+    }
+    if (resource != null) {
       return String.format("classpath: <%s>", resource);
     } else {
       return "<empty>";

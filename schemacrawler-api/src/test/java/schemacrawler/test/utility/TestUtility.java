@@ -57,6 +57,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -114,21 +115,21 @@ public final class TestUtility {
     requireNonNull(outputFormat, "Output format is not defined");
 
     if (!isFileReadable(testOutputTempFile)) {
-      return Collections.singletonList("Output file not created - " + testOutputTempFile);
+      return Collections.singletonList(
+          String.format(">> output file not created:%n%s", testOutputTempFile));
     }
 
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final Reader referenceReader =
-        readerForInputResource(new ClasspathInputResource(referenceFile));
+    final Reader referenceReader = readerForClasspathInputResource(referenceFile);
     if (referenceReader == null) {
-      failures.add("Reference file not available, " + referenceFile);
+      failures.add(String.format(">> reference file not available:%n%s", referenceFile));
       contentEquals = false;
     } else if ("png".equals(outputFormat)) {
       contentEquals = true;
     } else {
-      final Reader fileReader = readerForInputResource(new FileInputResource(testOutputTempFile));
+      final Reader fileReader = readerForFileInputResource(testOutputTempFile);
       final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
       final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
       contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
@@ -148,14 +149,17 @@ public final class TestUtility {
       System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
       System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
+      final Path buildDirectory = buildDirectory();
       final Path testOutputTargetFilePath =
-          buildDirectory().resolve("unit_tests_results_output").resolve(referenceFile);
+          buildDirectory.resolve("unit_tests_results_output").resolve(referenceFile);
       createDirectories(testOutputTargetFilePath.getParent());
       deleteIfPossible(testOutputTargetFilePath);
       move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
-      System.err.printf(
-          "%nOutput does not match - actual output in%n%s%n", testOutputTargetFilePath);
+      failures.add(
+          String.format(
+              ">> actual output in:%n%s",
+              buildDirectory.getParent().getParent().relativize(testOutputTargetFilePath)));
     } else {
       delete(testOutputTempFile);
     }
@@ -397,19 +401,29 @@ public final class TestUtility {
 
   private static String lineMiscompare(final String expectedline, final String actualLine) {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append(">> expected followed by actual:").append("\n");
-    buffer.append(expectedline).append("\n");
-    buffer.append(actualLine).append("\n");
+    buffer.append(">> expected followed by actual:").append(System.lineSeparator());
+    buffer.append(expectedline).append(System.lineSeparator());
+    buffer.append(actualLine);
 
     final String lineMiscompare = buffer.toString();
     return lineMiscompare;
   }
 
-  private static Reader readerForInputResource(final InputResource inputResource) {
+  private static Reader readerForClasspathInputResource(final String classpathResource) {
     try {
+      final InputResource inputResource = new ClasspathInputResource(classpathResource);
       return inputResource.openNewInputReader(UTF_8);
     } catch (final IOException e) {
       return null;
+    }
+  }
+
+  private static Reader readerForFileInputResource(final Path filePath) {
+    try {
+      final InputResource inputResource = new FileInputResource(filePath);
+      return inputResource.openNewInputReader(UTF_8);
+    } catch (final IOException e) {
+      return new StringReader("");
     }
   }
 
