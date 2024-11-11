@@ -28,13 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 import us.fatehi.utility.IOUtility;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.InputResource;
 
 public final class TestResource {
 
@@ -46,13 +43,7 @@ public final class TestResource {
       resourceString = null;
     }
 
-    boolean isAvailable = true;
-    try {
-      // Check that classpath resource is available
-      final InputResource inputResource = new ClasspathInputResource(resource);
-    } catch (IOException e) {
-      isAvailable = false;
-    }
+    final boolean isAvailable = IOUtility.locateResource(resource) != null;
 
     return new TestResource(resourceString, isAvailable);
   }

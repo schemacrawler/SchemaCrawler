@@ -32,6 +32,8 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doThrow;
@@ -153,5 +155,19 @@ public class IOUtilityTest {
   public void readResourceFully() throws IOException {
     assertThat(IOUtility.readResourceFully("no-resouce"), is(""));
     assertThat(IOUtility.readResourceFully("/test-resource.txt"), startsWith("hello, world"));
+  }
+
+  @Test
+  public void noClasspathResource() {
+    assertThat(IOUtility.locateResource("no_resource"), is(nullValue()));
+    assertThat(IOUtility.locateResource(null), is(nullValue()));
+  }
+
+  @Test
+  public void classpathResourceAvailable() throws IOException {
+    final String classpathResource = "/test-resource.txt";
+    assertThat(IOUtility.locateResource(classpathResource), is(not(nullValue())));
+    assertThat(
+        IOUtility.locateResource(classpathResource).toExternalForm(), endsWith(classpathResource));
   }
 }
