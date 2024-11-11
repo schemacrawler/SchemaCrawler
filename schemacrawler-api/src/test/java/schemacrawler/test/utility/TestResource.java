@@ -28,18 +28,28 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.size;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.FileInputResource;
 
 public final class TestResource {
 
-  static TestResource empty() {
-    return new TestResource(null, false);
+  public enum ResourceType {
+    none,
+    classpath,
+    file;
   }
 
-  static TestResource fromClasspath(final String resource) {
+  public static TestResource fromClasspath(final String resource) {
     final String resourceString;
     if (!isBlank(resource)) {
       resourceString = resource;
@@ -47,9 +57,7 @@ public final class TestResource {
       resourceString = null;
     }
 
-    final boolean isAvailable = IOUtility.locateResource(resource) != null;
-
-    return new TestResource(resourceString, isAvailable);
+    return new TestResource(resourceString, ResourceType.classpath);
   }
 
   /**
@@ -59,7 +67,7 @@ public final class TestResource {
    * @param filePath Expected path
    * @return Test resource
    */
-  static TestResource fromFilePath(final Path filePath) {
+  public static TestResource fromFilePath(final Path filePath) {
     final String resourceString;
     if (filePath != null) {
       resourceString = filePath.toString();
@@ -67,33 +75,69 @@ public final class TestResource {
       resourceString = null;
     }
 
-    final boolean isAvailable = IOUtility.isFileReadable(filePath);
+    return new TestResource(resourceString, ResourceType.file);
+  }
 
-    return new TestResource(resourceString, isAvailable);
+  public static TestResource none() {
+    return new TestResource(null, ResourceType.none);
   }
 
   private final String resourceString;
-  private final boolean isAvailable;
+  private final ResourceType resourceType;
 
-  private TestResource(String resourceString, boolean isAvailable) {
+  private TestResource(String resourceString, final ResourceType resourceType) {
     this.resourceString = resourceString;
-    this.isAvailable = isAvailable;
+    this.resourceType = resourceType;
   }
 
   public String getResourceString() {
     return resourceString;
   }
 
-  public boolean hasResourceString() {
-    return !isBlank(resourceString);
+  public boolean isAvailable() {
+    switch (resourceType) {
+      case classpath:
+        return IOUtility.locateResource(resourceString) != null;
+      case file:
+        final Path filePath = Paths.get(resourceString);
+        try {
+          return IOUtility.isFileReadable(filePath) && size(filePath) > 0;
+        } catch (final IOException e) {
+          return false;
+        }
+      case none:
+      // Fall-through
+      default:
+        return false;
+    }
   }
 
-  public boolean isAvailable() {
-    return isAvailable;
+  public boolean isNone() {
+    return resourceType == ResourceType.none;
+  }
+
+  public BufferedReader openNewReader() {
+    try {
+      switch (resourceType) {
+        case classpath:
+          return new ClasspathInputResource(resourceString).openNewInputReader(UTF_8);
+        case file:
+          return new FileInputResource(Paths.get(resourceString)).openNewInputReader(UTF_8);
+        case none:
+        // Fall-through
+        default:
+          return new BufferedReader(new StringReader(""));
+      }
+    } catch (final IOException e) {
+      return new BufferedReader(new StringReader(""));
+    }
   }
 
   @Override
   public String toString() {
+    if (isNone()) {
+      return "<none>";
+    }
     return trimToEmpty(resourceString);
   }
 }

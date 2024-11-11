@@ -45,11 +45,9 @@ import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -62,23 +60,13 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.condition.JRE;
 import org.opentest4j.TestAbortedException;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -87,7 +75,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.FileInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 
 public final class TestUtility {
@@ -146,8 +133,7 @@ public final class TestUtility {
   }
 
   public static <V> V failTestSetup(final String message, final Exception e) {
-    testAborted(message, e);
-    return null;
+    throw new TestAbortedException(message, e);
   }
 
   public static String fileHeaderOf(final Path tempFile) throws IOException {
@@ -271,48 +257,6 @@ public final class TestUtility {
     return directory.normalize().toAbsolutePath();
   }
 
-  static boolean contentEquals(
-      final Reader expectedInputReader,
-      final Reader actualInputReader,
-      final List<String> failures,
-      final Predicate<String> keepLines,
-      final Function<String, String> neuterMap)
-      throws Exception {
-    if (expectedInputReader == null || actualInputReader == null) {
-      return false;
-    }
-
-    try (final Stream<String> expectedLinesStream =
-            new BufferedReader(expectedInputReader).lines();
-        final Stream<String> actualLinesStream = new BufferedReader(actualInputReader).lines()) {
-
-      final Iterator<String> expectedLinesIterator =
-          expectedLinesStream.filter(keepLines).map(neuterMap).iterator();
-      final Iterator<String> actualLinesIterator =
-          actualLinesStream.filter(keepLines).map(neuterMap).iterator();
-
-      while (expectedLinesIterator.hasNext() && actualLinesIterator.hasNext()) {
-        final String expectedline = expectedLinesIterator.next();
-        final String actualLine = actualLinesIterator.next();
-
-        if (!expectedline.equals(actualLine)) {
-          failures.add(lineMiscompare(expectedline, actualLine));
-          return false;
-        }
-      }
-
-      if (actualLinesIterator.hasNext()) {
-        failures.add(lineMiscompare("<<end of stream>>", actualLinesIterator.next()));
-        return false;
-      }
-      if (expectedLinesIterator.hasNext()) {
-        failures.add(lineMiscompare(expectedLinesIterator.next(), "<<end of stream>>"));
-        return false;
-      }
-      return true;
-    }
-  }
-
   private static StackTraceElement currentMethodStackTraceElement() {
     final Pattern baseTestClassName = Pattern.compile(".*\\.Base.*Test");
     final Pattern testClassName = Pattern.compile(".*\\.[A-Z].*Test");
@@ -327,66 +271,6 @@ public final class TestUtility {
     }
 
     return null;
-  }
-
-  private static String lineMiscompare(final String expectedline, final String actualLine) {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append(">> expected followed by actual:").append(System.lineSeparator());
-    buffer.append(expectedline).append(System.lineSeparator());
-    buffer.append(actualLine);
-
-    final String lineMiscompare = buffer.toString();
-    return lineMiscompare;
-  }
-
-  static Reader readerForClasspathInputResource(final String classpathResource) {
-    try {
-      final InputResource inputResource = new ClasspathInputResource(classpathResource);
-      return inputResource.openNewInputReader(UTF_8);
-    } catch (final IOException e) {
-      return null;
-    }
-  }
-
-  static Reader readerForFileInputResource(final Path filePath) {
-    try {
-      final InputResource inputResource = new FileInputResource(filePath);
-      return inputResource.openNewInputReader(UTF_8);
-    } catch (final IOException e) {
-      return new StringReader("");
-    }
-  }
-
-  private static void testAborted(final String message, final Exception e) {
-    throw new TestAbortedException(message, e);
-  }
-
-  static void validateXML(final Path testOutputFile, final List<String> failures) throws Exception {
-    final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    factory.setValidating(false);
-    factory.setNamespaceAware(true);
-
-    final DocumentBuilder builder = factory.newDocumentBuilder();
-    builder.setErrorHandler(
-        new ErrorHandler() {
-          @Override
-          public void error(final SAXParseException e) throws SAXException {
-            failures.add(e.getMessage());
-          }
-
-          @Override
-          public void fatalError(final SAXParseException e) throws SAXException {
-            failures.add(e.getMessage());
-          }
-
-          @Override
-          public void warning(final SAXParseException e) throws SAXException {
-            failures.add(e.getMessage());
-          }
-        });
-    try (final Reader reader = new FileInputResource(testOutputFile).openNewInputReader(UTF_8); ) {
-      builder.parse(new InputSource(reader));
-    }
   }
 
   private TestUtility() {

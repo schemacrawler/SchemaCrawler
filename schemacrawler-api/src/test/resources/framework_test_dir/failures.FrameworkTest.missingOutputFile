@@ -1,5 +1,2 @@
->>>>> FrameworkTest.missingOutputFile
-Expected: <framework_test_dir/FrameworkTest.missingOutputFile>
-     but: mismatched on:
->> output file not created:
-no_such_file
+Expected: contents of <framework_test_dir/FrameworkTest.missingOutputFile>
+     but: output file not created

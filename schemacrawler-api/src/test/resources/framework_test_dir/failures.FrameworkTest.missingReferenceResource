@@ -1,7 +1,4 @@
->>>>> FrameworkTest.missingReferenceResource
-Expected: <framework_test_dir/FrameworkTest.missingReferenceResource>
-     but: mismatched on:
->> reference file not available:
-framework_test_dir/FrameworkTest.missingReferenceResource
+Expected: contents of <framework_test_dir/FrameworkTest.missingReferenceResource>
+     but: reference file not available
 >> actual output in:
 schemacrawler-api/target/unit_tests_results_output/framework_test_dir/FrameworkTest.missingReferenceResource

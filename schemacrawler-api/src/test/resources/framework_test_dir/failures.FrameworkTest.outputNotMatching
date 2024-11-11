@@ -1,7 +1,5 @@
->>>>> FrameworkTest.outputNotMatching
-Expected: <framework_test_dir/FrameworkTest.outputNotMatching>
-     but: mismatched on:
->> expected followed by actual:
+Expected: contents of <framework_test_dir/FrameworkTest.outputNotMatching>
+     but: was (expected followed by actual)
 goodbye, world
 hello, world
 >> actual output in:

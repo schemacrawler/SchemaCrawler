@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test.utility.test;
+package schemacrawler.test.utility;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -39,11 +39,6 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.junit.jupiter.api.Test;
-import schemacrawler.test.utility.FileHasContent;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestResource;
-import schemacrawler.test.utility.TestWriter;
 
 @ResolveTestContext
 public class FrameworkTest {
@@ -101,9 +96,6 @@ public class FrameworkTest {
 
     final Description description = new StringDescription();
     description
-        .appendText(">>>>> ")
-        .appendText(testContext.testMethodFullName())
-        .appendText(System.lineSeparator())
         .appendText("Expected: ")
         .appendDescriptionOf(matcher)
         .appendText(System.lineSeparator())
@@ -119,8 +111,10 @@ public class FrameworkTest {
     }
     final String expectedFailuresResource =
         TEST_DIR + "failures." + testContext.testMethodFullName();
+    final TestResource expectedResults = TestResource.fromClasspath(expectedFailuresResource);
+    final TestResource actualResults = TestResource.fromFilePath(testout.getFilePath());
     final List<String> failures =
-        FileHasContent.compareOutput(expectedFailuresResource, testout.getFilePath(), "text");
+        FileHasContent.compareOutput(actualResults, expectedResults, "text");
     if (!failures.isEmpty()) {
       System.err.println(failures);
       fail(failures.toString());
