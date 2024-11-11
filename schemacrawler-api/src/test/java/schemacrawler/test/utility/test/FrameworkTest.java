@@ -39,10 +39,10 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.junit.jupiter.api.Test;
+import schemacrawler.test.utility.FileHasContent;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestResource;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 
 @ResolveTestContext
@@ -117,7 +117,7 @@ public class FrameworkTest {
     final String expectedFailuresResource =
         TEST_DIR + "failures." + testContext.testMethodFullName();
     final List<String> failures =
-        TestUtility.compareOutput(expectedFailuresResource, testout.getFilePath(), "text");
+        FileHasContent.compareOutput(expectedFailuresResource, testout.getFilePath(), "text");
     if (!failures.isEmpty()) {
       System.err.println(failures);
       fail(failures.toString());

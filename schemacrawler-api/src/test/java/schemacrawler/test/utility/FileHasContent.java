@@ -28,15 +28,27 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static java.nio.file.Files.createDirectories;
+import static java.nio.file.Files.delete;
 import static java.nio.file.Files.exists;
+import static java.nio.file.Files.move;
 import static java.nio.file.Files.size;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static us.fatehi.utility.IOUtility.isFileReadable;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -50,6 +62,72 @@ public class FileHasContent extends BaseMatcher<TestResource> {
   public static TestResource classpathResource(final String classpathResource) {
     requireNotBlank(classpathResource, "No classpath resource provided");
     return TestResource.fromClasspath(classpathResource);
+  }
+
+  public static List<String> compareOutput(
+      final String referenceFile, final Path testOutputTempFile, final String outputFormat)
+      throws Exception {
+
+    requireNonNull(referenceFile, "Reference file is not defined");
+    requireNonNull(testOutputTempFile, "Output file is not defined");
+    requireNonNull(outputFormat, "Output format is not defined");
+
+    if (!isFileReadable(testOutputTempFile)) {
+      return Collections.singletonList(
+          String.format(">> output file not created:%n%s", testOutputTempFile));
+    }
+
+    final List<String> failures = new ArrayList<>();
+
+    final boolean contentEquals;
+    final Reader referenceReader = TestUtility.readerForClasspathInputResource(referenceFile);
+    if (referenceReader == null) {
+      failures.add(String.format(">> reference file not available:%n%s", referenceFile));
+      contentEquals = false;
+    } else if ("png".equals(outputFormat)) {
+      contentEquals = true;
+    } else {
+      final Reader fileReader = TestUtility.readerForFileInputResource(testOutputTempFile);
+      final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
+      final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
+      contentEquals =
+          TestUtility.contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
+    }
+
+    if ("html".equals(outputFormat)) {
+      TestUtility.validateXML(testOutputTempFile, failures);
+    }
+    if ("htmlx".equals(outputFormat)) {
+      TestUtility.validateXML(testOutputTempFile, failures);
+    } else if ("png".equals(outputFormat)) {
+      TestUtility.validateDiagram(testOutputTempFile);
+    }
+
+    if (!contentEquals) {
+      // Reset System streams
+      System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+      System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+
+      final Path buildDirectory = TestUtility.buildDirectory();
+      final Path testOutputTargetFilePath =
+          buildDirectory.resolve("unit_tests_results_output").resolve(referenceFile);
+      createDirectories(testOutputTargetFilePath.getParent());
+      TestUtility.deleteIfPossible(testOutputTargetFilePath);
+      move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
+
+      final String relativePathToTestResultsOutput =
+          buildDirectory.getParent().getParent().relativize(testOutputTargetFilePath).toString();
+      failures.add(
+          String.format(
+              ">> actual output in:%n%s", relativePathToTestResultsOutput.replace("\\\\", "/")));
+
+      // Print failures for easy reading of build log
+      System.err.println(String.join(System.lineSeparator(), failures));
+    } else {
+      delete(testOutputTempFile);
+    }
+
+    return failures;
   }
 
   public static String contentsOf(final TestOutputCapture testoutput) {
@@ -82,6 +160,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
 
   private final TestResource expectedResource;
   private final String outputFormatValue;
+
   private List<String> failures;
 
   private FileHasContent(final TestResource expectedResource, final String outputFormatValue) {
@@ -151,7 +230,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
 
       // Check file contents
       final String referenceFile = expectedResource.getResourceString();
-      failures = compareOutput(referenceFile, file, outputFormatValue);
+      failures = FileHasContent.compareOutput(referenceFile, file, outputFormatValue);
       return failures != null && failures.isEmpty();
     } catch (final Exception e) {
       return fail(e);

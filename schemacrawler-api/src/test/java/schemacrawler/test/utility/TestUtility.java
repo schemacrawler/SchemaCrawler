@@ -29,14 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createDirectories;
-import static java.nio.file.Files.delete;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
-import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.Files.size;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
@@ -49,13 +45,9 @@ import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static us.fatehi.utility.IOUtility.isFileReadable;
 import java.io.BufferedReader;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
@@ -70,7 +62,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -104,71 +95,6 @@ public final class TestUtility {
   public static void clean(final String dirname) throws Exception {
     FileUtils.deleteDirectory(
         buildDirectory().resolve("unit_tests_results_output").resolve(dirname).toFile());
-  }
-
-  public static List<String> compareOutput(
-      final String referenceFile, final Path testOutputTempFile, final String outputFormat)
-      throws Exception {
-
-    requireNonNull(referenceFile, "Reference file is not defined");
-    requireNonNull(testOutputTempFile, "Output file is not defined");
-    requireNonNull(outputFormat, "Output format is not defined");
-
-    if (!isFileReadable(testOutputTempFile)) {
-      return Collections.singletonList(
-          String.format(">> output file not created:%n%s", testOutputTempFile));
-    }
-
-    final List<String> failures = new ArrayList<>();
-
-    final boolean contentEquals;
-    final Reader referenceReader = readerForClasspathInputResource(referenceFile);
-    if (referenceReader == null) {
-      failures.add(String.format(">> reference file not available:%n%s", referenceFile));
-      contentEquals = false;
-    } else if ("png".equals(outputFormat)) {
-      contentEquals = true;
-    } else {
-      final Reader fileReader = readerForFileInputResource(testOutputTempFile);
-      final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
-      final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
-      contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
-    }
-
-    if ("html".equals(outputFormat)) {
-      validateXML(testOutputTempFile, failures);
-    }
-    if ("htmlx".equals(outputFormat)) {
-      validateXML(testOutputTempFile, failures);
-    } else if ("png".equals(outputFormat)) {
-      validateDiagram(testOutputTempFile);
-    }
-
-    if (!contentEquals) {
-      // Reset System streams
-      System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-      System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-
-      final Path buildDirectory = buildDirectory();
-      final Path testOutputTargetFilePath =
-          buildDirectory.resolve("unit_tests_results_output").resolve(referenceFile);
-      createDirectories(testOutputTargetFilePath.getParent());
-      deleteIfPossible(testOutputTargetFilePath);
-      move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
-
-      final String relativePathToTestResultsOutput =
-          buildDirectory.getParent().getParent().relativize(testOutputTargetFilePath).toString();
-      failures.add(
-          String.format(
-              ">> actual output in:%n%s", relativePathToTestResultsOutput.replace("\\\\", "/")));
-
-      // Print failures for easy reading of build log
-      System.err.println(String.join(System.lineSeparator(), failures));
-    } else {
-      delete(testOutputTempFile);
-    }
-
-    return failures;
   }
 
   public static Path copyResourceToTempFile(final String resource) throws IOException {
@@ -330,7 +256,7 @@ public final class TestUtility {
     return tempFile;
   }
 
-  private static Path buildDirectory() throws Exception {
+  static Path buildDirectory() throws Exception {
     final StackTraceElement ste = currentMethodStackTraceElement();
     final Class<?> callingClass = Class.forName(ste.getClassName());
     final Path codePath =
@@ -345,7 +271,7 @@ public final class TestUtility {
     return directory.normalize().toAbsolutePath();
   }
 
-  private static boolean contentEquals(
+  static boolean contentEquals(
       final Reader expectedInputReader,
       final Reader actualInputReader,
       final List<String> failures,
@@ -413,7 +339,7 @@ public final class TestUtility {
     return lineMiscompare;
   }
 
-  private static Reader readerForClasspathInputResource(final String classpathResource) {
+  static Reader readerForClasspathInputResource(final String classpathResource) {
     try {
       final InputResource inputResource = new ClasspathInputResource(classpathResource);
       return inputResource.openNewInputReader(UTF_8);
@@ -422,7 +348,7 @@ public final class TestUtility {
     }
   }
 
-  private static Reader readerForFileInputResource(final Path filePath) {
+  static Reader readerForFileInputResource(final Path filePath) {
     try {
       final InputResource inputResource = new FileInputResource(filePath);
       return inputResource.openNewInputReader(UTF_8);
@@ -435,8 +361,7 @@ public final class TestUtility {
     throw new TestAbortedException(message, e);
   }
 
-  private static void validateXML(final Path testOutputFile, final List<String> failures)
-      throws Exception {
+  static void validateXML(final Path testOutputFile, final List<String> failures) throws Exception {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setValidating(false);
     factory.setNamespaceAware(true);
