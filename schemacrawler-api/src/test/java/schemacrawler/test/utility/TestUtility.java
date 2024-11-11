@@ -161,6 +161,9 @@ public final class TestUtility {
       failures.add(
           String.format(
               ">> actual output in:%n%s", relativePathToTestResultsOutput.replace("\\\\", "/")));
+
+      // Print failures for easy reading of build log
+      System.err.println(String.join(System.lineSeparator(), failures));
     } else {
       delete(testOutputTempFile);
     }
