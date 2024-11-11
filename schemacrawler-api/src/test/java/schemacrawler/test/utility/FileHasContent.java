@@ -93,19 +93,28 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     return new FileHasContent(classpathTestResource, outputFormatValue);
   }
 
-  private final TestResource referenceFileResource;
+  private final TestResource expectedResource;
   private final String outputFormatValue;
   private List<String> failures;
 
-  private FileHasContent(final TestResource referenceFileResource, final String outputFormatValue) {
-    this.referenceFileResource = referenceFileResource;
-    this.outputFormatValue = outputFormatValue;
+  private FileHasContent(final TestResource expectedResource, final String outputFormatValue) {
+    if (expectedResource != null) {
+      this.expectedResource = expectedResource;
+    } else {
+      this.expectedResource = TestResource.empty();
+    }
+
+    if (isBlank(outputFormatValue)) {
+      this.outputFormatValue = "text";
+    } else {
+      this.outputFormatValue = outputFormatValue;
+    }
   }
 
   @Override
   public void describeMismatch(final Object item, final Description description) {
     // description.appendText("was ").appendValue(item);
-    if (referenceFileResource == null) {
+    if (!expectedResource.hasResourceString()) {
       String value;
       if (item instanceof TestResource) {
         try {
@@ -130,10 +139,10 @@ public class FileHasContent extends BaseMatcher<TestResource> {
 
   @Override
   public void describeTo(final Description description) {
-    if (referenceFileResource == null) {
+    if (!expectedResource.hasResourceString()) {
       description.appendValue("no output");
     } else {
-      description.appendValue(referenceFileResource);
+      description.appendValue(expectedResource);
     }
   }
 
@@ -143,15 +152,14 @@ public class FileHasContent extends BaseMatcher<TestResource> {
       // Clear failures from previous match
       failures = null;
 
-      final String referenceFile = getReferenceFile();
       final Path file = getFilePath(actualValue);
 
-      if (isBlank(referenceFile)) {
+      if (!expectedResource.hasResourceString()) {
         // Check if the file contents are empty
         return !exists(file) || size(file) == 0;
       }
       // Check file contents
-      final String outputFormatValue = getNonNullOutputFormatValue();
+      final String referenceFile = expectedResource.getResourceString();
       failures = compareOutput(referenceFile, file, outputFormatValue);
       return failures != null && failures.isEmpty();
     } catch (final Exception e) {
@@ -166,25 +174,5 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     final TestResource testResource = (TestResource) actualValue;
     final Path file = Paths.get(testResource.getResourceString());
     return file;
-  }
-
-  private String getNonNullOutputFormatValue() {
-    final String outputFormatValue;
-    if (isBlank(this.outputFormatValue)) {
-      outputFormatValue = "text";
-    } else {
-      outputFormatValue = this.outputFormatValue;
-    }
-    return outputFormatValue;
-  }
-
-  private String getReferenceFile() {
-    final String referenceFile;
-    if (referenceFileResource == null) {
-      referenceFile = null;
-    } else {
-      referenceFile = referenceFileResource.getResourceString();
-    }
-    return referenceFile;
   }
 }

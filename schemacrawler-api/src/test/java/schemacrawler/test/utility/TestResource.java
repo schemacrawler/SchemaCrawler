@@ -35,6 +35,10 @@ import us.fatehi.utility.IOUtility;
 
 public final class TestResource {
 
+  static TestResource empty() {
+    return new TestResource(null, false);
+  }
+
   static TestResource fromClasspath(final String resource) {
     final String resourceString;
     if (!isBlank(resource)) {
@@ -78,6 +82,10 @@ public final class TestResource {
 
   public String getResourceString() {
     return resourceString;
+  }
+
+  public boolean hasResourceString() {
+    return !isBlank(resourceString);
   }
 
   public boolean isAvailable() {
