@@ -44,20 +44,6 @@ https://www.schemacrawler.com/database-support.html
 first, before running SchemaCrawler
 
 Options:
-      --password=<password>
-                          Database password
-      --password:env=<environment variable name>
-                          Database password, from an environmental variable
-                            value
-      --password:file=<path to password file>
-                          Database password, read from a file
-      --password:prompt   Database password, prompted from the console
-      --user=<user>       Database user
-      --user:env=<environment variable name>
-                          Database user, from an environmental variable value
-      --user:file=<path to user file>
-                          Database user, read from a file
-      --user:prompt       Database user, prompted from the console
 
 For connecting to specific databases, use
       --database=<database>
@@ -74,6 +60,23 @@ For connecting to specific databases, use
 If your database does not have a SchemaCrawler plug-in, use
       --url=<connectionUrl>
                           JDBC connection URL to the database
+Specify the database user name using one of these options
+      --user=<user>       Database user name
+      --user:env=<environment variable name>
+                          Database user name, from an environmental variable
+                            value
+      --user:file=<path to user file>
+                          Database user name, read from a file
+      --user:prompt       Database user name, prompted from the console
+Specify the database password using one of these options
+      --password=<password>
+                          Database password
+      --password:env=<environment variable name>
+                          Database password, from an environmental variable
+                            value
+      --password:file=<path to password file>
+                          Database password, read from a file
+      --password:prompt   Database password, prompted from the console
 
 For additional options, specific to individual database server plugins,
 run SchemaCrawler with: `-h servers`

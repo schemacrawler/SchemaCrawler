@@ -38,8 +38,12 @@ import us.fatehi.utility.datasource.UserCredentials;
 /** Options for the command-line. */
 public final class UserCredentialsOptions {
 
-  @ArgGroup private UserOptions userOptions;
-  @ArgGroup private PasswordOptions passwordOptions;
+  @ArgGroup(heading = "Specify the database user name using one of these options\n")
+  private UserOptions userOptions;
+
+  @ArgGroup(heading = "Specify the database password using one of these options\n")
+  private PasswordOptions passwordOptions;
+
   @Spec private Model.CommandSpec spec;
 
   public UserCredentials getUserCredentials() {

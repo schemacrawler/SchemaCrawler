@@ -252,7 +252,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
         if (isBlank(username)) {
           continue;
         }
-        LOGGER.log(Level.FINER, new StringFormat("Retrieving database user: %s", username));
+        LOGGER.log(Level.FINER, new StringFormat("Retrieving database user name: %s", username));
 
         final ImmutableDatabaseUser databaseUser = new ImmutableDatabaseUser(username);
         databaseUser.addAttributes(results.getAttributes());
