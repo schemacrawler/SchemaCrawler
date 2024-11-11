@@ -156,15 +156,11 @@ public final class TestUtility {
       deleteIfPossible(testOutputTargetFilePath);
       move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
+      final String relativePathToTestResultsOutput =
+          buildDirectory.getParent().getParent().relativize(testOutputTargetFilePath).toString();
       failures.add(
           String.format(
-              ">> actual output in:%n%s",
-              buildDirectory
-                  .getParent()
-                  .getParent()
-                  .relativize(testOutputTargetFilePath)
-                  .toString()
-                  .replaceAll("\\", "/")));
+              ">> actual output in:%n%s", relativePathToTestResultsOutput.replace("\\\\", "/")));
     } else {
       delete(testOutputTempFile);
     }

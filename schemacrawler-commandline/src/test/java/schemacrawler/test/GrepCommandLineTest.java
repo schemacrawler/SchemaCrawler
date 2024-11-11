@@ -28,21 +28,19 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.nio.file.Path;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -64,8 +62,6 @@ public class GrepCommandLineTest {
 
   @Test
   public void grep(final DatabaseConnectionInfo connectionInfo) throws Exception {
-
-    final List<String> failures = new ArrayList<>();
 
     final List<List<Map.Entry<String, String>>> grepArgs =
         Arrays.asList(
@@ -105,13 +101,8 @@ public class GrepCommandLineTest {
           TextOutputFormat.text.getFormat(),
           testOutputFile);
 
-      failures.addAll(
-          compareOutput(
-              GREP_OUTPUT + referenceFile, testOutputFile, TextOutputFormat.text.getFormat()));
-    }
-
-    if (failures.size() > 0) {
-      fail(failures.toString());
+      final String expectedResource = GREP_OUTPUT + referenceFile;
+      assertThat(outputOf(testOutputFile), hasSameContentAs(classpathResource(expectedResource)));
     }
   }
 }
