@@ -154,10 +154,14 @@ public class FileHasContent extends BaseMatcher<TestResource> {
 
       final Path file = getFilePath(actualValue);
 
+      // If there is no expected classpath resource, also make sure that
+      // the output has no contents
       if (!expectedResource.hasResourceString()) {
         // Check if the file contents are empty
-        return !exists(file) || size(file) == 0;
+        final boolean hasNoFileContents = !exists(file) || size(file) == 0;
+        return hasNoFileContents;
       }
+
       // Check file contents
       final String referenceFile = expectedResource.getResourceString();
       failures = compareOutput(referenceFile, file, outputFormatValue);
