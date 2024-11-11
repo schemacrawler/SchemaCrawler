@@ -63,11 +63,11 @@ public class FileHasContent extends BaseMatcher<TestResource> {
 
   public static Matcher<TestResource> hasSameContentAndTypeAs(
       final TestResource classpathTestResource, final String outputFormatValue) {
-    return hasSameContentAndTypeAs(classpathTestResource, outputFormatValue, true);
+    return new FileHasContent(classpathTestResource, outputFormatValue);
   }
 
   public static Matcher<TestResource> hasSameContentAs(final TestResource classpathTestResource) {
-    return hasSameContentAndTypeAs(classpathTestResource, null, false);
+    return new FileHasContent(classpathTestResource, null);
   }
 
   public static TestResource outputOf(final Path filePath) {
@@ -78,19 +78,6 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     requireNonNull(testoutput, "No test output capture provided");
     final Path filePath = testoutput.getFilePath();
     return outputOf(filePath);
-  }
-
-  private static Matcher<TestResource> hasSameContentAndTypeAs(
-      final TestResource classpathTestResource,
-      final String outputFormatValue,
-      final boolean validateOutputFormat) {
-    if (classpathTestResource == null) {
-      fail("No classpath resource to match with");
-    }
-    if (validateOutputFormat && isBlank(outputFormatValue)) {
-      fail("No output format provided");
-    }
-    return new FileHasContent(classpathTestResource, outputFormatValue);
   }
 
   private final TestResource expectedResource;
