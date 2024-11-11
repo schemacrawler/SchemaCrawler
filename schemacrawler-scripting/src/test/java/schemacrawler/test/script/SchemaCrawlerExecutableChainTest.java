@@ -113,12 +113,12 @@ public class SchemaCrawlerExecutableChainTest {
         readFileFully(testOutputFile).replaceAll("\\R", ""),
         is("Created files \"schema.txt\" and \"schema.png\""));
 
-    final Path schemaFile = Paths.get("schema.txt");
-    final List<String> failures =
-        compareOutput("schema.txt", schemaFile, TextOutputFormat.text.name());
-    if (failures.size() > 0) {
-      fail(failures.toString());
-    }
+    final String expectedResource = "schema.txt";
+    final Path schemaFile = Paths.get(expectedResource);
+    assertThat(
+        outputOf(schemaFile),
+        hasSameContentAs(classpathResource(expectedResource)));
+
     deleteIfPossible(schemaFile);
 
     final Path diagramFile = Paths.get("schema.png");
