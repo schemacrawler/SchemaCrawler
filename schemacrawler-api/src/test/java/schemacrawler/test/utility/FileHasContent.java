@@ -70,12 +70,6 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     return hasSameContentAndTypeAs(classpathTestResource, null, false);
   }
 
-  /** MARK FOR INLINING */
-  public static Matcher<TestResource> hasSameContentAsClasspathResource(
-      final String classpathTestResource) {
-    return hasSameContentAndTypeAs(classpathResource(classpathTestResource), null, false);
-  }
-
   public static TestResource outputOf(final Path filePath) {
     return TestResource.fromFilePath(filePath);
   }

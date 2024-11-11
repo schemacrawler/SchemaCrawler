@@ -32,15 +32,13 @@ import static java.nio.file.Files.createTempFile;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAsClasspathResource;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-
 import java.io.IOException;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public class GraphvizJavaExecutorTest {
@@ -85,6 +83,6 @@ public class GraphvizJavaExecutorTest {
     graphvizJavaExecutor.run();
 
     assertThat(
-        outputOf(outputFile), hasSameContentAsClasspathResource("/javaexecutor/output.xdot"));
+        outputOf(outputFile), hasSameContentAs(classpathResource("/javaexecutor/output.xdot")));
   }
 }
