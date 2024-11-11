@@ -110,6 +110,9 @@ public class FrameworkTest {
         .appendText("     but: ");
     matcher.describeMismatch(actual, description);
 
+    // Print failures for easy reading of build log
+    System.err.println(description);
+
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       out.println(description);
