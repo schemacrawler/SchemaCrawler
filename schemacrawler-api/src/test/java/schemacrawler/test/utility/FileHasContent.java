@@ -116,10 +116,13 @@ public class FileHasContent extends BaseMatcher<TestResource> {
       move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
       final String relativePathToTestResultsOutput =
-          buildDirectory.getParent().getParent().relativize(testOutputTargetFilePath).toString();
-      failures.add(
-          String.format(
-              ">> actual output in:%n%s", relativePathToTestResultsOutput.replace("\\\\", "/")));
+          buildDirectory
+              .getParent()
+              .getParent()
+              .relativize(testOutputTargetFilePath)
+              .toString()
+              .replace('\\', '/');
+      failures.add(String.format(">> actual output in:%n%s", relativePathToTestResultsOutput));
 
       // Print failures for easy reading of build log
       System.err.println(String.join(System.lineSeparator(), failures));
