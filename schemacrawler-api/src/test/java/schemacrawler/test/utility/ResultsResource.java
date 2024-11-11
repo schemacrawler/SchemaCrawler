@@ -41,7 +41,7 @@ import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
 
-public final class TestResource {
+public final class ResultsResource {
 
   public enum ResourceType {
     none,
@@ -49,7 +49,7 @@ public final class TestResource {
     file;
   }
 
-  public static TestResource fromClasspath(final String resource) {
+  public static ResultsResource fromClasspath(final String resource) {
     final String resourceString;
     if (!isBlank(resource)) {
       resourceString = resource;
@@ -57,7 +57,7 @@ public final class TestResource {
       resourceString = null;
     }
 
-    return new TestResource(resourceString, ResourceType.classpath);
+    return new ResultsResource(resourceString, ResourceType.classpath);
   }
 
   /**
@@ -67,7 +67,7 @@ public final class TestResource {
    * @param filePath Expected path
    * @return Test resource
    */
-  public static TestResource fromFilePath(final Path filePath) {
+  public static ResultsResource fromFilePath(final Path filePath) {
     final String resourceString;
     if (filePath != null) {
       resourceString = filePath.toString();
@@ -75,17 +75,17 @@ public final class TestResource {
       resourceString = null;
     }
 
-    return new TestResource(resourceString, ResourceType.file);
+    return new ResultsResource(resourceString, ResourceType.file);
   }
 
-  public static TestResource none() {
-    return new TestResource(null, ResourceType.none);
+  public static ResultsResource none() {
+    return new ResultsResource(null, ResourceType.none);
   }
 
   private final String resourceString;
   private final ResourceType resourceType;
 
-  private TestResource(String resourceString, final ResourceType resourceType) {
+  private ResultsResource(String resourceString, final ResourceType resourceType) {
     this.resourceString = resourceString;
     this.resourceType = resourceType;
   }

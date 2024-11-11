@@ -87,7 +87,9 @@ public class FrameworkTest {
   }
 
   private void assertFailuresFor(
-      final TestContext testContext, final TestResource actual, final Matcher<TestResource> matcher)
+      final TestContext testContext,
+      final ResultsResource actual,
+      final Matcher<ResultsResource> matcher)
       throws Exception {
 
     if (matcher.matches(actual)) {
@@ -111,8 +113,8 @@ public class FrameworkTest {
     }
     final String expectedFailuresResource =
         TEST_DIR + "failures." + testContext.testMethodFullName();
-    final TestResource expectedResults = TestResource.fromClasspath(expectedFailuresResource);
-    final TestResource actualResults = TestResource.fromFilePath(testout.getFilePath());
+    final ResultsResource expectedResults = ResultsResource.fromClasspath(expectedFailuresResource);
+    final ResultsResource actualResults = ResultsResource.fromFilePath(testout.getFilePath());
     final List<String> failures =
         FileHasContent.compareOutput(actualResults, expectedResults, "text");
     if (!failures.isEmpty()) {

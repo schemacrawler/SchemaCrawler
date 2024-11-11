@@ -56,11 +56,11 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
-public class FileHasContent extends BaseMatcher<TestResource> {
+public class FileHasContent extends BaseMatcher<ResultsResource> {
 
-  public static TestResource classpathResource(final String classpathResource) {
+  public static ResultsResource classpathResource(final String classpathResource) {
     requireNotBlank(classpathResource, "No classpath resource provided");
-    return TestResource.fromClasspath(classpathResource);
+    return ResultsResource.fromClasspath(classpathResource);
   }
 
   public static String contentsOf(final TestOutputCapture testoutput) {
@@ -68,32 +68,33 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     return testoutput.getContents();
   }
 
-  public static Matcher<TestResource> hasNoContent() {
+  public static Matcher<ResultsResource> hasNoContent() {
     return new FileHasContent(null, null);
   }
 
-  public static Matcher<TestResource> hasSameContentAndTypeAs(
-      final TestResource classpathTestResource, final String outputFormatValue) {
+  public static Matcher<ResultsResource> hasSameContentAndTypeAs(
+      final ResultsResource classpathTestResource, final String outputFormatValue) {
     return new FileHasContent(classpathTestResource, outputFormatValue);
   }
 
-  public static Matcher<TestResource> hasSameContentAs(final TestResource classpathTestResource) {
+  public static Matcher<ResultsResource> hasSameContentAs(
+      final ResultsResource classpathTestResource) {
     return new FileHasContent(classpathTestResource, null);
   }
 
-  public static TestResource outputOf(final Path filePath) {
-    return TestResource.fromFilePath(filePath);
+  public static ResultsResource outputOf(final Path filePath) {
+    return ResultsResource.fromFilePath(filePath);
   }
 
-  public static TestResource outputOf(final TestOutputCapture testoutput) {
+  public static ResultsResource outputOf(final TestOutputCapture testoutput) {
     requireNonNull(testoutput, "No test output capture provided");
     final Path filePath = testoutput.getFilePath();
     return outputOf(filePath);
   }
 
   static List<String> compareOutput(
-      final TestResource actualResults,
-      final TestResource expectedResults,
+      final ResultsResource actualResults,
+      final ResultsResource expectedResults,
       final String outputFormatValue)
       throws Exception {
 
@@ -224,7 +225,7 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     return relativePathToTestResultsOutput;
   }
 
-  private static void validateXML(final TestResource actualResults, final List<String> failures)
+  private static void validateXML(final ResultsResource actualResults, final List<String> failures)
       throws Exception {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setValidating(false);
@@ -253,15 +254,15 @@ public class FileHasContent extends BaseMatcher<TestResource> {
     }
   }
 
-  private final TestResource expectedResults;
+  private final ResultsResource expectedResults;
   private final String outputFormatValue;
   private List<String> failures;
 
-  private FileHasContent(final TestResource expectedResults, final String outputFormatValue) {
+  private FileHasContent(final ResultsResource expectedResults, final String outputFormatValue) {
     if (expectedResults != null) {
       this.expectedResults = expectedResults;
     } else {
-      this.expectedResults = TestResource.none();
+      this.expectedResults = ResultsResource.none();
     }
 
     if (isBlank(outputFormatValue)) {
@@ -291,10 +292,10 @@ public class FileHasContent extends BaseMatcher<TestResource> {
   @Override
   public boolean matches(final Object actualValue) {
     try {
-      if (actualValue == null || !(actualValue instanceof TestResource)) {
+      if (actualValue == null || !(actualValue instanceof ResultsResource)) {
         throw new RuntimeException("No test output provided");
       }
-      final TestResource actualResults = (TestResource) actualValue;
+      final ResultsResource actualResults = (ResultsResource) actualValue;
 
       if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
         validateXML(actualResults, failures);

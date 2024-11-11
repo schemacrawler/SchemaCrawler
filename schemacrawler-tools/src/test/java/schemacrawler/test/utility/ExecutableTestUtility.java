@@ -90,13 +90,13 @@ public final class ExecutableTestUtility {
     return executable;
   }
 
-  public static Matcher<TestResource> hasSameContentAndTypeAs(
-      final TestResource classpathTestResource, final OutputFormat outputFormat) {
+  public static Matcher<ResultsResource> hasSameContentAndTypeAs(
+      final ResultsResource classpathTestResource, final OutputFormat outputFormat) {
     return hasSameContentAndTypeAs(classpathTestResource, outputFormat.getFormat());
   }
 
-  public static Matcher<TestResource> hasSameContentAndTypeAs(
-      final TestResource classpathTestResource, final String outputFormat) {
+  public static Matcher<ResultsResource> hasSameContentAndTypeAs(
+      final ResultsResource classpathTestResource, final String outputFormat) {
     return FileHasContent.hasSameContentAndTypeAs(classpathTestResource, outputFormat);
   }
 
