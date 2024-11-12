@@ -121,12 +121,9 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
   }
 
   private final ResultsResource expectedResults;
-
   private final String outputFormatValue;
-
   // Mutable state, per match run
   private List<String> failures;
-
   private ResultsResource actualResults;
 
   private FileHasContent(final ResultsResource expectedResults, final String outputFormatValue) {
