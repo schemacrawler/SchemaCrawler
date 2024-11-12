@@ -1,2 +1,2 @@
 Expected: contents of <_file_has_content/missingOutputFile>
-     but: output file not created
+     but: output file is not created

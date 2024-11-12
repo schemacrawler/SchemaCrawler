@@ -212,13 +212,13 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
 
     // Check if output is available
     if (!actualResults.isAvailable()) {
-      failures.add("output file not created");
+      failures.add("output file is not created");
       return;
     }
 
     final boolean contentEquals;
     if (!expectedResults.isAvailable()) {
-      failures.add("reference file not available");
+      failures.add("reference file is not available");
       contentEquals = false;
     } else {
       contentEquals = contentEquals();
@@ -292,7 +292,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
             .relativize(testOutputTargetFilePath)
             .toString()
             .replace('\\', '/');
-    failures.add(String.format(">> actual output in:%n%s", relativePathToTestResultsOutput));
+    failures.add(String.format(">> Actual output in:%n%s", relativePathToTestResultsOutput));
   }
 
   private void validateXML() throws Exception {
