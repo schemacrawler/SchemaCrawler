@@ -41,7 +41,7 @@ import org.hamcrest.StringDescription;
 import org.junit.jupiter.api.Test;
 
 @ResolveTestContext
-public class FrameworkTest {
+public class FileHasContentTest {
 
   private static final String TEST_DIR = "_file_has_content/";
 
