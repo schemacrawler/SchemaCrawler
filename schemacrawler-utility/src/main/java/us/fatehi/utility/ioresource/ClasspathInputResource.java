@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
+import static us.fatehi.utility.IOUtility.locateResource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -60,22 +61,5 @@ public class ClasspathInputResource extends BaseInputResource {
   @Override
   public String toString() {
     return url.toExternalForm();
-  }
-
-  /**
-   * Locates the resource bases on the current thread's classloader. Always assumes that resources
-   * are absolute.
-   *
-   * @return URL for the located resource, or null if not found
-   */
-  private static URL locateResource(final String classpathResource) {
-    final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-    final String resolvedClasspathResource;
-    if (classpathResource.startsWith("/")) {
-      resolvedClasspathResource = classpathResource.substring(1);
-    } else {
-      resolvedClasspathResource = classpathResource;
-    }
-    return classLoader.getResource(resolvedClasspathResource);
   }
 }

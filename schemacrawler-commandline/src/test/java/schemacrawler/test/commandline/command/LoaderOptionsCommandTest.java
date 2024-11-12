@@ -5,13 +5,11 @@ import static schemacrawler.test.utility.CommandlineTestUtility.createConnectedS
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
+import static schemacrawler.test.utility.FileHasContent.text;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -49,7 +47,7 @@ public class LoaderOptionsCommandTest {
     final String helpMessage = commandLine.getSubcommands().get("load").getUsageMessage();
 
     assertThat(
-        outputOf(writeStringToTempFile(helpMessage)),
+        outputOf(text(helpMessage)),
         hasSameContentAs(
             classpathResource(COMMAND_HELP + testContext.testMethodFullName() + ".txt")));
   }

@@ -51,7 +51,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.FileHasContent;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.config.LinterConfig;
@@ -160,6 +160,6 @@ public class LinterConfigsTest {
             .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
             .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
             .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-    return TestUtility.writeStringToTempFile(jsonMapper.writeValueAsString(linterConfigsList));
+    return FileHasContent.text(jsonMapper.writeValueAsString(linterConfigsList));
   }
 }

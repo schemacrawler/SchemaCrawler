@@ -24,15 +24,13 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import com.example.ApiExample;
 import com.example.ExecutableExample;
@@ -60,11 +58,10 @@ public class ExampleTest {
 
     assertThat(outputOf(streams.err()), hasNoContent());
 
-    final List<String> failures =
-        compareOutput("ExecutableExample.html", tempFile, TextOutputFormat.html.name());
-    if (failures.size() > 0) {
-      fail(failures.toString());
-    }
+    final String expectedResource = "ExecutableExample.html";
+    assertThat(
+        outputOf(tempFile),
+        hasSameContentAndTypeAs(classpathResource(expectedResource), TextOutputFormat.html));
   }
 
   @Test

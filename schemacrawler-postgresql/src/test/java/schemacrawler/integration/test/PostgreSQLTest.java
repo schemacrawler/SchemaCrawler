@@ -41,8 +41,8 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.text;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -147,7 +147,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
     final Map<String, Map<?, ?>> tableMap = new HashMap<>();
     tableMap.put(table.getFullName(), table.getAttributes());
     assertThat(
-        outputOf(writeStringToTempFile(ObjectToString.toString(tableMap))),
+        outputOf(text(ObjectToString.toString(tableMap))),
         hasSameContentAs(classpathResource("tableAttributes.json")));
 
     final Column column = table.lookupColumn("firstname").get();

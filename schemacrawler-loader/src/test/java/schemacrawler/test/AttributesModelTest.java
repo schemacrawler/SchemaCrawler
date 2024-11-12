@@ -48,7 +48,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.CatalogAttributesUtility;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.FileHasContent;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
 
@@ -116,6 +116,6 @@ public class AttributesModelTest {
             .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
             .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
             .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-    return TestUtility.writeStringToTempFile(jsonMapper.writeValueAsString(catalogAttributes));
+    return FileHasContent.text(jsonMapper.writeValueAsString(catalogAttributes));
   }
 }

@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.datasource;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
-import static java.util.Objects.requireNonNull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import static java.util.Objects.requireNonNull;
 
 public class PooledConnectionUtility {
 
@@ -52,7 +52,7 @@ public class PooledConnectionUtility {
         try {
           this.connection = connection.unwrap(Connection.class);
         } catch (final SQLException e) {
-          throw new RuntimeException("Could not unwrap proxy connection");
+          throw new UnsupportedOperationException("Could not unwrap proxy connection");
         }
       } else {
         this.connection = connection;

@@ -43,9 +43,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 
@@ -155,6 +157,26 @@ public final class IOUtility {
         && exists(parentPath)
         && isDirectory(parentPath)
         && isWritable(parentPath);
+  }
+
+  /**
+   * Locates the resource bases on the current thread's classloader. Always assumes that resources
+   * are absolute.
+   *
+   * @return URL for the located resource, or null if not found
+   */
+  public static URL locateResource(final String classpathResource) {
+    if (isBlank(classpathResource)) {
+      return null;
+    }
+    final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    final String resolvedClasspathResource;
+    if (classpathResource.startsWith("/")) {
+      resolvedClasspathResource = classpathResource.substring(1);
+    } else {
+      resolvedClasspathResource = classpathResource;
+    }
+    return classLoader.getResource(resolvedClasspathResource);
   }
 
   /**

@@ -30,19 +30,17 @@ package schemacrawler.test.script;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 import static schemacrawler.test.utility.TestUtility.readFileFully;
-import static schemacrawler.test.utility.TestUtility.validateDiagram;
+import static us.fatehi.utility.IOUtility.isFileReadable;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -52,7 +50,6 @@ import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
@@ -68,17 +65,8 @@ public class SchemaCrawlerExecutableChainTest {
         outputOf(commandLineScriptExecution(connectionInfo, "/chain_script.js")),
         hasSameContentAs(classpathResource("chain_output.txt")));
 
-    final Path schemaFile = Paths.get("chain_schema.txt");
-    final List<String> failures =
-        compareOutput("chain_schema.txt", schemaFile, TextOutputFormat.text.name());
-    if (failures.size() > 0) {
-      fail(failures.toString());
-    }
-    deleteIfPossible(schemaFile);
-
-    final Path diagramFile = Paths.get("chain_schema.png");
-    validateDiagram(diagramFile);
-    deleteIfPossible(diagramFile);
+    validateTextOutput("chain_schema.txt");
+    validateDiagramOutput("chain_schema.png");
   }
 
   @Test
@@ -113,16 +101,19 @@ public class SchemaCrawlerExecutableChainTest {
         readFileFully(testOutputFile).replaceAll("\\R", ""),
         is("Created files \"schema.txt\" and \"schema.png\""));
 
-    final Path schemaFile = Paths.get("schema.txt");
-    final List<String> failures =
-        compareOutput("schema.txt", schemaFile, TextOutputFormat.text.name());
-    if (failures.size() > 0) {
-      fail(failures.toString());
-    }
-    deleteIfPossible(schemaFile);
+    validateTextOutput("schema.txt");
+    validateDiagramOutput("schema.png");
+  }
 
-    final Path diagramFile = Paths.get("schema.png");
-    validateDiagram(diagramFile);
+  private void validateDiagramOutput(String string) throws IOException {
+    final Path diagramFile = Paths.get(string);
+    assertThat("Diagram file not created", isFileReadable(diagramFile), is(true));
     deleteIfPossible(diagramFile);
+  }
+
+  private void validateTextOutput(final String expectedResource) {
+    final Path schemaFile = Paths.get(expectedResource);
+    assertThat(outputOf(schemaFile), hasSameContentAs(classpathResource(expectedResource)));
+    deleteIfPossible(schemaFile);
   }
 }

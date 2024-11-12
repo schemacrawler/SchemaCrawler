@@ -29,39 +29,24 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createDirectories;
-import static java.nio.file.Files.delete;
 import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.Files.size;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static us.fatehi.utility.IOUtility.isFileReadable;
-import java.io.BufferedReader;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -69,24 +54,13 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.condition.JRE;
 import org.opentest4j.TestAbortedException;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -95,7 +69,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.FileInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 
 public final class TestUtility {
@@ -103,64 +76,6 @@ public final class TestUtility {
   public static void clean(final String dirname) throws Exception {
     FileUtils.deleteDirectory(
         buildDirectory().resolve("unit_tests_results_output").resolve(dirname).toFile());
-  }
-
-  public static List<String> compareOutput(
-      final String referenceFile, final Path testOutputTempFile, final String outputFormat)
-      throws Exception {
-
-    requireNonNull(referenceFile, "Reference file is not defined");
-    requireNonNull(testOutputTempFile, "Output file is not defined");
-    requireNonNull(outputFormat, "Output format is not defined");
-
-    if (!isFileReadable(testOutputTempFile)) {
-      return Collections.singletonList("Output file not created - " + testOutputTempFile);
-    }
-
-    final List<String> failures = new ArrayList<>();
-
-    final boolean contentEquals;
-    final Reader referenceReader =
-        readerForInputResource(new ClasspathInputResource(referenceFile));
-    if (referenceReader == null) {
-      failures.add("Reference file not available, " + referenceFile);
-      contentEquals = false;
-    } else if ("png".equals(outputFormat)) {
-      contentEquals = true;
-    } else {
-      final Reader fileReader = readerForInputResource(new FileInputResource(testOutputTempFile));
-      final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
-      final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
-      contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
-    }
-
-    if ("html".equals(outputFormat)) {
-      validateXML(testOutputTempFile, failures);
-    }
-    if ("htmlx".equals(outputFormat)) {
-      validateXML(testOutputTempFile, failures);
-    } else if ("png".equals(outputFormat)) {
-      validateDiagram(testOutputTempFile);
-    }
-
-    if (!contentEquals) {
-      // Reset System streams
-      System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-      System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-
-      final Path testOutputTargetFilePath =
-          buildDirectory().resolve("unit_tests_results_output").resolve(referenceFile);
-      createDirectories(testOutputTargetFilePath.getParent());
-      deleteIfPossible(testOutputTargetFilePath);
-      move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
-
-      System.err.printf(
-          "%nOutput does not match - actual output in%n%s%n", testOutputTargetFilePath);
-    } else {
-      delete(testOutputTempFile);
-    }
-
-    return failures;
   }
 
   public static Path copyResourceToTempFile(final String resource) throws IOException {
@@ -212,8 +127,7 @@ public final class TestUtility {
   }
 
   public static <V> V failTestSetup(final String message, final Exception e) {
-    testAborted(message, e);
-    return null;
+    throw new TestAbortedException(message, e);
   }
 
   public static String fileHeaderOf(final Path tempFile) throws IOException {
@@ -302,27 +216,7 @@ public final class TestUtility {
     return propertiesFile;
   }
 
-  public static void validateDiagram(final Path diagramFile) throws IOException {
-    assertThat("Diagram file not created", exists(diagramFile), is(true));
-    assertThat("Diagram file has 0 bytes size", size(diagramFile), greaterThan(0L));
-  }
-
-  public static Path writeStringToTempFile(final String data) throws IOException {
-
-    final Path tempFile =
-        IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
-    if (data == null) {
-      return tempFile;
-    }
-
-    final NeuteredExpressionsFilter neuteredExpressionsFilter = new NeuteredExpressionsFilter();
-    final String filteredData = neuteredExpressionsFilter.apply(data);
-    Files.write(tempFile, filteredData.getBytes(StandardCharsets.UTF_8));
-
-    return tempFile;
-  }
-
-  private static Path buildDirectory() throws Exception {
+  static Path buildDirectory() throws Exception {
     final StackTraceElement ste = currentMethodStackTraceElement();
     final Class<?> callingClass = Class.forName(ste.getClassName());
     final Path codePath =
@@ -335,48 +229,6 @@ public final class TestUtility {
     }
     final Path directory = codePath.resolve("..");
     return directory.normalize().toAbsolutePath();
-  }
-
-  private static boolean contentEquals(
-      final Reader expectedInputReader,
-      final Reader actualInputReader,
-      final List<String> failures,
-      final Predicate<String> keepLines,
-      final Function<String, String> neuterMap)
-      throws Exception {
-    if (expectedInputReader == null || actualInputReader == null) {
-      return false;
-    }
-
-    try (final Stream<String> expectedLinesStream =
-            new BufferedReader(expectedInputReader).lines();
-        final Stream<String> actualLinesStream = new BufferedReader(actualInputReader).lines()) {
-
-      final Iterator<String> expectedLinesIterator =
-          expectedLinesStream.filter(keepLines).map(neuterMap).iterator();
-      final Iterator<String> actualLinesIterator =
-          actualLinesStream.filter(keepLines).map(neuterMap).iterator();
-
-      while (expectedLinesIterator.hasNext() && actualLinesIterator.hasNext()) {
-        final String expectedline = expectedLinesIterator.next();
-        final String actualLine = actualLinesIterator.next();
-
-        if (!expectedline.equals(actualLine)) {
-          failures.add(lineMiscompare(expectedline, actualLine));
-          return false;
-        }
-      }
-
-      if (actualLinesIterator.hasNext()) {
-        failures.add(lineMiscompare("<<end of stream>>", actualLinesIterator.next()));
-        return false;
-      }
-      if (expectedLinesIterator.hasNext()) {
-        failures.add(lineMiscompare(expectedLinesIterator.next(), "<<end of stream>>"));
-        return false;
-      }
-      return true;
-    }
   }
 
   private static StackTraceElement currentMethodStackTraceElement() {
@@ -393,57 +245,6 @@ public final class TestUtility {
     }
 
     return null;
-  }
-
-  private static String lineMiscompare(final String expectedline, final String actualLine) {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append(">> expected followed by actual:").append("\n");
-    buffer.append(expectedline).append("\n");
-    buffer.append(actualLine).append("\n");
-
-    final String lineMiscompare = buffer.toString();
-    return lineMiscompare;
-  }
-
-  private static Reader readerForInputResource(final InputResource inputResource) {
-    try {
-      return inputResource.openNewInputReader(UTF_8);
-    } catch (final IOException e) {
-      return null;
-    }
-  }
-
-  private static void testAborted(final String message, final Exception e) {
-    throw new TestAbortedException(message, e);
-  }
-
-  private static void validateXML(final Path testOutputFile, final List<String> failures)
-      throws Exception {
-    final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    factory.setValidating(false);
-    factory.setNamespaceAware(true);
-
-    final DocumentBuilder builder = factory.newDocumentBuilder();
-    builder.setErrorHandler(
-        new ErrorHandler() {
-          @Override
-          public void error(final SAXParseException e) throws SAXException {
-            failures.add(e.getMessage());
-          }
-
-          @Override
-          public void fatalError(final SAXParseException e) throws SAXException {
-            failures.add(e.getMessage());
-          }
-
-          @Override
-          public void warning(final SAXParseException e) throws SAXException {
-            failures.add(e.getMessage());
-          }
-        });
-    try (final Reader reader = new FileInputResource(testOutputFile).openNewInputReader(UTF_8); ) {
-      builder.parse(new InputSource(reader));
-    }
   }
 
   private TestUtility() {

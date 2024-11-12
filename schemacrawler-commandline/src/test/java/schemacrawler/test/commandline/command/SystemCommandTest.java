@@ -11,7 +11,7 @@ import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
+import static schemacrawler.test.utility.FileHasContent.text;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.utility.datasource.DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource;
 import java.sql.Connection;
@@ -47,7 +47,7 @@ public class SystemCommandTest {
     final String helpMessage = commandLine.getUsageMessage();
 
     assertThat(
-        outputOf(writeStringToTempFile(helpMessage)),
+        outputOf(text(helpMessage)),
         hasSameContentAs(
             classpathResource(COMMAND_HELP + testContext.testMethodFullName() + ".txt")));
   }

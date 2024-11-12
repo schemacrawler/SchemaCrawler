@@ -1,0 +1,2 @@
+Expected: contents of <_file_has_content/missingOutputFile>
+     but: output file not created
