@@ -30,15 +30,10 @@ package schemacrawler.test.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.exists;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.Files.size;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -220,11 +215,6 @@ public final class TestUtility {
         newBufferedWriter(propertiesFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
     properties.store(writer, "Temporary file to hold properties");
     return propertiesFile;
-  }
-
-  public static void validateDiagram(final Path diagramFile) throws IOException {
-    assertThat("Diagram file not created", exists(diagramFile), is(true));
-    assertThat("Diagram file has 0 bytes size", size(diagramFile), greaterThan(0L));
   }
 
   public static Path writeStringToTempFile(final String data) throws IOException {
