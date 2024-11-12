@@ -35,7 +35,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.buildDirectory;
 import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ import org.xml.sax.SAXParseException;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import us.fatehi.utility.IOUtility;
 
 public class FileHasContent extends BaseMatcher<ResultsResource> {
 
@@ -89,6 +93,112 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     requireNonNull(testoutput, "No test output capture provided");
     final Path filePath = testoutput.getFilePath();
     return outputOf(filePath);
+  }
+
+  public static Path text(final String data) throws IOException {
+
+    final Path tempFile =
+        IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
+    if (data == null) {
+      return tempFile;
+    }
+
+    final NeuteredExpressionsFilter neuteredExpressionsFilter = new NeuteredExpressionsFilter();
+    final String filteredData = neuteredExpressionsFilter.apply(data);
+    Files.write(tempFile, filteredData.getBytes(StandardCharsets.UTF_8));
+
+    return tempFile;
+  }
+
+  private static String lineMiscompare(final String expectedline, final String actualLine) {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append("was (expected followed by actual)").append(System.lineSeparator());
+    buffer.append(expectedline).append(System.lineSeparator());
+    buffer.append(actualLine);
+
+    final String lineMiscompare = buffer.toString();
+    return lineMiscompare;
+  }
+
+  private final ResultsResource expectedResults;
+
+  private final String outputFormatValue;
+
+  // Mutable state, per match run
+  private List<String> failures;
+
+  private ResultsResource actualResults;
+
+  private FileHasContent(final ResultsResource expectedResults, final String outputFormatValue) {
+    if (expectedResults != null) {
+      this.expectedResults = expectedResults;
+    } else {
+      this.expectedResults = ResultsResource.none();
+    }
+
+    if (isBlank(outputFormatValue)) {
+      this.outputFormatValue = "text";
+    } else {
+      this.outputFormatValue = outputFormatValue;
+    }
+  }
+
+  @Override
+  public void describeMismatch(final Object item, final Description description) {
+    if (!failures.isEmpty()) {
+      description.appendText(String.join("\n", failures));
+    }
+  }
+
+  /** This message is shown in the expected section of the failure. */
+  @Override
+  public void describeTo(final Description description) {
+    if (expectedResults.isNone()) {
+      description.appendText("no output");
+    } else {
+      description.appendText("contents of ").appendValue(expectedResults);
+    }
+  }
+
+  @Override
+  public boolean matches(final Object actualValue) {
+    try {
+      if (actualValue == null || !(actualValue instanceof ResultsResource)) {
+        throw new RuntimeException("No test output provided");
+      }
+
+      actualResults = (ResultsResource) actualValue;
+
+      // Reset failures list for this match result
+      failures = new ArrayList<>();
+
+      // No file comparison can be done for binary file types,
+      // so as long as the output file is present, return
+      if ("png".equals(outputFormatValue)) {
+        return actualResults.isAvailable();
+      }
+
+      if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
+        validateXML();
+      }
+
+      compareOutput();
+
+      final boolean matches = failures.isEmpty();
+
+      // -- Clean up
+      // Delete output file if possible
+      final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
+      deleteIfPossible(testOutputTempFile);
+      // Flush System streams to prepare for further runs
+      System.out.flush();
+      System.err.flush();
+
+      return matches;
+
+    } catch (final Exception e) {
+      return fail(e);
+    }
   }
 
   private void compareOutput() throws Exception {
@@ -166,16 +276,6 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     }
   }
 
-  private static String lineMiscompare(final String expectedline, final String actualLine) {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("was (expected followed by actual)").append(System.lineSeparator());
-    buffer.append(expectedline).append(System.lineSeparator());
-    buffer.append(actualLine);
-
-    final String lineMiscompare = buffer.toString();
-    return lineMiscompare;
-  }
-
   private void moveActualToExpected() throws Exception {
 
     final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
@@ -223,84 +323,6 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
         });
     try (final Reader reader = actualResults.openNewReader()) {
       builder.parse(new InputSource(reader));
-    }
-  }
-
-  private final ResultsResource expectedResults;
-  private final String outputFormatValue;
-  // Mutable state, per match run
-  private List<String> failures;
-  private ResultsResource actualResults;
-
-  private FileHasContent(final ResultsResource expectedResults, final String outputFormatValue) {
-    if (expectedResults != null) {
-      this.expectedResults = expectedResults;
-    } else {
-      this.expectedResults = ResultsResource.none();
-    }
-
-    if (isBlank(outputFormatValue)) {
-      this.outputFormatValue = "text";
-    } else {
-      this.outputFormatValue = outputFormatValue;
-    }
-  }
-
-  @Override
-  public void describeMismatch(final Object item, final Description description) {
-    if (!failures.isEmpty()) {
-      description.appendText(String.join("\n", failures));
-    }
-  }
-
-  /** This message is shown in the expected section of the failure. */
-  @Override
-  public void describeTo(final Description description) {
-    if (expectedResults.isNone()) {
-      description.appendText("no output");
-    } else {
-      description.appendText("contents of ").appendValue(expectedResults);
-    }
-  }
-
-  @Override
-  public boolean matches(final Object actualValue) {
-    try {
-      if (actualValue == null || !(actualValue instanceof ResultsResource)) {
-        throw new RuntimeException("No test output provided");
-      }
-
-      actualResults = (ResultsResource) actualValue;
-
-      // Reset failures list for this match result
-      failures = new ArrayList<>();
-
-      // No file comparison can be done for binary file types,
-      // so as long as the output file is present, return
-      if ("png".equals(outputFormatValue)) {
-        return actualResults.isAvailable();
-      }
-
-      if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
-        validateXML();
-      }
-
-      compareOutput();
-
-      final boolean matches = failures.isEmpty();
-
-      // -- Clean up
-      // Delete output file if possible
-      final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
-      deleteIfPossible(testOutputTempFile);
-      // Flush System streams to prepare for further runs
-      System.out.flush();
-      System.err.flush();
-
-      return matches;
-
-    } catch (final Exception e) {
-      return fail(e);
     }
   }
 }

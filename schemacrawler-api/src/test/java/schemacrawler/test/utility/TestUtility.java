@@ -47,7 +47,6 @@ import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -215,21 +214,6 @@ public final class TestUtility {
         newBufferedWriter(propertiesFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
     properties.store(writer, "Temporary file to hold properties");
     return propertiesFile;
-  }
-
-  public static Path writeStringToTempFile(final String data) throws IOException {
-
-    final Path tempFile =
-        IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
-    if (data == null) {
-      return tempFile;
-    }
-
-    final NeuteredExpressionsFilter neuteredExpressionsFilter = new NeuteredExpressionsFilter();
-    final String filteredData = neuteredExpressionsFilter.apply(data);
-    Files.write(tempFile, filteredData.getBytes(StandardCharsets.UTF_8));
-
-    return tempFile;
   }
 
   static Path buildDirectory() throws Exception {

@@ -11,18 +11,15 @@ import static org.mockito.Mockito.when;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
+import static schemacrawler.test.utility.FileHasContent.text;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.utility.datasource.DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -125,7 +122,7 @@ public class LoadCommandTest {
     final String helpMessage = commandLine.getUsageMessage();
 
     assertThat(
-        outputOf(writeStringToTempFile(helpMessage)),
+        outputOf(text(helpMessage)),
         hasSameContentAs(
             classpathResource(COMMAND_HELP + testContext.testMethodFullName() + ".txt")));
   }
@@ -206,7 +203,7 @@ public class LoadCommandTest {
 
   @Test
   public void noArgs() {
-    final String[] args = new String[0];
+    final String[] args = {};
 
     final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
