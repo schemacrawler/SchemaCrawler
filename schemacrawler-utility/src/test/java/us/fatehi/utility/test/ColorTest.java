@@ -31,9 +31,7 @@ package us.fatehi.utility.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import us.fatehi.utility.Color;
 
@@ -72,6 +70,16 @@ public class ColorTest {
     assertThat(Color.fromHSV(-0.2f, 0.2f, 0.2f).toString(), is("#312933"));
     assertThat(Color.fromHSV(0.2f, -0.2f, 0.2f).toString(), is("#35333D"));
     assertThat(Color.fromHSV(0.2f, 0.2f, -0.2f).toString(), is("#000000"));
+  }
+
+  @Test
+  public void fromHSVBoundaries() {
+    assertThat(Color.fromHSV(0.0f, 1.0f, 1.0f).toString(), is("#FF0000"));
+    assertThat(Color.fromHSV(1.0f / 6.0f, 1.0f, 1.0f).toString(), is("#FFFF00"));
+    assertThat(Color.fromHSV(2.0f / 6.0f, 1.0f, 1.0f).toString(), is("#00FF00"));
+    assertThat(Color.fromHSV(3.0f / 6.0f, 1.0f, 1.0f).toString(), is("#00FFFF"));
+    assertThat(Color.fromHSV(4.0f / 6.0f, 1.0f, 1.0f).toString(), is("#0000FF"));
+    assertThat(Color.fromHSV(5.0f / 6.0f, 1.0f, 1.0f).toString(), is("#FF00FF"));
   }
 
   @Test
