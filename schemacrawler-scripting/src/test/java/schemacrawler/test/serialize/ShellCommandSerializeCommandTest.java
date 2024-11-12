@@ -30,20 +30,15 @@ package schemacrawler.test.serialize;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
@@ -69,7 +64,7 @@ public class ShellCommandSerializeCommandTest {
     final Path testOutputFile =
         IOUtility.createTempFilePath("test", "." + serializationFormat.name());
 
-    final String[] args = new String[] {"-c", "serialize", "-o", testOutputFile.toString()};
+    final String[] args = {"-c", "serialize", "-o", testOutputFile.toString()};
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(serializeCommand, null);
@@ -83,7 +78,7 @@ public class ShellCommandSerializeCommandTest {
   private void assertThatOutputIsCorrect(
       final Path testOutputFile, final Matcher<String> fileHeaderMatcher) {
     try {
-      assertThat(Files.size(testOutputFile), greaterThan(0L));
+      assertThat(IOUtility.isFileReadable(testOutputFile), is(true));
       assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
     } catch (final IOException e) {
       fail("Failed asserts", e);

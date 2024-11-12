@@ -29,7 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.size;
+import static us.fatehi.utility.IOUtility.isFileReadable;
+import static us.fatehi.utility.IOUtility.locateResource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -37,7 +38,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
-import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
 
@@ -97,14 +97,10 @@ public final class ResultsResource {
   public boolean isAvailable() {
     switch (resourceType) {
       case classpath:
-        return IOUtility.locateResource(resourceString) != null;
+        return locateResource(resourceString) != null;
       case file:
         final Path filePath = Paths.get(resourceString);
-        try {
-          return IOUtility.isFileReadable(filePath) && size(filePath) > 0;
-        } catch (final IOException e) {
-          return false;
-        }
+        return isFileReadable(filePath);
       case none:
       // Fall-through
       default:

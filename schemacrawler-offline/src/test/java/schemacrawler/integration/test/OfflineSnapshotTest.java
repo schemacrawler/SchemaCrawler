@@ -28,13 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-import static java.nio.file.Files.size;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -47,6 +46,7 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+import static us.fatehi.utility.IOUtility.isFileReadable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -224,7 +224,7 @@ public class OfflineSnapshotTest {
           new GZIPOutputStream(
               Files.newOutputStream(serializedCatalogFile, WRITE, CREATE, TRUNCATE_EXISTING));
       serializedCatalog.save(outputStream);
-      assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
+      assertThat("Database was not serialized", isFileReadable(serializedCatalogFile), is(true));
     } catch (final IOException e) {
       failTestSetup("Could not serialize catalog", e);
     }

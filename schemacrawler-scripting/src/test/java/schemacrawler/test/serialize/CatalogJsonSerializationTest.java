@@ -33,7 +33,6 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.oneOf;
@@ -44,6 +43,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+import static us.fatehi.utility.IOUtility.isFileReadable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
@@ -98,7 +98,7 @@ public class CatalogJsonSerializationTest {
         Files.newOutputStream(testOutputFile, WRITE, CREATE, TRUNCATE_EXISTING)) {
       new JsonSerializedCatalog(catalog).save(out);
     }
-    assertThat("Catalog was not serialized", Files.size(testOutputFile), greaterThan(0L));
+    assertThat("Catalog was not serialized", isFileReadable(testOutputFile), is(true));
     assertThat(fileHeaderOf(testOutputFile), is(oneOf("7B0D", "7B0A")));
 
     if (DEBUG) {

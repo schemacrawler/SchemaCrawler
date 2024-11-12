@@ -28,11 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.script;
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.size;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -40,6 +37,7 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
 import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 import static schemacrawler.test.utility.TestUtility.readFileFully;
+import static us.fatehi.utility.IOUtility.isFileReadable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -109,8 +107,7 @@ public class SchemaCrawlerExecutableChainTest {
 
   private void validateDiagramOutput(String string) throws IOException {
     final Path diagramFile = Paths.get(string);
-    assertThat("Diagram file not created", exists(diagramFile), is(true));
-    assertThat("Diagram file has 0 bytes size", size(diagramFile), greaterThan(0L));
+    assertThat("Diagram file not created", isFileReadable(diagramFile), is(true));
     deleteIfPossible(diagramFile);
   }
 

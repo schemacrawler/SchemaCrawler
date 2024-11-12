@@ -30,11 +30,10 @@ package schemacrawler.test.serialize;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.oneOf;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
-
+import static us.fatehi.utility.IOUtility.isFileReadable;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -42,11 +41,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
@@ -96,7 +93,7 @@ public class CommandLineSerializeCommandTest {
 
   private void assertThatOutputIsCorrect(
       final Path testOutputFile, final Matcher<String> fileHeaderMatcher) throws IOException {
-    assertThat(Files.size(testOutputFile), greaterThan(0L));
+    assertThat(isFileReadable(testOutputFile), is(true));
     assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
   }
 
