@@ -283,7 +283,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
   @Override
   public void describeTo(final Description description) {
     if (expectedResults.isNone()) {
-      description.appendValue("no output");
+      description.appendText("no output");
     } else {
       description.appendText("contents of ").appendValue(expectedResults);
     }

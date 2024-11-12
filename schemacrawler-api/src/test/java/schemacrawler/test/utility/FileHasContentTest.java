@@ -31,6 +31,7 @@ package schemacrawler.test.utility;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.nio.file.Paths;
@@ -44,16 +45,6 @@ import org.junit.jupiter.api.Test;
 public class FileHasContentTest {
 
   private static final String TEST_DIR = "_file_has_content/";
-
-  @Test
-  public void successfulTest(final TestContext testContext) throws Exception {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      out.println("hello, world");
-    }
-    final String expectedResource = TEST_DIR + testContext.testMethodName();
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
-  }
 
   @Test
   public void missingOutputFile(final TestContext testContext) throws Exception {
@@ -76,6 +67,15 @@ public class FileHasContentTest {
   }
 
   @Test
+  public void noContentTestWithOutput(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      out.println("hello, world");
+    }
+    assertFailuresFor(testContext, outputOf(testout), hasNoContent());
+  }
+
+  @Test
   public void outputNotMatching(final TestContext testContext) throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -84,6 +84,21 @@ public class FileHasContentTest {
     final String expectedResource = TEST_DIR + testContext.testMethodName();
     assertFailuresFor(
         testContext, outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  public void successfulNoOutputTest(final TestContext testContext) throws Exception {
+    assertThat(outputOf(Paths.get("no_such_file")), hasNoContent());
+  }
+
+  @Test
+  public void successfulTest(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      out.println("hello, world");
+    }
+    final String expectedResource = TEST_DIR + testContext.testMethodName();
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   private void assertFailuresFor(
@@ -111,8 +126,7 @@ public class FileHasContentTest {
     try (final TestWriter out = testout) {
       out.println(description);
     }
-    final String expectedFailuresResource =
-        TEST_DIR + "failures." + testContext.testMethodName();
+    final String expectedFailuresResource = TEST_DIR + "failures." + testContext.testMethodName();
     final ResultsResource expectedResults = ResultsResource.fromClasspath(expectedFailuresResource);
     final ResultsResource actualResults = ResultsResource.fromFilePath(testout.getFilePath());
     final List<String> failures =
