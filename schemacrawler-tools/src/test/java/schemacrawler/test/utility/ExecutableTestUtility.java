@@ -29,9 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 import java.nio.file.Path;
-
-import org.hamcrest.Matcher;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -90,14 +87,9 @@ public final class ExecutableTestUtility {
     return executable;
   }
 
-  public static Matcher<ResultsResource> hasSameContentAndTypeAs(
+  public static FileHasContent hasSameContentAndTypeAs(
       final ResultsResource classpathTestResource, final OutputFormat outputFormat) {
-    return hasSameContentAndTypeAs(classpathTestResource, outputFormat.getFormat());
-  }
-
-  public static Matcher<ResultsResource> hasSameContentAndTypeAs(
-      final ResultsResource classpathTestResource, final String outputFormat) {
-    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource, outputFormat);
+    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource, outputFormat.getFormat());
   }
 
   public static OutputOptions newOutputOptions(

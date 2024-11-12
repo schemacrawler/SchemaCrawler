@@ -24,9 +24,9 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.nio.file.Files;
@@ -61,7 +61,7 @@ public class ExampleTest {
     final String expectedResource = "ExecutableExample.html";
     assertThat(
         outputOf(tempFile),
-        hasSameContentAndTypeAs(classpathResource(expectedResource), TextOutputFormat.html.name()));
+        hasSameContentAndTypeAs(classpathResource(expectedResource), TextOutputFormat.html));
   }
 
   @Test

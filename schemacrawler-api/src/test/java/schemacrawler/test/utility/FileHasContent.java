@@ -107,12 +107,6 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       return;
     }
 
-    // At this point, results are available, but no further checking
-    // can be done for binary file types, so return early
-    if ("png".equals(outputFormatValue)) {
-      return;
-    }
-
     final boolean contentEquals;
     if (!expectedResults.isAvailable()) {
       failures.add("reference file not available");
@@ -202,8 +196,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     failures.add(String.format(">> actual output in:%n%s", relativePathToTestResultsOutput));
   }
 
-  private static void validateXML(final ResultsResource actualResults, final List<String> failures)
-      throws Exception {
+  private void validateXML(final ResultsResource actualResults) throws Exception {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setValidating(false);
     factory.setNamespaceAware(true);
@@ -274,13 +267,22 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       }
       final ResultsResource actualResults = (ResultsResource) actualValue;
 
-      if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
-        validateXML(actualResults, failures);
+      // Reset failures list for this match result
+      failures = new ArrayList<>();
+
+      // No file comparison can be done for binary file types,
+      // so as long as the output file is present, return
+      if ("png".equals(outputFormatValue)) {
+        return actualResults.isAvailable();
       }
 
-      failures = new ArrayList<>();
+      if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
+        validateXML(actualResults);
+      }
+
       compareOutput(actualResults);
-      final boolean matches = failures != null && failures.isEmpty();
+
+      final boolean matches = failures.isEmpty();
 
       // -- Clean up
       // Delete output file if possible
