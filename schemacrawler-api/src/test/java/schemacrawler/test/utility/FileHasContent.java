@@ -32,6 +32,8 @@ import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.move;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.TestUtility.buildDirectory;
+import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.nio.file.Path;
@@ -179,11 +181,11 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
     final String expectedResultsResource = expectedResults.getResourceString();
 
-    final Path buildDirectory = TestUtility.buildDirectory();
+    final Path buildDirectory = buildDirectory();
     final Path testOutputTargetFilePath =
         buildDirectory.resolve("unit_tests_results_output").resolve(expectedResultsResource);
     createDirectories(testOutputTargetFilePath.getParent());
-    TestUtility.deleteIfPossible(testOutputTargetFilePath);
+    deleteIfPossible(testOutputTargetFilePath);
     move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
     final String relativePathToTestResultsOutput =
@@ -290,7 +292,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       // -- Clean up
       // Delete output file if possible
       final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
-      TestUtility.deleteIfPossible(testOutputTempFile);
+      deleteIfPossible(testOutputTempFile);
       // Flush System streams to prepare for further runs
       System.out.flush();
       System.err.flush();
