@@ -1,2 +1,0 @@
-Expected: contents of <framework_test_dir/FrameworkTest.missingOutputFile>
-     but: output file not created

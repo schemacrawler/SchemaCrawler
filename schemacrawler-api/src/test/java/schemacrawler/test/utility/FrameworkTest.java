@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
 @ResolveTestContext
 public class FrameworkTest {
 
-  private static final String TEST_DIR = "framework_test_dir/";
+  private static final String TEST_DIR = "_file_has_content/";
 
   @Test
   public void successfulTest(final TestContext testContext) throws Exception {
@@ -51,13 +51,13 @@ public class FrameworkTest {
     try (final TestWriter out = testout) {
       out.println("hello, world");
     }
-    final String expectedResource = TEST_DIR + testContext.testMethodFullName();
+    final String expectedResource = TEST_DIR + testContext.testMethodName();
     assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
   public void missingOutputFile(final TestContext testContext) throws Exception {
-    final String expectedResource = TEST_DIR + testContext.testMethodFullName();
+    final String expectedResource = TEST_DIR + testContext.testMethodName();
     assertFailuresFor(
         testContext,
         outputOf(Paths.get("no_such_file")),
@@ -70,7 +70,7 @@ public class FrameworkTest {
     try (final TestWriter out = testout) {
       out.println("hello, world");
     }
-    final String expectedResource = TEST_DIR + testContext.testMethodFullName();
+    final String expectedResource = TEST_DIR + testContext.testMethodName();
     assertFailuresFor(
         testContext, outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
@@ -81,7 +81,7 @@ public class FrameworkTest {
     try (final TestWriter out = testout) {
       out.println("hello, world");
     }
-    final String expectedResource = TEST_DIR + testContext.testMethodFullName();
+    final String expectedResource = TEST_DIR + testContext.testMethodName();
     assertFailuresFor(
         testContext, outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
@@ -112,7 +112,7 @@ public class FrameworkTest {
       out.println(description);
     }
     final String expectedFailuresResource =
-        TEST_DIR + "failures." + testContext.testMethodFullName();
+        TEST_DIR + "failures." + testContext.testMethodName();
     final ResultsResource expectedResults = ResultsResource.fromClasspath(expectedFailuresResource);
     final ResultsResource actualResults = ResultsResource.fromFilePath(testout.getFilePath());
     final List<String> failures =
