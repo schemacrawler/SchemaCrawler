@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test.utility;
+package schemacrawler.test.utility.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -35,10 +35,14 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.nio.file.Paths;
-import java.util.List;
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;
 import org.junit.jupiter.api.Test;
+import schemacrawler.test.utility.FileHasContent;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.ResultsResource;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestWriter;
 
 @ResolveTestContext
 public class FileHasContentTest {
@@ -101,9 +105,7 @@ public class FileHasContentTest {
   }
 
   private void assertFailuresFor(
-      final TestContext testContext,
-      final ResultsResource actual,
-      final FileHasContent matcher)
+      final TestContext testContext, final ResultsResource actual, final FileHasContent matcher)
       throws Exception {
 
     if (matcher.matches(actual)) {
@@ -126,13 +128,13 @@ public class FileHasContentTest {
       out.println(description);
     }
     final String expectedFailuresResource = TEST_DIR + "failures." + testContext.testMethodName();
-    final ResultsResource expectedResults = ResultsResource.fromClasspath(expectedFailuresResource);
-    final ResultsResource actualResults = ResultsResource.fromFilePath(testout.getFilePath());
-    final FileHasContent failuresMatcher = FileHasContent.hasSameContentAs(expectedResults);
-    final List<String> failures = failuresMatcher.compareOutput(actualResults);
-    if (!failures.isEmpty()) {
-      System.err.println(failures);
-      fail(failures.toString());
+    final ResultsResource expectedFailuresResults =
+        ResultsResource.fromClasspath(expectedFailuresResource);
+    final ResultsResource actualFailuresResults =
+        ResultsResource.fromFilePath(testout.getFilePath());
+    final FileHasContent failuresMatcher = FileHasContent.hasSameContentAs(expectedFailuresResults);
+    if (!failuresMatcher.matches(actualFailuresResults)) {
+      fail("Failure messages are different");
     }
   }
 }

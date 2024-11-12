@@ -33,7 +33,6 @@ import static java.nio.file.Files.move;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -90,9 +89,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     return outputOf(filePath);
   }
 
-  protected List<String> compareOutput(final ResultsResource actualResults) throws Exception {
-
-    final List<String> failures = new ArrayList<>();
+  private void compareOutput(final ResultsResource actualResults) throws Exception {
 
     // If there is no expected output, also make sure that
     // the actual output has no contents
@@ -101,19 +98,19 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       if (actualResults.isAvailable()) {
         failures.add("output file is not empty");
       }
-      return failures;
+      return;
     }
 
     // Check if output is available
     if (!actualResults.isAvailable()) {
       failures.add("output file not created");
-      return failures;
+      return;
     }
 
     // At this point, results are available, but no further checking
     // can be done for binary file types, so return early
     if ("png".equals(outputFormatValue)) {
-      return failures;
+      return;
     }
 
     final boolean contentEquals;
@@ -121,13 +118,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       failures.add("reference file not available");
       contentEquals = false;
     } else {
-      final BufferedReader expectedResultsReader = expectedResults.openNewReader();
-      final BufferedReader actualResultsReader = actualResults.openNewReader();
-      final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
-      final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
-      contentEquals =
-          contentEquals(
-              expectedResultsReader, actualResultsReader, failures, linesFilter, neuterMap);
+      contentEquals = contentEquals(actualResults);
     }
 
     // Print failures for easy reading of build log
@@ -135,30 +126,22 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       System.err.println(String.join(System.lineSeparator(), failures));
     }
 
-    final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
     if (!contentEquals) {
-      final String expectedResultsResource = expectedResults.getResourceString();
-      final String relativePathToTestResultsOutput =
-          moveActualToExpected(testOutputTempFile, expectedResultsResource);
-      failures.add(String.format(">> actual output in:%n%s", relativePathToTestResultsOutput));
+      moveActualToExpected(actualResults);
     }
 
-    return failures;
+    return;
   }
 
-  private static boolean contentEquals(
-      final BufferedReader expectedInputReader,
-      final BufferedReader actualInputReader,
-      final List<String> failures,
-      final Predicate<String> keepLines,
-      final Function<String, String> neuterMap)
-      throws Exception {
-    if (expectedInputReader == null || actualInputReader == null) {
-      return false;
-    }
+  private boolean contentEquals(final ResultsResource actualResults) throws Exception {
 
-    try (final Stream<String> expectedLinesStream = expectedInputReader.lines();
-        final Stream<String> actualLinesStream = actualInputReader.lines()) {
+    final BufferedReader expectedResultsReader = expectedResults.openNewReader();
+    final BufferedReader actualResultsReader = actualResults.openNewReader();
+    final Predicate<String> keepLines = new SvgElementFilter().and(new NeuteredLinesFilter());
+    final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
+
+    try (final Stream<String> expectedLinesStream = expectedResultsReader.lines();
+        final Stream<String> actualLinesStream = actualResultsReader.lines()) {
 
       final Iterator<String> expectedLinesIterator =
           expectedLinesStream.filter(keepLines).map(neuterMap).iterator();
@@ -197,9 +180,11 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     return lineMiscompare;
   }
 
-  private static String moveActualToExpected(
-      final Path testOutputTempFile, final String expectedResultsResource)
-      throws Exception, IOException {
+  private void moveActualToExpected(final ResultsResource actualResults) throws Exception {
+
+    final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
+    final String expectedResultsResource = expectedResults.getResourceString();
+
     final Path buildDirectory = TestUtility.buildDirectory();
     final Path testOutputTargetFilePath =
         buildDirectory.resolve("unit_tests_results_output").resolve(expectedResultsResource);
@@ -214,7 +199,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
             .relativize(testOutputTargetFilePath)
             .toString()
             .replace('\\', '/');
-    return relativePathToTestResultsOutput;
+    failures.add(String.format(">> actual output in:%n%s", relativePathToTestResultsOutput));
   }
 
   private static void validateXML(final ResultsResource actualResults, final List<String> failures)
@@ -293,7 +278,8 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
         validateXML(actualResults, failures);
       }
 
-      failures = compareOutput(actualResults);
+      failures = new ArrayList<>();
+      compareOutput(actualResults);
       final boolean matches = failures != null && failures.isEmpty();
 
       // -- Clean up
