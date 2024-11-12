@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.nio.file.Paths;
 import java.util.List;
 import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.junit.jupiter.api.Test;
 
@@ -104,7 +103,7 @@ public class FileHasContentTest {
   private void assertFailuresFor(
       final TestContext testContext,
       final ResultsResource actual,
-      final Matcher<ResultsResource> matcher)
+      final FileHasContent matcher)
       throws Exception {
 
     if (matcher.matches(actual)) {
@@ -129,8 +128,8 @@ public class FileHasContentTest {
     final String expectedFailuresResource = TEST_DIR + "failures." + testContext.testMethodName();
     final ResultsResource expectedResults = ResultsResource.fromClasspath(expectedFailuresResource);
     final ResultsResource actualResults = ResultsResource.fromFilePath(testout.getFilePath());
-    final List<String> failures =
-        FileHasContent.compareOutput(actualResults, expectedResults, "text");
+    final FileHasContent failuresMatcher = FileHasContent.hasSameContentAs(expectedResults);
+    final List<String> failures = failuresMatcher.compareOutput(actualResults);
     if (!failures.isEmpty()) {
       System.err.println(failures);
       fail(failures.toString());

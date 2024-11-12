@@ -47,7 +47,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -68,17 +67,16 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     return testoutput.getContents();
   }
 
-  public static Matcher<ResultsResource> hasNoContent() {
+  public static FileHasContent hasNoContent() {
     return new FileHasContent(null, null);
   }
 
-  public static Matcher<ResultsResource> hasSameContentAndTypeAs(
+  public static FileHasContent hasSameContentAndTypeAs(
       final ResultsResource classpathTestResource, final String outputFormatValue) {
     return new FileHasContent(classpathTestResource, outputFormatValue);
   }
 
-  public static Matcher<ResultsResource> hasSameContentAs(
-      final ResultsResource classpathTestResource) {
+  public static FileHasContent hasSameContentAs(final ResultsResource classpathTestResource) {
     return new FileHasContent(classpathTestResource, null);
   }
 
@@ -92,11 +90,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     return outputOf(filePath);
   }
 
-  static List<String> compareOutput(
-      final ResultsResource actualResults,
-      final ResultsResource expectedResults,
-      final String outputFormatValue)
-      throws Exception {
+  protected List<String> compareOutput(final ResultsResource actualResults) throws Exception {
 
     final List<String> failures = new ArrayList<>();
 
@@ -299,7 +293,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
         validateXML(actualResults, failures);
       }
 
-      failures = compareOutput(actualResults, expectedResults, outputFormatValue);
+      failures = compareOutput(actualResults);
       final boolean matches = failures != null && failures.isEmpty();
 
       // -- Clean up
