@@ -116,12 +116,16 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       return failures;
     }
 
+    // At this point, results are available, but no further checking
+    // can be done for binary file types, so return early
+    if ("png".equals(outputFormatValue)) {
+      return failures;
+    }
+
     final boolean contentEquals;
     if (!expectedResults.isAvailable()) {
       failures.add("reference file not available");
       contentEquals = false;
-    } else if ("png".equals(outputFormatValue)) {
-      contentEquals = true;
     } else {
       final BufferedReader expectedResultsReader = expectedResults.openNewReader();
       final BufferedReader actualResultsReader = actualResults.openNewReader();
@@ -143,13 +147,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       final String relativePathToTestResultsOutput =
           moveActualToExpected(testOutputTempFile, expectedResultsResource);
       failures.add(String.format(">> actual output in:%n%s", relativePathToTestResultsOutput));
-    } else {
-      TestUtility.deleteIfPossible(testOutputTempFile);
     }
-
-    // Flush System streams to prepare for further runs
-    System.out.flush();
-    System.err.flush();
 
     return failures;
   }
@@ -302,7 +300,17 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       }
 
       failures = compareOutput(actualResults, expectedResults, outputFormatValue);
-      return failures != null && failures.isEmpty();
+      final boolean matches = failures != null && failures.isEmpty();
+
+      // -- Clean up
+      // Delete output file if possible
+      final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
+      TestUtility.deleteIfPossible(testOutputTempFile);
+      // Flush System streams to prepare for further runs
+      System.out.flush();
+      System.err.flush();
+
+      return matches;
 
     } catch (final Exception e) {
       return fail(e);
