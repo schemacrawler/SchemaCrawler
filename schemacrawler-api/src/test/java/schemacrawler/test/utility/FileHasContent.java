@@ -89,7 +89,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     return outputOf(filePath);
   }
 
-  private void compareOutput(final ResultsResource actualResults) throws Exception {
+  private void compareOutput() throws Exception {
 
     // If there is no expected output, also make sure that
     // the actual output has no contents
@@ -112,7 +112,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       failures.add("reference file not available");
       contentEquals = false;
     } else {
-      contentEquals = contentEquals(actualResults);
+      contentEquals = contentEquals();
     }
 
     // Print failures for easy reading of build log
@@ -121,13 +121,13 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     }
 
     if (!contentEquals) {
-      moveActualToExpected(actualResults);
+      moveActualToExpected();
     }
 
     return;
   }
 
-  private boolean contentEquals(final ResultsResource actualResults) throws Exception {
+  private boolean contentEquals() throws Exception {
 
     final BufferedReader expectedResultsReader = expectedResults.openNewReader();
     final BufferedReader actualResultsReader = actualResults.openNewReader();
@@ -174,7 +174,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     return lineMiscompare;
   }
 
-  private void moveActualToExpected(final ResultsResource actualResults) throws Exception {
+  private void moveActualToExpected() throws Exception {
 
     final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
     final String expectedResultsResource = expectedResults.getResourceString();
@@ -196,7 +196,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     failures.add(String.format(">> actual output in:%n%s", relativePathToTestResultsOutput));
   }
 
-  private void validateXML(final ResultsResource actualResults) throws Exception {
+  private void validateXML() throws Exception {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setValidating(false);
     factory.setNamespaceAware(true);
@@ -226,7 +226,9 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
 
   private final ResultsResource expectedResults;
   private final String outputFormatValue;
+  // Mutable state, per match run
   private List<String> failures;
+  private ResultsResource actualResults;
 
   private FileHasContent(final ResultsResource expectedResults, final String outputFormatValue) {
     if (expectedResults != null) {
@@ -265,7 +267,8 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       if (actualValue == null || !(actualValue instanceof ResultsResource)) {
         throw new RuntimeException("No test output provided");
       }
-      final ResultsResource actualResults = (ResultsResource) actualValue;
+
+      actualResults = (ResultsResource) actualValue;
 
       // Reset failures list for this match result
       failures = new ArrayList<>();
@@ -277,10 +280,10 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
       }
 
       if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
-        validateXML(actualResults);
+        validateXML();
       }
 
-      compareOutput(actualResults);
+      compareOutput();
 
       final boolean matches = failures.isEmpty();
 
