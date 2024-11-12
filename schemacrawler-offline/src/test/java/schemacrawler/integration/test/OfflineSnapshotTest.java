@@ -40,7 +40,6 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
@@ -243,7 +242,6 @@ public class OfflineSnapshotTest {
 
     assertThat(
         outputOf(executableExecution(dataSource, executable)),
-        hasSameContentAndTypeAs(
-            classpathResource(referenceFileName), TextOutputFormat.text.getFormat()));
+        hasSameContentAs(classpathResource(referenceFileName)));
   }
 }

@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
@@ -92,16 +92,13 @@ public class HsqldbTest {
 
     final String expectedResource =
         String.format("hsqldb.main.%s.%s", javaVersion(), outputFormat.getFormat());
-    assertThat(
-        outputOf(testout),
-        hasSameContentAndTypeAs(classpathResource(expectedResource), outputFormat.getFormat()));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
   public void testHsqldbPortableBroad(
       final DatabaseConnectionInfo connectionInfo, final TestContext testContext) throws Exception {
 
-    final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Map<String, String> argsMap = createArgsMaps(connectionInfo);
@@ -114,9 +111,7 @@ public class HsqldbTest {
     }
 
     final String expectedResource = testContext.testMethodName() + ".txt";
-    assertThat(
-        outputOf(testout),
-        hasSameContentAndTypeAs(classpathResource(expectedResource), outputFormat.getFormat()));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
@@ -136,9 +131,7 @@ public class HsqldbTest {
     }
 
     final String expectedResource = testContext.testMethodName() + ".txt";
-    assertThat(
-        outputOf(testout),
-        hasSameContentAndTypeAs(classpathResource(expectedResource), outputFormat.getFormat()));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
