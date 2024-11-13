@@ -13,28 +13,13 @@ import us.fatehi.utility.property.ProductVersion;
 public class BaseProductVersionTest {
 
   @Test
-  public void testConstructorWithProductVersion() {
-    final ProductVersion mockProductVersion = mock(ProductVersion.class);
-    when(mockProductVersion.getProductName()).thenReturn("TestProduct");
-    when(mockProductVersion.getProductVersion()).thenReturn("1.0.0");
-    when(mockProductVersion.getDescription()).thenReturn("Description");
-
-    BaseProductVersion baseProductVersion = new BaseProductVersion(mockProductVersion);
-    assertThat(baseProductVersion.getProductName(), is("TestProduct"));
-    assertThat(baseProductVersion.getProductVersion(), is("1.0.0"));
-    assertThat(baseProductVersion.getDescription(), is(""));
-  }
-
-  @Test
-  public void testConstructorWithProductNameAndVersion() {
-    BaseProductVersion baseProductVersion = new BaseProductVersion("TestProduct", "1.0.0");
-    assertThat(baseProductVersion.getProductName(), is("TestProduct"));
-    assertThat(baseProductVersion.getProductVersion(), is("1.0.0"));
+  public void baseProductVersion() {
+    EqualsVerifier.forClass(BaseProductVersion.class).verify();
   }
 
   @Test
   public void testConstructorWithNullProductVersion() {
-    Exception exception =
+    final Exception exception =
         assertThrows(
             NullPointerException.class,
             () -> {
@@ -44,13 +29,28 @@ public class BaseProductVersionTest {
   }
 
   @Test
-  public void testToString() {
-    BaseProductVersion baseProductVersion = new BaseProductVersion("TestProduct", "1.0.0");
-    assertThat(baseProductVersion.toString(), is("TestProduct 1.0.0"));
+  public void testConstructorWithProductNameAndVersion() {
+    final BaseProductVersion baseProductVersion = new BaseProductVersion("TestProduct", "1.0.0");
+    assertThat(baseProductVersion.getProductName(), is("TestProduct"));
+    assertThat(baseProductVersion.getProductVersion(), is("1.0.0"));
   }
 
   @Test
-  public void baseProductVersion() {
-    EqualsVerifier.forClass(BaseProductVersion.class).verify();
+  public void testConstructorWithProductVersion() {
+    final ProductVersion mockProductVersion = mock(ProductVersion.class);
+    when(mockProductVersion.getProductName()).thenReturn("TestProduct");
+    when(mockProductVersion.getProductVersion()).thenReturn("1.0.0");
+    when(mockProductVersion.getDescription()).thenReturn("Description");
+
+    final BaseProductVersion baseProductVersion = new BaseProductVersion(mockProductVersion);
+    assertThat(baseProductVersion.getProductName(), is("TestProduct"));
+    assertThat(baseProductVersion.getProductVersion(), is("1.0.0"));
+    assertThat(baseProductVersion.getDescription(), is(""));
+  }
+
+  @Test
+  public void testToString() {
+    final BaseProductVersion baseProductVersion = new BaseProductVersion("TestProduct", "1.0.0");
+    assertThat(baseProductVersion.toString(), is("TestProduct 1.0.0"));
   }
 }
