@@ -30,9 +30,9 @@ package us.fatehi.utility.test.graph;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
 import org.junit.jupiter.api.Test;
-
+import nl.jqno.equalsverifier.EqualsVerifier;
+import us.fatehi.utility.graph.DirectedEdge;
 import us.fatehi.utility.graph.DirectedGraph;
 
 /**
@@ -65,5 +65,10 @@ public class DirectedGraphBoundaryTest extends GraphTestBase {
 
     assertThat(containsCycleSimple(graph), is(false));
     assertThat(containsCycleTarjan(graph), is(false));
+  }
+
+  @Test
+  public void directedEdge() {
+    EqualsVerifier.forClass(DirectedEdge.class).verify();
   }
 }

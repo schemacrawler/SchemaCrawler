@@ -40,7 +40,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
-import us.fatehi.utility.graph.DirectedEdge;
 import us.fatehi.utility.graph.Vertex;
 import us.fatehi.utility.property.AbstractProperty;
 
@@ -72,11 +71,6 @@ public class EqualsTest {
         .suppress(Warning.STRICT_INHERITANCE)
         .withIgnoredFields("key", "attributeMap")
         .verify();
-  }
-
-  @Test
-  public void directedEdge() {
-    EqualsVerifier.forClass(DirectedEdge.class).verify();
   }
 
   @Test
