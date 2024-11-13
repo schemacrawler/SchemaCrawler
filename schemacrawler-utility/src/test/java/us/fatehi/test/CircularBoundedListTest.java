@@ -2,7 +2,9 @@ package us.fatehi.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.collections.CircularBoundedList;
@@ -22,6 +24,7 @@ public class CircularBoundedListTest {
     list.add(3);
 
     assertThat(list.size(), is(3));
+    assertThat(list.convertToList(), contains(1, 2, 3));
   }
 
   @Test
@@ -77,6 +80,11 @@ public class CircularBoundedListTest {
   }
 
   @Test
+  public void testBadCapacity() {
+    assertThrows(IllegalArgumentException.class, () -> new CircularBoundedList<>(0));
+  }
+
+  @Test
   public void testGet() {
     list.add(1);
     list.add(2);
@@ -106,11 +114,15 @@ public class CircularBoundedListTest {
     list.add(5);
 
     final StringBuilder sb = new StringBuilder();
-    for (final Integer element : list) {
+    final Iterator<Integer> iterator = list.iterator();
+    for (; iterator.hasNext(); ) {
+      final Integer element = iterator.next();
       sb.append(element).append(" ");
     }
 
     assertThat(sb.toString(), is("1 2 3 4 5 "));
+
+    assertThrows(IllegalStateException.class, () -> iterator.next());
   }
 
   @Test
