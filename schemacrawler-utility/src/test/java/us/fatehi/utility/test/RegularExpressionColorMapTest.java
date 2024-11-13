@@ -32,13 +32,10 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.Color;
 import us.fatehi.utility.RegularExpressionColorMap;
 
@@ -92,6 +89,37 @@ public class RegularExpressionColorMapTest {
     assertThat(colorMap.match("SCH").get().equals(test_color), is(true));
     MatcherAssert.assertThat(colorMap.match("SC.*"), is(not(isEmpty())));
     MatcherAssert.assertThat(colorMap.match("SHC"), isEmpty());
+  }
+
+  @Test
+  public void constructorTests() {
+    RegularExpressionColorMap colorMap;
+
+    // null
+    colorMap = new RegularExpressionColorMap(null);
+    assertThat(colorMap.size(), is(0));
+
+    // empty properties
+    colorMap = new RegularExpressionColorMap(new HashMap<>());
+    assertThat(colorMap.size(), is(0));
+
+    // invalid properties
+    Map<String, String> properties = new HashMap<>();
+    properties.put("FF0000", ".*error.*");
+    properties.put("FFFF00", ".*warning.*");
+    properties.put("INVALID", ".*info.*");
+
+    colorMap = new RegularExpressionColorMap(properties);
+    assertThat(colorMap.size(), is(2));
+  }
+
+  @Test
+  public void testToString() {
+    RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
+    colorMap.put(".*error.*", "#FF0000");
+
+    String expected = "{.*error.*=#FF0000}";
+    assertThat(colorMap.toString(), is(expected));
   }
 
   @Test
