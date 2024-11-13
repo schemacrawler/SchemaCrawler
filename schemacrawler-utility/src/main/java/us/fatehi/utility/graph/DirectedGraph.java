@@ -105,7 +105,7 @@ public class DirectedGraph<T extends Comparable<? super T>> {
     final StringBuilder writer = new StringBuilder(4096);
     writer.append("digraph {\n");
     if (name != null && !name.isEmpty()) {
-      writer.append(String.format("  [label=\"%s\"]%n", name));
+      writer.append(String.format("  [label=\"%s\"]\n", name));
     }
     for (final Vertex<T> vertex : verticesMap.values()) {
       writer.append("  ").append(vertex);
