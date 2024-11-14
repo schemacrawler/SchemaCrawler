@@ -1,4 +1,4 @@
-package us.fatehi.test.scheduler;
+package us.fatehi.utility.scheduler;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.Test;
-import us.fatehi.utility.scheduler.TaskDefinition;
 
 public class TaskDefinitionTest {
 

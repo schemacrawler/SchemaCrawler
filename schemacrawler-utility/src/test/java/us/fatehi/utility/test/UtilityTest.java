@@ -157,7 +157,7 @@ public class UtilityTest {
   @Test
   public void snakeCaseTest() {
     assertThat(toSnakeCase(null), nullValue());
-    assertThat(toSnakeCase("a b"), equalTo("a b"));
+    assertThat(toSnakeCase("a b"), equalTo("a_b"));
     assertThat(toSnakeCase("ab"), equalTo("ab"));
     assertThat(toSnakeCase("abI"), equalTo("ab_i"));
     assertThat(toSnakeCase("Ab"), equalTo("_ab"));
