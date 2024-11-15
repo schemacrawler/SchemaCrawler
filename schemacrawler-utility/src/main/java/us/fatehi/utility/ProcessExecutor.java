@@ -28,16 +28,14 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
-
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 public class ProcessExecutor implements Callable<Integer> {
@@ -55,12 +53,12 @@ public class ProcessExecutor implements Callable<Integer> {
     try {
       requireNonNull(command, "No command provided");
 
-      processOutput = createTempFilePath("temp", "stdout");
-      processError = createTempFilePath("temp", "stderr");
-
       if (command.isEmpty()) {
         return null;
       }
+
+      processOutput = createTempFilePath("temp", "stdout");
+      processError = createTempFilePath("temp", "stderr");
 
       LOGGER.log(Level.CONFIG, new StringFormat("Executing:%n%s", command));
 
