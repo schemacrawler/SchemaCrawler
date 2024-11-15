@@ -32,8 +32,7 @@ import static java.time.temporal.ChronoField.HOUR_OF_DAY;
 import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
+import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -45,17 +44,25 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 abstract class AbstractTaskRunner implements TaskRunner {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractTaskRunner.class.getName());
 
   private final String id;
+  protected final Clock clock;
   private final Queue<TaskDefinition> taskDefinitions;
   private final Queue<TimedTaskResult> taskResults;
 
-  public AbstractTaskRunner(final String id) {
+  AbstractTaskRunner(final String id) {
+    this(id, Clock.systemUTC());
+  }
+
+  AbstractTaskRunner(final String id, final Clock clock) {
     this.id = requireNotBlank(id, "No id provided");
+    this.clock = requireNonNull(clock, "Clock not provided");
 
     taskDefinitions = new LinkedBlockingDeque<>();
     taskResults = new LinkedBlockingDeque<>();
@@ -96,9 +103,8 @@ abstract class AbstractTaskRunner implements TaskRunner {
             final long totalMillis = totalDuration.toMillis();
             if (totalMillis == 0) {
               return 0d;
-            } else {
-              return duration.toMillis() * 100D / totalMillis;
             }
+            return duration.toMillis() * 100D / totalMillis;
           };
 
       final DateTimeFormatter df =
