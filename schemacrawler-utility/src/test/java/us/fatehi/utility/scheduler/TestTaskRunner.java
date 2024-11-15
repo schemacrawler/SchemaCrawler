@@ -2,11 +2,12 @@ package us.fatehi.utility.scheduler;
 
 import java.time.Clock;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
-import static java.util.Objects.requireNonNull;
 
 public final class TestTaskRunner extends AbstractTaskRunner {
+
+  boolean isStopped;
+  int size;
 
   public TestTaskRunner(String id, Clock clock) {
     super(id, clock);
@@ -14,22 +15,22 @@ public final class TestTaskRunner extends AbstractTaskRunner {
 
   @Override
   public boolean isStopped() {
-    return false;
+    return isStopped;
   }
 
   @Override
   public void stop() {
-    // No-op
+    isStopped = true;
+  }
+
+  public int size() {
+    return size;
   }
 
   @Override
   Collection<TimedTaskResult> runTimed(final Collection<TaskDefinition> taskDefinitions)
       throws Exception {
-
-    requireNonNull(taskDefinitions, "Tasks not provided");
-    if (taskDefinitions.isEmpty()) {
-      return Collections.emptyList();
-    }
+    size = taskDefinitions.size();
 
     final Collection<TimedTaskResult> runTaskResults = new CopyOnWriteArrayList<>();
     for (final TaskDefinition taskDefinition : taskDefinitions) {
