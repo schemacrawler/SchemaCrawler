@@ -38,6 +38,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.BiFunction;
@@ -147,7 +148,21 @@ abstract class AbstractTaskRunner implements TaskRunner {
 
   @Override
   public final void submit() throws Exception {
-    final Collection<TimedTaskResult> runTaskResults = runTimed(taskDefinitions);
+
+    // Cannot submit tasks to a stopped runner
+    if (isStopped()) {
+      throw new IllegalStateException("Task runner is stopped");
+    }
+
+    // Run tasks
+    final Collection<TimedTaskResult> runTaskResults;
+    requireNonNull(taskDefinitions, "Tasks not provided");
+    if (taskDefinitions.isEmpty()) {
+      runTaskResults = Collections.emptyList();
+    } else {
+      runTaskResults = runTimed(taskDefinitions);
+    }
+
     taskResults.addAll(runTaskResults);
     taskDefinitions.clear();
 
