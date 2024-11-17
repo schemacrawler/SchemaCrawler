@@ -29,21 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder.builder;
-
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -53,7 +44,6 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
@@ -71,110 +61,73 @@ public abstract class AbstractWeakAssociationsTest {
     TestUtility.clean(WEAK_ASSOCIATIONS_OUTPUT);
   }
 
-  @Test
-  @DisplayName("Inferred weak associations")
-  public void weakAssociations_00(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder.builder().toOptions();
+  protected void weakAssociations_00(
+      final OutputFormat outputFormat,
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource)
+      throws Exception {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("weak-associations", Boolean.TRUE);
 
-    multipleExecutions(
-        SchemaTextDetailType.schema.name(),
-        dataSource,
-        schemaCrawlerOptions,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
+    assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
   }
 
-  @Test
-  @DisplayName("Weak associations loaded from catalog attributes file")
-  public void weakAssociations_01(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder.builder().toOptions();
+  protected void weakAssociations_01(
+      final OutputFormat outputFormat,
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource)
+      throws Exception {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
-    multipleExecutions(
-        SchemaTextDetailType.schema.name(),
-        dataSource,
-        schemaCrawlerOptions,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
+    assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
   }
 
-  @Test
-  @DisplayName("Weak associations with remarks")
-  public void weakAssociations_02(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder.builder().toOptions();
-
-    final Config additionalConfig = new Config();
-    additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
-
-    multipleExecutions(
-        SchemaTextDetailType.schema.name(),
-        dataSource,
-        schemaCrawlerOptions,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
-  }
-
-  @Test
-  @DisplayName("Weak associations without remarks")
-  public void weakAssociations_03(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final SchemaTextOptions schemaTextOptions =
-        SchemaTextOptionsBuilder.builder().noRemarks().toOptions();
-
-    final Config additionalConfig = new Config();
-    additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
-
-    multipleExecutions(
-        SchemaTextDetailType.schema.name(),
-        dataSource,
-        schemaCrawlerOptions,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
-  }
-
-  protected abstract Stream<OutputFormat> outputFormats();
-
-  private void multipleExecutions(
-      final String command,
-      final DatabaseConnectionSource dataSource,
-      final SchemaCrawlerOptions options,
-      final Config config,
-      final SchemaTextOptions schemaTextOptions,
-      final String testMethodName)
+  protected void weakAssociations_02(
+      final OutputFormat outputFormat,
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource)
       throws Exception {
 
-    SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion)) {
-      final LimitOptionsBuilder limitOptionsBuilder =
-          LimitOptionsBuilder.builder()
-              .fromOptions(options.getLimitOptions())
-              .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
-      schemaCrawlerOptions = options.withLimitOptions(limitOptionsBuilder.toOptions());
-    }
+    final Config additionalConfig = new Config();
+    additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
-    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = builder(schemaTextOptions);
-    schemaTextOptionsBuilder.sortTables(true);
-    schemaTextOptionsBuilder.noInfo(schemaTextOptions.isNoInfo());
+    assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
+  }
+
+  protected void weakAssociations_03(
+      final OutputFormat outputFormat,
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource)
+      throws Exception {
+
+    final Config additionalConfig = new Config();
+    additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
+
+    assertWeakAssociations(testContext, dataSource, additionalConfig, true, outputFormat);
+  }
+
+  private void assertWeakAssociations(
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource,
+      final Config config,
+      final boolean noRemarks,
+      OutputFormat outputFormat)
+      throws Exception {
+
+    final String command = SchemaTextDetailType.schema.name();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel.withLimitOptions(
+            limitOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    schemaTextOptionsBuilder.sortTables(true).noInfo().noRemarks(noRemarks);
 
     final Config additionalConfig = new Config();
     additionalConfig.merge(config);
@@ -186,21 +139,10 @@ public abstract class AbstractWeakAssociationsTest {
     executable.setDataSource(dataSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    final String referenceFileName = testMethodName;
-    assertAll(
-        outputFormats()
-            .map(
-                outputFormat ->
-                    () -> {
-                      assertThat(
-                          outputOf(executableExecution(dataSource, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(
-                                  WEAK_ASSOCIATIONS_OUTPUT
-                                      + referenceFileName
-                                      + "."
-                                      + outputFormat.getFormat()),
-                              outputFormat));
-                    }));
+    final String referenceFileName =
+        WEAK_ASSOCIATIONS_OUTPUT + testContext.testMethodName() + "." + outputFormat.getFormat();
+    assertThat(
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));
   }
 }

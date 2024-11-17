@@ -28,10 +28,7 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.scheduler;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
-import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 final class MainThreadTaskRunner extends AbstractTaskRunner {
@@ -53,15 +50,9 @@ final class MainThreadTaskRunner extends AbstractTaskRunner {
   @Override
   Collection<TimedTaskResult> runTimed(final Collection<TaskDefinition> taskDefinitions)
       throws Exception {
-
-    requireNonNull(taskDefinitions, "Tasks not provided");
-    if (taskDefinitions.isEmpty()) {
-      return Collections.emptyList();
-    }
-
     final Collection<TimedTaskResult> runTaskResults = new CopyOnWriteArrayList<>();
     for (final TaskDefinition taskDefinition : taskDefinitions) {
-      final TimedTaskResult taskResult = new TimedTask(taskDefinition).call();
+      final TimedTaskResult taskResult = new TimedTask(taskDefinition, clock).call();
       runTaskResults.add(taskResult);
     }
     return runTaskResults;

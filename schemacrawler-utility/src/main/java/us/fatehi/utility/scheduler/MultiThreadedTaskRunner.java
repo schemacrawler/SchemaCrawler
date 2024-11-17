@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.scheduler;
 
-import static java.util.Objects.requireNonNull;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
@@ -81,19 +79,10 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
   @Override
   Collection<TimedTaskResult> runTimed(final Collection<TaskDefinition> taskDefinitions)
       throws Exception {
-
-    requireNonNull(taskDefinitions, "Tasks not provided");
-    if (taskDefinitions.isEmpty()) {
-      return Collections.emptyList();
-    }
-    if (isStopped()) {
-      throw new IllegalStateException("Task runner is stopped");
-    }
-
     try {
       final Collection<TimedTask> timedTasks = new CopyOnWriteArrayList<>();
       for (final TaskDefinition taskDefinition : taskDefinitions) {
-        final TimedTask timedTask = new TimedTask(taskDefinition);
+        final TimedTask timedTask = new TimedTask(taskDefinition, clock);
         timedTasks.add(timedTask);
       }
 
@@ -111,9 +100,8 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
       final Throwable cause = e.getCause();
       if (cause instanceof Exception) {
         throw (Exception) cause;
-      } else {
-        throw new RunnerException(cause);
       }
+      throw new RunnerException(cause);
     }
   }
 }

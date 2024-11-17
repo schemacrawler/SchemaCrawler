@@ -28,22 +28,30 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.html;
-import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.text;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
 public class TextAlternateKeysTest extends AbstractAlternateKeysTest {
 
-  @Override
-  protected Stream<OutputFormat> outputFormats() {
-    return Arrays.stream(new OutputFormat[] {text, html});
+  @DisplayName("Alternate keys loaded from catalog attributes file")
+  @ParameterizedTest(name = "with output to {0}")
+  @EnumSource(
+      value = TextOutputFormat.class,
+      names = {"text", "html"})
+  public void alternateKeys_01(
+      final OutputFormat outputFormat,
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource)
+      throws Exception {
+    assertAlternateKeys(testContext, dataSource, outputFormat);
   }
 }

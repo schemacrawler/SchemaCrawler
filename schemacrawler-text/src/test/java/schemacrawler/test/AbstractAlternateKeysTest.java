@@ -29,21 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder.builder;
-
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -71,45 +63,24 @@ public abstract class AbstractAlternateKeysTest {
     TestUtility.clean(ALTERNATE_KEYS_OUTPUT);
   }
 
-  @Test
-  @DisplayName("Alternate keys loaded from catalog attributes file")
-  public void alternateKeys_01(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder.builder().toOptions();
-
-    final Config additionalConfig = new Config();
-    additionalConfig.put("attributes-file", "/attributes-alternatekeys.yaml");
-
-    multipleExecutions(
-        SchemaTextDetailType.schema.name(),
-        dataSource,
-        schemaCrawlerOptions,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
-  }
-
-  protected abstract Stream<OutputFormat> outputFormats();
-
-  private void multipleExecutions(
-      final String command,
+  protected void assertAlternateKeys(
+      final TestContext testContext,
       final DatabaseConnectionSource dataSource,
-      final SchemaCrawlerOptions options,
-      final Config config,
-      final SchemaTextOptions schemaTextOptions,
-      final String testMethodName)
+      final OutputFormat outputFormat)
       throws Exception {
 
-    SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion)) {
-      final LimitOptionsBuilder limitOptionsBuilder =
-          LimitOptionsBuilder.builder()
-              .fromOptions(options.getLimitOptions())
-              .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
-      schemaCrawlerOptions = options.withLimitOptions(limitOptionsBuilder.toOptions());
-    }
+    final String command = SchemaTextDetailType.schema.name();
+    final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder.builder().toOptions();
+
+    final Config config = new Config();
+    config.put("attributes-file", "/attributes-alternatekeys.yaml");
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel.withLimitOptions(
+            limitOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = builder(schemaTextOptions);
     schemaTextOptionsBuilder.sortTables(true);
@@ -125,21 +96,10 @@ public abstract class AbstractAlternateKeysTest {
     executable.setDataSource(dataSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    final String referenceFileName = testMethodName;
-    assertAll(
-        outputFormats()
-            .map(
-                outputFormat ->
-                    () -> {
-                      assertThat(
-                          outputOf(executableExecution(dataSource, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(
-                                  ALTERNATE_KEYS_OUTPUT
-                                      + referenceFileName
-                                      + "."
-                                      + outputFormat.getFormat()),
-                              outputFormat));
-                    }));
+    final String referenceFileName =
+        ALTERNATE_KEYS_OUTPUT + testContext.testMethodName() + "." + outputFormat.getFormat();
+    assertThat(
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));
   }
 }

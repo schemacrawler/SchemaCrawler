@@ -31,13 +31,13 @@ package us.fatehi.utility.test.graph;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-
+import nl.jqno.equalsverifier.EqualsVerifier;
+import us.fatehi.utility.graph.DirectedEdge;
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.GraphException;
+import us.fatehi.utility.graph.Vertex;
 
 public class DirectedGraphTest extends GraphTestBase {
 
@@ -48,6 +48,11 @@ public class DirectedGraphTest extends GraphTestBase {
 
     assertThat(containsCycleSimple(graph), is(true));
     assertThat(containsCycleTarjan(graph), is(true));
+  }
+
+  @Test
+  public void directedEdge() {
+    EqualsVerifier.forClass(DirectedEdge.class).verify();
   }
 
   @Test
@@ -101,13 +106,20 @@ public class DirectedGraphTest extends GraphTestBase {
 
     assertThat(
         graph.toString(),
-        is("digraph {\n  A;\n  B;\n  C;\n  D;\n  E;\n  A -> B;\n  B -> C;\n  A -> D;\n}\n"));
+        is(
+            "digraph {\n  [label=\"graph_name\"]\n  A;\n  B;\n  C;\n  D;\n  E;\n  A -> B;\n  B -> C;\n  A -> D;\n}\n"));
+    assertThat(graph.getName(), is("graph_name"));
+  }
+
+  @Test
+  public void vertex() {
+    EqualsVerifier.forClass(Vertex.class).withIgnoredFields("attributes").verify();
   }
 
   private DirectedGraph<String> makeGraph() {
 
     final DirectedGraph<String> graph =
-        new DirectedGraph<String>("") {
+        new DirectedGraph<String>("graph_name") {
           {
             addEdge("A", "B");
             addEdge("B", "C");

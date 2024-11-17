@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility;
 
 import static java.lang.Character.isWhitespace;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -46,9 +45,8 @@ public final class Utility {
     final int index = indexOfDifference(string1, string2);
     if (index < 1) {
       return "";
-    } else {
-      return string1.substring(0, index).toLowerCase();
     }
+    return string1.substring(0, index).toLowerCase();
   }
 
   /**
@@ -210,16 +208,15 @@ public final class Utility {
     }
     final Pattern identifyCamelCase = Pattern.compile("([A-Z])");
     final String snakeCaseIdentifier =
-        identifyCamelCase.matcher(identifier).replaceAll("_$1").toLowerCase();
+        identifyCamelCase.matcher(identifier).replaceAll("_$1").toLowerCase().replace(' ', '_');
     return snakeCaseIdentifier;
   }
 
   public static String trimToEmpty(final String text) {
     if (isBlank(text)) {
       return "";
-    } else {
-      return stripEnd(stripStart(text));
     }
+    return stripEnd(stripStart(text));
   }
 
   private static int indexOfDifference(final String string1, final String string2) {

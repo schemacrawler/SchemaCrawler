@@ -28,14 +28,13 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.scheduler;
 
-import static java.util.Objects.requireNonNull;
-
+import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -47,9 +46,11 @@ class TimedTask implements Callable<TimedTaskResult> {
   private static final Logger LOGGER = Logger.getLogger(TimedTask.class.getName());
 
   private final TaskDefinition taskDefinition;
+  private final Clock clock;
 
-  TimedTask(final TaskDefinition task) {
-    this.taskDefinition = requireNonNull(task, "Task not provided");
+  TimedTask(final TaskDefinition task, final Clock clock) {
+    taskDefinition = requireNonNull(task, "Task not provided");
+    this.clock = requireNonNull(clock, "Clock not provided");
   }
 
   @Override
@@ -61,7 +62,7 @@ class TimedTask implements Callable<TimedTaskResult> {
             "Running <%s> on thread <%s>",
             taskDefinition.getTaskName(), Thread.currentThread().getName()));
 
-    final Instant start = Instant.now();
+    final Instant start = Instant.now(clock);
 
     Exception ex = null;
     try {
@@ -70,7 +71,7 @@ class TimedTask implements Callable<TimedTaskResult> {
       ex = e;
     }
 
-    final Instant stop = Instant.now();
+    final Instant stop = Instant.now(clock);
     final Duration runTime = Duration.between(start, stop);
     final TimedTaskResult timedTaskResult =
         new TimedTaskResult(taskDefinition.getTaskName(), runTime, ex);

@@ -32,7 +32,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.collections.MapUtils;
+import org.junit.jupiter.api.Test;
 import static us.fatehi.utility.Utility.commonPrefix;
+import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isClassAvailable;
@@ -41,15 +49,6 @@ import static us.fatehi.utility.Utility.join;
 import static us.fatehi.utility.Utility.stripEnd;
 import static us.fatehi.utility.Utility.stripStart;
 import static us.fatehi.utility.Utility.toSnakeCase;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.collections.MapUtils;
-import org.junit.jupiter.api.Test;
 
 public class UtilityTest {
 
@@ -61,6 +60,18 @@ public class UtilityTest {
     assertThat(commonPrefix("something", "nothing"), is(""));
     assertThat(commonPrefix("preTest", ""), is(""));
     assertThat(commonPrefix("12345", "12345"), is(""));
+  }
+
+  @Test
+  public void convertForComparisonTest() {
+    assertThat(convertForComparison(null), is(""));
+    assertThat(convertForComparison(""), is(""));
+    assertThat(convertForComparison("ABC123"), is("abc123"));
+    assertThat(convertForComparison("ABC_123"), is("abc_123"));
+    assertThat(convertForComparison("ABC.123"), is("abc.123"));
+    assertThat(convertForComparison("ABC!@#123"), is("abc123"));
+    assertThat(convertForComparison("ABC_123.DEF"), is("abc_123.def"));
+    assertThat(convertForComparison("ABC 123"), is("abc123"));
   }
 
   @Test
@@ -133,12 +144,11 @@ public class UtilityTest {
     assertThat(join((Map) null, ","), nullValue());
     assertThat(join(new HashMap<>(), ","), nullValue());
 
-    final String[][] map =
-        new String[][] {
-          {"RED", null},
-          {null, "#00FF00"},
-          {"BLUE", "#0000FF"}
-        };
+    final String[][] map = {
+      {"RED", null},
+      {null, "#00FF00"},
+      {"BLUE", "#0000FF"}
+    };
 
     assertThat(
         join(MapUtils.putAll(new HashMap<>(), map), ","), is("RED=null,null=#00FF00,BLUE=#0000FF"));
@@ -147,7 +157,7 @@ public class UtilityTest {
   @Test
   public void snakeCaseTest() {
     assertThat(toSnakeCase(null), nullValue());
-    assertThat(toSnakeCase("a b"), equalTo("a b"));
+    assertThat(toSnakeCase("a b"), equalTo("a_b"));
     assertThat(toSnakeCase("ab"), equalTo("ab"));
     assertThat(toSnakeCase("abI"), equalTo("ab_i"));
     assertThat(toSnakeCase("Ab"), equalTo("_ab"));

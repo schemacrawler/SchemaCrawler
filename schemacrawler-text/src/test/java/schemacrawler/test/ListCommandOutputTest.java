@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
@@ -39,8 +38,10 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import java.io.IOException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -68,8 +69,13 @@ public class ListCommandOutputTest {
 
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
-  @Test
-  public void compareListOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  @DisplayName("Compare list output")
+  @ParameterizedTest(name = "with output format {0}")
+  @EnumSource(
+      value = TextOutputFormat.class,
+      names = {"text", "html"})
+  public void compareListOutput(
+      final OutputFormat outputFormat, final DatabaseConnectionSource dataSource) throws Exception {
     clean(LIST_OUTPUT);
 
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -80,33 +86,11 @@ public class ListCommandOutputTest {
             .includeRoutines(new IncludeAll());
     final LimitOptions limitOptions = limitOptionsBuilder.toOptions();
 
-    assertAll(
-        outputFormats()
-            .map(
-                outputFormat ->
-                    () -> {
-                      compareListOutput(
-                          dataSource,
-                          limitOptions,
-                          tablesOutputTextOptions(),
-                          "list",
-                          outputFormat,
-                          "list_tables");
-                    }));
+    compareListOutput(
+        dataSource, limitOptions, tablesOutputTextOptions(), "list", outputFormat, "list_tables");
 
-    assertAll(
-        outputFormats()
-            .map(
-                outputFormat ->
-                    () -> {
-                      compareListOutput(
-                          dataSource,
-                          limitOptions,
-                          allOutputTextOptions(),
-                          "list",
-                          outputFormat,
-                          "list_all");
-                    }));
+    compareListOutput(
+        dataSource, limitOptions, allOutputTextOptions(), "list", outputFormat, "list_all");
   }
 
   @BeforeAll

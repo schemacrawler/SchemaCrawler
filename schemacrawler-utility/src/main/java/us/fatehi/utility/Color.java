@@ -30,6 +30,8 @@ package us.fatehi.utility;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.floor;
+import java.util.Objects;
+import java.util.regex.Pattern;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 /**
@@ -40,22 +42,21 @@ public final class Color {
 
   public static final Color white = new Color(255, 255, 255);
 
+  private static Pattern htmlColorPattern = Pattern.compile("^#[0-9A-Fa-f]{6}$");
+
   public static Color fromHexTriplet(final String htmlColor) {
     requireNotBlank(htmlColor, "No color provided");
-    if (htmlColor.length() != 7 || !htmlColor.startsWith("#")) {
-      throw new IllegalArgumentException("Bad color provided, " + htmlColor);
+
+    if (!htmlColorPattern.matcher(htmlColor).matches()) {
+      throw new IllegalArgumentException(String.format("Bad color provided <%s>", htmlColor));
     }
 
     // Parse color
-    try {
-      final int r = Integer.parseInt(htmlColor.substring(1, 3), 16);
-      final int b = Integer.parseInt(htmlColor.substring(3, 5), 16);
-      final int g = Integer.parseInt(htmlColor.substring(5, 7), 16);
+    final int r = Integer.parseInt(htmlColor.substring(1, 3), 16);
+    final int g = Integer.parseInt(htmlColor.substring(3, 5), 16);
+    final int b = Integer.parseInt(htmlColor.substring(5, 7), 16);
 
-      return new Color(r, b, g);
-    } catch (final Exception e) {
-      throw new IllegalArgumentException("Bad color provided, " + htmlColor, e);
-    }
+    return new Color(r, g, b);
   }
 
   /**
@@ -84,10 +85,8 @@ public final class Color {
       case 5:
         return fromRGB(value, p, q);
       default:
-        throw new IllegalArgumentException(
-            String.format(
-                "Could not convert from HSV (%f, %f, %f) to RGB",
-                normalizedHue, saturation, value));
+        // This case is not expected
+        throw new IllegalArgumentException();
     }
   }
 
@@ -128,17 +127,11 @@ public final class Color {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if ((obj == null) || (getClass() != obj.getClass())) {
       return false;
     }
     final Color other = (Color) obj;
-    if (b != other.b) {
-      return false;
-    }
-    if (g != other.g) {
+    if ((b != other.b) || (g != other.g)) {
       return false;
     }
     return r == other.r;
@@ -146,12 +139,7 @@ public final class Color {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + b;
-    result = prime * result + g;
-    result = prime * result + r;
-    return result;
+    return Objects.hash(b, g, r);
   }
 
   @Override
