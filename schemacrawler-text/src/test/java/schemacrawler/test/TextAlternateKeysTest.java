@@ -52,6 +52,6 @@ public class TextAlternateKeysTest extends AbstractAlternateKeysTest {
       final TestContext testContext,
       final DatabaseConnectionSource dataSource)
       throws Exception {
-    assert_alternateKeys_01(testContext, dataSource, outputFormat);
+    assertAlternateKeys(testContext, dataSource, outputFormat);
   }
 }

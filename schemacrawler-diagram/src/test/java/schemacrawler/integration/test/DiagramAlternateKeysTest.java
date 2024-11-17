@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-import static org.junit.jupiter.params.provider.EnumSource.Mode.INCLUDE;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -48,13 +47,12 @@ public class DiagramAlternateKeysTest extends AbstractAlternateKeysTest {
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = DiagramOutputFormat.class,
-      mode = INCLUDE,
       names = {"scdot", "htmlx"})
   public void alternateKeys_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource dataSource)
       throws Exception {
-    assert_alternateKeys_01(testContext, dataSource, outputFormat);
+    assertAlternateKeys(testContext, dataSource, outputFormat);
   }
 }
