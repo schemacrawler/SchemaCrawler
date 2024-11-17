@@ -64,9 +64,9 @@ public abstract class AbstractAlternateKeysTest {
   }
 
   protected void assert_alternateKeys_01(
-      final OutputFormat outputFormat,
+      final TestContext testContext,
       final DatabaseConnectionSource dataSource,
-      final TestContext testContext)
+      final OutputFormat outputFormat)
       throws Exception {
 
     final String command = SchemaTextDetailType.schema.name();
