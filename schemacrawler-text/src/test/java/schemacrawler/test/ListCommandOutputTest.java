@@ -30,7 +30,6 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -72,7 +71,9 @@ public class ListCommandOutputTest {
 
   @DisplayName("Compare list output")
   @ParameterizedTest(name = "with output format {0}")
-  @EnumSource(value = TextOutputFormat.class, mode = EXCLUDE, names = "tsv")
+  @EnumSource(
+      value = TextOutputFormat.class,
+      names = {"text", "html"})
   public void compareListOutput(
       final OutputFormat outputFormat, final DatabaseConnectionSource dataSource) throws Exception {
     clean(LIST_OUTPUT);
