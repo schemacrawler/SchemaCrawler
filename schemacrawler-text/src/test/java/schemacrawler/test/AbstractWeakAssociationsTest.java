@@ -77,11 +77,7 @@ public abstract class AbstractWeakAssociationsTest {
     final Config additionalConfig = new Config();
     additionalConfig.put("weak-associations", Boolean.TRUE);
 
-    multipleExecutions(
-        dataSource,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
+    multipleExecutions(dataSource, additionalConfig, schemaTextOptions, testContext);
   }
 
   @Test
@@ -94,11 +90,7 @@ public abstract class AbstractWeakAssociationsTest {
     final Config additionalConfig = new Config();
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
-    multipleExecutions(
-        dataSource,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
+    multipleExecutions(dataSource, additionalConfig, schemaTextOptions, testContext);
   }
 
   @Test
@@ -111,15 +103,11 @@ public abstract class AbstractWeakAssociationsTest {
     final Config additionalConfig = new Config();
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
-    multipleExecutions(
-        dataSource,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
+    multipleExecutions(dataSource, additionalConfig, schemaTextOptions, testContext);
   }
 
   @Test
-  @DisplayName("Weak associations without remarks")
+  @DisplayName("Weak associations hiding remarks")
   public void weakAssociations_03(
       final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
 
@@ -129,11 +117,7 @@ public abstract class AbstractWeakAssociationsTest {
     final Config additionalConfig = new Config();
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
-    multipleExecutions(
-        dataSource,
-        additionalConfig,
-        schemaTextOptions,
-        testContext.testMethodName());
+    multipleExecutions(dataSource, additionalConfig, schemaTextOptions, testContext);
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
@@ -142,7 +126,7 @@ public abstract class AbstractWeakAssociationsTest {
       final DatabaseConnectionSource dataSource,
       final Config config,
       final SchemaTextOptions schemaTextOptions,
-      final String testMethodName)
+      final TestContext testContext)
       throws Exception {
 
     final String command = SchemaTextDetailType.schema.name();
@@ -168,21 +152,20 @@ public abstract class AbstractWeakAssociationsTest {
     executable.setDataSource(dataSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    final String referenceFileName = testMethodName;
     assertAll(
         outputFormats()
             .map(
                 outputFormat ->
                     () -> {
+                      final String referenceFileName =
+                          WEAK_ASSOCIATIONS_OUTPUT
+                              + testContext.testMethodName()
+                              + "."
+                              + outputFormat.getFormat();
                       assertThat(
                           outputOf(executableExecution(dataSource, executable, outputFormat)),
                           hasSameContentAndTypeAs(
-                              classpathResource(
-                                  WEAK_ASSOCIATIONS_OUTPUT
-                                      + referenceFileName
-                                      + "."
-                                      + outputFormat.getFormat()),
-                              outputFormat));
+                              classpathResource(referenceFileName), outputFormat));
                     }));
   }
 }
