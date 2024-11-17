@@ -55,6 +55,6 @@ public class DiagramAlternateKeysTest extends AbstractAlternateKeysTest {
       final TestContext testContext,
       final DatabaseConnectionSource dataSource)
       throws Exception {
-    assert_alternateKeys_01(outputFormat, dataSource, testContext);
+    assert_alternateKeys_01(testContext, dataSource, outputFormat);
   }
 }
