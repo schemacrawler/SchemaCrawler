@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -45,7 +44,9 @@ public class TextAlternateKeysTest extends AbstractAlternateKeysTest {
 
   @DisplayName("Alternate keys loaded from catalog attributes file")
   @ParameterizedTest(name = "with output to {0}")
-  @EnumSource(value = TextOutputFormat.class, mode = EXCLUDE, names = "tsv")
+  @EnumSource(
+      value = TextOutputFormat.class,
+      names = {"text", "html"})
   public void alternateKeys_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
