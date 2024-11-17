@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -55,6 +54,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.test.utility.Commands;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.PortableType;
@@ -330,8 +330,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                     }));
   }
 
-  @Test
-  public void compareTitleOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  @ParameterizedTest
+  @EnumSource(Commands.class)
+  public void compareTitleOutput(final Commands command, final DatabaseConnectionSource dataSource)
+      throws Exception {
     clean(WITH_TITLE_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -343,16 +345,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     assertAll(
-        Arrays.asList("list", "schema").stream()
-            .flatMap(
-                command ->
-                    outputFormats()
-                        .map(
-                            outputFormat ->
-                                () -> {
-                                  compareTitleOutput(
-                                      dataSource, textOptions, command, outputFormat);
-                                })));
+        outputFormats()
+            .map(
+                outputFormat ->
+                    () -> {
+                      compareTitleOutput(dataSource, textOptions, command.name(), outputFormat);
+                    }));
   }
 
   @Test
