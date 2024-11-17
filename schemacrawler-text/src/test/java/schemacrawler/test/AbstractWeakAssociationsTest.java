@@ -37,13 +37,10 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder.builder;
-
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -83,7 +80,6 @@ public abstract class AbstractWeakAssociationsTest {
     additionalConfig.put("weak-associations", Boolean.TRUE);
 
     multipleExecutions(
-        SchemaTextDetailType.schema.name(),
         dataSource,
         schemaCrawlerOptions,
         additionalConfig,
@@ -103,7 +99,6 @@ public abstract class AbstractWeakAssociationsTest {
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
     multipleExecutions(
-        SchemaTextDetailType.schema.name(),
         dataSource,
         schemaCrawlerOptions,
         additionalConfig,
@@ -123,7 +118,6 @@ public abstract class AbstractWeakAssociationsTest {
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
     multipleExecutions(
-        SchemaTextDetailType.schema.name(),
         dataSource,
         schemaCrawlerOptions,
         additionalConfig,
@@ -144,7 +138,6 @@ public abstract class AbstractWeakAssociationsTest {
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
     multipleExecutions(
-        SchemaTextDetailType.schema.name(),
         dataSource,
         schemaCrawlerOptions,
         additionalConfig,
@@ -155,13 +148,14 @@ public abstract class AbstractWeakAssociationsTest {
   protected abstract Stream<OutputFormat> outputFormats();
 
   private void multipleExecutions(
-      final String command,
       final DatabaseConnectionSource dataSource,
       final SchemaCrawlerOptions options,
       final Config config,
       final SchemaTextOptions schemaTextOptions,
       final String testMethodName)
       throws Exception {
+
+    final String command = SchemaTextDetailType.schema.name();
 
     SchemaCrawlerOptions schemaCrawlerOptions = options;
     if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion)) {
