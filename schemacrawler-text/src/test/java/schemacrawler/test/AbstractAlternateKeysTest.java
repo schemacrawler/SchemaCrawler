@@ -63,7 +63,7 @@ public abstract class AbstractAlternateKeysTest {
     TestUtility.clean(ALTERNATE_KEYS_OUTPUT);
   }
 
-  protected void assert_alternateKeys_01(
+  protected void assertAlternateKeys(
       final TestContext testContext,
       final DatabaseConnectionSource dataSource,
       final OutputFormat outputFormat)
