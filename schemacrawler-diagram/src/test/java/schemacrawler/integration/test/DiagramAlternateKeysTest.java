@@ -28,23 +28,33 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
-
+import static org.junit.jupiter.params.provider.EnumSource.Mode.INCLUDE;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.test.AbstractAlternateKeysTest;
 import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
 public class DiagramAlternateKeysTest extends AbstractAlternateKeysTest {
 
-  @Override
-  protected Stream<OutputFormat> outputFormats() {
-    return Arrays.stream(new OutputFormat[] {scdot, htmlx});
+  @DisplayName("Alternate keys loaded from catalog attributes file")
+  @ParameterizedTest(name = "with output to {0}")
+  @EnumSource(
+      value = DiagramOutputFormat.class,
+      mode = INCLUDE,
+      names = {"scdot", "htmlx"})
+  public void alternateKeys_01(
+      final OutputFormat outputFormat,
+      final TestContext testContext,
+      final DatabaseConnectionSource dataSource)
+      throws Exception {
+    assert_alternateKeys_01(outputFormat, dataSource, testContext);
   }
 }
