@@ -71,7 +71,7 @@ public class DatabaseInfoRetrieverTest {
 
     assertThat(
         catalog.getDatabaseInfo().toString(),
-        is("-- database: HSQL Database Engine 2.7.3" + System.lineSeparator()));
+        is("-- database: HSQL Database Engine 2.7.4" + System.lineSeparator()));
   }
 
   @Test
