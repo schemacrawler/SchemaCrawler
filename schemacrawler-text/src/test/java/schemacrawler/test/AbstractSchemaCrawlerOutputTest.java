@@ -39,10 +39,12 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import java.io.IOException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -54,7 +56,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.test.utility.Commands;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.PortableType;
@@ -330,9 +331,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                     }));
   }
 
-  @ParameterizedTest
-  @EnumSource(Commands.class)
-  public void compareTitleOutput(final Commands command, final DatabaseConnectionSource dataSource)
+  @DisplayName("Compare title output")
+  @ParameterizedTest(name = "with command \"{0}\"")
+  @ValueSource(strings = {"list", "schema"})
+  public void compareTitleOutput(final String command, final DatabaseConnectionSource dataSource)
       throws Exception {
     clean(WITH_TITLE_OUTPUT);
 
@@ -349,7 +351,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareTitleOutput(dataSource, textOptions, command.name(), outputFormat);
+                      compareTitleOutput(dataSource, textOptions, command, outputFormat);
                     }));
   }
 
