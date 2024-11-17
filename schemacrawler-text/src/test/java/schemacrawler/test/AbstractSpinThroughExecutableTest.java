@@ -35,13 +35,11 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
 import java.util.Arrays;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -91,12 +89,11 @@ public abstract class AbstractSpinThroughExecutableTest {
     return referenceFile;
   }
 
-  private static Stream<SchemaTextDetailType> schemaTextDetailTypes() {
-    return Arrays.stream(SchemaTextDetailType.values());
-  }
-
-  @Test
-  public void spinThroughExecutable(final DatabaseConnectionSource dataSource) throws Exception {
+  @ParameterizedTest
+  @EnumSource(SchemaTextDetailType.class)
+  public void spinThroughExecutable(
+      final SchemaTextDetailType schemaTextDetailType, final DatabaseConnectionSource dataSource)
+      throws Exception {
 
     final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
 
@@ -105,19 +102,16 @@ public abstract class AbstractSpinThroughExecutableTest {
             .flatMap(
                 infoLevel ->
                     outputFormats()
-                        .flatMap(
+                        .map(
                             outputFormat ->
-                                schemaTextDetailTypes()
-                                    .map(
-                                        schemaTextDetailType ->
-                                            () -> {
-                                              spinThroughExecutable(
-                                                  dataSource,
-                                                  schemaRetrievalOptions,
-                                                  infoLevel,
-                                                  outputFormat,
-                                                  schemaTextDetailType);
-                                            }))));
+                                () -> {
+                                  spinThroughExecutable(
+                                      dataSource,
+                                      schemaRetrievalOptions,
+                                      infoLevel,
+                                      outputFormat,
+                                      schemaTextDetailType);
+                                })));
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
