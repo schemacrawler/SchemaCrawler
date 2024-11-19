@@ -19,9 +19,7 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
 
                                                           [lint, medium]
 	incrementing columns	PUBLIC.BOOKS.AUTHORS.ADDRESS1, PUBLIC.BOOKS.AUTHORS.ADDRESS2
-	incrementing columns	PUBLIC.BOOKS.AUTHORS.ADDRESS1, PUBLIC.BOOKS.AUTHORS.ADDRESS2
                                                              [lint, low]
-	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY
 	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY
 
 
@@ -39,7 +37,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_FK_10120
+	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_FK_10118
 	no primary key	
 	primary key may not be a surrogate	
                                                              [lint, low]
@@ -77,7 +75,7 @@ PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS."Celebrity Updates".SYS_FK_10130
+	redundant index	PUBLIC.BOOKS."Celebrity Updates".SYS_FK_10128
 	redundant index	PUBLIC.BOOKS."Celebrity Updates"."PK Celebrity Updates"
                                                           [lint, medium]
 	no non-nullable data columns	
