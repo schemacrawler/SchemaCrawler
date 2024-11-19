@@ -29,18 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.formatter;
 
 import static java.util.Comparator.naturalOrder;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import schemacrawler.schema.AttributedObject;
+import java.util.stream.Collectors;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -57,21 +56,9 @@ import us.fatehi.utility.Multimap;
 public final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
     implements LintReportBuilder {
 
-  private static final String LINT_KEY = "schemacrawler.lint";
-
-  private static Collection<Lint<?>> getLint(final AttributedObject namedObject) {
-    if (namedObject == null) {
-      return null;
-    }
-
-    final List<Lint<? extends Serializable>> lints =
-        new ArrayList<>(namedObject.getAttribute(LINT_KEY, new ArrayList<>()));
-    lints.sort(naturalOrder());
-    return lints;
-  }
-
   private final Catalog catalog;
   private final LintOptions lintOptions;
+  private Collection<Lint<? extends Serializable>> allLints;
 
   public LintReportTextFormatter(
       final Catalog catalog,
@@ -85,15 +72,17 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
 
   @Override
   public void generateLintReport(final LintReport report) {
+    requireNonNull(report, "No lint report provided");
+    allLints = report.getLints();
 
-    this.begin();
+    begin();
 
-    this.handleInfoStart();
+    handleInfoStart();
     this.handle(catalog.getDatabaseInfo());
     this.handle(catalog.getJdbcDriverInfo());
-    this.handleInfoEnd();
+    handleInfoEnd();
 
-    this.handleStart();
+    handleStart();
     this.handle(catalog);
 
     final List<? extends Table> tablesList = new ArrayList<>(catalog.getTables());
@@ -103,13 +92,26 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
       this.handle(table);
     }
 
-    this.handleEnd();
+    handleEnd();
 
-    this.end();
+    end();
+  }
+
+  public Collection<Lint<?>> getLints(final NamedObject namedObject) {
+    if (namedObject == null) {
+      return Collections.emptyList();
+    }
+
+    final List<Lint<? extends Serializable>> lints =
+        allLints.stream()
+            .filter(lint -> namedObject.getFullName().equals(lint.getObjectName()))
+            .collect(Collectors.toList());
+    lints.sort(naturalOrder());
+    return lints;
   }
 
   private void handle(final Catalog catalog) {
-    final Collection<Lint<?>> lints = getLint(catalog);
+    final Collection<Lint<?>> lints = getLints(catalog);
     if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 
@@ -121,7 +123,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   }
 
   private void handle(final Table table) {
-    final Collection<Lint<?>> lints = getLint(table);
+    final Collection<Lint<?>> lints = getLints(table);
     if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 
