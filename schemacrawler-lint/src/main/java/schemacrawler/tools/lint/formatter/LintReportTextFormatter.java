@@ -104,7 +104,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
 
     final List<Lint<? extends Serializable>> lints =
         allLints.stream()
-            .filter(lint -> namedObject.getFullName().equals(lint.getObjectName()))
+            .filter(lint -> namedObject.key().equals(lint.getObjectKey()))
             .collect(Collectors.toList());
     lints.sort(naturalOrder());
     return lints;

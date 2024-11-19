@@ -47,7 +47,7 @@ public final class LintCollector {
   public <N extends NamedObject> void addLint(final N namedObject, final Lint<?> lint) {
     requireNonNull(namedObject, "No named object provided");
     requireNonNull(lint, "No lint provided");
-    if (namedObject.getFullName().equals(lint.getObjectName())) {
+    if (namedObject.key().equals(lint.getObjectKey())) {
       allLints.add(lint);
     }
   }

@@ -28,17 +28,18 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import us.fatehi.utility.ObjectToString;
 
 public final class Lint<V extends Serializable>
@@ -49,6 +50,7 @@ public final class Lint<V extends Serializable>
   private final String linterId;
   private final String linterInstanceId;
   private final String message;
+  private final NamedObjectKey objectKey;
   private final String objectName;
   private final LintObjectType objectType;
   private final LintSeverity severity;
@@ -68,8 +70,10 @@ public final class Lint<V extends Serializable>
     this.linterInstanceId = requireNotBlank(linterInstanceId, "Linter instance id not provided");
 
     this.objectType = requireNonNull(objectType, "Named object type not provided");
+
     requireNonNull(namedObject, "Named object not provided");
-    this.objectName = namedObject.getFullName();
+    objectKey = namedObject.key();
+    objectName = namedObject.getFullName();
 
     if (severity == null) {
       this.severity = LintSeverity.critical;
@@ -146,6 +150,10 @@ public final class Lint<V extends Serializable>
     return message;
   }
 
+  public NamedObjectKey getObjectKey() {
+    return objectKey;
+  }
+
   public String getObjectName() {
     return objectName;
   }
@@ -163,34 +171,32 @@ public final class Lint<V extends Serializable>
   }
 
   public String getValueAsString() {
-    if (value != null) {
-      final Class<? extends Object> valueClass = value.getClass();
-      Object valueObject = value;
-
-      if (valueClass.isArray()
-          && NamedObject.class.isAssignableFrom(valueClass.getComponentType())) {
-        valueObject =
-            Arrays.asList(
-                Arrays.copyOf((Object[]) value, ((Object[]) value).length, NamedObject[].class));
-      }
-
-      if (NamedObject.class.isAssignableFrom(valueClass)) {
-        valueObject = ((NamedObject) valueObject).getFullName();
-      } else if (Iterable.class.isAssignableFrom(valueObject.getClass())) {
-        final List<String> list = new ArrayList<>();
-        for (final Object valuePart : (Iterable<?>) valueObject) {
-          if (valuePart instanceof NamedObject) {
-            list.add(((NamedObject) valuePart).getFullName());
-          } else {
-            list.add(valuePart.toString());
-          }
-        }
-        valueObject = list;
-      }
-      return ObjectToString.listOrObjectToString(valueObject);
-    } else {
+    if (value == null) {
       return "";
     }
+    final Class<? extends Object> valueClass = value.getClass();
+    Object valueObject = value;
+
+    if (valueClass.isArray() && NamedObject.class.isAssignableFrom(valueClass.getComponentType())) {
+      valueObject =
+          Arrays.asList(
+              Arrays.copyOf((Object[]) value, ((Object[]) value).length, NamedObject[].class));
+    }
+
+    if (NamedObject.class.isAssignableFrom(valueClass)) {
+      valueObject = ((NamedObject) valueObject).getFullName();
+    } else if (Iterable.class.isAssignableFrom(valueObject.getClass())) {
+      final List<String> list = new ArrayList<>();
+      for (final Object valuePart : (Iterable<?>) valueObject) {
+        if (valuePart instanceof NamedObject) {
+          list.add(((NamedObject) valuePart).getFullName());
+        } else {
+          list.add(valuePart.toString());
+        }
+      }
+      valueObject = list;
+    }
+    return ObjectToString.listOrObjectToString(valueObject);
   }
 
   @Override
