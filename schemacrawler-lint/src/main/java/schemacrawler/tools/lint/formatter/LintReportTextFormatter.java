@@ -50,7 +50,7 @@ import us.fatehi.utility.Color;
 import us.fatehi.utility.Multimap;
 
 public final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
-    implements LintReportBuilder {
+    implements LintReportGenerator {
 
   private final Catalog catalog;
   private final LintOptions lintOptions;

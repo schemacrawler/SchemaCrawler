@@ -31,7 +31,6 @@ package schemacrawler.tools.lint;
 import static java.util.Comparator.naturalOrder;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObject;

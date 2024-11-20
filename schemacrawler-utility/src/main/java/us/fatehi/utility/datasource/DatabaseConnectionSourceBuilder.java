@@ -28,17 +28,16 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.datasource;
 
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
+import us.fatehi.utility.Builder;
 import us.fatehi.utility.TemplatingUtility;
 
-public class DatabaseConnectionSourceBuilder {
+public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnectionSource> {
 
   public static DatabaseConnectionSourceBuilder builder(final String connectionUrlTemplate) {
     return new DatabaseConnectionSourceBuilder().withConnectionUrl(connectionUrlTemplate);
@@ -57,12 +56,13 @@ public class DatabaseConnectionSourceBuilder {
   private Map<String, String> providedUrlx;
 
   private DatabaseConnectionSourceBuilder() {
-    this.defaultHost = "localhost";
-    this.defaultDatabase = "";
+    defaultHost = "localhost";
+    defaultDatabase = "";
     userCredentials = new MultiUseUserCredentials();
     connectionInitializer = connection -> {};
   }
 
+  @Override
   public DatabaseConnectionSource build() {
     final String connectionUrl = toURL();
     final Map<String, String> connectionUrlx = toUrlx();
@@ -92,7 +92,7 @@ public class DatabaseConnectionSourceBuilder {
   }
 
   public DatabaseConnectionSourceBuilder withDatabase(final String database) {
-    this.providedDatabase = database;
+    providedDatabase = database;
     return this;
   }
 
@@ -131,17 +131,17 @@ public class DatabaseConnectionSourceBuilder {
   }
 
   public DatabaseConnectionSourceBuilder withHost(final String host) {
-    this.providedHost = host;
+    providedHost = host;
     return this;
   }
 
   public DatabaseConnectionSourceBuilder withPort(final Integer port) {
-    this.providedPort = port;
+    providedPort = port;
     return this;
   }
 
   public DatabaseConnectionSourceBuilder withUrlx(final Map<String, String> urlx) {
-    this.providedUrlx = urlx;
+    providedUrlx = urlx;
     return this;
   }
 

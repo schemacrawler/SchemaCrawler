@@ -50,13 +50,13 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
   private final List<Lint<? extends Serializable>> allLints;
   private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
-  public LintReport(
+  LintReport(
       final String title,
       final CrawlInfo crawlInfo,
       final Collection<Lint<? extends Serializable>> lints) {
 
     this.title = trimToEmpty(title);
-    this.crawlInfo = requireNonNull(crawlInfo, "No crawl information provided");
+    this.crawlInfo = crawlInfo; // Can be null
 
     allLints = new ArrayList<>(requireNonNull(lints, "No lints provided"));
     allLints.sort(naturalOrder());
@@ -117,6 +117,15 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
    */
   public boolean isEmpty() {
     return allLints.isEmpty();
+  }
+
+  /**
+   * Whether crawl information is available.
+   *
+   * @return True if crawl information is available.
+   */
+  public boolean hasCrawlInfo() {
+    return crawlInfo != null;
   }
 
   @Override

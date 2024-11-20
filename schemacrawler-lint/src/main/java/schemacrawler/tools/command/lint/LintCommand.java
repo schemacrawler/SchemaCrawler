@@ -29,22 +29,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintReport;
+import schemacrawler.tools.lint.LintReportBuilder;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import schemacrawler.tools.lint.formatter.LintReportBuilder;
-import schemacrawler.tools.lint.formatter.LintReportJsonBuilder;
+import schemacrawler.tools.lint.formatter.LintReportGenerator;
+import schemacrawler.tools.lint.formatter.LintReportJsonGenerator;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
-import schemacrawler.tools.lint.formatter.LintReportYamlBuilder;
+import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -75,9 +73,12 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       linters.lint(catalog, connection);
 
       // Produce the lint report
-      final String reportTitle = outputOptions.getTitle();
-      final Collection<Lint<? extends Serializable>> allLints = linters.getCollector().getLints();
-      final LintReport lintReport = new LintReport(reportTitle, catalog.getCrawlInfo(), allLints);
+      final LintReport lintReport =
+          LintReportBuilder.builder()
+              .fromCatalog(catalog)
+              .withLinters(linters)
+              .withOutputOptions(outputOptions)
+              .build();
 
       // Write out the lint report
       LOGGER.log(Level.INFO, "Generating lint report");
@@ -114,17 +115,17 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
     lintDispatch.dispatch();
   }
 
-  private LintReportBuilder getLintReportBuilder() {
+  private LintReportGenerator getLintReportBuilder() {
     final LintReportOutputFormat outputFormat =
         LintReportOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final LintReportBuilder lintReportBuilder;
+    final LintReportGenerator lintReportBuilder;
     switch (outputFormat) {
       case json:
-        lintReportBuilder = new LintReportJsonBuilder(outputOptions);
+        lintReportBuilder = new LintReportJsonGenerator(outputOptions);
         break;
       case yaml:
-        lintReportBuilder = new LintReportYamlBuilder(outputOptions);
+        lintReportBuilder = new LintReportYamlGenerator(outputOptions);
         break;
       default:
         lintReportBuilder =

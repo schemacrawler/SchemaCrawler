@@ -5,9 +5,9 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import schemacrawler.tools.options.OutputOptions;
 
-public class LintReportYamlBuilder extends BaseLintReportJacksonBuilder {
+public class LintReportYamlGenerator extends BaseLintReportJacksonGenerator {
 
-  public LintReportYamlBuilder(final OutputOptions outputOptions) {
+  public LintReportYamlGenerator(final OutputOptions outputOptions) {
     super(outputOptions);
   }
 

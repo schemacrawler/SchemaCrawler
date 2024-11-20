@@ -24,11 +24,11 @@ import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.options.OutputOptions;
 
-abstract class BaseLintReportJacksonBuilder implements LintReportBuilder {
+abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {
 
   private final PrintWriter out;
 
-  BaseLintReportJacksonBuilder(final OutputOptions outputOptions) {
+  BaseLintReportJacksonGenerator(final OutputOptions outputOptions) {
     out = outputOptions.openNewOutputWriter();
   }
 
