@@ -28,16 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static java.util.Comparator.naturalOrder;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObject;
 
 public final class LintCollector {
 
-  private final List<Lint<? extends Serializable>> allLints;
+  private final Collection<Lint<? extends Serializable>> allLints;
 
   public LintCollector() {
     allLints = new ArrayList<>();
@@ -56,18 +55,7 @@ public final class LintCollector {
    *
    * @return All lints collected by the collector.
    */
-  public List<Lint<? extends Serializable>> getLints() {
-    final List<Lint<? extends Serializable>> lints = new ArrayList<>(allLints);
-    lints.sort(naturalOrder());
-    return lints;
-  }
-
-  /**
-   * Number of lints collected.
-   *
-   * @return Number of lints.
-   */
-  public int size() {
-    return allLints.size();
+  public Collection<Lint<? extends Serializable>> getLints() {
+    return new ArrayList<>(allLints);
   }
 }

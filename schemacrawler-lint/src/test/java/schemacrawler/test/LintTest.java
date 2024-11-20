@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static java.util.Comparator.naturalOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -39,14 +40,14 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
+import java.io.Serializable;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -114,11 +115,13 @@ public class LintTest {
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
       final LintCollector lintCollector = linters.getCollector();
-      assertThat(lintCollector.size(), is(51));
+      final List<Lint<? extends Serializable>> lints = new ArrayList<>(lintCollector.getLints());
+      lints.sort(naturalOrder());
+      assertThat(lints.size(), is(51));
 
       final TestWriter testout1 = new TestWriter();
       try (final TestWriter out = testout1) {
-        for (final Lint<?> lint : lintCollector.getLints()) {
+        for (final Lint<?> lint : lints) {
           out.println(lint);
         }
       }
@@ -160,11 +163,13 @@ public class LintTest {
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
       final LintCollector lintCollector = linters.getCollector();
-      assertThat(lintCollector.size(), is(40));
+      final List<Lint<? extends Serializable>> lints = new ArrayList<>(lintCollector.getLints());
+      lints.sort(naturalOrder());
+      assertThat(lints.size(), is(40));
 
       final TestWriter testout = new TestWriter();
       try (final TestWriter out = testout) {
-        for (final Lint<?> lint : lintCollector.getLints()) {
+        for (final Lint<?> lint : lints) {
           out.println(lint);
         }
       }
@@ -246,7 +251,7 @@ public class LintTest {
       final LintCollector lintCollector = linters.getCollector();
       assertThat(
           "All linters should be turned off, so there should be no lints",
-          lintCollector.size(),
+          lintCollector.getLints().size(),
           is(0));
     }
   }

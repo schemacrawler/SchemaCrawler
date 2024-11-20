@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
+import static java.util.Comparator.naturalOrder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,8 @@ public final class LintReportBuilder implements Builder<LintReport> {
 
   public LintReportBuilder withLintCollector(final LintCollector lintCollector) {
     if (lintCollector != null) {
-      allLints = lintCollector.getLints();
+      allLints = new ArrayList<>(lintCollector.getLints());
+      allLints.sort(naturalOrder());
     }
     return this;
   }

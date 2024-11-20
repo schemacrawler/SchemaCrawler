@@ -37,11 +37,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -67,7 +64,7 @@ public class Issue496LintTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeTables(table -> table.equals("PUBLIC.FOR_LINT.WRITERS"));
+            .includeTables(table -> "PUBLIC.FOR_LINT.WRITERS".equals(table));
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
@@ -91,7 +88,7 @@ public class Issue496LintTest {
       linters.lint(catalog, connection);
       final LintCollector lintCollector = linters.getCollector();
 
-      assertThat(lintCollector.size(), is(0));
+      assertThat(lintCollector.getLints().size(), is(0));
     }
   }
 
@@ -120,7 +117,7 @@ public class Issue496LintTest {
       linters.lint(catalog, connection);
       final LintCollector lintCollector = linters.getCollector();
 
-      assertThat(lintCollector.size(), is(1));
+      assertThat(lintCollector.getLints().size(), is(1));
       assertThat(
           lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder(

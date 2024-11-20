@@ -37,11 +37,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -84,7 +81,7 @@ public class Issue419LintTest {
       linters.lint(catalog, connection);
       final LintCollector lintCollector = linters.getCollector();
 
-      assertThat(lintCollector.size(), is(1));
+      assertThat(lintCollector.getLints().size(), is(1));
       assertThat(
           lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder("[PUBLIC.\"PUBLISHER SALES\".REGIONS] primary key not first" /*,
