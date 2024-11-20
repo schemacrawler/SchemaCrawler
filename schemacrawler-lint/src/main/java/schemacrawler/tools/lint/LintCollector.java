@@ -52,11 +52,22 @@ public final class LintCollector {
     }
   }
 
-  public Collection<Lint<? extends Serializable>> getLints() {
-    allLints.sort(naturalOrder());
-    return new ArrayList<>(allLints);
+  /**
+   * Get all lints collected by the collector.
+   *
+   * @return All lints collected by the collector.
+   */
+  public List<Lint<? extends Serializable>> getLints() {
+    final List<Lint<? extends Serializable>> lints = new ArrayList<>(allLints);
+    lints.sort(naturalOrder());
+    return lints;
   }
 
+  /**
+   * Number of lints collected.
+   *
+   * @return Number of lints.
+   */
   public int size() {
     return allLints.size();
   }

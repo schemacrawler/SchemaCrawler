@@ -29,11 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.Linters;
@@ -72,9 +75,9 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       linters.lint(catalog, connection);
 
       // Produce the lint report
-      final LintReport lintReport =
-          new LintReport(
-              outputOptions.getTitle(), catalog.getCrawlInfo(), linters.getCollector().getLints());
+      final String reportTitle = outputOptions.getTitle();
+      final Collection<Lint<? extends Serializable>> allLints = linters.getCollector().getLints();
+      final LintReport lintReport = new LintReport(reportTitle, catalog.getCrawlInfo(), allLints);
 
       // Write out the lint report
       LOGGER.log(Level.INFO, "Generating lint report");

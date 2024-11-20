@@ -46,6 +46,7 @@ public final class Lint<V extends Serializable>
     implements Serializable, Comparable<Lint<? extends Serializable>> {
 
   private static final long serialVersionUID = -8627082144974643415L;
+
   private final String lintId;
   private final String linterId;
   private final String linterInstanceId;
@@ -64,6 +65,7 @@ public final class Lint<V extends Serializable>
       final LintSeverity severity,
       final String message,
       final V value) {
+
     lintId = UUID.randomUUID().toString();
 
     this.linterId = requireNotBlank(linterId, "Linter id not provided");

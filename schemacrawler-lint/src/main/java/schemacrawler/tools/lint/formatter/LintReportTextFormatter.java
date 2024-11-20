@@ -28,18 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint.formatter;
 
-import static java.util.Comparator.naturalOrder;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -58,7 +54,8 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
 
   private final Catalog catalog;
   private final LintOptions lintOptions;
-  private Collection<Lint<? extends Serializable>> allLints;
+  // Set per run
+  private LintReport report;
 
   public LintReportTextFormatter(
       final Catalog catalog,
@@ -72,8 +69,8 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
 
   @Override
   public void generateLintReport(final LintReport report) {
-    requireNonNull(report, "No lint report provided");
-    allLints = report.getLints();
+
+    this.report = requireNonNull(report, "No lint report provided");
 
     begin();
 
@@ -97,21 +94,8 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
     end();
   }
 
-  public Collection<Lint<?>> getLints(final NamedObject namedObject) {
-    if (namedObject == null) {
-      return Collections.emptyList();
-    }
-
-    final List<Lint<? extends Serializable>> lints =
-        allLints.stream()
-            .filter(lint -> namedObject.key().equals(lint.getObjectKey()))
-            .collect(Collectors.toList());
-    lints.sort(naturalOrder());
-    return lints;
-  }
-
   private void handle(final Catalog catalog) {
-    final Collection<Lint<?>> lints = getLints(catalog);
+    final Collection<Lint<?>> lints = report.getLints(catalog.key());
     if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 
@@ -123,7 +107,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   }
 
   private void handle(final Table table) {
-    final Collection<Lint<?>> lints = getLints(table);
+    final Collection<Lint<?>> lints = report.getLints(table.key());
     if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 
