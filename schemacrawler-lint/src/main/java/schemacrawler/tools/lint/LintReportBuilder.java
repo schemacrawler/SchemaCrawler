@@ -74,18 +74,16 @@ public final class LintReportBuilder implements Builder<LintReport> {
     return this;
   }
 
-  public LintReportBuilder withLintCollector(final LintCollector lintCollector) {
-    if (lintCollector != null) {
-      allLints = new ArrayList<>(lintCollector.getLints());
-      allLints.sort(Lint.COMPARATOR);
-    }
-    return this;
-  }
-
   public LintReportBuilder withLinters(final Linters linters) {
-    if (linters != null) {
-      return withLintCollector(linters.getCollector());
+    if (linters == null) {
+      return this;
     }
+    final LintCollector lintCollector = linters.getCollector();
+    if (lintCollector == null) {
+      return this;
+    }
+    allLints = new ArrayList<>(lintCollector.getLints());
+    allLints.sort(Lint.COMPARATOR);
     return this;
   }
 

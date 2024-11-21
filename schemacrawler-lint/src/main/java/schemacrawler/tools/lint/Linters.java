@@ -106,37 +106,35 @@ public final class Linters implements Iterable<Linter> {
   }
 
   public String getLintSummary() {
-    final class LinterComparator implements Comparator<Linter> {
-      @Override
-      public int compare(final Linter linter1, final Linter linter2) {
-        if (linter1 == null) {
-          return -1;
-        }
 
-        if (linter2 == null) {
-          return 1;
-        }
-
-        int comparison = 0;
-
-        if (comparison == 0) {
-          comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
-        }
-
-        if (comparison == 0) {
-          comparison = linter1.getLintCount() - linter2.getLintCount();
-        }
-
-        if (comparison == 0) {
-          comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
-        }
-
-        return comparison;
+    Comparator<Linter> lintComparator = (linter1, linter2) ->{
+      if (linter1 == null) {
+        return -1;
       }
-    }
+
+      if (linter2 == null) {
+        return 1;
+      }
+
+      int comparison = 0;
+
+      if (comparison == 0) {
+        comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
+      }
+
+      if (comparison == 0) {
+        comparison = linter1.getLintCount() - linter2.getLintCount();
+      }
+
+      if (comparison == 0) {
+        comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
+      }
+
+      return comparison;
+  };
 
     final List<Linter> linters = new ArrayList<>(this.linters);
-    linters.sort(new LinterComparator());
+    linters.sort(lintComparator);
 
     final StringBuilder buffer = new StringBuilder(1024);
     for (final Linter linter : linters) {

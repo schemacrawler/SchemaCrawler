@@ -38,11 +38,11 @@ public final class LintCollector {
 
   private final Collection<Lint<? extends Serializable>> allLints;
 
-  public LintCollector() {
+  LintCollector() {
     allLints = new HashSet<>();
   }
 
-  public <N extends NamedObject> void addLint(final N namedObject, final Lint<?> lint) {
+  <N extends NamedObject> void addLint(final N namedObject, final Lint<?> lint) {
     requireNonNull(namedObject, "No named object provided");
     requireNonNull(lint, "No lint provided");
     if (namedObject.key().equals(lint.getObjectKey())) {
