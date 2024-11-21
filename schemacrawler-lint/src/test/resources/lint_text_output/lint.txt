@@ -92,14 +92,14 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 	column where NULL may be intended	PUBLIC.FOR_LINT.WRITERS.ADDRESS2
 	column where NULL may be intended	PUBLIC.FOR_LINT.WRITERS.COUNTRY
 	incrementing columns	PUBLIC.FOR_LINT.WRITERS.ADDRESS1, PUBLIC.FOR_LINT.WRITERS.ADDRESS2
-	incrementing columns	PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2
-	incrementing columns	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
 	incrementing columns	PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2
+	incrementing columns	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
 	incrementing columns	PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL11, PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL12
+	incrementing columns	PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2
 	incrementing columns are not consecutive	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
-	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2
-	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
 	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2
+	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
+	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2
                                                              [lint, low]
 	empty table	
 	should have remarks	

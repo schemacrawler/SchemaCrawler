@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObject;
 
@@ -39,7 +39,7 @@ public final class LintCollector {
   private final Collection<Lint<? extends Serializable>> allLints;
 
   public LintCollector() {
-    allLints = new ArrayList<>();
+    allLints = new HashSet<>();
   }
 
   public <N extends NamedObject> void addLint(final N namedObject, final Lint<?> lint) {
@@ -56,6 +56,6 @@ public final class LintCollector {
    * @return All lints collected by the collector.
    */
   public Collection<Lint<? extends Serializable>> getLints() {
-    return new ArrayList<>(allLints);
+    return new HashSet<>(allLints);
   }
 }

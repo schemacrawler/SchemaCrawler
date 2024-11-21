@@ -31,6 +31,7 @@ package schemacrawler.tools.lint;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -42,10 +43,46 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import us.fatehi.utility.ObjectToString;
 
-public final class Lint<V extends Serializable>
-    implements Serializable, Comparable<Lint<? extends Serializable>> {
+public final class Lint<V extends Serializable> implements Serializable {
 
   private static final long serialVersionUID = -8627082144974643415L;
+
+  // This comparator is not compatible with the equals logic
+  // Comparison may be expensive, since it converts values to strings
+  public static final Comparator<Lint<? extends Serializable>> COMPARATOR =
+      (lint1, lint2) -> {
+        if (lint1 == null) {
+          return 1;
+        }
+        if (lint2 == null) {
+          return -1;
+        }
+
+        int compareTo;
+        compareTo = lint1.getObjectType().compareTo(lint2.getObjectType());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getObjectName().compareTo(lint2.getObjectName());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getSeverity().compareTo(lint2.getSeverity());
+        compareTo *= -1; // Reverse
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getLinterId().compareTo(lint2.getLinterId());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getMessage().compareTo(lint2.getMessage());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getValueAsString().compareTo(lint2.getValueAsString());
+        return compareTo;
+      };
 
   private final String lintId;
   private final String linterId;
@@ -91,34 +128,6 @@ public final class Lint<V extends Serializable>
     this.value = value;
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public int compareTo(final Lint<?> lint) {
-    if (lint == null) {
-      return -1;
-    }
-
-    int compareTo;
-    compareTo = objectType.compareTo(lint.getObjectType());
-    if (compareTo != 0) {
-      return compareTo;
-    }
-    compareTo = objectName.compareTo(lint.getObjectName());
-    if (compareTo != 0) {
-      return compareTo;
-    }
-    compareTo = severity.compareTo(lint.getSeverity());
-    compareTo *= -1; // Reverse
-    if (compareTo != 0) {
-      return compareTo;
-    }
-    compareTo = linterId.compareTo(lint.getLinterId());
-    if (compareTo != 0) {
-      return compareTo;
-    }
-    return message.compareTo(lint.getMessage());
-  }
-
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -129,10 +138,10 @@ public final class Lint<V extends Serializable>
     }
     final Lint<?> lint = (Lint<?>) o;
     return Objects.equals(linterId, lint.linterId)
-        && Objects.equals(message, lint.message)
-        && Objects.equals(objectName, lint.objectName)
         && objectType == lint.objectType
+        && Objects.equals(objectKey, lint.objectKey)
         && severity == lint.severity
+        && Objects.equals(message, lint.message)
         && Objects.equals(value, lint.value);
   }
 

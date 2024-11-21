@@ -28,10 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static java.util.Comparator.naturalOrder;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -53,13 +51,13 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
   LintReport(
       final String title,
       final CrawlInfo crawlInfo,
-      final Collection<Lint<? extends Serializable>> lints) {
+      final List<Lint<? extends Serializable>> lints) {
 
     this.title = trimToEmpty(title);
     this.crawlInfo = crawlInfo; // Can be null
 
-    allLints = new ArrayList<>(requireNonNull(lints, "No lints provided"));
-    allLints.sort(naturalOrder());
+    // Note: The builder will ensure that we have a sorted list of lints
+    allLints = requireNonNull(lints, "No lints provided");
 
     lintsByObject = new Multimap<>();
     for (final Lint<?> lint : lints) {
@@ -97,7 +95,6 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
     }
 
     final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
-    lints.sort(naturalOrder());
     return lints;
   }
 

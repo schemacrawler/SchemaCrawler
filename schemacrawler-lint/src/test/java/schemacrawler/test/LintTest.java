@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-import static java.util.Comparator.naturalOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -116,7 +115,7 @@ public class LintTest {
       linters.lint(catalog, connection);
       final LintCollector lintCollector = linters.getCollector();
       final List<Lint<? extends Serializable>> lints = new ArrayList<>(lintCollector.getLints());
-      lints.sort(naturalOrder());
+      lints.sort(Lint.COMPARATOR);
       assertThat(lints.size(), is(51));
 
       final TestWriter testout1 = new TestWriter();
@@ -164,7 +163,7 @@ public class LintTest {
       linters.lint(catalog, connection);
       final LintCollector lintCollector = linters.getCollector();
       final List<Lint<? extends Serializable>> lints = new ArrayList<>(lintCollector.getLints());
-      lints.sort(naturalOrder());
+      lints.sort(Lint.COMPARATOR);
       assertThat(lints.size(), is(40));
 
       final TestWriter testout = new TestWriter();
