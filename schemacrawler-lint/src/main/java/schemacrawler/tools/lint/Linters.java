@@ -30,7 +30,6 @@ package schemacrawler.tools.lint;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -60,6 +59,7 @@ public final class Linters implements Iterable<Linter> {
     // Initialize running state to empty
     linters = new ArrayList<>();
     collector = new LintCollector();
+    lintReport = new LintReport();
   }
 
   public boolean exceedsThreshold() {
@@ -77,35 +77,8 @@ public final class Linters implements Iterable<Linter> {
 
   public String getLintSummary() {
 
-    final Comparator<Linter> lintComparator =
-        (linter1, linter2) -> {
-          if (linter1 == null) {
-            return -1;
-          }
-
-          if (linter2 == null) {
-            return 1;
-          }
-
-          int comparison = 0;
-
-          if (comparison == 0) {
-            comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
-          }
-
-          if (comparison == 0) {
-            comparison = linter1.getLintCount() - linter2.getLintCount();
-          }
-
-          if (comparison == 0) {
-            comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
-          }
-
-          return comparison;
-        };
-
     final List<Linter> linters = new ArrayList<>(this.linters);
-    linters.sort(lintComparator);
+    linters.sort(LintUtility.LINTER_COMPARATOR);
 
     final StringBuilder buffer = new StringBuilder(1024);
     for (final Linter linter : linters) {
@@ -139,7 +112,7 @@ public final class Linters implements Iterable<Linter> {
 
     initialize();
     runLinters(catalog, connection);
-
+    // Produce lint report
     lintReport = new LintReport("", catalog.getCrawlInfo(), collector.getLints());
   }
 

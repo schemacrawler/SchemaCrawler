@@ -95,7 +95,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   }
 
   private void handle(final Catalog catalog) {
-    final Collection<Lint<?>> lints = report.getLints(catalog.key());
+    final Collection<Lint<?>> lints = report.getLints(catalog);
     if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 
@@ -107,7 +107,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   }
 
   private void handle(final Table table) {
-    final Collection<Lint<?>> lints = report.getLints(table.key());
+    final Collection<Lint<?>> lints = report.getLints(table);
     if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 

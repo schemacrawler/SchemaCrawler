@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import static us.fatehi.utility.IOUtility.readResourceFully;
+import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 import us.fatehi.utility.UtilityMarker;
@@ -37,6 +39,70 @@ import us.fatehi.utility.UtilityMarker;
 public final class LintUtility {
 
   public static final Logger LOGGER = Logger.getLogger(LintUtility.class.getName());
+
+  // This comparator is not compatible with the equals logic
+  // Comparison may be expensive, since it converts values to strings
+  public static final Comparator<Lint<? extends Serializable>> LINT_COMPARATOR =
+      (lint1, lint2) -> {
+        if (lint1 == null) {
+          return 1;
+        }
+        if (lint2 == null) {
+          return -1;
+        }
+
+        int compareTo;
+        compareTo = lint1.getObjectType().compareTo(lint2.getObjectType());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getObjectName().compareTo(lint2.getObjectName());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getSeverity().compareTo(lint2.getSeverity());
+        compareTo *= -1; // Reverse
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getLinterId().compareTo(lint2.getLinterId());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getMessage().compareTo(lint2.getMessage());
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        compareTo = lint1.getValueAsString().compareTo(lint2.getValueAsString());
+        return compareTo;
+      };
+
+  public static final Comparator<Linter> LINTER_COMPARATOR =
+      (linter1, linter2) -> {
+        if (linter1 == null) {
+          return -1;
+        }
+
+        if (linter2 == null) {
+          return 1;
+        }
+
+        int comparison = 0;
+
+        if (comparison == 0) {
+          comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
+        }
+
+        if (comparison == 0) {
+          comparison = linter1.getLintCount() - linter2.getLintCount();
+        }
+
+        if (comparison == 0) {
+          comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
+        }
+
+        return comparison;
+      };
 
   public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
     if (main == null || sub == null || (main.size() < sub.size())) {

@@ -35,6 +35,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObject;
 
+/** Thread-safe class that can collect lints from all linters. */
 public final class LintCollector {
 
   private final Collection<Lint<? extends Serializable>> allLints;

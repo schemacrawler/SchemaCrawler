@@ -31,14 +31,12 @@ package schemacrawler.tools.lint;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
-import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import us.fatehi.utility.ObjectToString;
@@ -46,43 +44,6 @@ import us.fatehi.utility.ObjectToString;
 public final class Lint<V extends Serializable> implements Serializable {
 
   private static final long serialVersionUID = -8627082144974643415L;
-
-  // This comparator is not compatible with the equals logic
-  // Comparison may be expensive, since it converts values to strings
-  public static final Comparator<Lint<? extends Serializable>> COMPARATOR =
-      (lint1, lint2) -> {
-        if (lint1 == null) {
-          return 1;
-        }
-        if (lint2 == null) {
-          return -1;
-        }
-
-        int compareTo;
-        compareTo = lint1.getObjectType().compareTo(lint2.getObjectType());
-        if (compareTo != 0) {
-          return compareTo;
-        }
-        compareTo = lint1.getObjectName().compareTo(lint2.getObjectName());
-        if (compareTo != 0) {
-          return compareTo;
-        }
-        compareTo = lint1.getSeverity().compareTo(lint2.getSeverity());
-        compareTo *= -1; // Reverse
-        if (compareTo != 0) {
-          return compareTo;
-        }
-        compareTo = lint1.getLinterId().compareTo(lint2.getLinterId());
-        if (compareTo != 0) {
-          return compareTo;
-        }
-        compareTo = lint1.getMessage().compareTo(lint2.getMessage());
-        if (compareTo != 0) {
-          return compareTo;
-        }
-        compareTo = lint1.getValueAsString().compareTo(lint2.getValueAsString());
-        return compareTo;
-      };
 
   private final String lintId;
   private final String linterId;
@@ -94,7 +55,7 @@ public final class Lint<V extends Serializable> implements Serializable {
   private final LintSeverity severity;
   private final V value;
 
-  public <N extends NamedObject & AttributedObject> Lint(
+  public <N extends NamedObject> Lint(
       final String linterId,
       final String linterInstanceId,
       final LintObjectType objectType,

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
+import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,6 +40,7 @@ import java.util.stream.StreamSupport;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import us.fatehi.utility.Multimap;
 
@@ -49,6 +51,7 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
   private final List<Lint<? extends Serializable>> allLints;
   private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
+  /** Empty lint report. */
   LintReport() {
     this("", null, new ArrayList<>());
   }
@@ -61,10 +64,9 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
     this.title = trimToEmpty(title);
     this.crawlInfo = crawlInfo; // Can be null
 
-    // Note: The call will ensure that we have a sorted list of lints
     requireNonNull(lints, "No lints provided");
     allLints = new ArrayList<>(lints);
-    allLints.sort(Lint.COMPARATOR);
+    allLints.sort(LINT_COMPARATOR);
 
     lintsByObject = new Multimap<>();
     for (final Lint<?> lint : lints) {
@@ -95,13 +97,17 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
    *
    * @return All lints for a named object.
    */
-  public List<Lint<?>> getLints(final NamedObjectKey key) {
+  public List<Lint<?>> getLints(final NamedObject namedObject) {
+    requireNonNull(namedObject, "No named object provided");
+
+    final NamedObjectKey key = namedObject.key();
     final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
     if (lintsForKey == null) {
       return Collections.emptyList();
     }
 
     final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
+    lints.sort(LINT_COMPARATOR);
     return lints;
   }
 
@@ -155,6 +161,11 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
     return allLints.size();
   }
 
+  /**
+   * Stream of lints in the report.
+   *
+   * @return Stream of lints.
+   */
   public Stream<Lint<? extends Serializable>> stream() {
     return StreamSupport.stream(spliterator(), false);
   }
