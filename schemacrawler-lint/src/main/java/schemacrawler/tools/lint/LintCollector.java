@@ -56,7 +56,7 @@ public final class LintCollector {
    *
    * @return All lints collected by the collector.
    */
-  public Collection<Lint<? extends Serializable>> getLints() {
+  Collection<Lint<? extends Serializable>> getLints() {
     return new HashSet<>(allLints);
   }
 }

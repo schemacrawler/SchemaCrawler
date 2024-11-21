@@ -46,11 +46,118 @@ public final class Linters implements Iterable<Linter> {
 
   private static final Logger LOGGER = Logger.getLogger(Linters.class.getName());
 
-  private final List<Linter> linters;
-  private final LintCollector collector;
+  private final LinterConfigs linterConfigs;
+  private final boolean runAllLinters;
+  // Running state
+  private List<Linter> linters;
+  private LintCollector collector;
+  private LintReport lintReport;
 
   public Linters(final LinterConfigs linterConfigs, final boolean runAllLinters) {
-    requireNonNull(linterConfigs, "No linter configs provided");
+    this.linterConfigs = requireNonNull(linterConfigs, "No linter configs provided");
+    this.runAllLinters = runAllLinters;
+
+    // Initialize running state to empty
+    linters = new ArrayList<>();
+    collector = new LintCollector();
+  }
+
+  public boolean exceedsThreshold() {
+    for (final Linter linter : linters) {
+      if (linter.exceedsThreshold()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public LintReport getLintReport() {
+    return lintReport;
+  }
+
+  public String getLintSummary() {
+
+    final Comparator<Linter> lintComparator =
+        (linter1, linter2) -> {
+          if (linter1 == null) {
+            return -1;
+          }
+
+          if (linter2 == null) {
+            return 1;
+          }
+
+          int comparison = 0;
+
+          if (comparison == 0) {
+            comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
+          }
+
+          if (comparison == 0) {
+            comparison = linter1.getLintCount() - linter2.getLintCount();
+          }
+
+          if (comparison == 0) {
+            comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
+          }
+
+          return comparison;
+        };
+
+    final List<Linter> linters = new ArrayList<>(this.linters);
+    linters.sort(lintComparator);
+
+    final StringBuilder buffer = new StringBuilder(1024);
+    for (final Linter linter : linters) {
+      if (linter.getLintCount() > 0) {
+        buffer.append(
+            String.format(
+                "%8s%s %5d- %s%n",
+                "[" + linter.getSeverity() + "]",
+                linter.exceedsThreshold() ? "*" : " ",
+                linter.getLintCount(),
+                linter.getSummary()));
+      }
+    }
+
+    if (buffer.length() > 0) {
+      buffer.insert(0, "Summary of schema lints:\n");
+    }
+
+    return buffer.toString();
+  }
+
+  @Override
+  public Iterator<Linter> iterator() {
+    return linters.iterator();
+  }
+
+  public void lint(final Catalog catalog, final Connection connection) {
+
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+
+    initialize();
+    runLinters(catalog, connection);
+
+    lintReport = new LintReport("", catalog.getCrawlInfo(), collector.getLints());
+  }
+
+  /**
+   * Number of linters configured to run
+   *
+   * @return Number of linters configured to run
+   */
+  public int size() {
+    return linters.size();
+  }
+
+  @Override
+  public String toString() {
+    return linters.toString();
+  }
+
+  private void initialize() {
 
     linters = new ArrayList<>();
     collector = new LintCollector();
@@ -92,76 +199,7 @@ public final class Linters implements Iterable<Linter> {
     }
   }
 
-  public boolean exceedsThreshold() {
-    for (final Linter linter : linters) {
-      if (linter.exceedsThreshold()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public LintCollector getCollector() {
-    return collector;
-  }
-
-  public String getLintSummary() {
-
-    Comparator<Linter> lintComparator = (linter1, linter2) ->{
-      if (linter1 == null) {
-        return -1;
-      }
-
-      if (linter2 == null) {
-        return 1;
-      }
-
-      int comparison = 0;
-
-      if (comparison == 0) {
-        comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
-      }
-
-      if (comparison == 0) {
-        comparison = linter1.getLintCount() - linter2.getLintCount();
-      }
-
-      if (comparison == 0) {
-        comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
-      }
-
-      return comparison;
-  };
-
-    final List<Linter> linters = new ArrayList<>(this.linters);
-    linters.sort(lintComparator);
-
-    final StringBuilder buffer = new StringBuilder(1024);
-    for (final Linter linter : linters) {
-      if (linter.getLintCount() > 0) {
-        buffer.append(
-            String.format(
-                "%8s%s %5d- %s%n",
-                "[" + linter.getSeverity() + "]",
-                linter.exceedsThreshold() ? "*" : " ",
-                linter.getLintCount(),
-                linter.getSummary()));
-      }
-    }
-
-    if (buffer.length() > 0) {
-      buffer.insert(0, "Summary of schema lints:\n");
-    }
-
-    return buffer.toString();
-  }
-
-  @Override
-  public Iterator<Linter> iterator() {
-    return linters.iterator();
-  }
-
-  public void lint(final Catalog catalog, final Connection connection) {
+  private void runLinters(final Catalog catalog, final Connection connection) {
     for (final Linter linter : linters) {
       LOGGER.log(Level.CONFIG, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
       try {
@@ -173,19 +211,5 @@ public final class Linters implements Iterable<Linter> {
             new StringFormat("Could not run linter <%s>", linter.getLinterInstanceId()));
       }
     }
-  }
-
-  /**
-   * Number of linters configured to run
-   *
-   * @return Number of linters configured to run
-   */
-  public int size() {
-    return linters.size();
-  }
-
-  @Override
-  public String toString() {
-    return linters.toString();
   }
 }

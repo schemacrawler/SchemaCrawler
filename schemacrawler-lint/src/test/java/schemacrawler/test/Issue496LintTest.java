@@ -48,7 +48,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
@@ -86,9 +86,9 @@ public class Issue496LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintCollector lintCollector = linters.getCollector();
+      final LintReport lintReport = linters.getLintReport();
 
-      assertThat(lintCollector.getLints().size(), is(0));
+      assertThat(lintReport.size(), is(0));
     }
   }
 
@@ -115,11 +115,11 @@ public class Issue496LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintCollector lintCollector = linters.getCollector();
+      final LintReport lintReport = linters.getLintReport();
 
-      assertThat(lintCollector.getLints().size(), is(1));
+      assertThat(lintReport.size(), is(1));
       assertThat(
-          lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
+          lintReport.getLints().stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder(
               "[catalog] cycles in table relationships: PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"));
     }

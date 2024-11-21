@@ -36,7 +36,6 @@ import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintReport;
-import schemacrawler.tools.lint.LintReportBuilder;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.lint.formatter.LintReportGenerator;
@@ -73,12 +72,8 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       linters.lint(catalog, connection);
 
       // Produce the lint report
-      final LintReport lintReport =
-          LintReportBuilder.builder()
-              .fromCatalog(catalog)
-              .withLinters(linters)
-              .withOutputOptions(outputOptions)
-              .build();
+      final LintReport lintReport = linters.getLintReport();
+      lintReport.setTitle(outputOptions.getTitle());
 
       // Write out the lint report
       LOGGER.log(Level.INFO, "Generating lint report");

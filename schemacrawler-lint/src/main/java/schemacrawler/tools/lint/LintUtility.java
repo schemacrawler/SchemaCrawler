@@ -49,8 +49,6 @@ public final class LintUtility {
     return main.subList(0, sub.size()).equals(sub);
   }
 
-  private LintUtility() {}
-
   /**
    * Gets a lengthy description of the linter. By default, reads a resource file called
    * /help/{linter-id}.txt and if that is not present, returns the summary. Can be overridden.
@@ -62,4 +60,6 @@ public final class LintUtility {
     final String descriptionText = readResourceFully(descriptionResource);
     return descriptionText;
   }
+
+  private LintUtility() {}
 }

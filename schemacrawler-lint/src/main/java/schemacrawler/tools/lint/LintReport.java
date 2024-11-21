@@ -30,6 +30,7 @@ package schemacrawler.tools.lint;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -43,21 +44,27 @@ import us.fatehi.utility.Multimap;
 
 public final class LintReport implements Iterable<Lint<? extends Serializable>> {
 
-  private final String title;
+  private String title;
   private final CrawlInfo crawlInfo;
   private final List<Lint<? extends Serializable>> allLints;
   private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
+  LintReport() {
+    this("", null, new ArrayList<>());
+  }
+
   LintReport(
       final String title,
       final CrawlInfo crawlInfo,
-      final List<Lint<? extends Serializable>> lints) {
+      final Collection<Lint<? extends Serializable>> lints) {
 
     this.title = trimToEmpty(title);
     this.crawlInfo = crawlInfo; // Can be null
 
-    // Note: The builder will ensure that we have a sorted list of lints
-    allLints = requireNonNull(lints, "No lints provided");
+    // Note: The call will ensure that we have a sorted list of lints
+    requireNonNull(lints, "No lints provided");
+    allLints = new ArrayList<>(lints);
+    allLints.sort(Lint.COMPARATOR);
 
     lintsByObject = new Multimap<>();
     for (final Lint<?> lint : lints) {
@@ -108,15 +115,6 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
   }
 
   /**
-   * Whether there are any lints in the report.
-   *
-   * @return True if lint report is empty.
-   */
-  public boolean isEmpty() {
-    return allLints.isEmpty();
-  }
-
-  /**
    * Whether crawl information is available.
    *
    * @return True if crawl information is available.
@@ -125,9 +123,27 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
     return crawlInfo != null;
   }
 
+  /**
+   * Whether there are any lints in the report.
+   *
+   * @return True if lint report is empty.
+   */
+  public boolean isEmpty() {
+    return allLints.isEmpty();
+  }
+
   @Override
   public Iterator<Lint<? extends Serializable>> iterator() {
     return getLints().iterator();
+  }
+
+  /**
+   * Set the lint report title.
+   *
+   * @param title Lint report title.
+   */
+  public void setTitle(final String title) {
+    this.title = trimToEmpty(title);
   }
 
   /**
