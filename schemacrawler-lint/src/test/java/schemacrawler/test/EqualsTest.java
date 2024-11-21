@@ -38,7 +38,7 @@ public class EqualsTest {
   @Test
   public void lint() {
     EqualsVerifier.forClass(Lint.class)
-        .withIgnoredFields("lintId", "linterInstanceId", "objectKey")
+        .withIgnoredFields("lintId", "linterInstanceId", "objectName")
         .verify();
   }
 

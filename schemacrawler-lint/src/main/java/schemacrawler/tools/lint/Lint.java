@@ -173,7 +173,7 @@ public final class Lint<V extends Serializable> implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(linterId, message, objectName, objectType, severity, value);
+    return Objects.hash(linterId, objectType, objectKey, severity, message, value);
   }
 
   public boolean hasValue() {
