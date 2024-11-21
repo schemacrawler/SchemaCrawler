@@ -31,6 +31,7 @@ package schemacrawler.tools.lint;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObject;
 
@@ -39,7 +40,7 @@ public final class LintCollector {
   private final Collection<Lint<? extends Serializable>> allLints;
 
   LintCollector() {
-    allLints = new HashSet<>();
+    allLints = new CopyOnWriteArraySet<>();
   }
 
   <N extends NamedObject> void addLint(final N namedObject, final Lint<?> lint) {
