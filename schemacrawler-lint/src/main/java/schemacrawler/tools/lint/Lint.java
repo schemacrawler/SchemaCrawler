@@ -29,9 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import static java.util.Objects.requireNonNull;
@@ -143,32 +140,7 @@ public final class Lint<V extends Serializable> implements Serializable {
   }
 
   public String getValueAsString() {
-    if (value == null) {
-      return "";
-    }
-    final Class<? extends Object> valueClass = value.getClass();
-    Object valueObject = value;
-
-    if (valueClass.isArray() && NamedObject.class.isAssignableFrom(valueClass.getComponentType())) {
-      valueObject =
-          Arrays.asList(
-              Arrays.copyOf((Object[]) value, ((Object[]) value).length, NamedObject[].class));
-    }
-
-    if (NamedObject.class.isAssignableFrom(valueClass)) {
-      valueObject = ((NamedObject) valueObject).getFullName();
-    } else if (Iterable.class.isAssignableFrom(valueObject.getClass())) {
-      final List<String> list = new ArrayList<>();
-      for (final Object valuePart : (Iterable<?>) valueObject) {
-        if (valuePart instanceof NamedObject) {
-          list.add(((NamedObject) valuePart).getFullName());
-        } else {
-          list.add(valuePart.toString());
-        }
-      }
-      valueObject = list;
-    }
-    return ObjectToString.listOrObjectToString(valueObject);
+    return ObjectToString.listOrObjectToString(value);
   }
 
   @Override
