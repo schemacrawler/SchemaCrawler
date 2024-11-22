@@ -140,6 +140,9 @@ public final class Lint<V extends Serializable> implements Serializable {
   }
 
   public String getValueAsString() {
+    if (value == null) {
+      return "";
+    }
     return ObjectToString.listOrObjectToString(value);
   }
 
