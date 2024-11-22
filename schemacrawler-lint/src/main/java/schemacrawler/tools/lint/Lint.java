@@ -55,7 +55,7 @@ public final class Lint<V extends Serializable> implements Serializable {
   private final LintSeverity severity;
   private final V value;
 
-  public <N extends NamedObject> Lint(
+  <N extends NamedObject> Lint(
       final String linterId,
       final String linterInstanceId,
       final LintObjectType objectType,
@@ -177,7 +177,7 @@ public final class Lint<V extends Serializable> implements Serializable {
   }
 
   public boolean hasValue() {
-    return value == null;
+    return value != null;
   }
 
   @Override

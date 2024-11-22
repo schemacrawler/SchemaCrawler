@@ -112,6 +112,7 @@ public class LintTest {
       linters.lint(catalog, connection);
       final LintReport lintReport = linters.getLintReport();
       assertThat(lintReport.size(), is(51));
+      assertThat(lintReport.hasCrawlInfo(), is(true));
 
       final TestWriter testout1 = new TestWriter();
       try (final TestWriter out = testout1) {

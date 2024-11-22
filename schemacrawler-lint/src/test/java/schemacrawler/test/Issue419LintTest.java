@@ -81,7 +81,7 @@ public class Issue419LintTest {
       linters.lint(catalog, connection);
       final LintReport lintReport = linters.getLintReport();
 
-      assertThat(lintReport.getLints().size(), is(1));
+      assertThat(lintReport.size(), is(1));
       assertThat(
           lintReport.stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder("[PUBLIC.\"PUBLISHER SALES\".REGIONS] primary key not first" /*,

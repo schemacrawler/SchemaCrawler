@@ -119,7 +119,7 @@ public class Issue496LintTest {
 
       assertThat(lintReport.size(), is(1));
       assertThat(
-          lintReport.getLints().stream().map(Lint::toString).collect(toList()),
+          lintReport.stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder(
               "[catalog] cycles in table relationships: PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"));
     }
