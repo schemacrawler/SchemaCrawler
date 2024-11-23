@@ -168,16 +168,21 @@ public final class Linters implements Iterable<Linter> {
   }
 
   private void runLinters(final Catalog catalog, final Connection connection) {
-    for (final Linter linter : linters) {
-      LOGGER.log(Level.CONFIG, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
-      try {
-        linter.lint(catalog, connection);
-      } catch (final Exception e) {
-        LOGGER.log(
-            Level.WARNING,
-            e,
-            new StringFormat("Could not run linter <%s>", linter.getLinterInstanceId()));
-      }
-    }
+
+    linters.parallelStream()
+        .forEach(
+            linter -> {
+              LOGGER.log(
+                  Level.CONFIG,
+                  new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
+              try {
+                linter.lint(catalog, connection);
+              } catch (final Exception e) {
+                LOGGER.log(
+                    Level.WARNING,
+                    e,
+                    new StringFormat("Could not run linter <%s>", linter.getLinterInstanceId()));
+              }
+            });
   }
 }
