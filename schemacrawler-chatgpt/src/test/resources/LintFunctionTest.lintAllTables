@@ -7,10 +7,10 @@ Database                                                      [database]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	column with same name but different data types	STATE [CHARACTER, VARCHAR]
+	column with same name but different data types	DATA [CLOB, PUBLIC.BOOKS.VALID_STRING]
 	column with same name but different data types	FIRSTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
 	column with same name but different data types	LASTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
-	column with same name but different data types	DATA [CLOB, PUBLIC.BOOKS.VALID_STRING]
+	column with same name but different data types	STATE [CHARACTER, VARCHAR]
 
 
 
@@ -75,8 +75,8 @@ PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS."Celebrity Updates".SYS_FK_10128
 	redundant index	PUBLIC.BOOKS."Celebrity Updates"."PK Celebrity Updates"
+	redundant index	PUBLIC.BOOKS."Celebrity Updates".SYS_FK_10128
                                                           [lint, medium]
 	no non-nullable data columns	
 	spaces in name, or reserved word	
