@@ -84,13 +84,13 @@ public class ObjectToString {
 
     if (object instanceof List) {
       return (List<?>) object;
-    } else if (object instanceof Collection) {
-      return new ArrayList<>((Collection<?>) object);
-    } else {
-      // We have checked earlier if this was an array, so at this point we are pretty sure it is an
-      // array
-      return arrayToList(object);
     }
+    if (object instanceof Collection) {
+      return new ArrayList<>((Collection<?>) object);
+    }
+    // We have checked earlier if this was an array, so at this point we are pretty sure it is an
+    // array
+    return arrayToList(object);
   }
 
   public static List<Field> fields(final Object object) {
@@ -136,9 +136,8 @@ public class ObjectToString {
     final Class<?> objectClass = object.getClass();
     if (Collection.class.isAssignableFrom(objectClass) || objectClass.isArray()) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   public static boolean isPrimitive(final Object object) {
@@ -221,7 +220,8 @@ public class ObjectToString {
   public static String toString(final Object object) {
     if (object == null || isSimpleObject(object)) {
       return String.valueOf(object);
-    } else if (isCollectionOrArray(object)) {
+    }
+    if (isCollectionOrArray(object)) {
       return printList(collectionOrArrayToList(object));
     }
 
@@ -260,10 +260,12 @@ public class ObjectToString {
   private static String printMap(final int indent, final Map<String, Object> objectMap) {
     // assert objectMap != null;
 
+    TreeMap<String, Object> map = new TreeMap<>(objectMap);
+
     final StringBuilder buffer = new StringBuilder();
 
     buffer.append(indent(indent)).append('{').append(lineSeparator());
-    final Set<Entry<String, Object>> entrySet = objectMap.entrySet();
+    final Set<Entry<String, Object>> entrySet = map.entrySet();
     for (final Iterator<Entry<String, Object>> iterator = entrySet.iterator();
         iterator.hasNext(); ) {
       final Entry<String, Object> entry = iterator.next();
