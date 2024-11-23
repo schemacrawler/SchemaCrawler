@@ -2,11 +2,14 @@
 
 SchemaCrawler release notes.
 
-<a name="v16.23.3"></a>
-## Release 16.23.3 - 2024-11-06
+<a name="v16.23.1"></a>
+## Release 16.23.1 - 2024-11-06
 
 - Remove deprecated `--portable-names` option 
 - Add constraint column usage for MySQL and PostgreSQL
+- Fix #1750 - avoid storing lints in catalog 
+- Run linters run in parallel
+- Enhance lint report to allow streaming lints
 
 
 <a name="v16.22.3"></a>
