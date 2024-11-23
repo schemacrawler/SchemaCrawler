@@ -31,18 +31,18 @@ package schemacrawler.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -55,7 +55,6 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -72,34 +71,25 @@ public class LintOutputTest {
     TestUtility.clean(TEXT_OUTPUT);
   }
 
-  @Test
-  public void commandlineLintReportOutput(final DatabaseConnectionInfo connectionInfo)
+  @ParameterizedTest
+  @EnumSource(LintReportOutputFormat.class)
+  public void commandlineLintReportOutput(
+      final OutputFormat outputFormat, final DatabaseConnectionInfo connectionInfo)
       throws Exception {
 
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("--schemas", ".*FOR_LINT");
 
-    assertAll(
-        Arrays.stream(
-                new OutputFormat[] {
-                  TextOutputFormat.text,
-                  TextOutputFormat.html,
-                  LintReportOutputFormat.json,
-                  LintReportOutputFormat.yaml
-                })
-            .map(
-                outputFormat ->
-                    () -> {
-                      final String referenceFile = "lint." + outputFormat.getFormat();
+    final String referenceFile = "lint." + outputFormat.getFormat();
 
-                      executeLintCommandLine(
-                          connectionInfo, outputFormat, null, argsMap, TEXT_OUTPUT + referenceFile);
-                    }));
+    executeLintCommandLine(
+        connectionInfo, outputFormat, null, argsMap, TEXT_OUTPUT + referenceFile);
   }
 
-  @Test
-  public void executableLintReportOutput(final DatabaseConnectionSource dataSource)
-      throws Exception {
+  @ParameterizedTest
+  @EnumSource(LintReportOutputFormat.class)
+  public void executableLintReportOutput(
+      final OutputFormat outputFormat, final DatabaseConnectionSource dataSource) throws Exception {
 
     final InfoLevel infoLevel = InfoLevel.standard;
 
@@ -113,29 +103,15 @@ public class LintOutputTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    assertAll(
-        Arrays.stream(
-                new OutputFormat[] {
-                  TextOutputFormat.text,
-                  TextOutputFormat.html,
-                  LintReportOutputFormat.json,
-                  LintReportOutputFormat.yaml
-                })
-            .map(
-                outputFormat ->
-                    () -> {
-                      final String referenceFile = "lint." + outputFormat.getFormat();
+    final String referenceFile = "lint." + outputFormat.getFormat();
 
-                      final SchemaCrawlerExecutable executable =
-                          new SchemaCrawlerExecutable("lint");
-                      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-                      assertThat(
-                          outputOf(executableExecution(dataSource, executable, outputFormat)),
-                          hasSameContentAndTypeAs(
-                              classpathResource(TEXT_OUTPUT + referenceFile), outputFormat));
-                    }));
+    assertThat(
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        hasSameContentAndTypeAs(classpathResource(TEXT_OUTPUT + referenceFile), outputFormat));
   }
 
   @Test
