@@ -44,59 +44,58 @@ public final class LintUtility {
   // Comparison may be expensive, since it converts values to strings
   public static final Comparator<Lint<? extends Serializable>> LINT_COMPARATOR =
       (lint1, lint2) -> {
-        if (lint1 == null) {
-          return 1;
+        if (lint1 == lint2) {
+          return 0;
         }
-        if (lint2 == null) {
+        if (lint1 == null) {
           return -1;
         }
+        if (lint2 == null) {
+          return 1;
+        }
 
-        int compareTo;
-        compareTo = lint1.getObjectType().compareTo(lint2.getObjectType());
-        if (compareTo != 0) {
-          return compareTo;
+        int comparison = 0;
+        if (comparison == 0) {
+          comparison = lint1.getObjectType().compareTo(lint2.getObjectType());
         }
-        compareTo = lint1.getObjectName().compareTo(lint2.getObjectName());
-        if (compareTo != 0) {
-          return compareTo;
+        if (comparison == 0) {
+          comparison = lint1.getObjectName().compareTo(lint2.getObjectName());
         }
-        compareTo = lint1.getSeverity().compareTo(lint2.getSeverity());
-        compareTo *= -1; // Reverse
-        if (compareTo != 0) {
-          return compareTo;
+        if (comparison == 0) {
+          comparison = lint1.getSeverity().compareTo(lint2.getSeverity());
+          comparison *= -1; // Reverse
         }
-        compareTo = lint1.getLinterId().compareTo(lint2.getLinterId());
-        if (compareTo != 0) {
-          return compareTo;
+        if (comparison == 0) {
+          comparison = lint1.getLinterId().compareTo(lint2.getLinterId());
         }
-        compareTo = lint1.getMessage().compareTo(lint2.getMessage());
-        if (compareTo != 0) {
-          return compareTo;
+        if (comparison == 0) {
+          comparison = lint1.getMessage().compareTo(lint2.getMessage());
         }
-        compareTo = lint1.getValueAsString().compareTo(lint2.getValueAsString());
-        return compareTo;
+        if (comparison == 0) {
+          comparison = lint1.getValueAsString().compareTo(lint2.getValueAsString());
+        }
+        return comparison;
       };
 
   public static final Comparator<Linter> LINTER_COMPARATOR =
       (linter1, linter2) -> {
+        if (linter1 == linter2) {
+          return 0;
+        }
         if (linter1 == null) {
           return -1;
         }
-
         if (linter2 == null) {
           return 1;
         }
 
         int comparison = 0;
-
         if (comparison == 0) {
           comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
         }
-
         if (comparison == 0) {
           comparison = linter1.getLintCount() - linter2.getLintCount();
         }
-
         if (comparison == 0) {
           comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
         }
