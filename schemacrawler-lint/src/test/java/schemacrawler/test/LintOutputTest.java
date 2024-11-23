@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -36,14 +38,11 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -137,5 +136,16 @@ public class LintOutputTest {
                           hasSameContentAndTypeAs(
                               classpathResource(TEXT_OUTPUT + referenceFile), outputFormat));
                     }));
+  }
+
+  @Test
+  public void lintReportOutputFormat() {
+    assertThat(LintReportOutputFormat.isSupportedFormat(null), is(false));
+    assertThat(LintReportOutputFormat.fromFormat(null), is(LintReportOutputFormat.text));
+    assertThat(LintReportOutputFormat.fromFormat("badformat"), is(LintReportOutputFormat.text));
+
+    assertThat(LintReportOutputFormat.text.getDescription(), is("Plain text format"));
+    assertThat(LintReportOutputFormat.text.toString(), is("[txt, text] Plain text format"));
+    assertThat(LintReportOutputFormat.text.getFormats(), contains("txt", "text"));
   }
 }

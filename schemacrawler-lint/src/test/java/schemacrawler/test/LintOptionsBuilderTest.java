@@ -56,4 +56,15 @@ public class LintOptionsBuilderTest {
     assertThat(lintOptions2.isRunAllLinters(), is(false));
     assertThat(lintOptions2.getConfig().size(), is(13));
   }
+
+  @Test
+  public void withNullDispatch() {
+
+    final LintOptions lintOptions = LintOptionsBuilder.builder().withLintDispatch(null).build();
+
+    assertThat(lintOptions.getLintDispatch(), is(LintDispatch.none));
+    assertThat(lintOptions.getLinterConfigs(), is(""));
+    assertThat(lintOptions.isRunAllLinters(), is(true));
+    assertThat(lintOptions.getConfig().size(), is(13));
+  }
 }
