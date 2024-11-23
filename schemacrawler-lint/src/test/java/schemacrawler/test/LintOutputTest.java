@@ -80,10 +80,9 @@ public class LintOutputTest {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("--schemas", ".*FOR_LINT");
 
-    final String referenceFile = "lint." + outputFormat.getFormat();
-
+    final String referenceFile = TEXT_OUTPUT + "lint." + outputFormat.getFormat();
     executeLintCommandLine(
-        connectionInfo, outputFormat, null, argsMap, TEXT_OUTPUT + referenceFile);
+        connectionInfo, outputFormat, null, argsMap, referenceFile);
   }
 
   @ParameterizedTest
@@ -103,15 +102,15 @@ public class LintOutputTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final String referenceFile = "lint." + outputFormat.getFormat();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
+    final String referenceFile = TEXT_OUTPUT + "lint." + outputFormat.getFormat();
     assertThat(
         outputOf(executableExecution(dataSource, executable, outputFormat)),
-        hasSameContentAndTypeAs(classpathResource(TEXT_OUTPUT + referenceFile), outputFormat));
+        hasSameContentAndTypeAs(classpathResource(referenceFile), outputFormat));
   }
 
   @Test
