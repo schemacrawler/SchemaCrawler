@@ -121,7 +121,7 @@ public class Issue496LintTest {
       assertThat(
           lintReport.stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder(
-              "[catalog] cycles in table relationships: PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"));
+              "[catalog] cycles in table relationships: [PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS]"));
     }
   }
 }

@@ -140,10 +140,10 @@ public final class Lint<V extends Serializable> implements Serializable {
   }
 
   public String getValueAsString() {
-    if (value == null) {
-      return "";
+    if (hasValue()) {
+      return ObjectToString.listOrObjectToString(value);
     }
-    return ObjectToString.listOrObjectToString(value);
+    return "";
   }
 
   @Override
@@ -158,8 +158,8 @@ public final class Lint<V extends Serializable> implements Serializable {
   @Override
   public String toString() {
     final String valueString;
-    if (value != null && !(value instanceof Boolean)) {
-      valueString = ": " + getValueAsString();
+    if (hasValue()) {
+      valueString = ": " + value;
     } else {
       valueString = "";
     }

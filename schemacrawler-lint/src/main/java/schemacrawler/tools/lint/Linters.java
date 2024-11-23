@@ -125,11 +125,6 @@ public final class Linters implements Iterable<Linter> {
     return linters.size();
   }
 
-  @Override
-  public String toString() {
-    return linters.toString();
-  }
-
   private void initialize() {
 
     linters = new ArrayList<>();
