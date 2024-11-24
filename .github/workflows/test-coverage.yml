@@ -45,7 +45,7 @@ jobs:
     - id: publish-coverage-codecov
       name: Upload coverage report to Codecov
       if: contains(github.ref, 'main')
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         verbose: true
