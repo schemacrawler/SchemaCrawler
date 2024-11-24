@@ -35,15 +35,12 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
@@ -66,7 +63,7 @@ public abstract class AbstractSpinThroughCommandLineTest {
   }
 
   private static Stream<InfoLevel> infoLevels() {
-    return Arrays.stream(InfoLevel.values()).filter(infoLevel -> infoLevel != InfoLevel.unknown);
+    return EnumSet.complementOf(EnumSet.of(InfoLevel.unknown)).stream();
   }
 
   private static String referenceFile(
@@ -87,7 +84,7 @@ public abstract class AbstractSpinThroughCommandLineTest {
   }
 
   private static Stream<SchemaTextDetailType> schemaTextDetailTypes() {
-    return Arrays.stream(SchemaTextDetailType.values());
+    return EnumSet.allOf(SchemaTextDetailType.class).stream();
   }
 
   @Test
@@ -142,5 +139,5 @@ public abstract class AbstractSpinThroughCommandLineTest {
                                             }))));
   }
 
-  protected abstract Stream<OutputFormat> outputFormats();
+  protected abstract Stream<? extends OutputFormat> outputFormats();
 }

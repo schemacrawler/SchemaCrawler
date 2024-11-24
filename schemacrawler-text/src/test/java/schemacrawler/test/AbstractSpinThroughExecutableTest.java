@@ -35,7 +35,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -69,7 +69,7 @@ public abstract class AbstractSpinThroughExecutableTest {
   }
 
   private static Stream<InfoLevel> infoLevels() {
-    return Arrays.stream(InfoLevel.values()).filter(infoLevel -> infoLevel != InfoLevel.unknown);
+    return EnumSet.complementOf(EnumSet.of(InfoLevel.unknown)).stream();
   }
 
   private static String referenceFile(
@@ -114,7 +114,7 @@ public abstract class AbstractSpinThroughExecutableTest {
                                 })));
   }
 
-  protected abstract Stream<OutputFormat> outputFormats();
+  protected abstract Stream<? extends OutputFormat> outputFormats();
 
   private void spinThroughExecutable(
       final DatabaseConnectionSource dataSource,

@@ -28,17 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.stream.Stream;
-
 import schemacrawler.test.AbstractSchemaCrawlerOutputTest;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
-import schemacrawler.tools.options.OutputFormat;
 
 public class SchemaCrawlerDiagramOutputTest extends AbstractSchemaCrawlerOutputTest {
 
   @Override
-  public Stream<OutputFormat> outputFormats() {
-    return Arrays.stream(new OutputFormat[] {DiagramOutputFormat.scdot});
+  public Stream<DiagramOutputFormat> outputFormats() {
+    return EnumSet.of(DiagramOutputFormat.scdot).stream();
   }
 }

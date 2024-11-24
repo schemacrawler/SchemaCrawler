@@ -28,16 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.stream.Stream;
-
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
-import schemacrawler.tools.options.OutputFormat;
 
 public class SpinThroughExecutableTest extends AbstractSpinThroughExecutableTest {
 
   @Override
-  public Stream<OutputFormat> outputFormats() {
-    return Arrays.stream(new OutputFormat[] {TextOutputFormat.text, TextOutputFormat.html});
+  public Stream<TextOutputFormat> outputFormats() {
+    return EnumSet.of(TextOutputFormat.text, TextOutputFormat.html).stream();
   }
 }
