@@ -81,8 +81,7 @@ public class LintOutputTest {
     argsMap.put("--schemas", ".*FOR_LINT");
 
     final String referenceFile = TEXT_OUTPUT + "lint." + outputFormat.getFormat();
-    executeLintCommandLine(
-        connectionInfo, outputFormat, null, argsMap, referenceFile);
+    executeLintCommandLine(connectionInfo, outputFormat, null, argsMap, referenceFile);
   }
 
   @ParameterizedTest
@@ -101,7 +100,6 @@ public class LintOutputTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
-
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
