@@ -34,7 +34,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -70,17 +70,13 @@ public class SpinThroughOperationsExecutableTest {
   }
 
   protected static Stream<Arguments> spinThroughArguments() {
-    return Arrays.stream(OperationType.values())
+    return EnumSet.allOf(OperationType.class).stream()
         .flatMap(
             operation ->
-                Arrays.stream(InfoLevel.values())
-                    .filter(infoLevel -> infoLevel != InfoLevel.unknown)
+                EnumSet.complementOf(EnumSet.of(InfoLevel.unknown)).stream()
                     .flatMap(
                         infoLevel ->
-                            Arrays.stream(
-                                    new TextOutputFormat[] {
-                                      TextOutputFormat.text, TextOutputFormat.html
-                                    })
+                            EnumSet.of(TextOutputFormat.text, TextOutputFormat.html).stream()
                                 .map(
                                     outputFormat ->
                                         Arguments.of(operation, infoLevel, outputFormat))));

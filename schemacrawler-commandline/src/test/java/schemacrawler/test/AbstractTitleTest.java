@@ -34,15 +34,12 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -94,7 +91,7 @@ public abstract class AbstractTitleTest {
     return Arrays.asList("schema", "list").stream();
   }
 
-  protected abstract Stream<OutputFormat> outputFormats();
+  protected abstract Stream<? extends OutputFormat> outputFormats();
 
   private String referenceFile(final String command, final OutputFormat outputFormat) {
     final String referenceFile =

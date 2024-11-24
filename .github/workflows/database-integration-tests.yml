@@ -108,7 +108,7 @@ jobs:
             docker pull cassandra:4.1.0
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cockroachdb" ]; then
-            docker pull cockroachdb/cockroach:v19.2.12
+            docker pull cockroachdb/cockroach:v20.2.9
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "firebird" ]; then
             docker pull jacobalberty/firebird:v4.0.2

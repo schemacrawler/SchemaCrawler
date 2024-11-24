@@ -382,7 +382,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
   }
 
-  protected abstract Stream<OutputFormat> outputFormats();
+  protected abstract Stream<? extends OutputFormat> outputFormats();
 
   private void compareHideConstraintNamesOutput(
       final DatabaseConnectionSource dataSource,
