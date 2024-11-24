@@ -249,7 +249,10 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     // No output required
   }
 
-  private String arrowhead(final ForeignKeyCardinality connectivity) {
+  private String arrowheadFk(final ForeignKeyCardinality connectivity) {
+    if (!options.isShowForeignKeyCardinality()) {
+      return "none";
+    }
     switch (connectivity) {
       case zero_one:
         return "teeodot";
@@ -260,6 +263,26 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       default: // Including "unknown"
         return "box";
     }
+  }
+
+  private String arrowheadPk() {
+    final String pkSymbol;
+    if (options.isShowPrimaryKeyCardinality()) {
+      pkSymbol = "teetee";
+    } else {
+      pkSymbol = "none";
+    }
+    return pkSymbol;
+  }
+
+  private String columnReferenceLineStyle(final boolean isForeignKey) {
+    final String style;
+    if (isForeignKey) {
+      style = "solid";
+    } else {
+      style = "dashed";
+    }
+    return style;
   }
 
   private String[] getPortIds(final Column column, final boolean isNewNode) {
@@ -363,27 +386,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     final String[] fkPortIds =
         getPortIds(foreignKeyColumn, isFkColumnFiltered || !isFkColumnSignificant);
 
-    final DiagramOptions diagramOptions = options;
-    final String pkSymbol;
-    if (diagramOptions.isShowPrimaryKeyCardinality()) {
-      pkSymbol = "teetee";
-    } else {
-      pkSymbol = "none";
-    }
-
-    final String fkSymbol;
-    if (diagramOptions.isShowForeignKeyCardinality()) {
-      fkSymbol = arrowhead(fkCardinality);
-    } else {
-      fkSymbol = "none";
-    }
-
-    final String style;
-    if (isForeignKey) {
-      style = "solid";
-    } else {
-      style = "dashed";
-    }
+    final String pkSymbol = arrowheadPk();
+    final String fkSymbol = arrowheadFk(fkCardinality);
+    final String lineStyle = columnReferenceLineStyle(isForeignKey);
 
     final String associationName;
     if (isForeignKey && options.is(hideForeignKeyNames)
@@ -403,7 +408,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
     return String.format(
         "  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-        fkPortIds[0], pkPortIds[1], label, style, pkSymbol, fkSymbol);
+        fkPortIds[0], pkPortIds[1], label, lineStyle, pkSymbol, fkSymbol);
   }
 
   private void printForeignKeys(final Table table) {
