@@ -33,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -102,7 +103,6 @@ public class SqlScript implements Runnable {
       final List<String> sqlList = readSql(new BufferedReader(scriptReader));
       for (final Iterator<String> iterator = sqlList.iterator(); iterator.hasNext(); ) {
         sql = iterator.next();
-        statement.clearWarnings();
         try {
           if (Pattern.matches("\\s+", sql)) {
             continue;
@@ -111,15 +111,7 @@ public class SqlScript implements Runnable {
             LOGGER.log(Level.INFO, "\n" + sql);
           }
 
-          final boolean hasResults = statement.execute(sql);
-          if (hasResults) {
-            throw new SQLWarning(String.format("Results not expected from SQL%n%s%n", sql));
-          }
-
-          final SQLWarning warnings = statement.getWarnings();
-          if (warnings != null && !warnings.getMessage().startsWith("Can't drop database")) {
-            throw warnings;
-          }
+          executeSql(sql, statement);
 
           if (!connection.getAutoCommit()) {
             connection.commit();
@@ -141,6 +133,19 @@ public class SqlScript implements Runnable {
       System.err.println(sql);
       LOGGER.log(Level.WARNING, throwable.getMessage(), throwable);
       throw new SQLRuntimeException(e);
+    }
+  }
+
+  private void executeSql(final String sql, final Statement statement) throws SQLException {
+    final boolean hasResults = statement.execute(sql);
+    if (hasResults) {
+      throw new SQLWarning(String.format("Results not expected from SQL%n%s%n", sql));
+    }
+
+    final SQLWarning warnings = statement.getWarnings();
+    statement.clearWarnings();
+    if (warnings != null && !warnings.getMessage().startsWith("Can't drop database")) {
+      throw warnings;
     }
   }
 

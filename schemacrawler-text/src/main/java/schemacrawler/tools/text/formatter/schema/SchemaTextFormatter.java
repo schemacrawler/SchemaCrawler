@@ -376,6 +376,54 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Tables");
   }
 
+  private List<TableConstraint> filterPrintableConstraints(
+      final Collection<TableConstraint> constraintsCollection) {
+    final EnumSet<TableConstraintType> printableConstraints =
+        EnumSet.of(TableConstraintType.check, TableConstraintType.unique);
+
+    final List<TableConstraint> constraints = new ArrayList<>();
+    for (final TableConstraint constraint : constraintsCollection) {
+      // 1. There is no point in showing a constraint if there is no information
+      // about the constrained columns, and the name is hidden
+      final List<TableConstraintColumn> constrainedColumns = constraint.getConstrainedColumns();
+      final boolean hasNoNameOrColumns =
+          options.is(hideTableConstraintNames)
+              && constrainedColumns.isEmpty()
+              && !constraint.hasRemarks();
+      // 2. Print only check constraints and unique constraints
+      final boolean isNotPkOrFk = printableConstraints.contains(constraint.getType());
+      // Keep only constraints that should be printed
+      if (!hasNoNameOrColumns && isNotPkOrFk) {
+        constraints.add(constraint);
+      }
+    }
+    return constraints;
+  }
+
+  private String makeFkRuleString(final ForeignKey foreignKey) {
+    String updateRuleString = "";
+    final ForeignKeyUpdateRule updateRule = foreignKey.getUpdateRule();
+    if (updateRule != null && updateRule != ForeignKeyUpdateRule.unknown) {
+      updateRuleString = ", on update " + updateRule.toString();
+    }
+
+    String deleteRuleString = "";
+    final ForeignKeyUpdateRule deleteRule = foreignKey.getDeleteRule();
+    if (deleteRule != null && deleteRule != ForeignKeyUpdateRule.unknown) {
+      deleteRuleString = ", on delete " + deleteRule.toString();
+    }
+
+    final String ruleString;
+    if (deleteRule != null
+        && updateRule == deleteRule
+        && updateRule != ForeignKeyUpdateRule.unknown) {
+      ruleString = ", with " + deleteRule.toString();
+    } else {
+      ruleString = updateRuleString + deleteRuleString;
+    }
+    return ruleString;
+  }
+
   private void printAlternateKeys(final Table table) {
     if (table == null || options.is(hideAlternateKeys)) {
       LOGGER.log(Level.FINER, "Not showing alternate keys");
@@ -571,27 +619,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     for (final ForeignKey foreignKey : foreignKeys) {
       if (foreignKey != null) {
         final String name = identifiers.quoteName(foreignKey);
-
-        String updateRuleString = "";
-        final ForeignKeyUpdateRule updateRule = foreignKey.getUpdateRule();
-        if (updateRule != null && updateRule != ForeignKeyUpdateRule.unknown) {
-          updateRuleString = ", on update " + updateRule.toString();
-        }
-
-        String deleteRuleString = "";
-        final ForeignKeyUpdateRule deleteRule = foreignKey.getDeleteRule();
-        if (deleteRule != null && deleteRule != ForeignKeyUpdateRule.unknown) {
-          deleteRuleString = ", on delete " + deleteRule.toString();
-        }
-
-        final String ruleString;
-        if (deleteRule != null
-            && updateRule == deleteRule
-            && updateRule != ForeignKeyUpdateRule.unknown) {
-          ruleString = ", with " + deleteRule.toString();
-        } else {
-          ruleString = updateRuleString + deleteRuleString;
-        }
+        final String ruleString = makeFkRuleString(foreignKey);
 
         formattingHelper.writeEmptyRow();
 
@@ -872,42 +900,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       return;
     }
 
-    final EnumSet<TableConstraintType> printableConstraints =
-        EnumSet.of(TableConstraintType.check, TableConstraintType.unique);
-
-    final List<TableConstraint> constraints = new ArrayList<>();
-    for (final TableConstraint constraint : constraintsCollection) {
-      if (printableConstraints.contains(constraint.getType())) {
-        constraints.add(constraint);
-      }
-    }
+    final List<TableConstraint> constraints = filterPrintableConstraints(constraintsCollection);
     if (constraints.isEmpty()) {
       return;
     }
 
     Collections.sort(
         constraints, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
-
-    // There is no point in showing a constraint if there is no information
-    // about the constrained columns, and the name is hidden
-    boolean canDisplayTableConstraints = false;
-    for (final TableConstraint constraint : constraints) {
-      if (constraint == null) {
-        continue;
-      }
-      final List<TableConstraintColumn> constrainedColumns = constraint.getConstrainedColumns();
-      final boolean cannotDisplayTableConstraints =
-          (options.is(hideTableConstraintNames)
-              && constrainedColumns.isEmpty()
-              && !constraint.hasRemarks());
-      if (!cannotDisplayTableConstraints) {
-        canDisplayTableConstraints = true;
-        break;
-      }
-    }
-    if (!canDisplayTableConstraints) {
-      return;
-    }
 
     formattingHelper.writeEmptyRow();
     formattingHelper.writeWideRow("Table Constraints", "section");
@@ -916,6 +915,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       if (constraint == null) {
         continue;
       }
+
       final String constraintName;
       if (!options.is(hideTableConstraintNames)) {
         LOGGER.log(
@@ -925,16 +925,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       } else {
         constraintName = "";
       }
-
-      final List<TableConstraintColumn> constrainedColumns = constraint.getConstrainedColumns();
-      if (options.is(hideTableConstraintNames)
-          && constrainedColumns.isEmpty()
-          && !constraint.hasRemarks()) {
-        // There is no point in showing a constraint if there is no information
-        // about the constrained columns, and the name is hidden
-        continue;
-      }
-
       final String constraintType = constraint.getType().getValue().toLowerCase();
       final String constraintDetails = "[" + constraintType + " constraint]";
       formattingHelper.writeEmptyRow();
@@ -942,6 +932,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
       printRemarks(constraint);
       if (!isBrief()) {
+        final List<TableConstraintColumn> constrainedColumns = constraint.getConstrainedColumns();
         printTableColumns(constrainedColumns, false);
       }
       printDependantObjectDefinition(constraint);
@@ -985,7 +976,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           if (timingBuffer.length() > 0) {
             timingBuffer.append(SPACE);
           }
-          for (EventManipulationType eventManipulationType : eventManipulationTypes) {
+          for (final EventManipulationType eventManipulationType : eventManipulationTypes) {
             timingBuffer.append(eventManipulationType);
             if (eventManipulationTypes.indexOf(eventManipulationType)
                 < eventManipulationTypes.size() - 1) {

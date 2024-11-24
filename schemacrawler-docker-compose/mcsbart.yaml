@@ -1,0 +1,13 @@
+services:
+
+  sqlserver:
+    image: mcsbart_1
+    container_name: sqlserver
+    ports:
+      - target: 1433
+        published: 1433
+        protocol: tcp
+        mode: host
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Schem#Crawl3r
