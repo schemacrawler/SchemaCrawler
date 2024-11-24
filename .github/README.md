@@ -4,12 +4,12 @@
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
-[![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
-[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
-[![Scoop](https://img.shields.io/scoop/v/schemacrawler.svg)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
-[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler)]( https://community.chocolatey.org/packages/schemacrawler)
+[![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total?color=FFDAB9)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
+[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler?color=FFDAB9)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 
+[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler?color=FFDAB9)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
+[![Scoop](https://img.shields.io/scoop/v/schemacrawler?color=FFDAB9)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
+[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler?color=FFDAB9)]( https://community.chocolatey.org/packages/schemacrawler)
 
 
 # <img src="https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/main/schemacrawler-website/src/site/resources/images/schemacrawler_logo.png" height="100px" width="100px" valign="middle"/> SchemaCrawler
