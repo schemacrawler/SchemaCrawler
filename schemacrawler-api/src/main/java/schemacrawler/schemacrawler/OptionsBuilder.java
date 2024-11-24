@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
+import us.fatehi.utility.Builder;
+
 /**
  * Convoluted interface to allow for subclasses builders, while maintaining a fluent interface.
  *
@@ -37,9 +39,15 @@ package schemacrawler.schemacrawler;
  *     "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing a
  *     Java Builder class</a>
  */
-public interface OptionsBuilder<B extends OptionsBuilder<B, O>, O extends Options> {
+public interface OptionsBuilder<B extends OptionsBuilder<B, O>, O extends Options>
+    extends Builder<O> {
 
   OptionsBuilder<B, O> fromOptions(O options);
 
   O toOptions();
+
+  @Override
+  default O build() {
+    return toOptions();
+  }
 }

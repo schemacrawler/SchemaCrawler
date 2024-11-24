@@ -38,10 +38,10 @@ import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import schemacrawler.tools.lint.formatter.LintReportBuilder;
-import schemacrawler.tools.lint.formatter.LintReportJsonBuilder;
+import schemacrawler.tools.lint.formatter.LintReportGenerator;
+import schemacrawler.tools.lint.formatter.LintReportJsonGenerator;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
-import schemacrawler.tools.lint.formatter.LintReportYamlBuilder;
+import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -72,9 +72,8 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       linters.lint(catalog, connection);
 
       // Produce the lint report
-      final LintReport lintReport =
-          new LintReport(
-              outputOptions.getTitle(), catalog.getCrawlInfo(), linters.getCollector().getLints());
+      final LintReport lintReport = linters.getLintReport();
+      lintReport.setTitle(outputOptions.getTitle());
 
       // Write out the lint report
       LOGGER.log(Level.INFO, "Generating lint report");
@@ -111,17 +110,17 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
     lintDispatch.dispatch();
   }
 
-  private LintReportBuilder getLintReportBuilder() {
+  private LintReportGenerator getLintReportBuilder() {
     final LintReportOutputFormat outputFormat =
         LintReportOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final LintReportBuilder lintReportBuilder;
+    final LintReportGenerator lintReportBuilder;
     switch (outputFormat) {
       case json:
-        lintReportBuilder = new LintReportJsonBuilder(outputOptions);
+        lintReportBuilder = new LintReportJsonGenerator(outputOptions);
         break;
       case yaml:
-        lintReportBuilder = new LintReportYamlBuilder(outputOptions);
+        lintReportBuilder = new LintReportYamlGenerator(outputOptions);
         break;
       default:
         lintReportBuilder =

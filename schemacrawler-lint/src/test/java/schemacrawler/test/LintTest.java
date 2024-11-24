@@ -39,14 +39,11 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -59,7 +56,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfig;
@@ -113,12 +110,13 @@ public class LintTest {
     try (final Connection connection = dataSource.get(); ) {
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
-      final LintCollector lintCollector = linters.getCollector();
-      assertThat(lintCollector.size(), is(51));
+      final LintReport lintReport = linters.getLintReport();
+      assertThat(lintReport.size(), is(51));
+      assertThat(lintReport.hasCrawlInfo(), is(true));
 
       final TestWriter testout1 = new TestWriter();
       try (final TestWriter out = testout1) {
-        for (final Lint<?> lint : lintCollector.getLints()) {
+        for (final Lint<?> lint : lintReport) {
           out.println(lint);
         }
       }
@@ -159,12 +157,12 @@ public class LintTest {
       final LinterConfigs linterConfigs = new LinterConfigs(new Config());
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
-      final LintCollector lintCollector = linters.getCollector();
-      assertThat(lintCollector.size(), is(40));
+      final LintReport lintReport = linters.getLintReport();
+      assertThat(lintReport.size(), is(40));
 
       final TestWriter testout = new TestWriter();
       try (final TestWriter out = testout) {
-        for (final Lint<?> lint : lintCollector.getLints()) {
+        for (final Lint<?> lint : lintReport) {
           out.println(lint);
         }
       }
@@ -209,13 +207,10 @@ public class LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintCollector lintCollector = linters.getCollector();
+      final LintReport lintReport = linters.getLintReport();
 
       assertThat(
-          lintCollector.getLints().stream()
-              .findFirst()
-              .map(Lint::getMessage)
-              .orElse("No value found"),
+          lintReport.stream().findFirst().map(Lint::getMessage).orElse("No value found"),
           startsWith(message));
     }
   }
@@ -243,10 +238,10 @@ public class LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintCollector lintCollector = linters.getCollector();
+      final LintReport lintReport = linters.getLintReport();
       assertThat(
           "All linters should be turned off, so there should be no lints",
-          lintCollector.size(),
+          lintReport.size(),
           is(0));
     }
   }

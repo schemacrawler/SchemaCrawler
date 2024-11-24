@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import schemacrawler.tools.options.OutputOptions;
 
-public class LintReportJsonBuilder extends BaseLintReportJacksonBuilder {
+public class LintReportJsonGenerator extends BaseLintReportJacksonGenerator {
 
-  public LintReportJsonBuilder(final OutputOptions outputOptions) {
+  public LintReportJsonGenerator(final OutputOptions outputOptions) {
     super(outputOptions);
   }
 

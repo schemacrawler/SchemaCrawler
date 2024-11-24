@@ -37,11 +37,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
-
 import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -50,7 +47,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
@@ -82,11 +79,11 @@ public class Issue419LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintCollector lintCollector = linters.getCollector();
+      final LintReport lintReport = linters.getLintReport();
 
-      assertThat(lintCollector.size(), is(1));
+      assertThat(lintReport.size(), is(1));
       assertThat(
-          lintCollector.getLints().stream().map(Lint::toString).collect(toList()),
+          lintReport.stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder("[PUBLIC.\"PUBLISHER SALES\".REGIONS] primary key not first" /*,
             "[PUBLIC.FOR_LINT.EXTRA_PK] primary key not first" */));
     }

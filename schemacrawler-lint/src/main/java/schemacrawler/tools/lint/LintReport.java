@@ -28,41 +28,114 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.trimToEmpty;
-
+import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
-
+import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
+import us.fatehi.utility.Multimap;
 
 public final class LintReport implements Iterable<Lint<? extends Serializable>> {
 
+  private String title;
   private final CrawlInfo crawlInfo;
-  private final Collection<Lint<? extends Serializable>> lints;
-  private final String title;
+  private final List<Lint<? extends Serializable>> allLints;
+  private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
-  public LintReport(
+  /** Empty lint report. */
+  LintReport() {
+    this("", null, new ArrayList<>());
+  }
+
+  LintReport(
       final String title,
       final CrawlInfo crawlInfo,
       final Collection<Lint<? extends Serializable>> lints) {
+
     this.title = trimToEmpty(title);
-    this.crawlInfo = requireNonNull(crawlInfo, "No crawl information provided");
-    this.lints = requireNonNull(lints, "No lints provided");
+    this.crawlInfo = crawlInfo; // Can be null
+
+    requireNonNull(lints, "No lints provided");
+    allLints = new ArrayList<>(lints);
+    allLints.sort(LINT_COMPARATOR);
+
+    lintsByObject = new Multimap<>();
+    for (final Lint<?> lint : lints) {
+      lintsByObject.add(lint.getObjectKey(), lint);
+    }
   }
 
+  /**
+   * Gets information about when the catalog was crawled.
+   *
+   * @return Catalog crawl information.
+   */
   public CrawlInfo getCrawlInfo() {
     return crawlInfo;
   }
 
-  public Collection<Lint<? extends Serializable>> getLints() {
-    return new ArrayList<>(lints);
+  /**
+   * Get all lints, sorted in natural sorting order.
+   *
+   * @return All lints in the report.
+   */
+  public List<Lint<? extends Serializable>> getLints() {
+    return new ArrayList<>(allLints);
   }
 
+  /**
+   * Get all lints for a given named object identified by its key, sorted in natural sorting order.
+   *
+   * @return All lints for a named object.
+   */
+  public List<Lint<?>> getLints(final NamedObject namedObject) {
+    requireNonNull(namedObject, "No named object provided");
+
+    final NamedObjectKey key = namedObject.key();
+    final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
+    if (lintsForKey == null) {
+      return Collections.emptyList();
+    }
+
+    final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
+    lints.sort(LINT_COMPARATOR);
+    return lints;
+  }
+
+  /**
+   * Gets the lint report title.
+   *
+   * @return Lint report title.
+   */
   public String getTitle() {
     return title;
+  }
+
+  /**
+   * Whether crawl information is available.
+   *
+   * @return True if crawl information is available.
+   */
+  public boolean hasCrawlInfo() {
+    return crawlInfo != null;
+  }
+
+  /**
+   * Whether there are any lints in the report.
+   *
+   * @return True if lint report is empty.
+   */
+  public boolean isEmpty() {
+    return allLints.isEmpty();
   }
 
   @Override
@@ -70,7 +143,30 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
     return getLints().iterator();
   }
 
+  /**
+   * Set the lint report title.
+   *
+   * @param title Lint report title.
+   */
+  public void setTitle(final String title) {
+    this.title = trimToEmpty(title);
+  }
+
+  /**
+   * Number of lints in the report.
+   *
+   * @return Number of lints.
+   */
   public int size() {
-    return lints.size();
+    return allLints.size();
+  }
+
+  /**
+   * Stream of lints in the report.
+   *
+   * @return Stream of lints.
+   */
+  public Stream<Lint<? extends Serializable>> stream() {
+    return StreamSupport.stream(spliterator(), false);
   }
 }

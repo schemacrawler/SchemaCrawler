@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import org.junit.jupiter.api.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.config.LinterConfig;
@@ -38,7 +37,9 @@ public class EqualsTest {
 
   @Test
   public void lint() {
-    EqualsVerifier.forClass(Lint.class).withIgnoredFields("lintId", "linterInstanceId").verify();
+    EqualsVerifier.forClass(Lint.class)
+        .withIgnoredFields("lintId", "linterInstanceId", "objectName")
+        .verify();
   }
 
   @Test

@@ -28,18 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.crawl.RetrieverUtility.lookupOrCreateColumn;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -49,9 +47,10 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.WeakAssociation;
+import us.fatehi.utility.Builder;
 import us.fatehi.utility.string.StringFormat;
 
-public final class WeakAssociationBuilder {
+public final class WeakAssociationBuilder implements Builder<TableReference> {
 
   public static final class WeakAssociationColumn {
 
@@ -68,8 +67,8 @@ public final class WeakAssociationBuilder {
 
     public WeakAssociationColumn(final Schema schema, final String table, final String column) {
       this.schema = requireNonNull(schema, "No schema provided");
-      this.tableName = requireNotBlank(table, "No table name provided");
-      this.columnName = requireNotBlank(column, "No column name provided");
+      tableName = requireNotBlank(table, "No table name provided");
+      columnName = requireNotBlank(column, "No column name provided");
     }
 
     public String getColumnName() {
@@ -146,8 +145,13 @@ public final class WeakAssociationBuilder {
     return this;
   }
 
-  public void build() {
-    findOrCreate(null);
+  @Override
+  public TableReference build() {
+    final Optional<TableReference> optionalTableReference = findOrCreate(null);
+    if (optionalTableReference.isPresent()) {
+      return optionalTableReference.get();
+    }
+    return null;
   }
 
   public WeakAssociationBuilder clear() {
@@ -205,18 +209,16 @@ public final class WeakAssociationBuilder {
         lookupMatchingWeakAssociation(weakAssociation);
     if (optionalMatchingWeakAssociation.isPresent()) {
       return Optional.of(optionalMatchingWeakAssociation.get());
-    } else {
-
-      // Add weak association to tables if no matching foreign key is found
-      if (referencedTable instanceof MutableTable) {
-        ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
-      }
-      if (dependentTable instanceof MutableTable) {
-        ((MutableTable) dependentTable).addWeakAssociation(weakAssociation);
-      }
-
-      return Optional.of(weakAssociation);
     }
+    // Add weak association to tables if no matching foreign key is found
+    if (referencedTable instanceof MutableTable) {
+      ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
+    }
+    if (dependentTable instanceof MutableTable) {
+      ((MutableTable) dependentTable).addWeakAssociation(weakAssociation);
+    }
+
+    return Optional.of(weakAssociation);
   }
 
   private Optional<ForeignKey> lookupMatchingForeignKey(final WeakAssociation weakAssociation) {
