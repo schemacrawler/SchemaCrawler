@@ -14,7 +14,7 @@ public class LinterRegistryTest {
   public void registeredPlugins() throws Exception {
     final Collection<PropertyName> supportedLinters =
         LinterRegistry.getLinterRegistry().getRegisteredPlugins();
-    assertThat(supportedLinters, hasSize(22));
+    assertThat(supportedLinters, hasSize(23));
   }
 
   @Test
