@@ -32,7 +32,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
@@ -40,7 +39,6 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
-import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
@@ -91,13 +89,5 @@ public class LinterConfigsDispatchTest {
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-  }
-
-  private void checkSystemErrLog(final TestContext testContext, final CapturedSystemStreams streams)
-      throws Exception {
-    assertThat(
-        outputOf(streams.err()),
-        hasSameContentAs(classpathResource(testContext.testMethodName() + ".stderr.txt")));
-    assertThat(outputOf(streams.out()), hasNoContent());
   }
 }
