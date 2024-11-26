@@ -1,7 +1,7 @@
 ---
 crawl-info:
-  crawl-timestamp: "2024-11-24 01:53:12"
-  crawl-timestamp-instant: 1732413192.044000000
+  crawl-timestamp: "2024-11-26 22:42:32"
+  crawl-timestamp-instant: 1732660952.543000000
   database-version:
     description: ""
     name: "HSQL Database Engine"
@@ -26,7 +26,7 @@ crawl-info:
     product-name: "Windows 11"
     product-version: "10.0"
     value: "10.0"
-  run-id: "79e693c8-b2c6-4e8e-8b77-570367064708"
+  run-id: "41d233fa-1c60-460a-8e76-e411d8296930"
   schema-crawler-version:
     description: ""
     name: "SchemaCrawler"
@@ -35,9 +35,9 @@ crawl-info:
     value: "16.23.1"
 empty: false
 lints:
-- lint-id: "0494285d-a780-4ccb-8ca2-ecfb8bda2a64"
+- lint-id: "8c627f81-a47c-4b7d-8b81-8e8ed3f5fa41"
   linter-id: "schemacrawler.tools.linter.LinterColumnTypes"
-  linter-instance-id: "0c81d9b0-046e-4743-806c-8cc8a0753adb"
+  linter-instance-id: "a09df305-a61d-4147-9e1d-cbbc294f6143"
   message: "column with same name but different data types"
   object-key:
     key:
@@ -46,9 +46,9 @@ lints:
   object-type: "catalog"
   severity: "medium"
   value: "ID [BIGINT, INTEGER]"
-- lint-id: "1c130db4-a8e1-4931-81c8-2a14a1d606b5"
+- lint-id: "0332624e-d307-4e97-8e3b-4e6cc670f8f5"
   linter-id: "schemacrawler.tools.linter.LinterTableCycles"
-  linter-instance-id: "b8e617a0-7a33-4c43-9e2a-9aaf1a4f97c3"
+  linter-instance-id: "adcea3d0-f434-43ac-b61d-ac9774d4a5a1"
   message: "cycles in table relationships"
   object-key:
     key:
@@ -57,9 +57,31 @@ lints:
   object-type: "catalog"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"
-- lint-id: "f64f522d-c75a-483a-a851-78f0b428517f"
+- lint-id: "615c1427-9b0d-4bfb-85d5-cbb248b63d30"
+  linter-id: "schemacrawler.test.utility.LinterForTest"
+  linter-instance-id: "9ce89f3f-2460-49bd-94a0-cc8257e483db"
+  message: "Test lint for database"
+  object-key:
+    key:
+    - "catalog"
+  object-name: "catalog"
+  object-type: "catalog"
+  severity: "low"
+  value: "HSQL Database Engine 2.7.4"
+- lint-id: "095b7b5d-f46a-4887-912c-d3d813df112b"
+  linter-id: "schemacrawler.test.utility.LinterForTest"
+  linter-instance-id: "9ce89f3f-2460-49bd-94a0-cc8257e483db"
+  message: "Test lint for the whole catalog, without a value"
+  object-key:
+    key:
+    - "catalog"
+  object-name: "catalog"
+  object-type: "catalog"
+  severity: "low"
+  value: ""
+- lint-id: "55cc25e1-4a94-4bb5-ae6a-6e0bcc410468"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey"
-  linter-instance-id: "b39c5d52-175a-4594-84a7-b8ba50fe939d"
+  linter-instance-id: "edeab416-791d-432d-b50e-7000d3a0ebc6"
   message: "no primary key"
   object-key:
     key:
@@ -70,9 +92,9 @@ lints:
   object-type: "table"
   severity: "high"
   value: ""
-- lint-id: "d8d5a28d-64f5-4c81-ac25-ed2c2d1c8da6"
+- lint-id: "32a037ae-9f94-4b6a-964d-09f7305defae"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey"
-  linter-instance-id: "15b83e8f-c5c7-4b9b-aa4f-658c01bea923"
+  linter-instance-id: "8a58e344-00cb-4fee-8f62-ed2cbc8eb6fb"
   message: "primary key may not be a surrogate"
   object-key:
     key:
@@ -83,9 +105,9 @@ lints:
   object-type: "table"
   severity: "high"
   value: ""
-- lint-id: "56f596c0-35e4-469a-8302-d32d389d3df0"
+- lint-id: "ce0fd6f0-74e9-4a2e-b46d-623a1763a509"
   linter-id: "schemacrawler.tools.linter.LinterTableAllNullableColumns"
-  linter-instance-id: "dfed0a29-2c92-46d7-a312-f061afc16f85"
+  linter-instance-id: "61339441-ca8f-4e76-a678-b1a318c2f2f5"
   message: "no non-nullable data columns"
   object-key:
     key:
@@ -96,9 +118,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: ""
-- lint-id: "2df8411a-8469-4716-9187-97a7f0d2be87"
+- lint-id: "12ec965f-fb22-4b38-9ee4-e40416c8a8df"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoIndexes"
-  linter-instance-id: "e314da21-c635-4bf4-86e1-59958897f47f"
+  linter-instance-id: "45591e67-4850-41ac-97e2-d1128797c89d"
   message: "no indexes"
   object-key:
     key:
@@ -109,9 +131,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: ""
-- lint-id: "119ba70f-f447-4a91-a655-4bd86258e277"
+- lint-id: "a170e9ce-8d61-4742-a8de-843ea20095e6"
   linter-id: "schemacrawler.tools.linter.LinterTableWithQuotedNames"
-  linter-instance-id: "285f73dc-c3b1-4a07-bf6f-86f9ce524b3c"
+  linter-instance-id: "2e8be76e-1150-435c-9f52-8e25ee632dc6"
   message: "spaces in name, or reserved word"
   object-key:
     key:
@@ -122,9 +144,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: ""
-- lint-id: "3b893c68-5477-41a7-ba0d-2e3f84821a16"
+- lint-id: "829db317-07eb-4190-ac3a-d78a3fdebcd7"
   linter-id: "schemacrawler.tools.linter.LinterTableWithQuotedNames"
-  linter-instance-id: "285f73dc-c3b1-4a07-bf6f-86f9ce524b3c"
+  linter-instance-id: "2e8be76e-1150-435c-9f52-8e25ee632dc6"
   message: "spaces in name, or reserved word"
   object-key:
     key:
@@ -135,9 +157,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "Global Count"
-- lint-id: "ad6d73fe-5280-4589-817e-2666232a1197"
+- lint-id: "fd377a0b-e642-4bba-ab0a-9a4cb0c42a87"
   linter-id: "schemacrawler.tools.linter.LinterTableWithSingleColumn"
-  linter-instance-id: "31676cd9-2678-498e-a67d-9923fd7c69a9"
+  linter-instance-id: "07f73a98-a607-498a-9996-cedb93215207"
   message: "single column"
   object-key:
     key:
@@ -148,9 +170,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: ""
-- lint-id: "541d9ac7-b27d-42a8-a871-596d65a18cf8"
+- lint-id: "b2870a6b-2f8a-40c9-8d47-66ada1ae5ff1"
   linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "9ed29ccd-e6f4-4be2-8b48-afa2374eca20"
+  linter-instance-id: "5280f367-0b08-4ff2-bf42-e528c922aad1"
   message: "empty table"
   object-key:
     key:
@@ -161,9 +183,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "c11e671c-0c4d-4aa0-8947-35fb1ad56d53"
+- lint-id: "5ec08700-928f-44f5-9d9f-d369b50cb56f"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -174,9 +196,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "a66bb3f9-05b3-43ac-97ce-db977bffe82f"
+- lint-id: "973081d4-8a8b-49ef-9049-e31d4c90e8b0"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -187,9 +209,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: "Global Count"
-- lint-id: "398cd65b-08e8-4d80-8019-024429ee11d7"
+- lint-id: "44e0a4d1-8884-482f-bc72-4b62d7031c69"
   linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "9ed29ccd-e6f4-4be2-8b48-afa2374eca20"
+  linter-instance-id: "5280f367-0b08-4ff2-bf42-e528c922aad1"
   message: "empty table"
   object-key:
     key:
@@ -200,9 +222,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "f3a1a333-cb15-42e9-84e3-668058935328"
+- lint-id: "358e3e15-770e-43e2-b2c6-26d3897cd711"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -213,9 +235,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: "WRITERID, PUBLICATIONID, ID"
-- lint-id: "2b2989a9-37b0-4dee-ac46-2eb5307642dc"
+- lint-id: "d9691400-fcb3-40df-a408-b2f0ab89eaf0"
   linter-id: "schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst"
-  linter-instance-id: "3803f1f2-88c5-4028-96c2-cbd24f80cc4e"
+  linter-instance-id: "21ad5388-66b7-4223-a3ab-71582ec211c7"
   message: "primary key not first"
   object-key:
     key:
@@ -226,9 +248,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "01ecb450-d152-4ff4-83c5-ff955065fc9d"
+- lint-id: "c600a9b6-c9ec-42b3-bd0f-6bf5281e794d"
   linter-id: "schemacrawler.tools.linter.LinterTableWithQuotedNames"
-  linter-instance-id: "285f73dc-c3b1-4a07-bf6f-86f9ce524b3c"
+  linter-instance-id: "2e8be76e-1150-435c-9f52-8e25ee632dc6"
   message: "spaces in name, or reserved word"
   object-key:
     key:
@@ -239,9 +261,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "UPDATE"
-- lint-id: "dc586d75-a11c-46bd-81cc-ed505a3e3a82"
+- lint-id: "8605a4c6-7fdb-46e1-b018-7de02bddb1ea"
   linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "9ed29ccd-e6f4-4be2-8b48-afa2374eca20"
+  linter-instance-id: "5280f367-0b08-4ff2-bf42-e528c922aad1"
   message: "empty table"
   object-key:
     key:
@@ -252,9 +274,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "222b3f8c-e4f8-42b2-b400-20905d8e28d6"
+- lint-id: "9f8c2675-f057-4ffe-9c59-c8f4111563e5"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -265,9 +287,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "fd04dca9-4e58-483c-a15c-442e188bda57"
+- lint-id: "bfcb921f-8b87-4211-99c7-2c3c5a873bfe"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -278,9 +300,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: "ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE"
-- lint-id: "babe937b-3d1a-466f-bbc4-b736555d1966"
+- lint-id: "6da33524-38c8-4a3a-a207-628ef54e24ca"
   linter-id: "schemacrawler.tools.linter.LinterTooManyLobs"
-  linter-instance-id: "b3178352-6d4b-4a62-915a-2d25492fb999"
+  linter-instance-id: "6a9805bf-702f-4e58-a710-2e2e0a7fe83b"
   message: "too many binary objects"
   object-key:
     key:
@@ -291,9 +313,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: "PUBLIC.FOR_LINT.PUBLICATIONS.\"UPDATE\", PUBLIC.FOR_LINT.PUBLICATIONS.PRESS_RELEASE"
-- lint-id: "73601a24-64ed-4301-b5c1-33ecc3bdb8b5"
+- lint-id: "a2a2fd7c-5b46-43aa-92d6-9157143b7e3d"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey"
-  linter-instance-id: "15b83e8f-c5c7-4b9b-aa4f-658c01bea923"
+  linter-instance-id: "8a58e344-00cb-4fee-8f62-ed2cbc8eb6fb"
   message: "primary key may not be a surrogate"
   object-key:
     key:
@@ -304,9 +326,9 @@ lints:
   object-type: "table"
   severity: "high"
   value: ""
-- lint-id: "6438e4fd-9af3-4a7f-93da-5662d481aa5d"
+- lint-id: "aa93b7cc-d479-4ad0-acfb-d57ecb58d424"
   linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "9ed29ccd-e6f4-4be2-8b48-afa2374eca20"
+  linter-instance-id: "5280f367-0b08-4ff2-bf42-e528c922aad1"
   message: "empty table"
   object-key:
     key:
@@ -317,9 +339,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "82038028-7146-434a-a05d-88349a829d2f"
+- lint-id: "416d2fc1-5dfb-4ffa-8f38-eb710596da6f"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -330,9 +352,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "d87cd32d-3cd9-4c75-8c36-4dceb8af1f9a"
+- lint-id: "4086c038-09d6-45a9-915b-0225029f32cd"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -343,9 +365,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: "PUBLICATIONID, WRITERID"
-- lint-id: "242b6d5c-59ad-45d2-9845-736093b90c90"
+- lint-id: "676dbc80-9082-43a4-b883-6d5b642ce329"
   linter-id: "schemacrawler.tools.linter.LinterForeignKeySelfReference"
-  linter-instance-id: "ef562cd6-89a6-49cf-a9c0-ef9cb9508f1b"
+  linter-instance-id: "394d6e5d-f33a-49f9-a2a6-8b37bcfb1e9f"
   message: "foreign key self-references primary key"
   object-key:
     key:
@@ -356,9 +378,9 @@ lints:
   object-type: "table"
   severity: "critical"
   value: "PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE"
-- lint-id: "a6cd22ef-b99f-4283-a4e3-4fd82c228c6e"
+- lint-id: "186314d1-9ba5-4eeb-96af-b2d1de8192b1"
   linter-id: "schemacrawler.tools.linter.LinterRedundantIndexes"
-  linter-instance-id: "8386f310-88eb-429c-a5a7-cdf36cd49ce3"
+  linter-instance-id: "16b0e35c-a354-46d1-bf34-55e4354b00dc"
   message: "redundant index"
   object-key:
     key:
@@ -369,9 +391,9 @@ lints:
   object-type: "table"
   severity: "high"
   value: "PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE"
-- lint-id: "27b24d8f-52ea-47a4-a108-3e7de25e6848"
+- lint-id: "d37855fe-8b3f-4fc8-ab42-6021c65f7ecd"
   linter-id: "schemacrawler.tools.linter.LinterRedundantIndexes"
-  linter-instance-id: "8386f310-88eb-429c-a5a7-cdf36cd49ce3"
+  linter-instance-id: "16b0e35c-a354-46d1-bf34-55e4354b00dc"
   message: "redundant index"
   object-key:
     key:
@@ -382,9 +404,9 @@ lints:
   object-type: "table"
   severity: "high"
   value: "PUBLIC.FOR_LINT.SELFREFERENCE.PK_SELFREFERENCE"
-- lint-id: "1e3bf15f-e0f7-4c99-b1eb-70e398f81cfc"
+- lint-id: "938c077f-1723-4fd7-bd56-f71567508146"
   linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "9ed29ccd-e6f4-4be2-8b48-afa2374eca20"
+  linter-instance-id: "5280f367-0b08-4ff2-bf42-e528c922aad1"
   message: "empty table"
   object-key:
     key:
@@ -395,9 +417,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "cdaa0c6d-1c3b-4fb1-8b60-1a1341d8a834"
+- lint-id: "20606d54-cdb6-4837-9925-efa43598b534"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -408,9 +430,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "e26c7f2d-b9f3-4d2c-a56a-ead32e61a744"
+- lint-id: "1255f094-00c9-409e-bc5c-71c237c0f8e8"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -421,9 +443,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: "ID, TITLE"
-- lint-id: "19497aac-0ff0-44f2-93a9-7a14faa91ca2"
+- lint-id: "2fba66c7-67f3-45ca-ada3-86f4f1408377"
   linter-id: "schemacrawler.tools.linter.LinterForeignKeyMismatch"
-  linter-instance-id: "1387a6b4-e1d6-46d2-a900-15e3128f9427"
+  linter-instance-id: "469bfd0b-fd14-4230-8c2f-80d25e5083ae"
   message: "foreign key data type different from primary key"
   object-key:
     key:
@@ -434,9 +456,9 @@ lints:
   object-type: "table"
   severity: "high"
   value: "PUBLIC.FOR_LINT.WRITERS.FK_WRITERS_PUBLICATION"
-- lint-id: "0e5e79c8-7e0e-424d-b2ba-4d3cf717087d"
+- lint-id: "a76a836c-ebf5-49ce-8d47-be86c8fd521b"
   linter-id: "schemacrawler.tools.linter.LinterRedundantIndexes"
-  linter-instance-id: "8386f310-88eb-429c-a5a7-cdf36cd49ce3"
+  linter-instance-id: "16b0e35c-a354-46d1-bf34-55e4354b00dc"
   message: "redundant index"
   object-key:
     key:
@@ -447,9 +469,9 @@ lints:
   object-type: "table"
   severity: "high"
   value: "PUBLIC.FOR_LINT.WRITERS.IDX_A1_WRITERS"
-- lint-id: "ab34a80e-6057-451e-9459-51cf4c1b1d91"
+- lint-id: "5a9b3f27-c6c8-4889-b670-4408ab04666a"
   linter-id: "schemacrawler.tools.linter.LinterNullColumnsInIndex"
-  linter-instance-id: "8070fbd0-fd9d-4545-8dd2-e540a0c872df"
+  linter-instance-id: "a6eb3259-4f02-4b0a-a889-8f2b68bafcc1"
   message: "unique index with nullable columns"
   object-key:
     key:
@@ -460,9 +482,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.IDX_U_WRITERS"
-- lint-id: "bf00f5e9-6063-4370-b780-457007ef6c91"
+- lint-id: "4f548d78-ed97-4028-8c6a-d8c80b4979b1"
   linter-id: "schemacrawler.tools.linter.LinterNullIntendedColumns"
-  linter-instance-id: "8c0b7855-6c17-442e-b7ec-b3026e12e390"
+  linter-instance-id: "435e4ad9-0113-4637-93cd-0b5698fae430"
   message: "column where NULL may be intended"
   object-key:
     key:
@@ -473,9 +495,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.ADDRESS2"
-- lint-id: "ddded470-a9d3-418b-bc10-2dc2593d6374"
+- lint-id: "edb65bca-6f90-4233-9fde-482bc951d9d9"
   linter-id: "schemacrawler.tools.linter.LinterNullIntendedColumns"
-  linter-instance-id: "8c0b7855-6c17-442e-b7ec-b3026e12e390"
+  linter-instance-id: "435e4ad9-0113-4637-93cd-0b5698fae430"
   message: "column where NULL may be intended"
   object-key:
     key:
@@ -486,9 +508,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.COUNTRY"
-- lint-id: "38a2f5ff-f41f-4d6c-9ca7-927f8d307b23"
+- lint-id: "02a72305-34f7-4f58-b54c-9f2dbc282b7e"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns"
   object-key:
     key:
@@ -499,9 +521,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.ADDRESS1, PUBLIC.FOR_LINT.WRITERS.ADDRESS2"
-- lint-id: "6a0585d6-c03b-4c28-bb37-f24e32e63749"
+- lint-id: "e848ee38-1ebb-4601-be71-193506c2f11c"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns"
   object-key:
     key:
@@ -512,9 +534,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2"
-- lint-id: "33bc5e93-f313-487d-a13d-0ad356ad11d7"
+- lint-id: "a3c4c134-ec3e-4adf-9b40-715e40d78aab"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns"
   object-key:
     key:
@@ -525,9 +547,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
-- lint-id: "474194c7-1159-4497-81aa-97059adc4c2e"
+- lint-id: "d19b1c4e-82c1-47c4-b501-6549068564a9"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns"
   object-key:
     key:
@@ -538,9 +560,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL11, PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL12"
-- lint-id: "5f4312f8-dfd7-442d-96a9-1e032ee6d242"
+- lint-id: "51013d0d-c904-4057-8485-6eba9c79441c"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns"
   object-key:
     key:
@@ -551,9 +573,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2"
-- lint-id: "9ee05ad9-9059-4e45-9685-2b2ed9f27d38"
+- lint-id: "db6299cc-fe0a-407c-ae8a-94b75cfe5c47"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns are not consecutive"
   object-key:
     key:
@@ -564,9 +586,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
-- lint-id: "abe169fd-40b6-4dcb-9ab7-c57877dd1125"
+- lint-id: "0d5d4d1e-0022-4fb2-93a3-3b2aa89859df"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns don't have the same data-type"
   object-key:
     key:
@@ -577,9 +599,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2"
-- lint-id: "992d1ecc-10b1-4e0a-8e7b-33a21b209db2"
+- lint-id: "2662c6b6-1414-4e37-b4a2-8e2d51344a56"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns don't have the same data-type"
   object-key:
     key:
@@ -590,9 +612,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
-- lint-id: "6bb9efdd-6a0e-48cf-9f63-a019af1005e1"
+- lint-id: "6f43fe76-eb8f-44aa-93e4-862b808ab270"
   linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "ff3e959f-1c91-4ab6-9fa4-fe9bb89f443f"
+  linter-instance-id: "bdb92654-fa75-458d-b117-cdf768d0178c"
   message: "incrementing columns don't have the same data-type"
   object-key:
     key:
@@ -603,9 +625,9 @@ lints:
   object-type: "table"
   severity: "medium"
   value: "PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2"
-- lint-id: "a57023a7-5406-4d5f-b8ec-9486a8567247"
+- lint-id: "65387336-8100-4d88-b518-abb213dce2d0"
   linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "9ed29ccd-e6f4-4be2-8b48-afa2374eca20"
+  linter-instance-id: "5280f367-0b08-4ff2-bf42-e528c922aad1"
   message: "empty table"
   object-key:
     key:
@@ -616,9 +638,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "88df0fbf-1810-46c6-9eae-80dc77b39d5e"
+- lint-id: "e98f67d9-9d5a-41ef-927d-27a69f15b746"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:
@@ -629,9 +651,9 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "9e5bb004-0d36-4d47-9a5e-9841fd81c20c"
+- lint-id: "45a2a606-82a7-40af-a57c-ac2edb0ee56e"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "b55b32e9-ba5c-40c8-93ca-b6753adf5541"
+  linter-instance-id: "931a08e0-8a81-48a8-ada6-b7885149fddc"
   message: "should have remarks"
   object-key:
     key:

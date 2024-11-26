@@ -14,6 +14,9 @@ Database                                                      [database]
 	column with same name but different data types	STATE [CHARACTER, VARCHAR]
 	column with same name but different data types	UPDATE [CLOB, VARCHAR]
 	cycles in table relationships	PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS
+                                                             [lint, low]
+	Test lint for database	HSQL Database Engine 2.7.4
+	Test lint for the whole catalog, without a value	
 
 
 

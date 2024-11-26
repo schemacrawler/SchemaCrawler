@@ -1,6 +1,7 @@
 Summary of schema lints:
      [low]      1 - primary key not first
      [low]      1 - too many binary objects
+     [low]      2 - Test catalog linter
      [low]      6 - empty table
      [low]     13 - should have remarks
   [medium]      1 - column with same name but different data types

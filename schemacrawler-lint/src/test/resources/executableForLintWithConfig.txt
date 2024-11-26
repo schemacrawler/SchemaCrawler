@@ -3,6 +3,13 @@
 Lints
 ========================================================================
 
+Database                                                      [database]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	Test lint for database	HSQL Database Engine 2.7.4
+	Test lint for the whole catalog, without a value	
+
 
 
 PUBLIC.BOOKS.AUTHORS                                             [table]

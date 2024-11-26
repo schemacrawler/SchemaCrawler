@@ -111,7 +111,7 @@ public class LintTest {
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
       final LintReport lintReport = linters.getLintReport();
-      assertThat(lintReport.size(), is(51));
+      assertThat(lintReport.size(), is(53));
       assertThat(lintReport.hasCrawlInfo(), is(true));
 
       final TestWriter testout1 = new TestWriter();
@@ -158,7 +158,7 @@ public class LintTest {
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
       final LintReport lintReport = linters.getLintReport();
-      assertThat(lintReport.size(), is(40));
+      assertThat(lintReport.size(), is(42));
 
       final TestWriter testout = new TestWriter();
       try (final TestWriter out = testout) {

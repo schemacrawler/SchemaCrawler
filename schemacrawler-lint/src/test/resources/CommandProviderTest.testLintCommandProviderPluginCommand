@@ -15,6 +15,10 @@ Whether to run all linters, including running the ones that are not explicitly c
 
 Available SchemaCrawler linters:
 
+Linter: schemacrawler.test.utility.LinterForTest
+
+
+
 Linter: schemacrawler.tools.linter.LinterCatalogSql
 Allows you to run SQL against the database. The SQL statement must return exactly one column and one row of data in the results. If one row is returned, it means that the lint has detected a problem. However, if no rows of data are returned, it means that there are no issues. 
 Example configuration:
@@ -41,10 +45,6 @@ Checks tables where the foreign key self-references the primary key. This means 
 
 Linter: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
 Checks for tables where foreign keys have no indexes. This may cause inefficient lookups.
-
-
-Linter: schemacrawler.tools.linter.LinterForTest
-
 
 
 Linter: schemacrawler.tools.linter.LinterNullColumnsInIndex

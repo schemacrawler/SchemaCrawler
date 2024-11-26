@@ -26,6 +26,10 @@ For more information, see https://www.schemacrawler.com/lint.html
 
 Available SchemaCrawler linters:
 
+Linter: schemacrawler.test.utility.LinterForTest
+
+
+
 Linter: schemacrawler.tools.linter.LinterCatalogSql
 Allows you to run SQL against the database. The SQL statement must return
 exactly one column and one row of data in the results. If one row is returned,
@@ -59,10 +63,6 @@ that a record in the table references itself, and cannot be deleted.
 Linter: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
 Checks for tables where foreign keys have no indexes. This may cause
 inefficient lookups.
-
-
-Linter: schemacrawler.tools.linter.LinterForTest
-
 
 
 Linter: schemacrawler.tools.linter.LinterNullColumnsInIndex

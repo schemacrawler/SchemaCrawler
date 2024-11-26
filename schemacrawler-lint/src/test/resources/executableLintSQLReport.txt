@@ -8,6 +8,9 @@ Database                                                      [database]
 
                                                           [lint, medium]
 	message for SQL catalog lint 1	
+                                                             [lint, low]
+	Test lint for database	HSQL Database Engine 2.7.4
+	Test lint for the whole catalog, without a value	
 
 
 

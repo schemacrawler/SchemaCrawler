@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
@@ -11,8 +12,12 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.LintUtility.LINTER_COMPARATOR;
+import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+import java.io.Serializable;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,11 +25,13 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.LinterProviderForTest;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.linter.LinterProviderCatalogSql;
 import schemacrawler.tools.linter.LinterProviderTableEmpty;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.property.ProductVersion;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @WithTestDatabase
@@ -84,5 +91,22 @@ public class LinterTest {
           NullPointerException.class,
           () -> ((BaseLinter) linter).addCatalogLint("Test catalog lint"));
     }
+  }
+
+  @Test
+  public void linterForCrawlInfo(final DatabaseConnectionSource dataSource) {
+
+    final LintCollector collector = new LintCollector();
+    final Linter linter = new LinterProviderForTest().newLinter(collector);
+    linter.lint(catalog, dataSource.get());
+
+    final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
+    lints.sort(LINT_COMPARATOR);
+
+    assertThat(lints.size(), is(2));
+
+    final Serializable value = lints.get(0).getValue();
+
+    assertThat(value, is(instanceOf(ProductVersion.class)));
   }
 }

@@ -1,1 +1,1 @@
-schemacrawler.tools.linter.LinterProviderForTest
+schemacrawler.test.utility.LinterProviderForTest
