@@ -60,6 +60,18 @@ jobs:
           ./diff-output/compare-oracle-postgresql.html \
           "Compare Oracle - PostgreSQL"
         #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-sqlite/src/test/resources/testSqlitePortable.txt \
+          ./diff-output/compare-oracle-sqlite.html \
+          "Compare Oracle - SQLite"
+        #
+        ./.github/scripts/diff-output.sh \
+          schemacrawler-oracle/src/test/resources/testOraclePortable.txt \
+          schemacrawler-hsqldb/src/test/resources/testHsqldbPortableBroad.txt \
+          ./diff-output/compare-oracle-hsqldb.html \
+          "Compare Oracle - HyperSQL"
+        #
         #
         #
         ./.github/scripts/diff-output.sh \
