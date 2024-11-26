@@ -56,11 +56,11 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import schemacrawler.tools.lint.report.LintReport;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 

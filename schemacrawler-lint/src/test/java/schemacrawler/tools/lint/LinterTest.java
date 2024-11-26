@@ -109,4 +109,18 @@ public class LinterTest {
 
     assertThat(value, is(instanceOf(ProductVersion.class)));
   }
+
+  @Test
+  public void noOpLinter(final DatabaseConnectionSource dataSource) {
+
+    final LintCollector collector = new LintCollector();
+    final Linter linter = LinterRegistry.getLinterRegistry().newLinter("bad-linter-id", collector);
+
+    assertThat(linter.getSummary(), is("No-op linter"));
+
+    linter.lint(catalog, dataSource.get());
+
+    final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
+    assertThat(lints.size(), is(0));
+  }
 }

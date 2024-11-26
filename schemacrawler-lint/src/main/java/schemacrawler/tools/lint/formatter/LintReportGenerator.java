@@ -1,6 +1,6 @@
 package schemacrawler.tools.lint.formatter;
 
-import schemacrawler.tools.lint.LintReport;
+import schemacrawler.tools.lint.report.LintReport;
 
 public interface LintReportGenerator {
 

@@ -35,13 +35,14 @@ import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LintDispatch;
-import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.lint.formatter.LintReportGenerator;
 import schemacrawler.tools.lint.formatter.LintReportJsonGenerator;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
 import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
+import schemacrawler.tools.lint.report.LintReport;
+import schemacrawler.tools.lint.report.LintReportBuilder;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -72,8 +73,11 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       linters.lint(catalog, connection);
 
       // Produce the lint report
-      final LintReport lintReport = linters.getLintReport();
-      lintReport.setTitle(outputOptions.getTitle());
+      final LintReport lintReport =
+          LintReportBuilder.builder()
+              .fromOptions(linters.getLintReport())
+              .withOutputOptions(outputOptions)
+              .build();
 
       // Write out the lint report
       LOGGER.log(Level.INFO, "Generating lint report");
