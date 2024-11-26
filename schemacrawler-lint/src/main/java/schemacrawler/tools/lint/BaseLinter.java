@@ -42,6 +42,7 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.config.LinterConfig;
 import us.fatehi.utility.property.PropertyName;
@@ -130,6 +131,23 @@ public abstract class BaseLinter extends AbstractLinter {
       }
     }
     return columns;
+  }
+
+  /**
+   * Allow linters to take appropriate action based on system information such as type of database,
+   * JDBC driver, JVM version or operating system.
+   *
+   * @return SchemaCrawler crawl information.
+   */
+  protected final CrawlInfo getCrawlInfo() {
+    if (!hasCrawlInfo()) {
+      return null;
+    }
+    return catalog.getCrawlInfo();
+  }
+
+  protected final boolean hasCrawlInfo() {
+    return catalog != null && catalog.getCrawlInfo() != null;
   }
 
   protected abstract void lint(Table table, Connection connection);
