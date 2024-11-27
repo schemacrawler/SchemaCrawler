@@ -28,8 +28,9 @@ PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 
-                                                            [lint, high]
+                                                        [lint, critical]
 	no primary key	
+                                                            [lint, high]
 	primary key may not be a surrogate	
                                                           [lint, medium]
 	no non-nullable data columns	

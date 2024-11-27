@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
+import static schemacrawler.tools.lint.LintUtility.LINTER_COMPARATOR;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -39,9 +39,11 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import schemacrawler.tools.lint.report.LintReport;
+import schemacrawler.tools.lint.report.LintReportBuilder;
 import us.fatehi.utility.string.StringFormat;
 
-public final class Linters implements Iterable<Linter> {
+public final class Linters {
 
   private static final Logger LOGGER = Logger.getLogger(Linters.class.getName());
 
@@ -59,7 +61,7 @@ public final class Linters implements Iterable<Linter> {
     // Initialize running state to empty
     linters = new ArrayList<>();
     collector = new LintCollector();
-    lintReport = new LintReport();
+    lintReport = LintReportBuilder.builder().build();
   }
 
   public boolean exceedsThreshold() {
@@ -78,7 +80,7 @@ public final class Linters implements Iterable<Linter> {
   public String getLintSummary() {
 
     final List<Linter> linters = new ArrayList<>(this.linters);
-    linters.sort(LintUtility.LINTER_COMPARATOR);
+    linters.sort(LINTER_COMPARATOR);
 
     final StringBuilder buffer = new StringBuilder(1024);
     for (final Linter linter : linters) {
@@ -100,11 +102,6 @@ public final class Linters implements Iterable<Linter> {
     return buffer.toString();
   }
 
-  @Override
-  public Iterator<Linter> iterator() {
-    return linters.iterator();
-  }
-
   public void lint(final Catalog catalog, final Connection connection) {
 
     requireNonNull(catalog, "No catalog provided");
@@ -113,7 +110,23 @@ public final class Linters implements Iterable<Linter> {
     initialize();
     runLinters(catalog, connection);
     // Produce lint report
-    lintReport = new LintReport("", catalog.getCrawlInfo(), collector.getLints());
+    lintReport =
+        LintReportBuilder.builder().withCatalog(catalog).withLints(collector.getLints()).build();
+  }
+
+  public void dispatch(final LintDispatch lintDispatch) {
+
+    LOGGER.log(Level.INFO, () -> getLintSummary());
+
+    if (lintDispatch == null || lintDispatch == LintDispatch.none) {
+      return;
+    }
+
+    if (!linters.isEmpty() && exceedsThreshold()) {
+      LOGGER.log(Level.INFO, "Dispatching lint results");
+      System.err.println(getLintSummary());
+      lintDispatch.dispatch();
+    }
   }
 
   /**

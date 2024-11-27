@@ -26,12 +26,11 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.lint;
+package schemacrawler.tools.lint.report;
 
 import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -42,24 +41,21 @@ import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schemacrawler.Options;
+import schemacrawler.tools.lint.Lint;
 import us.fatehi.utility.Multimap;
 
-public final class LintReport implements Iterable<Lint<? extends Serializable>> {
+public final class LintReport implements Options, Iterable<Lint<? extends Serializable>> {
 
-  private String title;
+  private final String title;
   private final CrawlInfo crawlInfo;
   private final List<Lint<? extends Serializable>> allLints;
   private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
-  /** Empty lint report. */
-  LintReport() {
-    this("", null, new ArrayList<>());
-  }
-
   LintReport(
       final String title,
       final CrawlInfo crawlInfo,
-      final Collection<Lint<? extends Serializable>> lints) {
+      final List<Lint<? extends Serializable>> lints) {
 
     this.title = trimToEmpty(title);
     this.crawlInfo = crawlInfo; // Can be null
@@ -141,15 +137,6 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
   @Override
   public Iterator<Lint<? extends Serializable>> iterator() {
     return getLints().iterator();
-  }
-
-  /**
-   * Set the lint report title.
-   *
-   * @param title Lint report title.
-   */
-  public void setTitle(final String title) {
-    this.title = trimToEmpty(title);
   }
 
   /**

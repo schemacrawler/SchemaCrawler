@@ -19,7 +19,7 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintReport;
+import schemacrawler.tools.lint.report.LintReport;
 import schemacrawler.tools.options.OutputOptions;
 
 abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {

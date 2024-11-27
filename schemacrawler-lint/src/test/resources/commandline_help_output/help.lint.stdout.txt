@@ -26,6 +26,10 @@ For more information, see https://www.schemacrawler.com/lint.html
 
 Available SchemaCrawler linters:
 
+Linter: schemacrawler.test.utility.LinterForTest
+
+
+
 Linter: schemacrawler.tools.linter.LinterCatalogSql
 Allows you to run SQL against the database. The SQL statement must return
 exactly one column and one row of data in the results. If one row is returned,
