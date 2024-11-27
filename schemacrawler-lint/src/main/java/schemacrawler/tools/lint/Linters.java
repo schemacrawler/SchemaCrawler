@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
+import static schemacrawler.tools.lint.LintUtility.LINTER_COMPARATOR;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public final class Linters {
   public String getLintSummary() {
 
     final List<Linter> linters = new ArrayList<>(this.linters);
-    linters.sort(LintUtility.LINTER_COMPARATOR);
+    linters.sort(LINTER_COMPARATOR);
 
     final StringBuilder buffer = new StringBuilder(1024);
     for (final Linter linter : linters) {
@@ -111,6 +112,21 @@ public final class Linters {
     // Produce lint report
     lintReport =
         LintReportBuilder.builder().withCatalog(catalog).withLints(collector.getLints()).build();
+  }
+
+  public void dispatch(final LintDispatch lintDispatch) {
+
+    LOGGER.log(Level.INFO, () -> getLintSummary());
+
+    if (lintDispatch == null || lintDispatch == LintDispatch.none) {
+      return;
+    }
+
+    if (!linters.isEmpty() && exceedsThreshold()) {
+      LOGGER.log(Level.INFO, "Dispatching lint results");
+      System.err.println(getLintSummary());
+      lintDispatch.dispatch();
+    }
   }
 
   /**
