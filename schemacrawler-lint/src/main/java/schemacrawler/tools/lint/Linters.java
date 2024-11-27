@@ -64,6 +64,21 @@ public final class Linters {
     lintReport = LintReportBuilder.builder().build();
   }
 
+  public void dispatch(final LintDispatch lintDispatch) {
+
+    LOGGER.log(Level.INFO, () -> getLintSummary());
+
+    if (lintDispatch == null || lintDispatch == LintDispatch.none) {
+      return;
+    }
+
+    if (!linters.isEmpty() && exceedsThreshold()) {
+      LOGGER.log(Level.INFO, "Dispatching lint results");
+      System.err.println(getLintSummary());
+      lintDispatch.dispatch();
+    }
+  }
+
   public boolean exceedsThreshold() {
     for (final Linter linter : linters) {
       if (linter.exceedsThreshold()) {
@@ -112,21 +127,6 @@ public final class Linters {
     // Produce lint report
     lintReport =
         LintReportBuilder.builder().withCatalog(catalog).withLints(collector.getLints()).build();
-  }
-
-  public void dispatch(final LintDispatch lintDispatch) {
-
-    LOGGER.log(Level.INFO, () -> getLintSummary());
-
-    if (lintDispatch == null || lintDispatch == LintDispatch.none) {
-      return;
-    }
-
-    if (!linters.isEmpty() && exceedsThreshold()) {
-      LOGGER.log(Level.INFO, "Dispatching lint results");
-      System.err.println(getLintSummary());
-      lintDispatch.dispatch();
-    }
   }
 
   /**
