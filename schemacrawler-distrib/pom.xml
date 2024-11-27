@@ -35,11 +35,6 @@
       <artifactId>schemacrawler-lint</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-chatgpt</artifactId>
-      <version>${project.version}</version>
-    </dependency>
 
     <!-- SchemaCrawler database plugins -->
 

@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.23.3"></a>
+## Release 16.23.3 - 2024-11-26
+
+- Move ChatGPT integration into a separate top-level project
+
+
 <a name="v16.23.2"></a>
 ## Release 16.23.2 - 2024-11-26
 

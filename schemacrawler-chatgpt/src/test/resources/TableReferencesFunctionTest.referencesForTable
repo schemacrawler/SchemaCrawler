@@ -1,7 +1,0 @@
-Table "PUBLIC"."BOOKS"."BOOKS" has the following parent tables:
-- "PUBLIC"."BOOKS"."BOOKS"
-
-Table "PUBLIC"."BOOKS"."BOOKS" has the following child tables:
-- "PUBLIC"."BOOKS"."BOOKAUTHORS"
-- "PUBLIC"."BOOKS"."BOOKS"
-- "PUBLIC"."PUBLISHER SALES"."SALES"

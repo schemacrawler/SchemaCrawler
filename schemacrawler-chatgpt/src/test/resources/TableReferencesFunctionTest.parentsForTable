@@ -1,3 +1,0 @@
-Table "PUBLIC"."BOOKS"."BOOKAUTHORS" has the following parent tables:
-- "PUBLIC"."BOOKS"."AUTHORS"
-- "PUBLIC"."BOOKS"."BOOKS"
