@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.23.2"></a>
+## Release 16.23.2 - 2024-11-26
+
+- Add back `getCrawlInfo` into the `BaseLinter` to allow linters to act based on a particular database system (see #1750)
+- Create a lint report build to allow for custom lint reports to created programmatically (see #1750)
+
+
 <a name="v16.23.1"></a>
 ## Release 16.23.1 - 2024-11-24
 
@@ -119,8 +126,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.23.1"></a>
-## Release 16.23.1 - 2023-06-03
+<a name="v16.23.2"></a>
+## Release 16.23.2 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
