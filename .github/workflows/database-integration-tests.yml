@@ -86,26 +86,26 @@ jobs:
         echo "Building code"
         echo "Downloading Docker image"
         if [ "${{ matrix.database }}" == "oracle" ]; then
-            docker pull gvenzl/oracle-free:23-slim-faststart
+            docker pull gvenzl/oracle-free:23.5-slim-faststart
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
-            docker pull mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
+            docker pull mcr.microsoft.com/mssql/server:2022-CU9-ubuntu-20.04
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "db2" ]; then
-            docker pull ibmcom/db2:11.5.7.0
+            docker pull icr.io/db2_community/db2:11.5.9.0
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "postgresql" ]; then
-            docker pull postgres:12.16-alpine
-            docker pull postgres:15.4-alpine
+            docker pull postgres:11.16-alpine
+            docker pull postgres:16.4-bookworm
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mysql" ]; then
-            docker pull mysql:8.0.31
+            docker pull mysql:9.1.0
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mariadb" ]; then
-            docker pull mariadb:10.7.3
+            docker pull mariadb:11.6.2-noble
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cassandra" ]; then
-            docker pull cassandra:4.1.0
+            docker pull cassandra:5.0.2
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cockroachdb" ]; then
             docker pull cockroachdb/cockroach:v20.2.9
@@ -117,7 +117,7 @@ jobs:
             docker pull ibmcom/informix-developer-database:14.10.FC7W1DE
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "trino" ]; then
-            docker pull trinodb/trino:421
+            docker pull trinodb/trino:464
             dbproject="dbtest"
         else
             dbproject="dbtest"

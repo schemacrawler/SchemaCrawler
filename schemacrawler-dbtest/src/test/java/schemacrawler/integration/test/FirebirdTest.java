@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -57,9 +58,11 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @Testcontainers
 public class FirebirdTest extends BaseAdditionalDatabaseTest {
 
+  private static final DockerImageName imageName =
+      DockerImageName.parse("jacobalberty/firebird").withTag("v4.0.2");
   @Container
   private final JdbcDatabaseContainer dbContainer =
-      new FirebirdContainer().withUsername("schemacrawler").withDatabaseName("BOOKS");
+      new FirebirdContainer(imageName).withUsername("schemacrawler").withDatabaseName("BOOKS");
 
   @BeforeEach
   public void createDatabase() {

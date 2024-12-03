@@ -1,7 +1,7 @@
 services:
 
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
+    image: mcr.microsoft.com/mssql/server:2022-CU9-ubuntu-20.04
     container_name: sqlserver
     ports:
       - target: 1433

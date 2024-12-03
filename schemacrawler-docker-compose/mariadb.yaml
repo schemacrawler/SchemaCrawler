@@ -1,7 +1,7 @@
 services:
 
   mysql:
-    image: mariadb:11.5.2-noble
+    image: mariadb:11.6.2-noble
     container_name: mariadb
     # command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
     ports:
