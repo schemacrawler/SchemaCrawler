@@ -32,7 +32,6 @@ import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.database.DatabaseUtility.createStatement;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -86,10 +84,9 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
 
     handler.begin();
 
-    handler.handleInfoStart();
-    handler.handle(catalog.getDatabaseInfo());
-    handler.handle(catalog.getJdbcDriverInfo());
-    handler.handleInfoEnd();
+    handler.handleHeaderStart();
+    handler.handle(catalog.getCrawlInfo());
+    handler.handleHeaderEnd();
 
     if (query.isQueryOver()) {
       // This is a special instance of identifiers that does not use

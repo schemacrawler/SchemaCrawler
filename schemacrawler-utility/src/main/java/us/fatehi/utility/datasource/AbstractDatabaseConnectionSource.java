@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;

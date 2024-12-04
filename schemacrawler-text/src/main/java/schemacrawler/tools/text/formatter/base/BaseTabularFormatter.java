@@ -28,20 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.formatter.base;
 
-import java.util.Collection;
 import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.options.BaseTextOptions;
-import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.property.Property;
 
 /** Text formatting of schema. */
 public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends BaseFormatter<O> {
@@ -110,91 +104,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   }
 
   @Override
-  public final void handle(final DatabaseInfo dbInfo) {
-    if (!printVerboseDatabaseInfo() || !options.isShowDatabaseInfo() || dbInfo == null) {
-      return;
-    }
-
-    final Collection<Property> serverInfo = dbInfo.getServerInfo();
-    if (!serverInfo.isEmpty()) {
-      formattingHelper.writeHeader(DocumentHeaderType.section, "Database Server Information");
-      formattingHelper.writeObjectStart();
-      for (final Property property : serverInfo) {
-        final String name = property.getName();
-        final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(
-            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
-      }
-      formattingHelper.writeObjectEnd();
-    }
-
-    formattingHelper.writeHeader(DocumentHeaderType.section, "Database Information");
-
-    formattingHelper.writeObjectStart();
-    formattingHelper.writeNameValueRow(
-        "database product name", dbInfo.getProductName(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "database product version", dbInfo.getProductVersion(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "database user name", dbInfo.getUserName(), Alignment.inherit);
-    formattingHelper.writeObjectEnd();
-
-    final Collection<Property> dbProperties = dbInfo.getProperties();
-    if (!dbProperties.isEmpty()) {
-      formattingHelper.writeHeader(DocumentHeaderType.section, "Database Characteristics");
-      formattingHelper.writeObjectStart();
-      for (final Property property : dbProperties) {
-        final String name = property.getDescription();
-        final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(
-            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
-      }
-      formattingHelper.writeObjectEnd();
-    }
-  }
-
-  @Override
-  public void handle(final JdbcDriverInfo driverInfo) {
-    if (!printVerboseDatabaseInfo() || !options.isShowJdbcDriverInfo() || driverInfo == null) {
-      return;
-    }
-
-    formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Information");
-
-    formattingHelper.writeObjectStart();
-    formattingHelper.writeNameValueRow(
-        "connection url", driverInfo.getConnectionUrl(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "driver name", driverInfo.getProductName(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "driver version", driverInfo.getProductVersion(), Alignment.inherit);
-    if (driverInfo.hasDriverClassName()) {
-      formattingHelper.writeNameValueRow(
-          "driver class name", driverInfo.getDriverClassName(), Alignment.inherit);
-      formattingHelper.writeNameValueRow(
-          "is JDBC compliant", Boolean.toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
-      formattingHelper.writeNameValueRow(
-          "supported JDBC version",
-          String.format(
-              "%d.%d", driverInfo.getJdbcMajorVersion(), driverInfo.getJdbcMinorVersion()),
-          Alignment.inherit);
-    }
-    formattingHelper.writeObjectEnd();
-
-    if (driverInfo.hasDriverClassName()) {
-      final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo.getDriverProperties();
-      if (!jdbcDriverProperties.isEmpty()) {
-        formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Properties");
-        for (final JdbcDriverProperty driverProperty : jdbcDriverProperties) {
-          formattingHelper.writeObjectStart();
-          printJdbcDriverProperty(driverProperty);
-          formattingHelper.writeObjectEnd();
-        }
-      }
-    }
-  }
-
-  @Override
   public final void handleHeaderEnd() {
     // Default implementation - NO-OP
   }
@@ -204,38 +113,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
     // Default implementation - NO-OP
   }
 
-  @Override
-  public final void handleInfoEnd() {
-    // Default implementation - NO-OP
-  }
-
-  @Override
-  public final void handleInfoStart() {
-    if (!printVerboseDatabaseInfo()
-        || options.isNoInfo()
-        || !options.isShowDatabaseInfo() && !options.isShowJdbcDriverInfo()) {
-      return;
-    }
-
-    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "System Information");
-  }
-
   protected boolean printVerboseDatabaseInfo() {
     return !options.isNoInfo() && schemaTextDetailType == SchemaTextDetailType.details;
-  }
-
-  private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty) {
-    final String required = (driverProperty.isRequired() ? "" : "not ") + "required";
-    final StringBuilder details = new StringBuilder();
-    details.append(required);
-    if (driverProperty.getChoices() != null && !driverProperty.getChoices().isEmpty()) {
-      details.append("; choices ").append(driverProperty.getChoices());
-    }
-    final String value = driverProperty.getValue();
-
-    formattingHelper.writeNameRow(driverProperty.getName(), "[driver property]");
-    formattingHelper.writeDescriptionRow(driverProperty.getDescription());
-    formattingHelper.writeDescriptionRow(details.toString());
-    formattingHelper.writeDetailRow("", "value", ObjectToString.listOrObjectToString(value));
   }
 }

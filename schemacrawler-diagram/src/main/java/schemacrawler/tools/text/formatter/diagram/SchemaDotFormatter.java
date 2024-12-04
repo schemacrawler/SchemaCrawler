@@ -54,8 +54,10 @@ import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
@@ -101,6 +103,16 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   @Override
   public void handle(final ColumnDataType columnDataType) {
     // No output required
+  }
+
+  @Override
+  public void handle(final DatabaseInfo dbInfo) {
+    // No-op
+  }
+
+  @Override
+  public void handle(final JdbcDriverInfo driverInfo) {
+    // No-op
   }
 
   /**
@@ -207,6 +219,16 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   @Override
   public void handleColumnDataTypesStart() {
     // No output required
+  }
+
+  @Override
+  public void handleInfoEnd() {
+    // No-op
+  }
+
+  @Override
+  public void handleInfoStart() {
+    // No-op
   }
 
   @Override

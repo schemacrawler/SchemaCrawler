@@ -60,6 +60,7 @@ public class FirebirdTest extends BaseAdditionalDatabaseTest {
 
   private static final DockerImageName imageName =
       DockerImageName.parse("jacobalberty/firebird").withTag("v4.0.2");
+
   @Container
   private final JdbcDatabaseContainer dbContainer =
       new FirebirdContainer(imageName).withUsername("schemacrawler").withDatabaseName("BOOKS");

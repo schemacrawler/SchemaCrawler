@@ -1,6 +1,7 @@
 package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
+
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;

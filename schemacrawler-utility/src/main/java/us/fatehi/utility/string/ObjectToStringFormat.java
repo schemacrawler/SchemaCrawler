@@ -28,8 +28,9 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.string;
 
-import java.util.function.Supplier;
 import static us.fatehi.utility.Utility.isBlank;
+
+import java.util.function.Supplier;
 import us.fatehi.utility.ObjectToString;
 
 public final class ObjectToStringFormat implements Supplier<String> {

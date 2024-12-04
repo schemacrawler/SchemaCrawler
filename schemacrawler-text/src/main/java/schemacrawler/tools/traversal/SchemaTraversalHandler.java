@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.traversal;
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -37,6 +39,10 @@ import schemacrawler.schema.Table;
 public interface SchemaTraversalHandler extends TraversalHandler {
 
   void handle(final ColumnDataType columnDataType);
+
+  void handle(DatabaseInfo databaseInfo);
+
+  void handle(JdbcDriverInfo jdbcDriverInfo);
 
   /**
    * Provides information on the database schema.
@@ -69,6 +75,10 @@ public interface SchemaTraversalHandler extends TraversalHandler {
   void handleColumnDataTypesEnd();
 
   void handleColumnDataTypesStart();
+
+  void handleInfoEnd();
+
+  void handleInfoStart();
 
   void handleRoutinesEnd();
 
