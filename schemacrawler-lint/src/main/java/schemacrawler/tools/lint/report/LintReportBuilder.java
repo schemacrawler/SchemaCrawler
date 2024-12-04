@@ -32,12 +32,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.options.OutputOptions;
 
 /** SchemaCrawler lint report builder, to build lint report. */
 public final class LintReportBuilder implements OptionsBuilder<LintReportBuilder, LintReport> {
@@ -46,13 +44,11 @@ public final class LintReportBuilder implements OptionsBuilder<LintReportBuilder
     return new LintReportBuilder();
   }
 
-  private String title;
   private CrawlInfo crawlInfo;
   private List<Lint<? extends Serializable>> allLints;
 
   /** Default options. */
   private LintReportBuilder() {
-    title = "";
     crawlInfo = null;
     allLints = new ArrayList<>();
   }
@@ -60,7 +56,6 @@ public final class LintReportBuilder implements OptionsBuilder<LintReportBuilder
   @Override
   public LintReportBuilder fromOptions(final LintReport lintReport) {
     if (lintReport != null) {
-      title = lintReport.getTitle();
       crawlInfo = lintReport.getCrawlInfo();
       allLints = lintReport.getLints();
     }
@@ -69,7 +64,7 @@ public final class LintReportBuilder implements OptionsBuilder<LintReportBuilder
 
   @Override
   public LintReport toOptions() {
-    return new LintReport(title, crawlInfo, allLints);
+    return new LintReport(crawlInfo, allLints);
   }
 
   public LintReportBuilder withCatalog(final Catalog catalog) {
@@ -90,18 +85,6 @@ public final class LintReportBuilder implements OptionsBuilder<LintReportBuilder
     if (lints != null) {
       allLints = new ArrayList<>(lints);
     }
-    return this;
-  }
-
-  public LintReportBuilder withOutputOptions(final OutputOptions outputOptions) {
-    if (outputOptions != null) {
-      withTitle(outputOptions.getTitle());
-    }
-    return this;
-  }
-
-  public LintReportBuilder withTitle(final String title) {
-    this.title = trimToEmpty(title);
     return this;
   }
 }

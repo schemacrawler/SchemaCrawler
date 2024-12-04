@@ -72,10 +72,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
       // Produce the lint report
       final LintReport lintReport =
-          LintReportBuilder.builder()
-              .fromOptions(linters.getLintReport())
-              .withOutputOptions(outputOptions)
-              .build();
+          LintReportBuilder.builder().fromOptions(linters.getLintReport()).build();
 
       // Write out the lint report
       LOGGER.log(Level.INFO, "Generating lint report");

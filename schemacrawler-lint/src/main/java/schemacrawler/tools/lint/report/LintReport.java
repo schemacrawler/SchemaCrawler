@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
@@ -47,17 +46,12 @@ import us.fatehi.utility.Multimap;
 
 public final class LintReport implements Options, Iterable<Lint<? extends Serializable>> {
 
-  private final String title;
   private final CrawlInfo crawlInfo;
   private final List<Lint<? extends Serializable>> allLints;
   private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
-  LintReport(
-      final String title,
-      final CrawlInfo crawlInfo,
-      final List<Lint<? extends Serializable>> lints) {
+  LintReport(final CrawlInfo crawlInfo, final List<Lint<? extends Serializable>> lints) {
 
-    this.title = trimToEmpty(title);
     this.crawlInfo = crawlInfo; // Can be null
 
     requireNonNull(lints, "No lints provided");
@@ -105,15 +99,6 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
     final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
     lints.sort(LINT_COMPARATOR);
     return lints;
-  }
-
-  /**
-   * Gets the lint report title.
-   *
-   * @return Lint report title.
-   */
-  public String getTitle() {
-    return title;
   }
 
   /**
