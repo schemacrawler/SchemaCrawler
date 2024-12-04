@@ -34,7 +34,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -50,8 +49,6 @@ import us.fatehi.utility.Multimap;
 
 public final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
     implements LintTraversalHandler {
-
-  private static final Logger LOGGER = Logger.getLogger(LintReportTextFormatter.class.getName());
 
   // Set per run
   private LintReport report;
@@ -82,9 +79,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
 
   @Override
   public void handleHeaderEnd() {
-
     requireNonNull(report, "No lint report provided");
-
     handleCatalog();
   }
 
