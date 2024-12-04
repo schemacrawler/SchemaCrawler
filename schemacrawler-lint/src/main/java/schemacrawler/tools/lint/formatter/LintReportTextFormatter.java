@@ -53,7 +53,6 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
     implements LintReportGenerator {
 
   private final Catalog catalog;
-  private final LintOptions lintOptions;
   // Set per run
   private LintReport report;
 
@@ -64,7 +63,6 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
       final Identifiers identifiers) {
     super(schema, lintOptions, outputOptions, identifiers);
     this.catalog = requireNonNull(catalog, "No catalog provided");
-    this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }
 
   @Override
@@ -83,7 +81,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
 
     final List<? extends Table> tablesList = new ArrayList<>(catalog.getTables());
     Collections.sort(
-        tablesList, NamedObjectSort.getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
+        tablesList, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTables()));
     for (final Table table : tablesList) {
       this.handle(table);
     }

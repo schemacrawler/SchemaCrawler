@@ -62,7 +62,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   }
 
   @Override
-  public void handleHeader(final CrawlInfo crawlInfo) {
+  public final void handleHeader(final CrawlInfo crawlInfo) {
     if (crawlInfo == null) {
       return;
     }
@@ -113,7 +113,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
     // Default implementation - NO-OP
   }
 
-  protected boolean printVerboseDatabaseInfo() {
+  protected final boolean printVerboseDatabaseInfo() {
     return !options.isNoInfo() && schemaTextDetailType == SchemaTextDetailType.details;
   }
 }
