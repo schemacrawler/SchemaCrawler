@@ -34,8 +34,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -45,65 +45,26 @@ import schemacrawler.tools.lint.report.LintReport;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
-import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.Multimap;
 
 public final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
-    implements LintReportGenerator {
+    implements LintTraversalHandler {
 
-  private final Catalog catalog;
+  private static final Logger LOGGER = Logger.getLogger(LintReportTextFormatter.class.getName());
+
   // Set per run
   private LintReport report;
 
   public LintReportTextFormatter(
-      final Catalog catalog,
       final LintOptions lintOptions,
       final OutputOptions outputOptions,
       final Identifiers identifiers) {
     super(schema, lintOptions, outputOptions, identifiers);
-    this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
   @Override
-  public void generateLintReport(final LintReport report) {
-
-    this.report = requireNonNull(report, "No lint report provided");
-
-    begin();
-
-    handleHeaderStart();
-    handleHeader(catalog.getCrawlInfo());
-    handleHeaderEnd();
-
-    handleStart();
-    this.handle(catalog);
-
-    final List<? extends Table> tablesList = new ArrayList<>(catalog.getTables());
-    Collections.sort(
-        tablesList, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (final Table table : tablesList) {
-      this.handle(table);
-    }
-
-    handleEnd();
-
-    end();
-  }
-
-  private void handle(final Catalog catalog) {
-    final Collection<Lint<?>> lints = report.getLints(catalog);
-    if (lints != null && !lints.isEmpty()) {
-      formattingHelper.writeObjectStart();
-
-      formattingHelper.writeObjectNameRow("", "Database", "[database]", Color.white);
-
-      printLints(lints);
-      formattingHelper.writeObjectEnd();
-    }
-  }
-
-  private void handle(final Table table) {
+  public void handle(final Table table) {
     final Collection<Lint<?>> lints = report.getLints(table);
     if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
@@ -119,12 +80,42 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
     }
   }
 
-  private void handleEnd() {
+  @Override
+  public void handleHeaderEnd() {
+
+    requireNonNull(report, "No lint report provided");
+
+    handleCatalog();
+  }
+
+  @Override
+  public void handleTablesEnd() {
     // No output required
   }
 
-  private void handleStart() {
-    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Lints");
+  @Override
+  public void handleTablesStart() {
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Table Lints");
+  }
+
+  @Override
+  public void setReport(final LintReport report) {
+    requireNonNull(report, "No lint report provided");
+    this.report = report;
+  }
+
+  private void handleCatalog() {
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Catalog Lints");
+
+    final Collection<Lint<?>> lints = report.getCatalogLints();
+    if (lints != null && !lints.isEmpty()) {
+      formattingHelper.writeObjectStart();
+
+      formattingHelper.writeObjectNameRow("", "Database", "[database]", Color.white);
+
+      printLints(lints);
+      formattingHelper.writeObjectEnd();
+    }
   }
 
   private void printLints(final Collection<Lint<?>> lints) {

@@ -38,8 +38,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.tools.lint.Lint;
 import us.fatehi.utility.Multimap;
@@ -65,6 +65,15 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
   }
 
   /**
+   * Get all lints for the catalog, sorted in natural sorting order.
+   *
+   * @return All lints for a named object.
+   */
+  public List<Lint<?>> getCatalogLints() {
+    return getLints(new NamedObjectKey("catalog"));
+  }
+
+  /**
    * Gets information about when the catalog was crawled.
    *
    * @return Catalog crawl information.
@@ -83,22 +92,13 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
   }
 
   /**
-   * Get all lints for a given named object identified by its key, sorted in natural sorting order.
+   * Get all lints for a given table, sorted in natural sorting order.
    *
    * @return All lints for a named object.
    */
-  public List<Lint<?>> getLints(final NamedObject namedObject) {
-    requireNonNull(namedObject, "No named object provided");
-
-    final NamedObjectKey key = namedObject.key();
-    final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
-    if (lintsForKey == null) {
-      return Collections.emptyList();
-    }
-
-    final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
-    lints.sort(LINT_COMPARATOR);
-    return lints;
+  public List<Lint<?>> getLints(final Table table) {
+    requireNonNull(table, "No table provided");
+    return getLints(table.key());
   }
 
   /**
@@ -140,5 +140,16 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
    */
   public Stream<Lint<? extends Serializable>> stream() {
     return StreamSupport.stream(spliterator(), false);
+  }
+
+  private List<Lint<?>> getLints(final NamedObjectKey key) {
+    final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
+    if (lintsForKey == null) {
+      return Collections.emptyList();
+    }
+
+    final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
+    lints.sort(LINT_COMPARATOR);
+    return lints;
   }
 }

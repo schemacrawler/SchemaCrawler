@@ -104,12 +104,12 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   }
 
   @Override
-  public final void handleHeaderEnd() {
+  public void handleHeaderEnd() {
     // Default implementation - NO-OP
   }
 
   @Override
-  public final void handleHeaderStart() {
+  public void handleHeaderStart() {
     // Default implementation - NO-OP
   }
 

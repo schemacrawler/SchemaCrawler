@@ -7,6 +7,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_US
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -53,6 +54,9 @@ abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {
       @JsonProperty("value")
       public abstract Object getValueAsString();
 
+      @JsonIgnore
+      public abstract List<?> getCatalogLints();
+
       @JsonProperty("key")
       private final String[] key = {};
     }
@@ -70,6 +74,7 @@ abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {
         WRITE_ENUMS_USING_TO_STRING);
     mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
     mapper.addMixIn(Lint.class, JacksonAnnotationMixIn.class);
+    mapper.addMixIn(LintReport.class, JacksonAnnotationMixIn.class);
     mapper.addMixIn(NamedObjectKey.class, JacksonAnnotationMixIn.class);
     mapper.registerModule(timeModule);
     return mapper;

@@ -40,10 +40,6 @@ public interface SchemaTraversalHandler extends TraversalHandler {
 
   void handle(final ColumnDataType columnDataType);
 
-  void handleInfo(DatabaseInfo databaseInfo);
-
-  void handleInfo(JdbcDriverInfo jdbcDriverInfo);
-
   /**
    * Provides information on the database schema.
    *
@@ -75,6 +71,10 @@ public interface SchemaTraversalHandler extends TraversalHandler {
   void handleColumnDataTypesEnd();
 
   void handleColumnDataTypesStart();
+
+  void handleInfo(DatabaseInfo databaseInfo);
+
+  void handleInfo(JdbcDriverInfo jdbcDriverInfo);
 
   void handleInfoEnd();
 
