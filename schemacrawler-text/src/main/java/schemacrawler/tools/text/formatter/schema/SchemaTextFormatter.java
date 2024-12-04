@@ -154,7 +154,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   @Override
-  public void handle(final DatabaseInfo dbInfo) {
+  public void handleInfo(final DatabaseInfo dbInfo) {
     if (!printVerboseDatabaseInfo() || !options.isShowDatabaseInfo() || dbInfo == null) {
       return;
     }
@@ -198,7 +198,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   @Override
-  public void handle(final JdbcDriverInfo driverInfo) {
+  public void handleInfo(final JdbcDriverInfo driverInfo) {
     if (!printVerboseDatabaseInfo() || !options.isShowJdbcDriverInfo() || driverInfo == null) {
       return;
     }

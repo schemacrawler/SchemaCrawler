@@ -152,8 +152,8 @@ public class SchemaTraverser {
     }
 
     handler.handleInfoStart();
-    handler.handle(catalog.getDatabaseInfo());
-    handler.handle(catalog.getJdbcDriverInfo());
+    handler.handleInfo(catalog.getDatabaseInfo());
+    handler.handleInfo(catalog.getJdbcDriverInfo());
     handler.handleInfoEnd();
 
     handler.end();

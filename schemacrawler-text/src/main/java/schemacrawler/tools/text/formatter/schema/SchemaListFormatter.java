@@ -136,12 +136,12 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   }
 
   @Override
-  public void handle(final DatabaseInfo dbInfo) {
+  public void handleInfo(final DatabaseInfo dbInfo) {
     // No output required
   }
 
   @Override
-  public void handle(final JdbcDriverInfo driverInfo) {
+  public void handleInfo(final JdbcDriverInfo driverInfo) {
     // No output required
   }
 
