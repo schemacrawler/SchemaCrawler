@@ -36,7 +36,7 @@ public interface TraversalHandler {
 
   void end();
 
-  void handle(CrawlInfo crawlInfo);
+  void handleHeader(CrawlInfo crawlInfo);
 
   void handleHeaderEnd();
 

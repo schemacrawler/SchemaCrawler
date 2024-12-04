@@ -75,7 +75,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
     begin();
 
     handleHeaderStart();
-    handle(catalog.getCrawlInfo());
+    handleHeader(catalog.getCrawlInfo());
     handleHeaderEnd();
 
     handleStart();

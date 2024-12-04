@@ -112,7 +112,7 @@ public class TextFormatterCoverageTest {
   public void nullCrawlInfo(final TestContext testContext) throws Exception {
     checkTextOutput(
         formatter -> {
-          formatter.handle((CrawlInfo) null);
+          formatter.handleHeader((CrawlInfo) null);
           formatter.handle(mock(DatabaseInfo.class));
         },
         testContext.testMethodFullName());

@@ -96,7 +96,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   }
 
   @Override
-  public void handle(final CrawlInfo crawlInfo) {
+  public void handleHeader(final CrawlInfo crawlInfo) {
     if (crawlInfo == null) {
       return;
     }

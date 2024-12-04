@@ -62,7 +62,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   }
 
   @Override
-  public void handle(final CrawlInfo crawlInfo) {
+  public void handleHeader(final CrawlInfo crawlInfo) {
     if (crawlInfo == null) {
       return;
     }

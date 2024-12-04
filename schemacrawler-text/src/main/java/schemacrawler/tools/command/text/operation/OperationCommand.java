@@ -85,7 +85,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
     handler.begin();
 
     handler.handleHeaderStart();
-    handler.handle(catalog.getCrawlInfo());
+    handler.handleHeader(catalog.getCrawlInfo());
     handler.handleHeaderEnd();
 
     if (query.isQueryOver()) {
