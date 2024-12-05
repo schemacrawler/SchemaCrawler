@@ -28,13 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint.formatter;
 
-import schemacrawler.tools.lint.report.LintReport;
+import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.traversal.SchemaTraverser;
 
 public final class LintReportTextGenerator extends SchemaTraverser implements LintReportGenerator {
 
   @Override
-  public void generateLintReport(final LintReport report) {
+  public void generateLintReport(final Lints report) {
     ((LintTraversalHandler) getHandler()).setReport(report);
     traverse();
   }

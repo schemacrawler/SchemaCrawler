@@ -26,33 +26,32 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.lint.report;
+package schemacrawler.tools.lint;
 
 import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import static java.util.Objects.requireNonNull;
-import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.tools.lint.Lint;
 import us.fatehi.utility.Multimap;
 
-public final class LintReport implements Options, Iterable<Lint<? extends Serializable>> {
+/** Immutable collection of lints, with lookup methods useful for reporting. */
+// Contrast with the internal lint collector, which is mutable, and shared
+// between linters.
+public final class Lints implements Options, Iterable<Lint<? extends Serializable>> {
 
-  private final CrawlInfo crawlInfo;
   private final List<Lint<? extends Serializable>> allLints;
   private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
-  LintReport(final CrawlInfo crawlInfo, final List<Lint<? extends Serializable>> lints) {
-
-    this.crawlInfo = crawlInfo; // Can be null
+  public Lints(final Collection<Lint<? extends Serializable>> lints) {
 
     requireNonNull(lints, "No lints provided");
     allLints = new ArrayList<>(lints);
@@ -74,15 +73,6 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
   }
 
   /**
-   * Gets information about when the catalog was crawled.
-   *
-   * @return Catalog crawl information.
-   */
-  public CrawlInfo getCrawlInfo() {
-    return crawlInfo;
-  }
-
-  /**
    * Get all lints, sorted in natural sorting order.
    *
    * @return All lints in the report.
@@ -99,15 +89,6 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
   public List<Lint<?>> getLints(final Table table) {
     requireNonNull(table, "No table provided");
     return getLints(table.key());
-  }
-
-  /**
-   * Whether crawl information is available.
-   *
-   * @return True if crawl information is available.
-   */
-  public boolean hasCrawlInfo() {
-    return crawlInfo != null;
   }
 
   /**

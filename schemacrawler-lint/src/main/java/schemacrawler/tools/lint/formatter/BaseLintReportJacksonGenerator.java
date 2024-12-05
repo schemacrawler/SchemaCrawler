@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.report.LintReport;
+import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.options.OutputOptions;
 
 abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {
@@ -32,7 +32,7 @@ abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {
   }
 
   @Override
-  public void generateLintReport(final LintReport report) {
+  public void generateLintReport(final Lints report) {
     requireNonNull(out, "No output stream provided");
     try {
       final ObjectMapper mapper = newConfiguredObjectMapper();
@@ -74,7 +74,7 @@ abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {
         WRITE_ENUMS_USING_TO_STRING);
     mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
     mapper.addMixIn(Lint.class, JacksonAnnotationMixIn.class);
-    mapper.addMixIn(LintReport.class, JacksonAnnotationMixIn.class);
+    mapper.addMixIn(Lints.class, JacksonAnnotationMixIn.class);
     mapper.addMixIn(NamedObjectKey.class, JacksonAnnotationMixIn.class);
     mapper.registerModule(timeModule);
     return mapper;

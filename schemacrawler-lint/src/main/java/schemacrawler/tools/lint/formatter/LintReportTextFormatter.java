@@ -40,7 +40,7 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.report.LintReport;
+import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
@@ -51,7 +51,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
     implements LintTraversalHandler {
 
   // Set per run
-  private LintReport report;
+  private Lints report;
 
   public LintReportTextFormatter(
       final LintOptions lintOptions,
@@ -94,7 +94,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   }
 
   @Override
-  public void setReport(final LintReport report) {
+  public void setReport(final Lints report) {
     requireNonNull(report, "No lint report provided");
     this.report = report;
   }

@@ -34,7 +34,7 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
-import schemacrawler.tools.lint.report.LintReport;
+import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 
 public interface LintTraversalHandler extends SchemaTraversalHandler {
@@ -119,5 +119,5 @@ public interface LintTraversalHandler extends SchemaTraversalHandler {
     // No-op
   }
 
-  void setReport(final LintReport report);
+  void setReport(final Lints report);
 }

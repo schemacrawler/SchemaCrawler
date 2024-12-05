@@ -39,8 +39,6 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import schemacrawler.tools.lint.report.LintReport;
-import schemacrawler.tools.lint.report.LintReportBuilder;
 import us.fatehi.utility.string.StringFormat;
 
 public final class Linters {
@@ -52,7 +50,6 @@ public final class Linters {
   // Running state
   private List<Linter> linters;
   private LintCollector collector;
-  private LintReport lintReport;
 
   public Linters(final LinterConfigs linterConfigs, final boolean runAllLinters) {
     this.linterConfigs = requireNonNull(linterConfigs, "No linter configs provided");
@@ -61,7 +58,6 @@ public final class Linters {
     // Initialize running state to empty
     linters = new ArrayList<>();
     collector = new LintCollector();
-    lintReport = LintReportBuilder.builder().build();
   }
 
   public void dispatch(final LintDispatch lintDispatch) {
@@ -88,8 +84,8 @@ public final class Linters {
     return false;
   }
 
-  public LintReport getLintReport() {
-    return lintReport;
+  public Lints getLints() {
+    return new Lints(collector.getLints());
   }
 
   public String getLintSummary() {
@@ -124,9 +120,6 @@ public final class Linters {
 
     initialize();
     runLinters(catalog, connection);
-    // Produce lint report
-    lintReport =
-        LintReportBuilder.builder().withCatalog(catalog).withLints(collector.getLints()).build();
   }
 
   /**
