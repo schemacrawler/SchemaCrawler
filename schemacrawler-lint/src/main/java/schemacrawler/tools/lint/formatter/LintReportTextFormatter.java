@@ -100,7 +100,7 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   }
 
   private void handleCatalog() {
-    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Catalog Lints");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Database Lints");
 
     final Collection<Lint<?>> lints = report.getCatalogLints();
     if (lints != null && !lints.isEmpty()) {
