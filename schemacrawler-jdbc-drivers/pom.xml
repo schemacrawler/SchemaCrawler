@@ -46,7 +46,7 @@
     <dependency>
       <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
-      <version>21.15.0.0</version>
+      <version>21.16.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.db2</groupId>
@@ -108,7 +108,7 @@
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
-      <version>3.5.0</version>
+      <version>3.5.1</version>
     </dependency>
 
     <dependency>
@@ -159,7 +159,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
-          <version>2.4.0</version>
+          <version>2.5.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
