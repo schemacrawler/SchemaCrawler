@@ -16,3 +16,4 @@ buildNumber.properties
 .sdb/
 .cache/
 dbeaver-workspace/
+*.log
