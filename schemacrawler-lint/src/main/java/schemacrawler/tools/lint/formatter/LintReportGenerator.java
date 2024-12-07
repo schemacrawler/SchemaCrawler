@@ -1,8 +1,8 @@
 package schemacrawler.tools.lint.formatter;
 
-import schemacrawler.tools.lint.report.LintReport;
+import schemacrawler.tools.lint.Lints;
 
 public interface LintReportGenerator {
 
-  void generateLintReport(LintReport report);
+  void generateLintReport(Lints report);
 }

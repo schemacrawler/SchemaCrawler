@@ -24,43 +24,18 @@ License v3 are available at:
 http://www.gnu.org/licenses/
 
 ========================================================================
- */
+*/
 
-package us.fatehi.utility.string;
+package schemacrawler.tools.lint.formatter;
 
-import static us.fatehi.utility.Utility.isBlank;
+import schemacrawler.tools.lint.Lints;
+import schemacrawler.tools.traversal.SchemaTraverser;
 
-import java.util.function.Supplier;
-import us.fatehi.utility.ObjectToString;
-
-public final class ObjectToStringFormat implements Supplier<String> {
-
-  private final String context;
-  private final Object args;
-
-  public ObjectToStringFormat(final Object args) {
-    this(null, args);
-  }
-
-  public ObjectToStringFormat(final String context, final Object args) {
-    this.context = context;
-    this.args = args;
-  }
+public final class LintReportTextGenerator extends SchemaTraverser implements LintReportGenerator {
 
   @Override
-  public String get() {
-    final StringBuilder buffer = new StringBuilder();
-    if (!isBlank(context)) {
-      buffer.append(context).append(System.lineSeparator());
-    }
-    if (args != null) {
-      buffer.append(ObjectToString.toString(args));
-    }
-    return buffer.toString();
-  }
-
-  @Override
-  public String toString() {
-    return get();
+  public void generateLintReport(final Lints report) {
+    ((LintTraversalHandler) getHandler()).setReport(report);
+    traverse();
   }
 }

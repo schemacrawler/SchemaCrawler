@@ -112,8 +112,8 @@ public class TextFormatterCoverageTest {
   public void nullCrawlInfo(final TestContext testContext) throws Exception {
     checkTextOutput(
         formatter -> {
-          formatter.handle((CrawlInfo) null);
-          formatter.handle(mock(DatabaseInfo.class));
+          formatter.handleHeader((CrawlInfo) null);
+          formatter.handleInfo(mock(DatabaseInfo.class));
         },
         testContext.testMethodFullName());
   }
@@ -131,7 +131,7 @@ public class TextFormatterCoverageTest {
     dbInfo.addServerInfo(
         new ImmutableServerInfoProperty("PROP1", "VALUE1", "Server info property"));
 
-    checkTextOutput(formatter -> formatter.handle(dbInfo), testContext.testMethodFullName());
+    checkTextOutput(formatter -> formatter.handleInfo(dbInfo), testContext.testMethodFullName());
   }
 
   private void checkTextOutput(

@@ -28,11 +28,12 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.ioresource;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.locateResource;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import static java.util.Objects.requireNonNull;
 
 /**
  * Converts a provided classpath resource into an input resource. NOTE: Always assumes that

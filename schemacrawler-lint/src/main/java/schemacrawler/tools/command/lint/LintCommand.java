@@ -35,13 +35,13 @@ import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.lint.formatter.LintReportGenerator;
 import schemacrawler.tools.lint.formatter.LintReportJsonGenerator;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
+import schemacrawler.tools.lint.formatter.LintReportTextGenerator;
 import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
-import schemacrawler.tools.lint.report.LintReport;
-import schemacrawler.tools.lint.report.LintReportBuilder;
 import us.fatehi.utility.string.ObjectToStringFormat;
 
 public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
@@ -71,15 +71,11 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       linters.lint(catalog, connection);
 
       // Produce the lint report
-      final LintReport lintReport =
-          LintReportBuilder.builder()
-              .fromOptions(linters.getLintReport())
-              .withOutputOptions(outputOptions)
-              .build();
+      final Lints lints = linters.getLints();
 
       // Write out the lint report
       LOGGER.log(Level.INFO, "Generating lint report");
-      getLintReportBuilder().generateLintReport(lintReport);
+      getLintReportBuilder().generateLintReport(lints);
 
       linters.dispatch(commandOptions.getLintDispatch());
 
@@ -97,19 +93,23 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
     final LintReportOutputFormat outputFormat =
         LintReportOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final LintReportGenerator lintReportBuilder;
+    final LintReportGenerator lintReportGenerator;
     switch (outputFormat) {
       case json:
-        lintReportBuilder = new LintReportJsonGenerator(outputOptions);
+        lintReportGenerator = new LintReportJsonGenerator(outputOptions);
         break;
       case yaml:
-        lintReportBuilder = new LintReportYamlGenerator(outputOptions);
+        lintReportGenerator = new LintReportYamlGenerator(outputOptions);
         break;
       default:
-        lintReportBuilder =
-            new LintReportTextFormatter(catalog, commandOptions, outputOptions, identifiers);
+        final LintReportTextFormatter textFormatter =
+            new LintReportTextFormatter(commandOptions, outputOptions, identifiers);
+        final LintReportTextGenerator textGenerator = new LintReportTextGenerator();
+        textGenerator.setCatalog(catalog);
+        textGenerator.setHandler(textFormatter);
+        lintReportGenerator = textGenerator;
     }
 
-    return lintReportBuilder;
+    return lintReportGenerator;
   }
 }

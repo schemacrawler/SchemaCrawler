@@ -48,8 +48,8 @@ import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import schemacrawler.tools.lint.report.LintReport;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -79,7 +79,7 @@ public class Issue419LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintReport lintReport = linters.getLintReport();
+      final Lints lintReport = linters.getLints();
 
       assertThat(lintReport.size(), is(1));
       assertThat(

@@ -32,7 +32,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import us.fatehi.utility.Color;
 
 /** Builds an HTML tag. */

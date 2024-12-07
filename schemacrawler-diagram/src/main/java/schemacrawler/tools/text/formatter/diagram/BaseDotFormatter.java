@@ -32,13 +32,9 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
-
 import java.util.Map;
 import java.util.Map.Entry;
-
 import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -72,7 +68,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
   }
 
   @Override
-  public void handle(final CrawlInfo crawlInfo) {
+  public void handleHeader(final CrawlInfo crawlInfo) {
     if (crawlInfo == null) {
       return;
     }
@@ -136,16 +132,6 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
   }
 
   @Override
-  public void handle(final DatabaseInfo dbInfo) {
-    // No-op
-  }
-
-  @Override
-  public void handle(final JdbcDriverInfo driverInfo) {
-    // No-op
-  }
-
-  @Override
   public void handleHeaderEnd() {
     if (options.isNoInfo() && !outputOptions.hasTitle()) {
       return;
@@ -173,16 +159,6 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
     formattingHelper
         .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
         .println();
-  }
-
-  @Override
-  public void handleInfoEnd() {
-    // No-op
-  }
-
-  @Override
-  public void handleInfoStart() {
-    // No-op
   }
 
   private String makeGraphvizAttributes(

@@ -28,13 +28,14 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.scheduler;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 /**

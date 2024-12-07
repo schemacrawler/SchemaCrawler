@@ -58,9 +58,9 @@ import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import schemacrawler.tools.lint.report.LintReport;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -110,9 +110,8 @@ public class LintTest {
     try (final Connection connection = dataSource.get(); ) {
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
-      final LintReport lintReport = linters.getLintReport();
+      final Lints lintReport = linters.getLints();
       assertThat(lintReport.size(), is(53));
-      assertThat(lintReport.hasCrawlInfo(), is(true));
 
       final TestWriter testout1 = new TestWriter();
       try (final TestWriter out = testout1) {
@@ -157,7 +156,7 @@ public class LintTest {
       final LinterConfigs linterConfigs = new LinterConfigs(new Config());
       final Linters linters = new Linters(linterConfigs, true);
       linters.lint(catalog, connection);
-      final LintReport lintReport = linters.getLintReport();
+      final Lints lintReport = linters.getLints();
       assertThat(lintReport.size(), is(42));
 
       final TestWriter testout = new TestWriter();
@@ -207,7 +206,7 @@ public class LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintReport lintReport = linters.getLintReport();
+      final Lints lintReport = linters.getLints();
 
       assertThat(
           lintReport.stream().findFirst().map(Lint::getMessage).orElse("No value found"),
@@ -238,7 +237,7 @@ public class LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
-      final LintReport lintReport = linters.getLintReport();
+      final Lints lintReport = linters.getLints();
       assertThat(
           "All linters should be turned off, so there should be no lints",
           lintReport.size(),

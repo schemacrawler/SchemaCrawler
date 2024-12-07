@@ -26,39 +26,32 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.lint.report;
+package schemacrawler.tools.lint;
 
 import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.trimToEmpty;
-import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.tools.lint.Lint;
 import us.fatehi.utility.Multimap;
 
-public final class LintReport implements Options, Iterable<Lint<? extends Serializable>> {
+/** Immutable collection of lints, with lookup methods useful for reporting. */
+// Contrast with the internal lint collector, which is mutable, and shared
+// between linters.
+public final class Lints implements Options, Iterable<Lint<? extends Serializable>> {
 
-  private final String title;
-  private final CrawlInfo crawlInfo;
   private final List<Lint<? extends Serializable>> allLints;
   private final Multimap<NamedObjectKey, Lint<?>> lintsByObject;
 
-  LintReport(
-      final String title,
-      final CrawlInfo crawlInfo,
-      final List<Lint<? extends Serializable>> lints) {
-
-    this.title = trimToEmpty(title);
-    this.crawlInfo = crawlInfo; // Can be null
+  public Lints(final Collection<Lint<? extends Serializable>> lints) {
 
     requireNonNull(lints, "No lints provided");
     allLints = new ArrayList<>(lints);
@@ -71,12 +64,12 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
   }
 
   /**
-   * Gets information about when the catalog was crawled.
+   * Get all lints for the catalog, sorted in natural sorting order.
    *
-   * @return Catalog crawl information.
+   * @return All lints for a named object.
    */
-  public CrawlInfo getCrawlInfo() {
-    return crawlInfo;
+  public List<Lint<?>> getCatalogLints() {
+    return getLints(new NamedObjectKey("catalog"));
   }
 
   /**
@@ -89,40 +82,13 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
   }
 
   /**
-   * Get all lints for a given named object identified by its key, sorted in natural sorting order.
+   * Get all lints for a given table, sorted in natural sorting order.
    *
    * @return All lints for a named object.
    */
-  public List<Lint<?>> getLints(final NamedObject namedObject) {
-    requireNonNull(namedObject, "No named object provided");
-
-    final NamedObjectKey key = namedObject.key();
-    final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
-    if (lintsForKey == null) {
-      return Collections.emptyList();
-    }
-
-    final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
-    lints.sort(LINT_COMPARATOR);
-    return lints;
-  }
-
-  /**
-   * Gets the lint report title.
-   *
-   * @return Lint report title.
-   */
-  public String getTitle() {
-    return title;
-  }
-
-  /**
-   * Whether crawl information is available.
-   *
-   * @return True if crawl information is available.
-   */
-  public boolean hasCrawlInfo() {
-    return crawlInfo != null;
+  public List<Lint<?>> getLints(final Table table) {
+    requireNonNull(table, "No table provided");
+    return getLints(table.key());
   }
 
   /**
@@ -155,5 +121,16 @@ public final class LintReport implements Options, Iterable<Lint<? extends Serial
    */
   public Stream<Lint<? extends Serializable>> stream() {
     return StreamSupport.stream(spliterator(), false);
+  }
+
+  private List<Lint<?>> getLints(final NamedObjectKey key) {
+    final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
+    if (lintsForKey == null) {
+      return Collections.emptyList();
+    }
+
+    final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
+    lints.sort(LINT_COMPARATOR);
+    return lints;
   }
 }
