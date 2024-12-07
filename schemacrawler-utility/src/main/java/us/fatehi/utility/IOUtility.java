@@ -89,7 +89,8 @@ public final class IOUtility {
 
       bufferedWriter.flush();
     } catch (final IOException e) {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      LOGGER.log(Level.INFO, e.getMessage());
+      LOGGER.log(Level.FINE, e.getMessage(), e);
     }
   }
 
@@ -198,7 +199,8 @@ public final class IOUtility {
       return writer.toString();
     } catch (final IOException e) {
       // This is the error thrown while closing the writer itself, not during copy
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      LOGGER.log(Level.INFO, e.getMessage());
+      LOGGER.log(Level.FINE, e.getMessage(), e);
       return "";
     }
   }
@@ -208,7 +210,8 @@ public final class IOUtility {
       final InputResource inputResource = new ClasspathInputResource(resource);
       return readFully(inputResource.openNewInputReader(UTF_8));
     } catch (final IOException e) {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      LOGGER.log(Level.INFO, e.getMessage());
+      LOGGER.log(Level.FINE, e.getMessage(), e);
       return "";
     }
   }

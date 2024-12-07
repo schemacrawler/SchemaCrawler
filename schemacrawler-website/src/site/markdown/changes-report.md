@@ -7,6 +7,7 @@ SchemaCrawler release notes.
 
 - Move ChatGPT integration into a separate top-level project
 - Fix issue #1768 by standardizing how all reports are generated
+- Build Docker image based on ARM 64 architecture
 
 
 <a name="v16.23.2"></a>

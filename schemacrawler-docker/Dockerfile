@@ -24,7 +24,7 @@
 #
 # ========================================================================
 
-FROM eclipse-temurin:11-alpine
+FROM --platform=linux/arm64 eclipse-temurin:21-jdk-alpine
 
 LABEL \
   "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \

@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.join;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,6 +41,8 @@ import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.join;
 
 public final class UtilityLogger {
 
@@ -71,7 +71,8 @@ public final class UtilityLogger {
       final String arg = iterator.next();
       if (arg == null) {
         continue;
-      } else if (arg.matches("--password.*=.*")) {
+      }
+      if (arg.matches("--password.*=.*")) {
         argsList.add(passwordRedacted);
       } else if (arg.startsWith("--password")) {
         argsList.add(passwordRedacted);
@@ -97,7 +98,7 @@ public final class UtilityLogger {
       resultSet.clearWarnings();
     } catch (final SQLException e) {
       // NOTE: Do not show exception while logging warnings
-      logger.log(Level.WARNING, "Could not log SQL warnings for result set");
+      logger.log(Level.FINE, "Could not log SQL warnings for result set");
     }
   }
 
@@ -111,7 +112,7 @@ public final class UtilityLogger {
       statement.clearWarnings();
     } catch (final SQLException e) {
       // NOTE: Do not show exception while logging warnings
-      logger.log(Level.WARNING, "Could not log SQL warnings for statement");
+      logger.log(Level.FINE, "Could not log SQL warnings for statement");
     }
   }
 

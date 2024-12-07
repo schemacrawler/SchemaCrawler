@@ -143,11 +143,10 @@ Connect to the IBM DB2 container if needed, run
 
 ### Testing
 
-- Open DBeaver in a browser at <http://localhost:8080>
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --url jdbc:mariadb://mariadb:3306/books --user schemacrawler --password schemacrawler --info-level minimum -c list`
+  `schemacrawler --url jdbc:mariadb://mariadb:3306/books --user root --password schemacrawler --info-level minimum -c list`
 - Output can be created with `--output-file share/out.txt`
 
 ### Tear Down
