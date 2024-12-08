@@ -70,10 +70,6 @@ import schemacrawler.tools.options.Config;
     disabledReason = "SQL Server Docker container does not run on ARM")
 public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
 
-  static {
-    System.err.println("CURRENT_ARCHITECTURE=" + System.getProperty("os.arch"));
-  }
-
   @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
