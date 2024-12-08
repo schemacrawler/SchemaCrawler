@@ -15,7 +15,7 @@ public class DatabaseDriverTest {
     final int numJDBCDrivers = availableJDBCDrivers.size();
     assertThat(
         "Number of of avilable JDBC drivers is not correct - found " + numJDBCDrivers,
-        numJDBCDrivers == 20,
+        numJDBCDrivers == 21,
         is(true));
   }
 }
