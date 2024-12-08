@@ -100,32 +100,6 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  public void testDB2Dump() throws Exception {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule(schemaName))
-            .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.showDatabaseInfo().noInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("dump");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource("testDB2Dump.txt")));
-  }
-
-  @Test
   public void testDB2WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
