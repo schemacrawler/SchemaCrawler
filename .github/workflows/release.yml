@@ -26,6 +26,9 @@ jobs:
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
+    - id: setup-qemu
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
 
 # BUILD FOR DISTRIBUTION
     - id: build
