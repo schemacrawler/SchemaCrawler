@@ -132,6 +132,7 @@ jobs:
           clean package
     - id: gather-expected-results
       name: Gather expected results for failed tests
+      if: always()
       shell: bash
       run: |
         # Gather expected results
