@@ -74,8 +74,12 @@ import us.fatehi.utility.ioresource.InputResource;
 public final class TestUtility {
 
   public static void clean(final String dirname) throws Exception {
-    FileUtils.deleteDirectory(
-        buildDirectory().resolve("unit_tests_results_output").resolve(dirname).toFile());
+    final Path expectedResultsDirectory = buildDirectory().resolve("unit_tests_results_output");
+    FileUtils.deleteDirectory(expectedResultsDirectory.resolve(dirname).toFile());
+    if (Files.exists(expectedResultsDirectory)
+        && FileUtils.sizeOfDirectory(expectedResultsDirectory.toFile()) == 0) {
+      FileUtils.deleteDirectory(expectedResultsDirectory.toFile());
+    }
   }
 
   public static Path copyResourceToTempFile(final String resource) throws IOException {

@@ -34,10 +34,15 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.clean;
 import java.nio.file.Paths;
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import schemacrawler.test.utility.FileHasContent;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.ResultsResource;
@@ -45,9 +50,16 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 
 @ResolveTestContext
+@TestInstance(Lifecycle.PER_CLASS)
 public class FileHasContentTest {
 
   private static final String TEST_DIR = "_file_has_content/";
+
+  @BeforeAll
+  @AfterAll
+  public void cleanActualOutput() throws Exception {
+    clean(TEST_DIR);
+  }
 
   @Test
   public void missingOutputFile(final TestContext testContext) throws Exception {
