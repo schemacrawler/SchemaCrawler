@@ -103,7 +103,10 @@ jobs:
       uses: sualeh/install-graphviz@v1.0.3
 
 # BUILD AND TEST
-    - id: build-test
+    - id: setup-qemu
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - id: build-docker-image
       name: Build Docker image
       shell: bash
       run: |
