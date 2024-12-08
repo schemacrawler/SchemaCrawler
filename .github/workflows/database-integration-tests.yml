@@ -130,13 +130,26 @@ jobs:
           --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \
           clean package
+    - id: gather-expected-results
+      name: Gather expected results for failed tests
+      if: always()
+      shell: bash
+      run: |
+        # Gather expected results
+        echo "Gather expected results"
+        # DEBUG
+        echo "Current working directory:"
+        pwd
+        echo "Show expected results directories:"
+        find . -type d -name "unit_tests_results_output" -exec echo {} \;
         # Save expected results files
-        .github/scripts/unit-tests-results-output.sh $(realpath .)
+        echo "Zip expected results:"
+        .github/scripts/unit-tests-results-output.sh $(realpath .)        
     - id: upload-unit-tests-results-output
       name: Upload expected results files
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: unit-tests-results-output
-        path: ./unit-tests-results-output.zip
+        name: expected-results-${{ matrix.database }}
+        path: ./unit_tests_results_output.zip
         retention-days: 5
