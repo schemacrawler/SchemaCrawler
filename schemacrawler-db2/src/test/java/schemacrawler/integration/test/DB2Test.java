@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -75,6 +76,9 @@ import us.fatehi.utility.property.Property;
 @HeavyDatabaseTest("db2")
 @Testcontainers
 @ResolveTestContext
+@EnabledOnOs(
+    architectures = {"x64", "x86_64", "amd64"},
+    disabledReason = "IBM DB2 Docker container does not run on ARM")
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();

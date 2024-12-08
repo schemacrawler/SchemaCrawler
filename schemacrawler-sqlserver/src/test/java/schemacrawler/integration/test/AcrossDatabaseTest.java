@@ -40,6 +40,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -63,6 +64,9 @@ import us.fatehi.utility.database.SqlScript;
 @ResolveTestContext
 @HeavyDatabaseTest("sqlserver")
 @Testcontainers
+@EnabledOnOs(
+    architectures = {"x64", "x86_64", "amd64"},
+    disabledReason = "SQL Server Docker container does not run on ARM")
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
