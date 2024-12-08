@@ -91,9 +91,12 @@ jobs:
         # Gather expected results
         echo "Gather expected results"
         # DEBUG
+        echo "Current working directory:"
         pwd
+        echo "Show expected results directories:"
         find . -type d -name "unit_tests_results_output" -exec echo {} \;
         # Save expected results files
+        echo "Zip expected results:"
         .github/scripts/unit-tests-results-output.sh $(realpath .)        
     - id: upload-unit-tests-results-output
       name: Upload expected results files
@@ -101,5 +104,5 @@ jobs:
       if: always()
       with:
         name: unit-tests-results-output
-        path: ./unit-tests-results-output.zip
+        path: ./unit_tests_results_output.zip
         retention-days: 5
