@@ -1,7 +1,6 @@
 package schemacrawler.integration.test.utility;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
-
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Collections;
@@ -43,8 +42,7 @@ public class InformixContainer extends JdbcDatabaseContainer<InformixContainer> 
 
   @Override
   public String getJdbcUrl() {
-    return String.format(
-        "jdbc:informix-sqli://%s:%d/%s", getContainerIpAddress(), getJdbcPort(), databaseName);
+    return String.format("jdbc:informix-sqli://%s:%d/%s", getHost(), getJdbcPort(), databaseName);
   }
 
   @Override

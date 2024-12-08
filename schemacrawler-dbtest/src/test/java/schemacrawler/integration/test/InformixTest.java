@@ -63,6 +63,12 @@ public class InformixTest extends BaseAdditionalDatabaseTest {
   @BeforeEach
   public void createDatabase() {
 
+    try {
+      Class.forName("com.informix.jdbc.IfxDriver");
+    } catch (Exception e) {
+      fail("Could not load the Informix JDBC driver", e);
+    }
+
     if (!dbContainer.isRunning()) {
       fail("Testcontainer for database is not available");
     }
