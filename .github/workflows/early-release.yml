@@ -83,13 +83,13 @@ jobs:
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v6
       with:
-        context: ./schemacrawler-distrib/target/_expanded-distribution
         file: ./schemacrawler-docker/Dockerfile
+        context: ./schemacrawler-distrib/target/_expanded-distribution
         platforms: |-
           linux/amd64
           linux/arm64
-        push: true
-        sbom: true
-        provenance: true
         tags: |-
           schemacrawler/schemacrawler:early-access-release
+        sbom: true
+        provenance: true
+        push: true
