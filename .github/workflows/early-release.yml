@@ -85,6 +85,11 @@ jobs:
       with:
         context: ./schemacrawler-distrib/target/_expanded-distribution
         file: ./schemacrawler-docker/Dockerfile
-        platforms: linux/amd64,linux/arm64
+        platforms: 
+          - linux/amd64
+          - linux/arm64
         push: true
-        tags: schemacrawler/schemacrawler:early-access-release
+        sbom: true
+        provenance: true
+        tags:
+          - schemacrawler/schemacrawler:early-access-release
