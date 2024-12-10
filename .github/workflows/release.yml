@@ -26,9 +26,6 @@ jobs:
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
-    - id: setup-qemu
-      name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
 
 # BUILD FOR DISTRIBUTION
     - id: build
@@ -40,24 +37,37 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
-          -Ddocker.skip=false \
           clean install
 
-# PUBLISH DOCKER IMAGE
-    - id: publish-docker-image
-      name: Publish Docker image
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      shell: bash
-      run: |
-        # Publish Docker image
-        docker version
-        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v16.23.2
-        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
-        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker push --all-tags schemacrawler/schemacrawler
-        docker logout
+# BUILD AND PUBLISH DOCKER IMAGE
+    - id: setup-qemu
+      name: Setup QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - id: setup-buildx
+      name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log into Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v6
+      with:
+        file: ./schemacrawler-docker/Dockerfile
+        context: ./schemacrawler-distrib/target/_expanded-distribution
+        platforms: |-
+          linux/amd64
+          linux/arm64
+        tags: |-
+          schemacrawler/schemacrawler:v16.23.2
+          schemacrawler/schemacrawler:latest
+        sbom: true
+        provenance: true
+        push: true
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
     - id: upload-artifacts

@@ -8,6 +8,28 @@
 
 
 
+## SQLite
+
+### Setup
+
+- To start SchemaCrawler with SQLite, run
+  `docker-compose -f schemacrawler.yaml up -d`
+
+### Testing
+
+- Start SchemaCrawler bash with
+  `docker exec -it schemacrawler bash`
+- Run SchemaCrawler from Docker container bash
+  `schemacrawler --server sqlite --database sc.db --info-level minimum -c list`
+- Output can be created with `--output-file share/out.txt`
+
+### Tear Down
+
+- To stop SchemaCrawler with SQLite, run
+  `docker-compose -f schemacrawler.yaml down -t0`
+
+
+
 ## PostgreSQL
 
 ### Setup
