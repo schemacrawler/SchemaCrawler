@@ -33,7 +33,6 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
-          -Ddocker.skip=false \
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
@@ -66,18 +65,27 @@ jobs:
           ./schemacrawler-distrib/target/schemacrawler-16.23.2-bin.zip
           ./schemacrawler-distrib/target/schemacrawler-16.23.2-bin.zip.SHA-512
 
-# PUBLISH DOCKER IMAGE
-    - id: publish-docker-image
-      name: Publish Docker image
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      shell: bash
-      run: |
-        # Publish Docker image
-        docker version
-        docker tag schemacrawler/schemacrawler:latest \
-                   schemacrawler/schemacrawler:early-access-release
-        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker push schemacrawler/schemacrawler:early-access-release
-        docker logout
+# BUILD AND PUBLISH DOCKER IMAGE
+    - id: setup-qemu
+      name: Setup QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - id: setup-buildx
+      name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log into Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v6
+      with:
+        context: ./schemacrawler-distrib/target/_expanded-distribution
+        file: ./schemacrawler-docker/Dockerfile
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags:
+        - schemacrawler/schemacrawler:early-access-release
