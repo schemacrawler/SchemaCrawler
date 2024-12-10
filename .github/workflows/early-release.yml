@@ -91,5 +91,4 @@ jobs:
         push: true
         sbom: true
         provenance: true
-        tags: |
-          schemacrawler/schemacrawler:early-access-release
+        tags: schemacrawler/schemacrawler:early-access-release
