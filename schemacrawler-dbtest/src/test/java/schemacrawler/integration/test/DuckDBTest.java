@@ -39,6 +39,7 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -50,6 +51,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.IOUtility;
 
 @EnabledOnOs(
+    value = {OS.WINDOWS},
     architectures = {"x64", "x86_64", "amd64"},
     disabledReason = "DuckDB does not run on Windows ARM")
 public class DuckDBTest extends BaseAdditionalDatabaseTest {
