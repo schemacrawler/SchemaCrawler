@@ -77,9 +77,14 @@ class LinterTableEmpty extends BaseLinter {
   }
 
   @Override
+  public boolean usesConnection() {
+    return true;
+  }
+
+  @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
-    requireNonNull(connection, "No connection provided");
+    requireNonNull(connection, "c");
 
     final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
     try {

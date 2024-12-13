@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
@@ -62,7 +63,7 @@ public final class Linters {
 
   public void dispatch(final LintDispatch lintDispatch) {
 
-    LOGGER.log(Level.INFO, () -> getLintSummary());
+    LOGGER.log(Level.INFO, (Supplier<String>) this::getLintSummary);
 
     if (lintDispatch == null || lintDispatch == LintDispatch.none) {
       return;
@@ -182,7 +183,12 @@ public final class Linters {
                   Level.CONFIG,
                   new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
               try {
-                linter.lint(catalog, connection);
+                linter.initialize();
+                linter.setCatalog(catalog);
+                if (linter.usesConnection()) {
+                  linter.setConnection(connection);
+                }
+                linter.call();
               } catch (final Exception e) {
                 LOGGER.log(
                     Level.WARNING,

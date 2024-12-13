@@ -1,12 +1,23 @@
 package schemacrawler.tools.lint;
 
-import java.sql.Connection;
-import schemacrawler.schema.Catalog;
+import schemacrawler.tools.executable.Command;
 import schemacrawler.tools.lint.config.LinterConfig;
 
-public interface Linter {
+public interface Linter extends Command<LinterConfig, Void> {
 
   boolean exceedsThreshold();
+
+  /**
+   * @{@inheritDoc}
+   */
+  String getDescription();
+
+  /**
+   * Gets the number of lints produced by this linter.
+   *
+   * @return Lint counts
+   */
+  int getLintCount();
 
   /**
    * Gets the identification of the linter. A linter can be instantiated multiple times with
@@ -15,13 +26,6 @@ public interface Linter {
    * @return Identification of the linter.
    */
   String getLinterId();
-
-  /**
-   * Gets the number of lints produced by this linter.
-   *
-   * @return Lint counts
-   */
-  int getLintCount();
 
   /**
    * Gets the identification of this linter instance.
@@ -43,13 +47,4 @@ public interface Linter {
    * @return Brief summary of this linter
    */
   String getSummary();
-
-  void configure(final LinterConfig linterConfig);
-
-  void lint(final Catalog catalog, final Connection connection);
-
-  /**
-   * @{@inheritDoc}
-   */
-  String getDescription();
 }

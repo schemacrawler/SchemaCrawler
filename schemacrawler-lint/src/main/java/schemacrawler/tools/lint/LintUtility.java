@@ -104,7 +104,7 @@ public final class LintUtility {
       };
 
   public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
-    if (main == null || sub == null || (main.size() < sub.size())) {
+    if (main == null || sub == null || main.size() < sub.size()) {
       return false;
     }
     if (main.isEmpty()) {

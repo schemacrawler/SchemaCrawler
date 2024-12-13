@@ -77,6 +77,11 @@ class LinterCatalogSql extends BaseLinter {
   }
 
   @Override
+  public boolean usesConnection() {
+    return true;
+  }
+
+  @Override
   protected void configure(final Config config) {
     requireNonNull(config, "No configuration provided");
 

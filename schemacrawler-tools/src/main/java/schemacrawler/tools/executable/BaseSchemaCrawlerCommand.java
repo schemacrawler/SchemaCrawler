@@ -28,15 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
+import java.sql.Connection;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
-import java.sql.Connection;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
@@ -118,6 +117,9 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
 
   @Override
   public void setConnection(final Connection connection) {
+    if (!usesConnection()) {
+      throw new ExecutionRuntimeException("SchemaCrawler command does not use a connection");
+    }
     this.connection = connection;
   }
 
