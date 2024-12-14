@@ -26,9 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler;
-
-import us.fatehi.utility.property.BaseProductVersion;
+package us.fatehi.utility.property;
 
 /** Operating system information. */
 public final class OperatingSystemInfo extends BaseProductVersion {

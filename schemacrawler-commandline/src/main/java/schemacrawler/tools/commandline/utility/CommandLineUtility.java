@@ -43,8 +43,6 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.crawl.ConnectionInfoBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -55,6 +53,8 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.BaseProductVersion;
+import us.fatehi.utility.property.JvmSystemInfo;
+import us.fatehi.utility.property.OperatingSystemInfo;
 import us.fatehi.utility.property.ProductVersion;
 
 public class CommandLineUtility {
