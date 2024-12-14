@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
-import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.testcommand.TestCommandProvider;
@@ -36,7 +35,7 @@ public class CommandRegistryTest {
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder().withOutputFormatValue("unknown-output-format").toOptions();
     assertThrows(
-        ConfigurationException.class,
+        ExecutionRuntimeException.class,
         () -> commandRegistry.configureNewCommand("test-command", null, null, outputOptions));
   }
 

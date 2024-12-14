@@ -85,7 +85,7 @@ public class PluginCommandPojoTest {
   @Test
   public void newPluginCommand() {
     final PluginCommand pluginCommand =
-        PluginCommand.newPluginCommand(new PropertyName("name", "helpHeader"));
+        PluginCommand.newPluginCommand(new PropertyName("name", "** helpHeader"));
     pluginCommand.addOption("option1", Object.class, "helpOption1", "helpOption2");
     assertPluginCommandValues(
         pluginCommand, "Add command options to the `execute` command in the SchemaCrawler Shell");
@@ -113,7 +113,7 @@ public class PluginCommandPojoTest {
             () -> new String[] {"helpFooter1", "helpFooter2"});
     assertThat(pluginCommand.toString(), is("PluginCommand[name='name', options=[]]"));
     assertThat(pluginCommand.getName(), endsWith(":name"));
-    assertThat(pluginCommand.getHelpHeader(), is("helpHeader"));
+    assertThat(pluginCommand.getHelpHeader(), is("** helpHeader"));
     assertThat(
         pluginCommand.getHelpDescription().get(),
         is(arrayContaining("helpDescription1", "helpDescription2")));
@@ -168,7 +168,7 @@ public class PluginCommandPojoTest {
         is(
             "PluginCommand[name='name', options=[PluginCommandOption[name='option1', valueClass=java.lang.Object]]]"));
     assertThat(pluginCommand.getName(), endsWith(":name"));
-    assertThat(pluginCommand.getHelpHeader(), is("helpHeader"));
+    assertThat(pluginCommand.getHelpHeader(), is("** helpHeader"));
     assertThat(pluginCommand.getHelpDescription(), is(not(nullValue())));
     assertThat(pluginCommand.getHelpFooter().get(), is(arrayContaining(standardFooter)));
     assertThat(pluginCommand.getOptions(), contains(option));
