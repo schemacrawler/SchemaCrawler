@@ -61,9 +61,4 @@ public interface SchemaCrawlerCommand<C extends CommandOptions> extends Command<
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  @Override
-  default boolean usesConnection() {
-    return false;
-  }
 }
