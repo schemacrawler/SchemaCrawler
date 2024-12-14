@@ -116,7 +116,9 @@ public class DiagramRendererTest {
 
     try (final Connection connection = dataSource.get(); ) {
       scCommand.setOutputOptions(outputOptionsBuilder.toOptions());
-      scCommand.setConnection(connection);
+      if (scCommand.usesConnection()) {
+        scCommand.setConnection(connection);
+      }
 
       final SchemaRetrievalOptions schemaRetrievalOptions =
           SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);

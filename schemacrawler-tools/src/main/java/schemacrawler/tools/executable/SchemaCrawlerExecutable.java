@@ -124,9 +124,6 @@ public final class SchemaCrawlerExecutable {
       scCommand.setCatalog(catalog);
 
       if (scCommand.usesConnection()) {
-        if (connection == null) {
-          throw new SchemaCrawlerException("No database connection provided");
-        }
         scCommand.setConnection(connection);
       }
 
