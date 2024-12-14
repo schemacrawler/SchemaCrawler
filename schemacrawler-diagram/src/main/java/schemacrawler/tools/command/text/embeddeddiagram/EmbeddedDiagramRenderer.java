@@ -46,7 +46,9 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 import static java.util.Objects.requireNonNull;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.DiagramRenderer;
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -131,6 +133,10 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
       }
     } catch (final IOException e) {
       throw new IORuntimeException("Could not create embedded diagram", e);
+    } catch (final SchemaCrawlerException e) {
+      throw e;
+    } catch (final Exception e) {
+      throw new ExecutionRuntimeException(e);
     }
   }
 
@@ -148,11 +154,13 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
    * @param scCommand SchemaCrawler command to execute
    * @param outputFile Output file to create
    * @param outputFormat Output format
+   * @throws Exception
    */
   private void executeCommand(
       final SchemaCrawlerCommand<? super DiagramOptions> scCommand,
       final Path outputFile,
-      final OutputFormat outputFormat) {
+      final OutputFormat outputFormat)
+      throws Exception {
 
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder(getOutputOptions())

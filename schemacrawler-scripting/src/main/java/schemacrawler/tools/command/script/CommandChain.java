@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -165,7 +166,13 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     }
 
     for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
-      scCommand.call();
+      try {
+        scCommand.call();
+      } catch (final SchemaCrawlerException e) {
+        throw e;
+      } catch (final Exception e) {
+        throw new ExecutionRuntimeException(e);
+      }
     }
   }
 
