@@ -28,14 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.updateConnectionDataSource;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -134,7 +134,7 @@ public final class SchemaCrawlerExecutable {
       LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
       LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getIdentifiers()));
       LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getCommandOptions()));
-      scCommand.execute();
+      scCommand.call();
     } catch (final SchemaCrawlerException e) {
       throw e;
     } catch (final Exception e) {

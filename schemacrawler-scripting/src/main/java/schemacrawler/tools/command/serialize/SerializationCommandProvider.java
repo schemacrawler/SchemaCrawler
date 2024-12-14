@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.serialize;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -79,7 +78,7 @@ public class SerializationCommandProvider extends BaseCommandProvider {
   @Override
   public SerializationCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final SerializationCommand scCommand = new SerializationCommand();
-    scCommand.setCommandOptions(new SerializationOptions());
+    scCommand.configure(new SerializationOptions());
     return scCommand;
   }
 

@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.template;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-
 import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -65,7 +64,7 @@ public class TemplateCommandProvider extends BaseCommandProvider {
         TemplateLanguageOptionsBuilder.builder().fromConfig(config).toOptions();
 
     final TemplateCommand scCommand = new TemplateCommand();
-    scCommand.setCommandOptions(toOptions);
+    scCommand.configure(toOptions);
     return scCommand;
   }
 

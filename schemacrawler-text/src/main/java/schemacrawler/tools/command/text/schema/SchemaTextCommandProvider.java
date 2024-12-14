@@ -116,7 +116,7 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
         SchemaTextOptionsBuilder.builder().fromConfig(config).toOptions();
 
     final SchemaTextRenderer scCommand = new SchemaTextRenderer(command);
-    scCommand.setCommandOptions(schemaTextOptions);
+    scCommand.configure(schemaTextOptions);
     return scCommand;
   }
 

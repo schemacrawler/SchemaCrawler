@@ -34,20 +34,18 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.svg;
 import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.html;
 import static us.fatehi.utility.IOUtility.copy;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.text.diagram.DiagramRenderer;
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
@@ -163,7 +161,7 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
             .toOptions();
 
     // Normally set by the command provider during instantiation
-    scCommand.setCommandOptions(commandOptions);
+    scCommand.configure(commandOptions);
 
     // Set when a new command provider is initialized
     scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -181,6 +179,6 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     // Note: No need to set connection on the command
 
     // Execute
-    scCommand.execute();
+    scCommand.call();
   }
 }

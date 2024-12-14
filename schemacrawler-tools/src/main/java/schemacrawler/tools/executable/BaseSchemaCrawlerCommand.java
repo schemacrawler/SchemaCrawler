@@ -58,9 +58,20 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     outputOptions = OutputOptionsBuilder.newOutputOptions();
   }
 
+  @Override
+  public final Void call() {
+    execute();
+    return null;
+  }
+
   /** Runtime exceptions will be thrown if the command is not available. */
   @Override
   public abstract void checkAvailability() throws RuntimeException;
+
+  @Override
+  public final void configure(final C commandOptions) {
+    this.commandOptions = requireNonNull(commandOptions, "No command options provided");
+  }
 
   @Override
   public Catalog getCatalog() {
@@ -88,6 +99,11 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     return identifiers;
   }
 
+  @Override
+  public final String getName() {
+    return getCommand();
+  }
+
   /** {@inheritDoc} */
   @Override
   public final OutputOptions getOutputOptions() {
@@ -108,11 +124,6 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   @Override
   public void setCatalog(final Catalog catalog) {
     this.catalog = catalog;
-  }
-
-  @Override
-  public final void setCommandOptions(final C commandOptions) {
-    this.commandOptions = requireNonNull(commandOptions, "No command options provided");
   }
 
   @Override

@@ -28,15 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-import java.sql.Connection;
-
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
 /** A SchemaCrawler tools executable unit. */
-public interface SchemaCrawlerCommand<C extends CommandOptions> {
+public interface SchemaCrawlerCommand<C extends CommandOptions> extends Command<C, Void> {
 
   /**
    * Checks whether a command is available, and throws a runtime exception if it is not available.
@@ -49,13 +46,9 @@ public interface SchemaCrawlerCommand<C extends CommandOptions> {
    */
   void execute();
 
-  Catalog getCatalog();
-
   String getCommand();
 
   C getCommandOptions();
-
-  Connection getConnection();
 
   Identifiers getIdentifiers();
 
@@ -63,21 +56,13 @@ public interface SchemaCrawlerCommand<C extends CommandOptions> {
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
-  /** Initializes the command for execution. */
-  void initialize();
-
-  void setCatalog(Catalog catalog);
-
-  void setCommandOptions(C commandOptions);
-
-  void setConnection(Connection connection);
-
   void setIdentifiers(Identifiers identifiers);
 
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 
+  @Override
   default boolean usesConnection() {
     return false;
   }

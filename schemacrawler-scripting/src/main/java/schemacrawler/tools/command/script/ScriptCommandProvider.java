@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.script;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-
 import schemacrawler.tools.command.script.options.ScriptLanguageOptionsBuilder;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -63,7 +62,7 @@ public class ScriptCommandProvider extends BaseCommandProvider {
         ScriptLanguageOptionsBuilder.builder().fromConfig(config).toOptions();
 
     final ScriptCommand scCommand = new ScriptCommand();
-    scCommand.setCommandOptions(scriptOptions);
+    scCommand.configure(scriptOptions);
     return scCommand;
   }
 

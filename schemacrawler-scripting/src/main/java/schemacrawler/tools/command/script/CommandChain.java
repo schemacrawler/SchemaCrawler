@@ -28,13 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.script;
 
-import static java.util.Objects.requireNonNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -165,7 +165,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     }
 
     for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
-      scCommand.execute();
+      scCommand.call();
     }
   }
 
