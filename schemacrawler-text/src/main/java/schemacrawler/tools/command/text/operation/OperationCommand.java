@@ -52,12 +52,13 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.text.formatter.operation.DataTextFormatter;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
   private static final Logger LOGGER = Logger.getLogger(OperationCommand.class.getName());
 
-  public OperationCommand(final String command) {
+  public OperationCommand(final PropertyName command) {
     super(command);
   }
 
@@ -75,7 +76,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
           Level.INFO,
           new StringFormat(
               "Output format <%s> not supported for command <%s>",
-              outputOptions.getOutputFormatValue(), getCommand()));
+              outputOptions.getOutputFormatValue(), getCommandName().getName()));
       return;
     }
 

@@ -43,6 +43,7 @@ import java.util.function.Supplier;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.trimToEmpty;
 import us.fatehi.utility.Nullable;
+import us.fatehi.utility.property.PropertyName;
 
 public class PluginCommand implements Iterable<PluginCommandOption> {
 
@@ -58,16 +59,16 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     return newPluginCommand(server, name, helpHeader);
   }
 
-  public static PluginCommand newPluginCommand(final String name, final String helpHeader) {
-    return newPluginCommand(command, name, helpHeader);
+  public static PluginCommand newPluginCommand(final PropertyName name) {
+    return newPluginCommand(command, name.getName(), "** " + name.getDescription());
   }
 
   public static PluginCommand newPluginCommand(
-      final String name,
-      final String helpHeader,
+      final PropertyName name,
       @Nullable final Supplier<String[]> helpDescription,
       @Nullable final Supplier<String[]> helpFooter) {
-    return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter);
+    return new PluginCommand(
+        command, name.getName(), "** " + name.getDescription(), helpDescription, helpFooter);
   }
 
   private static PluginCommand newPluginCommand(

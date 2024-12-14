@@ -34,6 +34,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.property.PropertyName;
 
 /** A SchemaCrawler tools executable unit. */
 public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
@@ -43,7 +44,7 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   protected OutputOptions outputOptions;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
 
-  protected BaseSchemaCrawlerCommand(final String command) {
+  protected BaseSchemaCrawlerCommand(final PropertyName command) {
     super(command);
 
     schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
@@ -63,12 +64,6 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   @Override
   public final void configure(final C commandOptions) {
     this.commandOptions = requireNonNull(commandOptions, "No command options provided");
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String getCommand() {
-    return command;
   }
 
   @Override
@@ -121,12 +116,6 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     } else {
       this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    return command;
   }
 
   protected void checkCatalog() {

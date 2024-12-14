@@ -28,27 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility.testcommand;
 
+import static schemacrawler.test.utility.testcommand.TestCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.PropertyName;
 
 public class TestCommandProvider extends BaseCommandProvider {
 
-  public static final String DESCRIPTION_HEADER =
-      "Test command which is not deployed with the release";
-
   public TestCommandProvider() {
-    super(new PropertyName(TestCommand.COMMAND, DESCRIPTION_HEADER));
+    super(COMMAND);
     forceInstantiationFailureIfConfigured();
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final PluginCommand pluginCommand =
-        newPluginCommand(TestCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+    final PluginCommand pluginCommand = newPluginCommand(COMMAND);
     pluginCommand.addOption("test-command-parameter", String.class, "Parameter for test command");
     return pluginCommand;
   }

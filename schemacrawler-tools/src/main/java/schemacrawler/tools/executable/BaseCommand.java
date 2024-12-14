@@ -30,20 +30,20 @@ package schemacrawler.tools.executable;
 
 import java.sql.Connection;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.property.PropertyName;
 
 /** A SchemaCrawler tools executable unit. */
 public abstract class BaseCommand<C, R> implements Command<C, R> {
 
-  protected final String command;
+  protected final PropertyName command;
   protected C commandOptions;
   protected Catalog catalog;
   protected Connection connection;
 
-  protected BaseCommand(final String command) {
-    this.command = requireNotBlank(command, "No command specified");
+  protected BaseCommand(final PropertyName command) {
+    this.command = requireNonNull(command, "No command specified");
   }
 
   @Override
@@ -62,7 +62,7 @@ public abstract class BaseCommand<C, R> implements Command<C, R> {
   }
 
   @Override
-  public final String getName() {
+  public final PropertyName getCommandName() {
     return command;
   }
 
@@ -80,7 +80,7 @@ public abstract class BaseCommand<C, R> implements Command<C, R> {
   public final void setConnection(final Connection connection) {
     if (!usesConnection()) {
       throw new ExecutionRuntimeException(
-          String.format("<%s> does not use a connection", getName()));
+          String.format("<%s> does not use a connection", command.getName()));
     }
     this.connection = connection;
   }
@@ -88,6 +88,6 @@ public abstract class BaseCommand<C, R> implements Command<C, R> {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return command;
+    return command.toString();
   }
 }

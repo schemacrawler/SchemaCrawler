@@ -45,6 +45,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.LanguageOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.property.PropertyName;
 
 /**
  * Allows chaining multiple executables together, that produce different artifacts, such as an image
@@ -52,7 +53,9 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  */
 public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions> {
 
-  private static final String COMMAND = "chain";
+  private static final PropertyName COMMAND =
+      new PropertyName(
+          "chain", "Runs SchemaCrawler commands sequentially, each relying on the previous one");
 
   private static final Logger LOGGER = Logger.getLogger(CommandChain.class.getName());
 

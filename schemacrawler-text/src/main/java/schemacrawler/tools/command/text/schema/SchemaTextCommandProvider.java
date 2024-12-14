@@ -31,6 +31,7 @@ package schemacrawler.tools.command.text.schema;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import schemacrawler.tools.command.text.schema.options.CommandProviderUtility;
 import schemacrawler.tools.command.text.schema.options.PortableType;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -38,11 +39,9 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.PropertyName;
 
 public final class SchemaTextCommandProvider extends BaseCommandProvider {
-
-  private static final String DESCRIPTION_HEADER =
-      "Generate text output to show details of a schema";
 
   public SchemaTextCommandProvider() {
     super(CommandProviderUtility.schemaTextCommands());
@@ -53,8 +52,7 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
 
     final PluginCommand pluginCommand =
         newPluginCommand(
-            "schema",
-            "** " + DESCRIPTION_HEADER,
+            SchemaTextDetailType.schema.toPropertyName(),
             () -> new String[] {"Applies to all commands that show schema information"},
             () -> new String[0]);
 
@@ -112,10 +110,15 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
 
   @Override
   public SchemaTextRenderer newSchemaCrawlerCommand(final String command, final Config config) {
+    final PropertyName commandName = lookupSupportedCommand(command);
+    if (commandName == null) {
+      throw new IllegalArgumentException("Cannot support command, " + command);
+    }
+
     final SchemaTextOptions schemaTextOptions =
         SchemaTextOptionsBuilder.builder().fromConfig(config).toOptions();
 
-    final SchemaTextRenderer scCommand = new SchemaTextRenderer(command);
+    final SchemaTextRenderer scCommand = new SchemaTextRenderer(commandName);
     scCommand.configure(schemaTextOptions);
     return scCommand;
   }

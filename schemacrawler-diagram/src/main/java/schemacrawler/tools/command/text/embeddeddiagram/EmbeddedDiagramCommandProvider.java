@@ -36,6 +36,7 @@ import schemacrawler.tools.command.text.schema.options.CommandProviderUtility;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.property.PropertyName;
 
 public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
 
@@ -46,10 +47,15 @@ public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
   @Override
   public EmbeddedDiagramRenderer newSchemaCrawlerCommand(
       final String command, final Config config) {
+    final PropertyName commandName = lookupSupportedCommand(command);
+    if (commandName == null) {
+      throw new IllegalArgumentException("Cannot support command, " + command);
+    }
+
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().fromConfig(config).toOptions();
     final EmbeddedDiagramRenderer scCommand =
-        new EmbeddedDiagramRenderer(command, new GraphExecutorFactory());
+        new EmbeddedDiagramRenderer(commandName, new GraphExecutorFactory());
     scCommand.configure(diagramOptions);
     return scCommand;
   }

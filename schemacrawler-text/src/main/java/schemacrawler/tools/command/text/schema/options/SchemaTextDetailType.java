@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema.options;
 
+import us.fatehi.utility.property.PropertyName;
+
 /** Enumeration for level of schema text output detail. */
 public enum SchemaTextDetailType {
   brief(
@@ -50,7 +52,7 @@ public enum SchemaTextDetailType {
     this.description = description;
   }
 
-  public String getDescription() {
-    return description;
+  public PropertyName toPropertyName() {
+    return new PropertyName(name(), description);
   }
 }

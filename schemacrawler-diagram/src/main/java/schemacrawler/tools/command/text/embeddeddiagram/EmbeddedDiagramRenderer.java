@@ -58,6 +58,7 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.property.PropertyName;
 
 public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
 
@@ -90,7 +91,7 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
   private final GraphExecutorFactory graphExecutorFactory;
 
   public EmbeddedDiagramRenderer(
-      final String command, final GraphExecutorFactory graphExecutorFactory) {
+      final PropertyName command, final GraphExecutorFactory graphExecutorFactory) {
     super(command);
     this.graphExecutorFactory =
         requireNonNull(graphExecutorFactory, "No graph executor factory provided");

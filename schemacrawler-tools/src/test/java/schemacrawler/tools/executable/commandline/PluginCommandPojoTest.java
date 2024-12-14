@@ -45,6 +45,7 @@ import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import us.fatehi.utility.property.PropertyName;
 
 public class PluginCommandPojoTest {
 
@@ -83,7 +84,8 @@ public class PluginCommandPojoTest {
 
   @Test
   public void newPluginCommand() {
-    final PluginCommand pluginCommand = PluginCommand.newPluginCommand("name", "helpHeader");
+    final PluginCommand pluginCommand =
+        PluginCommand.newPluginCommand(new PropertyName("name", "helpHeader"));
     pluginCommand.addOption("option1", Object.class, "helpOption1", "helpOption2");
     assertPluginCommandValues(
         pluginCommand, "Add command options to the `execute` command in the SchemaCrawler Shell");
@@ -106,8 +108,7 @@ public class PluginCommandPojoTest {
 
     final PluginCommand pluginCommand =
         PluginCommand.newPluginCommand(
-            "name",
-            "helpHeader",
+            new PropertyName("name", "helpHeader"),
             () -> new String[] {"helpDescription1", "helpDescription2"},
             () -> new String[] {"helpFooter1", "helpFooter2"});
     assertThat(pluginCommand.toString(), is("PluginCommand[name='name', options=[]]"));

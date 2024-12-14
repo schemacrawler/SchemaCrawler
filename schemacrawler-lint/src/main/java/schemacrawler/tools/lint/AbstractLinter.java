@@ -49,7 +49,6 @@ public abstract class AbstractLinter extends BaseCommand<LinterConfig, Void> imp
 
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 
-  private final PropertyName linterName;
   private final UUID linterInstanceId;
   private final LintCollector lintCollector;
   private LintSeverity severity;
@@ -57,8 +56,7 @@ public abstract class AbstractLinter extends BaseCommand<LinterConfig, Void> imp
   private int lintCount;
 
   protected AbstractLinter(final PropertyName linterName, final LintCollector lintCollector) {
-    super(requireNonNull(linterName, "Linter name not provided").getName());
-    this.linterName = linterName;
+    super(requireNonNull(linterName, "Linter name not provided"));
     linterInstanceId = UUID.randomUUID();
     this.lintCollector = requireNonNull(lintCollector, "Lint collector cannot be null");
 
@@ -87,7 +85,7 @@ public abstract class AbstractLinter extends BaseCommand<LinterConfig, Void> imp
    */
   @Override
   public String getDescription() {
-    return linterName.getDescription();
+    return command.getDescription();
   }
 
   /**
@@ -103,7 +101,7 @@ public abstract class AbstractLinter extends BaseCommand<LinterConfig, Void> imp
    */
   @Override
   public String getLinterId() {
-    return linterName.getName();
+    return command.getName();
   }
 
   /**

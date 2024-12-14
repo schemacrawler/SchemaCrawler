@@ -55,10 +55,15 @@ public final class OperationCommandProvider extends BaseCommandProvider {
 
   @Override
   public OperationCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final PropertyName commandName = lookupSupportedCommand(command);
+    if (commandName == null) {
+      throw new IllegalArgumentException("Cannot support command, " + command);
+    }
+
     final OperationOptions operationOptions =
         OperationOptionsBuilder.builder().withCommand(command).fromConfig(config).toOptions();
 
-    final OperationCommand scCommand = new OperationCommand(command);
+    final OperationCommand scCommand = new OperationCommand(commandName);
     scCommand.configure(operationOptions);
     return scCommand;
   }
@@ -85,11 +90,11 @@ public final class OperationCommandProvider extends BaseCommandProvider {
       isNamedQuery = false;
     }
 
-    // Operation and query output is only in text or HTMl, but nevertheless some operations such as
-    // count
-    // can be represented on diagrams (since the catalog is annotated with attributes).
-    // Also, if a query is part of a comma-separated list of commands, the run should not fail due
-    // to a bad output format.
+    // Operation and query output is only in text or HTML,
+    // but nevertheless some operations such as count can be
+    // represented on diagrams (since the catalog is annotated with attributes).
+    // Also, if a query is part of a comma-separated list of commands,
+    // the run should not fail due to a bad output format.
     // So no check is done for output format.
     final boolean supportsSchemaCrawlerCommand = isOperation || isNamedQuery;
     return supportsSchemaCrawlerCommand;

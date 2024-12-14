@@ -214,7 +214,8 @@ public class DiagramRendererTest {
     final Catalog catalog = getCatalog(dataSource);
 
     commandDiagram(
-        new DiagramRenderer(SchemaTextDetailType.details.name(), new GraphExecutorFactory()),
+        new DiagramRenderer(
+            SchemaTextDetailType.details.toPropertyName(), new GraphExecutorFactory()),
         dataSource,
         catalog,
         diagramOptions,
@@ -233,7 +234,8 @@ public class DiagramRendererTest {
     final Catalog catalog = getCatalog(dataSource);
 
     commandDiagram(
-        new DiagramRenderer(SchemaTextDetailType.details.name(), new GraphvizJavaExecutorFactory()),
+        new DiagramRenderer(
+            SchemaTextDetailType.details.toPropertyName(), new GraphvizJavaExecutorFactory()),
         dataSource,
         catalog,
         diagramOptions,
@@ -254,7 +256,7 @@ public class DiagramRendererTest {
 
     commandDiagram(
         new EmbeddedDiagramRenderer(
-            SchemaTextDetailType.details.name(), new GraphExecutorFactory()),
+            SchemaTextDetailType.details.toPropertyName(), new GraphExecutorFactory()),
         dataSource,
         catalog,
         diagramOptions,
@@ -274,7 +276,7 @@ public class DiagramRendererTest {
 
     commandDiagram(
         new EmbeddedDiagramRenderer(
-            SchemaTextDetailType.details.name(), new GraphvizJavaExecutorFactory()),
+            SchemaTextDetailType.details.toPropertyName(), new GraphvizJavaExecutorFactory()),
         dataSource,
         catalog,
         diagramOptions,

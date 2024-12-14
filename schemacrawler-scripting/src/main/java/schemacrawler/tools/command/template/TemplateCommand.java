@@ -28,19 +28,20 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.template;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.HashMap;
 import java.util.Map;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.LanguageOptions;
+import us.fatehi.utility.property.PropertyName;
 
 public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOptions> {
 
-  static final String COMMAND = "template";
+  static final PropertyName COMMAND =
+      new PropertyName(
+          "template", "Process a template file, such as Freemarker, against the database schema");
 
   public TemplateCommand() {
     super(COMMAND);

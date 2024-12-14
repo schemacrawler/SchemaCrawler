@@ -37,8 +37,7 @@ public class CommandProviderUtility {
   public static Collection<PropertyName> schemaTextCommands() {
     final Collection<PropertyName> supportedCommands = new ArrayList<>();
     for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values()) {
-      supportedCommands.add(
-          new PropertyName(schemaTextDetailType.name(), schemaTextDetailType.getDescription()));
+      supportedCommands.add(schemaTextDetailType.toPropertyName());
     }
     return supportedCommands;
   }
