@@ -3,7 +3,7 @@
 SchemaCrawler release notes.
 
 <a name="v16.24.1"></a>
-## Release 16.24.1 - 2024-12-10
+## Release 16.24.1 - 2024-12-15
 
 - Move ChatGPT integration into a separate top-level project
 - Fix issue #1768 by standardizing how all reports are generated
@@ -134,8 +134,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.23.2"></a>
-## Release 16.23.2 - 2023-06-03
+<a name="v16.24.1"></a>
+## Release 16.24.1 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
