@@ -44,6 +44,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.lint.config.LinterConfig;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
@@ -58,6 +59,7 @@ public abstract class BaseLinter extends AbstractLinter {
   private static final Logger LOGGER = Logger.getLogger(BaseLinter.class.getName());
 
   private Catalog catalog;
+  private Connection connection;
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
   private TableTypesFilter tableTypesFilter;
@@ -70,18 +72,7 @@ public abstract class BaseLinter extends AbstractLinter {
   }
 
   @Override
-  public final void configure(final LinterConfig linterConfig) {
-    super.configure(linterConfig);
-    if (linterConfig != null) {
-      tableInclusionRule = linterConfig.getTableInclusionRule();
-      columnInclusionRule = linterConfig.getColumnInclusionRule();
-    }
-  }
-
-  @Override
-  public final void lint(final Catalog catalog, final Connection connection) {
-    this.catalog = requireNonNull(catalog, "No catalog provided");
-
+  public final Void call() {
     start(connection);
     for (final Table table : catalog.getTables()) {
       if (includeTable(table)) {
@@ -93,7 +84,46 @@ public abstract class BaseLinter extends AbstractLinter {
       }
     }
     end(connection);
-    this.catalog = null;
+    catalog = null;
+
+    return null;
+  }
+
+  @Override
+  public final void configure(final LinterConfig linterConfig) {
+    super.configure(linterConfig);
+    if (linterConfig != null) {
+      tableInclusionRule = linterConfig.getTableInclusionRule();
+      columnInclusionRule = linterConfig.getColumnInclusionRule();
+    }
+  }
+
+  @Override
+  public Catalog getCatalog() {
+    return catalog;
+  }
+
+  @Override
+  public Connection getConnection() {
+    return connection;
+  }
+
+  @Override
+  public void initialize() {
+    // Default implementation - NO-OP
+  }
+
+  @Override
+  public void setCatalog(final Catalog catalog) {
+    this.catalog = requireNonNull(catalog, "No catalog provided");
+  }
+
+  @Override
+  public void setConnection(final Connection connection) {
+    if (!usesConnection()) {
+      throw new ExecutionRuntimeException("Linter does not use a connection");
+    }
+    this.connection = requireNonNull(connection, "No connection provided");
   }
 
   protected final void addCatalogLint(final String message) {

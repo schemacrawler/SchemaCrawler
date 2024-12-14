@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +40,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.registry.BasePluginRegistry;
 import us.fatehi.utility.property.PropertyName;
@@ -52,19 +50,7 @@ public final class LinterRegistry extends BasePluginRegistry {
 
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
-  private static final Linter NO_OP_LINTER =
-      new BaseLinter(new PropertyName("schemacrawler.NO_OP_LINTER", ""), new LintCollector()) {
-
-        @Override
-        public String getSummary() {
-          return "No-op linter";
-        }
-
-        @Override
-        protected void lint(final Table table, final Connection connection) {
-          // No-op
-        }
-      };
+  private static final Linter NO_OP_LINTER = new NoOpLinter();
 
   private static LinterRegistry linterRegistrySingleton;
 

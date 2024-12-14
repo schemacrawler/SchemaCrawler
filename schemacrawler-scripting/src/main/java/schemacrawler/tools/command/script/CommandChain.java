@@ -28,15 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.script;
 
-import static java.util.Objects.requireNonNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -78,7 +79,9 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     setOutputOptions(scCommand.getOutputOptions());
 
     setCatalog(scCommand.getCatalog());
-    setConnection(scCommand.getConnection());
+    if (usesConnection()) {
+      setConnection(scCommand.getConnection());
+    }
     setIdentifiers(scCommand.getIdentifiers());
   }
 
@@ -130,7 +133,9 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
       }
 
       scCommand.setCatalog(catalog);
-      scCommand.setConnection(connection);
+      if (scCommand.usesConnection()) {
+        scCommand.setConnection(connection);
+      }
       scCommand.setIdentifiers(identifiers);
 
       scCommands.add(scCommand);
@@ -165,7 +170,13 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     }
 
     for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
-      scCommand.execute();
+      try {
+        scCommand.call();
+      } catch (final SchemaCrawlerException e) {
+        throw e;
+      } catch (final Exception e) {
+        throw new ExecutionRuntimeException(e);
+      }
     }
   }
 

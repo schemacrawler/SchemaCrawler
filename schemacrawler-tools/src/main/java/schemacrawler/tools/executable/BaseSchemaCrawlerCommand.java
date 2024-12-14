@@ -28,15 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
+import java.sql.Connection;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
-
-import java.sql.Connection;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
@@ -59,9 +58,20 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     outputOptions = OutputOptionsBuilder.newOutputOptions();
   }
 
+  @Override
+  public final Void call() {
+    execute();
+    return null;
+  }
+
   /** Runtime exceptions will be thrown if the command is not available. */
   @Override
   public abstract void checkAvailability() throws RuntimeException;
+
+  @Override
+  public final void configure(final C commandOptions) {
+    this.commandOptions = requireNonNull(commandOptions, "No command options provided");
+  }
 
   @Override
   public Catalog getCatalog() {
@@ -89,6 +99,11 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     return identifiers;
   }
 
+  @Override
+  public final String getName() {
+    return getCommand();
+  }
+
   /** {@inheritDoc} */
   @Override
   public final OutputOptions getOutputOptions() {
@@ -112,12 +127,10 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   }
 
   @Override
-  public final void setCommandOptions(final C commandOptions) {
-    this.commandOptions = requireNonNull(commandOptions, "No command options provided");
-  }
-
-  @Override
   public void setConnection(final Connection connection) {
+    if (!usesConnection()) {
+      throw new ExecutionRuntimeException("SchemaCrawler command does not use a connection");
+    }
     this.connection = connection;
   }
 

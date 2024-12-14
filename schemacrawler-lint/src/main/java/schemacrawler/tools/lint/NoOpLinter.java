@@ -26,39 +26,25 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.executable;
+package schemacrawler.tools.lint;
 
-import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.OutputOptions;
+import java.sql.Connection;
+import schemacrawler.schema.Table;
+import us.fatehi.utility.property.PropertyName;
 
-/** A SchemaCrawler tools executable unit. */
-public interface SchemaCrawlerCommand<C extends CommandOptions> extends Command<C, Void> {
+public final class NoOpLinter extends BaseLinter {
 
-  /**
-   * Checks whether a command is available, and throws a runtime exception if it is not available.
-   */
-  void checkAvailability();
+  NoOpLinter() {
+    super(new PropertyName("schemacrawler.NO_OP_LINTER", ""), new LintCollector());
+  }
 
-  /**
-   * Executes functionality for SchemaCrawler, after database metadata has been obtained. May throw
-   * runtime exceptions on errors.
-   */
-  void execute();
+  @Override
+  public String getSummary() {
+    return "No-op linter";
+  }
 
-  String getCommand();
-
-  C getCommandOptions();
-
-  Identifiers getIdentifiers();
-
-  OutputOptions getOutputOptions();
-
-  SchemaCrawlerOptions getSchemaCrawlerOptions();
-
-  void setIdentifiers(Identifiers identifiers);
-
-  void setOutputOptions(OutputOptions outputOptions);
-
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+  @Override
+  protected void lint(final Table table, final Connection connection) {
+    // No-op
+  }
 }

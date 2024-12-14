@@ -26,27 +26,20 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler;
+package us.fatehi.utility.property;
 
-import us.fatehi.utility.property.BaseProductVersion;
-
-/** JVM system information. */
-public final class JvmSystemInfo extends BaseProductVersion {
+/** Operating system information. */
+public final class OperatingSystemInfo extends BaseProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private static final JvmSystemInfo JVM_SYSTEM_INFO = new JvmSystemInfo();
+  private static final OperatingSystemInfo OPERATING_SYSTEM_INFO = new OperatingSystemInfo();
 
-  public static JvmSystemInfo jvmSystemInfo() {
-    return JVM_SYSTEM_INFO;
+  public static OperatingSystemInfo operatingSystemInfo() {
+    return OPERATING_SYSTEM_INFO;
   }
 
-  private JvmSystemInfo() {
-    super(
-        String.format(
-            "%s %s",
-            System.getProperty("java.vm.vendor", "<unknown>"),
-            System.getProperty("java.vm.name", "<unknown>")),
-        System.getProperty("java.runtime.version", ""));
+  private OperatingSystemInfo() {
+    super(System.getProperty("os.name", "<unknown>"), System.getProperty("os.version", ""));
   }
 }

@@ -70,7 +70,12 @@ public class LinterTest {
     try (final Connection connection = dataSource.get(); ) {
       final LintCollector collector = new LintCollector();
       final Linter linter = new LinterProviderTableEmpty().newLinter(collector);
-      linter.lint(catalog, connection);
+      linter.initialize();
+      linter.setCatalog(catalog);
+      if (linter.usesConnection()) {
+        linter.setConnection(connection);
+      }
+      linter.call();
 
       assertThat(linter.getDescription(), is("Checks for empty tables with no data."));
       assertThat(linter.getLintCount(), is(10));
@@ -94,33 +99,48 @@ public class LinterTest {
   }
 
   @Test
-  public void linterForCrawlInfo(final DatabaseConnectionSource dataSource) {
+  public void linterForCrawlInfo(final DatabaseConnectionSource dataSource) throws Exception {
 
-    final LintCollector collector = new LintCollector();
-    final Linter linter = new LinterProviderForTest().newLinter(collector);
-    linter.lint(catalog, dataSource.get());
+    try (final Connection connection = dataSource.get(); ) {
+      final LintCollector collector = new LintCollector();
+      final Linter linter = new LinterProviderForTest().newLinter(collector);
+      linter.initialize();
+      linter.setCatalog(catalog);
+      if (linter.usesConnection()) {
+        linter.setConnection(connection);
+      }
+      linter.call();
 
-    final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
-    lints.sort(LINT_COMPARATOR);
+      final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
+      lints.sort(LINT_COMPARATOR);
 
-    assertThat(lints.size(), is(2));
+      assertThat(lints.size(), is(2));
 
-    final Serializable value = lints.get(0).getValue();
+      final Serializable value = lints.get(0).getValue();
 
-    assertThat(value, is(instanceOf(ProductVersion.class)));
+      assertThat(value, is(instanceOf(ProductVersion.class)));
+    }
   }
 
   @Test
-  public void noOpLinter(final DatabaseConnectionSource dataSource) {
+  public void noOpLinter(final DatabaseConnectionSource dataSource) throws Exception {
 
-    final LintCollector collector = new LintCollector();
-    final Linter linter = LinterRegistry.getLinterRegistry().newLinter("bad-linter-id", collector);
+    try (final Connection connection = dataSource.get(); ) {
+      final LintCollector collector = new LintCollector();
+      final Linter linter =
+          LinterRegistry.getLinterRegistry().newLinter("bad-linter-id", collector);
 
-    assertThat(linter.getSummary(), is("No-op linter"));
+      assertThat(linter.getSummary(), is("No-op linter"));
 
-    linter.lint(catalog, dataSource.get());
+      linter.initialize();
+      linter.setCatalog(catalog);
+      if (linter.usesConnection()) {
+        linter.setConnection(connection);
+      }
+      linter.call();
 
-    final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
-    assertThat(lints.size(), is(0));
+      final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
+      assertThat(lints.size(), is(0));
+    }
   }
 }

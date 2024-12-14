@@ -70,7 +70,7 @@ public class TestCommandProvider extends BaseCommandProvider {
 
     final TestOptions commandOptions = new TestOptions(usesConnection, testCommandParameter);
     final TestCommand testCommand = new TestCommand();
-    testCommand.setCommandOptions(commandOptions);
+    testCommand.configure(commandOptions);
     return testCommand;
   }
 

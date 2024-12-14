@@ -44,11 +44,11 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.util.UUID;
 import static java.util.Objects.requireNonNull;
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.schema.CrawlInfo;
 import us.fatehi.utility.property.BaseProductVersion;
+import us.fatehi.utility.property.JvmSystemInfo;
+import us.fatehi.utility.property.OperatingSystemInfo;
 import us.fatehi.utility.property.ProductVersion;
 
 /** SchemaCrawler crawl information. */

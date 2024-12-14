@@ -94,6 +94,11 @@ class LinterTableSql extends BaseLinter {
   }
 
   @Override
+  public boolean usesConnection() {
+    return true;
+  }
+
+  @Override
   protected void lint(final Table table, final Connection connection) {
     if (isBlank(sql)) {
       return;

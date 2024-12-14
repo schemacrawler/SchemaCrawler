@@ -30,7 +30,6 @@ package schemacrawler.tools.command.text.operation;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationOptionsBuilder;
@@ -60,7 +59,7 @@ public final class OperationCommandProvider extends BaseCommandProvider {
         OperationOptionsBuilder.builder().withCommand(command).fromConfig(config).toOptions();
 
     final OperationCommand scCommand = new OperationCommand(command);
-    scCommand.setCommandOptions(operationOptions);
+    scCommand.configure(operationOptions);
     return scCommand;
   }
 

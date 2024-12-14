@@ -50,7 +50,7 @@ public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
         DiagramOptionsBuilder.builder().fromConfig(config).toOptions();
     final EmbeddedDiagramRenderer scCommand =
         new EmbeddedDiagramRenderer(command, new GraphExecutorFactory());
-    scCommand.setCommandOptions(diagramOptions);
+    scCommand.configure(diagramOptions);
     return scCommand;
   }
 

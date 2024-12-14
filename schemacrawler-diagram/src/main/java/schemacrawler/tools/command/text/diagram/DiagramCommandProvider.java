@@ -47,7 +47,7 @@ public final class DiagramCommandProvider extends BaseCommandProvider {
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().fromConfig(config).toOptions();
     final DiagramRenderer scCommand = new DiagramRenderer(command, new GraphExecutorFactory());
-    scCommand.setCommandOptions(diagramOptions);
+    scCommand.configure(diagramOptions);
     return scCommand;
   }
 

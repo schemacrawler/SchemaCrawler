@@ -64,6 +64,15 @@ public abstract class AbstractLinter implements Linter {
     threshold = Integer.MAX_VALUE; // default value
   }
 
+  @Override
+  public void configure(final LinterConfig linterConfig) {
+    if (linterConfig != null) {
+      setSeverity(linterConfig.getSeverity());
+      threshold = linterConfig.getThreshold();
+      configure(linterConfig.getConfig());
+    }
+  }
+
   /**
    * @{@inheritDoc}
    */
@@ -84,14 +93,6 @@ public abstract class AbstractLinter implements Linter {
    * @{@inheritDoc}
    */
   @Override
-  public String getLinterId() {
-    return linterName.getName();
-  }
-
-  /**
-   * @{@inheritDoc}
-   */
-  @Override
   public final int getLintCount() {
     return lintCount;
   }
@@ -100,8 +101,21 @@ public abstract class AbstractLinter implements Linter {
    * @{@inheritDoc}
    */
   @Override
+  public String getLinterId() {
+    return linterName.getName();
+  }
+
+  /**
+   * @{@inheritDoc}
+   */
+  @Override
   public final String getLinterInstanceId() {
     return linterInstanceId.toString();
+  }
+
+  @Override
+  public final String getName() {
+    return getLinterId();
   }
 
   /**
@@ -164,15 +178,6 @@ public abstract class AbstractLinter implements Linter {
   protected final void setSeverity(final LintSeverity severity) {
     if (severity != null) {
       this.severity = severity;
-    }
-  }
-
-  @Override
-  public void configure(final LinterConfig linterConfig) {
-    if (linterConfig != null) {
-      setSeverity(linterConfig.getSeverity());
-      threshold = linterConfig.getThreshold();
-      configure(linterConfig.getConfig());
     }
   }
 }

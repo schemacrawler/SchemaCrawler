@@ -26,22 +26,31 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler;
+package schemacrawler.tools.executable;
 
-import us.fatehi.utility.property.BaseProductVersion;
+import java.sql.Connection;
+import java.util.concurrent.Callable;
+import schemacrawler.schema.Catalog;
 
-/** Operating system information. */
-public final class OperatingSystemInfo extends BaseProductVersion {
+/** A SchemaCrawler executable unit. */
+public interface Command<P, R> extends Callable<R> {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  void configure(P parameters);
 
-  private static final OperatingSystemInfo OPERATING_SYSTEM_INFO = new OperatingSystemInfo();
+  Catalog getCatalog();
 
-  public static OperatingSystemInfo operatingSystemInfo() {
-    return OPERATING_SYSTEM_INFO;
-  }
+  Connection getConnection();
 
-  private OperatingSystemInfo() {
-    super(System.getProperty("os.name", "<unknown>"), System.getProperty("os.version", ""));
+  String getName();
+
+  /** Initializes the command for execution. */
+  void initialize();
+
+  void setCatalog(Catalog catalog);
+
+  void setConnection(Connection connection);
+
+  default boolean usesConnection() {
+    return false;
   }
 }

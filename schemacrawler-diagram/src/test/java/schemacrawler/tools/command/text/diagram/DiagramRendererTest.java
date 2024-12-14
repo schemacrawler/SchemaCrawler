@@ -37,13 +37,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
-
 import java.nio.file.Path;
 import java.sql.Connection;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.integration.test.DiagramOutputTest;
 import schemacrawler.schema.Catalog;
@@ -119,7 +116,9 @@ public class DiagramRendererTest {
 
     try (final Connection connection = dataSource.get(); ) {
       scCommand.setOutputOptions(outputOptionsBuilder.toOptions());
-      scCommand.setConnection(connection);
+      if (scCommand.usesConnection()) {
+        scCommand.setConnection(connection);
+      }
 
       final SchemaRetrievalOptions schemaRetrievalOptions =
           SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);
@@ -129,7 +128,7 @@ public class DiagramRendererTest {
       scCommand.initialize();
       scCommand.checkAvailability();
 
-      scCommand.execute();
+      scCommand.call();
     }
 
     return tempFilePath;
@@ -153,7 +152,7 @@ public class DiagramRendererTest {
       final String testMethodName)
       throws Exception {
 
-    scCommand.setCommandOptions(diagramOptions);
+    scCommand.configure(diagramOptions);
     scCommand.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
     scCommand.setCatalog(catalog);

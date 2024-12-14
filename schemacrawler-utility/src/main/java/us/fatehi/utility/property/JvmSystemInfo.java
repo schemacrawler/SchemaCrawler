@@ -26,39 +26,25 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.executable;
+package us.fatehi.utility.property;
 
-import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.OutputOptions;
+/** JVM system information. */
+public final class JvmSystemInfo extends BaseProductVersion {
 
-/** A SchemaCrawler tools executable unit. */
-public interface SchemaCrawlerCommand<C extends CommandOptions> extends Command<C, Void> {
+  private static final long serialVersionUID = 4051323422934251828L;
 
-  /**
-   * Checks whether a command is available, and throws a runtime exception if it is not available.
-   */
-  void checkAvailability();
+  private static final JvmSystemInfo JVM_SYSTEM_INFO = new JvmSystemInfo();
 
-  /**
-   * Executes functionality for SchemaCrawler, after database metadata has been obtained. May throw
-   * runtime exceptions on errors.
-   */
-  void execute();
+  public static JvmSystemInfo jvmSystemInfo() {
+    return JVM_SYSTEM_INFO;
+  }
 
-  String getCommand();
-
-  C getCommandOptions();
-
-  Identifiers getIdentifiers();
-
-  OutputOptions getOutputOptions();
-
-  SchemaCrawlerOptions getSchemaCrawlerOptions();
-
-  void setIdentifiers(Identifiers identifiers);
-
-  void setOutputOptions(OutputOptions outputOptions);
-
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+  private JvmSystemInfo() {
+    super(
+        String.format(
+            "%s %s",
+            System.getProperty("java.vm.vendor", "<unknown>"),
+            System.getProperty("java.vm.name", "<unknown>")),
+        System.getProperty("java.runtime.version", ""));
+  }
 }

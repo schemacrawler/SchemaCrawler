@@ -29,9 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-
 import java.nio.file.Path;
-
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
@@ -98,7 +96,7 @@ public class LintCommandProvider extends BaseCommandProvider {
   public LintCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final LintOptions lintOptions = LintOptionsBuilder.builder().fromConfig(config).toOptions();
     final LintCommand scCommand = new LintCommand();
-    scCommand.setCommandOptions(lintOptions);
+    scCommand.configure(lintOptions);
     return scCommand;
   }
 

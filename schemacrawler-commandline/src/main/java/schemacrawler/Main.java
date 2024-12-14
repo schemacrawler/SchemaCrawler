@@ -37,6 +37,8 @@ import schemacrawler.tools.registry.JDBCDriverRegistry;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.SystemExitException;
 import us.fatehi.utility.UtilityLogger;
+import us.fatehi.utility.property.JvmSystemInfo;
+import us.fatehi.utility.property.OperatingSystemInfo;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {
