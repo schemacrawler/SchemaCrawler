@@ -83,7 +83,7 @@
     <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
-      <version>3.20.0</version>
+      <version>3.21.0</version>
     </dependency>
     <dependency>
       <groupId>com.amazon.redshift</groupId>
@@ -98,7 +98,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>464</version>
+      <version>467</version>
     </dependency>
     <dependency>
       <groupId>org.duckdb</groupId>
