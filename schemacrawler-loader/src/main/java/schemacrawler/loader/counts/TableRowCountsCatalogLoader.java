@@ -29,10 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.counts;
 
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
@@ -59,9 +57,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
   @Override
   public PluginCommand getCommandLineCommand() {
     final PropertyName catalogLoaderName = getCatalogLoaderName();
-    final PluginCommand pluginCommand =
-        PluginCommand.newCatalogLoaderCommand(
-            catalogLoaderName.getName(), catalogLoaderName.getDescription());
+    final PluginCommand pluginCommand = PluginCommand.newCatalogLoaderCommand(catalogLoaderName);
     pluginCommand
         .addOption(
             OPTION_LOAD_ROW_COUNTS,
