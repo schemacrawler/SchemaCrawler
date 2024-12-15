@@ -291,9 +291,8 @@ run SchemaCrawler with: `-h loaders`
 or from the SchemaCrawler interactive shell: `help loaders`
 
 
-** Generate text output to show the commonly needed detail of the schema,
-including details of tables, views and routines, columns, primary keys,
-indexes, foreign keys, and triggers
+** Show the commonly needed detail of the schema, including details of tables,
+views and routines, columns, primary keys, indexes, foreign keys, and triggers
 Command:
 command:schema
 Applies to all commands that show schema information

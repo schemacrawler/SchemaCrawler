@@ -34,11 +34,11 @@ import schemacrawler.schemacrawler.Query;
 public enum OperationType implements Operation {
 
   /** Count operation */
-  count("Row Count", "Shows counts of rows in the tables", "SELECT COUNT(*) FROM ${table}"),
+  count("Row Count", "Show counts of rows in the tables", "SELECT COUNT(*) FROM ${table}"),
   /** Dump operation */
   dump(
       "Dump",
-      "Shows data from all rows in the tables",
+      "Show data from all rows in the tables",
       "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
   /**
    * Quick dump operation, where columns do not need to be retrieved (minimum infolevel), but the
@@ -46,7 +46,7 @@ public enum OperationType implements Operation {
    */
   quickdump(
       "Dump",
-      "Shows data from all rows in the tables, "
+      "Show data from all rows in the tables, "
           + "but row order is not guaranteed - "
           + "this can be used with a minimum info-level for speed",
       "SELECT * FROM ${table}"),

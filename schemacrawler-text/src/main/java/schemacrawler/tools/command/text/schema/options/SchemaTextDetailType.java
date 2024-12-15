@@ -33,18 +33,18 @@ import us.fatehi.utility.property.PropertyName;
 /** Enumeration for level of schema text output detail. */
 public enum SchemaTextDetailType {
   brief(
-      "Generate text output to show basic schema information, "
+      "Show basic schema information, "
           + "for tables, views and routines, columns, "
           + "primary keys, and foreign keys"),
   schema(
-      "Generate text output to show the commonly needed detail of the schema, "
+      "Show the commonly needed detail of the schema, "
           + "including details of tables, views and routines, columns, "
           + "primary keys, indexes, foreign keys, and triggers"),
   details(
-      "Generate text output to show maximum possible detail of the schema, "
+      "Show maximum possible detail of the schema, "
           + "including privileges, and details of privileges, triggers, "
           + "and check constraints"),
-  list("Generate text output to show a list of schema objects");
+  list("Show a list of schema objects");
 
   private final String description;
 
