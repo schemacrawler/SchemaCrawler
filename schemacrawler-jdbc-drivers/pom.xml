@@ -98,7 +98,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>464</version>
+      <version>467</version>
     </dependency>
     <dependency>
       <groupId>org.duckdb</groupId>

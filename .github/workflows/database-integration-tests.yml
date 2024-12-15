@@ -117,7 +117,7 @@ jobs:
             docker pull ibmcom/informix-developer-database:14.10.FC7W1DE
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "trino" ]; then
-            docker pull trinodb/trino:464
+            docker pull trinodb/trino:467
             dbproject="dbtest"
         else
             dbproject="dbtest"
