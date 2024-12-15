@@ -28,12 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.diagram;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import java.io.IOException;
 import java.nio.file.Path;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
@@ -47,13 +47,15 @@ import schemacrawler.tools.text.formatter.diagram.SchemaDotFormatter;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.property.PropertyName;
 
 public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
 
   private DiagramOutputFormat diagramOutputFormat;
   private final GraphExecutorFactory graphExecutorFactory;
 
-  public DiagramRenderer(final String command, final GraphExecutorFactory graphExecutorFactory) {
+  public DiagramRenderer(
+      final PropertyName command, final GraphExecutorFactory graphExecutorFactory) {
     super(command);
     this.graphExecutorFactory =
         requireNonNull(graphExecutorFactory, "No graph executor factory provided");
@@ -152,7 +154,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
   private SchemaTextDetailType getSchemaTextDetailType() {
     SchemaTextDetailType schemaTextDetailType;
     try {
-      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
+      schemaTextDetailType = SchemaTextDetailType.valueOf(command.getName());
     } catch (final IllegalArgumentException e) {
       schemaTextDetailType = null;
     }

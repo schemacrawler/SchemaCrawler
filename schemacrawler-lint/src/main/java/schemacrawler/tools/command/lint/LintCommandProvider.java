@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.lint;
 
+import static schemacrawler.tools.command.lint.LintCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import java.nio.file.Path;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -39,23 +40,18 @@ import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.PropertyName;
 
 public class LintCommandProvider extends BaseCommandProvider {
 
-  public static final String DESCRIPTION_HEADER =
-      "Find lints (non-adherence to coding standards and conventions) " + "in the database schema";
-
   public LintCommandProvider() {
-    super(new PropertyName(LintCommand.COMMAND, DESCRIPTION_HEADER));
+    super(COMMAND);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
         newPluginCommand(
-            "lint",
-            "** " + DESCRIPTION_HEADER,
+            COMMAND,
             () ->
                 new String[] {
                   "For more information, see https://www.schemacrawler.com/lint.html %n"
@@ -94,6 +90,10 @@ public class LintCommandProvider extends BaseCommandProvider {
 
   @Override
   public LintCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    if (!supportsCommand(command)) {
+      throw new IllegalArgumentException("Cannot support command, " + command);
+    }
+
     final LintOptions lintOptions = LintOptionsBuilder.builder().fromConfig(config).toOptions();
     final LintCommand scCommand = new LintCommand();
     scCommand.configure(lintOptions);

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.template;
 
+import static schemacrawler.tools.command.template.TemplateCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
@@ -36,21 +37,16 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.LanguageOptions;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.PropertyName;
 
 public class TemplateCommandProvider extends BaseCommandProvider {
 
-  public static final String DESCRIPTION_HEADER =
-      "Process a template file, such as Freemarker, " + "against the database schema";
-
   public TemplateCommandProvider() {
-    super(new PropertyName(TemplateCommand.COMMAND, DESCRIPTION_HEADER));
+    super(COMMAND);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final PluginCommand pluginCommand =
-        newPluginCommand(TemplateCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+    final PluginCommand pluginCommand = newPluginCommand(COMMAND);
     pluginCommand
         .addOption(
             "template", String.class, "Path to the template file or to the CLASSPATH resource")
@@ -60,6 +56,10 @@ public class TemplateCommandProvider extends BaseCommandProvider {
 
   @Override
   public TemplateCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    if (!supportsCommand(command)) {
+      throw new IllegalArgumentException("Cannot support command, " + command);
+    }
+
     final LanguageOptions toOptions =
         TemplateLanguageOptionsBuilder.builder().fromConfig(config).toOptions();
 

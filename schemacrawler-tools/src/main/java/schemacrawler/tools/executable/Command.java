@@ -31,6 +31,7 @@ package schemacrawler.tools.executable;
 import java.sql.Connection;
 import java.util.concurrent.Callable;
 import schemacrawler.schema.Catalog;
+import us.fatehi.utility.property.PropertyName;
 
 /** A SchemaCrawler executable unit. */
 public interface Command<P, R> extends Callable<R> {
@@ -41,7 +42,7 @@ public interface Command<P, R> extends Callable<R> {
 
   Connection getConnection();
 
-  String getName();
+  PropertyName getCommandName();
 
   /** Initializes the command for execution. */
   void initialize();

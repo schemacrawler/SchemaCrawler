@@ -28,12 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
@@ -71,18 +71,19 @@ public abstract class BaseCommandProvider implements CommandProvider {
   }
 
   protected final boolean supportsCommand(final String command) {
+    return lookupSupportedCommand(command) != null;
+  }
+
+  protected final PropertyName lookupSupportedCommand(final String command) {
     if (isBlank(command)) {
-      return false;
+      return null;
     }
     for (final PropertyName supportedCommand : supportedCommands) {
-      if (supportedCommand == null) {
-        continue;
-      }
-      if (command.equalsIgnoreCase(supportedCommand.getName())) {
-        return true;
+      if (supportedCommand != null && command.equalsIgnoreCase(supportedCommand.getName())) {
+        return supportedCommand;
       }
     }
-    return false;
+    return null;
   }
 
   protected boolean supportsOutputFormat(

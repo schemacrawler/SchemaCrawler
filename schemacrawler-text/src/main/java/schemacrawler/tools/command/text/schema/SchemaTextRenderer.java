@@ -36,11 +36,12 @@ import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.property.PropertyName;
 
 /** Basic SchemaCrawler executor for text output. */
 public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTextOptions> {
 
-  public SchemaTextRenderer(final String command) {
+  public SchemaTextRenderer(final PropertyName command) {
     super(command);
   }
 
@@ -74,7 +75,7 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
   private SchemaTextDetailType getSchemaTextDetailType() {
     SchemaTextDetailType schemaTextDetailType;
     try {
-      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
+      schemaTextDetailType = SchemaTextDetailType.valueOf(command.getName());
     } catch (final IllegalArgumentException e) {
       schemaTextDetailType = SchemaTextDetailType.schema;
     }

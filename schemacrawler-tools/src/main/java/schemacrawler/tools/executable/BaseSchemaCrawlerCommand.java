@@ -28,31 +28,24 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-import java.sql.Connection;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.property.PropertyName;
 
 /** A SchemaCrawler tools executable unit. */
 public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
-    implements SchemaCrawlerCommand<C> {
+    extends BaseCommand<C, Void> implements SchemaCrawlerCommand<C> {
 
-  protected final String command;
-  protected C commandOptions;
-  protected Catalog catalog;
-  protected Connection connection;
   protected Identifiers identifiers;
   protected OutputOptions outputOptions;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
 
-  protected BaseSchemaCrawlerCommand(final String command) {
-    this.command = requireNotBlank(command, "No command specified");
+  protected BaseSchemaCrawlerCommand(final PropertyName command) {
+    super(command);
 
     schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
@@ -74,34 +67,13 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   }
 
   @Override
-  public Catalog getCatalog() {
-    return catalog;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String getCommand() {
-    return command;
-  }
-
-  @Override
   public final C getCommandOptions() {
     return commandOptions;
   }
 
   @Override
-  public Connection getConnection() {
-    return connection;
-  }
-
-  @Override
   public Identifiers getIdentifiers() {
     return identifiers;
-  }
-
-  @Override
-  public final String getName() {
-    return getCommand();
   }
 
   /** {@inheritDoc} */
@@ -119,19 +91,6 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   @Override
   public void initialize() {
     checkOptions();
-  }
-
-  @Override
-  public void setCatalog(final Catalog catalog) {
-    this.catalog = catalog;
-  }
-
-  @Override
-  public void setConnection(final Connection connection) {
-    if (!usesConnection()) {
-      throw new ExecutionRuntimeException("SchemaCrawler command does not use a connection");
-    }
-    this.connection = connection;
   }
 
   @Override
@@ -157,12 +116,6 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     } else {
       this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    return command;
   }
 
   protected void checkCatalog() {

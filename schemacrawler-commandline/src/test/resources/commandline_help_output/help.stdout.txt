@@ -1,4 +1,4 @@
-SchemaCrawler 16.23.1
+SchemaCrawler 16.24.1
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -222,7 +222,7 @@ Options:
                             Optional, default is 0
 
 
-Loader for catalog attributes, such as remarks or tags
+** Loader for catalog attributes, such as remarks or tags
 Command:
 loader:attributesloader
 
@@ -233,7 +233,7 @@ Options:
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
-Loader for table row counts
+** Loader for table row counts
 Command:
 loader:countsloader
 
@@ -247,7 +247,7 @@ Options:
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
-Loader for testing
+** Loader for testing
 Command:
 loader:testloader
 
@@ -257,7 +257,7 @@ Options:
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
-Loader for weak associations
+** Loader for weak associations
 Command:
 loader:weakassociationsloader
 
@@ -291,7 +291,8 @@ run SchemaCrawler with: `-h loaders`
 or from the SchemaCrawler interactive shell: `help loaders`
 
 
-** Generate text output to show details of a schema
+** Show the commonly needed detail of the schema, including details of tables,
+views and routines, columns, primary keys, indexes, foreign keys, and triggers
 Command:
 command:schema
 Applies to all commands that show schema information

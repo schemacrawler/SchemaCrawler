@@ -46,8 +46,6 @@ public interface SchemaCrawlerCommand<C extends CommandOptions> extends Command<
    */
   void execute();
 
-  String getCommand();
-
   C getCommandOptions();
 
   Identifiers getIdentifiers();

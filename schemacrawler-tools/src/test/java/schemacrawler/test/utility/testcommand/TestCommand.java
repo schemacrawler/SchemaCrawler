@@ -30,10 +30,12 @@ package schemacrawler.test.utility.testcommand;
 
 import java.io.PrintWriter;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import us.fatehi.utility.property.PropertyName;
 
 public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
 
-  static final String COMMAND = "test-command";
+  static final PropertyName COMMAND =
+      new PropertyName("test-command", "Test command which is not deployed with the release");
 
   public TestCommand() {
     super(COMMAND);

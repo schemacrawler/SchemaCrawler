@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.script;
 
+import static schemacrawler.tools.command.script.ScriptCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import schemacrawler.tools.command.script.options.ScriptLanguageOptionsBuilder;
 import schemacrawler.tools.command.script.options.ScriptOptions;
@@ -35,21 +36,16 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.utility.property.PropertyName;
 
 public class ScriptCommandProvider extends BaseCommandProvider {
 
-  public static final String DESCRIPTION_HEADER =
-      "Process a script file, such as JavaScript, " + "against the database schema";
-
   public ScriptCommandProvider() {
-    super(new PropertyName(ScriptCommand.COMMAND, DESCRIPTION_HEADER));
+    super(COMMAND);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final PluginCommand pluginCommand =
-        newPluginCommand(ScriptCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+    final PluginCommand pluginCommand = newPluginCommand(COMMAND);
     pluginCommand
         .addOption("script", String.class, "Path to the script file or to the CLASSPATH resource")
         .addOption("script-language", String.class, "Scripting language");
@@ -58,6 +54,10 @@ public class ScriptCommandProvider extends BaseCommandProvider {
 
   @Override
   public ScriptCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    if (!supportsCommand(command)) {
+      throw new IllegalArgumentException("Cannot support command, " + command);
+    }
+
     final ScriptOptions scriptOptions =
         ScriptLanguageOptionsBuilder.builder().fromConfig(config).toOptions();
 

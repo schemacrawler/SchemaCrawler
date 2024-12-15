@@ -1,6 +1,6 @@
 command:schema
 
-** Generate text output to show details of a schema
+** Show the commonly needed detail of the schema, including details of tables, views and routines, columns, primary keys, indexes, foreign keys, and triggers
 Applies to all commands that show schema information
 
 no-info

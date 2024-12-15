@@ -28,21 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema.options;
 
+import us.fatehi.utility.property.PropertyName;
+
 /** Enumeration for level of schema text output detail. */
 public enum SchemaTextDetailType {
   brief(
-      "Shows basic schema information, "
+      "Show basic schema information, "
           + "for tables, views and routines, columns, "
           + "primary keys, and foreign keys"),
   schema(
-      "Shows the commonly needed detail of the schema, "
+      "Show the commonly needed detail of the schema, "
           + "including details of tables, views and routines, columns, "
           + "primary keys, indexes, foreign keys, and triggers"),
   details(
-      "Shows maximum possible detail of the schema, "
+      "Show maximum possible detail of the schema, "
           + "including privileges, and details of privileges, triggers, "
           + "and check constraints"),
-  list("Shows a list of schema objects");
+  list("Show a list of schema objects");
 
   private final String description;
 
@@ -50,7 +52,7 @@ public enum SchemaTextDetailType {
     this.description = description;
   }
 
-  public String getDescription() {
-    return description;
+  public PropertyName toPropertyName() {
+    return new PropertyName(name(), description);
   }
 }

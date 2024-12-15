@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.tools.executable.BaseCommand;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;
@@ -44,11 +45,10 @@ import us.fatehi.utility.string.StringFormat;
  * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
  * state, but not for visiting a catalog. Includes code for dispatching a linter.
  */
-public abstract class AbstractLinter implements Linter {
+public abstract class AbstractLinter extends BaseCommand<LinterConfig, Void> implements Linter {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 
-  private final PropertyName linterName;
   private final UUID linterInstanceId;
   private final LintCollector lintCollector;
   private LintSeverity severity;
@@ -56,7 +56,7 @@ public abstract class AbstractLinter implements Linter {
   private int lintCount;
 
   protected AbstractLinter(final PropertyName linterName, final LintCollector lintCollector) {
-    this.linterName = requireNonNull(linterName, "Linter name cannot be null");
+    super(requireNonNull(linterName, "Linter name not provided"));
     linterInstanceId = UUID.randomUUID();
     this.lintCollector = requireNonNull(lintCollector, "Lint collector cannot be null");
 
@@ -66,11 +66,10 @@ public abstract class AbstractLinter implements Linter {
 
   @Override
   public void configure(final LinterConfig linterConfig) {
-    if (linterConfig != null) {
-      setSeverity(linterConfig.getSeverity());
-      threshold = linterConfig.getThreshold();
-      configure(linterConfig.getConfig());
-    }
+    super.configure(linterConfig);
+    setSeverity(linterConfig.getSeverity());
+    threshold = linterConfig.getThreshold();
+    configure(linterConfig.getConfig());
   }
 
   /**
@@ -86,7 +85,7 @@ public abstract class AbstractLinter implements Linter {
    */
   @Override
   public String getDescription() {
-    return linterName.getDescription();
+    return command.getDescription();
   }
 
   /**
@@ -102,7 +101,7 @@ public abstract class AbstractLinter implements Linter {
    */
   @Override
   public String getLinterId() {
-    return linterName.getName();
+    return command.getName();
   }
 
   /**
@@ -111,11 +110,6 @@ public abstract class AbstractLinter implements Linter {
   @Override
   public final String getLinterInstanceId() {
     return linterInstanceId.toString();
-  }
-
-  @Override
-  public final String getName() {
-    return getLinterId();
   }
 
   /**

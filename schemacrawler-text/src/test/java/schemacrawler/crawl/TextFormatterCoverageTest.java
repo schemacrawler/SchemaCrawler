@@ -29,18 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static us.fatehi.utility.Utility.isBlank;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DataTypeType;
-import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -110,10 +108,14 @@ public class TextFormatterCoverageTest {
 
   @Test
   public void nullCrawlInfo(final TestContext testContext) throws Exception {
+    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo("FakeDB", "v0.0", "nouser");
+    dbInfo.addServerInfo(
+        new ImmutableServerInfoProperty("PROP1", "VALUE1", "Server info property"));
+
     checkTextOutput(
         formatter -> {
           formatter.handleHeader((CrawlInfo) null);
-          formatter.handleInfo(mock(DatabaseInfo.class));
+          formatter.handleInfo(dbInfo);
         },
         testContext.testMethodFullName());
   }

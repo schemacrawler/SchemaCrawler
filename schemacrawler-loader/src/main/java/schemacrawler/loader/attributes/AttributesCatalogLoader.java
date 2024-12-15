@@ -29,13 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.attributes;
 
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
@@ -79,9 +77,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
   @Override
   public PluginCommand getCommandLineCommand() {
     final PropertyName catalogLoaderName = getCatalogLoaderName();
-    final PluginCommand pluginCommand =
-        PluginCommand.newCatalogLoaderCommand(
-            catalogLoaderName.getName(), catalogLoaderName.getDescription());
+    final PluginCommand pluginCommand = PluginCommand.newCatalogLoaderCommand(catalogLoaderName);
     pluginCommand.addOption(
         OPTION_ATTRIBUTES_FILE,
         String.class,
@@ -161,12 +157,11 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       final Optional<Table> lookupTable =
           catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
       final Table table;
-      if (lookupTable.isPresent()) {
-        table = lookupTable.get();
-      } else {
+      if (!lookupTable.isPresent()) {
         LOGGER.log(Level.CONFIG, new StringFormat("Table %s not found", tableAttributes));
         continue;
       }
+      table = lookupTable.get();
 
       if (tableAttributes.hasRemarks()) {
         table.setRemarks(tableAttributes.getRemarks());

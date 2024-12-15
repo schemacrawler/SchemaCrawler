@@ -42,6 +42,7 @@ import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.utility.ioresource.InputResource;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Main executor for the script engine integration. */
@@ -49,7 +50,9 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
   private static final Logger LOGGER = Logger.getLogger(ScriptCommand.class.getName());
 
-  static final String COMMAND = "script";
+  static final PropertyName COMMAND =
+      new PropertyName(
+          "script", "Process a script file, such as JavaScript, against the database schema");
 
   private ScriptExecutor scriptExecutor;
 

@@ -41,7 +41,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -217,7 +216,7 @@ public final class CommandRegistry extends BasePluginRegistry implements PluginC
       }
     }
     if (executableCommandProviders.isEmpty()) {
-      throw new ConfigurationException(
+      throw new ExecutionRuntimeException(
           String.format(
               "Output format <%s> not supported for command <%s>",
               outputOptions.getOutputFormatValue(), command));

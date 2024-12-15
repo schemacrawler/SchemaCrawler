@@ -37,7 +37,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -100,10 +99,7 @@ public abstract class DatabaseConnector implements Options {
 
   public PluginCommand getHelpCommand() {
 
-    final PluginCommand pluginCommand =
-        newDatabasePluginCommand(
-            dbServerType.getDatabaseSystemIdentifier(),
-            "** Connect to " + trimToEmpty(dbServerType.getDatabaseSystemName()));
+    final PluginCommand pluginCommand = newDatabasePluginCommand(dbServerType);
     return pluginCommand;
   }
 

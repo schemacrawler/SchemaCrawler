@@ -42,14 +42,14 @@ public class AvailableCommands extends BaseAvailableRegistryPlugins {
     supportedCommands.add(
         new PropertyName(
             "<query_name>",
-            "Shows results of query <query_name>, "
+            "Show results of query <query_name>, "
                 + "as specified in the configuration properties file"));
     supportedCommands.add(
         new PropertyName(
             "<query>",
             String.join(
                 "\n",
-                "Shows results of SQL <query>",
+                "Show results of SQL <query>",
                 "The query itself can contain the variables ${table}, ${columns} "
                     + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
                 "Queries without any variables are executed exactly once",

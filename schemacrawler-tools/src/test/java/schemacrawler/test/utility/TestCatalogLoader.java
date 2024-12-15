@@ -43,9 +43,7 @@ public class TestCatalogLoader extends BaseCatalogLoader {
   @Override
   public PluginCommand getCommandLineCommand() {
     final PropertyName catalogLoaderName = getCatalogLoaderName();
-    final PluginCommand pluginCommand =
-        PluginCommand.newCatalogLoaderCommand(
-            catalogLoaderName.getName(), catalogLoaderName.getDescription());
+    final PluginCommand pluginCommand = PluginCommand.newCatalogLoaderCommand(catalogLoaderName);
     pluginCommand.addOption(
         "test-load-option",
         Boolean.class,

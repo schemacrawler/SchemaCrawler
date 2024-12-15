@@ -42,13 +42,18 @@ import schemacrawler.tools.lint.formatter.LintReportJsonGenerator;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
 import schemacrawler.tools.lint.formatter.LintReportTextGenerator;
 import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
+import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.ObjectToStringFormat;
 
 public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
   private static final Logger LOGGER = Logger.getLogger(LintCommand.class.getName());
 
-  public static final String COMMAND = "lint";
+  static final PropertyName COMMAND =
+      new PropertyName(
+          "lint",
+          "Find lints (non-adherence to coding standards and conventions) "
+              + "in the database schema");
 
   public LintCommand() {
     super(COMMAND);
