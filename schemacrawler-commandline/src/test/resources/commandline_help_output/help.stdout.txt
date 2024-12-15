@@ -222,7 +222,7 @@ Options:
                             Optional, default is 0
 
 
-Loader for catalog attributes, such as remarks or tags
+** Loader for catalog attributes, such as remarks or tags
 Command:
 loader:attributesloader
 
@@ -233,7 +233,7 @@ Options:
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
-Loader for table row counts
+** Loader for table row counts
 Command:
 loader:countsloader
 
@@ -247,7 +247,7 @@ Options:
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
-Loader for testing
+** Loader for testing
 Command:
 loader:testloader
 
@@ -257,7 +257,7 @@ Options:
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
-Loader for weak associations
+** Loader for weak associations
 Command:
 loader:weakassociationsloader
 
