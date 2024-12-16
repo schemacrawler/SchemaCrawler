@@ -19,7 +19,7 @@ public class JDBCDriverRegistryTest {
   public void registeredPlugins() {
     final JDBCDriverRegistry driverRegistry = JDBCDriverRegistry.getJDBCDriverRegistry();
     final Collection<PropertyName> commandLineCommands = driverRegistry.getRegisteredPlugins();
-    assertThat(commandLineCommands, hasSize(3));
+    assertThat(commandLineCommands, hasSize(17));
   }
 
   @Test

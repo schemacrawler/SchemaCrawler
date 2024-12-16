@@ -17,23 +17,10 @@
 
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-jdbc-drivers</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-jdbc-drivers</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
@@ -68,6 +55,7 @@
     </dependency>
 
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>

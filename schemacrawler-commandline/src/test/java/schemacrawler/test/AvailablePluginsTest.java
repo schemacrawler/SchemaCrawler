@@ -65,7 +65,7 @@ public class AvailablePluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     final AvailableJDBCDrivers availableJDBCDrivers = new AvailableJDBCDrivers();
     final int size = availableJDBCDrivers.size();
-    assertThat(size == 1 || size == 2, is(true));
+    assertThat(size == 16, is(true));
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();
