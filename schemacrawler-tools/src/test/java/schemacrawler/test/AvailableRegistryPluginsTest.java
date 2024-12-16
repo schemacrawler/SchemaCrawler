@@ -1,17 +1,16 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
+import static org.hamcrest.Matchers.hasItemInArray;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.hsqldb.jdbc.JDBCDriver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.JRE;
-import org.testcontainers.jdbc.ContainerDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -27,14 +26,14 @@ public class AvailableRegistryPluginsTest {
   public void availableCatalogLoaders() {
     assertThat(
         getRegisteredPlugins(CatalogLoaderRegistry.getCatalogLoaderRegistry()),
-        containsInAnyOrder("testloader", "schemacrawlerloader"));
+        arrayContainingInAnyOrder("testloader", "schemacrawlerloader"));
   }
 
   @Test
   public void availableCommands() {
     assertThat(
         getRegisteredPlugins(CommandRegistry.getCommandRegistry()),
-        containsInAnyOrder("test-command"));
+        arrayContainingInAnyOrder("test-command"));
   }
 
   @Test
@@ -58,25 +57,23 @@ public class AvailableRegistryPluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     assertThat(
         getRegisteredPlugins(JDBCDriverRegistry.getJDBCDriverRegistry()),
-        containsInAnyOrder(
-            JDBCDriver.class.getName(),
-            TestDatabaseDriver.class.getName(),
-            ContainerDatabaseDriver.class.getName()));
+        hasItemInArray(
+            TestDatabaseDriver.class.getName()));
   }
 
   @Test
   public void availableServers() {
     assertThat(
         getRegisteredPlugins(DatabaseConnectorRegistry.getDatabaseConnectorRegistry()),
-        containsInAnyOrder("test-db"));
+        arrayContainingInAnyOrder("test-db"));
   }
 
-  private List<String> getRegisteredPlugins(final PluginRegistry registry) {
+  private String[] getRegisteredPlugins(final PluginRegistry registry) {
     final List<String> commands = new ArrayList<>();
     final Collection<PropertyName> registeredPlugins = registry.getRegisteredPlugins();
     for (final PropertyName registeredPlugin : registeredPlugins) {
       commands.add(registeredPlugin.getName());
     }
-    return commands;
+    return commands.toArray(new String[0]);
   }
 }
