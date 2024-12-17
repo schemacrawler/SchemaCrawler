@@ -8,9 +8,9 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler?color=FFDAB9)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 ![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)
 
-[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler?color=A102F0)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
-[![Scoop](https://img.shields.io/scoop/v/schemacrawler?color=A102F0)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
-[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler?color=A102F0)]( https://community.chocolatey.org/packages/schemacrawler)
+[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler?color=9B59BD)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
+[![Scoop](https://img.shields.io/scoop/v/schemacrawler?color=9B59BD)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
+[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler?color=9B59BD)]( https://community.chocolatey.org/packages/schemacrawler)
 
 
 # <img src="https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/main/schemacrawler-website/src/site/resources/images/schemacrawler_logo.png" height="100px" width="100px" valign="middle"/> SchemaCrawler
