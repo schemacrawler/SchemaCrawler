@@ -105,7 +105,7 @@
       file="${schemacrawler.base-distribution}/sc.db"
       todir="${main-distribution.staging.dir}/_testdb" />
     <copy
-      file="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/src/test/resources/cassandra.create-database.cql"
+      file="${SchemaCrawler.home}/schemacrawler-testdb/src/main/resources/cassandra.create-database.cql"
       todir="${main-distribution.staging.dir}/_testdb" />
 
   </target>
