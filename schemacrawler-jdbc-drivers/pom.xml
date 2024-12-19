@@ -109,7 +109,7 @@
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
       <version>3.5.1</version>
-    </dependency>  
+    </dependency>
   </dependencies>
   <build>
     <pluginManagement>
@@ -124,21 +124,24 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/assembly.xml</descriptor>
+          </descriptors>
+          <formats>
+            <format>dir</format>
+          </formats>
+          <appendAssemblyId>false</appendAssemblyId>
+          <finalName>_jdbc-drivers/lib</finalName>
+        </configuration>
         <executions>
           <execution>
-            <id>create-lib</id>
-            <phase>prepare-package</phase>
+            <id>make-assembly</id>
+            <phase>package</phase>
             <goals>
-              <goal>copy-dependencies</goal>
+              <goal>single</goal>
             </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/_jdbc-drivers/lib</outputDirectory>
-              <includeScope>compile</includeScope>
-              <excludeGroupIds>org.checkerframework,com.google.protobuf</excludeGroupIds>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-            </configuration>
           </execution>
         </executions>
       </plugin>
