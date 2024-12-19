@@ -38,7 +38,9 @@ jobs:
 
 # BUILD AND TEST
     - id: build-test
-      name: Build and run tests without Graphviz installed, using the Java library
+      name: >
+        Build and run tests without Graphviz installed, using the Java library
+        and also create distribution
       env:
         TZ: GMT
       shell: bash
@@ -47,6 +49,7 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
+          -Ddistrib \
           clean package
 
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
