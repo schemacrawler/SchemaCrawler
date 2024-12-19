@@ -28,6 +28,7 @@
 /schemacrawler-docker-compose/*.pdf
 /schemacrawler-docker-compose/*.html
 
+**/target*
 tree.txt
 **/gpl*.*
 
