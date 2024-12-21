@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.system;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
@@ -40,6 +39,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -163,14 +163,12 @@ final class DataTypeRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(typeInfoSql, statement, getLimitMap()); ) {
-      int numSystemColumnDataTypes = 0;
+      int count = 0;
       while (results.next()) {
-        numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
+        count = count + 1;
         createSystemColumnDataType(results, systemSchema);
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d system column data types", count));
     }
   }
 
@@ -180,22 +178,19 @@ final class DataTypeRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(
                 connection.getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo"); ) {
-      int numSystemColumnDataTypes = 0;
+      int count = 0;
       while (results.next()) {
-        numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
+        count = count + 1;
         createSystemColumnDataType(results, systemSchema);
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d system column data types", count));
     } catch (final SQLException e) {
       logPossiblyUnsupportedSQLFeature(
           new StringFormat("Could not retrieve system column data types"), e);
     }
   }
 
-  private void retrieveUserDefinedColumnDataTypesFromMetadata(final Schema schema)
-      throws SQLException {
+  private void retrieveUserDefinedColumnDataTypesFromMetadata(final Schema schema) {
     requireNonNull(schema, "No schema provided");
 
     final Optional<SchemaReference> schemaOptional = catalog.lookupSchema(schema.getFullName());

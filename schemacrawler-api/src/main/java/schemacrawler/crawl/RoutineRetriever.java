@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTIONS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -41,6 +39,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Function;
@@ -201,12 +201,12 @@ final class RoutineRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getLimitMap()); ) {
-      int numFunctions = 0;
+      int count = 0;
       while (results.next()) {
-        numFunctions = numFunctions + 1;
+        count = count + 1;
         createFunction(results, schemas, functionFilter);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", numFunctions));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", count));
     }
   }
 
@@ -224,12 +224,13 @@ final class RoutineRetriever extends AbstractRetriever {
               new MetadataResultSet(
                   connection.getMetaData().getFunctions(catalogName, schemaName, null),
                   "DatabaseMetaData::getFunctions"); ) {
-        int numFunctions = 0;
+        int count = 0;
         while (results.next()) {
-          numFunctions = numFunctions + 1;
+          count = count + 1;
           createFunction(results, schemas, functionFilter);
         }
-        LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", numFunctions));
+        LOGGER.log(
+            Level.INFO, new StringFormat("Processed %d functions in schema <%s>", count, schema));
       } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"), e);
       } catch (final SQLException e) {
@@ -279,12 +280,12 @@ final class RoutineRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getLimitMap()); ) {
-      int numProcedures = 0;
+      int count = 0;
       while (results.next()) {
-        numProcedures = numProcedures + 1;
+        count = count + 1;
         createProcedure(results, schemas, procedureFilter);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", numProcedures));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", count));
     }
   }
 
@@ -303,12 +304,13 @@ final class RoutineRetriever extends AbstractRetriever {
               new MetadataResultSet(
                   connection.getMetaData().getProcedures(catalogName, schemaName, null),
                   "DatabaseMetaData::getProcedures"); ) {
-        int numProcedures = 0;
+        int count = 0;
         while (results.next()) {
-          numProcedures = numProcedures + 1;
+          count = count + 1;
           createProcedure(results, schemas, procedureFilter);
         }
-        LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", numProcedures));
+        LOGGER.log(
+            Level.INFO, new StringFormat("Processed %d procedures in schema <%s>", count, schema));
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
         logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve procedures"), e);

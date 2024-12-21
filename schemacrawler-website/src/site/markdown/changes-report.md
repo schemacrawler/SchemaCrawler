@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.24.2"></a>
+## Release 16.24.2 - 2024-12-24
+
+- Allow table retrieval to proceed even if there are no permissions for a given schema
+
+
 <a name="v16.24.1"></a>
 ## Release 16.24.1 - 2024-12-15
 
