@@ -115,11 +115,12 @@ public class CommandLineUtility {
               new BaseProductVersion(connectionInfoBuilder.buildJdbcDriverInfo());
           writer.printf("%n  %s%n  %s", databaseInfo, jdbcDriverInfo);
         } catch (final Exception e) {
-          // Ignore - do not log
+          writer.printf("%n  %s", e.getMessage());
         }
       } else {
         writer.printf("%n  Not connected to a database");
       }
+      writer.flush();
     }
 
     return stringWriter.toString();

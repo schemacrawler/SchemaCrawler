@@ -95,7 +95,7 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), containsString("HSQL Database Engine"));
+    assertThat(contentsOf(streams.out()), containsString("No database metadata available"));
   }
 
   @Test
