@@ -28,18 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.commandline.command;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
@@ -61,7 +59,7 @@ public class ConnectionShellCommandsTest {
     final ShellState state = new ShellState();
     state.setDataSource(dataSource); // is-connected
 
-    final String[] args = new String[0];
+    final String[] args = {};
 
     assertThat(state.getDataSource(), is(not(nullValue())));
 
@@ -76,7 +74,7 @@ public class ConnectionShellCommandsTest {
   public void disconnectWhenNotConnected() {
     final ShellState state = new ShellState();
 
-    final String[] args = new String[0];
+    final String[] args = {};
 
     assertThat(state.getDataSource(), is(nullValue()));
 
@@ -93,14 +91,14 @@ public class ConnectionShellCommandsTest {
     final ShellState state = new ShellState();
     state.setDataSource(dataSource); // is-connected
 
-    final String[] args = new String[] {"--is-connected"};
+    final String[] args = {"--is-connected"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), startsWith("Connected to "));
+    assertThat(contentsOf(streams.out()), containsString("HSQL Database Engine"));
   }
 
   @Test
@@ -108,14 +106,14 @@ public class ConnectionShellCommandsTest {
       final DatabaseConnectionInfo connectionInfo, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
 
-    final String[] args = new String[] {"--is-connected"};
+    final String[] args = {"--is-connected"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), startsWith("Not connected to a database"));
+    assertThat(contentsOf(streams.out()), containsString("Not connected to a database"));
   }
 
   @Test
@@ -129,7 +127,7 @@ public class ConnectionShellCommandsTest {
 
     assertThat(state.getConfig().size(), is(1));
 
-    final String[] args = new String[0];
+    final String[] args = {};
     final SweepCommand optionsParser = new SweepCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
@@ -144,7 +142,7 @@ public class ConnectionShellCommandsTest {
 
     assertThat(state.getConfig().size(), is(0));
 
-    final String[] args = new String[0];
+    final String[] args = {};
     final SweepCommand optionsParser = new SweepCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);

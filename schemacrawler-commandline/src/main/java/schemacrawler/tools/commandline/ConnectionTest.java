@@ -87,11 +87,9 @@ public final class ConnectionTest {
 
   private static void executeCommandLine(final CommandLine commandLine) {
     final Map<String, Object> subcommands = commandLine.getMixins();
-    for (final String commandName : new String[] {"connect"}) {
-      final Runnable command = (Runnable) subcommands.get(commandName);
-      LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
-      command.run();
-    }
+    final Runnable command = (Runnable) subcommands.get("connect");
+    LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
+    command.run();
   }
 
   private ConnectionTest() {

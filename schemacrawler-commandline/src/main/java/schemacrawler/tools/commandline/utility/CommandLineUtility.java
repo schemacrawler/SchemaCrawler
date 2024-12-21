@@ -100,7 +100,7 @@ public class CommandLineUtility {
     final StringWriter stringWriter = new StringWriter();
     try (final PrintWriter writer = new PrintWriter(stringWriter)) {
 
-      writer.println("Connection:");
+      writer.print("Connection:");
 
       final boolean isConnectedState = state.isConnected();
       if (isConnectedState) {
@@ -113,12 +113,12 @@ public class CommandLineUtility {
               new BaseProductVersion(connectionInfoBuilder.buildDatabaseInfo());
           final ProductVersion jdbcDriverInfo =
               new BaseProductVersion(connectionInfoBuilder.buildJdbcDriverInfo());
-          writer.printf("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
+          writer.printf("%n  %s%n  %s", databaseInfo, jdbcDriverInfo);
         } catch (final Exception e) {
           // Ignore - do not log
         }
       } else {
-        writer.println("  Not connected to a database");
+        writer.printf("%n  Not connected to a database");
       }
     }
 
