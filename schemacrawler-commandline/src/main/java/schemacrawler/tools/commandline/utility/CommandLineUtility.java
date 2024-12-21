@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 import static us.fatehi.utility.IOUtility.readResourceFully;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
@@ -93,23 +95,34 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static String getConnectionInfo(final DatabaseConnectionSource dbConnectionSource) {
-    final String connectionInfoString = "";
-    if (dbConnectionSource == null) {
-      return connectionInfoString;
-    }
-    try (final Connection connection = dbConnectionSource.get(); ) {
-      final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+  public static String getConnectionInfo(final ShellState state) {
 
-      final ProductVersion databaseInfo =
-          new BaseProductVersion(connectionInfoBuilder.buildDatabaseInfo());
-      final ProductVersion jdbcDriverInfo =
-          new BaseProductVersion(connectionInfoBuilder.buildJdbcDriverInfo());
-      return String.format("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
-    } catch (final Exception e) {
-      // Ignore - do not log
+    final StringWriter stringWriter = new StringWriter();
+    try (final PrintWriter writer = new PrintWriter(stringWriter)) {
+
+      writer.println("Connection:");
+
+      final boolean isConnectedState = state.isConnected();
+      if (isConnectedState) {
+        final DatabaseConnectionSource dbConnectionSource = state.getDataSource();
+        try (final Connection connection = dbConnectionSource.get(); ) {
+          final ConnectionInfoBuilder connectionInfoBuilder =
+              ConnectionInfoBuilder.builder(connection);
+
+          final ProductVersion databaseInfo =
+              new BaseProductVersion(connectionInfoBuilder.buildDatabaseInfo());
+          final ProductVersion jdbcDriverInfo =
+              new BaseProductVersion(connectionInfoBuilder.buildJdbcDriverInfo());
+          writer.printf("  %s%n  %s%n", databaseInfo, jdbcDriverInfo);
+        } catch (final Exception e) {
+          // Ignore - do not log
+        }
+      } else {
+        writer.println("  Not connected to a database");
+      }
     }
-    return connectionInfoString;
+
+    return stringWriter.toString();
   }
 
   public static String getEnvironment(final ShellState state) {
@@ -117,11 +130,10 @@ public class CommandLineUtility {
       return "";
     }
     return String.format(
-        "Environment:%n  %s%n  %s%n  %s%n%s",
+        "Environment:%n  %s%n  %s%n  %s",
         Version.version(),
         OperatingSystemInfo.operatingSystemInfo(),
-        JvmSystemInfo.jvmSystemInfo(),
-        getConnectionInfo(state.getDataSource()));
+        JvmSystemInfo.jvmSystemInfo());
   }
 
   /**
@@ -177,6 +189,7 @@ public class CommandLineUtility {
 
     System.err.println();
     System.err.println(CommandLineUtility.getEnvironment(state));
+    System.err.println(CommandLineUtility.getConnectionInfo(state));
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {

@@ -34,9 +34,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
+import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
+import schemacrawler.tools.commandline.shell.AvailableServersCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import us.fatehi.utility.UtilityLogger;
+import schemacrawler.tools.commandline.utility.CommandLineUtility;
 
 public final class ConnectionTest {
 
@@ -61,15 +63,23 @@ public final class ConnectionTest {
       final CommandLine commandLine = newCommandLine(commands, stateFactory);
       commandLine.parseArgs(args);
 
-      executeCommandLine(commandLine);
+      System.out.println(CommandLineUtility.getEnvironment(state));
+      new AvailableJDBCDrivers().run();
+      new AvailableServersCommand().run();
+
+      Throwable throwable = null;
+      try {
+        executeCommandLine(commandLine);
+      } catch (final Throwable e) {
+        throwable = e;
+      }
+      System.out.printf("%n%n");
+      System.out.println(CommandLineUtility.getConnectionInfo(state));
+      if (throwable != null) {
+        throwable.printStackTrace();
+      }
 
       return 0;
-    } catch (final Throwable throwable) {
-      final UtilityLogger logger = new UtilityLogger(LOGGER);
-      logger.logSafeArguments(args);
-      logger.logFatalStackTrace(throwable);
-
-      return 1;
     } finally {
       state.close();
     }
@@ -77,8 +87,7 @@ public final class ConnectionTest {
 
   private static void executeCommandLine(final CommandLine commandLine) {
     final Map<String, Object> subcommands = commandLine.getMixins();
-
-    for (final String commandName : new String[] {"system", "connect"}) {
+    for (final String commandName : new String[] {"connect"}) {
       final Runnable command = (Runnable) subcommands.get(commandName);
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
       command.run();

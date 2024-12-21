@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.getConnectionInfo;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.Version;
@@ -106,7 +105,6 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
       showEnvironment();
       System.out.println();
 
-      System.out.println("Connection Information:");
       showConnected();
       System.out.println();
 
@@ -117,13 +115,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void showConnected() {
-    final boolean isConnectedState = state.isConnected();
-    if (isConnectedState) {
-      System.out.println("Connected to database");
-      System.out.println(getConnectionInfo(state.getDataSource()));
-    } else {
-      System.out.println("Not connected to a database");
-    }
+    System.out.println(CommandLineUtility.getConnectionInfo(state));
   }
 
   private void showEnvironment() {
@@ -139,7 +131,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
 
   private void showLoaded() {
     final boolean isLoadedState = state.isLoaded();
-    System.out.printf("Database metadata is %sloaded%n", isLoadedState ? "" : "not ");
+    System.out.printf("  Database metadata is %sloaded%n", isLoadedState ? "" : "not ");
   }
 
   private void showStackTrace() {
