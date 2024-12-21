@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.shell;
+package schemacrawler.tools.commandline;
 
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Unmatched;
