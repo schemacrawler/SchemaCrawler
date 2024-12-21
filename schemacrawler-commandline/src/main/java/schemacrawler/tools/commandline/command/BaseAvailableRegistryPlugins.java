@@ -28,9 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static picocli.CommandLine.Help.Column.Overflow.SPAN;
-import static picocli.CommandLine.Help.Column.Overflow.WRAP;
-import static picocli.CommandLine.Help.TextTable.forColumns;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
@@ -39,10 +36,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static java.util.Objects.requireNonNull;
-import picocli.CommandLine;
-import picocli.CommandLine.Help.Column;
-import picocli.CommandLine.Help.TextTable;
 import us.fatehi.utility.property.PropertyName;
+import us.fatehi.utility.property.PropertyNameUtility;
 
 abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
 
@@ -64,9 +59,10 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
 
   public void print(final PrintStream out) {
     if (!isEmpty() && out != null) {
+      final String title = String.format("Available %s:%n", getName());
+      final String pluginsTable = PropertyNameUtility.tableOf(title, plugins);
       out.println();
-      out.printf("Available %s:%n", getName());
-      out.println(commands());
+      out.println(pluginsTable);
     }
   }
 
@@ -82,17 +78,4 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
   }
 
   protected abstract String getName();
-
-  private final TextTable commands() {
-    final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
-        new CommandLine.Help.ColorScheme.Builder();
-    colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
-    final TextTable textTable =
-        forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
-
-    for (final PropertyName plugin : plugins) {
-      textTable.addRowValues(plugin.getName(), plugin.getDescription());
-    }
-    return textTable;
-  }
 }
