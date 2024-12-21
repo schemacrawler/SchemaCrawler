@@ -8,7 +8,7 @@
   </configurations>
   <dependencies>
     <dependency org="org.thymeleaf" name="thymeleaf"
-      rev="3.1.2.RELEASE" conf="binaries->default" />
+      rev="3.1.3.RELEASE" conf="binaries->default" />
 
     <exclude org="javax.servlet" module="servlet-api" />
     <exclude org="org.slf4j" />
