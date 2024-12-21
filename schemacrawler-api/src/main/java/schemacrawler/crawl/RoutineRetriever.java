@@ -201,12 +201,12 @@ final class RoutineRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getLimitMap()); ) {
-      int numFunctions = 0;
+      int count = 0;
       while (results.next()) {
-        numFunctions = numFunctions + 1;
+        count = count + 1;
         createFunction(results, schemas, functionFilter);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", numFunctions));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", count));
     }
   }
 
@@ -280,12 +280,12 @@ final class RoutineRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getLimitMap()); ) {
-      int numProcedures = 0;
+      int count = 0;
       while (results.next()) {
-        numProcedures = numProcedures + 1;
+        count = count + 1;
         createProcedure(results, schemas, procedureFilter);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", numProcedures));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", count));
     }
   }
 

@@ -163,14 +163,12 @@ final class DataTypeRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(typeInfoSql, statement, getLimitMap()); ) {
-      int numSystemColumnDataTypes = 0;
+      int count = 0;
       while (results.next()) {
-        numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
+        count = count + 1;
         createSystemColumnDataType(results, systemSchema);
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d system column data types", count));
     }
   }
 
@@ -180,14 +178,12 @@ final class DataTypeRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(
                 connection.getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo"); ) {
-      int numSystemColumnDataTypes = 0;
+      int count = 0;
       while (results.next()) {
-        numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
+        count = count + 1;
         createSystemColumnDataType(results, systemSchema);
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d system column data types", count));
     } catch (final SQLException e) {
       logPossiblyUnsupportedSQLFeature(
           new StringFormat("Could not retrieve system column data types"), e);

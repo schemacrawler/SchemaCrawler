@@ -168,12 +168,12 @@ final class TableRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getLimitMap()); ) {
-      int numTables = 0;
+      int count = 0;
       while (results.next()) {
-        numTables = numTables + 1;
+        count = count + 1;
         createTable(results, schemas, tableFilter, filteredTableTypes);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d tables", numTables));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d tables", count));
     }
   }
 
