@@ -57,8 +57,7 @@ public class AvailableRegistryPluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     assertThat(
         getRegisteredPlugins(JDBCDriverRegistry.getJDBCDriverRegistry()),
-        hasItemInArray(
-            TestDatabaseDriver.class.getName()));
+        hasItemInArray(TestDatabaseDriver.class.getName()));
   }
 
   @Test

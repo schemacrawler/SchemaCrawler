@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import java.sql.Connection;
@@ -37,6 +36,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -181,8 +181,8 @@ final class TableRetriever extends AbstractRetriever {
       final NamedObjectList<SchemaReference> schemas,
       final String tableNamePattern,
       final TableTypes tableTypes,
-      final InclusionRuleFilter<Table> tableFilter)
-      throws SQLException {
+      final InclusionRuleFilter<Table> tableFilter) {
+
     for (final Schema schema : schemas) {
       LOGGER.log(Level.INFO, new StringFormat("Retrieving tables for schema <%s>", schema));
 
@@ -201,12 +201,16 @@ final class TableRetriever extends AbstractRetriever {
                       .getTables(
                           catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()),
                   "DatabaseMetaData::getTables"); ) {
-        int numTables = 0;
+        int count = 0;
         while (results.next()) {
-          numTables = numTables + 1;
+          count = count + 1;
           createTable(results, schemas, tableFilter, supportedTableTypes);
         }
-        LOGGER.log(Level.INFO, new StringFormat("Processed %d tables", numTables));
+        LOGGER.log(
+            Level.INFO, new StringFormat("Processed %d tables in schema <%s>", count, schema));
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING, e, new StringFormat("Could not obtain tables in schema <%s>", schema));
       }
     }
   }
