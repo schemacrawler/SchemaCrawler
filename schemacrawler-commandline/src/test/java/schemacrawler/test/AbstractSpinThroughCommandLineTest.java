@@ -40,7 +40,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
@@ -62,10 +65,6 @@ public abstract class AbstractSpinThroughCommandLineTest {
     TestUtility.clean(SPIN_THROUGH_OUTPUT);
   }
 
-  private static Stream<InfoLevel> infoLevels() {
-    return EnumSet.complementOf(EnumSet.of(InfoLevel.unknown)).stream();
-  }
-
   private static String referenceFile(
       final SchemaTextDetailType schemaTextDetailType,
       final InfoLevel infoLevel,
@@ -83,60 +82,54 @@ public abstract class AbstractSpinThroughCommandLineTest {
     return referenceFile;
   }
 
-  private static Stream<SchemaTextDetailType> schemaTextDetailTypes() {
-    return EnumSet.allOf(SchemaTextDetailType.class).stream();
+  protected static Stream<Arguments> spinThroughArguments() {
+    return EnumSet.complementOf(EnumSet.of(InfoLevel.unknown)).stream()
+        .flatMap(
+            infoLevel ->
+                EnumSet.allOf(SchemaTextDetailType.class).stream()
+                    .map(schemaTextDetailType -> Arguments.of(infoLevel, schemaTextDetailType)));
   }
 
-  @Test
-  public void spinThroughMain(final DatabaseConnectionInfo connectionInfo) throws Exception {
+  @DisplayName("Spin through command-line for output")
+  @ParameterizedTest()
+  @MethodSource("spinThroughArguments")
+  public void spinThroughMain(
+      final InfoLevel infoLevel,
+      final SchemaTextDetailType schemaTextDetailType,
+      final DatabaseConnectionInfo connectionInfo)
+      throws Exception {
     assertAll(
-        infoLevels()
-            .flatMap(
-                infoLevel ->
-                    outputFormats()
-                        .flatMap(
-                            outputFormat ->
-                                schemaTextDetailTypes()
-                                    .map(
-                                        schemaTextDetailType ->
-                                            () -> {
-                                              final String javaVersion;
-                                              if (schemaTextDetailType
-                                                      == SchemaTextDetailType.details
-                                                  && infoLevel == InfoLevel.maximum) {
-                                                javaVersion = "." + javaVersion();
-                                              } else {
-                                                javaVersion = "";
-                                              }
-                                              final String referenceFile =
-                                                  referenceFile(
-                                                      schemaTextDetailType,
-                                                      infoLevel,
-                                                      outputFormat,
-                                                      javaVersion);
+        outputFormats()
+            .map(
+                outputFormat ->
+                    () -> {
+                      final String javaVersion;
+                      if (schemaTextDetailType == SchemaTextDetailType.details
+                          && infoLevel == InfoLevel.maximum) {
+                        javaVersion = "." + javaVersion();
+                      } else {
+                        javaVersion = "";
+                      }
+                      final String referenceFile =
+                          referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
 
-                                              final String command = schemaTextDetailType.name();
+                      final String command = schemaTextDetailType.name();
 
-                                              final Map<String, String> argsMap = new HashMap<>();
-                                              argsMap.put("--sequences", ".*");
-                                              argsMap.put("--synonyms", ".*");
-                                              argsMap.put("--routines", ".*");
-                                              argsMap.put("--no-info", Boolean.FALSE.toString());
-                                              argsMap.put("--info-level", infoLevel.name());
+                      final Map<String, String> argsMap = new HashMap<>();
+                      argsMap.put("--sequences", ".*");
+                      argsMap.put("--synonyms", ".*");
+                      argsMap.put("--routines", ".*");
+                      argsMap.put("--no-info", Boolean.FALSE.toString());
+                      argsMap.put("--info-level", infoLevel.name());
 
-                                              assertThat(
-                                                  outputOf(
-                                                      commandlineExecution(
-                                                          connectionInfo,
-                                                          command,
-                                                          argsMap,
-                                                          true,
-                                                          outputFormat)),
-                                                  hasSameContentAndTypeAs(
-                                                      classpathResource(
-                                                          SPIN_THROUGH_OUTPUT + referenceFile),
-                                                      outputFormat));
-                                            }))));
+                      assertThat(
+                          outputOf(
+                              commandlineExecution(
+                                  connectionInfo, command, argsMap, true, outputFormat)),
+                          hasSameContentAndTypeAs(
+                              classpathResource(SPIN_THROUGH_OUTPUT + referenceFile),
+                              outputFormat));
+                    }));
   }
 
   protected abstract Stream<? extends OutputFormat> outputFormats();
