@@ -44,7 +44,7 @@ public class AvailableServersCommand implements Runnable {
   public void run() {
     final AvailableServers availableServers = new AvailableServers();
     if (!availableServers.isEmpty()) {
-      availableServers.print(System.out);
+      availableServers.printHelp(System.out);
 
       System.out.println("Notes:");
       System.out.println("- For help on an individual database plugin,");

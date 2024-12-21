@@ -46,6 +46,7 @@ import schemacrawler.tools.registry.JDBCDriverRegistry;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.SystemExitException;
 import us.fatehi.utility.UtilityLogger;
+import us.fatehi.utility.property.JvmArchitectureInfo;
 import us.fatehi.utility.property.JvmSystemInfo;
 import us.fatehi.utility.property.OperatingSystemInfo;
 
@@ -67,6 +68,7 @@ public final class Main {
     LOGGER.log(Level.INFO, String.valueOf(Version.version()));
     LOGGER.log(Level.INFO, String.valueOf(OperatingSystemInfo.operatingSystemInfo()));
     LOGGER.log(Level.INFO, String.valueOf(JvmSystemInfo.jvmSystemInfo()));
+    LOGGER.log(Level.INFO, String.valueOf(JvmArchitectureInfo.jvmArchitectureInfo()));
     final UtilityLogger logger = new UtilityLogger(LOGGER);
     logger.logSafeArguments(args);
     logger.logSystemClasspath();

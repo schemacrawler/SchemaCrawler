@@ -30,18 +30,13 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 
-public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins implements Runnable {
+public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins {
 
   private final String name;
 
   public AvailableJDBCDrivers() {
     super(JDBCDriverRegistry.getJDBCDriverRegistry().getRegisteredPlugins());
     name = JDBCDriverRegistry.getJDBCDriverRegistry().getName();
-  }
-
-  @Override
-  public void run() {
-    print(System.out);
   }
 
   @Override

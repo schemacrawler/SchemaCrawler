@@ -44,7 +44,7 @@ public class AvailableCommandsCommand implements Runnable {
   public void run() {
     final AvailableCommands availableCommands = new AvailableCommands();
     if (!availableCommands.isEmpty()) {
-      availableCommands.print(System.out);
+      availableCommands.printHelp(System.out);
 
       System.out.println("Notes:");
       System.out.println("- For help on an individual SchemaCrawler command,");
