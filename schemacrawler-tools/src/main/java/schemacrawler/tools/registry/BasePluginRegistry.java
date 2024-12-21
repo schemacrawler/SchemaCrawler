@@ -28,10 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.registry;
 
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import us.fatehi.utility.property.PropertyName;
+import us.fatehi.utility.property.PropertyNameUtility;
 
 public abstract class BasePluginRegistry implements PluginRegistry {
 
@@ -44,32 +43,8 @@ public abstract class BasePluginRegistry implements PluginRegistry {
       return;
     }
 
-    int index = 0;
-    final StringBuilder buffer = new StringBuilder(1024);
-    try {
-      int maxNameLength = 0;
-      final Collection<PropertyName> registeredPlugins = getRegisteredPlugins();
-      for (final PropertyName registeredPlugin : registeredPlugins) {
-        final int length = registeredPlugin.getName().length();
-        if (length > maxNameLength) {
-          maxNameLength = length;
-        }
-      }
-      final String format = String.format("%%2d %%%ds %%s", maxNameLength);
-
-      buffer.append("Registered ").append(getName()).append(":").append(System.lineSeparator());
-      for (final PropertyName registeredPlugin : registeredPlugins) {
-        index++;
-        buffer
-            .append(
-                String.format(
-                    format, index, registeredPlugin.getName(), registeredPlugin.getDescription()))
-            .append(System.lineSeparator());
-      }
-    } catch (final Throwable e) {
-      // Log the error and continue
-      LOGGER.log(Level.WARNING, "Could not list " + getName(), e);
-    }
-    LOGGER.log(Level.CONFIG, buffer.toString());
+    final String title = String.format("Registered %s:", getName());
+    final String registeredPlugins = PropertyNameUtility.tableOf(title, getRegisteredPlugins());
+    LOGGER.log(Level.CONFIG, registeredPlugins);
   }
 }

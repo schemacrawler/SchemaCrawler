@@ -2,7 +2,6 @@ package schemacrawler.test.commandline.command;
 
 import static java.util.regex.Pattern.DOTALL;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.mockito.Mockito.mock;
@@ -82,7 +81,6 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), containsString("Connected to"));
     assertThat(contentsOf(streams.out()), containsString("HSQL Database Engine"));
   }
 
@@ -97,7 +95,7 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), startsWith("Connected to"));
+    assertThat(contentsOf(streams.out()), containsString("No database metadata available"));
   }
 
   @Test
@@ -131,7 +129,7 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), startsWith("Not connected to a database"));
+    assertThat(contentsOf(streams.out()), containsString("Not connected to a database"));
   }
 
   @Test

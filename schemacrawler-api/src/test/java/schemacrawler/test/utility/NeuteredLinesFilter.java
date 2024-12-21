@@ -62,6 +62,7 @@ final class NeuteredLinesFilter implements Predicate<String> {
     // Operating systems and environment
     Pattern.compile(".*(Windows|Linux|Mac OS).*"),
     Pattern.compile(".*(Java|OpenJDK).*"),
+    Pattern.compile(".*JVM Architecture.*"),
     // SQL Server
     // -- server-specific values
     Pattern.compile(".*ServerName.*"),

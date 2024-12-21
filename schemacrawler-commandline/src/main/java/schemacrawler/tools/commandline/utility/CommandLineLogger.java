@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.utility;
 
-import static java.util.Objects.requireNonNull;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.tools.commandline.state.ShellState;
 
 public final class CommandLineLogger {
@@ -47,5 +47,6 @@ public final class CommandLineLogger {
     }
 
     logger.log(Level.INFO, CommandLineUtility.getEnvironment(state));
+    logger.log(Level.INFO, CommandLineUtility.getConnectionInfo(state));
   }
 }

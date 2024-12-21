@@ -26,21 +26,21 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.commandline;
 
-import schemacrawler.tools.registry.JDBCDriverRegistry;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Unmatched;
 
-public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins {
+public final class ConnectionTestOptions {
 
-  private final String name;
+  @Option(
+      names = {"--connection-test", "-T"},
+      description = "Test database connection and show environment information")
+  private boolean connectionTest;
 
-  public AvailableJDBCDrivers() {
-    super(JDBCDriverRegistry.getJDBCDriverRegistry().getRegisteredPlugins());
-    name = JDBCDriverRegistry.getJDBCDriverRegistry().getName();
-  }
+  @Unmatched private String[] otherOptions;
 
-  @Override
-  public String getName() {
-    return name;
+  public boolean isConnectionTest() {
+    return connectionTest;
   }
 }

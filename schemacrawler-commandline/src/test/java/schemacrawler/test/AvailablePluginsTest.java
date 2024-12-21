@@ -53,7 +53,7 @@ public class AvailablePluginsTest {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();
     try (final PrintStream out = new PrintStream(baos, true, utf8)) {
-      availableScriptEngines.print(out);
+      availableScriptEngines.printHelp(out);
     }
     final String data = baos.toString(utf8);
 
@@ -70,7 +70,7 @@ public class AvailablePluginsTest {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();
     try (final PrintStream out = new PrintStream(baos, true, utf8)) {
-      availableJDBCDrivers.print(out);
+      availableJDBCDrivers.printHelp(out);
     }
     final String data = baos.toString(utf8);
 

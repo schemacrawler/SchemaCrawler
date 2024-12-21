@@ -43,6 +43,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
 import us.fatehi.utility.property.PropertyName;
+import us.fatehi.utility.property.PropertyNameUtility;
 
 abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
 
@@ -62,11 +63,21 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
     return stream().collect(Collectors.toList()).iterator();
   }
 
-  public void print(final PrintStream out) {
+  public void printHelp(final PrintStream out) {
     if (!isEmpty() && out != null) {
       out.println();
       out.printf("Available %s:%n", getName());
       out.println(commands());
+    }
+  }
+
+  public void print() {
+    final PrintStream out = System.out;
+    if (!isEmpty() && out != null) {
+      final String title = String.format("Available %s:%n", getName());
+      final String pluginsTable = PropertyNameUtility.tableOf(title, plugins);
+      out.println();
+      out.println(pluginsTable);
     }
   }
 

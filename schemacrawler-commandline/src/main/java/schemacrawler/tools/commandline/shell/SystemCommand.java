@@ -28,12 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.getConnectionInfo;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.Version;
+import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
+import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.command.AvailableScriptEngines;
+import schemacrawler.tools.commandline.command.AvailableServers;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
@@ -106,7 +108,6 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
       showEnvironment();
       System.out.println();
 
-      System.out.println("Connection Information:");
       showConnected();
       System.out.println();
 
@@ -117,29 +118,23 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void showConnected() {
-    final boolean isConnectedState = state.isConnected();
-    if (isConnectedState) {
-      System.out.println("Connected to database");
-      System.out.println(getConnectionInfo(state.getDataSource()));
-    } else {
-      System.out.println("Not connected to a database");
-    }
+    System.out.println(CommandLineUtility.getConnectionInfo(state));
   }
 
   private void showEnvironment() {
 
     System.out.println(CommandLineUtility.getEnvironment(state));
 
-    new AvailableScriptEngines().run();
-    new AvailableJDBCDrivers().run();
-    new AvailableServersCommand().run();
-    new AvailableCatalogLoadersCommand().run();
-    new AvailableCommandsCommand().run();
+    new AvailableScriptEngines().print();
+    new AvailableJDBCDrivers().print();
+    new AvailableServers().print();
+    new AvailableCatalogLoaders().print();
+    new AvailableCommands().print();
   }
 
   private void showLoaded() {
     final boolean isLoadedState = state.isLoaded();
-    System.out.printf("Database metadata is %sloaded%n", isLoadedState ? "" : "not ");
+    System.out.printf("  Database metadata is %sloaded%n", isLoadedState ? "" : "not ");
   }
 
   private void showStackTrace() {

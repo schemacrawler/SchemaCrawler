@@ -28,19 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.commandline.command;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
@@ -61,14 +59,14 @@ public class LoadedShellCommandsTest {
       final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
     final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
 
-    final String[] args = new String[] {"--is-loaded"};
+    final String[] args = {"--is-loaded"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), startsWith("Database metadata is loaded"));
+    assertThat(contentsOf(streams.out()), containsString("Database metadata is loaded"));
   }
 
   @Test
@@ -77,14 +75,14 @@ public class LoadedShellCommandsTest {
     final ShellState state = new ShellState();
     state.setDataSource(dataSource); // is-connected
 
-    final String[] args = new String[] {"--is-loaded"};
+    final String[] args = {"--is-loaded"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), startsWith("Database metadata is not loaded"));
+    assertThat(contentsOf(streams.out()), containsString("Database metadata is not loaded"));
   }
 
   @Test
@@ -92,7 +90,7 @@ public class LoadedShellCommandsTest {
   public void sweepCatalog(final DatabaseConnectionSource dataSource) {
     final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
 
-    final String[] args = new String[0];
+    final String[] args = {};
 
     assertThat(state.getCatalog(), is(not(nullValue())));
 
@@ -107,7 +105,7 @@ public class LoadedShellCommandsTest {
   public void sweepCatalogWithNoState() {
     final ShellState state = new ShellState();
 
-    final String[] args = new String[0];
+    final String[] args = {};
 
     assertThat(state.getCatalog(), is(nullValue()));
 

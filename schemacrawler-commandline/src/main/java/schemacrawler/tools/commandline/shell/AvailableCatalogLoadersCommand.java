@@ -44,7 +44,7 @@ public class AvailableCatalogLoadersCommand implements Runnable {
   public void run() {
     final AvailableCatalogLoaders availableCatalogLoaders = new AvailableCatalogLoaders();
     if (!availableCatalogLoaders.isEmpty()) {
-      availableCatalogLoaders.print(System.out);
+      availableCatalogLoaders.printHelp(System.out);
 
       System.out.println("Notes:");
       System.out.println("- For help on an individual catalog loader,");

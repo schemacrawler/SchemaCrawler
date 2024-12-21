@@ -30,18 +30,13 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.registry.ScriptEngineRegistry;
 
-public class AvailableScriptEngines extends BaseAvailableRegistryPlugins implements Runnable {
+public class AvailableScriptEngines extends BaseAvailableRegistryPlugins {
 
   private final String name;
 
   public AvailableScriptEngines() {
     super(ScriptEngineRegistry.getScriptEngineRegistry().getRegisteredPlugins());
     name = ScriptEngineRegistry.getScriptEngineRegistry().getName();
-  }
-
-  @Override
-  public void run() {
-    print(System.out);
   }
 
   @Override

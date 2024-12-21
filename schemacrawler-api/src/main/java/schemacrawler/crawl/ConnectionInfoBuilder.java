@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
@@ -38,6 +36,8 @@ import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import us.fatehi.utility.string.StringFormat;
@@ -105,6 +105,7 @@ public final class ConnectionInfoBuilder {
   private ConnectionInfoBuilder(final Connection connection) throws SQLException {
     requireNonNull(connection, "No connection provided");
     dbMetaData = connection.getMetaData();
+    requireNonNull(dbMetaData, "No database metadata available");
   }
 
   public DatabaseInfo buildDatabaseInfo() throws SQLException {
