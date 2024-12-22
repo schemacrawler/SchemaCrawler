@@ -66,10 +66,14 @@ COPY \
     ./*.py \
     /home/schcrwlr/
 
-# Create aliases for SchemaCrawler
+# Create .bashrc with aliases for SchemaCrawler
 RUN \
     echo 'alias schemacrawler="/opt/schemacrawler/bin/schemacrawler.sh"' \
     >> /home/schcrwlr/.profile \
  && echo 'export schemacrawler' \
     >> /home/schcrwlr/.profile \
- && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc
+ && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc \
+ && echo 'echo "`schemacrawler --version`"' >> ~/.bashrc \
+ && echo 'echo -e "\n\nUse the schemacrawler command.\n"' >> ~/.bashrc
+
+CMD ["bash"]
