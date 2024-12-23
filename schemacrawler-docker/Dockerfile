@@ -73,6 +73,7 @@ RUN \
  && echo 'export schemacrawler' \
     >> /home/schcrwlr/.profile \
  && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc \
+ && echo 'PS1="\[\e[0;33m\]SchemaCrawler\[\e[m\]:\w\$ "'  >> ~/.bashrc \
  && echo 'echo "`schemacrawler --version`"' >> ~/.bashrc \
  && echo 'echo -e "\n\nUse the schemacrawler command.\n"' >> ~/.bashrc
 
