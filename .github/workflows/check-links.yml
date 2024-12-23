@@ -42,7 +42,7 @@ jobs:
 # CHECK WEBSITE LINKS
     - id: check-links
       name: Check website links
-      uses: lycheeverse/lychee-action@v2.1.0
+      uses: lycheeverse/lychee-action@v2.2.0
       with:
         args: >
           --verbose
