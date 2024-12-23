@@ -41,11 +41,16 @@ jobs:
         DEFAULT_BRANCH: main
 
 # SETUP BUILD ENVIRONMENT
-    - id: prepare-maven-build
-      name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.4.0
+    - id: setup-java
+      name: Set up JDK
+      uses: actions/setup-java@v4
       with:
+        distribution: temurin
         java-version: 8
+        cache: maven
+        server-id: sonatype-nexus
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
