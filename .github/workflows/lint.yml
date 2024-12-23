@@ -1,4 +1,4 @@
-name: Check Website Links
+name: Lint Code Base and Check Website Links
 
 on:
   workflow_dispatch:
@@ -13,9 +13,32 @@ concurrency:
 
 jobs:
   build:
-    name: Check Website Links
+    name: Lint Code Base and Check Website Links
     runs-on: ubuntu-latest
     steps:
+
+# CHECKOUT CODE
+    - id: checkout-code
+      name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        # Full git history is needed to get a proper list
+        # of changed files within `super-linter`
+        fetch-depth: 0
+
+# LINT CODE
+    - id: read-env
+      name: Use super-linter environmental variables
+      shell: bash
+      run: |
+        # Use super-linter environmental variables
+        cat .github/super-linter.env >> "$GITHUB_ENV"
+    - id: lint-code-base
+      name: Lint Code Base
+      uses: github/super-linter/slim@v7
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEFAULT_BRANCH: main
 
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
@@ -42,7 +65,7 @@ jobs:
 # CHECK WEBSITE LINKS
     - id: check-links
       name: Check website links
-      uses: lycheeverse/lychee-action@v2.1.0
+      uses: lycheeverse/lychee-action@v2.2.0
       with:
         args: >
           --verbose
