@@ -31,11 +31,6 @@ package schemacrawler.tools.commandline.shell;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.Version;
-import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
-import schemacrawler.tools.commandline.command.AvailableCommands;
-import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
-import schemacrawler.tools.commandline.command.AvailableScriptEngines;
-import schemacrawler.tools.commandline.command.AvailableServers;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
@@ -122,14 +117,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void showEnvironment() {
-
-    System.out.println(CommandLineUtility.getEnvironment(state));
-
-    new AvailableScriptEngines().print();
-    new AvailableJDBCDrivers().print();
-    new AvailableServers().print();
-    new AvailableCatalogLoaders().print();
-    new AvailableCommands().print();
+    CommandLineUtility.printEnvironment(state);
   }
 
   private void showLoaded() {

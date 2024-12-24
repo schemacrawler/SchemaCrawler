@@ -48,6 +48,11 @@ import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
 import schemacrawler.crawl.ConnectionInfoBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
+import schemacrawler.tools.commandline.command.AvailableCommands;
+import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
+import schemacrawler.tools.commandline.command.AvailableScriptEngines;
+import schemacrawler.tools.commandline.command.AvailableServers;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -193,6 +198,16 @@ public class CommandLineUtility {
     System.err.println();
     System.err.println(CommandLineUtility.getEnvironment(state));
     System.err.println(CommandLineUtility.getConnectionInfo(state));
+  }
+
+  public static void printEnvironment(final ShellState state) {
+    System.out.println(CommandLineUtility.getEnvironment(state));
+
+    new AvailableScriptEngines().print();
+    new AvailableJDBCDrivers().print();
+    new AvailableServers().print();
+    new AvailableCatalogLoaders().print();
+    new AvailableCommands().print();
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {

@@ -34,8 +34,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
-import schemacrawler.tools.commandline.command.AvailableServers;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineUtility;
@@ -63,9 +61,7 @@ public final class ConnectionTest {
       final CommandLine commandLine = newCommandLine(commands, stateFactory);
       commandLine.parseArgs(args);
 
-      System.out.println(CommandLineUtility.getEnvironment(state));
-      new AvailableJDBCDrivers().print();
-      new AvailableServers().print();
+      CommandLineUtility.printEnvironment(state);
 
       Throwable throwable = null;
       try {
