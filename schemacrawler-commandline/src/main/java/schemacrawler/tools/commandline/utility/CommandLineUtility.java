@@ -202,12 +202,13 @@ public class CommandLineUtility {
 
   public static void printEnvironment(final ShellState state) {
     System.out.println(CommandLineUtility.getEnvironment(state));
+    System.out.println();
 
-    new AvailableScriptEngines().print();
-    new AvailableJDBCDrivers().print();
-    new AvailableServers().print();
-    new AvailableCatalogLoaders().print();
-    new AvailableCommands().print();
+    new AvailableScriptEngines().printHelp(System.out);
+    new AvailableJDBCDrivers().printHelp(System.out);
+    new AvailableServers().printHelp(System.out);
+    new AvailableCatalogLoaders().printHelp(System.out);
+    new AvailableCommands().printHelp(System.out);
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {

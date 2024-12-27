@@ -34,6 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
+import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineUtility;
@@ -53,6 +54,8 @@ public final class ConnectionTest {
     final ShellState state = new ShellState();
     try {
       requireNonNull(args, "No arguments provided");
+
+      System.out.printf("%s%n%n", Version.about());
 
       state.setDeferCatalogLoad(true);
       final StateFactory stateFactory = new StateFactory(state);
