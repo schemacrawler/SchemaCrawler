@@ -2,10 +2,16 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.25.1"></a>
+## Release 16.25.1 - 2024-12-27
+
+- Fix #1815 - show column default value in text output
+
+
 <a name="v16.24.3"></a>
 ## Release 16.24.3 - 2024-12-27
 
-- Fixes #1811 - pom for lint (see https://github.com/sualeh/schemacrawler-issue1811)
+- Fix #1811 - pom for lint (see https://github.com/sualeh/schemacrawler-issue1811)
 - Tweaks to output for connection test
 
 
@@ -149,8 +155,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.24.3"></a>
-## Release 16.24.3 - 2023-06-03
+<a name="v16.25.1"></a>
+## Release 16.25.1 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
