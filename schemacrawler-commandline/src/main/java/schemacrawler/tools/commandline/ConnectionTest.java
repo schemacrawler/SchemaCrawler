@@ -75,8 +75,11 @@ public final class ConnectionTest {
       System.out.printf("%n%n");
       System.out.println(CommandLineUtility.getConnectionInfo(state));
       if (throwable != null) {
-        throwable.printStackTrace();
+        System.out.println("  " + throwable.getMessage());
+        System.out.println();
+        throwable.printStackTrace(System.out);
       }
+      System.out.flush();
 
       return 0;
     } finally {
