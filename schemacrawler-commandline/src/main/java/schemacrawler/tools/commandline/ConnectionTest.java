@@ -76,8 +76,7 @@ public final class ConnectionTest {
       System.out.println(CommandLineUtility.getConnectionInfo(state));
       if (throwable != null) {
         System.out.println("  " + throwable.getMessage());
-        System.out.println();
-        throwable.printStackTrace(System.out);
+        LOGGER.log(Level.CONFIG, throwable.getMessage(), throwable);
       }
       System.out.flush();
 

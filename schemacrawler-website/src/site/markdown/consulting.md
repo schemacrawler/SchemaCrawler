@@ -33,7 +33,9 @@ Please do not ask questions on the issues page - instead, ask questions on
 Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler discussions page]:
 
 - Please explain the issue briefly, and specify the versions of SchemaCrawler, Java, 
-  operating system, database, and JDBC driver that you are using
+  operating system, database, and JDBC driver that you are using - the 
+  best way to do this is to run SchemaCrawler with an additional `-T` argument, and 
+  capture the output
 - Provide the steps that you took to reproduce the issue, and any steps that you took to 
   solve the issue
 - Zip and attach the SchemaCrawler debug logs, which can be obtained by running 

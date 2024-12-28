@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.24.3"></a>
+## Release 16.24.3 - 2024-12-27
+
+- Fixes #1811 - pom for lint
+
+
 <a name="v16.24.2"></a>
 ## Release 16.24.2 - 2024-12-21
 
