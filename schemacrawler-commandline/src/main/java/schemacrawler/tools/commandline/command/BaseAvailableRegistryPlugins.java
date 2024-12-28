@@ -28,9 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static picocli.CommandLine.Help.Column.Overflow.SPAN;
-import static picocli.CommandLine.Help.Column.Overflow.WRAP;
 import static picocli.CommandLine.Help.TextTable.forColumns;
+import static picocli.CommandLine.Model.UsageMessageSpec.DEFAULT_USAGE_WIDTH;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
@@ -41,6 +40,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
 import picocli.CommandLine.Help.Column;
+import picocli.CommandLine.Help.Column.Overflow;
 import picocli.CommandLine.Help.TextTable;
 import us.fatehi.utility.property.PropertyName;
 
@@ -84,6 +84,8 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
   protected abstract String getName();
 
   private final TextTable commands() {
+    final int indent = 2;
+    final int spacing = 2;
     int maxNameLength = 0;
     for (final PropertyName plugin : plugins) {
       final int length = plugin.getName().length();
@@ -91,7 +93,7 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
         maxNameLength = length;
       }
     }
-    maxNameLength = maxNameLength + 1;
+    maxNameLength = maxNameLength + spacing;
 
     final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
         new CommandLine.Help.ColorScheme.Builder();
@@ -99,8 +101,8 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
     final TextTable textTable =
         forColumns(
             colorSchemaBuilder.build(),
-            new Column(maxNameLength, 1, SPAN),
-            new Column(80 - maxNameLength, 1, WRAP));
+            new Column(maxNameLength, indent, Overflow.SPAN),
+            new Column(DEFAULT_USAGE_WIDTH - maxNameLength, indent, Overflow.WRAP));
 
     for (final PropertyName plugin : plugins) {
       textTable.addRowValues(plugin.getName(), plugin.getDescription());
