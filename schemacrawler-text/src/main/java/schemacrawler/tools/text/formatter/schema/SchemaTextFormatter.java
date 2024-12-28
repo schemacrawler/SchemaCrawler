@@ -912,6 +912,14 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeDetailRow("", "", "auto-incremented");
   }
 
+  private void printTableColumnDefaultValue(final Column column) {
+    if (column == null
+        || !column.hasDefaultValue()) {
+      return;
+    }
+    formattingHelper.writeDetailRow("", "", "default " + column.getDefaultValue());
+  }
+
   private void printTableColumnEnumValues(final Column column) {
     if (column == null
         || !column.isColumnDataTypeKnown()
@@ -1004,6 +1012,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
       if (extraDetails) {
         printTableColumnEnumValues(column);
+        printTableColumnDefaultValue(column);
         printTableColumnHidden(column);
         printTableColumnAutoIncremented(column);
         printTableColumnGenerated(column);
