@@ -237,459 +237,459 @@ td.section {
 <p>&#160;</p>
 
 <svg
- viewBox="0.00 0.00 2293.75 1051.50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1047.5)">
+ viewBox="0.00 0.00 2211.92 1035.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0.0) translate(4.0 1031.0)">
 <title>SchemaCrawler_Diagram</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-1047.5 2289.75,-1047.5 2289.75,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-1031 2207.92,-1031 2207.92,4 -4,4"/>
 <!-- authors_f521e766 -->
 <g id="node1" class="node">
 <title>authors_f521e766</title>
-<polygon fill="#c2dcf2" stroke="none" points="9,-413.5 9,-434.5 197,-434.5 197,-413.5 9,-413.5"/>
-<text text-anchor="start" x="10.75" y="-420.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.AUTHORS</text>
-<polygon fill="#c2dcf2" stroke="none" points="197,-413.5 197,-434.5 370,-434.5 370,-413.5 197,-413.5"/>
-<text text-anchor="start" x="329.75" y="-418.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="11" y="-399.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
-<text text-anchor="start" x="153" y="-397.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="199" y="-397.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="11" y="-377.2" font-family="Helvetica,sans-Serif" font-size="14.00">FIRSTNAME</text>
-<text text-anchor="start" x="153" y="-377.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="198.75" y="-377.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20) NOT NULL</text>
-<text text-anchor="start" x="11" y="-357.2" font-family="Helvetica,sans-Serif" font-size="14.00">LASTNAME</text>
-<text text-anchor="start" x="153" y="-357.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="198.75" y="-357.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20) NOT NULL</text>
-<text text-anchor="start" x="11" y="-337.2" font-family="Helvetica,sans-Serif" font-size="14.00">ADDRESS1</text>
-<text text-anchor="start" x="153" y="-337.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="199" y="-337.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
-<text text-anchor="start" x="11" y="-317.2" font-family="Helvetica,sans-Serif" font-size="14.00">ADDRESS2</text>
-<text text-anchor="start" x="153" y="-317.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="199" y="-317.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
-<text text-anchor="start" x="11" y="-297.2" font-family="Helvetica,sans-Serif" font-size="14.00">CITY</text>
-<text text-anchor="start" x="153" y="-297.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="199" y="-297.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50)</text>
-<text text-anchor="start" x="11" y="-277.2" font-family="Helvetica,sans-Serif" font-size="14.00">STATE</text>
-<text text-anchor="start" x="153" y="-277.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="199" y="-277.2" font-family="Helvetica,sans-Serif" font-size="14.00">CHARACTER(2)</text>
-<text text-anchor="start" x="11" y="-257.2" font-family="Helvetica,sans-Serif" font-size="14.00">POSTALCODE</text>
-<text text-anchor="start" x="153" y="-257.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="199" y="-257.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(10)</text>
-<text text-anchor="start" x="11" y="-237.2" font-family="Helvetica,sans-Serif" font-size="14.00">COUNTRY</text>
-<text text-anchor="start" x="153" y="-237.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="199" y="-237.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50)</text>
-<polygon fill="none" stroke="#888888" points="8,-231.5 8,-435.5 371,-435.5 371,-231.5 8,-231.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="9,-407 9,-427 189,-427 189,-407 9,-407"/>
+<text text-anchor="start" x="10.72" y="-413.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.AUTHORS</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="189,-407 189,-427 359,-427 359,-407 189,-407"/>
+<text text-anchor="start" x="318.87" y="-412.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="11" y="-393.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
+<text text-anchor="start" x="147" y="-392.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="191" y="-392.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="11" y="-372.4" font-family="Helvetica,sans-Serif" font-size="14.00">FIRSTNAME</text>
+<text text-anchor="start" x="147" y="-372.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="190.78" y="-372.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20) NOT NULL</text>
+<text text-anchor="start" x="11" y="-352.4" font-family="Helvetica,sans-Serif" font-size="14.00">LASTNAME</text>
+<text text-anchor="start" x="147" y="-352.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="190.78" y="-352.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20) NOT NULL</text>
+<text text-anchor="start" x="11" y="-332.4" font-family="Helvetica,sans-Serif" font-size="14.00">ADDRESS1</text>
+<text text-anchor="start" x="147" y="-332.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="191" y="-332.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
+<text text-anchor="start" x="11" y="-312.4" font-family="Helvetica,sans-Serif" font-size="14.00">ADDRESS2</text>
+<text text-anchor="start" x="147" y="-312.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="191" y="-312.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
+<text text-anchor="start" x="11" y="-292.4" font-family="Helvetica,sans-Serif" font-size="14.00">CITY</text>
+<text text-anchor="start" x="147" y="-292.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="191" y="-292.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50)</text>
+<text text-anchor="start" x="11" y="-272.4" font-family="Helvetica,sans-Serif" font-size="14.00">STATE</text>
+<text text-anchor="start" x="147" y="-272.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="191" y="-272.4" font-family="Helvetica,sans-Serif" font-size="14.00">CHARACTER(2)</text>
+<text text-anchor="start" x="11" y="-252.4" font-family="Helvetica,sans-Serif" font-size="14.00">POSTALCODE</text>
+<text text-anchor="start" x="147" y="-252.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="191" y="-252.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(10)</text>
+<text text-anchor="start" x="11" y="-232.4" font-family="Helvetica,sans-Serif" font-size="14.00">COUNTRY</text>
+<text text-anchor="start" x="147" y="-232.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="191" y="-232.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50)</text>
+<polygon fill="none" stroke="#888888" points="8,-226 8,-428 360,-428 360,-226 8,-226"/>
 </g>
 <!-- bookauthors_ead84c5d -->
 <g id="node2" class="node">
 <title>bookauthors_ead84c5d</title>
-<polygon fill="#c2dcf2" stroke="none" points="1246.75,-413 1246.75,-434 1477.75,-434 1477.75,-413 1246.75,-413"/>
-<text text-anchor="start" x="1248.62" y="-419.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.BOOKAUTHORS</text>
-<polygon fill="#c2dcf2" stroke="none" points="1477.75,-413 1477.75,-434 1619.75,-434 1619.75,-413 1477.75,-413"/>
-<text text-anchor="start" x="1579.5" y="-418.45" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1248.75" y="-397.7" font-family="Helvetica,sans-Serif" font-size="14.00">BOOKID</text>
-<text text-anchor="start" x="1402.75" y="-397.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.75" y="-397.7" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1248.75" y="-377.7" font-family="Helvetica,sans-Serif" font-size="14.00">AUTHORID</text>
-<text text-anchor="start" x="1402.75" y="-377.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.75" y="-377.7" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1248.75" y="-357.7" font-family="Helvetica,sans-Serif" font-size="14.00">SOMEDATA</text>
-<text text-anchor="start" x="1402.75" y="-357.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.75" y="-357.7" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(30)</text>
-<polygon fill="none" stroke="#888888" points="1245.75,-352 1245.75,-435 1620.75,-435 1620.75,-352 1245.75,-352"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1207.98,-409 1207.98,-429 1428.98,-429 1428.98,-409 1207.98,-409"/>
+<text text-anchor="start" x="1209.97" y="-415.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.BOOKAUTHORS</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="1428.98,-409 1428.98,-429 1567.98,-429 1567.98,-409 1428.98,-409"/>
+<text text-anchor="start" x="1527.86" y="-414.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1209.98" y="-394.4" font-family="Helvetica,sans-Serif" font-size="14.00">BOOKID</text>
+<text text-anchor="start" x="1357.98" y="-394.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1430.82" y="-394.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1209.98" y="-374.4" font-family="Helvetica,sans-Serif" font-size="14.00">AUTHORID</text>
+<text text-anchor="start" x="1357.98" y="-374.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1430.82" y="-374.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1209.98" y="-354.4" font-family="Helvetica,sans-Serif" font-size="14.00">SOMEDATA</text>
+<text text-anchor="start" x="1357.98" y="-354.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1430.98" y="-354.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(30)</text>
+<polygon fill="none" stroke="#888888" points="1206.98,-348 1206.98,-430 1568.98,-430 1568.98,-348 1206.98,-348"/>
 </g>
 <!-- bookauthors_ead84c5d&#45;&gt;authors_f521e766 -->
 <g id="edge1" class="edge">
 <title>bookauthors_ead84c5d:w&#45;&gt;authors_f521e766:e</title>
-<path fill="none" stroke="black" d="M1245.25,-382.5C795.26,-457.86 741.63,-446.9 533.5,-435.5 472.56,-432.16 454.36,-441.35 397,-420.5 388.2,-417.3 385.88,-410.46 380.87,-406.51"/>
-<polygon fill="black" stroke="black" points="1255.49,-392.74 1249.99,-378.24 1250.25,-387.5 1245.72,-382.97 1245.72,-382.97 1245.72,-382.97 1250.25,-387.5 1240.99,-387.24 1255.49,-392.74"/>
-<ellipse fill="none" stroke="black" cx="1260.7" cy="-397.95" rx="5.66" ry="5.66"/>
-<polygon fill="black" stroke="black" points="370.93,-408.57 373.98,-399.04 375.88,-399.65 372.83,-409.18 370.93,-408.57"/>
-<polyline fill="none" stroke="black" points="371.5,-403.5 376.26,-405.03"/>
-<polygon fill="black" stroke="black" points="375.69,-410.09 378.74,-400.57 380.64,-401.18 377.59,-410.7 375.69,-410.09"/>
-<polyline fill="none" stroke="black" points="376.26,-405.03 381.02,-406.55"/>
-<text text-anchor="start" x="715.88" y="-451.7" font-family="Helvetica,sans-Serif" font-size="14.00">Z_FK_AUTHOR</text>
+<path fill="none" stroke="black" d="M1188.95,-379.4C1098.38,-383.53 1073.3,-418.49 974.44,-429 774.23,-450.28 722.5,-439.36 521.44,-429 461,-425.88 442.76,-435.99 386,-415 376.94,-411.65 374.69,-404.4 369.6,-400.19"/>
+<polygon fill="black" stroke="black" points="1196.98,-379.22 1207.08,-383.5 1201.98,-379.11 1206.98,-379 1206.98,-379 1206.98,-379 1201.98,-379.11 1206.88,-374.5 1196.98,-379.22 1196.98,-379.22"/>
+<ellipse fill="none" stroke="black" cx="1192.99" cy="-379.31" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="359.37,-402.06 362.53,-392.57 364.42,-393.2 361.27,-402.69 359.37,-402.06"/>
+<polyline fill="none" stroke="black" points="360,-397 364.74,-398.58 "/>
+<polygon fill="black" stroke="black" points="364.12,-403.64 367.27,-394.15 369.17,-394.78 366.01,-404.27 364.12,-403.64"/>
+<polyline fill="none" stroke="black" points="364.74,-398.58 369.49,-400.16 "/>
+<text text-anchor="start" x="697.38" y="-446.2" font-family="Helvetica,sans-Serif" font-size="14.00">Z_FK_AUTHOR</text>
 </g>
 <!-- books_f4a675c8 -->
 <g id="node3" class="node">
 <title>books_f4a675c8</title>
-<polygon fill="#c2dcf2" stroke="none" points="593,-235.5 593,-256.5 762,-256.5 762,-235.5 593,-235.5"/>
-<text text-anchor="start" x="595" y="-242.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.BOOKS</text>
-<polygon fill="#c2dcf2" stroke="none" points="762,-235.5 762,-256.5 943,-256.5 943,-235.5 762,-235.5"/>
-<text text-anchor="start" x="902.75" y="-240.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="595" y="-221.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
-<text text-anchor="start" x="752" y="-219.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="764" y="-219.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="595" y="-199.2" font-family="Helvetica,sans-Serif" font-size="14.00">TITLE</text>
-<text text-anchor="start" x="752" y="-199.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="763.62" y="-199.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255) NOT NULL</text>
-<text text-anchor="start" x="595" y="-179.2" font-family="Helvetica,sans-Serif" font-size="14.00">DESCRIPTION</text>
-<text text-anchor="start" x="752" y="-179.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="764" y="-179.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
-<text text-anchor="start" x="595" y="-159.2" font-family="Helvetica,sans-Serif" font-size="14.00">PUBLISHERID</text>
-<text text-anchor="start" x="752" y="-159.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="764" y="-159.2" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="595" y="-139.2" font-family="Helvetica,sans-Serif" font-size="14.00">PUBLICATIONDATE</text>
-<text text-anchor="start" x="752" y="-139.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="764" y="-139.2" font-family="Helvetica,sans-Serif" font-size="14.00">DATE</text>
-<text text-anchor="start" x="595" y="-119.2" font-family="Helvetica,sans-Serif" font-size="14.00">PRICE</text>
-<text text-anchor="start" x="752" y="-119.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="764" y="-119.2" font-family="Helvetica,sans-Serif" font-size="14.00">DOUBLE(64, 0)</text>
-<text text-anchor="start" x="595" y="-99.2" font-family="Helvetica,sans-Serif" font-size="14.00">PREVIOUSEDITIONID</text>
-<text text-anchor="start" x="752" y="-99.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="764" y="-99.2" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<polygon fill="none" stroke="#888888" points="592,-93.5 592,-257.5 944,-257.5 944,-93.5 592,-93.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="578.94,-233 578.94,-253 739.94,-253 739.94,-233 578.94,-233"/>
+<text text-anchor="start" x="580.48" y="-239.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.BOOKS</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="739.94,-233 739.94,-253 917.94,-253 917.94,-233 739.94,-233"/>
+<text text-anchor="start" x="877.81" y="-238.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="580.94" y="-219.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
+<text text-anchor="start" x="730.94" y="-218.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="741.94" y="-218.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="580.94" y="-198.4" font-family="Helvetica,sans-Serif" font-size="14.00">TITLE</text>
+<text text-anchor="start" x="730.94" y="-198.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="741.83" y="-198.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255) NOT NULL</text>
+<text text-anchor="start" x="580.94" y="-178.4" font-family="Helvetica,sans-Serif" font-size="14.00">DESCRIPTION</text>
+<text text-anchor="start" x="730.94" y="-178.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="741.94" y="-178.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
+<text text-anchor="start" x="580.94" y="-158.4" font-family="Helvetica,sans-Serif" font-size="14.00">PUBLISHERID</text>
+<text text-anchor="start" x="730.94" y="-158.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="741.94" y="-158.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="580.94" y="-138.4" font-family="Helvetica,sans-Serif" font-size="14.00">PUBLICATIONDATE</text>
+<text text-anchor="start" x="730.94" y="-138.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="741.94" y="-138.4" font-family="Helvetica,sans-Serif" font-size="14.00">DATE</text>
+<text text-anchor="start" x="580.94" y="-118.4" font-family="Helvetica,sans-Serif" font-size="14.00">PRICE</text>
+<text text-anchor="start" x="730.94" y="-118.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="741.94" y="-118.4" font-family="Helvetica,sans-Serif" font-size="14.00">DOUBLE(64, 0)</text>
+<text text-anchor="start" x="580.94" y="-98.4" font-family="Helvetica,sans-Serif" font-size="14.00">PREVIOUSEDITIONID</text>
+<text text-anchor="start" x="730.94" y="-98.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="741.94" y="-98.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
+<polygon fill="none" stroke="#888888" points="577.44,-92 577.44,-254 918.44,-254 918.44,-92 577.44,-92"/>
 </g>
 <!-- bookauthors_ead84c5d&#45;&gt;books_f4a675c8 -->
 <g id="edge5" class="edge">
 <title>bookauthors_ead84c5d:w&#45;&gt;books_f4a675c8:e</title>
-<path fill="none" stroke="black" d="M1245.25,-403.5C1126.19,-264.48 1090.21,-315.49 1020.5,-286.5 983.64,-271.17 986.63,-232.58 953.73,-226.35"/>
-<polygon fill="black" stroke="black" points="1255.49,-413.74 1249.99,-399.24 1250.25,-408.5 1245.72,-403.97 1245.72,-403.97 1245.72,-403.97 1250.25,-408.5 1240.99,-408.24 1255.49,-413.74"/>
-<ellipse fill="none" stroke="black" cx="1260.7" cy="-418.95" rx="5.66" ry="5.66"/>
-<polygon fill="black" stroke="black" points="944.56,-230.57 945.43,-220.61 947.43,-220.78 946.55,-230.74 944.56,-230.57"/>
-<polyline fill="none" stroke="black" points="944,-225.5 948.98,-225.94"/>
-<polygon fill="black" stroke="black" points="949.54,-231.01 950.41,-221.04 952.41,-221.22 951.53,-231.18 949.54,-231.01"/>
-<polyline fill="none" stroke="black" points="948.98,-225.94 953.96,-226.37"/>
-<text text-anchor="start" x="1052.38" y="-309.7" font-family="Helvetica,sans-Serif" font-size="14.00">SYS_FK_10118</text>
+<path fill="none" stroke="black" d="M1189.47,-394.3C1167.12,-378.14 1188.12,-324.61 1153.48,-301.2 1093.77,-260.83 1058.9,-309.91 992.44,-282 957.28,-267.24 959.94,-230.47 929.11,-223.99"/>
+<polygon fill="black" stroke="black" points="1197.32,-396.41 1205.82,-403.35 1202.15,-397.7 1206.98,-399 1206.98,-399 1206.98,-399 1202.15,-397.7 1208.15,-394.65 1197.32,-396.41 1197.32,-396.41"/>
+<ellipse fill="none" stroke="black" cx="1193.46" cy="-395.37" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="919.45,-228.07 920.42,-218.12 922.41,-218.31 921.44,-228.27 919.45,-228.07"/>
+<polyline fill="none" stroke="black" points="918.94,-223 923.91,-223.48 "/>
+<polygon fill="black" stroke="black" points="924.43,-228.56 925.39,-218.6 927.38,-218.79 926.42,-228.75 924.43,-228.56"/>
+<polyline fill="none" stroke="black" points="923.91,-223.48 928.89,-223.96 "/>
+<text text-anchor="start" x="1022.77" y="-306.2" font-family="Helvetica,sans-Serif" font-size="14.00">SYS_FK_10118</text>
 </g>
 <!-- books_f4a675c8&#45;&gt;authors_f521e766 -->
 <g id="edge2" class="edge">
 <title>books_f4a675c8:w&#45;&gt;authors_f521e766:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M578.28,-226.25C471.33,-238.45 491.37,-394.29 381.45,-403.11"/>
-<polygon fill="black" stroke="black" points="590.73,-220.56 591.28,-230.55 589.28,-230.66 588.73,-220.67 590.73,-220.56"/>
-<polyline fill="none" stroke="black" points="592,-225.5 587.01,-225.77"/>
-<ellipse fill="none" stroke="black" cx="582.51" cy="-226.02" rx="4" ry="4"/>
-<polygon fill="black" stroke="black" points="372.69,-408.46 372.3,-398.46 374.3,-398.39 374.69,-408.38 372.69,-408.46"/>
-<polyline fill="none" stroke="black" points="371.5,-403.5 376.5,-403.3"/>
-<polygon fill="black" stroke="black" points="377.69,-408.26 377.3,-398.27 379.3,-398.19 379.69,-408.18 377.69,-408.26"/>
-<polyline fill="none" stroke="black" points="376.5,-403.3 381.49,-403.11"/>
-<text text-anchor="start" x="397" y="-403.7" font-family="Helvetica,sans-Serif" font-size="14.00">multi_line_remarks</text>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M564.76,-223.7C459.19,-235.32 478.09,-387.68 370.13,-396.59"/>
+<polygon fill="black" stroke="black" points="576.67,-218.06 577.2,-228.05 575.21,-228.15 574.68,-218.17 576.67,-218.06"/>
+<polyline fill="none" stroke="black" points="577.94,-223 572.94,-223.27 "/>
+<ellipse fill="none" stroke="black" cx="568.95" cy="-223.48" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="361.2,-401.96 360.8,-391.96 362.8,-391.88 363.2,-401.88 361.2,-401.96"/>
+<polyline fill="none" stroke="black" points="360,-397 365,-396.8 "/>
+<polygon fill="black" stroke="black" points="366.2,-401.75 365.79,-391.76 367.79,-391.68 368.19,-401.67 366.2,-401.75"/>
+<polyline fill="none" stroke="black" points="365,-396.8 369.99,-396.6 "/>
+<text text-anchor="start" x="386" y="-398.2" font-family="Helvetica,sans-Serif" font-size="14.00">multi_line_remarks</text>
 </g>
 <!-- books_f4a675c8&#45;&gt;books_f4a675c8 -->
 <g id="edge3" class="edge">
 <title>books_f4a675c8:w&#45;&gt;books_f4a675c8:e</title>
-<path fill="none" stroke="black" d="M580.94,-111.1C515.82,-154.1 528.9,-279.5 768,-279.5 1011.06,-279.5 1020.55,-261.65 951.77,-229.49"/>
-<polygon fill="black" stroke="black" points="589.72,-100.59 594.52,-109.37 592.77,-110.33 587.97,-101.55 589.72,-100.59"/>
-<polyline fill="none" stroke="black" points="593,-104.5 588.61,-106.9"/>
-<ellipse fill="none" stroke="black" cx="584.67" cy="-109.06" rx="4" ry="4"/>
-<polygon fill="black" stroke="black" points="941.84,-230.46 945.98,-221.36 947.8,-222.19 943.66,-231.29 941.84,-230.46"/>
-<polyline fill="none" stroke="black" points="943,-225.5 947.55,-227.57"/>
-<polygon fill="black" stroke="black" points="946.39,-232.54 950.53,-223.44 952.35,-224.27 948.21,-233.37 946.39,-232.54"/>
-<polyline fill="none" stroke="black" points="947.55,-227.57 952.1,-229.64"/>
-<text text-anchor="start" x="687.38" y="-282.7" font-family="Helvetica,sans-Serif" font-size="14.00">FK_PREVIOUSEDITION</text>
+<path fill="none" stroke="black" d="M567.26,-109.53C504.17,-152.09 516.84,-276 748.44,-276 982.91,-276 992.99,-258.9 927.24,-227.34"/>
+<polygon fill="black" stroke="black" points="575.63,-99.12 580.5,-107.85 578.76,-108.83 573.88,-100.1 575.63,-99.12"/>
+<polyline fill="none" stroke="black" points="578.94,-103 574.57,-105.44 "/>
+<ellipse fill="none" stroke="black" cx="571.08" cy="-107.39" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="916.73,-227.95 920.96,-218.89 922.77,-219.74 918.54,-228.8 916.73,-227.95"/>
+<polyline fill="none" stroke="black" points="917.94,-223 922.47,-225.11 "/>
+<polygon fill="black" stroke="black" points="921.26,-230.07 925.49,-221.01 927.3,-221.85 923.07,-230.91 921.26,-230.07"/>
+<polyline fill="none" stroke="black" points="922.47,-225.11 927,-227.23 "/>
+<text text-anchor="start" x="670.54" y="-280.2" font-family="Helvetica,sans-Serif" font-size="14.00">FK_PREVIOUSEDITION</text>
 </g>
 <!-- authorslist_9ccb3c04 -->
 <g id="node4" class="node">
 <title>authorslist_9ccb3c04</title>
-<polygon fill="#c2dcf2" stroke="none" points="1918.75,-430 1918.75,-451 2137.75,-451 2137.75,-430 1918.75,-430"/>
-<text text-anchor="start" x="1920.62" y="-436.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.AUTHORSLIST</text>
-<polygon fill="#c2dcf2" stroke="none" points="2137.75,-430 2137.75,-451 2237.75,-451 2237.75,-430 2137.75,-430"/>
-<text text-anchor="start" x="2200.5" y="-435.45" font-family="Helvetica,sans-Serif" font-size="14.00">[view]</text>
-<text text-anchor="start" x="1920.75" y="-414.7" font-family="Helvetica,sans-Serif" font-size="14.00">ID</text>
-<text text-anchor="start" x="2069.75" y="-414.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2139.75" y="-414.7" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<text text-anchor="start" x="1920.75" y="-394.7" font-family="Helvetica,sans-Serif" font-size="14.00">FIRSTNAME</text>
-<text text-anchor="start" x="2069.75" y="-394.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2139.75" y="-394.7" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
-<text text-anchor="start" x="1920.75" y="-374.7" font-family="Helvetica,sans-Serif" font-size="14.00">LASTNAME</text>
-<text text-anchor="start" x="2069.75" y="-374.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2139.75" y="-374.7" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
-<polygon fill="none" stroke="#888888" points="1917.75,-369 1917.75,-452 2238.75,-452 2238.75,-369 1917.75,-369"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1855.92,-426 1855.92,-446 2065.92,-446 2065.92,-426 1855.92,-426"/>
+<text text-anchor="start" x="1857.85" y="-432.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.AUTHORSLIST</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="2065.92,-426 2065.92,-446 2162.92,-446 2162.92,-426 2065.92,-426"/>
+<text text-anchor="start" x="2125.14" y="-431.4" font-family="Helvetica,sans-Serif" font-size="14.00">[view]</text>
+<text text-anchor="start" x="1857.92" y="-411.4" font-family="Helvetica,sans-Serif" font-size="14.00">ID</text>
+<text text-anchor="start" x="2000.92" y="-411.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2067.92" y="-411.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
+<text text-anchor="start" x="1857.92" y="-391.4" font-family="Helvetica,sans-Serif" font-size="14.00">FIRSTNAME</text>
+<text text-anchor="start" x="2000.92" y="-391.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2067.76" y="-391.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
+<text text-anchor="start" x="1857.92" y="-371.4" font-family="Helvetica,sans-Serif" font-size="14.00">LASTNAME</text>
+<text text-anchor="start" x="2000.92" y="-371.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2067.76" y="-371.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
+<polygon fill="none" stroke="#888888" points="1854.42,-365 1854.42,-447 2163.42,-447 2163.42,-365 1854.42,-365"/>
 </g>
 <!-- sales_751e68cc -->
 <g id="node5" class="node">
 <title>sales_751e68cc</title>
-<polygon fill="#f2d6c2" stroke="none" points="1216.25,-287 1216.25,-308 1477.25,-308 1477.25,-287 1216.25,-287"/>
-<text text-anchor="start" x="1218.12" y="-293.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</text>
-<polygon fill="#f2d6c2" stroke="none" points="1477.25,-287 1477.25,-308 1650.25,-308 1650.25,-287 1477.25,-287"/>
-<text text-anchor="start" x="1610" y="-292.45" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1218.25" y="-271.7" font-family="Helvetica,sans-Serif" font-size="14.00">POSTALCODE</text>
-<text text-anchor="start" x="1409.25" y="-271.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479" y="-271.7" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(10) NOT NULL</text>
-<text text-anchor="start" x="1218.25" y="-251.7" font-family="Helvetica,sans-Serif" font-size="14.00">COUNTRY</text>
-<text text-anchor="start" x="1409.25" y="-251.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479" y="-251.7" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50) NOT NULL</text>
-<text text-anchor="start" x="1218.25" y="-231.7" font-family="Helvetica,sans-Serif" font-size="14.00">BOOKID</text>
-<text text-anchor="start" x="1409.25" y="-231.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.25" y="-231.7" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<text text-anchor="start" x="1218.25" y="-211.7" font-family="Helvetica,sans-Serif" font-size="14.00">COUPON_ID</text>
-<text text-anchor="start" x="1409.25" y="-211.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.25" y="-211.7" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<text text-anchor="start" x="1218.25" y="-191.7" font-family="Helvetica,sans-Serif" font-size="14.00">PERIODENDDATE</text>
-<text text-anchor="start" x="1409.25" y="-191.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.25" y="-191.7" font-family="Helvetica,sans-Serif" font-size="14.00">DATE</text>
-<text text-anchor="start" x="1218.25" y="-171.7" font-family="Helvetica,sans-Serif" font-size="14.00">TOTALAMOUNT</text>
-<text text-anchor="start" x="1409.25" y="-171.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.25" y="-171.7" font-family="Helvetica,sans-Serif" font-size="14.00">DOUBLE(64, 0)</text>
-<text text-anchor="start" x="1218.25" y="-151.7" font-family="Helvetica,sans-Serif" font-size="14.00">SALESDATAID</text>
-<text text-anchor="start" x="1409.25" y="-151.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1479.25" y="-151.7" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<polygon fill="none" stroke="#888888" points="1215.25,-146 1215.25,-309 1651.25,-309 1651.25,-146 1215.25,-146"/>
+<polygon fill="#f2d6c2" stroke="transparent" points="1180.98,-284 1180.98,-304 1425.98,-304 1425.98,-284 1180.98,-284"/>
+<text text-anchor="start" x="1182.6" y="-290.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</text>
+<polygon fill="#f2d6c2" stroke="transparent" points="1425.98,-284 1425.98,-304 1595.98,-304 1595.98,-284 1425.98,-284"/>
+<text text-anchor="start" x="1555.86" y="-289.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1182.98" y="-269.4" font-family="Helvetica,sans-Serif" font-size="14.00">POSTALCODE</text>
+<text text-anchor="start" x="1363.98" y="-269.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1427.77" y="-269.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(10) NOT NULL</text>
+<text text-anchor="start" x="1182.98" y="-249.4" font-family="Helvetica,sans-Serif" font-size="14.00">COUNTRY</text>
+<text text-anchor="start" x="1363.98" y="-249.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1427.77" y="-249.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50) NOT NULL</text>
+<text text-anchor="start" x="1182.98" y="-229.4" font-family="Helvetica,sans-Serif" font-size="14.00">BOOKID</text>
+<text text-anchor="start" x="1363.98" y="-229.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1427.98" y="-229.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
+<text text-anchor="start" x="1182.98" y="-209.4" font-family="Helvetica,sans-Serif" font-size="14.00">COUPON_ID</text>
+<text text-anchor="start" x="1363.98" y="-209.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1427.98" y="-209.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
+<text text-anchor="start" x="1182.98" y="-189.4" font-family="Helvetica,sans-Serif" font-size="14.00">PERIODENDDATE</text>
+<text text-anchor="start" x="1363.98" y="-189.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1427.98" y="-189.4" font-family="Helvetica,sans-Serif" font-size="14.00">DATE</text>
+<text text-anchor="start" x="1182.98" y="-169.4" font-family="Helvetica,sans-Serif" font-size="14.00">TOTALAMOUNT</text>
+<text text-anchor="start" x="1363.98" y="-169.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1427.98" y="-169.4" font-family="Helvetica,sans-Serif" font-size="14.00">DOUBLE(64, 0)</text>
+<text text-anchor="start" x="1182.98" y="-149.4" font-family="Helvetica,sans-Serif" font-size="14.00">SALESDATAID</text>
+<text text-anchor="start" x="1363.98" y="-149.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1427.98" y="-149.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
+<polygon fill="none" stroke="#888888" points="1179.48,-143 1179.48,-305 1596.48,-305 1596.48,-143 1179.48,-143"/>
 </g>
 <!-- sales_751e68cc&#45;&gt;books_f4a675c8 -->
 <g id="edge4" class="edge">
 <title>sales_751e68cc:w&#45;&gt;books_f4a675c8:e</title>
-<path fill="none" stroke="black" d="M1215.25,-237.5C1085.89,-211.91 1054.91,-224.64 953.99,-225.46"/>
-<polygon fill="black" stroke="black" points="1225.49,-247.74 1219.99,-233.24 1220.25,-242.5 1215.72,-237.97 1215.72,-237.97 1215.72,-237.97 1220.25,-242.5 1210.99,-242.24 1225.49,-247.74"/>
-<ellipse fill="none" stroke="black" cx="1230.7" cy="-252.95" rx="5.66" ry="5.66"/>
-<polygon fill="black" stroke="black" points="945.02,-230.5 944.98,-220.5 946.98,-220.49 947.02,-230.49 945.02,-230.5"/>
-<polyline fill="none" stroke="black" points="944,-225.5 949,-225.48"/>
-<polygon fill="black" stroke="black" points="950.02,-230.48 949.98,-220.48 951.98,-220.47 952.02,-230.47 950.02,-230.48"/>
-<polyline fill="none" stroke="black" points="949,-225.48 954,-225.46"/>
-<text text-anchor="start" x="1042.62" y="-232.7" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_BOOK</text>
+<path fill="none" stroke="black" d="M1162.55,-228.14C1160.12,-226.94 1157.31,-225.84 1153.48,-225.2 1054.07,-208.65 1025.09,-222.04 929.07,-222.95"/>
+<polygon fill="black" stroke="black" points="1170.5,-230.82 1178.55,-238.27 1175.24,-232.41 1179.98,-234 1179.98,-234 1179.98,-234 1175.24,-232.41 1181.42,-229.73 1170.5,-230.82 1170.5,-230.82"/>
+<ellipse fill="none" stroke="black" cx="1166.71" cy="-229.54" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="919.96,-228 919.91,-218 921.91,-217.99 921.96,-227.99 919.96,-228"/>
+<polyline fill="none" stroke="black" points="918.94,-223 923.94,-222.98 "/>
+<polygon fill="black" stroke="black" points="924.96,-227.97 924.91,-217.97 926.91,-217.96 926.96,-227.96 924.96,-227.97"/>
+<polyline fill="none" stroke="black" points="923.94,-222.98 928.94,-222.95 "/>
+<text text-anchor="start" x="1013.44" y="-230.2" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_BOOK</text>
 </g>
 <!-- regions_dbf65bbf -->
 <g id="node13" class="node">
 <title>regions_dbf65bbf</title>
-<polygon fill="#f2d6c2" stroke="none" points="542.5,-401 542.5,-422 820.5,-422 820.5,-401 542.5,-401"/>
-<text text-anchor="start" x="544.25" y="-407.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</text>
-<polygon fill="#f2d6c2" stroke="none" points="820.5,-401 820.5,-422 993.5,-422 993.5,-401 820.5,-401"/>
-<text text-anchor="start" x="953.25" y="-406.45" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="544.5" y="-385.7" font-family="Helvetica,sans-Serif" font-size="14.00">CITY</text>
-<text text-anchor="start" x="732.5" y="-385.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="822.25" y="-385.7" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50) NOT NULL</text>
-<text text-anchor="start" x="544.5" y="-365.7" font-family="Helvetica,sans-Serif" font-size="14.00">STATE</text>
-<text text-anchor="start" x="732.5" y="-365.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="822.5" y="-365.7" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(2) NOT NULL</text>
-<text text-anchor="start" x="544.5" y="-346.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">POSTALCODE</text>
-<text text-anchor="start" x="732.5" y="-345.45" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="822.25" y="-345.45" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(10) NOT NULL</text>
-<text text-anchor="start" x="544.5" y="-325.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">COUNTRY</text>
-<text text-anchor="start" x="732.5" y="-324.45" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="822.25" y="-324.45" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50) NOT NULL</text>
-<polygon fill="none" stroke="#888888" points="541.5,-318 541.5,-423 994.5,-423 994.5,-318 541.5,-318"/>
+<polygon fill="#f2d6c2" stroke="transparent" points="530.94,-395 530.94,-415 795.94,-415 795.94,-395 530.94,-395"/>
+<text text-anchor="start" x="532.84" y="-401.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</text>
+<polygon fill="#f2d6c2" stroke="transparent" points="795.94,-395 795.94,-415 965.94,-415 965.94,-395 795.94,-395"/>
+<text text-anchor="start" x="925.81" y="-400.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="532.94" y="-380.4" font-family="Helvetica,sans-Serif" font-size="14.00">CITY</text>
+<text text-anchor="start" x="710.94" y="-380.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="797.72" y="-380.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50) NOT NULL</text>
+<text text-anchor="start" x="532.94" y="-360.4" font-family="Helvetica,sans-Serif" font-size="14.00">STATE</text>
+<text text-anchor="start" x="710.94" y="-360.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="797.94" y="-360.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(2) NOT NULL</text>
+<text text-anchor="start" x="532.94" y="-341.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">POSTALCODE</text>
+<text text-anchor="start" x="710.94" y="-340.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="797.72" y="-340.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(10) NOT NULL</text>
+<text text-anchor="start" x="532.94" y="-321.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">COUNTRY</text>
+<text text-anchor="start" x="710.94" y="-320.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="797.72" y="-320.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50) NOT NULL</text>
+<polygon fill="none" stroke="#888888" points="529.44,-314 529.44,-416 966.44,-416 966.44,-314 529.44,-314"/>
 </g>
 <!-- sales_751e68cc&#45;&gt;regions_dbf65bbf -->
 <g id="edge8" class="edge">
 <title>sales_751e68cc:w&#45;&gt;regions_dbf65bbf:e</title>
-<path fill="none" stroke="black" d="M1215.25,-277.5C1121.41,-371.99 1084.87,-352.29 1004.97,-350.61"/>
-<polygon fill="black" stroke="black" points="1225.49,-287.74 1219.99,-273.24 1220.25,-282.5 1215.72,-277.97 1215.72,-277.97 1215.72,-277.97 1220.25,-282.5 1210.99,-282.24 1225.49,-287.74"/>
-<ellipse fill="none" stroke="black" cx="1230.7" cy="-292.95" rx="5.66" ry="5.66"/>
-<polygon fill="black" stroke="black" points="995.95,-355.51 996.05,-345.51 998.05,-345.53 997.95,-355.53 995.95,-355.51"/>
-<polyline fill="none" stroke="black" points="995,-350.5 1000,-350.55"/>
-<polygon fill="black" stroke="black" points="1000.95,-355.56 1001.05,-345.56 1003.05,-345.59 1002.95,-355.59 1000.95,-355.56"/>
-<polyline fill="none" stroke="black" points="1000,-350.55 1005,-350.61"/>
-<text text-anchor="start" x="1030.25" y="-360.7" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_REGIONS</text>
+<path fill="none" stroke="black" d="M1166.12,-286.01C1163.83,-297.27 1165.94,-313.58 1153.48,-322 1087.12,-366.87 1053.31,-346.83 976.97,-345.11"/>
+<polygon fill="black" stroke="black" points="1172.43,-280.55 1182.93,-277.4 1176.2,-277.27 1179.98,-274 1179.98,-274 1179.98,-274 1176.2,-277.27 1177.03,-270.6 1172.43,-280.55 1172.43,-280.55"/>
+<ellipse fill="none" stroke="black" cx="1169.4" cy="-283.17" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="967.88,-350.01 967.99,-340.01 969.99,-340.03 969.88,-350.03 967.88,-350.01"/>
+<polyline fill="none" stroke="black" points="966.94,-345 971.94,-345.06 "/>
+<polygon fill="black" stroke="black" points="972.88,-350.07 972.99,-340.07 974.99,-340.09 974.88,-350.09 972.88,-350.07"/>
+<polyline fill="none" stroke="black" points="971.94,-345.06 976.94,-345.11 "/>
+<text text-anchor="start" x="1001.39" y="-356.2" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_REGIONS</text>
 </g>
 <!-- sales_751e68cc&#45;&gt;regions_dbf65bbf -->
 <g id="edge9" class="edge">
 <title>sales_751e68cc:w&#45;&gt;regions_dbf65bbf:e</title>
-<path fill="none" stroke="black" d="M1215.25,-257.5C1027.69,-282.51 1021.09,-317.71 1004.68,-327.11"/>
-<polygon fill="black" stroke="black" points="1225.49,-267.74 1219.99,-253.24 1220.25,-262.5 1215.72,-257.97 1215.72,-257.97 1215.72,-257.97 1220.25,-262.5 1210.99,-262.24 1225.49,-267.74"/>
-<ellipse fill="none" stroke="black" cx="1230.7" cy="-272.95" rx="5.66" ry="5.66"/>
-<polygon fill="black" stroke="black" points="997.17,-334.11 994.77,-324.41 996.72,-323.93 999.11,-333.64 997.17,-334.11"/>
-<polyline fill="none" stroke="black" points="995,-329.5 999.85,-328.3"/>
-<polygon fill="black" stroke="black" points="1002.02,-332.92 999.63,-323.21 1001.57,-322.73 1003.96,-332.44 1002.02,-332.92"/>
-<polyline fill="none" stroke="black" points="999.85,-328.3 1004.71,-327.1"/>
-<text text-anchor="start" x="1030.25" y="-273.7" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_REGIONS</text>
+<path fill="none" stroke="black" d="M1161.67,-253.51C1111.93,-251.4 1022.37,-244.11 992.44,-265.2 972.51,-279.24 988.63,-312.16 976.79,-322.1"/>
+<polygon fill="black" stroke="black" points="1169.99,-253.73 1179.86,-258.5 1174.98,-253.87 1179.98,-254 1179.98,-254 1179.98,-254 1174.98,-253.87 1180.1,-249.5 1169.99,-253.73 1169.99,-253.73"/>
+<ellipse fill="none" stroke="black" cx="1165.99" cy="-253.62" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="969.31,-329.52 966.49,-319.92 968.41,-319.36 971.23,-328.95 969.31,-329.52"/>
+<polyline fill="none" stroke="black" points="966.94,-325 971.73,-323.59 "/>
+<polygon fill="black" stroke="black" points="974.1,-328.11 971.28,-318.51 973.2,-317.95 976.02,-327.54 974.1,-328.11"/>
+<polyline fill="none" stroke="black" points="971.73,-323.59 976.53,-322.18 "/>
+<text text-anchor="start" x="1001.39" y="-270.2" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_REGIONS</text>
 </g>
 <!-- salesdata_1193fa76 -->
 <g id="node16" class="node">
 <title>salesdata_1193fa76</title>
-<polygon fill="#f2d6c2" stroke="none" points="565.5,-45 565.5,-66 866.5,-66 866.5,-45 565.5,-45"/>
-<text text-anchor="start" x="567.12" y="-51.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.SALESDATA</text>
-<polygon fill="#f2d6c2" stroke="none" points="866.5,-45 866.5,-66 970.5,-66 970.5,-45 866.5,-45"/>
-<text text-anchor="start" x="930.25" y="-50.45" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="567.5" y="-29.7" font-family="Helvetica,sans-Serif" font-size="14.00">SALESDATAID</text>
-<text text-anchor="start" x="774.5" y="-29.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="868.5" y="-29.7" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<text text-anchor="start" x="567.5" y="-9.7" font-family="Helvetica,sans-Serif" font-size="14.00">YEARLYAMOUNT</text>
-<text text-anchor="start" x="774.5" y="-9.7" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="868.25" y="-9.7" font-family="Helvetica,sans-Serif" font-size="14.00">DOUBLE(64, 0)</text>
-<polygon fill="none" stroke="#888888" points="564.5,-4 564.5,-67 971.5,-67 971.5,-4 564.5,-4"/>
+<polygon fill="#f2d6c2" stroke="transparent" points="555.94,-45 555.94,-65 838.94,-65 838.94,-45 555.94,-45"/>
+<text text-anchor="start" x="557.89" y="-51.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.SALESDATA</text>
+<polygon fill="#f2d6c2" stroke="transparent" points="838.94,-45 838.94,-65 940.94,-65 940.94,-45 838.94,-45"/>
+<text text-anchor="start" x="900.81" y="-50.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="557.94" y="-30.4" font-family="Helvetica,sans-Serif" font-size="14.00">SALESDATAID</text>
+<text text-anchor="start" x="754.94" y="-30.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="840.94" y="-30.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
+<text text-anchor="start" x="557.94" y="-10.4" font-family="Helvetica,sans-Serif" font-size="14.00">YEARLYAMOUNT</text>
+<text text-anchor="start" x="754.94" y="-10.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="840.93" y="-10.4" font-family="Helvetica,sans-Serif" font-size="14.00">DOUBLE(64, 0)</text>
+<polygon fill="none" stroke="#888888" points="554.44,-4 554.44,-66 941.44,-66 941.44,-4 554.44,-4"/>
 </g>
 <!-- sales_751e68cc&#45;&gt;salesdata_1193fa76 -->
 <g id="edge12" class="edge">
 <title>sales_751e68cc:w&#45;&gt;salesdata_1193fa76:e</title>
-<path fill="none" stroke="black" d="M1194.86,-155.25C1096.68,-142.77 1086.29,-40.74 981.73,-34.77"/>
-<polygon fill="black" stroke="black" points="1204.93,-155.87 1214.64,-160.97 1210.26,-156.19 1214.58,-156.46 1214.58,-156.46 1214.58,-156.46 1210.26,-156.19 1215.19,-151.99 1204.93,-155.87"/>
-<ellipse fill="none" stroke="black" cx="1199.23" cy="-155.52" rx="4" ry="4"/>
-<polygon fill="black" stroke="black" points="972.86,-39.53 973.14,-29.53 975.14,-29.59 974.86,-39.58 972.86,-39.53"/>
-<polyline fill="none" stroke="black" points="972,-34.5 977,-34.64"/>
-<polygon fill="black" stroke="black" points="977.86,-39.67 978.14,-29.67 980.14,-29.73 979.86,-39.72 977.86,-39.67"/>
-<polyline fill="none" stroke="black" points="977,-34.64 982,-34.78"/>
-<text text-anchor="start" x="1020.5" y="-157.7" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_SALESDATA</text>
+<path fill="none" stroke="black" d="M1161.9,-153.01C1064.35,-141.92 1054.42,-41.57 952.13,-35.31"/>
+<polygon fill="black" stroke="black" points="1170,-153.45 1179.74,-158.49 1174.99,-153.73 1179.98,-154 1179.98,-154 1179.98,-154 1174.99,-153.73 1180.23,-149.51 1170,-153.45 1170,-153.45"/>
+<ellipse fill="none" stroke="black" cx="1166" cy="-153.23" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="942.79,-40.03 943.09,-30.03 945.09,-30.09 944.79,-40.09 942.79,-40.03"/>
+<polyline fill="none" stroke="black" points="941.94,-35 946.94,-35.15 "/>
+<polygon fill="black" stroke="black" points="947.78,-40.18 948.08,-30.18 950.08,-30.24 949.78,-40.24 947.78,-40.18"/>
+<polyline fill="none" stroke="black" points="946.94,-35.15 951.93,-35.3 "/>
+<text text-anchor="start" x="992.44" y="-155.2" font-family="Helvetica,sans-Serif" font-size="14.00">FK_SALES_SALESDATA</text>
 </g>
 <!-- celebrities_db1258df -->
 <g id="node6" class="node">
 <title>celebrities_db1258df</title>
-<polygon fill="#c2dcf2" stroke="none" points="1259.25,-537.5 1259.25,-558.5 1465.25,-558.5 1465.25,-537.5 1259.25,-537.5"/>
-<text text-anchor="start" x="1261" y="-544.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.&quot;Celebrities&quot;</text>
-<polygon fill="#c2dcf2" stroke="none" points="1465.25,-537.5 1465.25,-558.5 1607.25,-558.5 1607.25,-537.5 1465.25,-537.5"/>
-<text text-anchor="start" x="1567" y="-542.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1261.25" y="-523.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">&quot;Id&quot;</text>
-<text text-anchor="start" x="1382.25" y="-521.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1467.25" y="-521.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1261.25" y="-501.2" font-family="Helvetica,sans-Serif" font-size="14.00">NAME</text>
-<text text-anchor="start" x="1382.25" y="-501.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1467.25" y="-501.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
-<polygon fill="none" stroke="#888888" points="1258.25,-495.5 1258.25,-559.5 1608.25,-559.5 1608.25,-495.5 1258.25,-495.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1224.98,-530 1224.98,-550 1412.98,-550 1412.98,-530 1224.98,-530"/>
+<text text-anchor="start" x="1226.89" y="-536.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.&quot;Celebrities&quot;</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="1412.98,-530 1412.98,-550 1551.98,-550 1551.98,-530 1412.98,-530"/>
+<text text-anchor="start" x="1511.86" y="-535.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1226.98" y="-516.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">&quot;Id&quot;</text>
+<text text-anchor="start" x="1338.98" y="-515.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1414.82" y="-515.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1226.98" y="-495.4" font-family="Helvetica,sans-Serif" font-size="14.00">NAME</text>
+<text text-anchor="start" x="1338.98" y="-495.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1414.98" y="-495.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
+<polygon fill="none" stroke="#888888" points="1223.48,-489 1223.48,-551 1552.48,-551 1552.48,-489 1223.48,-489"/>
 </g>
 <!-- celebrityupdates_f5088e8b -->
 <g id="node7" class="node">
 <title>celebrityupdates_f5088e8b</title>
-<polygon fill="#c2dcf2" stroke="none" points="1879.75,-537.5 1879.75,-558.5 2134.75,-558.5 2134.75,-537.5 1879.75,-537.5"/>
-<text text-anchor="start" x="1881.62" y="-544.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.&quot;Celebrity Updates&quot;</text>
-<polygon fill="#c2dcf2" stroke="none" points="2134.75,-537.5 2134.75,-558.5 2276.75,-558.5 2276.75,-537.5 2134.75,-537.5"/>
-<text text-anchor="start" x="2236.5" y="-542.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1881.75" y="-523.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">&quot;Celebrity Id&quot;</text>
-<text text-anchor="start" x="2053.75" y="-521.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2136.75" y="-521.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1881.75" y="-501.2" font-family="Helvetica,sans-Serif" font-size="14.00">&quot;UPDATE&quot;</text>
-<text text-anchor="start" x="2053.75" y="-501.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2136.75" y="-501.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
-<polygon fill="none" stroke="#888888" points="1878.75,-495.5 1878.75,-559.5 2277.75,-559.5 2277.75,-495.5 1878.75,-495.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1822.92,-530 1822.92,-550 2055.92,-550 2055.92,-530 1822.92,-530"/>
+<text text-anchor="start" x="1824.77" y="-536.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.&quot;Celebrity Updates&quot;</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="2055.92,-530 2055.92,-550 2194.92,-550 2194.92,-530 2055.92,-530"/>
+<text text-anchor="start" x="2154.79" y="-535.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1824.92" y="-516.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">&quot;Celebrity Id&quot;</text>
+<text text-anchor="start" x="1979.92" y="-515.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2057.76" y="-515.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1824.92" y="-495.4" font-family="Helvetica,sans-Serif" font-size="14.00">&quot;UPDATE&quot;</text>
+<text text-anchor="start" x="1979.92" y="-495.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2057.92" y="-495.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
+<polygon fill="none" stroke="#888888" points="1821.92,-489 1821.92,-551 2195.92,-551 2195.92,-489 1821.92,-489"/>
 </g>
 <!-- celebrityupdates_f5088e8b&#45;&gt;celebrities_db1258df -->
 <g id="edge6" class="edge">
 <title>celebrityupdates_f5088e8b:w&#45;&gt;celebrities_db1258df:e</title>
-<path fill="none" stroke="black" d="M1864.26,-526.5C1758.88,-526.5 1725.4,-526.5 1618.17,-526.5"/>
-<polygon fill="black" stroke="black" points="1877.25,-521.5 1877.25,-531.5 1875.25,-531.5 1875.25,-521.5 1877.25,-521.5"/>
-<polyline fill="none" stroke="black" points="1878.25,-526.5 1873.25,-526.5"/>
-<ellipse fill="none" stroke="black" cx="1868.75" cy="-526.5" rx="4" ry="4"/>
-<polygon fill="black" stroke="black" points="1609.25,-531.5 1609.25,-521.5 1611.25,-521.5 1611.25,-531.5 1609.25,-531.5"/>
-<polyline fill="none" stroke="black" points="1608.25,-526.5 1613.25,-526.5"/>
-<polygon fill="black" stroke="black" points="1614.25,-531.5 1614.25,-521.5 1616.25,-521.5 1616.25,-531.5 1614.25,-531.5"/>
-<polyline fill="none" stroke="black" points="1613.25,-526.5 1618.25,-526.5"/>
-<text text-anchor="start" x="1712.5" y="-529.7" font-family="Helvetica,sans-Serif" font-size="14.00">SYS_FK_10128</text>
+<path fill="none" stroke="black" d="M1808.64,-520C1703.28,-520 1669.97,-520 1563.2,-520"/>
+<polygon fill="black" stroke="black" points="1820.92,-515 1820.92,-525 1818.92,-525 1818.92,-515 1820.92,-515"/>
+<polyline fill="none" stroke="black" points="1821.92,-520 1816.92,-520 "/>
+<ellipse fill="none" stroke="black" cx="1812.92" cy="-520" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="1553.98,-525 1553.98,-515 1555.98,-515 1555.98,-525 1553.98,-525"/>
+<polyline fill="none" stroke="black" points="1552.98,-520 1557.98,-520 "/>
+<polygon fill="black" stroke="black" points="1558.98,-525 1558.98,-515 1560.98,-515 1560.98,-525 1558.98,-525"/>
+<polyline fill="none" stroke="black" points="1557.98,-520 1562.98,-520 "/>
+<text text-anchor="start" x="1659.01" y="-524.2" font-family="Helvetica,sans-Serif" font-size="14.00">SYS_FK_10128</text>
 </g>
 <!-- coupons_54c3042b -->
 <g id="node8" class="node">
 <title>coupons_54c3042b</title>
-<polygon fill="#c2dcf2" stroke="none" points="1894.75,-667.5 1894.75,-688.5 2084.75,-688.5 2084.75,-667.5 1894.75,-667.5"/>
-<text text-anchor="start" x="1896.75" y="-674.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.COUPONS</text>
-<polygon fill="#c2dcf2" stroke="none" points="2084.75,-667.5 2084.75,-688.5 2261.75,-688.5 2261.75,-667.5 2084.75,-667.5"/>
-<text text-anchor="start" x="2221.5" y="-672.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1896.75" y="-653.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
-<text text-anchor="start" x="2025.75" y="-651.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2086.75" y="-651.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1896.75" y="-631.2" font-family="Helvetica,sans-Serif" font-size="14.00">DATA</text>
-<text text-anchor="start" x="2025.75" y="-631.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2086.75" y="-631.2" font-family="Helvetica,sans-Serif" font-size="14.00">CLOB</text>
-<text text-anchor="start" x="1896.75" y="-611.2" font-family="Helvetica,sans-Serif" font-size="14.00">COUPONS</text>
-<text text-anchor="start" x="2025.75" y="-611.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2086.75" y="-611.2" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER ARRAY</text>
-<text text-anchor="start" x="1896.75" y="-591.2" font-family="Helvetica,sans-Serif" font-size="14.00">BOOKS</text>
-<text text-anchor="start" x="2025.75" y="-591.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2086.62" y="-591.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20) ARRAY[10]</text>
-<polygon fill="none" stroke="#888888" points="1893.75,-585.5 1893.75,-689.5 2262.75,-689.5 2262.75,-585.5 1893.75,-585.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1831.92,-658 1831.92,-678 2013.92,-678 2013.92,-658 1831.92,-658"/>
+<text text-anchor="start" x="1833.47" y="-664.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.COUPONS</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="2013.92,-658 2013.92,-678 2185.92,-678 2185.92,-658 2013.92,-658"/>
+<text text-anchor="start" x="2145.79" y="-663.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1833.92" y="-644.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
+<text text-anchor="start" x="1957.92" y="-643.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2015.92" y="-643.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1833.92" y="-623.4" font-family="Helvetica,sans-Serif" font-size="14.00">DATA</text>
+<text text-anchor="start" x="1957.92" y="-623.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2015.92" y="-623.4" font-family="Helvetica,sans-Serif" font-size="14.00">CLOB</text>
+<text text-anchor="start" x="1833.92" y="-603.4" font-family="Helvetica,sans-Serif" font-size="14.00">COUPONS</text>
+<text text-anchor="start" x="1957.92" y="-603.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2015.92" y="-603.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER ARRAY</text>
+<text text-anchor="start" x="1833.92" y="-583.4" font-family="Helvetica,sans-Serif" font-size="14.00">BOOKS</text>
+<text text-anchor="start" x="1957.92" y="-583.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2015.53" y="-583.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20) ARRAY[10]</text>
+<polygon fill="none" stroke="#888888" points="1830.92,-577 1830.92,-679 2186.92,-679 2186.92,-577 1830.92,-577"/>
 </g>
 <!-- customerdata_b0af83c6 -->
 <g id="node9" class="node">
 <title>customerdata_b0af83c6</title>
-<polygon fill="#c2dcf2" stroke="none" points="1886.75,-757.5 1886.75,-778.5 2127.75,-778.5 2127.75,-757.5 1886.75,-757.5"/>
-<text text-anchor="start" x="1888.38" y="-764.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.CUSTOMERDATA</text>
-<polygon fill="#c2dcf2" stroke="none" points="2127.75,-757.5 2127.75,-778.5 2269.75,-778.5 2269.75,-757.5 2127.75,-757.5"/>
-<text text-anchor="start" x="2229.5" y="-762.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1888.75" y="-743.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
-<text text-anchor="start" x="2026.75" y="-741.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2129.75" y="-741.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1888.75" y="-721.2" font-family="Helvetica,sans-Serif" font-size="14.00">DATA</text>
-<text text-anchor="start" x="2026.75" y="-721.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2129.75" y="-721.2" font-family="Helvetica,sans-Serif" font-size="14.00">VALID_STRING(20)</text>
-<polygon fill="none" stroke="#888888" points="1885.75,-715.5 1885.75,-779.5 2270.75,-779.5 2270.75,-715.5 1885.75,-715.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1824.92,-746 1824.92,-766 2053.92,-766 2053.92,-746 1824.92,-746"/>
+<text text-anchor="start" x="1826.64" y="-752.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.CUSTOMERDATA</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="2053.92,-746 2053.92,-766 2192.92,-766 2192.92,-746 2053.92,-746"/>
+<text text-anchor="start" x="2152.79" y="-751.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1826.92" y="-732.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
+<text text-anchor="start" x="1957.92" y="-731.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2055.76" y="-731.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1826.92" y="-711.4" font-family="Helvetica,sans-Serif" font-size="14.00">DATA</text>
+<text text-anchor="start" x="1957.92" y="-711.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2055.92" y="-711.4" font-family="Helvetica,sans-Serif" font-size="14.00">VALID_STRING(20)</text>
+<polygon fill="none" stroke="#888888" points="1823.92,-705 1823.92,-767 2193.92,-767 2193.92,-705 1823.92,-705"/>
 </g>
 <!-- customers_f705d773 -->
 <g id="node10" class="node">
 <title>customers_f705d773</title>
-<polygon fill="#c2dcf2" stroke="none" points="1891.25,-887.5 1891.25,-908.5 2102.25,-908.5 2102.25,-887.5 1891.25,-887.5"/>
-<text text-anchor="start" x="1893.25" y="-894.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.CUSTOMERS</text>
-<polygon fill="#c2dcf2" stroke="none" points="2102.25,-887.5 2102.25,-908.5 2265.25,-908.5 2265.25,-887.5 2102.25,-887.5"/>
-<text text-anchor="start" x="2225" y="-892.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1893.25" y="-873.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
-<text text-anchor="start" x="2038.25" y="-871.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2104.25" y="-871.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1893.25" y="-851.2" font-family="Helvetica,sans-Serif" font-size="14.00">FIRSTNAME</text>
-<text text-anchor="start" x="2038.25" y="-851.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2103.88" y="-851.2" font-family="Helvetica,sans-Serif" font-size="14.00">NAME_TYPE NOT NULL</text>
-<text text-anchor="start" x="1893.25" y="-831.2" font-family="Helvetica,sans-Serif" font-size="14.00">LASTNAME</text>
-<text text-anchor="start" x="2038.25" y="-831.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2103.88" y="-831.2" font-family="Helvetica,sans-Serif" font-size="14.00">NAME_TYPE NOT NULL</text>
-<text text-anchor="start" x="1893.25" y="-811.2" font-family="Helvetica,sans-Serif" font-size="14.00">AGE</text>
-<text text-anchor="start" x="2038.25" y="-811.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2104.25" y="-811.2" font-family="Helvetica,sans-Serif" font-size="14.00">AGE_TYPE</text>
-<polygon fill="none" stroke="#888888" points="1890.25,-805.5 1890.25,-909.5 2266.25,-909.5 2266.25,-805.5 1890.25,-805.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1827.92,-874 1827.92,-894 2028.92,-894 2028.92,-874 1827.92,-874"/>
+<text text-anchor="start" x="1829.64" y="-880.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.CUSTOMERS</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="2028.92,-874 2028.92,-894 2189.92,-894 2189.92,-874 2028.92,-874"/>
+<text text-anchor="start" x="2149.79" y="-879.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1829.92" y="-860.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
+<text text-anchor="start" x="1968.92" y="-859.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2030.92" y="-859.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1829.92" y="-839.4" font-family="Helvetica,sans-Serif" font-size="14.00">FIRSTNAME</text>
+<text text-anchor="start" x="1968.92" y="-839.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2030.47" y="-839.4" font-family="Helvetica,sans-Serif" font-size="14.00">NAME_TYPE NOT NULL</text>
+<text text-anchor="start" x="1829.92" y="-819.4" font-family="Helvetica,sans-Serif" font-size="14.00">LASTNAME</text>
+<text text-anchor="start" x="1968.92" y="-819.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2030.47" y="-819.4" font-family="Helvetica,sans-Serif" font-size="14.00">NAME_TYPE NOT NULL</text>
+<text text-anchor="start" x="1829.92" y="-799.4" font-family="Helvetica,sans-Serif" font-size="14.00">AGE</text>
+<text text-anchor="start" x="1968.92" y="-799.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2030.92" y="-799.4" font-family="Helvetica,sans-Serif" font-size="14.00">AGE_TYPE</text>
+<polygon fill="none" stroke="#888888" points="1826.92,-793 1826.92,-895 2190.92,-895 2190.92,-793 1826.92,-793"/>
 </g>
 <!-- publishers_8037d535 -->
 <g id="node11" class="node">
 <title>publishers_8037d535</title>
-<polygon fill="#c2dcf2" stroke="none" points="1258.25,-956.5 1258.25,-977.5 1466.25,-977.5 1466.25,-956.5 1258.25,-956.5"/>
-<text text-anchor="start" x="1259.88" y="-963.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.PUBLISHERS</text>
-<polygon fill="#c2dcf2" stroke="none" points="1466.25,-956.5 1466.25,-977.5 1608.25,-977.5 1608.25,-956.5 1466.25,-956.5"/>
-<text text-anchor="start" x="1568" y="-961.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1260.25" y="-942.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
-<text text-anchor="start" x="1403.25" y="-940.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1468.25" y="-940.95" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
-<text text-anchor="start" x="1403.25" y="-920.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1468.25" y="-920.2" font-family="Helvetica,sans-Serif" font-size="14.00">auto&#45;incremented</text>
-<text text-anchor="start" x="1260.25" y="-900.2" font-family="Helvetica,sans-Serif" font-size="14.00">PUBLISHER</text>
-<text text-anchor="start" x="1403.25" y="-900.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="1468.25" y="-900.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
-<polygon fill="none" stroke="#888888" points="1257.25,-894.5 1257.25,-978.5 1609.25,-978.5 1609.25,-894.5 1257.25,-894.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1218.98,-942 1218.98,-962 1418.98,-962 1418.98,-942 1218.98,-942"/>
+<text text-anchor="start" x="1220.58" y="-948.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.PUBLISHERS</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="1418.98,-942 1418.98,-962 1557.98,-962 1557.98,-942 1418.98,-942"/>
+<text text-anchor="start" x="1517.86" y="-947.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1220.98" y="-928.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ID</text>
+<text text-anchor="start" x="1358.98" y="-927.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1420.82" y="-927.4" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER NOT NULL</text>
+<text text-anchor="start" x="1358.98" y="-907.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1420.98" y="-907.4" font-family="Helvetica,sans-Serif" font-size="14.00">auto&#45;incremented</text>
+<text text-anchor="start" x="1220.98" y="-887.4" font-family="Helvetica,sans-Serif" font-size="14.00">PUBLISHER</text>
+<text text-anchor="start" x="1358.98" y="-887.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="1420.98" y="-887.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
+<polygon fill="none" stroke="#888888" points="1217.48,-881 1217.48,-963 1558.48,-963 1558.48,-881 1217.48,-881"/>
 </g>
 <!-- βιβλία_3cecb755 -->
 <g id="node12" class="node">
 <title>βιβλία_3cecb755</title>
-<polygon fill="#c2dcf2" stroke="none" points="1904.75,-1017.5 1904.75,-1038.5 2070.75,-1038.5 2070.75,-1017.5 1904.75,-1017.5"/>
-<text text-anchor="start" x="1906.75" y="-1024.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.ΒΙΒΛΊΑ</text>
-<polygon fill="#c2dcf2" stroke="none" points="2070.75,-1017.5 2070.75,-1038.5 2251.75,-1038.5 2251.75,-1017.5 2070.75,-1017.5"/>
-<text text-anchor="start" x="2211.5" y="-1022.95" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
-<text text-anchor="start" x="1906.75" y="-1003.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ΜΟΝΑΔΙΚΌΣ</text>
-<text text-anchor="start" x="2032.75" y="-1001.95" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2072.75" y="-1001.95" font-family="Helvetica,sans-Serif" font-size="14.00">SMALLINT NOT NULL</text>
-<text text-anchor="start" x="1906.75" y="-981.2" font-family="Helvetica,sans-Serif" font-size="14.00">ΤΊΤΛΟΣ</text>
-<text text-anchor="start" x="2032.75" y="-981.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2072.38" y="-981.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255) NOT NULL</text>
-<text text-anchor="start" x="1906.75" y="-961.2" font-family="Helvetica,sans-Serif" font-size="14.00">ΠΕΡΙΓΡΑΦΉ</text>
-<text text-anchor="start" x="2032.75" y="-961.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2072.75" y="-961.2" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
-<text text-anchor="start" x="1906.75" y="-941.2" font-family="Helvetica,sans-Serif" font-size="14.00">ΕΚΔΌΤΗΣ</text>
-<text text-anchor="start" x="2032.75" y="-941.2" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
-<text text-anchor="start" x="2072.75" y="-941.2" font-family="Helvetica,sans-Serif" font-size="14.00">SMALLINT NOT NULL</text>
-<polygon fill="none" stroke="#888888" points="1903.75,-935.5 1903.75,-1039.5 2252.75,-1039.5 2252.75,-935.5 1903.75,-935.5"/>
+<polygon fill="#c2dcf2" stroke="transparent" points="1838.92,-1002 1838.92,-1022 2001.92,-1022 2001.92,-1002 1838.92,-1002"/>
+<text text-anchor="start" x="1840.7" y="-1008.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.ΒΙΒΛΊΑ</text>
+<polygon fill="#c2dcf2" stroke="transparent" points="2001.92,-1002 2001.92,-1022 2179.92,-1022 2179.92,-1002 2001.92,-1002"/>
+<text text-anchor="start" x="2139.79" y="-1007.4" font-family="Helvetica,sans-Serif" font-size="14.00">[table]</text>
+<text text-anchor="start" x="1840.92" y="-988.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">ΜΟΝΑΔΙΚΌΣ</text>
+<text text-anchor="start" x="1961.92" y="-987.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2003.92" y="-987.4" font-family="Helvetica,sans-Serif" font-size="14.00">SMALLINT NOT NULL</text>
+<text text-anchor="start" x="1840.92" y="-967.4" font-family="Helvetica,sans-Serif" font-size="14.00">ΤΊΤΛΟΣ</text>
+<text text-anchor="start" x="1961.92" y="-967.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2003.81" y="-967.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255) NOT NULL</text>
+<text text-anchor="start" x="1840.92" y="-947.4" font-family="Helvetica,sans-Serif" font-size="14.00">ΠΕΡΙΓΡΑΦΉ</text>
+<text text-anchor="start" x="1961.92" y="-947.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2003.92" y="-947.4" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
+<text text-anchor="start" x="1840.92" y="-927.4" font-family="Helvetica,sans-Serif" font-size="14.00">ΕΚΔΌΤΗΣ</text>
+<text text-anchor="start" x="1961.92" y="-927.4" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
+<text text-anchor="start" x="2003.92" y="-927.4" font-family="Helvetica,sans-Serif" font-size="14.00">SMALLINT NOT NULL</text>
+<polygon fill="none" stroke="#888888" points="1837.42,-921 1837.42,-1023 2180.42,-1023 2180.42,-921 1837.42,-921"/>
 </g>
 <!-- βιβλία_3cecb755&#45;&gt;publishers_8037d535 -->
 <g id="edge7" class="edge">
 <title>βιβλία_3cecb755:w&#45;&gt;publishers_8037d535:e</title>
-<path fill="none" stroke="black" d="M1883.01,-946.5C1771.91,-946.5 1734.92,-946.5 1619.2,-946.5"/>
-<polygon fill="black" stroke="black" points="1892.92,-946.5 1902.92,-951 1898.25,-946.5 1902.58,-946.5 1902.58,-946.5 1902.58,-946.5 1898.25,-946.5 1902.92,-942 1892.92,-946.5"/>
-<ellipse fill="none" stroke="black" cx="1887.2" cy="-946.5" rx="4" ry="4"/>
-<polygon fill="black" stroke="black" points="1610.25,-951.5 1610.25,-941.5 1612.25,-941.5 1612.25,-951.5 1610.25,-951.5"/>
-<polyline fill="none" stroke="black" points="1609.25,-946.5 1614.25,-946.5"/>
-<polygon fill="black" stroke="black" points="1615.25,-951.5 1615.25,-941.5 1617.25,-941.5 1617.25,-951.5 1615.25,-951.5"/>
-<polyline fill="none" stroke="black" points="1614.25,-946.5 1619.25,-946.5"/>
-<text text-anchor="start" x="1677.25" y="-949.7" font-family="Helvetica,sans-Serif" font-size="14.00">FK_ΒΙΒΛΊΑ_PUBLISHERS</text>
+<path fill="none" stroke="black" d="M1819.73,-932C1713.76,-932 1678.71,-932 1569.11,-932"/>
+<polygon fill="black" stroke="black" points="1827.92,-932 1837.92,-936.5 1832.92,-932 1837.92,-932 1837.92,-932 1837.92,-932 1832.92,-932 1837.92,-927.5 1827.92,-932 1827.92,-932"/>
+<ellipse fill="none" stroke="black" cx="1823.92" cy="-932" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="1559.98,-937 1559.98,-927 1561.98,-927 1561.98,-937 1559.98,-937"/>
+<polyline fill="none" stroke="black" points="1558.98,-932 1563.98,-932 "/>
+<polygon fill="black" stroke="black" points="1564.98,-937 1564.98,-927 1566.98,-927 1566.98,-937 1564.98,-937"/>
+<polyline fill="none" stroke="black" points="1563.98,-932 1568.98,-932 "/>
+<text text-anchor="start" x="1622.48" y="-936.2" font-family="Helvetica,sans-Serif" font-size="14.00">FK_ΒΙΒΛΊΑ_PUBLISHERS</text>
 </g>
 <!-- postalcode_c32cfdc2 -->
 <g id="node14" class="node">
 <title>postalcode_c32cfdc2</title>
-<text text-anchor="start" x="1921.12" y="-289.45" font-family="Helvetica,sans-Serif" font-size="14.00">PRIVATE.ALLSALES.REGIONS.POSTALCODE</text>
+<text text-anchor="start" x="1858" y="-287.8" font-family="Helvetica,sans-Serif" font-size="14.00">PRIVATE.ALLSALES.REGIONS.POSTALCODE</text>
 </g>
 <!-- postalcode_c32cfdc2&#45;&gt;sales_751e68cc -->
 <g id="edge10" class="edge">
 <title>postalcode_c32cfdc2:w&#45;&gt;sales_751e68cc:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1901.93,-294.45C1797.35,-293.51 1765.81,-278.42 1660.95,-277.54"/>
-<polygon fill="black" stroke="black" points="1911.77,-290.5 1911.73,-298.5 1903.73,-298.46 1903.77,-290.46 1911.77,-290.5"/>
-<polyline fill="none" stroke="black" points="1903.75,-294.46 1901.75,-294.45"/>
-<polygon fill="black" stroke="black" points="1652.23,-282.5 1652.27,-272.5 1654.27,-272.51 1654.23,-282.51 1652.23,-282.5"/>
-<polyline fill="none" stroke="black" points="1651.25,-277.5 1656.25,-277.52"/>
-<polygon fill="black" stroke="black" points="1657.23,-282.52 1657.27,-272.53 1659.27,-272.53 1659.23,-282.53 1657.23,-282.52"/>
-<polyline fill="none" stroke="black" points="1656.25,-277.52 1661.25,-277.54"/>
-<text text-anchor="start" x="1685.88" y="-296.7" font-family="Helvetica,sans-Serif" font-size="14.00">multi_reference_remarks</text>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1838.64,-291.95C1738.21,-290.93 1707.69,-275.07 1607.25,-274.05"/>
+<polygon fill="black" stroke="black" points="1848.94,-288 1848.9,-296 1840.9,-295.96 1840.94,-287.96 1848.94,-288"/>
+<polyline fill="none" stroke="black" points="1840.92,-291.96 1838.92,-291.95 "/>
+<polygon fill="black" stroke="black" points="1597.96,-279 1598.01,-269.01 1600.01,-269.02 1599.96,-279.02 1597.96,-279"/>
+<polyline fill="none" stroke="black" points="1596.98,-274 1601.98,-274.03 "/>
+<polygon fill="black" stroke="black" points="1602.96,-279.03 1603.01,-269.03 1605.01,-269.04 1604.96,-279.04 1602.96,-279.03"/>
+<polyline fill="none" stroke="black" points="1601.98,-274.03 1606.98,-274.05 "/>
+<text text-anchor="start" x="1631.81" y="-295.2" font-family="Helvetica,sans-Serif" font-size="14.00">multi_reference_remarks</text>
 </g>
 <!-- country_9237a800 -->
 <g id="node15" class="node">
 <title>country_9237a800</title>
-<text text-anchor="start" x="1936.12" y="-235.45" font-family="Helvetica,sans-Serif" font-size="14.00">PRIVATE.ALLSALES.REGIONS.COUNTRY</text>
+<text text-anchor="start" x="1871.24" y="-233.8" font-family="Helvetica,sans-Serif" font-size="14.00">PRIVATE.ALLSALES.REGIONS.COUNTRY</text>
 </g>
 <!-- country_9237a800&#45;&gt;sales_751e68cc -->
 <g id="edge11" class="edge">
 <title>country_9237a800:w&#45;&gt;sales_751e68cc:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1916.86,-241.09C1872.99,-243.71 1703.69,-254.4 1661.02,-256.95"/>
-<polygon fill="black" stroke="black" points="1926.53,-236.53 1926.98,-244.52 1918.99,-244.97 1918.54,-236.98 1926.53,-236.53"/>
-<polyline fill="none" stroke="black" points="1918.76,-240.98 1916.77,-241.09"/>
-<polygon fill="black" stroke="black" points="1652.53,-262.44 1651.97,-252.45 1653.97,-252.34 1654.53,-262.32 1652.53,-262.44"/>
-<polyline fill="none" stroke="black" points="1651.25,-257.5 1656.24,-257.22"/>
-<polygon fill="black" stroke="black" points="1657.52,-262.16 1656.96,-252.17 1658.96,-252.06 1659.52,-262.04 1657.52,-262.16"/>
-<polyline fill="none" stroke="black" points="1656.24,-257.22 1661.23,-256.94"/>
-<text text-anchor="start" x="1685.88" y="-259.7" font-family="Helvetica,sans-Serif" font-size="14.00">multi_reference_remarks</text>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1851.62,-238.29C1804.96,-240.27 1653.52,-251.76 1607.11,-253.72"/>
+<polygon fill="black" stroke="black" points="1861.81,-234 1862.03,-242 1854.04,-242.22 1853.81,-234.23 1861.81,-234"/>
+<polyline fill="none" stroke="black" points="1853.92,-238.23 1851.92,-238.28 "/>
+<polygon fill="black" stroke="black" points="1598.12,-258.97 1597.84,-248.97 1599.84,-248.92 1600.12,-258.91 1598.12,-258.97"/>
+<polyline fill="none" stroke="black" points="1596.98,-254 1601.98,-253.86 "/>
+<polygon fill="black" stroke="black" points="1603.12,-258.83 1602.84,-248.83 1604.84,-248.78 1605.12,-258.77 1603.12,-258.83"/>
+<polyline fill="none" stroke="black" points="1601.98,-253.86 1606.98,-253.72 "/>
+<text text-anchor="start" x="1631.81" y="-257.2" font-family="Helvetica,sans-Serif" font-size="14.00">multi_reference_remarks</text>
 </g>
 </g>
 </svg>
@@ -748,6 +748,11 @@ td.section {
 		<td class='spacer'></td>
 		<td class='minwidth'>COUNTRY</td>
 		<td class='minwidth'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'></td>
+		<td class='minwidth'>default 'USA'</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1347,6 +1352,11 @@ td.section {
 		<td class='spacer'></td>
 		<td class='minwidth'>COUPONS</td>
 		<td class='minwidth'>INTEGER ARRAY</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'></td>
+		<td class='minwidth'>default ARRAY[]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>

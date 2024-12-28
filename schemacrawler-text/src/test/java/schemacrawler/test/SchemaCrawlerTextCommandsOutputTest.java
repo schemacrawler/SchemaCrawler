@@ -34,10 +34,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -57,16 +57,16 @@ public class SchemaCrawlerTextCommandsOutputTest {
   private static final String COMMAND_OUTPUT = "command_output/";
 
   @BeforeAll
-  public static void before() throws Exception {
+  public static void cleanAll() throws Exception {
     clean(COMMAND_OUTPUT);
   }
 
-  @Test
+  @ParameterizedTest
+  @EnumSource(OperationType.class)
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void operationOutput(final DatabaseConnectionSource dataSource) throws Exception {
-    for (final OperationType operation : OperationType.values()) {
-      textOutputTest(operation.name(), dataSource, new Config());
-    }
+  public void operationOutput(
+      final OperationType operation, final DatabaseConnectionSource dataSource) throws Exception {
+    textOutputTest(operation.name(), dataSource, new Config());
   }
 
   @Test
@@ -91,12 +91,13 @@ public class SchemaCrawlerTextCommandsOutputTest {
     textOutputTest(queryCommand, dataSource, config);
   }
 
-  @Test
+  @ParameterizedTest
+  @EnumSource(SchemaTextDetailType.class)
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void schemaTextOutput(final DatabaseConnectionSource dataSource) throws Exception {
-    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values()) {
-      textOutputTest(schemaTextDetailType.name(), dataSource, new Config());
-    }
+  public void schemaTextOutput(
+      final SchemaTextDetailType schemaTextDetailType, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    textOutputTest(schemaTextDetailType.name(), dataSource, new Config());
   }
 
   @Test
