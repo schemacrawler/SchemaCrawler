@@ -1,29 +1,28 @@
 
 Available SchemaCrawler Commands:
- brief          Show basic schema information, for tables, views and routines,
-                  columns, primary keys, and foreign keys
- count          Show counts of rows in the tables
- details        Show maximum possible detail of the schema, including
-                  privileges, and details of privileges, triggers, and check
-                  constraints
- dump           Show data from all rows in the tables
- list           Show a list of schema objects
- quickdump      Show data from all rows in the tables, but row order is not
-                  guaranteed - this can be used with a minimum info-level for
-                  speed
- schema         Show the commonly needed detail of the schema, including
-                  details of tables, views and routines, columns, primary keys,
-                  indexes, foreign keys, and triggers
- test-command   Test command which is not deployed with the release
- <query_name>   Show results of query <query_name>, as specified in the
-                  configuration properties file
- <query>        Show results of SQL <query>
-                The query itself can contain the variables ${table}, ${columns}
-                  and ${tabletype}, or system properties referenced as
-                  ${<system-property-name>}
-                Queries without any variables are executed exactly once
-                Queries with variables are executed once for each table, with
-                  the variables substituted
+ brief        Show basic schema information, for tables, views and routines,
+                columns, primary keys, and foreign keys
+ count        Show counts of rows in the tables
+ details      Show maximum possible detail of the schema, including privileges,
+                and details of privileges, triggers, and check constraints
+ dump         Show data from all rows in the tables
+ list         Show a list of schema objects
+ quickdump    Show data from all rows in the tables, but row order is not
+                guaranteed - this can be used with a minimum info-level for
+                speed
+ schema       Show the commonly needed detail of the schema, including details
+                of tables, views and routines, columns, primary keys, indexes,
+                foreign keys, and triggers
+ test-command Test command which is not deployed with the release
+ <query_name> Show results of query <query_name>, as specified in the
+                configuration properties file
+ <query>      Show results of SQL <query>
+              The query itself can contain the variables ${table}, ${columns}
+                and ${tabletype}, or system properties referenced as
+                ${<system-property-name>}
+              Queries without any variables are executed exactly once
+              Queries with variables are executed once for each table, with the
+                variables substituted
 
 Notes:
 - For help on an individual SchemaCrawler command,

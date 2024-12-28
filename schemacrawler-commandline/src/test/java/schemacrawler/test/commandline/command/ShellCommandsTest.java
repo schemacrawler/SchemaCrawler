@@ -37,6 +37,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.commandline.shell.AvailableCatalogLoadersCommand;
@@ -49,6 +50,7 @@ import schemacrawler.tools.commandline.state.StateFactory;
 
 @ResolveTestContext
 @CaptureSystemStreams
+@DisableLogging
 public class ShellCommandsTest {
 
   private static final String SHELL_COMMANDS_OUTPUT = "shell_commands_output/";

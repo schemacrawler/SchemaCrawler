@@ -43,7 +43,6 @@ import picocli.CommandLine;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
 import us.fatehi.utility.property.PropertyName;
-import us.fatehi.utility.property.PropertyNameUtility;
 
 abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
 
@@ -71,16 +70,6 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
     }
   }
 
-  public void print() {
-    final PrintStream out = System.out;
-    if (!isEmpty() && out != null) {
-      final String title = String.format("Available %s:%n", getName());
-      final String pluginsTable = PropertyNameUtility.tableOf(title, plugins);
-      out.println();
-      out.println(pluginsTable);
-    }
-  }
-
   public int size() {
     return plugins.size();
   }
@@ -95,11 +84,23 @@ abstract class BaseAvailableRegistryPlugins implements Iterable<String> {
   protected abstract String getName();
 
   private final TextTable commands() {
+    int maxNameLength = 0;
+    for (final PropertyName plugin : plugins) {
+      final int length = plugin.getName().length();
+      if (length > maxNameLength) {
+        maxNameLength = length;
+      }
+    }
+    maxNameLength = maxNameLength + 1;
+
     final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
         new CommandLine.Help.ColorScheme.Builder();
     colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
     final TextTable textTable =
-        forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
+        forColumns(
+            colorSchemaBuilder.build(),
+            new Column(maxNameLength, 1, SPAN),
+            new Column(80 - maxNameLength, 1, WRAP));
 
     for (final PropertyName plugin : plugins) {
       textTable.addRowValues(plugin.getName(), plugin.getDescription());
