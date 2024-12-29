@@ -17,6 +17,7 @@ Contact details for book authors
   State                             CHAR(2)                     
   PostalCode                        VARCHAR(10)                 
   Country                           VARCHAR(50)                 
+                                    default ('USA')             
 
 Primary Key
 
