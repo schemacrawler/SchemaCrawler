@@ -16,6 +16,7 @@ AUTHORS                                                          [table]
   STATE                             CHAR(2)                     
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -193,6 +194,7 @@ JSON_BOOKS                                                        [view]
 PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
   ID                                BIT NOT NULL                
+                                    default "BOOKS"."ISEQ$$_71647".nextval
   PUBLISHER                         VARCHAR(255)                
 
 Primary Key
@@ -246,8 +248,10 @@ X_EMPLOYEES                                                      [table]
   END_DATE                          TIME                        
   ANNUAL_SALARY                     BIT                         
   HOURLY_RATE                       BIT                         
+                                    default "ANNUAL_SALARY"/2080
                                     generated                   
   ACTIVE                            CHAR(1)                     
+                                    default CASE  WHEN "END_DATE" IS NULL THEN 'Y' ELSE 'N' END
                                     generated                   
 
 

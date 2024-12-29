@@ -17,6 +17,7 @@ Contact details for book authors
   STATE                             CHAR(2)                     
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -278,6 +279,7 @@ PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
 List of book publishers
   ID                                NUMERIC(38, 0) NOT NULL     
+                                    default "BOOKS"."ISEQ$$_71647".nextval
                                     auto-incremented            
                                     Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
@@ -354,8 +356,10 @@ X_EMPLOYEES                                                      [table]
   END_DATE                          DATE                        
   ANNUAL_SALARY                     NUMERIC(38, 0)              
   HOURLY_RATE                       NUMERIC                     
+                                    default "ANNUAL_SALARY"/2080
                                     generated                   
   ACTIVE                            CHAR(1)                     
+                                    default CASE  WHEN "END_DATE" IS NULL THEN 'Y' ELSE 'N' END
                                     generated                   
 
 Table Constraints
@@ -424,7 +428,7 @@ Sequences
 
 
 
-"ISEQ$$_71735"                                                [sequence]
+"ISEQ$$_71647"                                                [sequence]
 ------------------------------------------------------------------------
   increment                         1                           
   start value                                                   

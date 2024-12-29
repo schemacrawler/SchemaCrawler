@@ -17,9 +17,11 @@ Contact details for book authors
   STATE                             CHAR(2)                     
   POSTALCODE                        VARCHAR2(10)                
   COUNTRY                           VARCHAR2(50)                
+                                    default 'USA'               
   "SYS_NC00010$"                    RAW                         
-                                    hidden                      
+                                    default "STATE"             
                                     generated                   
+                                    hidden                      
 
 Primary Key
 
@@ -57,13 +59,13 @@ Table Constraints
 CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 
-SYS_C008742                                           [check constraint]
+SYS_C008647                                           [check constraint]
   ID                                                            
 
-SYS_C008743                                           [check constraint]
+SYS_C008648                                           [check constraint]
   FIRSTNAME                                                     
 
-SYS_C008744                                           [check constraint]
+SYS_C008649                                           [check constraint]
   LASTNAME                                                      
 
 Privileges and Grants
