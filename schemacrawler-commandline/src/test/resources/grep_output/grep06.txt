@@ -17,6 +17,7 @@ Contact details for book authors
   STATE                             CHARACTER(2)                
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -56,15 +57,15 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
-SYS_CT_10104                                          [check constraint]
+SYS_CT_10102                                          [check constraint]
   ID                                                            
 BOOKS.AUTHORS.ID IS NOT NULL
 
-SYS_CT_10105                                          [check constraint]
+SYS_CT_10103                                          [check constraint]
   FIRSTNAME                                                     
 BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10106                                          [check constraint]
+SYS_CT_10104                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
@@ -98,7 +99,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-SYS_FK_10120                               [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -120,15 +121,15 @@ Table Constraints
 U_PREVIOUSEDITION                                    [unique constraint]
   PREVIOUSEDITIONID                                             
 
-SYS_CT_10111                                          [check constraint]
+SYS_CT_10109                                          [check constraint]
   ID                                                            
 BOOKS.BOOKS.ID IS NOT NULL
 
-SYS_CT_10112                                          [check constraint]
+SYS_CT_10110                                          [check constraint]
   TITLE                                                         
 BOOKS.BOOKS.TITLE IS NOT NULL
 
-SYS_CT_10113                                          [check constraint]
+SYS_CT_10111                                          [check constraint]
   PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
@@ -175,15 +176,15 @@ PK_PUBLICATIONS                                           [unique index]
 
 Table Constraints
 
-SYS_CT_10167                                          [check constraint]
+SYS_CT_10165                                          [check constraint]
   ID                                                            
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10168                                          [check constraint]
+SYS_CT_10166                                          [check constraint]
   TITLE                                                         
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10169                                          [check constraint]
+SYS_CT_10167                                          [check constraint]
   WRITERID                                                      
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
