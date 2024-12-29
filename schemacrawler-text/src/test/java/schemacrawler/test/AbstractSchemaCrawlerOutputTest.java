@@ -91,10 +91,26 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
+  @BeforeAll
+  public void cleanAll() throws Exception {
+    clean(ORDINAL_OUTPUT);
+    clean(TABLE_ROW_COUNT_OUTPUT);
+    clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
+    clean(HIDE_CONSTRAINT_NAMES_OUTPUT);
+    clean(HIDE_DATABASE_OBJECTS_OUTPUT);
+    clean(HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT);
+    clean(PORTABLE_OUTPUT);
+    clean(UNQUALIFIED_NAMES_OUTPUT);
+    clean(ROUTINES_OUTPUT);
+    clean(NO_REMARKS_OUTPUT);
+    clean(WITH_TITLE_OUTPUT);
+    clean(NO_SCHEMA_COLORS_OUTPUT);
+    clean(IDENTIFIER_QUOTING_OUTPUT);
+  }
+
   @Test
   public void compareHideConstraintNamesOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(HIDE_CONSTRAINT_NAMES_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -121,7 +137,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @Test
   public void compareHideDatabaseObjectsOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(HIDE_DATABASE_OBJECTS_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -148,7 +163,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @Test
   public void compareHideDependantDatabaseObjectsOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -183,7 +197,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
       final IdentifierQuotingStrategy identifierQuotingStrategy,
       final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(IDENTIFIER_QUOTING_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -197,7 +210,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
   @Test
   public void compareNoRemarksOutput(final DatabaseConnectionSource dataSource) throws Exception {
-    clean(NO_REMARKS_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -219,7 +231,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @Test
   public void compareNoSchemaColorsOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(NO_SCHEMA_COLORS_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -241,7 +252,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
   @Test
   public void compareOrdinalOutput(final DatabaseConnectionSource dataSource) throws Exception {
-    clean(ORDINAL_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
@@ -259,7 +269,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
   @Test
   public void comparePortableOutput(final DatabaseConnectionSource dataSource) throws Exception {
-    clean(PORTABLE_OUTPUT);
 
     assertAll(
         () -> {
@@ -275,7 +284,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
   @Test
   public void compareRoutinesOutput(final DatabaseConnectionSource dataSource) throws Exception {
-    clean(ROUTINES_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -297,7 +305,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @Test
   public void compareShowWeakAssociationsOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
@@ -316,7 +323,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @Test
   public void compareTableRowCountOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(TABLE_ROW_COUNT_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
@@ -336,7 +342,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @ValueSource(strings = {"list", "schema"})
   public void compareTitleOutput(final String command, final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(WITH_TITLE_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -358,7 +363,6 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @Test
   public void compareUnqualifiedNamesOutput(final DatabaseConnectionSource dataSource)
       throws Exception {
-    clean(UNQUALIFIED_NAMES_OUTPUT);
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder

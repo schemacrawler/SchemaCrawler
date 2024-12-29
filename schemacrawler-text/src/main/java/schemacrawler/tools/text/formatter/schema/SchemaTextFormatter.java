@@ -153,91 +153,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
   }
 
-  @Override
-  public void handleInfo(final DatabaseInfo dbInfo) {
-    if (!printVerboseDatabaseInfo() || !options.isShowDatabaseInfo() || dbInfo == null) {
-      return;
-    }
-
-    final Collection<Property> serverInfo = dbInfo.getServerInfo();
-    if (!serverInfo.isEmpty()) {
-      formattingHelper.writeHeader(DocumentHeaderType.section, "Database Server Information");
-      formattingHelper.writeObjectStart();
-      for (final Property property : serverInfo) {
-        final String name = property.getName();
-        final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(
-            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
-      }
-      formattingHelper.writeObjectEnd();
-    }
-
-    formattingHelper.writeHeader(DocumentHeaderType.section, "Database Information");
-
-    formattingHelper.writeObjectStart();
-    formattingHelper.writeNameValueRow(
-        "database product name", dbInfo.getProductName(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "database product version", dbInfo.getProductVersion(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "database user name", dbInfo.getUserName(), Alignment.inherit);
-    formattingHelper.writeObjectEnd();
-
-    final Collection<Property> dbProperties = dbInfo.getProperties();
-    if (!dbProperties.isEmpty()) {
-      formattingHelper.writeHeader(DocumentHeaderType.section, "Database Characteristics");
-      formattingHelper.writeObjectStart();
-      for (final Property property : dbProperties) {
-        final String name = property.getDescription();
-        final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(
-            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
-      }
-      formattingHelper.writeObjectEnd();
-    }
-  }
-
-  @Override
-  public void handleInfo(final JdbcDriverInfo driverInfo) {
-    if (!printVerboseDatabaseInfo() || !options.isShowJdbcDriverInfo() || driverInfo == null) {
-      return;
-    }
-
-    formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Information");
-
-    formattingHelper.writeObjectStart();
-    formattingHelper.writeNameValueRow(
-        "connection url", driverInfo.getConnectionUrl(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "driver name", driverInfo.getProductName(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "driver version", driverInfo.getProductVersion(), Alignment.inherit);
-    if (driverInfo.hasDriverClassName()) {
-      formattingHelper.writeNameValueRow(
-          "driver class name", driverInfo.getDriverClassName(), Alignment.inherit);
-      formattingHelper.writeNameValueRow(
-          "is JDBC compliant", Boolean.toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
-      formattingHelper.writeNameValueRow(
-          "supported JDBC version",
-          String.format(
-              "%d.%d", driverInfo.getJdbcMajorVersion(), driverInfo.getJdbcMinorVersion()),
-          Alignment.inherit);
-    }
-    formattingHelper.writeObjectEnd();
-
-    if (driverInfo.hasDriverClassName()) {
-      final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo.getDriverProperties();
-      if (!jdbcDriverProperties.isEmpty()) {
-        formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Properties");
-        for (final JdbcDriverProperty driverProperty : jdbcDriverProperties) {
-          formattingHelper.writeObjectStart();
-          printJdbcDriverProperty(driverProperty);
-          formattingHelper.writeObjectEnd();
-        }
-      }
-    }
-  }
-
   /** {@inheritDoc} */
   @Override
   public void handle(final Routine routine) {
@@ -396,6 +311,91 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   public void handleColumnDataTypesStart() {
     if (printVerboseDatabaseInfo() && isVerbose()) {
       formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Data Types");
+    }
+  }
+
+  @Override
+  public void handleInfo(final DatabaseInfo dbInfo) {
+    if (!printVerboseDatabaseInfo() || !options.isShowDatabaseInfo() || dbInfo == null) {
+      return;
+    }
+
+    final Collection<Property> serverInfo = dbInfo.getServerInfo();
+    if (!serverInfo.isEmpty()) {
+      formattingHelper.writeHeader(DocumentHeaderType.section, "Database Server Information");
+      formattingHelper.writeObjectStart();
+      for (final Property property : serverInfo) {
+        final String name = property.getName();
+        final Object value = property.getValue();
+        formattingHelper.writeNameValueRow(
+            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
+      }
+      formattingHelper.writeObjectEnd();
+    }
+
+    formattingHelper.writeHeader(DocumentHeaderType.section, "Database Information");
+
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeNameValueRow(
+        "database product name", dbInfo.getProductName(), Alignment.inherit);
+    formattingHelper.writeNameValueRow(
+        "database product version", dbInfo.getProductVersion(), Alignment.inherit);
+    formattingHelper.writeNameValueRow(
+        "database user name", dbInfo.getUserName(), Alignment.inherit);
+    formattingHelper.writeObjectEnd();
+
+    final Collection<Property> dbProperties = dbInfo.getProperties();
+    if (!dbProperties.isEmpty()) {
+      formattingHelper.writeHeader(DocumentHeaderType.section, "Database Characteristics");
+      formattingHelper.writeObjectStart();
+      for (final Property property : dbProperties) {
+        final String name = property.getDescription();
+        final Object value = property.getValue();
+        formattingHelper.writeNameValueRow(
+            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
+      }
+      formattingHelper.writeObjectEnd();
+    }
+  }
+
+  @Override
+  public void handleInfo(final JdbcDriverInfo driverInfo) {
+    if (!printVerboseDatabaseInfo() || !options.isShowJdbcDriverInfo() || driverInfo == null) {
+      return;
+    }
+
+    formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Information");
+
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeNameValueRow(
+        "connection url", driverInfo.getConnectionUrl(), Alignment.inherit);
+    formattingHelper.writeNameValueRow(
+        "driver name", driverInfo.getProductName(), Alignment.inherit);
+    formattingHelper.writeNameValueRow(
+        "driver version", driverInfo.getProductVersion(), Alignment.inherit);
+    if (driverInfo.hasDriverClassName()) {
+      formattingHelper.writeNameValueRow(
+          "driver class name", driverInfo.getDriverClassName(), Alignment.inherit);
+      formattingHelper.writeNameValueRow(
+          "is JDBC compliant", Boolean.toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
+      formattingHelper.writeNameValueRow(
+          "supported JDBC version",
+          String.format(
+              "%d.%d", driverInfo.getJdbcMajorVersion(), driverInfo.getJdbcMinorVersion()),
+          Alignment.inherit);
+    }
+    formattingHelper.writeObjectEnd();
+
+    if (driverInfo.hasDriverClassName()) {
+      final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo.getDriverProperties();
+      if (!jdbcDriverProperties.isEmpty()) {
+        formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Properties");
+        for (final JdbcDriverProperty driverProperty : jdbcDriverProperties) {
+          formattingHelper.writeObjectStart();
+          printJdbcDriverProperty(driverProperty);
+          formattingHelper.writeObjectEnd();
+        }
+      }
     }
   }
 
@@ -912,6 +912,17 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeDetailRow("", "", "auto-incremented");
   }
 
+  private void printTableColumnDefaultValue(final Column column) {
+    if (column == null || !column.hasDefaultValue()) {
+      return;
+    }
+    final String defaultValue = column.getDefaultValue();
+    if ("NULL".equalsIgnoreCase(defaultValue)) {
+      return;
+    }
+    formattingHelper.writeDetailRow("", "", "default " + defaultValue);
+  }
+
   private void printTableColumnEnumValues(final Column column) {
     if (column == null
         || !column.isColumnDataTypeKnown()
@@ -1003,10 +1014,11 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           ordinalNumberString, columnName, columnDetails, true, emphasize, "");
 
       if (extraDetails) {
-        printTableColumnEnumValues(column);
-        printTableColumnHidden(column);
+        printTableColumnDefaultValue(column);
         printTableColumnAutoIncremented(column);
         printTableColumnGenerated(column);
+        printTableColumnEnumValues(column);
+        printTableColumnHidden(column);
         printTableColumnRemarks(column);
 
         if (column instanceof DefinedObject) {

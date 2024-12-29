@@ -14,6 +14,7 @@ AUTHORS                                                          [table]
 7   STATE                             CHAR(2)                     
 8   POSTALCODE                        VARCHAR(10)                 
 9   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -42,7 +43,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
  1  AUTHORID (0..many)--> AUTHORS.ID                              
 
-SYS_FK_10120                               [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
  1  BOOKID (0..many)--> BOOKS.ID                                  
 
 
@@ -62,7 +63,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
  1  ID <--(0..many) SALES.BOOKID                                  
 
-SYS_FK_10120                               [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
  1  ID <--(0..many) BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -81,7 +82,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10130                               [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
  1  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
 
 
@@ -97,7 +98,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10130                               [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
  1  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
 
 
@@ -142,7 +143,7 @@ PUBLISHERS                                                       [table]
 
 Primary Key
 
-SYS_PK_10126                                               [primary key]
+SYS_PK_10124                                               [primary key]
 1   ID                                                            
 
 Foreign Keys

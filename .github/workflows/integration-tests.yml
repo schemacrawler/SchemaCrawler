@@ -51,6 +51,29 @@ jobs:
           --batch-mode \
           -Ddistrib \
           clean package
+    - id: gather-expected-results
+      name: Gather expected results for failed tests
+      if: always()
+      shell: bash
+      run: |
+        # Gather expected results
+        echo "Gather expected results"
+        # DEBUG
+        echo "Current working directory:"
+        pwd
+        echo "Show expected results directories:"
+        find . -type d -name "unit_tests_results_output" -exec echo {} \;
+        # Save expected results files
+        echo "Zip expected results:"
+        .github/scripts/unit-tests-results-output.sh $(realpath .)        
+    - id: upload-unit-tests-results-output
+      name: Upload expected results files
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: expected-results-${{ matrix.os }}-${{ matrix.java }}
+        path: ./unit_tests_results_output.zip
+        retention-days: 5
 
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
     - id: install-graphviz
@@ -68,13 +91,3 @@ jobs:
           schemacrawler-diagram,schemacrawler-scripting \
           --also-make \
           package
-        # Save expected results files
-        .github/scripts/unit-tests-results-output.sh
-    - id: upload-unit-tests-results-output
-      name: Upload expected results files
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: unit-tests-results-output
-        path: ./unit-tests-results-output.zip
-        retention-days: 5

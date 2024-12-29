@@ -17,6 +17,7 @@ Contact details for book authors
   state                             CHAR(2)                     
   postalcode                        VARCHAR(10)                 
   country                           VARCHAR(50)                 
+                                    default 'USA'::character varying
 
 Primary Key
 
@@ -238,6 +239,7 @@ publishers                                                       [table]
 ------------------------------------------------------------------------
 List of book publishers
   id                                INTEGER NOT NULL            
+                                    default nextval('books.publishers_id_seq'::regclass)
                                     auto-incremented            
                                     Unique (internal) id for book publisher
   publisher                         VARCHAR(255)                

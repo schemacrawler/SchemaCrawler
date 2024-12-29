@@ -17,6 +17,7 @@ Contact details for book authors
   STATE                             CHAR(2)                     
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -103,6 +104,7 @@ Details for published books
   PRICE                             DOUBLE(53, 0)               
                                     Current price for the book  
   PREVIOUSEDITIONID                 INTEGER NOT NULL            
+                                    default 1                   
 
 Primary Key
 

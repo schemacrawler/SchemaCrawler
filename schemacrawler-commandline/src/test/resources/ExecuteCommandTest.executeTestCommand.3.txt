@@ -17,6 +17,7 @@ Contact details for book authors
   STATE                             CHARACTER(2)                
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -66,7 +67,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-SYS_FK_10120                               [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
@@ -74,7 +75,7 @@ Indexes
 Z_FK_AUTHOR                                           [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_FK_10120                                          [non-unique index]
+SYS_FK_10118                                          [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -111,7 +112,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-SYS_FK_10120                               [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -142,7 +143,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10130                               [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
@@ -164,7 +165,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10130                               [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 Indexes
@@ -172,7 +173,7 @@ Indexes
 "PK Celebrity Updates"                                    [unique index]
   "Celebrity Id"                    ascending                   
 
-SYS_FK_10130                                          [non-unique index]
+SYS_FK_10128                                          [non-unique index]
   "Celebrity Id"                    ascending                   
 
 
@@ -182,6 +183,7 @@ PUBLIC.BOOKS.COUPONS                                             [table]
   ID                                INTEGER NOT NULL            
   DATA                              CLOB                        
   COUPONS                           INTEGER ARRAY               
+                                    default ARRAY[]             
   BOOKS                             VARCHAR(20) ARRAY[10]       
 
 Primary Key
@@ -243,7 +245,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10126                                               [primary key]
+SYS_PK_10124                                               [primary key]
   ID                                                            
 
 Foreign Keys
@@ -253,7 +255,7 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-SYS_PK_10126                                              [unique index]
+SYS_PK_10124                                              [unique index]
   ID                                ascending                   
 
 
