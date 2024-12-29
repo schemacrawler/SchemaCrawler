@@ -7,7 +7,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>16.24.3</version>
+    <version>16.25.1</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-dbtest</artifactId>
@@ -57,7 +57,7 @@
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>4.13.1</version>
+      <version>4.14.0</version>
       <scope>test</scope>
     </dependency>
     <!--  -->
