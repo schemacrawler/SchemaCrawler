@@ -26,6 +26,7 @@ sc.main.Authors                                             [base table]
   State                             VARCHAR                     
   PostalCode                        VARCHAR                     
   Country                           VARCHAR                     
+                                    default 'USA'               
 
 Primary Key
 
