@@ -109,6 +109,7 @@ Primary Key
 sc.main.Publishers                                          [base table]
 ------------------------------------------------------------------------
   Id                                INTEGER NOT NULL            
+                                    default nextval('Publisher_Id_Seq')
   Publisher                         VARCHAR                     
 
 Primary Key
