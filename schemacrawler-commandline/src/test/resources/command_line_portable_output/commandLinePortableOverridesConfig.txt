@@ -17,6 +17,7 @@ Contact details for book authors
 7   STATE                             CHARACTER(2)                
 8   POSTALCODE                        VARCHAR(10)                 
 9   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -235,6 +236,7 @@ PUBLIC.BOOKS.COUPONS                                             [table]
 1   ID                                INTEGER NOT NULL            
 2   DATA                              CLOB                        
 3   COUPONS                           INTEGER ARRAY               
+                                    default ARRAY[]             
 4   BOOKS                             VARCHAR(20) ARRAY[10]       
 
 Primary Key

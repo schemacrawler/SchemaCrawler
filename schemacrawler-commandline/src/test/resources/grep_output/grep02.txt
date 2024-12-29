@@ -17,6 +17,7 @@ Contact details for book authors
   STATE                             CHARACTER(2)                
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
 
 Primary Key
 
@@ -56,15 +57,15 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
-SYS_CT_10104                                          [check constraint]
+SYS_CT_10102                                          [check constraint]
   ID                                                            
 BOOKS.AUTHORS.ID IS NOT NULL
 
-SYS_CT_10105                                          [check constraint]
+SYS_CT_10103                                          [check constraint]
   FIRSTNAME                                                     
 BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10106                                          [check constraint]
+SYS_CT_10104                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
@@ -98,7 +99,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10130                               [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
@@ -108,7 +109,7 @@ Indexes
 
 Table Constraints
 
-SYS_CT_10127                                          [check constraint]
+SYS_CT_10125                                          [check constraint]
   "Id"                                                          
 BOOKS."Celebrities"."Id" IS NOT NULL
 
@@ -133,15 +134,15 @@ PK_CUSTOMERS                                              [unique index]
 
 Table Constraints
 
-SYS_CT_10095                                          [check constraint]
+SYS_CT_10093                                          [check constraint]
   ID                                                            
 BOOKS.CUSTOMERS.ID IS NOT NULL
 
-SYS_CT_10096                                          [check constraint]
+SYS_CT_10094                                          [check constraint]
   FIRSTNAME                                                     
 BOOKS.CUSTOMERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10097                                          [check constraint]
+SYS_CT_10095                                          [check constraint]
   LASTNAME                                                      
 BOOKS.CUSTOMERS.LASTNAME IS NOT NULL
 
@@ -219,23 +220,23 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10156                                          [check constraint]
+SYS_CT_10154                                          [check constraint]
   ID                                                            
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10157                                          [check constraint]
+SYS_CT_10155                                          [check constraint]
   FIRSTNAME                                                     
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10158                                          [check constraint]
+SYS_CT_10156                                          [check constraint]
   LASTNAME                                                      
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10159                                          [check constraint]
+SYS_CT_10157                                          [check constraint]
   ADDRESS2                                                      
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10160                                          [check constraint]
+SYS_CT_10158                                          [check constraint]
   PUBLICATION_ID                                                
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
