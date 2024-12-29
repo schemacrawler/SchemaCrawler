@@ -1014,11 +1014,11 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           ordinalNumberString, columnName, columnDetails, true, emphasize, "");
 
       if (extraDetails) {
-        printTableColumnEnumValues(column);
-        printTableColumnHidden(column);
         printTableColumnDefaultValue(column);
         printTableColumnAutoIncremented(column);
         printTableColumnGenerated(column);
+        printTableColumnEnumValues(column);
+        printTableColumnHidden(column);
         printTableColumnRemarks(column);
 
         if (column instanceof DefinedObject) {
