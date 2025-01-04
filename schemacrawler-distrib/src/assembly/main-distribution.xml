@@ -44,7 +44,7 @@
     <copy file="gpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
 
     <!-- Copy Apache Ant Ivy -->
-    <copy file="${user.home}/.ant/lib/ivy-2.5.2.jar" todir="${main-distribution.staging.dir}/_downloader" />
+    <copy file="${user.home}/.ant/lib/ivy-2.5.3.jar" todir="${main-distribution.staging.dir}/_downloader" />
 
     <!-- Stage examples -->
     <copy todir="${main-distribution.staging.dir}">
