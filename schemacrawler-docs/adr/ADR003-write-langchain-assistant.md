@@ -33,4 +33,4 @@ Also, the langchain4j API forces the creation of tool executors ahead of time, w
 
 ## Decision Outcome
 
-Considering that the user experience when chossing to use metadata versus not to share was different, the decision is that we will use a single custom assistant.
+Considering that the user experience when chossing to use metadata versus not to share was different, the decision is to use a single custom assistant.
