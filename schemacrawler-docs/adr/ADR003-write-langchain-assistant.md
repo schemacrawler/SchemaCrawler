@@ -20,7 +20,7 @@ sequenceDiagram
 
 For SchemaCrawler, Step #5 is problematic, since the function results can be shared with LLM. SchemaCrawler function results can leak information about the details of the database schema, and so SchemaCrawler need to provide the results directly to the user or caller.
 
-SchemaCrawler uses retrieval augmented generation to retrieve table metadata which are likely to help with the user's prompt. Ideally, this background information should go into a system message to the LLM. Since content retrieval is managed by the langchain4j assistant, content in out into the user message, not the system message.
+SchemaCrawler uses retrieval augmented generation to retrieve table metadata which are likely to help with the user's prompt. Ideally, this background information should go into a system message to the LLM. Since content retrieval is managed by the langchain4j assistant, content is output into the user message, not the system message. This is another issue with using the assistant. 
 
 Also, the langchain4j API forces the creation of tool executors ahead of time, which limits the ability to make decisions on how to execute functions based on a changed context.
 
