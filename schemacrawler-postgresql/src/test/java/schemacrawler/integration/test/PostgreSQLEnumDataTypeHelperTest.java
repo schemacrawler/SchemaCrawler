@@ -19,7 +19,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.server.postgresql.PostgreSQLEnumDataTypeHelper;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.TestUtility;
+import us.fatehi.test.utility.TestObjectUtility;
 
 @DisableLogging
 public class PostgreSQLEnumDataTypeHelperTest {
@@ -52,7 +52,7 @@ public class PostgreSQLEnumDataTypeHelperTest {
     final Connection connection = mock(Connection.class);
     final Statement mockStatement = mock(java.sql.Statement.class);
     final ResultSet mockResultSet =
-        TestUtility.createMockResultSet(
+        TestObjectUtility.mockResultSet(
             new String[] {"TYPE_CATALOG", "TYPE_SCHEMA", "TYPE_NAME", "ENUM_LABEL"},
             new Object[][] {
               {null, "", columnDataType.getName(), "Moe"},

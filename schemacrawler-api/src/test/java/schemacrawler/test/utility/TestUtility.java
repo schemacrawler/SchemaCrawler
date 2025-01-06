@@ -35,8 +35,6 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
@@ -50,9 +48,6 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -89,37 +84,6 @@ public final class TestUtility {
     Files.copy(inputResource.openNewInputStream(), tempFile);
 
     return tempFile;
-  }
-
-  public static ResultSet createMockResultSet(final String[] columnNames, final Object[][] data)
-      throws SQLException {
-    final ResultSet rs = mock(ResultSet.class);
-    final ResultSetMetaData rsmd = mock(ResultSetMetaData.class);
-
-    // Mock ResultSetMetaData
-    when(rs.getMetaData()).thenReturn(rsmd);
-    when(rsmd.getColumnCount()).thenReturn(columnNames.length);
-    for (int i = 0; i < columnNames.length; i++) {
-      when(rsmd.getColumnName(i + 1)).thenReturn(columnNames[i]);
-    }
-
-    // Mock ResultSet data
-    final int[] rowIndex = {-1};
-    when(rs.next())
-        .thenAnswer(
-            invocation -> {
-              rowIndex[0]++;
-              return rowIndex[0] < data.length;
-            });
-
-    for (int i = 0; i < columnNames.length; i++) {
-      final int columnIndex = i;
-      when(rs.getObject(columnIndex + 1)).thenAnswer(invocation -> data[rowIndex[0]][columnIndex]);
-      when(rs.getString(columnIndex + 1))
-          .thenAnswer(invocation -> (String) data[rowIndex[0]][columnIndex]);
-    }
-
-    return rs;
   }
 
   public static void deleteIfPossible(final Path testOutputTargetFilePath) {
