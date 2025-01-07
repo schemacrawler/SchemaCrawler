@@ -37,10 +37,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
@@ -80,6 +78,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
@@ -236,20 +235,13 @@ public class SchemaCrawlerCoverageTest {
   }
 
   @Test
-  public void schemaCrawlerExceptions() throws Exception {
+  public void schemaCrawlerExceptions() {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final Connection connection = mock(Connection.class);
-    final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
-    when(connection.isClosed()).thenReturn(false);
-    when(connection.getMetaData()).thenReturn(databaseMetaData);
-    when(databaseMetaData.getDatabaseProductName()).thenReturn("databaseProductName");
-    when(databaseMetaData.getDatabaseProductVersion()).thenReturn("databaseProductVersion");
-    when(databaseMetaData.getURL()).thenReturn("connectionUrl");
-    when(databaseMetaData.getDriverName()).thenReturn("driverName");
-    when(databaseMetaData.getDriverVersion()).thenReturn("driverVersion");
+    final Connection connection = TestObjectUtility.mockConnection();
+    final DatabaseMetaData databaseMetaData = TestObjectUtility.mockDatabaseMetaData();
 
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);

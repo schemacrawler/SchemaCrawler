@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -58,6 +58,7 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.test.utility.TestObjectUtility;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -74,13 +75,9 @@ public class QueryUtilityTest {
   @Test
   public void executeAgainstColumnDataType() throws Exception {
 
-    final Connection mockConnection = mock(Connection.class);
-    final Statement mockStatement = mock(java.sql.Statement.class);
-    when(mockConnection.createStatement()).thenReturn(mockStatement);
-    when(mockStatement.execute(anyString())).thenReturn(true);
-    when(mockStatement.getResultSet()).thenReturn(mock(ResultSet.class));
-    when(mockStatement.getUpdateCount()).thenReturn(0);
-    when(mockStatement.execute(anyString())).thenReturn(true);
+    final Connection mockConnection = TestObjectUtility.mockConnection();
+    final Statement mockStatement = TestObjectUtility.mockStatement();
+    lenient().when(mockConnection.createStatement()).thenReturn(mockStatement);
     final ColumnDataType mockColumnDataType = mock(ColumnDataType.class);
     when(mockColumnDataType.getName()).thenReturn("mock-column-data-type-name");
 
