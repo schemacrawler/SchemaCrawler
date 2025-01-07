@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -40,7 +41,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.utility.SQLRuntimeException;
 
 class DataSourceConnectionSourceTest {
@@ -49,7 +50,7 @@ class DataSourceConnectionSourceTest {
   void close() throws Exception {
     // Arrange
     abstract class CloseableDataSource implements DataSource, AutoCloseable {}
-    final CloseableDataSource dataSource = Mockito.mock(CloseableDataSource.class);
+    final CloseableDataSource dataSource = mock(CloseableDataSource.class);
 
     final DataSourceConnectionSource dataSourceConnectionSource =
         new DataSourceConnectionSource(dataSource);
@@ -64,7 +65,7 @@ class DataSourceConnectionSourceTest {
   @Test
   void closeWithoutShutdown() throws Exception {
     // Arrange
-    final DataSource dataSource = Mockito.mock(DataSource.class);
+    final DataSource dataSource = mock(DataSource.class);
 
     final DataSourceConnectionSource dataSourceConnectionSource =
         new DataSourceConnectionSource(dataSource);
@@ -82,7 +83,7 @@ class DataSourceConnectionSourceTest {
     abstract class ShutdownableDataSource implements DataSource {
       abstract void shutdown();
     }
-    final ShutdownableDataSource dataSource = Mockito.mock(ShutdownableDataSource.class);
+    final ShutdownableDataSource dataSource = mock(ShutdownableDataSource.class);
 
     final DataSourceConnectionSource dataSourceConnectionSource =
         new DataSourceConnectionSource(dataSource);
@@ -97,8 +98,8 @@ class DataSourceConnectionSourceTest {
   @Test
   void get() throws Exception {
     // Arrange
-    final DataSource dataSource = Mockito.mock(DataSource.class);
-    final Connection connection = Mockito.mock(Connection.class);
+    final DataSource dataSource = mock(DataSource.class);
+    final Connection connection = TestObjectUtility.mockConnection();
     when(dataSource.getConnection()).thenReturn(connection);
 
     final DataSourceConnectionSource dataSourceConnectionSource =
@@ -114,8 +115,8 @@ class DataSourceConnectionSourceTest {
   @Test
   void getWithException() throws Exception {
     // Arrange
-    final DataSource dataSource = Mockito.mock(DataSource.class);
-    final Connection connection = Mockito.mock(Connection.class);
+    final DataSource dataSource = mock(DataSource.class);
+    final Connection connection = TestObjectUtility.mockConnection();
     when(dataSource.getConnection()).thenThrow(new SQLException("Forced exception"));
 
     final DataSourceConnectionSource dataSourceConnectionSource =
@@ -128,8 +129,8 @@ class DataSourceConnectionSourceTest {
   @Test
   void releaseConnection() throws Exception {
     // Arrange
-    final DataSource dataSource = Mockito.mock(DataSource.class);
-    final Connection connection = Mockito.mock(Connection.class);
+    final DataSource dataSource = mock(DataSource.class);
+    final Connection connection = TestObjectUtility.mockConnection();
     final DataSourceConnectionSource dataSourceConnectionSource =
         new DataSourceConnectionSource(dataSource);
 
@@ -144,8 +145,8 @@ class DataSourceConnectionSourceTest {
   @Test
   void releaseConnectionWithException() throws Exception {
     // Arrange
-    final DataSource dataSource = Mockito.mock(DataSource.class);
-    final Connection connection = Mockito.mock(Connection.class);
+    final DataSource dataSource = mock(DataSource.class);
+    final Connection connection = TestObjectUtility.mockConnection();
     doThrow(new SQLException("Forced exception")).when(connection).close();
 
     final DataSourceConnectionSource dataSourceConnectionSource =

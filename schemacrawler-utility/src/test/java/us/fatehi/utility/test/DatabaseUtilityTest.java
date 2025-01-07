@@ -69,6 +69,7 @@ import org.mockito.Captor;
 import org.mockito.junit.jupiter.MockitoExtension;
 import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.test.utility.TestDatabaseDriver;
+import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.database.DatabaseUtility;
@@ -85,7 +86,7 @@ public class DatabaseUtilityTest {
 
     assertThat(DatabaseUtility.checkConnection(connection), is(connection));
 
-    final Connection mockConnection = mock(Connection.class);
+    final Connection mockConnection = TestObjectUtility.mockConnection();
     when(mockConnection.isClosed()).thenReturn(true);
 
     final SQLException exception1 =
@@ -247,10 +248,7 @@ public class DatabaseUtilityTest {
             () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL2, COL3 FROM TABLE1"));
     assertThat(exception.getMessage(), startsWith("Too many columns"));
     // Empty result set
-    final Connection mockConnection = mock(Connection.class);
-    final Statement mockStatement = mock(Statement.class);
-    when(mockConnection.createStatement()).thenReturn(mockStatement);
-    when(mockStatement.execute(anyString())).thenReturn(true);
+    final Connection mockConnection = TestObjectUtility.mockConnection();
 
     final Object scalar =
         DatabaseUtility.executeSqlForScalar(mockConnection, "SELECT COL3 FROM TABLE1");

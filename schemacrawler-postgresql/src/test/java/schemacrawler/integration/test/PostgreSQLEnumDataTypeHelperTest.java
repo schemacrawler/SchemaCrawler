@@ -19,7 +19,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.server.postgresql.PostgreSQLEnumDataTypeHelper;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.TestUtility;
+import us.fatehi.test.utility.TestObjectUtility;
 
 @DisableLogging
 public class PostgreSQLEnumDataTypeHelperTest {
@@ -28,11 +28,7 @@ public class PostgreSQLEnumDataTypeHelperTest {
   public void testGetEnumDataTypeInfo() throws Exception {
     final Column column = mock(Column.class);
     final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
-    final Connection connection = mock(Connection.class);
-
-    when(connection.createStatement()).thenReturn(mock(java.sql.Statement.class));
-    when(connection.createStatement().executeQuery(anyString()))
-        .thenReturn(mock(java.sql.ResultSet.class));
+    final Connection connection = TestObjectUtility.mockConnection();
 
     final PostgreSQLEnumDataTypeHelper helper = new PostgreSQLEnumDataTypeHelper();
     final EnumDataTypeInfo enumDataTypeInfo =
@@ -50,9 +46,9 @@ public class PostgreSQLEnumDataTypeHelperTest {
     final Column column = mock(Column.class);
     final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
     final Connection connection = mock(Connection.class);
-    final Statement mockStatement = mock(java.sql.Statement.class);
+    final Statement mockStatement = mock(Statement.class);
     final ResultSet mockResultSet =
-        TestUtility.createMockResultSet(
+        TestObjectUtility.mockResultSet(
             new String[] {"TYPE_CATALOG", "TYPE_SCHEMA", "TYPE_NAME", "ENUM_LABEL"},
             new Object[][] {
               {null, "", columnDataType.getName(), "Moe"},
