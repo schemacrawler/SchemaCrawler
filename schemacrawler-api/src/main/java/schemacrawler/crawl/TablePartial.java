@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
@@ -154,10 +152,20 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
     throw new NotLoadedException(this);
   }
 
+  @Override
+  public boolean hasIndexes() {
+    return false;
+  }
+
   /** {@inheritDoc} */
   @Override
   public boolean hasPrimaryKey() {
     throw new NotLoadedException(this);
+  }
+
+  @Override
+  public boolean hasTriggers() {
+    return false;
   }
 
   @Override
@@ -169,18 +177,16 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
   public Optional<Column> lookupColumn(final String name) {
     if (column.getName().equals(name)) {
       return Optional.ofNullable(column);
-    } else {
-      return Optional.empty();
     }
+    return Optional.empty();
   }
 
   @Override
   public Optional<ForeignKey> lookupForeignKey(final String name) {
     if (foreignKey.getName().equals(name)) {
       return Optional.ofNullable(foreignKey);
-    } else {
-      return Optional.empty();
     }
+    return Optional.empty();
   }
 
   @Override

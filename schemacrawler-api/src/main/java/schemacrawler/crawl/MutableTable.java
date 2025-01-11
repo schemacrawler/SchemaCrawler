@@ -245,8 +245,20 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   /** {@inheritDoc} */
   @Override
+  public final boolean hasIndexes() {
+    return !indexes.isEmpty();
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final boolean hasPrimaryKey() {
     return getPrimaryKey() != null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean hasTriggers() {
+    return !triggers.isEmpty();
   }
 
   /** {@inheritDoc} */
@@ -377,13 +389,13 @@ class MutableTable extends AbstractDatabaseObject implements Table {
       for (final Iterator<R> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
         final R foreignKey = iterator.next();
 
-        final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
+        final boolean isExportedKey = equals(foreignKey.getReferencedTable());
         if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {
           iterator.remove();
           continue;
         }
 
-        final boolean isImportedKey = foreignKey.getDependentTable().equals(this);
+        final boolean isImportedKey = equals(foreignKey.getDependentTable());
         if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
           iterator.remove();
           continue;
@@ -398,16 +410,16 @@ class MutableTable extends AbstractDatabaseObject implements Table {
         nullsLast(
             ((Comparator<R>)
                     (final R one, final R two) -> {
-                      final boolean isOneImportedKey = one.getDependentTable().equals(this);
-                      final boolean isTwoImportedKey = two.getDependentTable().equals(this);
+                      final boolean isOneImportedKey = equals(one.getDependentTable());
+                      final boolean isTwoImportedKey = equals(two.getDependentTable());
 
                       if (isOneImportedKey == isTwoImportedKey) {
                         return 0;
-                      } else if (isOneImportedKey) {
-                        return -1;
-                      } else {
-                        return 1;
                       }
+                      if (isOneImportedKey) {
+                        return -1;
+                      }
+                      return 1;
                     })
                 .thenComparing(naturalOrder()));
     Collections.sort(foreignKeysList, fkComparator);

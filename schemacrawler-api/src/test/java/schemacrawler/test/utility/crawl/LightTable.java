@@ -222,6 +222,11 @@ public final class LightTable implements Table {
   }
 
   @Override
+  public boolean hasIndexes() {
+    return false;
+  }
+
+  @Override
   public boolean hasPrimaryKey() {
     return false;
   }
@@ -229,6 +234,11 @@ public final class LightTable implements Table {
   @Override
   public boolean hasRemarks() {
     return false;
+  }
+
+  @Override
+  public boolean hasTriggers() {
+    return !triggers.isEmpty();
   }
 
   @Override
