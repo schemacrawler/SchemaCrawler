@@ -114,31 +114,14 @@ public final class Linters {
     return buffer.toString();
   }
 
-  public void lint(final Catalog catalog, final Connection connection) {
+  public void initialize(final LinterInitializer linterInitializer) {
 
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-
-    initialize();
-    runLinters(catalog, connection);
-  }
-
-  /**
-   * Number of linters configured to run
-   *
-   * @return Number of linters configured to run
-   */
-  public int size() {
-    return linters.size();
-  }
-
-  private void initialize() {
+    requireNonNull(linterInitializer, "No linter initializer provided");
 
     linters = new ArrayList<>();
     collector = new LintCollector();
 
-    final LinterRegistry registry = LinterRegistry.getLinterRegistry();
-    final Set<String> registeredLinters = registry.getRegisteredLinters();
+    final Set<String> registeredLinters = linterInitializer.getRegisteredLinters();
 
     // Add all configured linters, with as many instances as were
     // configured
@@ -158,7 +141,7 @@ public final class Linters {
         continue;
       }
 
-      final Linter linter = registry.newLinter(linterId, collector);
+      final Linter linter = linterInitializer.newLinter(linterId, collector);
       if (linter != null) {
         linter.configure(linterConfig);
         linters.add(linter);
@@ -168,10 +151,34 @@ public final class Linters {
     if (runAllLinters) {
       // Add in all remaining linters that were not configured
       for (final String linterId : registeredLinters) {
-        final Linter linter = registry.newLinter(linterId, collector);
+        final Linter linter = linterInitializer.newLinter(linterId, collector);
         linters.add(linter);
       }
     }
+  }
+
+  public void lint(final Catalog catalog, final Connection connection) {
+
+    // Check if initialized
+    requireNonNull(linters, "No linters provided");
+    requireNonNull(collector, "No lint collectpr provided");
+    if (linters.isEmpty()) {
+      return;
+    }
+
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+
+    runLinters(catalog, connection);
+  }
+
+  /**
+   * Number of linters configured to run
+   *
+   * @return Number of linters configured to run
+   */
+  public int size() {
+    return linters.size();
   }
 
   private void runLinters(final Catalog catalog, final Connection connection) {

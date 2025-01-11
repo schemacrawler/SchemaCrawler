@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.lint.LinterRegistry;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfigs;
@@ -73,6 +74,9 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
       LOGGER.log(Level.FINEST, new ObjectToStringFormat(linterConfigs));
       final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
+      final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+      linters.initialize(linterRegistry);
+
       linters.lint(catalog, connection);
 
       // Produce the lint report

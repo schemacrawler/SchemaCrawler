@@ -57,6 +57,7 @@ import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.LinterRegistry;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfig;
@@ -109,6 +110,9 @@ public class LintTest {
 
     try (final Connection connection = dataSource.get(); ) {
       final Linters linters = new Linters(linterConfigs, true);
+      final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+      linters.initialize(linterRegistry);
+
       linters.lint(catalog, connection);
       final Lints lintReport = linters.getLints();
       assertThat(lintReport.size(), is(53));
@@ -155,6 +159,9 @@ public class LintTest {
     try (final Connection connection = dataSource.get(); ) {
       final LinterConfigs linterConfigs = new LinterConfigs(new Config());
       final Linters linters = new Linters(linterConfigs, true);
+      final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+      linters.initialize(linterRegistry);
+
       linters.lint(catalog, connection);
       final Lints lintReport = linters.getLints();
       assertThat(lintReport.size(), is(42));
@@ -203,6 +210,8 @@ public class LintTest {
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     final Linters linters = new Linters(linterConfigs, false);
+    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    linters.initialize(linterRegistry);
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
@@ -233,6 +242,9 @@ public class LintTest {
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final Linters linters = new Linters(linterConfigs, false);
+    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    linters.initialize(linterRegistry);
+
     assertThat("All linters should be turned off", linters.size(), is(0));
 
     try (final Connection connection = dataSource.get(); ) {
