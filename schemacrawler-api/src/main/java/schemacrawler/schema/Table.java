@@ -175,11 +175,25 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
   boolean hasForeignKeys();
 
   /**
+   * Checks if the table has any indexes.
+   *
+   * @return True if the table has an index.
+   */
+  boolean hasIndexes();
+
+  /**
    * Checks if the table has a primary key.
    *
    * @return True if the table has a primary key.
    */
   boolean hasPrimaryKey();
+
+  /**
+   * Checks if the table has any indexes.
+   *
+   * @return True if the table has an index.
+   */
+  boolean hasTriggers();
 
   /**
    * Gets an alternate key by unqualified name.
