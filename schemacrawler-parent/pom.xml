@@ -134,7 +134,7 @@
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier</artifactId>
-      <version>3.18</version>
+      <version>3.18.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -221,7 +221,7 @@
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.9.4</version>
+      <version>1.10.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
