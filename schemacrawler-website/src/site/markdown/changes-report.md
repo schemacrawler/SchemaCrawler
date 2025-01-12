@@ -4,9 +4,9 @@ SchemaCrawler release notes.
 
 
 <a name="v16.25.2"></a>
-## Release 16.25.2 - 2024-12-27
+## Release 16.25.2 - 2025-01-12
 
-- Add convenience methods to Table for checking if there are indexes and triggers
+- Add convenience methods to Table for checking if there are indexes and triggers - fixes [#1831]( https://github.com/sualeh/schemacrawler-issue1831)
 - Externalize a `LinterInitializer` so that `Linters` can be used with a custom registry
 
 
@@ -49,9 +49,9 @@ SchemaCrawler release notes.
 <a name="v16.23.1"></a>
 ## Release 16.23.1 - 2024-11-24
 
-- Remove deprecated `--portable-names` option 
+- Remove deprecated `--portable-names` option
 - Add constraint column usage for MySQL and PostgreSQL
-- Fix #1750 - avoid storing lints in catalog 
+- Fix #1750 - avoid storing lints in catalog
 - Run linters run in parallel
 - Enhance lint report to allow streaming lints
 
@@ -59,7 +59,7 @@ SchemaCrawler release notes.
 <a name="v16.22.3"></a>
 ## Release 16.22.3 - 2024-11-06
 
-- Deprecate `--portable-names` option in favor of `--portable`, 
+- Deprecate `--portable-names` option in favor of `--portable`,
   which allows a better diff across different systems
 
 
@@ -163,8 +163,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.25.1"></a>
-## Release 16.25.1 - 2023-06-03
+<a name="v16.25.2"></a>
+## Release 16.25.2 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
@@ -230,12 +230,12 @@ SchemaCrawler release notes.
 
 - Fix #933 - NullPointerException when using custom schema info level
 - Fix #931 - Hive does not support DatabaseMetaData.getUserName()
-  
-  
+
+
 <a name="v16.19.1"></a>
 ## Release 16.19.1 - 2022-11-20
 
-- SchemaCrawler runs multi-threaded by defualt, but you can force single-threading with `SC_SINGLE_THREADED`=`true`  
+- SchemaCrawler runs multi-threaded by defualt, but you can force single-threading with `SC_SINGLE_THREADED`=`true`
   as a environmental variable or Java system property
 - Fix for Hive does not support DatabaseMetaData.getURL() #910
 
@@ -249,9 +249,9 @@ SchemaCrawler release notes.
 <a name="v16.18.1"></a>
 ## Release 16.18.1 - 2022-08-23
 
-- Breaking change to APIs by using database connection sources instead of database connections  
+- Breaking change to APIs by using database connection sources instead of database connections
   to allow for true multi-threading with multiple connections
-- Allow multi-threading to be turned on with `SC_EXPERIMENTAL=true` either as an  
+- Allow multi-threading to be turned on with `SC_EXPERIMENTAL=true` either as an
   environmental variable or a Java system property
 - Fix #835 - Oracle SQLException when multi-threading turned on
 
@@ -298,21 +298,21 @@ SchemaCrawler release notes.
 <a name="v16.16.17"></a>
 ## Release 16.16.17 - 2022-06-12
 
-- Fix issue #749 - Diagram shows hanging references when columns are not displayed by the "brief" command 
+- Fix issue #749 - Diagram shows hanging references when columns are not displayed by the "brief" command
 
 
 <a name="v16.16.16"></a>
 ## Release 16.16.16 - 2022-06-07
 
-- Add new diagram option to show or hide tables that are filtered out, which   
-  can be set in the configuration properties file with  
+- Add new diagram option to show or hide tables that are filtered out, which
+  can be set in the configuration properties file with
   `schemacrawler.graph.show.foreignkey.filtered_tables=false`
 
 
 <a name="v16.16.15"></a>
 ## Release 16.16.15 - 2022-05-30
 
-- Exclude entity management framework metadata tables (from Liquibase, Flyway, django, EF Core, and so on) 
+- Exclude entity management framework metadata tables (from Liquibase, Flyway, django, EF Core, and so on)
   by default from SQLLite schemas, when using `EmbeddedSQLiteWrapper`
 
 
@@ -421,7 +421,7 @@ SchemaCrawler release notes.
 ## Release 16.15.11 - 2021-11-01
 
 - Show index and constraint remarks in output
-- Create a new metadata extension view, EXT_TABLE_CONSTRAINTS for remarks and definitions of constraints  
+- Create a new metadata extension view, EXT_TABLE_CONSTRAINTS for remarks and definitions of constraints
   and implement it for databases that support it
 
 
