@@ -46,7 +46,7 @@ import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Linter registry for mapping linters by id. */
-public final class LinterRegistry extends BasePluginRegistry {
+public final class LinterRegistry extends BasePluginRegistry implements LinterInitializer {
 
   private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
@@ -91,6 +91,7 @@ public final class LinterRegistry extends BasePluginRegistry {
     return "Linters";
   }
 
+  @Override
   public Set<String> getRegisteredLinters() {
     return new HashSet<>(linterRegistry.keySet());
   }
@@ -109,6 +110,7 @@ public final class LinterRegistry extends BasePluginRegistry {
     return linterRegistry.containsKey(linterId);
   }
 
+  @Override
   public Linter newLinter(final String linterId, final LintCollector lintCollector) {
     requireNonNull(lintCollector, "No lint collector provided");
     if (!hasLinter(linterId)) {

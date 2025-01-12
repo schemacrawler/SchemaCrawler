@@ -48,6 +48,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LinterRegistry;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfigs;
@@ -83,6 +84,8 @@ public class Issue496LintTest {
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     final Linters linters = new Linters(linterConfigs, false);
+    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    linters.initialize(linterRegistry);
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
@@ -112,6 +115,8 @@ public class Issue496LintTest {
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     final Linters linters = new Linters(linterConfigs, false);
+    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    linters.initialize(linterRegistry);
 
     try (final Connection connection = dataSource.get(); ) {
       linters.lint(catalog, connection);
