@@ -12,21 +12,14 @@
   <property name="schemacrawler.distribution.javadoc.jar"
     value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
 
-  <available file="gpl-3.0.txt" property="available.gpl-3.0.txt" />
-
   <target name="make"
     depends="
-            download-gpl,
             make-main-distribution,
             make-main-distribution-zip,
             cleanup-distribution
           "
     description="Package SchemaCrawler, test database, and examples into the main distributable zip" />
 
-  <target name="download-gpl" unless="available.gpl-3.0.txt">
-    <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt"
-      usetimestamp="true" />
-  </target>
 
   <target name="make-main-distribution">
 
@@ -40,8 +33,15 @@
 
     <mkdir dir="${main-distribution.staging.dir}"/>
 
-    <!-- Copy licenses -->
-    <copy file="gpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
+    <!-- Provide license -->
+    <get
+      src="http://www.gnu.org/licenses/gpl-3.0.txt"
+      dest="${main-distribution.staging.dir}/LICENSE.txt"
+      usetimestamp="true"
+      maxtime="20"
+      skipexisting="true"
+      tryGzipEncoding="true"
+      ignoreerrors="true" />
 
     <!-- Copy Apache Ant Ivy -->
     <copy file="${user.home}/.ant/lib/ivy-2.5.3.jar" todir="${main-distribution.staging.dir}/_downloader" />
