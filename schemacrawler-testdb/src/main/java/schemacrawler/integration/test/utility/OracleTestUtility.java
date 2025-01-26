@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test.utility;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -56,7 +55,7 @@ public final class OracleTestUtility {
             new LogMessageWaitStrategy()
                 .withRegEx(".*DATABASE IS READY TO USE!.*\\s")
                 .withTimes(1)
-                .withStartupTimeout(Duration.of(5, ChronoUnit.MINUTES));
+                .withStartupTimeout(Duration.ofMinutes(5));
       }
 
       @Override
