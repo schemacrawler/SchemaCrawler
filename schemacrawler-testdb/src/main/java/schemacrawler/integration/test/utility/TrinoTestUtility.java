@@ -34,7 +34,7 @@ import org.testcontainers.utility.DockerImageName;
 public final class TrinoTestUtility {
 
   public static TrinoContainer newTrinoContainer() {
-    return newTrinoContainer("468");
+    return newTrinoContainer("469");
   }
 
   private static TrinoContainer newTrinoContainer(final String version) {
