@@ -45,7 +45,7 @@
     <dependency>
       <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
-      <version>21.16.0.0</version>
+      <version>21.17.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.db2</groupId>
@@ -66,7 +66,7 @@
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
-      <version>3.48.0.0</version>
+      <version>3.49.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -97,7 +97,7 @@
     <dependency>
       <groupId>io.trino</groupId>
       <artifactId>trino-jdbc</artifactId>
-      <version>469</version>
+      <version>470</version>
     </dependency>
     <dependency>
       <groupId>org.duckdb</groupId>
