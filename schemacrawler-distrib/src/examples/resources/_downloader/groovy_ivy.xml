@@ -8,7 +8,7 @@
   </configurations>
   <dependencies>
     <dependency org="org.codehaus.groovy" name="groovy-all"
-                rev="3.0.23" conf="binaries->default" />
+                rev="3.0.24" conf="binaries->default" />
 
     <exclude org="org.codehaus.groovy" module="groovy-ant" />
     <exclude org="org.codehaus.groovy" module="groovy-cli-picocli" />
