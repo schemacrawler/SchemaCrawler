@@ -156,7 +156,7 @@
     <dependency>
       <groupId>org.apache.calcite</groupId>
       <artifactId>calcite-csv</artifactId>
-      <version>1.38.0</version>
+      <version>1.39.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
