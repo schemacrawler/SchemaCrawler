@@ -3,8 +3,8 @@
 SchemaCrawler release notes.
 
 
-<a name="v16.25.2"></a>
-## Release 16.25.2 - 2025-01-12
+<a name="v16.25.3"></a>
+## Release 16.25.3 - 2025-01-12
 
 - Add convenience methods to Table for checking if there are indexes and triggers - fixes [#1831]( https://github.com/sualeh/schemacrawler-issue1831)
 - Externalize a `LinterInitializer` so that `Linters` can be used with a custom registry
@@ -163,8 +163,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.25.2"></a>
-## Release 16.25.2 - 2023-06-03
+<a name="v16.25.3"></a>
+## Release 16.25.3 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
