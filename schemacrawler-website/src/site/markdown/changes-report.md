@@ -2,11 +2,16 @@
 
 SchemaCrawler release notes.
 
-
 <a name="v16.25.3"></a>
-## Release 16.25.3 - 2025-01-12
+## Release 16.25.3 - 2025-03-24
 
-- Add convenience methods to Table for checking if there are indexes and triggers - fixes [#1831]( https://github.com/sualeh/schemacrawler-issue1831)
+- Fix download scripts - fixes [#1882](https://github.com/schemacrawler/SchemaCrawler/issues/1882)
+
+
+<a name="v16.25.2"></a>
+## Release 16.25.2 - 2025-01-12
+
+- Add convenience methods to Table for checking if there are indexes and triggers - fixes [#1831](https://github.com/sualeh/schemacrawler-issue1831)
 - Externalize a `LinterInitializer` so that `Linters` can be used with a custom registry
 
 
