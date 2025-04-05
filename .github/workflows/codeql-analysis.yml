@@ -37,7 +37,8 @@ jobs:
       name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: java
+        languages: java-kotlin
+        build-mode: manual
 
 # BUILD AND TEST
     - id: build-test
@@ -57,11 +58,3 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:java"
-
-    - id: upload-codeql-results
-      name: Upload CodeQL results
-      uses: actions/upload-artifact@v4
-      with:
-        name: java_sarif
-        path: ./results/java.sarif
-        retention-days: 5
