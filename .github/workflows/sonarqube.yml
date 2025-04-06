@@ -23,7 +23,7 @@ jobs:
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.4.0
       with:
-        java-version: 8
+        java-version: 21
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
@@ -45,5 +45,6 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
+          -Dsonar.projectKey=us.fatehi:schemacrawler-parent \
           verify \
-          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \ -Dsonar.projectKey=us.fatehi:schemacrawler-parent
+          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
