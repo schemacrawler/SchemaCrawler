@@ -232,8 +232,6 @@
     <maven.javadoc.skip>true</maven.javadoc.skip>
     <graphviz.java.version>0.18.1</graphviz.java.version>
     <jacoco.version>0.8.12</jacoco.version>
-    <sonar.organization>schemacrawler-github</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
   <build>
     <pluginManagement>
