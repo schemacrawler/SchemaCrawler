@@ -15,7 +15,7 @@
     <override org="com.github.jnr" module="jnr-posix"
               rev="3.1.20" />
     <override org="org.ow2.asm"
-              rev="9.7.1" />
+              rev="9.8" />
 
   </dependencies>
 </ivy-module>
