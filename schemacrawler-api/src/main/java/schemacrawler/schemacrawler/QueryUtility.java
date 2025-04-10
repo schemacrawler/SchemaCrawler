@@ -137,12 +137,12 @@ public final class QueryUtility {
 
   protected static void addInclusionRule(
       final String limitType,
-      final InclusionRule schemaInclusionRule,
+      final InclusionRule inclusionRule,
       final Map<String, String> properties) {
     properties.put(limitType, ".*");
-    if (schemaInclusionRule instanceof InclusionRuleWithRegularExpression) {
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
       final String schemaInclusionPattern =
-          ((InclusionRuleWithRegularExpression) schemaInclusionRule)
+          ((InclusionRuleWithRegularExpression) inclusionRule)
               .getInclusionPattern()
               .pattern();
       if (!isBlank(schemaInclusionPattern)) {
