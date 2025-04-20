@@ -142,9 +142,7 @@ public final class QueryUtility {
     properties.put(limitType, ".*");
     if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
       final String schemaInclusionPattern =
-          ((InclusionRuleWithRegularExpression) inclusionRule)
-              .getInclusionPattern()
-              .pattern();
+          ((InclusionRuleWithRegularExpression) inclusionRule).getInclusionPattern().pattern();
       if (!isBlank(schemaInclusionPattern)) {
         properties.put(limitType, schemaInclusionPattern);
       }

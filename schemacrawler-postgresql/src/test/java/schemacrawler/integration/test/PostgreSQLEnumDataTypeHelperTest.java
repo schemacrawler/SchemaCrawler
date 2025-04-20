@@ -49,6 +49,7 @@ public class PostgreSQLEnumDataTypeHelperTest {
     final Statement mockStatement = mock(Statement.class);
     final ResultSet mockResultSet =
         TestObjectUtility.mockResultSet(
+            "PostgreSQL enum",
             new String[] {"TYPE_CATALOG", "TYPE_SCHEMA", "TYPE_NAME", "ENUM_LABEL"},
             new Object[][] {
               {null, "", columnDataType.getName(), "Moe"},
