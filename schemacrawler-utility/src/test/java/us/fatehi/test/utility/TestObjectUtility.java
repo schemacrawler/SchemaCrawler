@@ -81,7 +81,7 @@ public class TestObjectUtility {
           wasNull = false;
           int index = -1;
           if (args[0] instanceof Integer) {
-            index = (Integer) args[0];
+            index = (Integer) args[0] - 1;
           }
           if (args[0] instanceof String) {
             final String columnName = (String) args[0];
