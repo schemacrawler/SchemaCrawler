@@ -28,17 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test.utility;
 
-import com.github.dockerjava.api.command.InspectContainerResponse;
 import org.testcontainers.cassandra.CassandraContainer;
 import org.testcontainers.cassandra.delegate.CassandraDatabaseDelegate;
 import org.testcontainers.ext.ScriptUtils;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
+import com.github.dockerjava.api.command.InspectContainerResponse;
 
 public final class CassandraTestUtility {
 
   public static CassandraContainer newCassandraContainer() {
-    return newCassandraContainer("5.0.2");
+    return newCassandraContainer("5.0.4");
   }
 
   @SuppressWarnings("resource")
