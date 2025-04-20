@@ -38,7 +38,7 @@ import static schemacrawler.schema.ParameterModeType.out;
 import static schemacrawler.schema.ParameterModeType.result;
 import static schemacrawler.schema.ParameterModeType.returnValue;
 import static schemacrawler.schema.ParameterModeType.unknown;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,39 +47,40 @@ import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.ParameterModeType;
+import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import us.fatehi.test.utility.TestObjectUtility;
 
-public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTest {
+public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverTest {
 
   @Test
   public void testParameterModeMapping() throws SQLException {
-    final String functionName = "testFunction";
+    final String procedureName = "testProcedure";
     final String paramName = "paramName";
 
     final Map<Integer, ParameterModeType> expectedModeMap = new HashMap<>();
-    expectedModeMap.put(DatabaseMetaData.functionColumnIn, in);
-    expectedModeMap.put(DatabaseMetaData.functionColumnInOut, inOut);
-    expectedModeMap.put(DatabaseMetaData.functionColumnOut, out);
-    expectedModeMap.put(DatabaseMetaData.functionColumnResult, result);
-    expectedModeMap.put(DatabaseMetaData.functionReturn, returnValue);
+    expectedModeMap.put(DatabaseMetaData.procedureColumnIn, in);
+    expectedModeMap.put(DatabaseMetaData.procedureColumnInOut, inOut);
+    expectedModeMap.put(DatabaseMetaData.procedureColumnOut, out);
+    expectedModeMap.put(DatabaseMetaData.procedureColumnResult, result);
+    expectedModeMap.put(DatabaseMetaData.procedureColumnReturn, returnValue);
     expectedModeMap.put(99, unknown); // Some arbitrary value
 
-    setupMockRoutine(functionName);
+    setupMockRoutine(procedureName);
 
     for (final Map.Entry<Integer, ParameterModeType> entry : expectedModeMap.entrySet()) {
-      final ResultSet resultSet = setupResultSet(functionName, paramName, entry.getKey());
+      final ResultSet resultSet = setupResultSet(procedureName, paramName, entry.getKey());
       configureMetaData(resultSet);
 
-      ((FunctionParameterRetriever) retriever)
-          .retrieveFunctionParameters(allRoutines, new IncludeAll());
+      ((ProcedureParameterRetriever) retriever)
+          .retrieveProcedureParameters(allRoutines, new IncludeAll());
 
-      final MutableFunction function = (MutableFunction) allRoutines.iterator().next();
-      final Optional<MutableFunctionParameter> paramOptional = function.lookupParameter(paramName);
+      final MutableProcedure procedure = (MutableProcedure) allRoutines.iterator().next();
+      final Optional<MutableProcedureParameter> paramOptional =
+          procedure.lookupParameter(paramName);
 
       assertThat(
           "Parameter with mode <" + entry.getKey() + "> should exist",
@@ -96,31 +97,31 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   }
 
   @Test
-  public void testRetrieveFunctionParameters() throws SQLException {
-    final String functionName = "testFunction";
+  public void testRetrieveProcedureParameters() throws SQLException {
+    final String procedureName = "testProcedure";
     final String paramName = "paramName";
 
-    setupMockRoutine(functionName);
+    setupMockRoutine(procedureName);
     final ResultSet resultSet =
-        setupResultSet(functionName, paramName, DatabaseMetaData.functionColumnIn);
+        setupResultSet(procedureName, paramName, DatabaseMetaData.procedureColumnIn);
     configureMetaData(resultSet);
 
-    ((FunctionParameterRetriever) retriever)
-        .retrieveFunctionParameters(allRoutines, new IncludeAll());
+    ((ProcedureParameterRetriever) retriever)
+        .retrieveProcedureParameters(allRoutines, new IncludeAll());
 
-    final MutableFunction function = (MutableFunction) allRoutines.iterator().next();
-    assertThat(function.getParameters(), hasSize(1));
+    final MutableProcedure procedure = (MutableProcedure) allRoutines.iterator().next();
+    assertThat(procedure.getParameters(), hasSize(1));
 
-    final FunctionParameter parameter = function.getParameters().get(0);
+    final ProcedureParameter parameter = procedure.getParameters().get(0);
     assertThat(parameter.getName(), is(paramName));
     assertThat(parameter.getParameterMode(), is(in));
     assertThat(parameter.getOrdinalPosition(), is(1));
   }
 
   @Test
-  public void testRetrieveFunctionParametersWhenNoFunctions() throws SQLException {
-    ((FunctionParameterRetriever) retriever)
-        .retrieveFunctionParameters(allRoutines, new IncludeAll());
+  public void testRetrieveProcedureParametersWhenNoProcedures() throws SQLException {
+    ((ProcedureParameterRetriever) retriever)
+        .retrieveProcedureParameters(allRoutines, new IncludeAll());
 
     assertThat(allRoutines.size(), is(0));
   }
@@ -128,39 +129,40 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   @Override
   protected void configureMetaData(final ResultSet resultSet) throws SQLException {
     final DatabaseMetaData metaData = connection.getMetaData();
-    when(metaData.getFunctionColumns(any(), any(), any(), any())).thenReturn(resultSet);
+    when(metaData.getProcedureColumns(any(), any(), any(), any())).thenReturn(resultSet);
   }
 
   @Override
   protected void configureMetadataRetrievalStrategy() {
-    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
         .thenReturn(MetadataRetrievalStrategy.metadata);
   }
 
   @Override
   protected void createRetriever(final SchemaCrawlerOptions options) {
-    retriever = new FunctionParameterRetriever(retrieverConnection, catalog, options);
+    retriever = new ProcedureParameterRetriever(retrieverConnection, catalog, options);
   }
 
   @Override
   protected void setupMockRoutine(final String routineName) {
-    final MutableFunction function =
-        new MutableFunction(new SchemaReference(null, null), routineName, routineName);
-    allRoutines.add(function);
+    final MutableProcedure procedure =
+        new MutableProcedure(new SchemaReference(null, null), routineName, routineName);
+    allRoutines.add(procedure);
   }
 
   @Override
   protected ResultSet setupResultSet(
       final String routineName, final String paramName, final int columnType) throws SQLException {
-    return setupFunctionsResultSet(routineName, paramName, columnType);
+    return setupProceduresResultSet(routineName, paramName, columnType);
   }
 
-  private ResultSet setupFunctionsResultSet(
-      final String functionName, final String paramName, final int columnType) throws SQLException {
+  private ResultSet setupProceduresResultSet(
+      final String procedureName, final String paramName, final int columnType)
+      throws SQLException {
     final String[] columnNames = {
-      "FUNCTION_CAT",
-      "FUNCTION_SCHEM",
-      "FUNCTION_NAME",
+      "PROCEDURE_CAT",
+      "PROCEDURE_SCHEM",
+      "PROCEDURE_NAME",
       "COLUMN_NAME",
       "COLUMN_TYPE",
       "DATA_TYPE",
@@ -171,6 +173,9 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
       "RADIX",
       "NULLABLE",
       "REMARKS",
+      "COLUMN_DEF",
+      "SQL_DATA_TYPE",
+      "SQL_DATETIME_SUB",
       "CHAR_OCTET_LENGTH",
       "ORDINAL_POSITION",
       "IS_NULLABLE",
@@ -181,7 +186,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
       {
         null,
         null,
-        functionName,
+        procedureName,
         paramName,
         columnType,
         12,
@@ -190,16 +195,20 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
         255,
         0,
         10,
-        DatabaseMetaData.functionNullable,
+        DatabaseMetaData.procedureNullable,
         "",
+        null,
+        null,
+        null,
         255,
         1,
         "YES",
-        "testFunction"
+        "testProcedure"
       }
     };
 
-    final String resultSetDescription = String.format("Function parameters for <%s>", functionName);
+    final String resultSetDescription =
+        String.format("Procedure parameters for <%s>", procedureName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }
 }
