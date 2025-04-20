@@ -7,7 +7,7 @@ updates:
       day: "saturday"
     ignore:
       - dependency-name: "org.springframework:spring-context"
-        update-types: ["version-update:semver-major"]      
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
       - ":children_crossing: dependencies"
@@ -24,3 +24,6 @@ updates:
     assignees:
       - sualeh
       - schemacrawler
+ignore:
+  - dependency-name:  "org.jruby:jruby"
+    update-types: ["version-update:semver-major"]
