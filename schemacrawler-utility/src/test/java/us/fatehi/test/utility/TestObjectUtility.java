@@ -1,9 +1,12 @@
 package us.fatehi.test.utility;
 
-import static org.mockito.ArgumentMatchers.anyInt;
+import static java.lang.reflect.Proxy.newProxyInstance;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.nio.file.AccessMode;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -16,8 +19,124 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 public class TestObjectUtility {
+
+  private static final class ResultSetInvocationHandler implements InvocationHandler {
+
+    private final String resultSetDescription;
+    private final Object[][] data;
+    private final String[] columnNames;
+    private int rowIndex;
+    private boolean wasNull;
+    private ResultSetMetaData rsmd;
+
+    private ResultSetInvocationHandler(
+        final String resultSetDescription, final Object[][] data, final String[] columnNames)
+        throws SQLException {
+      this.resultSetDescription =
+          requireNotBlank(resultSetDescription, "No result set description provided");
+      this.data = data;
+      this.columnNames = requireNonNull(columnNames, "No column names provided");
+      rsmd = createResultSetMetaData();
+      rowIndex = -1;
+    }
+
+    @Override
+    public Object invoke(final Object proxy, final Method method, final Object[] args)
+        throws Throwable {
+      // Result set
+      final String methodName = method.getName();
+      switch (methodName) {
+        case "close":
+          return null;
+        case "getMetaData":
+          return rsmd;
+        case "next":
+          wasNull = false;
+          if (data == null) {
+            return false;
+          }
+          rowIndex = rowIndex + 1;
+          return rowIndex < data.length;
+        case "getColumnName":
+        case "getColumnLabel":
+          if (args[0] instanceof Integer) {
+            final int index = (Integer) args[0];
+            return columnNames[index];
+          }
+          return "columnName";
+        case "getCatalogName":
+          return "catalogName";
+        case "getSchemaName":
+          return "schemaName";
+        case "getTableName":
+          return "tableName";
+        case "getObject":
+        case "getString":
+        case "getInt":
+        case "getShort":
+          wasNull = false;
+          int index = -1;
+          if (args[0] instanceof Integer) {
+            index = (Integer) args[0] - 1;
+          }
+          if (args[0] instanceof String) {
+            final String columnName = (String) args[0];
+            index = Arrays.asList(columnNames).indexOf(columnName);
+          }
+          Object columnData;
+          if (data == null || rowIndex < 0 || index < 0) {
+            columnData = null;
+          } else {
+            columnData = data[rowIndex][index];
+          }
+          if (columnData == null) {
+            wasNull = true;
+            if ("getInt".equals(methodName) || "getShort".equals(methodName)) {
+              throw new SQLException(String.format("Cannot convert <null> to an integer"));
+            }
+            return null;
+          }
+          if (methodName != null) {
+            switch (methodName) {
+              case "getObject":
+                return columnData;
+              case "getString":
+                return String.valueOf(columnData);
+              case "getInt":
+                return ((Number) columnData).intValue();
+              case "getShort":
+                return ((Number) columnData).shortValue();
+              default:
+                break;
+            }
+          }
+        case "setFetchSize":
+          return null;
+        case "wasNull":
+          return wasNull;
+        case "toString":
+          return "ResultSet: " + resultSetDescription;
+        default:
+          fail(String.format("%s(%s)", method, args));
+          return null;
+      }
+    }
+
+    private ResultSetMetaData createResultSetMetaData() throws SQLException {
+      final ResultSetMetaData rsmd = mock(ResultSetMetaData.class);
+      lenient().when(rsmd.getColumnCount()).thenReturn(columnNames.length);
+      for (int i = 0; i < columnNames.length; i++) {
+        lenient().when(rsmd.getColumnName(i + 1)).thenReturn(columnNames[i]);
+        lenient().when(rsmd.getColumnLabel(i + 1)).thenReturn(columnNames[i]);
+      }
+      lenient().when(rsmd.toString()).thenReturn("ResultSetMetaData: " + resultSetDescription);
+      return rsmd;
+    }
+  }
 
   public static Map<String, Object> fakeObjectMapFor(final Class<?> clazz) {
     final Map<String, Object> fakeObjectMap = new HashMap<>();
@@ -62,19 +181,48 @@ public class TestObjectUtility {
       final DatabaseMetaData mockDbMetaData = mockDatabaseMetaData();
 
       final Connection mockConnection = mock(Connection.class);
+      lenient().when(mockConnection.toString()).thenReturn("Connection: Mocked Connection");
       lenient().when(mockConnection.getMetaData()).thenReturn(mockDbMetaData);
       lenient().when(mockConnection.isClosed()).thenReturn(false);
 
       final Statement mockStatement = mockStatement();
       lenient().when(mockConnection.createStatement()).thenReturn(mockStatement);
 
-      final ResultSet mockResultSet = mockResultSet(new String[] {"col1"}, null);
+      final ResultSet mockResultSet =
+          mockResultSet("Mocked connection", new String[] {"col1"}, null);
       lenient().when(mockStatement.getResultSet()).thenReturn(mockResultSet);
 
       return mockConnection;
-    } catch (SQLException e) {
+    } catch (final SQLException e) {
       return mock(Connection.class);
     }
+  }
+
+  public static DatabaseMetaData mockDatabaseMetaData() {
+    try {
+      final DatabaseMetaData mockDbMetaData = mock(DatabaseMetaData.class);
+      lenient().when(mockDbMetaData.toString()).thenReturn("DatabaseMetaData: Mocked Database");
+      lenient().when(mockDbMetaData.getDatabaseProductName()).thenReturn("Mocked Database");
+      lenient().when(mockDbMetaData.getDatabaseProductVersion()).thenReturn("0.0.1");
+      lenient().when(mockDbMetaData.getURL()).thenReturn("jdbc:mocked://mockedconnection");
+      lenient().when(mockDbMetaData.getDriverName()).thenReturn("Mocked Driver");
+      lenient().when(mockDbMetaData.getDriverVersion()).thenReturn("0.0.1-ALPHA");
+      lenient().when(mockDbMetaData.supportsCatalogsInTableDefinitions()).thenReturn(false);
+      lenient().when(mockDbMetaData.supportsSchemasInTableDefinitions()).thenReturn(true);
+      return mockDbMetaData;
+    } catch (final SQLException e) {
+      return mock(DatabaseMetaData.class);
+    }
+  }
+
+  public static ResultSet mockResultSet(
+      final String resultSetDescription, final String[] columnNames, final Object[][] data)
+      throws SQLException {
+    return (ResultSet)
+        newProxyInstance(
+            ResultSet.class.getClassLoader(),
+            new Class[] {ResultSet.class},
+            new ResultSetInvocationHandler(resultSetDescription, data, columnNames));
   }
 
   public static Statement mockStatement() {
@@ -85,69 +233,9 @@ public class TestObjectUtility {
       lenient().when(mockStatement.getUpdateCount()).thenReturn(0);
       lenient().when(mockStatement.execute(anyString())).thenReturn(true);
       return mockStatement;
-    } catch (SQLException e) {
+    } catch (final SQLException e) {
       return mock(Statement.class);
     }
-  }
-
-  public static DatabaseMetaData mockDatabaseMetaData() {
-    try {
-      final DatabaseMetaData mockDbMetaData = mock(DatabaseMetaData.class);
-      lenient().when(mockDbMetaData.getDatabaseProductName()).thenReturn("Fake Database");
-      lenient().when(mockDbMetaData.getDatabaseProductVersion()).thenReturn("0.0.1");
-      lenient().when(mockDbMetaData.getURL()).thenReturn("jdbc:fake://fakeconnection");
-      lenient().when(mockDbMetaData.getDriverName()).thenReturn("Fake Driver");
-      lenient().when(mockDbMetaData.getDriverVersion()).thenReturn("0.0.1");
-      lenient().when(mockDbMetaData.supportsCatalogsInTableDefinitions()).thenReturn(false);
-      lenient().when(mockDbMetaData.supportsSchemasInTableDefinitions()).thenReturn(true);
-      return mockDbMetaData;
-    } catch (final SQLException e) {
-      return mock(DatabaseMetaData.class);
-    }
-  }
-
-  public static ResultSet mockResultSet(final String[] columnNames, final Object[][] data)
-      throws SQLException {
-    final ResultSet mockRs = mock(ResultSet.class);
-    final ResultSetMetaData rsmd = mock(ResultSetMetaData.class);
-
-    // Mock ResultSetMetaData
-    lenient().when(mockRs.getMetaData()).thenReturn(rsmd);
-    lenient().when(rsmd.getColumnCount()).thenReturn(columnNames.length);
-    for (int i = 0; i < columnNames.length; i++) {
-      lenient().when(rsmd.getColumnName(i + 1)).thenReturn(columnNames[i]);
-    }
-
-    // Mock ResultSet data
-    final int[] rowIndex = {-1};
-    if (data == null) {
-      lenient().when(mockRs.next()).thenAnswer(invocation -> false);
-    } else {
-      lenient()
-          .when(mockRs.next())
-          .thenAnswer(
-              invocation -> {
-                rowIndex[0]++;
-                return rowIndex[0] < data.length;
-              });
-    }
-
-    if (data == null) {
-      lenient().when(mockRs.getObject(anyInt())).thenAnswer(invocation -> null);
-      lenient().when(mockRs.getString(anyInt())).thenAnswer(invocation -> (String) null);
-    } else {
-      for (int i = 0; i < columnNames.length; i++) {
-        final int columnIndex = i;
-        lenient()
-            .when(mockRs.getObject(columnIndex + 1))
-            .thenAnswer(invocation -> data[rowIndex[0]][columnIndex]);
-        lenient()
-            .when(mockRs.getString(columnIndex + 1))
-            .thenAnswer(invocation -> (String) data[rowIndex[0]][columnIndex]);
-      }
-    }
-
-    return mockRs;
   }
 
   private TestObjectUtility() {
