@@ -475,7 +475,6 @@
                 <id>prepare-agent</id>
                 <goals>
                   <goal>prepare-agent</goal>
-                  <goal>report</goal>
                 </goals>
               </execution>
             </executions>

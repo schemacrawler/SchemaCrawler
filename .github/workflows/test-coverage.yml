@@ -39,7 +39,9 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Dtestcoverage \
-          clean install
+          -Ddistrib \
+          clean verify \
+          jacoco:report-aggregate
 
 # GET TEST RESULTS
     - id: publish-coverage-codecov
@@ -72,6 +74,6 @@ jobs:
       uses: actions/upload-artifact@v4
       if: contains(github.ref, 'main')
       with:
-        name: jacoco-coverage-test-results
-        path: ./target/schemacrawler-jacoco.exec
+        name: coverage-test-results
+        path: ../schemacrawler-distrib/target/site/jacoco-aggregate
         retention-days: 5
