@@ -75,5 +75,5 @@ jobs:
       if: contains(github.ref, 'main')
       with:
         name: coverage-test-results
-        path: ../schemacrawler-distrib/target/site/jacoco-aggregate
+        path: ./schemacrawler-distrib/target/site/jacoco-aggregate
         retention-days: 5
