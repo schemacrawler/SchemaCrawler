@@ -79,6 +79,8 @@ public abstract class AbstractParameterRetrieverTest {
     // Setup InformationSchemaViews
     final InformationSchemaViews informationSchemaViews = mock(InformationSchemaViews.class);
     final Query query = mock(Query.class);
+    when(query.getName()).thenReturn("Mock Query");
+    when(query.getQuery()).thenReturn("SELECT * FROM MOCK_TABLE");
     when(informationSchemaViews.hasQuery(any())).thenReturn(true);
     when(informationSchemaViews.getQuery(any())).thenReturn(query);
     when(retrieverConnection.getInformationSchemaViews()).thenReturn(informationSchemaViews);

@@ -59,7 +59,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   @Test
   public void testParameterModeMapping() throws SQLException {
     when(retrieverConnection.get(procedureParametersRetrievalStrategy))
-    .thenReturn(MetadataRetrievalStrategy.metadata);
+        .thenReturn(MetadataRetrievalStrategy.metadata);
 
     final String procedureName = "testProcedure";
     final String paramName = "paramName";
@@ -100,9 +100,34 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   }
 
   @Test
-  public void testRetrieveProcedureParameters() throws SQLException {
+  public void testRetrieveProcedureParametersFromDataDictionary() throws SQLException {
     when(retrieverConnection.get(procedureParametersRetrievalStrategy))
-    .thenReturn(MetadataRetrievalStrategy.metadata);
+        .thenReturn(MetadataRetrievalStrategy.data_dictionary_all);
+
+    final String procedureName = "testProcedure";
+    final String paramName = "paramName";
+
+    setupMockRoutine(procedureName);
+    final ResultSet resultSet =
+        setupResultSet(procedureName, paramName, DatabaseMetaData.procedureColumnIn);
+    configureMetaData(resultSet);
+
+    ((ProcedureParameterRetriever) retriever)
+        .retrieveProcedureParameters(allRoutines, new IncludeAll());
+
+    final MutableProcedure procedure = (MutableProcedure) allRoutines.iterator().next();
+    assertThat(procedure.getParameters(), hasSize(1));
+
+    final ProcedureParameter parameter = procedure.getParameters().get(0);
+    assertThat(parameter.getName(), is(paramName));
+    assertThat(parameter.getParameterMode(), is(in));
+    assertThat(parameter.getOrdinalPosition(), is(1));
+  }
+
+  @Test
+  public void testRetrieveProcedureParametersFromMetaData() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
 
     final String procedureName = "testProcedure";
     final String paramName = "paramName";
@@ -127,7 +152,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   @Test
   public void testRetrieveProcedureParametersWhenNoProcedures() throws SQLException {
     when(retrieverConnection.get(procedureParametersRetrievalStrategy))
-    .thenReturn(MetadataRetrievalStrategy.metadata);
+        .thenReturn(MetadataRetrievalStrategy.metadata);
 
     ((ProcedureParameterRetriever) retriever)
         .retrieveProcedureParameters(allRoutines, new IncludeAll());
@@ -205,8 +230,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
       }
     };
 
-    final String resultSetDescription =
-        String.format("Procedure parameters for <%s>", routineName);
+    final String resultSetDescription = String.format("Procedure parameters for <%s>", routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }
 }

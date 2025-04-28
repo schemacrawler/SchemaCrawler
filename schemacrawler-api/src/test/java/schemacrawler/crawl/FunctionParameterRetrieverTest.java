@@ -59,7 +59,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   @Test
   public void testParameterModeMapping() throws SQLException {
     when(retrieverConnection.get(functionParametersRetrievalStrategy))
-    .thenReturn(MetadataRetrievalStrategy.metadata);
+        .thenReturn(MetadataRetrievalStrategy.metadata);
 
     final String functionName = "testFunction";
     final String paramName = "paramName";
@@ -99,9 +99,34 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   }
 
   @Test
-  public void testRetrieveFunctionParameters() throws SQLException {
+  public void testRetrieveFunctionParametersFromDataDictionary() throws SQLException {
     when(retrieverConnection.get(functionParametersRetrievalStrategy))
-    .thenReturn(MetadataRetrievalStrategy.metadata);
+        .thenReturn(MetadataRetrievalStrategy.data_dictionary_all);
+
+    final String functionName = "testFunction";
+    final String paramName = "paramName";
+
+    setupMockRoutine(functionName);
+    final ResultSet resultSet =
+        setupResultSet(functionName, paramName, DatabaseMetaData.functionColumnIn);
+    configureMetaData(resultSet);
+
+    ((FunctionParameterRetriever) retriever)
+        .retrieveFunctionParameters(allRoutines, new IncludeAll());
+
+    final MutableFunction function = (MutableFunction) allRoutines.iterator().next();
+    assertThat(function.getParameters(), hasSize(1));
+
+    final FunctionParameter parameter = function.getParameters().get(0);
+    assertThat(parameter.getName(), is(paramName));
+    assertThat(parameter.getParameterMode(), is(in));
+    assertThat(parameter.getOrdinalPosition(), is(1));
+  }
+
+  @Test
+  public void testRetrieveFunctionParametersFromMetaData() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
 
     final String functionName = "testFunction";
     final String paramName = "paramName";
@@ -126,7 +151,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   @Test
   public void testRetrieveFunctionParametersWhenNoFunctions() throws SQLException {
     when(retrieverConnection.get(functionParametersRetrievalStrategy))
-    .thenReturn(MetadataRetrievalStrategy.metadata);
+        .thenReturn(MetadataRetrievalStrategy.metadata);
     ((FunctionParameterRetriever) retriever)
         .retrieveFunctionParameters(allRoutines, new IncludeAll());
 
