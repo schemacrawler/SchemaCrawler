@@ -152,11 +152,6 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   @Override
   protected ResultSet setupResultSet(
       final String routineName, final String paramName, final int columnType) throws SQLException {
-    return setupFunctionsResultSet(routineName, paramName, columnType);
-  }
-
-  private ResultSet setupFunctionsResultSet(
-      final String functionName, final String paramName, final int columnType) throws SQLException {
     final String[] columnNames = {
       "FUNCTION_CAT",
       "FUNCTION_SCHEM",
@@ -176,12 +171,12 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
       "IS_NULLABLE",
       "SPECIFIC_NAME"
     };
-
+    
     final Object[][] data = {
       {
         null,
         null,
-        functionName,
+        routineName,
         paramName,
         columnType,
         12,
@@ -198,8 +193,8 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
         "testFunction"
       }
     };
-
-    final String resultSetDescription = String.format("Function parameters for <%s>", functionName);
+    
+    final String resultSetDescription = String.format("Function parameters for <%s>", routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }
 }

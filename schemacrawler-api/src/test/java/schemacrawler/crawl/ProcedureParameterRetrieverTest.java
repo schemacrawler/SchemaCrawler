@@ -153,12 +153,6 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   @Override
   protected ResultSet setupResultSet(
       final String routineName, final String paramName, final int columnType) throws SQLException {
-    return setupProceduresResultSet(routineName, paramName, columnType);
-  }
-
-  private ResultSet setupProceduresResultSet(
-      final String procedureName, final String paramName, final int columnType)
-      throws SQLException {
     final String[] columnNames = {
       "PROCEDURE_CAT",
       "PROCEDURE_SCHEM",
@@ -181,12 +175,12 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
       "IS_NULLABLE",
       "SPECIFIC_NAME"
     };
-
+    
     final Object[][] data = {
       {
         null,
         null,
-        procedureName,
+        routineName,
         paramName,
         columnType,
         12,
@@ -206,9 +200,9 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
         "testProcedure"
       }
     };
-
+    
     final String resultSetDescription =
-        String.format("Procedure parameters for <%s>", procedureName);
+        String.format("Procedure parameters for <%s>", routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }
 }
