@@ -58,6 +58,9 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
 
   @Test
   public void testParameterModeMapping() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String procedureName = "testProcedure";
     final String paramName = "paramName";
 
@@ -97,7 +100,35 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   }
 
   @Test
-  public void testRetrieveProcedureParameters() throws SQLException {
+  public void testRetrieveProcedureParametersFromDataDictionary() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.data_dictionary_all);
+
+    final String procedureName = "testProcedure";
+    final String paramName = "paramName";
+
+    setupMockRoutine(procedureName);
+    final ResultSet resultSet =
+        setupResultSet(procedureName, paramName, DatabaseMetaData.procedureColumnIn);
+    configureMetaData(resultSet);
+
+    ((ProcedureParameterRetriever) retriever)
+        .retrieveProcedureParameters(allRoutines, new IncludeAll());
+
+    final MutableProcedure procedure = (MutableProcedure) allRoutines.iterator().next();
+    assertThat(procedure.getParameters(), hasSize(1));
+
+    final ProcedureParameter parameter = procedure.getParameters().get(0);
+    assertThat(parameter.getName(), is(paramName));
+    assertThat(parameter.getParameterMode(), is(in));
+    assertThat(parameter.getOrdinalPosition(), is(1));
+  }
+
+  @Test
+  public void testRetrieveProcedureParametersFromMetaData() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String procedureName = "testProcedure";
     final String paramName = "paramName";
 
@@ -120,6 +151,9 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
 
   @Test
   public void testRetrieveProcedureParametersWhenNoProcedures() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
+
     ((ProcedureParameterRetriever) retriever)
         .retrieveProcedureParameters(allRoutines, new IncludeAll());
 
@@ -130,12 +164,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   protected void configureMetaData(final ResultSet resultSet) throws SQLException {
     final DatabaseMetaData metaData = connection.getMetaData();
     when(metaData.getProcedureColumns(any(), any(), any(), any())).thenReturn(resultSet);
-  }
-
-  @Override
-  protected void configureMetadataRetrievalStrategy() {
-    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
-        .thenReturn(MetadataRetrievalStrategy.metadata);
+    when(connection.createStatement().getResultSet()).thenReturn(resultSet);
   }
 
   @Override
@@ -153,12 +182,6 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   @Override
   protected ResultSet setupResultSet(
       final String routineName, final String paramName, final int columnType) throws SQLException {
-    return setupProceduresResultSet(routineName, paramName, columnType);
-  }
-
-  private ResultSet setupProceduresResultSet(
-      final String procedureName, final String paramName, final int columnType)
-      throws SQLException {
     final String[] columnNames = {
       "PROCEDURE_CAT",
       "PROCEDURE_SCHEM",
@@ -186,7 +209,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
       {
         null,
         null,
-        procedureName,
+        routineName,
         paramName,
         columnType,
         12,
@@ -207,8 +230,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
       }
     };
 
-    final String resultSetDescription =
-        String.format("Procedure parameters for <%s>", procedureName);
+    final String resultSetDescription = String.format("Procedure parameters for <%s>", routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }
 }

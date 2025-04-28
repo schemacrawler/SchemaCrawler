@@ -62,7 +62,6 @@ public abstract class AbstractParameterRetrieverTest {
     when(retrieverConnection.getConnection()).thenReturn(connection);
     when(retrieverConnection.getJavaSqlTypes()).thenReturn(new JavaSqlTypes());
     when(retrieverConnection.getTypeMap()).thenReturn(new TypeMap());
-    configureMetadataRetrievalStrategy();
 
     // Setup IdentifierQuotingStrategy
     final Identifiers identifiers = mock(Identifiers.class);
@@ -80,6 +79,8 @@ public abstract class AbstractParameterRetrieverTest {
     // Setup InformationSchemaViews
     final InformationSchemaViews informationSchemaViews = mock(InformationSchemaViews.class);
     final Query query = mock(Query.class);
+    when(query.getName()).thenReturn("Mock Query");
+    when(query.getQuery()).thenReturn("SELECT * FROM MOCK_TABLE");
     when(informationSchemaViews.hasQuery(any())).thenReturn(true);
     when(informationSchemaViews.getQuery(any())).thenReturn(query);
     when(retrieverConnection.getInformationSchemaViews()).thenReturn(informationSchemaViews);
@@ -98,9 +99,6 @@ public abstract class AbstractParameterRetrieverTest {
    * @throws SQLException If a database access error occurs
    */
   protected abstract void configureMetaData(ResultSet resultSet) throws SQLException;
-
-  /** Configure the metadata retrieval strategy specific to the retriever type. */
-  protected abstract void configureMetadataRetrievalStrategy();
 
   /**
    * Create the appropriate retriever for the test.

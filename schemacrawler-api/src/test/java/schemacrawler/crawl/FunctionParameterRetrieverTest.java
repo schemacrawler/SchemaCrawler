@@ -58,6 +58,9 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
 
   @Test
   public void testParameterModeMapping() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String functionName = "testFunction";
     final String paramName = "paramName";
 
@@ -96,7 +99,35 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   }
 
   @Test
-  public void testRetrieveFunctionParameters() throws SQLException {
+  public void testRetrieveFunctionParametersFromDataDictionary() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.data_dictionary_all);
+
+    final String functionName = "testFunction";
+    final String paramName = "paramName";
+
+    setupMockRoutine(functionName);
+    final ResultSet resultSet =
+        setupResultSet(functionName, paramName, DatabaseMetaData.functionColumnIn);
+    configureMetaData(resultSet);
+
+    ((FunctionParameterRetriever) retriever)
+        .retrieveFunctionParameters(allRoutines, new IncludeAll());
+
+    final MutableFunction function = (MutableFunction) allRoutines.iterator().next();
+    assertThat(function.getParameters(), hasSize(1));
+
+    final FunctionParameter parameter = function.getParameters().get(0);
+    assertThat(parameter.getName(), is(paramName));
+    assertThat(parameter.getParameterMode(), is(in));
+    assertThat(parameter.getOrdinalPosition(), is(1));
+  }
+
+  @Test
+  public void testRetrieveFunctionParametersFromMetaData() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String functionName = "testFunction";
     final String paramName = "paramName";
 
@@ -119,6 +150,8 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
 
   @Test
   public void testRetrieveFunctionParametersWhenNoFunctions() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+        .thenReturn(MetadataRetrievalStrategy.metadata);
     ((FunctionParameterRetriever) retriever)
         .retrieveFunctionParameters(allRoutines, new IncludeAll());
 
@@ -129,12 +162,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   protected void configureMetaData(final ResultSet resultSet) throws SQLException {
     final DatabaseMetaData metaData = connection.getMetaData();
     when(metaData.getFunctionColumns(any(), any(), any(), any())).thenReturn(resultSet);
-  }
-
-  @Override
-  protected void configureMetadataRetrievalStrategy() {
-    when(retrieverConnection.get(functionParametersRetrievalStrategy))
-        .thenReturn(MetadataRetrievalStrategy.metadata);
+    when(connection.createStatement().getResultSet()).thenReturn(resultSet);
   }
 
   @Override
@@ -152,11 +180,6 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   @Override
   protected ResultSet setupResultSet(
       final String routineName, final String paramName, final int columnType) throws SQLException {
-    return setupFunctionsResultSet(routineName, paramName, columnType);
-  }
-
-  private ResultSet setupFunctionsResultSet(
-      final String functionName, final String paramName, final int columnType) throws SQLException {
     final String[] columnNames = {
       "FUNCTION_CAT",
       "FUNCTION_SCHEM",
@@ -181,7 +204,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
       {
         null,
         null,
-        functionName,
+        routineName,
         paramName,
         columnType,
         12,
@@ -199,7 +222,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
       }
     };
 
-    final String resultSetDescription = String.format("Function parameters for <%s>", functionName);
+    final String resultSetDescription = String.format("Function parameters for <%s>", routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }
 }
