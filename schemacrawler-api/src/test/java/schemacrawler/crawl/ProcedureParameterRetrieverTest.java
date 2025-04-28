@@ -58,6 +58,9 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
 
   @Test
   public void testParameterModeMapping() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+    .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String procedureName = "testProcedure";
     final String paramName = "paramName";
 
@@ -98,6 +101,9 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
 
   @Test
   public void testRetrieveProcedureParameters() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+    .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String procedureName = "testProcedure";
     final String paramName = "paramName";
 
@@ -120,6 +126,9 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
 
   @Test
   public void testRetrieveProcedureParametersWhenNoProcedures() throws SQLException {
+    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
+    .thenReturn(MetadataRetrievalStrategy.metadata);
+
     ((ProcedureParameterRetriever) retriever)
         .retrieveProcedureParameters(allRoutines, new IncludeAll());
 
@@ -131,12 +140,6 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
     final DatabaseMetaData metaData = connection.getMetaData();
     when(metaData.getProcedureColumns(any(), any(), any(), any())).thenReturn(resultSet);
     when(connection.createStatement().getResultSet()).thenReturn(resultSet);
-  }
-
-  @Override
-  protected void configureMetadataRetrievalStrategy() {
-    when(retrieverConnection.get(procedureParametersRetrievalStrategy))
-        .thenReturn(MetadataRetrievalStrategy.metadata);
   }
 
   @Override

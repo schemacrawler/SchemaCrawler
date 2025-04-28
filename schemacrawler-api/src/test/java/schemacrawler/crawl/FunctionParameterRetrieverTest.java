@@ -58,6 +58,9 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
 
   @Test
   public void testParameterModeMapping() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+    .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String functionName = "testFunction";
     final String paramName = "paramName";
 
@@ -97,6 +100,9 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
 
   @Test
   public void testRetrieveFunctionParameters() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+    .thenReturn(MetadataRetrievalStrategy.metadata);
+
     final String functionName = "testFunction";
     final String paramName = "paramName";
 
@@ -119,6 +125,8 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
 
   @Test
   public void testRetrieveFunctionParametersWhenNoFunctions() throws SQLException {
+    when(retrieverConnection.get(functionParametersRetrievalStrategy))
+    .thenReturn(MetadataRetrievalStrategy.metadata);
     ((FunctionParameterRetriever) retriever)
         .retrieveFunctionParameters(allRoutines, new IncludeAll());
 
@@ -130,12 +138,6 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
     final DatabaseMetaData metaData = connection.getMetaData();
     when(metaData.getFunctionColumns(any(), any(), any(), any())).thenReturn(resultSet);
     when(connection.createStatement().getResultSet()).thenReturn(resultSet);
-  }
-
-  @Override
-  protected void configureMetadataRetrievalStrategy() {
-    when(retrieverConnection.get(functionParametersRetrievalStrategy))
-        .thenReturn(MetadataRetrievalStrategy.metadata);
   }
 
   @Override
