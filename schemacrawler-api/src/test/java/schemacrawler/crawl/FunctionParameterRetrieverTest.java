@@ -129,6 +129,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
   protected void configureMetaData(final ResultSet resultSet) throws SQLException {
     final DatabaseMetaData metaData = connection.getMetaData();
     when(metaData.getFunctionColumns(any(), any(), any(), any())).thenReturn(resultSet);
+    when(connection.createStatement().getResultSet()).thenReturn(resultSet);
   }
 
   @Override
@@ -171,7 +172,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
       "IS_NULLABLE",
       "SPECIFIC_NAME"
     };
-    
+
     final Object[][] data = {
       {
         null,
@@ -193,7 +194,7 @@ public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTe
         "testFunction"
       }
     };
-    
+
     final String resultSetDescription = String.format("Function parameters for <%s>", routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }

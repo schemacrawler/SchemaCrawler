@@ -130,6 +130,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
   protected void configureMetaData(final ResultSet resultSet) throws SQLException {
     final DatabaseMetaData metaData = connection.getMetaData();
     when(metaData.getProcedureColumns(any(), any(), any(), any())).thenReturn(resultSet);
+    when(connection.createStatement().getResultSet()).thenReturn(resultSet);
   }
 
   @Override
@@ -175,7 +176,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
       "IS_NULLABLE",
       "SPECIFIC_NAME"
     };
-    
+
     final Object[][] data = {
       {
         null,
@@ -200,7 +201,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
         "testProcedure"
       }
     };
-    
+
     final String resultSetDescription =
         String.format("Procedure parameters for <%s>", routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
