@@ -44,13 +44,6 @@ jobs:
           jacoco:report-aggregate
 
 # GET TEST RESULTS
-    - id: publish-coverage-codecov
-      name: Upload coverage report to Codecov
-      if: contains(github.ref, 'main')
-      uses: codecov/codecov-action@v5
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        verbose: true
     - id: upload-coverage-test-results
       name: Upload coverage test results
       uses: actions/upload-artifact@v4
@@ -58,6 +51,13 @@ jobs:
         name: coverage-test-results
         path: ./schemacrawler-distrib/target/site/jacoco-aggregate
         retention-days: 5
+    - id: publish-coverage-codecov
+      name: Upload coverage report to Codecov
+      if: contains(github.ref, 'main')
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        verbose: true
     - id: publish-coverage-codacy
       name: Upload coverage report to Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
