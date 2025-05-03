@@ -44,6 +44,13 @@ jobs:
           jacoco:report-aggregate
 
 # GET TEST RESULTS
+    - id: upload-coverage-test-results
+      name: Upload coverage test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-test-results
+        path: ./schemacrawler-distrib/target/site/jacoco-aggregate
+        retention-days: 5
     - id: publish-coverage-codecov
       name: Upload coverage report to Codecov
       if: contains(github.ref, 'main')
@@ -69,11 +76,3 @@ jobs:
       if: contains(github.ref, 'main')
       env:
         QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-    - id: upload-coverage-test-results
-      name: Upload coverage test results
-      uses: actions/upload-artifact@v4
-      if: contains(github.ref, 'main')
-      with:
-        name: coverage-test-results
-        path: ./schemacrawler-distrib/target/site/jacoco-aggregate
-        retention-days: 5

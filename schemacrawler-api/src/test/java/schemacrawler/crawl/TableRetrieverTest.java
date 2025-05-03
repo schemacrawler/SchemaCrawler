@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -39,19 +40,15 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableTypes;
@@ -75,12 +72,70 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TableRetrieverTest {
 
   private MutableCatalog catalog;
 
-  @BeforeAll
+  @Test
+  @DisplayName("Test with empty result set")
+  public void emptyResultSet(final DatabaseConnectionSource dataSource) throws Exception {
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.TABLES,
+                "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=0")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(tablesRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+    tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
+
+    // Verify that no new tables were added to the catalog
+    assertThat(catalog.getTables(), is(empty()));
+  }
+
+  @Test
+  @DisplayName("Test handling of invalid SQL in table retrieval")
+  public void handlingOfInvalidSQLInTableRetrieval(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    // Use invalid SQL that will cause a SQL exception
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(InformationSchemaKey.TABLES, "THIS IS NOT VALID SQL")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(tablesRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+
+    // Verify that the retriever handles SQL exceptions gracefully
+    final SQLException sqlException =
+        assertThrows(
+            SQLException.class,
+            () ->
+                tableRetriever.retrieveTables(
+                    "", TableTypes.from("TABLE", "VIEW"), new IncludeAll()));
+    assertThat(sqlException.getCause().getMessage(), is("unexpected token: THIS"));
+  }
+
+  @BeforeEach
   public void loadBaseCatalog(final Connection connection) {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -103,6 +158,43 @@ public class TableRetrieverTest {
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, is(empty()));
+  }
+
+  @Test
+  @DisplayName("Test with malformed data in result sets")
+  public void malformedDataInResultSets(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.TABLES,
+                "SELECT 'INVALID_CAT' AS TABLE_CAT, 'INVALID_SCHEMA' AS TABLE_SCHEM, '' AS TABLE_NAME,"
+                    + " 'INVALID_TYPE' AS TABLE_TYPE, 'Test remarks' AS REMARKS FROM (VALUES(0))")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(tablesRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+    // Should handle empty table name gracefully
+    tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
+
+    // Verify that no tables with empty names were added
+    boolean foundEmptyNameTable = false;
+    for (final Table table : catalog.getTables()) {
+      if (table.getName().isEmpty()) {
+        foundEmptyNameTable = true;
+        break;
+      }
+    }
+    assertThat("Table with empty name should not be added", foundEmptyNameTable, is(false));
   }
 
   @Test
@@ -129,10 +221,10 @@ public class TableRetrieverTest {
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final Schema[] schemas = ((Catalog) catalog).getSchemas().toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas) {
-        final Table[] tables = ((Catalog) catalog).getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
           out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
