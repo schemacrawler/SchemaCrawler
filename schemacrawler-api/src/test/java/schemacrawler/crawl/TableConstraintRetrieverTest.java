@@ -34,19 +34,14 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
+import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -54,14 +49,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestWriter;
-import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -77,34 +68,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
-public class IndexRetrieverTest {
-
-  public static void verifyRetrieveIndexes(final Catalog catalog) throws Exception {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length > 0, is(true));
-      for (final Schema schema : schemas) {
-        out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-        Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables) {
-          out.println("  table: " + table.getFullName());
-          final Collection<Index> tableIndices = table.getIndexes();
-          for (final Index index : tableIndices) {
-            out.println("    index: " + index.getFullName());
-            out.println("      unique: " + index.isUnique());
-            out.println("      columns: " + index.getColumns());
-            out.println("      definition: " + index.getDefinition());
-            out.println("      remarks: " + index.getRemarks());
-          }
-        }
-      }
-    }
-
-    // Since we don't have a TestContext, we can't verify the output against a resource
-    // This method is primarily used by SchemaCrawlerTest
-  }
+public class TableConstraintRetrieverTest {
 
   private MutableCatalog catalog;
 
@@ -118,7 +82,7 @@ public class IndexRetrieverTest {
             .withSchemaInfoLevel(
                 SchemaInfoLevelBuilder.builder()
                     .withInfoLevel(InfoLevel.standard)
-                    .setRetrieveIndexes(false) // Don't retrieve indexes yet
+                    .setRetrieveTableConstraints(false) // Don't retrieve constraints yet
                     .toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
@@ -131,20 +95,20 @@ public class IndexRetrieverTest {
 
     assertThat(catalog, is(notNullValue()));
 
-    // Verify that we have tables but no indexes yet
+    // Verify that we have tables
     assertThat(catalog.getTables(), is(not(empty())));
   }
 
   @Test
-  @DisplayName("Test retrieving indexes from metadata")
-  public void testRetrieveIndexesFromMetadata(final DatabaseConnectionSource dataSource) throws Exception {
+  @DisplayName("Test retrieving table constraints")
+  public void testRetrieveTableConstraints(final DatabaseConnectionSource dataSource) throws Exception {
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsDefault;
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    // Create a list of tables to retrieve indexes for
+    // Create a list of tables to retrieve constraints for
     final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
     for (final Schema schema : catalog.getSchemas()) {
       for (final Table table : catalog.getTables(schema)) {
@@ -154,99 +118,33 @@ public class IndexRetrieverTest {
       }
     }
 
-    assertThat("Should have tables to retrieve indexes for", !allTables.isEmpty(), is(true));
+    assertThat("Should have tables to retrieve constraints for", !allTables.isEmpty(), is(true));
 
-    // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    // Create the constraint retriever
+    final TableConstraintRetriever constraintRetriever =
+        new TableConstraintRetriever(retrieverConnection, catalog, options);
 
-    // Act - retrieve indexes
-    indexRetriever.retrieveIndexes(allTables);
+    // Act - retrieve table constraints
+    constraintRetriever.retrieveTableConstraints();
+    constraintRetriever.matchTableConstraints(allTables);
 
-    // Assert - verify indexes were retrieved
-    boolean hasIndexes = false;
-    for (final Table table : catalog.getTables()) {
-      final Collection<Index> indexes = table.getIndexes();
-      if (!indexes.isEmpty()) {
-        hasIndexes = true;
-        break;
-      }
-    }
-
-    assertThat("Should have retrieved at least one index", hasIndexes, is(true));
-  }
-
-  @Test
-  @DisplayName("Test retrieving indexes from data dictionary")
-  public void testRetrieveIndexesFromDataDictionary(final DatabaseConnectionSource dataSource) throws Exception {
-    // Arrange - create a custom information schema view for indexes
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(
-                INDEXES,
-                "SELECT " +
-                "NULL AS TABLE_CAT, " +
-                "'PUBLIC' AS TABLE_SCHEM, " +
-                "'BOOKS' AS TABLE_NAME, " +
-                "FALSE AS NON_UNIQUE, " +
-                "NULL AS INDEX_QUALIFIER, " +
-                "'TEST_INDEX' AS INDEX_NAME, " +
-                "1 AS TYPE, " +
-                "1 AS ORDINAL_POSITION, " +
-                "'ID' AS COLUMN_NAME, " +
-                "NULL AS ASC_OR_DESC, " +
-                "0 AS CARDINALITY, " +
-                "0 AS PAGES, " +
-                "NULL AS FILTER_CONDITION " +
-                "FROM (VALUES(0))")
-            .toOptions();
-
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(indexesRetrievalStrategy, schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    // Create a list of tables to retrieve indexes for
-    final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
-    for (final Schema schema : catalog.getSchemas()) {
-      for (final Table table : catalog.getTables(schema)) {
-        if (table instanceof MutableTable) {
-          allTables.add((MutableTable) table);
-        }
-      }
-    }
-
-    // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
-
-    // Act - retrieve indexes
-    indexRetriever.retrieveIndexes(allTables);
-
-    // We can't easily verify the specific index was created since we need a matching table,
+    // We can't easily verify specific constraints were created,
     // but we can verify the method executed without errors
   }
 
   @Test
-  @DisplayName("Test retrieving additional index information")
-  public void testRetrieveIndexInformation(final DatabaseConnectionSource dataSource) throws Exception {
-    // Arrange - create a custom information schema view for extended indexes
+  @DisplayName("Test retrieving table constraint definitions")
+  public void testRetrieveTableConstraintDefinitions(final DatabaseConnectionSource dataSource) throws Exception {
+    // Arrange - create a custom information schema view for check constraints
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
-                EXT_INDEXES,
+                CHECK_CONSTRAINTS,
                 "SELECT " +
-                "NULL AS INDEX_CATALOG, " +
-                "'PUBLIC' AS INDEX_SCHEMA, " +
-                "'BOOKS' AS TABLE_NAME, " +
-                "'TEST_INDEX' AS INDEX_NAME, " +
-                "'Test index remark' AS REMARKS, " +
-                "'Test index source' AS INDEX_DEFINITION " +
+                "NULL AS CONSTRAINT_CATALOG, " +
+                "'PUBLIC' AS CONSTRAINT_SCHEMA, " +
+                "'TEST_CHECK' AS CONSTRAINT_NAME, " +
+                "'ID > 0' AS CHECK_CLAUSE " +
                 "FROM (VALUES(0))")
             .toOptions();
 
@@ -260,30 +158,52 @@ public class IndexRetrieverTest {
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    // Create the constraint retriever
+    final TableConstraintRetriever constraintRetriever =
+        new TableConstraintRetriever(retrieverConnection, catalog, options);
 
-    // Act - retrieve additional index information
-    indexRetriever.retrieveIndexInformation();
+    // Act - retrieve table constraint definitions
+    constraintRetriever.retrieveTableConstraintDefinitions();
 
-    // We can't easily verify the specific index information was added since we need a matching index,
+    // We can't easily verify specific constraint definitions were created,
     // but we can verify the method executed without errors
   }
 
   @Test
-  @DisplayName("Test retrieving indexes with invalid SQL")
-  public void testRetrieveIndexesWithInvalidSql(final DatabaseConnectionSource dataSource) throws Exception {
-    // Arrange - create a custom information schema view with invalid SQL
+  @DisplayName("Test retrieving table constraint information")
+  public void testRetrieveTableConstraintInformation(final DatabaseConnectionSource dataSource) throws Exception {
+    // Arrange - create a custom information schema view for table constraints
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
-            .withSql(INDEXES, "THIS IS NOT VALID SQL")
+            .withSql(
+                TABLE_CONSTRAINTS,
+                "SELECT " +
+                "NULL AS CONSTRAINT_CATALOG, " +
+                "'PUBLIC' AS CONSTRAINT_SCHEMA, " +
+                "'TEST_CONSTRAINT' AS CONSTRAINT_NAME, " +
+                "NULL AS TABLE_CATALOG, " +
+                "'PUBLIC' AS TABLE_SCHEMA, " +
+                "'BOOKS' AS TABLE_NAME, " +
+                "'PRIMARY KEY' AS CONSTRAINT_TYPE, " +
+                "'YES' AS IS_DEFERRABLE, " +
+                "'NO' AS INITIALLY_DEFERRED " +
+                "FROM (VALUES(0))")
+            .withSql(
+                CONSTRAINT_COLUMN_USAGE,
+                "SELECT " +
+                "NULL AS TABLE_CATALOG, " +
+                "'PUBLIC' AS TABLE_SCHEMA, " +
+                "'BOOKS' AS TABLE_NAME, " +
+                "'ID' AS COLUMN_NAME, " +
+                "NULL AS CONSTRAINT_CATALOG, " +
+                "'PUBLIC' AS CONSTRAINT_SCHEMA, " +
+                "'TEST_CONSTRAINT' AS CONSTRAINT_NAME " +
+                "FROM (VALUES(0))")
             .toOptions();
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(indexesRetrievalStrategy, schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
 
     final RetrieverConnection retrieverConnection =
@@ -291,7 +211,37 @@ public class IndexRetrieverTest {
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    // Create a list of tables to retrieve indexes for
+    // Create the constraint retriever
+    final TableConstraintRetriever constraintRetriever =
+        new TableConstraintRetriever(retrieverConnection, catalog, options);
+
+    // Act - retrieve table constraint information
+    constraintRetriever.retrieveTableConstraintInformation();
+
+    // We can't easily verify specific constraint information was created,
+    // but we can verify the method executed without errors
+  }
+
+  @Test
+  @DisplayName("Test retrieving table constraints with invalid SQL")
+  public void testRetrieveTableConstraintsWithInvalidSql(final DatabaseConnectionSource dataSource) throws Exception {
+    // Arrange - create a custom information schema view with invalid SQL
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(TABLE_CONSTRAINTS, "THIS IS NOT VALID SQL")
+            .toOptions();
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    // Create a list of tables to retrieve constraints for
     final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
     for (final Schema schema : catalog.getSchemas()) {
       for (final Table table : catalog.getTables(schema)) {
@@ -301,13 +251,17 @@ public class IndexRetrieverTest {
       }
     }
 
-    // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    // Create the constraint retriever
+    final TableConstraintRetriever constraintRetriever =
+        new TableConstraintRetriever(retrieverConnection, catalog, options);
 
-    // Act & Assert - retrieving indexes with invalid SQL should throw an exception
-    // The IndexRetriever doesn't handle invalid SQL gracefully, so we expect an exception
-    assertThrows(
-        SQLException.class,
-        () -> indexRetriever.retrieveIndexes(allTables));
+    // Act - retrieve table constraints with invalid SQL
+    // This should not throw an exception
+    constraintRetriever.retrieveTableConstraintInformation();
+    constraintRetriever.matchTableConstraints(allTables);
+
+    // Verify that we still have tables
+    assertThat(catalog.getTables(), is(not(empty())));
   }
+
 }
