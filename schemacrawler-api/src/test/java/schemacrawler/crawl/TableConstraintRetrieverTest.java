@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -41,8 +40,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -51,7 +48,6 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraint;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -101,7 +97,8 @@ public class TableConstraintRetrieverTest {
 
   @Test
   @DisplayName("Test retrieving table constraints")
-  public void testRetrieveTableConstraints(final DatabaseConnectionSource dataSource) throws Exception {
+  public void testRetrieveTableConstraints(final DatabaseConnectionSource dataSource)
+      throws Exception {
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsDefault;
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
@@ -134,18 +131,19 @@ public class TableConstraintRetrieverTest {
 
   @Test
   @DisplayName("Test retrieving table constraint definitions")
-  public void testRetrieveTableConstraintDefinitions(final DatabaseConnectionSource dataSource) throws Exception {
+  public void testRetrieveTableConstraintDefinitions(final DatabaseConnectionSource dataSource)
+      throws Exception {
     // Arrange - create a custom information schema view for check constraints
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 CHECK_CONSTRAINTS,
-                "SELECT " +
-                "NULL AS CONSTRAINT_CATALOG, " +
-                "'PUBLIC' AS CONSTRAINT_SCHEMA, " +
-                "'TEST_CHECK' AS CONSTRAINT_NAME, " +
-                "'ID > 0' AS CHECK_CLAUSE " +
-                "FROM (VALUES(0))")
+                "SELECT "
+                    + "NULL AS CONSTRAINT_CATALOG, "
+                    + "'PUBLIC' AS CONSTRAINT_SCHEMA, "
+                    + "'TEST_CHECK' AS CONSTRAINT_NAME, "
+                    + "'ID > 0' AS CHECK_CLAUSE "
+                    + "FROM (VALUES(0))")
             .toOptions();
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
@@ -171,34 +169,35 @@ public class TableConstraintRetrieverTest {
 
   @Test
   @DisplayName("Test retrieving table constraint information")
-  public void testRetrieveTableConstraintInformation(final DatabaseConnectionSource dataSource) throws Exception {
+  public void testRetrieveTableConstraintInformation(final DatabaseConnectionSource dataSource)
+      throws Exception {
     // Arrange - create a custom information schema view for table constraints
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 TABLE_CONSTRAINTS,
-                "SELECT " +
-                "NULL AS CONSTRAINT_CATALOG, " +
-                "'PUBLIC' AS CONSTRAINT_SCHEMA, " +
-                "'TEST_CONSTRAINT' AS CONSTRAINT_NAME, " +
-                "NULL AS TABLE_CATALOG, " +
-                "'PUBLIC' AS TABLE_SCHEMA, " +
-                "'BOOKS' AS TABLE_NAME, " +
-                "'PRIMARY KEY' AS CONSTRAINT_TYPE, " +
-                "'YES' AS IS_DEFERRABLE, " +
-                "'NO' AS INITIALLY_DEFERRED " +
-                "FROM (VALUES(0))")
+                "SELECT "
+                    + "NULL AS CONSTRAINT_CATALOG, "
+                    + "'PUBLIC' AS CONSTRAINT_SCHEMA, "
+                    + "'TEST_CONSTRAINT' AS CONSTRAINT_NAME, "
+                    + "NULL AS TABLE_CATALOG, "
+                    + "'PUBLIC' AS TABLE_SCHEMA, "
+                    + "'BOOKS' AS TABLE_NAME, "
+                    + "'PRIMARY KEY' AS CONSTRAINT_TYPE, "
+                    + "'YES' AS IS_DEFERRABLE, "
+                    + "'NO' AS INITIALLY_DEFERRED "
+                    + "FROM (VALUES(0))")
             .withSql(
                 CONSTRAINT_COLUMN_USAGE,
-                "SELECT " +
-                "NULL AS TABLE_CATALOG, " +
-                "'PUBLIC' AS TABLE_SCHEMA, " +
-                "'BOOKS' AS TABLE_NAME, " +
-                "'ID' AS COLUMN_NAME, " +
-                "NULL AS CONSTRAINT_CATALOG, " +
-                "'PUBLIC' AS CONSTRAINT_SCHEMA, " +
-                "'TEST_CONSTRAINT' AS CONSTRAINT_NAME " +
-                "FROM (VALUES(0))")
+                "SELECT "
+                    + "NULL AS TABLE_CATALOG, "
+                    + "'PUBLIC' AS TABLE_SCHEMA, "
+                    + "'BOOKS' AS TABLE_NAME, "
+                    + "'ID' AS COLUMN_NAME, "
+                    + "NULL AS CONSTRAINT_CATALOG, "
+                    + "'PUBLIC' AS CONSTRAINT_SCHEMA, "
+                    + "'TEST_CONSTRAINT' AS CONSTRAINT_NAME "
+                    + "FROM (VALUES(0))")
             .toOptions();
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
@@ -224,7 +223,8 @@ public class TableConstraintRetrieverTest {
 
   @Test
   @DisplayName("Test retrieving table constraints with invalid SQL")
-  public void testRetrieveTableConstraintsWithInvalidSql(final DatabaseConnectionSource dataSource) throws Exception {
+  public void testRetrieveTableConstraintsWithInvalidSql(final DatabaseConnectionSource dataSource)
+      throws Exception {
     // Arrange - create a custom information schema view with invalid SQL
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
@@ -263,5 +263,4 @@ public class TableConstraintRetrieverTest {
     // Verify that we still have tables
     assertThat(catalog.getTables(), is(not(empty())));
   }
-
 }

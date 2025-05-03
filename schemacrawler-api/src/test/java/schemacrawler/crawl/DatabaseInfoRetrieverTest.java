@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -40,7 +39,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -78,9 +76,7 @@ public class DatabaseInfoRetrieverTest {
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder()
             .withSchemaInfoLevel(
-                SchemaInfoLevelBuilder.builder()
-                    .withInfoLevel(InfoLevel.minimum)
-                    .toOptions());
+                SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.minimum).toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
@@ -115,7 +111,8 @@ public class DatabaseInfoRetrieverTest {
 
   @Test
   @DisplayName("Test retrieving JDBC driver info")
-  public void testRetrieveJdbcDriverInfo(final DatabaseConnectionSource dataSource) throws Exception {
+  public void testRetrieveJdbcDriverInfo(final DatabaseConnectionSource dataSource)
+      throws Exception {
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsDefault;
     final RetrieverConnection retrieverConnection =
         new RetrieverConnection(dataSource, schemaRetrievalOptions);
@@ -135,7 +132,8 @@ public class DatabaseInfoRetrieverTest {
 
   @Test
   @DisplayName("Test retrieving database users with valid SQL")
-  public void testRetrieveDatabaseUsers(final DatabaseConnectionSource dataSource) throws Exception {
+  public void testRetrieveDatabaseUsers(final DatabaseConnectionSource dataSource)
+      throws Exception {
     // Arrange - create a custom information schema view for database users
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
@@ -166,7 +164,8 @@ public class DatabaseInfoRetrieverTest {
 
   @Test
   @DisplayName("Test retrieving database users with invalid SQL")
-  public void testRetrieveDatabaseUsersWithInvalidSql(final DatabaseConnectionSource dataSource) throws Exception {
+  public void testRetrieveDatabaseUsersWithInvalidSql(final DatabaseConnectionSource dataSource)
+      throws Exception {
     // Arrange - create a custom information schema view with invalid SQL
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()

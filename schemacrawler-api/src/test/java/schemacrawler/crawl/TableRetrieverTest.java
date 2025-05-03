@@ -58,26 +58,18 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 public class TableRetrieverTest extends AbstractRetrieverTest {
 
-  @Override
-  protected SchemaInfoMetadataRetrievalStrategy getRetrievalStrategyKey() {
-    return tablesRetrievalStrategy;
-  }
-
-  @Override
-  protected void customizeSchemaInfoLevel(final SchemaInfoLevelBuilder schemaInfoLevelBuilder) {
-    schemaInfoLevelBuilder.setRetrieveTables(false);
-  }
-
   @Test
   @DisplayName("Test with empty result set")
   public void emptyResultSet(final DatabaseConnectionSource dataSource) throws Exception {
-    final RetrieverConnection retrieverConnection = createRetrieverConnection(
-        dataSource,
-        InformationSchemaKey.TABLES,
-        "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=0",
-        data_dictionary_all);
+    final RetrieverConnection retrieverConnection =
+        createRetrieverConnection(
+            dataSource,
+            InformationSchemaKey.TABLES,
+            "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=0",
+            data_dictionary_all);
 
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, createOptions());
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
     tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
 
     // Verify that no new tables were added to the catalog
@@ -89,13 +81,12 @@ public class TableRetrieverTest extends AbstractRetrieverTest {
   public void handlingOfInvalidSQLInTableRetrieval(final DatabaseConnectionSource dataSource)
       throws Exception {
     // Use invalid SQL that will cause a SQL exception
-    final RetrieverConnection retrieverConnection = createRetrieverConnection(
-        dataSource,
-        InformationSchemaKey.TABLES,
-        "THIS IS NOT VALID SQL",
-        data_dictionary_all);
+    final RetrieverConnection retrieverConnection =
+        createRetrieverConnection(
+            dataSource, InformationSchemaKey.TABLES, "THIS IS NOT VALID SQL", data_dictionary_all);
 
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, createOptions());
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
 
     // Verify that the retriever handles SQL exceptions gracefully
     final SQLException sqlException =
@@ -107,21 +98,20 @@ public class TableRetrieverTest extends AbstractRetrieverTest {
     assertThat(sqlException.getCause().getMessage(), is("unexpected token: THIS"));
   }
 
-
   @Test
   @DisplayName("Test with malformed data in result sets")
   public void malformedDataInResultSets(final DatabaseConnectionSource dataSource)
       throws Exception {
-    final String sql = "SELECT 'INVALID_CAT' AS TABLE_CAT, 'INVALID_SCHEMA' AS TABLE_SCHEM, '' AS TABLE_NAME,"
-        + " 'INVALID_TYPE' AS TABLE_TYPE, 'Test remarks' AS REMARKS FROM (VALUES(0))";
+    final String sql =
+        "SELECT 'INVALID_CAT' AS TABLE_CAT, 'INVALID_SCHEMA' AS TABLE_SCHEM, '' AS TABLE_NAME,"
+            + " 'INVALID_TYPE' AS TABLE_TYPE, 'Test remarks' AS REMARKS FROM (VALUES(0))";
 
-    final RetrieverConnection retrieverConnection = createRetrieverConnection(
-        dataSource,
-        InformationSchemaKey.TABLES,
-        sql,
-        data_dictionary_all);
+    final RetrieverConnection retrieverConnection =
+        createRetrieverConnection(
+            dataSource, InformationSchemaKey.TABLES, sql, data_dictionary_all);
 
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, createOptions());
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
     // Should handle empty table name gracefully
     tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
 
@@ -140,13 +130,15 @@ public class TableRetrieverTest extends AbstractRetrieverTest {
   @DisplayName("Retrieve tables from data dictionary")
   public void tablesFromDataDictionary(
       final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-    final RetrieverConnection retrieverConnection = createRetrieverConnection(
-        dataSource,
-        InformationSchemaKey.TABLES,
-        "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
-        data_dictionary_all);
+    final RetrieverConnection retrieverConnection =
+        createRetrieverConnection(
+            dataSource,
+            InformationSchemaKey.TABLES,
+            "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
+            data_dictionary_all);
 
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, createOptions());
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
     tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
 
     final TestWriter testout = new TestWriter();
@@ -163,5 +155,15 @@ public class TableRetrieverTest extends AbstractRetrieverTest {
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Override
+  protected void customizeSchemaInfoLevel(final SchemaInfoLevelBuilder schemaInfoLevelBuilder) {
+    schemaInfoLevelBuilder.setRetrieveTables(false);
+  }
+
+  @Override
+  protected SchemaInfoMetadataRetrievalStrategy getRetrievalStrategyKey() {
+    return tablesRetrievalStrategy;
   }
 }
