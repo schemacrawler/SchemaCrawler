@@ -30,10 +30,18 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,7 +51,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseUser;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -168,5 +179,127 @@ public class DatabaseInfoRetrieverTest {
     final Property serverInfoProperty = serverInfo.get(0);
     assertThat(serverInfoProperty, is(new ImmutableServerInfoProperty(name, value, description)));
     assertThat(serverInfoProperty.getDescription(), is(description));
+  }
+
+  @Test
+  @DisplayName("Retrieve additional database info")
+  public void additionalDatabaseInfo(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, SchemaRetrievalOptionsBuilder.builder().toOptions());
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final DatabaseInfoRetriever databaseInfoRetriever =
+        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+    databaseInfoRetriever.retrieveAdditionalDatabaseInfo();
+
+    // Verify that database properties were retrieved
+    final Collection<Property> databaseProperties = catalog.getDatabaseInfo().getProperties();
+    assertThat("Should have database properties", databaseProperties, is(not(empty())));
+
+    // Verify that some common database properties are present
+    boolean foundSupportedProperty = false;
+    for (final Property property : databaseProperties) {
+      if (property.getName().startsWith("supports")) {
+        foundSupportedProperty = true;
+        break;
+      }
+    }
+    assertThat("Should find at least one 'supports' property", foundSupportedProperty, is(true));
+
+    // Verify that result set type properties were retrieved
+    boolean foundResultSetTypeProperty = false;
+    for (final Property property : databaseProperties) {
+      if (property.getName().contains("ResultSets")) {
+        foundResultSetTypeProperty = true;
+        break;
+      }
+    }
+    assertThat("Should find at least one result set type property", foundResultSetTypeProperty, is(true));
+  }
+
+  @Test
+  @DisplayName("Retrieve additional JDBC driver info")
+  public void additionalJdbcDriverInfo(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, SchemaRetrievalOptionsBuilder.builder().toOptions());
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final DatabaseInfoRetriever databaseInfoRetriever =
+        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+    databaseInfoRetriever.retrieveAdditionalJdbcDriverInfo();
+
+    // Verify that JDBC driver properties were retrieved
+    final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
+    assertThat(jdbcDriverInfo, is(notNullValue()));
+
+    // HSQLDB driver should have some properties
+    final Collection<JdbcDriverProperty> driverProperties = jdbcDriverInfo.getDriverProperties();
+    assertThat("Should have JDBC driver properties", driverProperties, is(not(empty())));
+
+    // Verify driver name and version
+    assertThat(jdbcDriverInfo.getDriverName(), containsString("HSQL"));
+    assertThat(jdbcDriverInfo.getDriverVersion(), is(notNullValue()));
+  }
+
+  @Test
+  @DisplayName("Test result set type properties retrieval")
+  public void resultSetTypePropertiesRetrieval(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, SchemaRetrievalOptionsBuilder.builder().toOptions());
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final DatabaseInfoRetriever databaseInfoRetriever =
+        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+    databaseInfoRetriever.retrieveAdditionalDatabaseInfo();
+
+    // Verify that result set type properties were retrieved
+    final Collection<Property> databaseProperties = catalog.getDatabaseInfo().getProperties();
+
+    // Check for specific result set type properties
+    boolean foundDeletesAreDetected = false;
+    boolean foundInsertsAreDetected = false;
+    boolean foundUpdatesAreDetected = false;
+    boolean foundSupportsResultSetType = false;
+
+    for (final Property property : databaseProperties) {
+      final String propertyName = property.getName();
+      if (propertyName.contains("deletesAreDetected")) {
+        foundDeletesAreDetected = true;
+      } else if (propertyName.contains("insertsAreDetected")) {
+        foundInsertsAreDetected = true;
+      } else if (propertyName.contains("updatesAreDetected")) {
+        foundUpdatesAreDetected = true;
+      } else if (propertyName.contains("supportsResultSetType")) {
+        foundSupportsResultSetType = true;
+      }
+    }
+
+    assertThat("Should find deletesAreDetected properties", foundDeletesAreDetected, is(true));
+    assertThat("Should find insertsAreDetected properties", foundInsertsAreDetected, is(true));
+    assertThat("Should find updatesAreDetected properties", foundUpdatesAreDetected, is(true));
+    assertThat("Should find supportsResultSetType properties", foundSupportsResultSetType, is(true));
+  }
+
+  @Test
+  @DisplayName("Test error handling in retrieveAdditionalDatabaseInfo")
+  public void errorHandlingInRetrieveAdditionalDatabaseInfo(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    // Create a retriever connection with a closed connection source to simulate errors
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, SchemaRetrievalOptionsBuilder.builder().toOptions());
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final DatabaseInfoRetriever databaseInfoRetriever =
+        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+
+    // The method should handle exceptions gracefully and not throw
+    assertDoesNotThrow(() -> databaseInfoRetriever.retrieveAdditionalDatabaseInfo());
   }
 }

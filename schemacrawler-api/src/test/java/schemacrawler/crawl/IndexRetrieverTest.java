@@ -33,9 +33,12 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
@@ -69,6 +72,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
@@ -170,6 +174,112 @@ public class IndexRetrieverTest {
         assertThat(index.getDefinition(), is(definition));
       }
     }
+  }
+
+  @Test
+  @DisplayName("Retrieve indexes from metadata")
+  public void indexesFromMetadata(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.with(indexesRetrievalStrategy, metadata);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    indexRetriever.retrieveIndexes(catalog.getAllTables());
+
+    // Verify that indexes were retrieved
+    boolean foundIndexes = false;
+    for (final Table table : catalog.getTables()) {
+      if (!table.getIndexes().isEmpty()) {
+        foundIndexes = true;
+        break;
+      }
+    }
+    assertThat("Should find at least one index", foundIndexes, is(true));
+
+    // Verify the retrieved indexes match the expected output
+    verifyRetrieveIndexes(catalog);
+  }
+
+  @Test
+  @DisplayName("Test error handling in retrieveIndexInformation")
+  public void errorHandlingInRetrieveIndexInformation(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    // Create a retriever connection with invalid SQL to simulate errors
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                EXT_INDEXES,
+                "SELECT INVALID_COLUMN FROM NON_EXISTENT_TABLE")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+
+    // The method should handle exceptions gracefully and not throw
+    assertDoesNotThrow(() -> indexRetriever.retrieveIndexInformation());
+  }
+
+  @Test
+  @DisplayName("Test handling of edge cases in index retrieval")
+  public void edgeCasesInIndexRetrieval(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    // First, populate the catalog with indexes
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.with(indexesRetrievalStrategy, metadata);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    indexRetriever.retrieveIndexes(catalog.getAllTables());
+
+    // Now test retrieveIndexInformation with a SQL that returns non-existent tables and indexes
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                EXT_INDEXES,
+                "SELECT 'NON_EXISTENT_CATALOG' AS INDEX_CATALOG, 'NON_EXISTENT_SCHEMA' AS INDEX_SCHEMA, "
+                    + "'NON_EXISTENT_TABLE' AS TABLE_NAME, 'NON_EXISTENT_INDEX' AS INDEX_NAME, "
+                    + "'Test remarks' AS REMARKS, 'Test definition' AS INDEX_DEFINITION "
+                    + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=1")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder edgeCaseOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    edgeCaseOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions edgeCaseOptions = edgeCaseOptionsBuilder.toOptions();
+    final RetrieverConnection edgeCaseConnection =
+        new RetrieverConnection(dataSource, edgeCaseOptions);
+
+    final IndexRetriever edgeCaseRetriever = new IndexRetriever(edgeCaseConnection, catalog, options);
+
+    // The method should handle non-existent tables and indexes gracefully
+    assertDoesNotThrow(() -> edgeCaseRetriever.retrieveIndexInformation());
+
+    // Verify that the original indexes are still intact
+    boolean foundIndexes = false;
+    for (final Table table : catalog.getTables()) {
+      if (!table.getIndexes().isEmpty()) {
+        foundIndexes = true;
+        break;
+      }
+    }
+    assertThat("Should still have indexes after edge case test", foundIndexes, is(true));
   }
 
   @BeforeAll
