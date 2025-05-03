@@ -29,17 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.BeforeEach;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
@@ -57,9 +53,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
-/**
- * An abstract base class for retriever tests to reduce code duplication.
- */
+/** An abstract base class for retriever tests to reduce code duplication. */
 @WithTestDatabase
 public abstract class AbstractRetrieverTest {
 
@@ -78,15 +72,13 @@ public abstract class AbstractRetrieverTest {
 
     // Create SchemaInfoLevelBuilder with base settings
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
-        SchemaInfoLevelBuilder.builder()
-            .withInfoLevel(getInfoLevel());
+        SchemaInfoLevelBuilder.builder().withInfoLevel(getInfoLevel());
 
     // Allow subclasses to customize the SchemaInfoLevelBuilder
     customizeSchemaInfoLevel(schemaInfoLevelBuilder);
 
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions());
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions());
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
@@ -101,8 +93,8 @@ public abstract class AbstractRetrieverTest {
   }
 
   /**
-   * Customize the SchemaInfoLevelBuilder for specific retriever tests.
-   * Subclasses should override this method to disable specific object retrieval.
+   * Customize the SchemaInfoLevelBuilder for specific retriever tests. Subclasses should override
+   * this method to disable specific object retrieval.
    *
    * @param schemaInfoLevelBuilder SchemaInfoLevelBuilder to customize
    */
@@ -124,12 +116,11 @@ public abstract class AbstractRetrieverTest {
       final DatabaseConnectionSource dataSource,
       final InformationSchemaKey informationSchemaKey,
       final String sql,
-      final MetadataRetrievalStrategy retrievalStrategy) throws SQLException {
+      final MetadataRetrievalStrategy retrievalStrategy)
+      throws SQLException {
 
     final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(informationSchemaKey, sql)
-            .toOptions();
+        InformationSchemaViewsBuilder.builder().withSql(informationSchemaKey, sql).toOptions();
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
@@ -154,8 +145,8 @@ public abstract class AbstractRetrieverTest {
    * @return RetrieverConnection
    * @throws SQLException If a database access error occurs
    */
-  protected RetrieverConnection createRetrieverConnection(
-      final DatabaseConnectionSource dataSource) throws SQLException {
+  protected RetrieverConnection createRetrieverConnection(final DatabaseConnectionSource dataSource)
+      throws SQLException {
     return new RetrieverConnection(dataSource, schemaRetrievalOptionsDefault);
   }
 
@@ -169,8 +160,7 @@ public abstract class AbstractRetrieverTest {
   }
 
   /**
-   * Gets the info level for the test.
-   * Override this method to change the info level.
+   * Gets the info level for the test. Override this method to change the info level.
    *
    * @return InfoLevel
    */
@@ -179,8 +169,8 @@ public abstract class AbstractRetrieverTest {
   }
 
   /**
-   * Gets the retrieval strategy key for the test.
-   * Override this method to specify the retrieval strategy key.
+   * Gets the retrieval strategy key for the test. Override this method to specify the retrieval
+   * strategy key.
    *
    * @return Retrieval strategy key
    */
