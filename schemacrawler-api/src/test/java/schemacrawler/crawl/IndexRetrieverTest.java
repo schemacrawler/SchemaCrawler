@@ -37,47 +37,34 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
-import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.utility.NamedObjectSort;
-import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
-@WithTestDatabase
 @ResolveTestContext
-public class IndexRetrieverTest {
+public class IndexRetrieverTest extends AbstractRetrieverTest {
 
   public static void verifyRetrieveIndexes(final Catalog catalog) throws Exception {
     final TestWriter testout = new TestWriter();
@@ -106,43 +93,26 @@ public class IndexRetrieverTest {
     // This method is primarily used by SchemaCrawlerTest
   }
 
-  private MutableCatalog catalog;
-
-  @BeforeEach
-  public void loadBaseCatalog(final Connection connection) {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(
-                SchemaInfoLevelBuilder.builder()
-                    .withInfoLevel(InfoLevel.standard)
-                    .setRetrieveIndexes(false) // Don't retrieve indexes yet
-                    .toOptions());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    catalog =
-        (MutableCatalog)
-            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
-
-    assertThat(catalog, is(notNullValue()));
-
-    // Verify that we have tables but no indexes yet
-    assertThat(catalog.getTables(), is(not(empty())));
+  @Override
+  protected SchemaInfoMetadataRetrievalStrategy getRetrievalStrategyKey() {
+    return indexesRetrievalStrategy;
   }
+
+  @Override
+  protected void customizeSchemaInfoLevel(final SchemaInfoLevelBuilder schemaInfoLevelBuilder) {
+    schemaInfoLevelBuilder.setRetrieveIndexes(false);
+  }
+
+  @Override
+  protected InfoLevel getInfoLevel() {
+    return InfoLevel.standard;
+  }
+
 
   @Test
   @DisplayName("Test retrieving indexes from metadata")
   public void testRetrieveIndexesFromMetadata(final DatabaseConnectionSource dataSource) throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsDefault;
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final RetrieverConnection retrieverConnection = createRetrieverConnection(dataSource);
 
     // Create a list of tables to retrieve indexes for
     final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
@@ -157,7 +127,7 @@ public class IndexRetrieverTest {
     assertThat("Should have tables to retrieve indexes for", !allTables.isEmpty(), is(true));
 
     // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, createOptions());
 
     // Act - retrieve indexes
     indexRetriever.retrieveIndexes(allTables);
@@ -179,38 +149,27 @@ public class IndexRetrieverTest {
   @DisplayName("Test retrieving indexes from data dictionary")
   public void testRetrieveIndexesFromDataDictionary(final DatabaseConnectionSource dataSource) throws Exception {
     // Arrange - create a custom information schema view for indexes
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(
-                INDEXES,
-                "SELECT " +
-                "NULL AS TABLE_CAT, " +
-                "'PUBLIC' AS TABLE_SCHEM, " +
-                "'BOOKS' AS TABLE_NAME, " +
-                "FALSE AS NON_UNIQUE, " +
-                "NULL AS INDEX_QUALIFIER, " +
-                "'TEST_INDEX' AS INDEX_NAME, " +
-                "1 AS TYPE, " +
-                "1 AS ORDINAL_POSITION, " +
-                "'ID' AS COLUMN_NAME, " +
-                "NULL AS ASC_OR_DESC, " +
-                "0 AS CARDINALITY, " +
-                "0 AS PAGES, " +
-                "NULL AS FILTER_CONDITION " +
-                "FROM (VALUES(0))")
-            .toOptions();
+    final String sql = "SELECT " +
+        "NULL AS TABLE_CAT, " +
+        "'PUBLIC' AS TABLE_SCHEM, " +
+        "'BOOKS' AS TABLE_NAME, " +
+        "FALSE AS NON_UNIQUE, " +
+        "NULL AS INDEX_QUALIFIER, " +
+        "'TEST_INDEX' AS INDEX_NAME, " +
+        "1 AS TYPE, " +
+        "1 AS ORDINAL_POSITION, " +
+        "'ID' AS COLUMN_NAME, " +
+        "NULL AS ASC_OR_DESC, " +
+        "0 AS CARDINALITY, " +
+        "0 AS PAGES, " +
+        "NULL AS FILTER_CONDITION " +
+        "FROM (VALUES(0))";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(indexesRetrievalStrategy, schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final RetrieverConnection retrieverConnection = createRetrieverConnection(
+        dataSource,
+        INDEXES,
+        sql,
+        data_dictionary_all);
 
     // Create a list of tables to retrieve indexes for
     final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
@@ -223,7 +182,7 @@ public class IndexRetrieverTest {
     }
 
     // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, createOptions());
 
     // Act - retrieve indexes
     indexRetriever.retrieveIndexes(allTables);
@@ -236,32 +195,23 @@ public class IndexRetrieverTest {
   @DisplayName("Test retrieving additional index information")
   public void testRetrieveIndexInformation(final DatabaseConnectionSource dataSource) throws Exception {
     // Arrange - create a custom information schema view for extended indexes
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(
-                EXT_INDEXES,
-                "SELECT " +
-                "NULL AS INDEX_CATALOG, " +
-                "'PUBLIC' AS INDEX_SCHEMA, " +
-                "'BOOKS' AS TABLE_NAME, " +
-                "'TEST_INDEX' AS INDEX_NAME, " +
-                "'Test index remark' AS REMARKS, " +
-                "'Test index source' AS INDEX_DEFINITION " +
-                "FROM (VALUES(0))")
-            .toOptions();
+    final String sql = "SELECT " +
+        "NULL AS INDEX_CATALOG, " +
+        "'PUBLIC' AS INDEX_SCHEMA, " +
+        "'BOOKS' AS TABLE_NAME, " +
+        "'TEST_INDEX' AS INDEX_NAME, " +
+        "'Test index remark' AS REMARKS, " +
+        "'Test index source' AS INDEX_DEFINITION " +
+        "FROM (VALUES(0))";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final RetrieverConnection retrieverConnection = createRetrieverConnection(
+        dataSource,
+        EXT_INDEXES,
+        sql,
+        null);
 
     // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, createOptions());
 
     // Act - retrieve additional index information
     indexRetriever.retrieveIndexInformation();
@@ -274,22 +224,11 @@ public class IndexRetrieverTest {
   @DisplayName("Test retrieving indexes with invalid SQL")
   public void testRetrieveIndexesWithInvalidSql(final DatabaseConnectionSource dataSource) throws Exception {
     // Arrange - create a custom information schema view with invalid SQL
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(INDEXES, "THIS IS NOT VALID SQL")
-            .toOptions();
-
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(indexesRetrievalStrategy, schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final RetrieverConnection retrieverConnection = createRetrieverConnection(
+        dataSource,
+        INDEXES,
+        "THIS IS NOT VALID SQL",
+        data_dictionary_all);
 
     // Create a list of tables to retrieve indexes for
     final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
@@ -302,7 +241,7 @@ public class IndexRetrieverTest {
     }
 
     // Create the index retriever
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, createOptions());
 
     // Act & Assert - retrieving indexes with invalid SQL should throw an exception
     // The IndexRetriever doesn't handle invalid SQL gracefully, so we expect an exception
