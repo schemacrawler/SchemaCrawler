@@ -29,213 +29,169 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
-import java.sql.SQLException;
+import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+
+import java.io.IOException;
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
+@WithTestDatabase
 @ResolveTestContext
-public class IndexRetrieverTest extends AbstractRetrieverTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class IndexRetrieverTest {
 
-  public static void verifyRetrieveIndexes(final Catalog catalog) throws Exception {
+  public static void verifyRetrieveIndexes(final Catalog catalog) throws IOException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length > 0, is(true));
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas) {
-        out.println("schema: " + schema.getFullName());
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
-          out.println("  table: " + table.getFullName());
-          final Collection<Index> tableIndices = table.getIndexes();
-          for (final Index index : tableIndices) {
-            out.println("    index: " + index.getFullName());
-            out.println("      unique: " + index.isUnique());
-            out.println("      columns: " + index.getColumns());
-            out.println("      definition: " + index.getDefinition());
-            out.println("      remarks: " + index.getRemarks());
+          out.println(table.getFullName());
+          final Collection<Index> indexes = table.getIndexes();
+          for (final Index index : indexes) {
+            out.println(String.format("  index: %s", index.getName()));
+            out.println(String.format("    columns: %s", index.getColumns()));
+            out.println(String.format("    is unique: %b", index.isUnique()));
+            out.println(String.format("    cardinality: %d", index.getCardinality()));
+            out.println(String.format("    pages: %d", index.getPages()));
+            out.println(String.format("    index type: %s", index.getIndexType()));
           }
         }
       }
     }
-
-    // Since we don't have a TestContext, we can't verify the output against a resource
-    // This method is primarily used by SchemaCrawlerTest
+    // IMPORTANT: The data dictionary should return the same information as the metadata test
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.indexes")));
   }
 
-  @Override
-  protected SchemaInfoMetadataRetrievalStrategy getRetrievalStrategyKey() {
-    return indexesRetrievalStrategy;
-  }
-
-  @Override
-  protected void customizeSchemaInfoLevel(final SchemaInfoLevelBuilder schemaInfoLevelBuilder) {
-    schemaInfoLevelBuilder.setRetrieveIndexes(false);
-  }
-
-  @Override
-  protected InfoLevel getInfoLevel() {
-    return InfoLevel.standard;
-  }
+  private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Test retrieving indexes from metadata")
-  public void testRetrieveIndexesFromMetadata(final DatabaseConnectionSource dataSource)
+  @DisplayName("Retrieve indexes from data dictionary")
+  public void indexesFromDataDictionary(final DatabaseConnectionSource dataSource)
       throws Exception {
-    final RetrieverConnection retrieverConnection = createRetrieverConnection(dataSource);
-
-    // Create a list of tables to retrieve indexes for
-    final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
-    for (final Schema schema : catalog.getSchemas()) {
-      for (final Table table : catalog.getTables(schema)) {
-        if (table instanceof MutableTable) {
-          allTables.add((MutableTable) table);
-        }
-      }
-    }
-
-    assertThat("Should have tables to retrieve indexes for", !allTables.isEmpty(), is(true));
-
-    // Create the index retriever
-    final IndexRetriever indexRetriever =
-        new IndexRetriever(retrieverConnection, catalog, createOptions());
-
-    // Act - retrieve indexes
-    indexRetriever.retrieveIndexes(allTables);
-
-    // Assert - verify indexes were retrieved
-    boolean hasIndexes = false;
-    for (final Table table : catalog.getTables()) {
-      final Collection<Index> indexes = table.getIndexes();
-      if (!indexes.isEmpty()) {
-        hasIndexes = true;
-        break;
-      }
-    }
-
-    assertThat("Should have retrieved at least one index", hasIndexes, is(true));
-  }
-
-  @Test
-  @DisplayName("Test retrieving indexes from data dictionary")
-  public void testRetrieveIndexesFromDataDictionary(final DatabaseConnectionSource dataSource)
-      throws Exception {
-    // Arrange - create a custom information schema view for indexes
-    final String sql =
-        "SELECT "
-            + "NULL AS TABLE_CAT, "
-            + "'PUBLIC' AS TABLE_SCHEM, "
-            + "'BOOKS' AS TABLE_NAME, "
-            + "FALSE AS NON_UNIQUE, "
-            + "NULL AS INDEX_QUALIFIER, "
-            + "'TEST_INDEX' AS INDEX_NAME, "
-            + "1 AS TYPE, "
-            + "1 AS ORDINAL_POSITION, "
-            + "'ID' AS COLUMN_NAME, "
-            + "NULL AS ASC_OR_DESC, "
-            + "0 AS CARDINALITY, "
-            + "0 AS PAGES, "
-            + "NULL AS FILTER_CONDITION "
-            + "FROM (VALUES(0))";
-
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(indexesRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        createRetrieverConnection(dataSource, INDEXES, sql, data_dictionary_all);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
-    // Create a list of tables to retrieve indexes for
-    final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
-    for (final Schema schema : catalog.getSchemas()) {
-      for (final Table table : catalog.getTables(schema)) {
-        if (table instanceof MutableTable) {
-          allTables.add((MutableTable) table);
-        }
-      }
-    }
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    // Create the index retriever
-    final IndexRetriever indexRetriever =
-        new IndexRetriever(retrieverConnection, catalog, createOptions());
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    indexRetriever.retrieveIndexes(catalog.getAllTables());
 
-    // Act - retrieve indexes
-    indexRetriever.retrieveIndexes(allTables);
-
-    // We can't easily verify the specific index was created since we need a matching table,
-    // but we can verify the method executed without errors
+    verifyRetrieveIndexes(catalog);
   }
 
   @Test
-  @DisplayName("Test retrieving additional index information")
-  public void testRetrieveIndexInformation(final DatabaseConnectionSource dataSource)
-      throws Exception {
-    // Arrange - create a custom information schema view for extended indexes
-    final String sql =
-        "SELECT "
-            + "NULL AS INDEX_CATALOG, "
-            + "'PUBLIC' AS INDEX_SCHEMA, "
-            + "'BOOKS' AS TABLE_NAME, "
-            + "'TEST_INDEX' AS INDEX_NAME, "
-            + "'Test index remark' AS REMARKS, "
-            + "'Test index source' AS INDEX_DEFINITION "
-            + "FROM (VALUES(0))";
+  @DisplayName("Retrieve index definitions from INFORMATION_SCHEMA")
+  public void indexInfo(final DatabaseConnectionSource dataSource) throws Exception {
 
+    final String remarks = "TEST Index remarks";
+    final String definition = "TEST Index definition";
+
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                EXT_INDEXES,
+                String.format(
+                    "SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
+                        + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
+                        + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO",
+                    remarks, definition))
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        createRetrieverConnection(dataSource, EXT_INDEXES, sql, null);
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
 
-    // Create the index retriever
-    final IndexRetriever indexRetriever =
-        new IndexRetriever(retrieverConnection, catalog, createOptions());
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    // Act - retrieve additional index information
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
     indexRetriever.retrieveIndexInformation();
 
-    // We can't easily verify the specific index information was added since we need a matching
-    // index,
-    // but we can verify the method executed without errors
-  }
-
-  @Test
-  @DisplayName("Test retrieving indexes with invalid SQL")
-  public void testRetrieveIndexesWithInvalidSql(final DatabaseConnectionSource dataSource)
-      throws Exception {
-    // Arrange - create a custom information schema view with invalid SQL
-    final RetrieverConnection retrieverConnection =
-        createRetrieverConnection(
-            dataSource, INDEXES, "THIS IS NOT VALID SQL", data_dictionary_all);
-
-    // Create a list of tables to retrieve indexes for
-    final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
-    for (final Schema schema : catalog.getSchemas()) {
-      for (final Table table : catalog.getTables(schema)) {
-        if (table instanceof MutableTable) {
-          allTables.add((MutableTable) table);
-        }
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(14));
+    for (final Table table : tables) {
+      for (final Index index : table.getIndexes()) {
+        assertThat(index.getRemarks(), is(remarks));
+        assertThat(index.getDefinition(), is(definition));
       }
     }
+  }
 
-    // Create the index retriever
-    final IndexRetriever indexRetriever =
-        new IndexRetriever(retrieverConnection, catalog, createOptions());
+  @BeforeAll
+  public void loadBaseCatalog(final Connection connection) {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+    catalog =
+        (MutableCatalog)
+            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
 
-    // Act & Assert - retrieving indexes with invalid SQL should throw an exception
-    // The IndexRetriever doesn't handle invalid SQL gracefully, so we expect an exception
-    assertThrows(SQLException.class, () -> indexRetriever.retrieveIndexes(allTables));
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(14));
+    for (final Table table : tables) {
+      assertThat(table.getIndexes(), is(empty()));
+      assertThat(table.getPrimaryKey(), is(nullValue()));
+    }
   }
 }
