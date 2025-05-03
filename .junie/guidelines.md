@@ -4,12 +4,12 @@ This document provides guidelines for the Junie AI assistant when working with t
 
 ## General Coding Guidelines
 - Prefer **immutability** and use the `final` keyword for fields, parameters, and local variables when appropriate.
+- Follow the **Effective Java** principles, particularly "Item 17 - Minimize Mutability" by using package-private constructors.
 - Follow **Java 8 best practices**, including usage of `Optional`, `Streams`, and functional programming where applicable.
 - Ensure **thread safety** by avoiding mutable shared state and using synchronized wrappers or concurrency utilities when necessary.
 - Use **meaningful names** for classes, methods, and variables to improve code readability.
 - Follow **SOLID principles** to enhance maintainability and scalability.
 - Write meaningful **javadocs** for functions and classes.
-- Follow the **Effective Java** principles, particularly "Item 17 - Minimize Mutability" by using package-private constructors.
 - Use **builder pattern** for complex object construction.
 - Implement clear **class hierarchies** with abstract base classes and specific implementations.
 - Use **interfaces** extensively with well-defined implementations.
