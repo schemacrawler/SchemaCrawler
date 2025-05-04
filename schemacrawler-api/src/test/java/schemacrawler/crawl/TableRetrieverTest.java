@@ -35,68 +35,41 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
-import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Collection;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableTypes;
-import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
-import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
-@WithTestDatabase
 @ResolveTestContext
-public class TableRetrieverTest {
-
-  private MutableCatalog catalog;
+public class TableRetrieverTest extends AbstractRetrieverTest {
 
   @Test
   @DisplayName("Test with empty result set")
   public void emptyResultSet(final DatabaseConnectionSource dataSource) throws Exception {
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(
-                InformationSchemaKey.TABLES,
-                "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=0")
-            .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(tablesRetrievalStrategy, data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+        createRetrieverConnection(
+            dataSource,
+            InformationSchemaKey.TABLES,
+            "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=0",
+            data_dictionary_all);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
     tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
 
     // Verify that no new tables were added to the catalog
@@ -108,22 +81,12 @@ public class TableRetrieverTest {
   public void handlingOfInvalidSQLInTableRetrieval(final DatabaseConnectionSource dataSource)
       throws Exception {
     // Use invalid SQL that will cause a SQL exception
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(InformationSchemaKey.TABLES, "THIS IS NOT VALID SQL")
-            .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(tablesRetrievalStrategy, data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+        createRetrieverConnection(
+            dataSource, InformationSchemaKey.TABLES, "THIS IS NOT VALID SQL", data_dictionary_all);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
 
     // Verify that the retriever handles SQL exceptions gracefully
     final SQLException sqlException =
@@ -135,54 +98,20 @@ public class TableRetrieverTest {
     assertThat(sqlException.getCause().getMessage(), is("unexpected token: THIS"));
   }
 
-  @BeforeEach
-  public void loadBaseCatalog(final Connection connection) {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(
-                SchemaInfoLevelBuilder.builder()
-                    .withInfoLevel(InfoLevel.minimum)
-                    .setRetrieveTables(false)
-                    .toOptions());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    catalog =
-        (MutableCatalog)
-            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, is(empty()));
-  }
-
   @Test
   @DisplayName("Test with malformed data in result sets")
   public void malformedDataInResultSets(final DatabaseConnectionSource dataSource)
       throws Exception {
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(
-                InformationSchemaKey.TABLES,
-                "SELECT 'INVALID_CAT' AS TABLE_CAT, 'INVALID_SCHEMA' AS TABLE_SCHEM, '' AS TABLE_NAME,"
-                    + " 'INVALID_TYPE' AS TABLE_TYPE, 'Test remarks' AS REMARKS FROM (VALUES(0))")
-            .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(tablesRetrievalStrategy, data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final String sql =
+        "SELECT 'INVALID_CAT' AS TABLE_CAT, 'INVALID_SCHEMA' AS TABLE_SCHEM, '' AS TABLE_NAME,"
+            + " 'INVALID_TYPE' AS TABLE_TYPE, 'Test remarks' AS REMARKS FROM (VALUES(0))";
+
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+        createRetrieverConnection(
+            dataSource, InformationSchemaKey.TABLES, sql, data_dictionary_all);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
     // Should handle empty table name gracefully
     tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
 
@@ -201,22 +130,15 @@ public class TableRetrieverTest {
   @DisplayName("Retrieve tables from data dictionary")
   public void tablesFromDataDictionary(
       final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(InformationSchemaKey.TABLES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES")
-            .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(tablesRetrievalStrategy, data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+        createRetrieverConnection(
+            dataSource,
+            InformationSchemaKey.TABLES,
+            "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
+            data_dictionary_all);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+    final TableRetriever tableRetriever =
+        new TableRetriever(retrieverConnection, catalog, createOptions());
     tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
 
     final TestWriter testout = new TestWriter();
@@ -233,5 +155,15 @@ public class TableRetrieverTest {
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Override
+  protected void customizeSchemaInfoLevel(final SchemaInfoLevelBuilder schemaInfoLevelBuilder) {
+    schemaInfoLevelBuilder.setRetrieveTables(false);
+  }
+
+  @Override
+  protected SchemaInfoMetadataRetrievalStrategy getRetrievalStrategyKey() {
+    return tablesRetrievalStrategy;
   }
 }
