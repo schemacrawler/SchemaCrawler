@@ -214,6 +214,8 @@ public class DatabaseInfoRetrieverTest {
     final Connection mockConnection = TestObjectUtility.mockConnection();
     final DatabaseMetaData mockMetaData = mockConnection.getMetaData();
     when(mockMetaData.isReadOnly()).thenThrow(SQLException.class);
+    when(mockMetaData.getSchemas()).thenThrow(AbstractMethodError.class);
+    when(mockMetaData.getCatalogs()).thenThrow(SQLException.class);
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(mockConnection);
 
