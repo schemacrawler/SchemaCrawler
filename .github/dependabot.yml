@@ -10,6 +10,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "org.jruby:jruby"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "nl.jqno.equalsverifier:equalsverifier"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
       - ":children_crossing: dependencies"
