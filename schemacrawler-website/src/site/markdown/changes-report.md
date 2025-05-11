@@ -24,7 +24,7 @@ SchemaCrawler release notes.
 <a name="v16.24.3"></a>
 ## Release 16.24.3 - 2024-12-27
 
-- Fix #1811 - pom for lint (see https://github.com/sualeh/schemacrawler-issue1811)
+- Fix #1811 - pom for lint (see [sualeh/schemacrawler-issue1811](https://github.com/sualeh/schemacrawler-issue1811))
 - Tweaks to output for connection test
 
 
