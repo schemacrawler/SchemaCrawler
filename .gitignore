@@ -32,6 +32,8 @@
 tree.txt
 **/gpl*.*
 
+.idea/
+
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij+all,visualstudiocode,maven,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,intellij+all,visualstudiocode,maven,gradle
 
@@ -184,7 +186,7 @@ fabric.properties
 # Ignore everything but code style settings and run configurations
 # that are supposed to be shared within teams.
 
-**/.idea/*
+.idea/*
 
 !.idea/codeStyles
 !.idea/runConfigurations

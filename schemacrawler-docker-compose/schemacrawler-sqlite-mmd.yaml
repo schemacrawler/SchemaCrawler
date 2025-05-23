@@ -11,4 +11,10 @@ services:
         source: ./
         target: /home/schcrwlr/share
     entrypoint: ['/opt/schemacrawler/bin/schemacrawler.sh']
-    command: --url="jdbc:sqlite:sc.db" --info-level=standard --command=script --script-language=python --script=mermaid.py --output-file=share/db-schema.mmd
+    command: >
+      --url="jdbc:sqlite:sc.db"
+      --info-level=standard
+      --command=script
+      --script-language=python
+      --script=mermaid.py
+      --output-file=share/db-schema.mmd

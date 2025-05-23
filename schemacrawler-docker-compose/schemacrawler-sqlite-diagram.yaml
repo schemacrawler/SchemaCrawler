@@ -11,4 +11,8 @@ services:
         source: ./
         target: /home/schcrwlr/share
     entrypoint: ['/opt/schemacrawler/bin/schemacrawler.sh']
-    command: --url="jdbc:sqlite:sc.db" --info-level=standard --command=schema --output-file=share/db-schema.pdf
+    command: >
+      --url="jdbc:sqlite:sc.db"
+      --info-level=standard
+      --command=schema
+      --output-file=share/db-schema.pdf
