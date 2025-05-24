@@ -144,8 +144,8 @@ public class SqlScript implements Runnable {
 
     final SQLWarning warnings = statement.getWarnings();
     statement.clearWarnings();
-    if (warnings != null && !warnings.getMessage().startsWith("Can't drop database")) {
-      throw warnings;
+    if (warnings != null) {
+      LOGGER.log(Level.WARNING, warnings.getMessage(), warnings);
     }
   }
 

@@ -60,7 +60,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class CockroachDBTest extends BaseAdditionalDatabaseTest {
 
   private static final DockerImageName imageName =
-      DockerImageName.parse("cockroachdb/cockroach").withTag("v20.2.9");
+      DockerImageName.parse("cockroachdb/cockroach").withTag("v24.3.13");
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = new CockroachContainer(imageName);
 
