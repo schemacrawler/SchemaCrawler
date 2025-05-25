@@ -3,7 +3,13 @@
 SchemaCrawler release notes.
 
 <a name="v16.25.4"></a>
-## Release 16.25.4 - 2025-03-24
+## Release 16.25.4 - 2025-05-24
+
+- Released SchemaCrawler MCP Server
+
+
+<a name="v16.25.3"></a>
+## Release 16.25.3 - 2025-03-24
 
 - Fix download scripts - fixes [#1882](https://github.com/schemacrawler/SchemaCrawler/issues/1882)
 
