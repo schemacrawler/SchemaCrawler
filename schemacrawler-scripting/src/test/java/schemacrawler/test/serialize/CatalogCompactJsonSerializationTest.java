@@ -42,6 +42,7 @@ import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.command.serialize.model.TableDocument;
 import schemacrawler.tools.formatter.serialize.CatalogSerializer;
 import schemacrawler.tools.formatter.serialize.CompactSerializedCatalog;
 import schemacrawler.tools.options.Config;
@@ -60,6 +61,25 @@ public class CatalogCompactJsonSerializationTest {
     final Catalog catalog =
         getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
     final CatalogSerializer serializedCatalog = new CompactSerializedCatalog(catalog);
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      serializedCatalog.save(testout);
+    }
+
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void catalogSerializationWithCompactJsonAllDetails(
+      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+
+    final Catalog catalog =
+        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+    final CatalogSerializer serializedCatalog = new CompactSerializedCatalog(catalog, TableDocument.allTableDetails());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

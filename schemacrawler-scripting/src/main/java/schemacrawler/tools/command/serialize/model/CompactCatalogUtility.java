@@ -29,69 +29,72 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.serialize.model;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.EnumMap;
 import java.util.Map;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
-import us.fatehi.utility.UtilityMarker;
 
-@UtilityMarker
 public final class CompactCatalogUtility {
 
-  public static CatalogDocument createCatalogDocument(final Catalog catalog) {
+  private final EnumMap<AdditionalTableDetails, Boolean> additionalTableDetails;
+
+  private final EnumMap<AdditionalRoutineDetails, Boolean> additionalRoutineDetails;
+
+  public CompactCatalogUtility() {
+    additionalTableDetails = new EnumMap<>(AdditionalTableDetails.class);
+    additionalRoutineDetails = new EnumMap<>(AdditionalRoutineDetails.class);
+  }
+
+  public CatalogDocument createCatalogDocument(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
 
     final CatalogDocument catalogDocument =
         new CatalogDocument(catalog.getDatabaseInfo().getDatabaseProductName());
     for (final Table table : catalog.getTables()) {
-      final TableDocument tableDocument = getTableDocument(table, true);
+      final TableDocument tableDocument = getTableDocument(table);
       catalogDocument.addTable(tableDocument);
     }
     return catalogDocument;
   }
 
-  public static TableDocument getTableDocument(final Table table, final boolean withDependents) {
+  public TableDocument getTableDocument(final Table table) {
     requireNonNull(table, "No table provided");
-
-    final Map<String, Column> referencedColumns = mapReferencedColumns(table);
-    final TableDocument tableDocument = new TableDocument(table);
-    for (final Column column : table.getColumns()) {
-      final ColumnDocument columnDocument =
-          new ColumnDocument(column, referencedColumns.get(column.getName()));
-      tableDocument.addColumn(columnDocument);
-    }
-
-    if (withDependents) {
-      final Collection<Table> dependentTables = table.getDependentTables();
-      for (final Table dependentTable : dependentTables) {
-        final TableDocument dependentTableDocument = new TableDocument(dependentTable);
-        tableDocument.addDependentTable(dependentTableDocument);
-      }
-    }
-
+    final TableDocument tableDocument = new TableDocument(table, additionalTableDetails);
     return tableDocument;
   }
 
-  private static Map<String, Column> mapReferencedColumns(final Table table) {
-    requireNonNull(table, "No table provided");
-
-    final Map<String, Column> referencedColumns = new HashMap<>();
-    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-      final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
-      for (final ColumnReference columnReference : columnReferences) {
-        referencedColumns.put(
-            columnReference.getForeignKeyColumn().getName(), columnReference.getPrimaryKeyColumn());
-      }
+  public CompactCatalogUtility withAdditionalRoutineDetails(
+      final Collection<AdditionalRoutineDetails> withAdditionalRoutineDetails) {
+    if (withAdditionalRoutineDetails == null || withAdditionalRoutineDetails.isEmpty()) {
+      return this;
     }
-    return referencedColumns;
+    for (final AdditionalRoutineDetails additionalRoutineDetail : withAdditionalRoutineDetails) {
+      additionalRoutineDetails.put(additionalRoutineDetail, true);
+    }
+
+    return this;
   }
 
-  private CompactCatalogUtility() {
-    // Prevent instantiation
+  public CompactCatalogUtility withAdditionalTableDetails(
+      final Collection<AdditionalTableDetails> withAdditionalTableDetails) {
+    if (withAdditionalTableDetails == null || withAdditionalTableDetails.isEmpty()) {
+      return this;
+    }
+    for (final AdditionalTableDetails additionalTableDetail : withAdditionalTableDetails) {
+      additionalTableDetails.put(additionalTableDetail, true);
+    }
+    return this;
+  }
+
+  public CompactCatalogUtility withAdditionalTableDetails(
+      final Map<AdditionalTableDetails, Boolean> withAdditionalTableDetails) {
+    if (withAdditionalTableDetails == null || withAdditionalTableDetails.isEmpty()) {
+      return this;
+    }
+    additionalTableDetails.clear();
+    additionalTableDetails.putAll(withAdditionalTableDetails);
+
+    return this;
   }
 }

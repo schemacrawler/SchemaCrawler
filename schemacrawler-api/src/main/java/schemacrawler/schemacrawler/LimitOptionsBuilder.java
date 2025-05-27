@@ -39,8 +39,6 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.utility.EnumUtility.enumValue;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.EnumSet;
@@ -48,7 +46,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -134,6 +132,11 @@ public final class LimitOptionsBuilder
 
   public LimitOptionsBuilder includeAllSynonyms() {
     includeSynonyms(new IncludeAll());
+    return this;
+  }
+
+  public LimitOptionsBuilder includeAllTables() {
+    includeTables(new IncludeAll());
     return this;
   }
 
@@ -256,7 +259,7 @@ public final class LimitOptionsBuilder
    *     requested.
    */
   public LimitOptionsBuilder tableTypes(final Collection<String> tableTypeStrings) {
-    this.tableTypes = TableTypes.from(tableTypeStrings);
+    tableTypes = TableTypes.from(tableTypeStrings);
     return this;
   }
 
@@ -267,7 +270,7 @@ public final class LimitOptionsBuilder
    *     requested.
    */
   public LimitOptionsBuilder tableTypes(final String... tableTypeStrings) {
-    this.tableTypes = TableTypes.from(tableTypeStrings);
+    tableTypes = TableTypes.from(tableTypeStrings);
     return this;
   }
 
@@ -279,7 +282,7 @@ public final class LimitOptionsBuilder
    *     types are requested.
    */
   public LimitOptionsBuilder tableTypes(final String tableTypesString) {
-    this.tableTypes = TableTypes.from(tableTypesString);
+    tableTypes = TableTypes.from(tableTypesString);
     return this;
   }
 
