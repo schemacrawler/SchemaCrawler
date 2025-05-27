@@ -2,6 +2,7 @@ package schemacrawler.tools.command.serialize.model;
 
 import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.DEFINIITION;
 import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.INDEXES;
+import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.PRIMARY_KEY;
 import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.TRIGGERS;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public final class TableDocument implements Serializable {
 
     tableName = table.getName();
 
-    if (table.hasPrimaryKey()) {
+    if (details.get(PRIMARY_KEY) && table.hasPrimaryKey()) {
       primaryKey = new IndexDocument(table.getPrimaryKey());
     } else {
       primaryKey = null;

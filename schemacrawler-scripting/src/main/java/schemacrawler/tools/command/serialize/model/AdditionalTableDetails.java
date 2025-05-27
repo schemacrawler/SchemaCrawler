@@ -1,5 +1,5 @@
 package schemacrawler.tools.command.serialize.model;
 
 public enum AdditionalTableDetails {
-  INDEXES, TRIGGERS, ATTRIBUTES, DEFINIITION
+  PRIMARY_KEY, INDEXES, TRIGGERS, ATTRIBUTES, DEFINIITION
 }
