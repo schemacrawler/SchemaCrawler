@@ -33,10 +33,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.tools.command.serialize.model.AdditionalTableDetails;
 import schemacrawler.tools.command.serialize.model.CatalogDocument;
 import schemacrawler.tools.command.serialize.model.CompactCatalogUtility;
 
@@ -47,8 +49,15 @@ public final class CompactSerializedCatalog implements CatalogSerializer {
   private final CatalogDocument catalogDescription;
 
   public CompactSerializedCatalog(final Catalog catalog) {
+    this(catalog, null);
+  }
+
+  public CompactSerializedCatalog(final Catalog catalog,
+      final Map<AdditionalTableDetails, Boolean> tableDetails) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
-    catalogDescription = CompactCatalogUtility.createCatalogDocument(catalog);
+    final CompactCatalogUtility compactCatalogUtility = new CompactCatalogUtility();
+    compactCatalogUtility.withAdditionalTableDetails(tableDetails);
+    catalogDescription = compactCatalogUtility.createCatalogDocument(catalog);
   }
 
   @Override

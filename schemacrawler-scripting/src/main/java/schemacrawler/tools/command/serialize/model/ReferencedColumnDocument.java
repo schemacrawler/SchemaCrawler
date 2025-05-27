@@ -18,8 +18,8 @@ public final class ReferencedColumnDocument implements Serializable {
 
   private static final long serialVersionUID = -2159895984317222363L;
 
-  private final String tableName;
   private final String schemaName;
+  private final String tableName;
   private final String columnName;
 
   public ReferencedColumnDocument(final Column column) {
@@ -27,15 +27,13 @@ public final class ReferencedColumnDocument implements Serializable {
 
     final Table table = column.getParent();
 
-    tableName = table.getName();
-
     final String schema = table.getSchema().getFullName();
     if (!isBlank(schema)) {
       schemaName = schema;
     } else {
       schemaName = null;
     }
-
+    tableName = table.getName();
     columnName = column.getName();
   }
 
