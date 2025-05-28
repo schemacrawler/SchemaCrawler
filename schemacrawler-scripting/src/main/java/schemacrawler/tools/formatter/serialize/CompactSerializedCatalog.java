@@ -38,6 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.tools.command.serialize.model.AdditionalRoutineDetails;
 import schemacrawler.tools.command.serialize.model.AdditionalTableDetails;
 import schemacrawler.tools.command.serialize.model.CatalogDocument;
 import schemacrawler.tools.command.serialize.model.CompactCatalogUtility;
@@ -49,14 +50,18 @@ public final class CompactSerializedCatalog implements CatalogSerializer {
   private final CatalogDocument catalogDescription;
 
   public CompactSerializedCatalog(final Catalog catalog) {
-    this(catalog, null);
+    this(catalog, null, null);
   }
 
-  public CompactSerializedCatalog(final Catalog catalog,
-      final Map<AdditionalTableDetails, Boolean> tableDetails) {
+  public CompactSerializedCatalog(
+      final Catalog catalog,
+      final Map<AdditionalTableDetails, Boolean> tableDetails,
+      final Map<AdditionalRoutineDetails, Boolean> routineDetails) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
-    final CompactCatalogUtility compactCatalogUtility = new CompactCatalogUtility();
-    compactCatalogUtility.withAdditionalTableDetails(tableDetails);
+    final CompactCatalogUtility compactCatalogUtility =
+        new CompactCatalogUtility()
+            .withAdditionalTableDetails(tableDetails)
+            .withAdditionalRoutineDetails(routineDetails);
     catalogDescription = compactCatalogUtility.createCatalogDocument(catalog);
   }
 

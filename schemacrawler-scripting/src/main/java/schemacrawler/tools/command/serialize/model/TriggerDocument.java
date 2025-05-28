@@ -16,8 +16,16 @@ import schemacrawler.schema.Trigger;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonPropertyOrder({"name", "table", "remarks", "primary-key", "columns", "indexes", "attributes",
-    "definition"})
+@JsonPropertyOrder({
+  "name",
+  "table",
+  "remarks",
+  "primary-key",
+  "columns",
+  "indexes",
+  "attributes",
+  "definition"
+})
 public final class TriggerDocument implements Serializable {
 
   private static final long serialVersionUID = 1873929712139211255L;
@@ -37,8 +45,10 @@ public final class TriggerDocument implements Serializable {
     actionOrder = trigger.getActionOrder();
     actionOrientation = trigger.getActionOrientation().toString();
     conditionTiming = trigger.getConditionTiming().toString();
-    eventManipulationType = trigger.getEventManipulationTypes().stream()
-        .map(EventManipulationType::toString).collect(Collectors.toList());
+    eventManipulationType =
+        trigger.getEventManipulationTypes().stream()
+            .map(EventManipulationType::toString)
+            .collect(Collectors.toList());
   }
 
   public String getActionCondition() {
@@ -66,16 +76,12 @@ public final class TriggerDocument implements Serializable {
     return triggerName;
   }
 
-  public String toJson() {
+  @Override
+  public String toString() {
     try {
       return new ObjectMapper().writeValueAsString(this);
     } catch (final JsonProcessingException e) {
       return super.toString();
     }
-  }
-
-  @Override
-  public String toString() {
-    return toJson();
   }
 }
