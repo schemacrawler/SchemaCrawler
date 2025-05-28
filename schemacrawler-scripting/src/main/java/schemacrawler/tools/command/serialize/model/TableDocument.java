@@ -15,7 +15,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -30,26 +30,25 @@ import schemacrawler.schema.Trigger;
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonPropertyOrder({"schema", "table", "remarks", "primary-key", "columns", "indexes", "attributes",
-    "definition"})
+@JsonPropertyOrder({
+  "schema",
+  "table",
+  "type",
+  "remarks",
+  "primary-key",
+  "columns",
+  "indexes",
+  "triggers",
+  "attributes",
+  "definition"
+})
 public final class TableDocument implements Serializable {
 
   private static final long serialVersionUID = 1873929712139211255L;
 
-  public static Map<AdditionalTableDetails, Boolean> allTableDetails() {
-    final Map<AdditionalTableDetails, Boolean> details;
-    details = new EnumMap<>(AdditionalTableDetails.class);
-
-    for (final AdditionalTableDetails additionalTableDetails : AdditionalTableDetails.values()) {
-      if (!details.containsKey(additionalTableDetails)) {
-        details.put(additionalTableDetails, true);
-      }
-    }
-    return details;
-  }
-
   private final String schemaName;
   private final String tableName;
+  private final String tableType;
   private final String remarks;
   private final IndexDocument primaryKey;
   private final List<ColumnDocument> columns;
@@ -67,6 +66,7 @@ public final class TableDocument implements Serializable {
     this.schemaName = trimToEmpty(schemaName);
 
     tableName = table.getName();
+    tableType = table.getTableType().toString();
 
     if (details.get(PRIMARY_KEY) && table.hasPrimaryKey()) {
       primaryKey = new IndexDocument(table.getPrimaryKey());
@@ -156,17 +156,22 @@ public final class TableDocument implements Serializable {
     return tableName;
   }
 
-  public String toJson() {
-    try {
-      return new ObjectMapper().writeValueAsString(this);
-    } catch (final JsonProcessingException e) {
-      return super.toString();
-    }
+  @JsonProperty("type")
+  public String getTableType() {
+    return tableType;
+  }
+
+  public List<TriggerDocument> getTriggers() {
+    return triggers;
+  }
+
+  public JsonNode toJson() {
+    return new ObjectMapper().valueToTree(this);
   }
 
   @Override
   public String toString() {
-    return toJson();
+    return toJson().toString();
   }
 
   private Map<AdditionalTableDetails, Boolean> defaults(
@@ -193,8 +198,8 @@ public final class TableDocument implements Serializable {
     for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
       final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
       for (final ColumnReference columnReference : columnReferences) {
-        referencedColumns.put(columnReference.getForeignKeyColumn().getName(),
-            columnReference.getPrimaryKeyColumn());
+        referencedColumns.put(
+            columnReference.getForeignKeyColumn().getName(), columnReference.getPrimaryKeyColumn());
       }
     }
     return referencedColumns;

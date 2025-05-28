@@ -38,8 +38,10 @@ public final class IndexDocument implements Serializable {
     requireNonNull(primaryKey, "No index provided");
 
     name = primaryKey.getName();
-    columns = primaryKey.getConstrainedColumns().stream().map(TableConstraintColumn::getName)
-        .collect(Collectors.toList());
+    columns =
+        primaryKey.getConstrainedColumns().stream()
+            .map(TableConstraintColumn::getName)
+            .collect(Collectors.toList());
     isUnique = true;
   }
 
@@ -55,16 +57,12 @@ public final class IndexDocument implements Serializable {
     return isUnique;
   }
 
-  public String toJson() {
+  @Override
+  public String toString() {
     try {
       return new ObjectMapper().writeValueAsString(this);
     } catch (final JsonProcessingException e) {
       return super.toString();
     }
-  }
-
-  @Override
-  public String toString() {
-    return toJson();
   }
 }

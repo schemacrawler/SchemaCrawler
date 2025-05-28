@@ -33,12 +33,12 @@ import java.util.EnumMap;
 import java.util.Map;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 
 public final class CompactCatalogUtility {
 
   private final EnumMap<AdditionalTableDetails, Boolean> additionalTableDetails;
-
   private final EnumMap<AdditionalRoutineDetails, Boolean> additionalRoutineDetails;
 
   public CompactCatalogUtility() {
@@ -55,7 +55,17 @@ public final class CompactCatalogUtility {
       final TableDocument tableDocument = getTableDocument(table);
       catalogDocument.addTable(tableDocument);
     }
+    for (final Routine routine : catalog.getRoutines()) {
+      final RoutineDocument routineDocument = getRoutineDocument(routine);
+      catalogDocument.addRoutine(routineDocument);
+    }
     return catalogDocument;
+  }
+
+  public RoutineDocument getRoutineDocument(final Routine routine) {
+    requireNonNull(routine, "No routine provided");
+    final RoutineDocument routineDocument = new RoutineDocument(routine, additionalRoutineDetails);
+    return routineDocument;
   }
 
   public TableDocument getTableDocument(final Table table) {
@@ -72,6 +82,17 @@ public final class CompactCatalogUtility {
     for (final AdditionalRoutineDetails additionalRoutineDetail : withAdditionalRoutineDetails) {
       additionalRoutineDetails.put(additionalRoutineDetail, true);
     }
+
+    return this;
+  }
+
+  public CompactCatalogUtility withAdditionalRoutineDetails(
+      final Map<AdditionalRoutineDetails, Boolean> withAdditionalRoutineDetails) {
+    if (withAdditionalRoutineDetails == null || withAdditionalRoutineDetails.isEmpty()) {
+      return this;
+    }
+    additionalRoutineDetails.clear();
+    additionalRoutineDetails.putAll(withAdditionalRoutineDetails);
 
     return this;
   }
