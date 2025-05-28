@@ -45,6 +45,7 @@ import static us.fatehi.utility.Utility.hasNoUpperCase;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isClassAvailable;
 import static us.fatehi.utility.Utility.isIntegral;
+import static us.fatehi.utility.Utility.isRegularExpression;
 import static us.fatehi.utility.Utility.join;
 import static us.fatehi.utility.Utility.stripEnd;
 import static us.fatehi.utility.Utility.stripStart;
@@ -185,5 +186,14 @@ public class UtilityTest {
     assertThat(stripStart(" \tpreTest"), is("preTest"));
     assertThat(stripStart(" \tpreTest\t "), is("preTest\t "));
     assertThat(stripStart("preTest\t "), is("preTest\t "));
+  }
+
+  @Test
+  void testValidRegexPatterns() {
+      assertThat(isRegularExpression("[a-z]+"), is(true));
+      assertThat(isRegularExpression("^hello$"), is(true));
+
+      assertThat(isRegularExpression("hello"), is(false));
+      assertThat(isRegularExpression("*invalid"), is(false));
   }
 }
