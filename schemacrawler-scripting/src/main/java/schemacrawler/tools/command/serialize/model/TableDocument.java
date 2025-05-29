@@ -1,5 +1,7 @@
 package schemacrawler.tools.command.serialize.model;
 
+import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.ATTRIBUTES;
+import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.CHILD_TABLES;
 import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.DEFINIITION;
 import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.INDEXES;
 import static schemacrawler.tools.command.serialize.model.AdditionalTableDetails.PRIMARY_KEY;
@@ -35,8 +37,9 @@ import schemacrawler.schema.Trigger;
   "table",
   "type",
   "remarks",
-  "primary-key",
   "columns",
+  "primary-key",
+  "child-tables",
   "indexes",
   "triggers",
   "attributes",
@@ -50,8 +53,9 @@ public final class TableDocument implements Serializable {
   private final String tableName;
   private final String tableType;
   private final String remarks;
-  private final IndexDocument primaryKey;
   private final List<ColumnDocument> columns;
+  private final IndexDocument primaryKey;
+  private final Collection<ReferencedTableDocument> dependentTables;
   private final Collection<IndexDocument> indexes;
   private final List<TriggerDocument> triggers;
   private final Map<String, String> attributes;
@@ -68,18 +72,27 @@ public final class TableDocument implements Serializable {
     tableName = table.getName();
     tableType = table.getTableType().toString();
 
-    if (details.get(PRIMARY_KEY) && table.hasPrimaryKey()) {
-      primaryKey = new IndexDocument(table.getPrimaryKey());
-    } else {
-      primaryKey = null;
-    }
-
     final Map<String, Column> referencedColumns = mapReferencedColumns(table);
     columns = new ArrayList<>();
     for (final Column column : table.getColumns()) {
       final ColumnDocument columnDocument =
           new ColumnDocument(column, referencedColumns.get(column.getName()));
       columns.add(columnDocument);
+    }
+
+    if (details.get(PRIMARY_KEY) && table.hasPrimaryKey()) {
+      primaryKey = new IndexDocument(table.getPrimaryKey());
+    } else {
+      primaryKey = null;
+    }
+
+    if (details.get(CHILD_TABLES)) {
+      dependentTables = new ArrayList<>();
+      for (final Table dependentTable : table.getDependentTables()) {
+        dependentTables.add(new ReferencedTableDocument(dependentTable));
+      }
+    } else {
+      dependentTables = null;
     }
 
     if (details.get(INDEXES)) {
@@ -113,7 +126,7 @@ public final class TableDocument implements Serializable {
       definition = null;
     }
 
-    if (details.get(AdditionalTableDetails.ATTRIBUTES)) {
+    if (details.get(ATTRIBUTES)) {
       attributes = new HashMap<>();
       table.getAttributes().entrySet().stream()
           .forEach(entry -> attributes.put(entry.getKey(), String.valueOf(entry.getValue())));
@@ -132,6 +145,11 @@ public final class TableDocument implements Serializable {
 
   public String getDefinition() {
     return definition;
+  }
+
+  @JsonProperty("child-tables")
+  public Collection<ReferencedTableDocument> getDependentTables() {
+    return dependentTables;
   }
 
   public Collection<IndexDocument> getIndexes() {
