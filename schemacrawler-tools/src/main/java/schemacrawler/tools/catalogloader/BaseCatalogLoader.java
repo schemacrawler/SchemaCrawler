@@ -31,6 +31,8 @@ package schemacrawler.tools.catalogloader;
 import static java.util.Comparator.comparingInt;
 import static java.util.Comparator.nullsLast;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
@@ -40,10 +42,14 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
+import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.PropertyName;
+import us.fatehi.utility.string.StringFormat;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
+
+  private static final Logger LOGGER = Logger.getLogger(BaseCatalogLoader.class.getName());
 
   private static Comparator<CatalogLoader> comparator =
       nullsLast(comparingInt(CatalogLoader::getPriority))
@@ -63,17 +69,17 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public int compareTo(final CatalogLoader otherCatalogLoader) {
+  public final int compareTo(final CatalogLoader otherCatalogLoader) {
     return compare(this, otherCatalogLoader, comparator);
   }
 
   @Override
-  public Catalog getCatalog() {
+  public final Catalog getCatalog() {
     return catalog;
   }
 
   @Override
-  public PropertyName getCatalogLoaderName() {
+  public final PropertyName getCatalogLoaderName() {
     return catalogLoaderName;
   }
 
@@ -83,17 +89,17 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public DatabaseConnectionSource getDataSource() {
+  public final DatabaseConnectionSource getDataSource() {
     return dataSource;
   }
 
   @Override
-  public int getPriority() {
+  public final int getPriority() {
     return priority;
   }
 
   @Override
-  public SchemaCrawlerOptions getSchemaCrawlerOptions() {
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions() {
     if (schemaCrawlerOptions == null) {
       return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     }
@@ -101,7 +107,7 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public SchemaRetrievalOptions getSchemaRetrievalOptions() {
+  public final SchemaRetrievalOptions getSchemaRetrievalOptions() {
     if (schemaRetrievalOptions == null) {
       return SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
     }
@@ -112,35 +118,39 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
    * @param additionalConfig the additionalConfig to set
    */
   @Override
-  public void setAdditionalConfiguration(final Config additionalConfig) {
+  public final void setAdditionalConfiguration(final Config additionalConfig) {
     this.additionalConfig = additionalConfig;
   }
 
   @Override
-  public void setCatalog(final Catalog catalog) {
+  public final void setCatalog(final Catalog catalog) {
+    if (catalog != null) {
+      LOGGER.log(Level.INFO, new StringFormat("Loaded catalog with loader <%s>", this.getClass()));
+      LOGGER.log(Level.INFO, () -> MetaDataUtility.summarizeCatalog(catalog));
+    }
     this.catalog = catalog;
   }
 
   @Override
-  public void setDataSource(final DatabaseConnectionSource dataSource) {
+  public final void setDataSource(final DatabaseConnectionSource dataSource) {
     this.dataSource = dataSource;
   }
 
   @Override
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
   @Override
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
+  public final void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
     this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 
-  protected Config getAdditionalConfiguration() {
+  protected final Config getAdditionalConfiguration() {
     return additionalConfig;
   }
 
-  protected boolean isDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
+  protected final boolean isDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
     final String actualDatabaseSystemIdentifier =
         getSchemaRetrievalOptions().getDatabaseServerType().getDatabaseSystemIdentifier();
     if (actualDatabaseSystemIdentifier == null && databaseSystemIdentifier == null) {
@@ -152,7 +162,7 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
     return false;
   }
 
-  protected boolean isLoaded() {
+  protected final boolean isLoaded() {
     return catalog != null;
   }
 }

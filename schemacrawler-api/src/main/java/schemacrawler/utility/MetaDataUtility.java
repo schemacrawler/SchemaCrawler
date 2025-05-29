@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.utility;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
 import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
@@ -37,15 +36,19 @@ import static schemacrawler.filter.ReducerFactory.getTableReducer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.PartialDatabaseObject;
-import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
@@ -237,9 +240,9 @@ public final class MetaDataUtility {
       }
       final JavaSqlTypeGroup javaSqlTypeGroup =
           column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
-      if (!(omitLargeObjectColumns
-          && (javaSqlTypeGroup == JavaSqlTypeGroup.large_object
-              || javaSqlTypeGroup == JavaSqlTypeGroup.object))) {
+      if ((!omitLargeObjectColumns
+          || ((javaSqlTypeGroup != JavaSqlTypeGroup.large_object)
+              && (javaSqlTypeGroup != JavaSqlTypeGroup.object)))) {
         columnsList.add(identifiers.quoteName(column.getName()));
       }
     }
@@ -251,20 +254,34 @@ public final class MetaDataUtility {
     requireNonNull(catalog, "No catalog provided");
     requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
 
-    ((Reducible) catalog).undo(Schema.class, getSchemaReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));
+    catalog.undo(Schema.class, getSchemaReducer(schemaCrawlerOptions));
+    catalog.reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));
 
-    ((Reducible) catalog).undo(Table.class, getTableReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Table.class, getTableReducer(schemaCrawlerOptions));
+    catalog.undo(Table.class, getTableReducer(schemaCrawlerOptions));
+    catalog.reduce(Table.class, getTableReducer(schemaCrawlerOptions));
 
-    ((Reducible) catalog).undo(Routine.class, getRoutineReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Routine.class, getRoutineReducer(schemaCrawlerOptions));
+    catalog.undo(Routine.class, getRoutineReducer(schemaCrawlerOptions));
+    catalog.reduce(Routine.class, getRoutineReducer(schemaCrawlerOptions));
 
-    ((Reducible) catalog).undo(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
+    catalog.undo(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
+    catalog.reduce(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
 
-    ((Reducible) catalog).undo(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
+    catalog.undo(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
+    catalog.reduce(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
+  }
+
+  public static String summarizeCatalog(final Catalog catalog) {
+    final CrawlInfo crawlInfo = catalog.getCrawlInfo();
+
+    final Map<String, Integer> countsMap = new HashMap<>();
+    countsMap.put("column-data-types", catalog.getColumnDataTypes().size());
+    countsMap.put("schemas", catalog.getSchemas().size());
+    countsMap.put("tables", catalog.getTables().size());
+    countsMap.put("routines", catalog.getRoutines().size());
+    countsMap.put("sequences", catalog.getSequences().size());
+    countsMap.put("synonyms", catalog.getSynonyms().size());
+
+    return String.format("Loaded catalog%n%s%nCounts:%n%s", crawlInfo, Objects.toString(countsMap));
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table) {
