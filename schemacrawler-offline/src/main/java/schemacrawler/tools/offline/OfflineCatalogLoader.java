@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -15,9 +17,12 @@ import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
+import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.property.PropertyName;
 
 public final class OfflineCatalogLoader extends BaseCatalogLoader {
+
+  private static final Logger LOGGER = Logger.getLogger(OfflineCatalogLoader.class.getName());
 
   public OfflineCatalogLoader() {
     super(new PropertyName("offlineloader", "Loader for offline databases"), -1);
@@ -56,6 +61,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
         final JavaSerializedCatalog deserializedCatalog =
             new JavaSerializedCatalog(inputFileStream);
         catalog = deserializedCatalog.getCatalog();
+        LOGGER.log(Level.INFO, () -> MetaDataUtility.summarizeCatalog(catalog));
       }
 
       final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
