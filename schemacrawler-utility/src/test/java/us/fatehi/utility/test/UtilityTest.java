@@ -190,10 +190,10 @@ public class UtilityTest {
 
   @Test
   void testValidRegexPatterns() {
-      assertThat(isRegularExpression("[a-z]+"), is(true));
-      assertThat(isRegularExpression("^hello$"), is(true));
+    assertThat(isRegularExpression("[a-z]+"), is(true));
+    assertThat(isRegularExpression("^hello$"), is(true));
 
-      assertThat(isRegularExpression("hello"), is(false));
-      assertThat(isRegularExpression("*invalid"), is(false));
+    assertThat(isRegularExpression("hello"), is(false));
+    assertThat(isRegularExpression("*invalid"), is(false));
   }
 }

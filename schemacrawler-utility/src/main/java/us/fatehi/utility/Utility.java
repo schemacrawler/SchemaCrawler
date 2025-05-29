@@ -39,7 +39,6 @@ import java.util.regex.PatternSyntaxException;
 @UtilityMarker
 public final class Utility {
 
-
   public static String commonPrefix(final String string1, final String string2) {
     if (string1 == null || string2 == null) {
       return "";
