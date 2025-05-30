@@ -25,7 +25,6 @@ public class Issue342Test {
 
   @Test
   public void unsupportedOutputFormat(final DatabaseConnectionSource dataSource) throws Exception {
-    // Create the options
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));

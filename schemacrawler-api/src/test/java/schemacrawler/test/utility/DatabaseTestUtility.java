@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Properties;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -86,8 +87,15 @@ public final class DatabaseTestUtility {
   private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeAllTables()
+            .includeAllRoutines()
+            .includeAllSequences()
+            .includeAllSynonyms();
     return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-        .withLoadOptions(loadOptionsBuilder.toOptions());
+        .withLoadOptions(loadOptionsBuilder.toOptions())
+        .withLimitOptions(limitOptionsBuilder.toOptions());
   }
 
   private DatabaseTestUtility() {
