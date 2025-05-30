@@ -15,7 +15,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
-import schemacrawler.tools.formatter.serialize.KryoSerializedCatalog;
+import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.property.PropertyName;
@@ -58,8 +58,8 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
       try (final InputStream inputFileStream =
           new GZIPInputStream(newInputStream(offlineDatabasePath)); ) {
-        final KryoSerializedCatalog deserializedCatalog =
-            new KryoSerializedCatalog(inputFileStream);
+        final JavaSerializedCatalog deserializedCatalog =
+            new JavaSerializedCatalog(inputFileStream);
         catalog = deserializedCatalog.getCatalog();
         LOGGER.log(Level.INFO, () -> MetaDataUtility.summarizeCatalog(catalog));
       }

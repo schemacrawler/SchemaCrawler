@@ -174,12 +174,7 @@
       <artifactId>asm-analysis</artifactId>
       <version>9.8</version>
       <scope>provided</scope>
-    </dependency>   
-	<dependency>
-      <groupId>com.esotericsoftware</groupId>
-      <artifactId>kryo</artifactId>
-      <version>5.6.2</version>
-	</dependency> 
+    </dependency>
     <!-- graphviz-java dependencies -->
     <dependency>
       <groupId>guru.nidi</groupId>
