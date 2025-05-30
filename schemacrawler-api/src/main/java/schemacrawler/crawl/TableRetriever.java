@@ -97,7 +97,7 @@ final class TableRetriever extends AbstractRetriever {
     }
   }
 
-  private void createTable(
+  private boolean createTable(
       final MetadataResultSet results,
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Table> tableFilter,
@@ -114,7 +114,7 @@ final class TableRetriever extends AbstractRetriever {
     final Optional<SchemaReference> optionalSchema =
         schemas.lookup(new NamedObjectKey(catalogName, schemaName));
     if (!optionalSchema.isPresent()) {
-      return;
+      return false;
     }
     final Schema schema = optionalSchema.get();
 
@@ -126,7 +126,7 @@ final class TableRetriever extends AbstractRetriever {
           new StringFormat(
               "Not including table <%s.%s>, since table type <%s> was not requested",
               schema, tableName, tableTypeString));
-      return;
+      return false;
     }
 
     final MutableTable table;
@@ -143,7 +143,10 @@ final class TableRetriever extends AbstractRetriever {
       table.addAttributes(results.getAttributes());
 
       catalog.addTable(table);
+      return true;
     }
+
+    return false;
   }
 
   private void retrieveTablesFromDataDictionary(
@@ -169,11 +172,15 @@ final class TableRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getLimitMap()); ) {
       int count = 0;
+      int addedCount = 0;
       while (results.next()) {
         count = count + 1;
-        createTable(results, schemas, tableFilter, filteredTableTypes);
+        final boolean added = createTable(results, schemas, tableFilter, filteredTableTypes);
+        if (added) {
+          addedCount = addedCount + 1;
+        }
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d tables", count));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d tables", addedCount, count));
     }
   }
 

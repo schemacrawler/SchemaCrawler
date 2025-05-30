@@ -45,6 +45,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A retriever that uses database metadata to get the extended details about the database sequences.
@@ -91,7 +92,10 @@ final class SequenceRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(sequencesDefinitionSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("SEQUENCE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("SEQUENCE_SCHEMA"));
         final String sequenceName = results.getString("SEQUENCE_NAME");
@@ -113,17 +117,19 @@ final class SequenceRetriever extends AbstractRetriever {
         sequence.withQuoting(getRetrieverConnection().getIdentifiers());
 
         if (sequenceFilter.test(sequence)) {
+          sequence.setStartValue(startValue);
+          sequence.setMaximumValue(maximumValue);
+          sequence.setMinimumValue(minimumValue);
+          sequence.setIncrement(longIncrement);
+          sequence.setCycle(cycle);
+
+          sequence.addAttributes(results.getAttributes());
+
           catalog.addSequence(sequence);
+          addedCount = addedCount + 1;
         }
-
-        sequence.setStartValue(startValue);
-        sequence.setMaximumValue(maximumValue);
-        sequence.setMinimumValue(minimumValue);
-        sequence.setIncrement(longIncrement);
-        sequence.setCycle(cycle);
-
-        sequence.addAttributes(results.getAttributes());
       }
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d sequences", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve sequences", e);
     }
