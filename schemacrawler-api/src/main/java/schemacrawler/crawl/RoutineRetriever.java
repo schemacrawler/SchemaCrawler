@@ -86,7 +86,7 @@ final class RoutineRetriever extends AbstractRetriever {
     }
   }
 
-  private void createFunction(
+  private boolean createFunction(
       final MetadataResultSet results,
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Function> functionFilter) {
@@ -98,7 +98,7 @@ final class RoutineRetriever extends AbstractRetriever {
         new StringFormat("Retrieving function <%s.%s.%s>", catalogName, schemaName, functionName));
 
     if (isBlank(functionName)) {
-      return;
+      return false;
     }
 
     final FunctionReturnType functionType =
@@ -109,7 +109,7 @@ final class RoutineRetriever extends AbstractRetriever {
     final Optional<SchemaReference> optionalSchema =
         schemas.lookup(new NamedObjectKey(catalogName, schemaName));
     if (!optionalSchema.isPresent()) {
-      return;
+      return false;
     }
     final Schema schema = optionalSchema.get();
 
@@ -120,10 +120,13 @@ final class RoutineRetriever extends AbstractRetriever {
       function.addAttributes(results.getAttributes());
 
       catalog.addRoutine(function);
+      return true;
     }
+
+    return false;
   }
 
-  private void createProcedure(
+  private boolean createProcedure(
       final MetadataResultSet results,
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Procedure> procedureFilter) {
@@ -135,7 +138,7 @@ final class RoutineRetriever extends AbstractRetriever {
         new StringFormat(
             "Retrieving procedure <%s.%s.%s>", catalogName, schemaName, procedureName));
     if (isBlank(procedureName)) {
-      return;
+      return false;
     }
     final ProcedureReturnType procedureType =
         results.getEnumFromShortId("PROCEDURE_TYPE", ProcedureReturnType.unknown);
@@ -145,7 +148,7 @@ final class RoutineRetriever extends AbstractRetriever {
     final Optional<SchemaReference> optionalSchema =
         schemas.lookup(new NamedObjectKey(catalogName, schemaName));
     if (!optionalSchema.isPresent()) {
-      return;
+      return false;
     }
     final Schema schema = optionalSchema.get();
 
@@ -156,7 +159,10 @@ final class RoutineRetriever extends AbstractRetriever {
       procedure.addAttributes(results.getAttributes());
 
       catalog.addRoutine(procedure);
+      return true;
     }
+
+    return false;
   }
 
   private void retrieveFunctions(final InclusionRule routineInclusionRule) throws SQLException {
@@ -202,11 +208,15 @@ final class RoutineRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getLimitMap()); ) {
       int count = 0;
+      int addedCount = 0;
       while (results.next()) {
         count = count + 1;
-        createFunction(results, schemas, functionFilter);
+        final boolean added = createFunction(results, schemas, functionFilter);
+        if (added) {
+          addedCount = addedCount + 1;
+        }
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", count));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d functions", addedCount, count));
     }
   }
 
@@ -225,12 +235,18 @@ final class RoutineRetriever extends AbstractRetriever {
                   connection.getMetaData().getFunctions(catalogName, schemaName, null),
                   "DatabaseMetaData::getFunctions"); ) {
         int count = 0;
+        int addedCount = 0;
         while (results.next()) {
           count = count + 1;
-          createFunction(results, schemas, functionFilter);
+          final boolean added = createFunction(results, schemas, functionFilter);
+          if (added) {
+            addedCount = addedCount + 1;
+          }
         }
         LOGGER.log(
-            Level.INFO, new StringFormat("Processed %d functions in schema <%s>", count, schema));
+            Level.INFO,
+            new StringFormat(
+                "Processed %d/%d functions in schema <%s>", addedCount, count, schema));
       } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"), e);
       } catch (final SQLException e) {
@@ -281,11 +297,15 @@ final class RoutineRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getLimitMap()); ) {
       int count = 0;
+      int addedCount = 0;
       while (results.next()) {
         count = count + 1;
-        createProcedure(results, schemas, procedureFilter);
+        final boolean added = createProcedure(results, schemas, procedureFilter);
+        if (added) {
+          addedCount = addedCount + 1;
+        }
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", count));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d procedures", addedCount, count));
     }
   }
 
@@ -305,12 +325,18 @@ final class RoutineRetriever extends AbstractRetriever {
                   connection.getMetaData().getProcedures(catalogName, schemaName, null),
                   "DatabaseMetaData::getProcedures"); ) {
         int count = 0;
+        int addedCount = 0;
         while (results.next()) {
           count = count + 1;
-          createProcedure(results, schemas, procedureFilter);
+          final boolean added = createProcedure(results, schemas, procedureFilter);
+          if (added) {
+            addedCount = addedCount + 1;
+          }
         }
         LOGGER.log(
-            Level.INFO, new StringFormat("Processed %d procedures in schema <%s>", count, schema));
+            Level.INFO,
+            new StringFormat(
+                "Processed %d/%d procedures in schema <%s>", addedCount, count, schema));
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
         logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve procedures"), e);

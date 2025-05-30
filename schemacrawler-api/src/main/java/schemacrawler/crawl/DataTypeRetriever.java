@@ -151,6 +151,34 @@ final class DataTypeRetriever extends AbstractRetriever {
     catalog.addColumnDataType(columnDataType);
   }
 
+  private void createUserDefinedColumnDataType(
+      final MetadataResultSet results, final Schema schema) {
+    // "TYPE_CAT", "TYPE_SCHEM"
+    final String typeName = results.getString("TYPE_NAME");
+    LOGGER.log(Level.FINE, new StringFormat("Retrieving data type <%s.%s>", schema, typeName));
+    final int dataType = results.getInt("DATA_TYPE", 0);
+    final String className = results.getString("CLASS_NAME");
+    final String remarks = results.getString("REMARKS");
+    final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
+
+    final ColumnDataType baseType;
+    if (baseTypeValue != 0) {
+      baseType = catalog.lookupBaseColumnDataTypeByType(baseTypeValue);
+    } else {
+      baseType = null;
+    }
+    final MutableColumnDataType columnDataType =
+        lookupOrCreateColumnDataType(user_defined, schema, dataType, typeName, className);
+    columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
+
+    columnDataType.setBaseType(baseType);
+    columnDataType.setRemarks(remarks);
+
+    columnDataType.addAttributes(results.getAttributes());
+
+    catalog.addColumnDataType(columnDataType);
+  }
+
   private void retrieveSystemColumnDataTypesFromDataDictionary(final Schema systemSchema)
       throws SQLException {
     final InformationSchemaViews informationSchemaViews =
@@ -212,32 +240,13 @@ final class DataTypeRetriever extends AbstractRetriever {
             new MetadataResultSet(
                 connection.getMetaData().getUDTs(catalogName, schemaName, null, null),
                 "DatabaseMetaData::getUDTs"); ) {
+      int count = 0;
       while (results.next()) {
-        // "TYPE_CAT", "TYPE_SCHEM"
-        final String typeName = results.getString("TYPE_NAME");
-        LOGGER.log(Level.FINE, new StringFormat("Retrieving data type <%s.%s>", schema, typeName));
-        final int dataType = results.getInt("DATA_TYPE", 0);
-        final String className = results.getString("CLASS_NAME");
-        final String remarks = results.getString("REMARKS");
-        final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
-
-        final ColumnDataType baseType;
-        if (baseTypeValue != 0) {
-          baseType = catalog.lookupBaseColumnDataTypeByType(baseTypeValue);
-        } else {
-          baseType = null;
-        }
-        final MutableColumnDataType columnDataType =
-            lookupOrCreateColumnDataType(user_defined, schema, dataType, typeName, className);
-        columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
-
-        columnDataType.setBaseType(baseType);
-        columnDataType.setRemarks(remarks);
-
-        columnDataType.addAttributes(results.getAttributes());
-
-        catalog.addColumnDataType(columnDataType);
+        count = count + 1;
+        createUserDefinedColumnDataType(results, schema);
       }
+      LOGGER.log(
+          Level.INFO, new StringFormat("Processed %d user-defined column data types", count));
     } catch (final SQLException e) {
       logPossiblyUnsupportedSQLFeature(
           new StringFormat("Could not retrieve user-defined column data types"), e);

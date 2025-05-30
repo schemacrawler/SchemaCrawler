@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
@@ -103,7 +103,10 @@ final class SynonymRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(synonymsDefinitionSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("SYNONYM_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("SYNONYM_SCHEMA"));
         final String synonymName = results.getString("SYNONYM_NAME");
@@ -148,13 +151,16 @@ final class SynonymRetriever extends AbstractRetriever {
         synonym.withQuoting(getRetrieverConnection().getIdentifiers());
 
         if (synonymFilter.test(synonym)) {
+
+          synonym.setReferencedObject(referencedObject);
+
+          synonym.addAttributes(results.getAttributes());
+
           catalog.addSynonym(synonym);
+          addedCount = addedCount + 1;
         }
-
-        synonym.setReferencedObject(referencedObject);
-
-        synonym.addAttributes(results.getAttributes());
       }
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d synonyms", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve synonyms", e);
     }
