@@ -69,8 +69,7 @@ public class LoadSnapshotTest {
         new JavaSerializedCatalog(newInputStream(serializedCatalogFile, READ));
     final Catalog catalog = serializedCatalog.getCatalog();
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    validateSchema(catalog, schema);
+    validateSchema(catalog);
   }
 
   @BeforeEach
@@ -86,8 +85,7 @@ public class LoadSnapshotTest {
       assertThat("Could not obtain catalog", catalog, notNullValue());
       assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 
-      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-      validateSchema(catalog, schema);
+      validateSchema(catalog);
 
       serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
 
@@ -100,12 +98,12 @@ public class LoadSnapshotTest {
     }
   }
 
-  private void validateSchema(final Catalog catalog, final Schema schema) {
+  private void validateSchema(final Catalog catalog) {
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
     assertThat(
         "Unexpected number of tables in the schema", catalog.getColumnDataTypes(), hasSize(32));
-    assertThat(
-        "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
     assertThat(
         "Unexpected number of routines in the schema", catalog.getRoutines(schema), hasSize(4));
     assertThat(
