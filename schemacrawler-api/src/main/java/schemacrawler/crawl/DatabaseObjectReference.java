@@ -107,7 +107,7 @@ class DatabaseObjectReference<D extends DatabaseObject> implements Serializable 
   private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
     if (in != null) {
       partial = (D) in.readObject();
-      databaseObjectRef = new WeakReference<>((D) null);
+      databaseObjectRef = new WeakReference<>((D) in.readObject());
     }
   }
 
@@ -119,6 +119,7 @@ class DatabaseObjectReference<D extends DatabaseObject> implements Serializable 
   private void writeObject(final ObjectOutputStream out) throws IOException {
     if (out != null) {
       out.writeObject(partial);
+      out.writeObject(databaseObjectRef.get());
     }
   }
 }
