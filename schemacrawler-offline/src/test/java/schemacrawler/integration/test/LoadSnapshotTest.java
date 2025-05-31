@@ -36,10 +36,10 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
+import static schemacrawler.test.utility.DatabaseTestUtility.validateSchema;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.utility.IOUtility.isFileReadable;
@@ -49,7 +49,6 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -96,19 +95,5 @@ public class LoadSnapshotTest {
     } catch (final IOException e) {
       failTestSetup("Could not serialize catalog", e);
     }
-  }
-
-  private void validateSchema(final Catalog catalog) {
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat(
-        "Unexpected number of tables in the schema", catalog.getColumnDataTypes(), hasSize(32));
-    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
-    assertThat(
-        "Unexpected number of routines in the schema", catalog.getRoutines(schema), hasSize(4));
-    assertThat(
-        "Unexpected number of synonyms in the schema", catalog.getSynonyms(schema), hasSize(0));
-    assertThat(
-        "Unexpected number of sequences in the schema", catalog.getSequences(schema), hasSize(0));
   }
 }

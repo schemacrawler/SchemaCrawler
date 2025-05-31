@@ -1,23 +1,18 @@
 package schemacrawler.tools.offline;
 
-import static java.nio.file.Files.newInputStream;
+import static schemacrawler.tools.formatter.serialize.CatalogSerializationUtility.deserializeCatalog;
 import static schemacrawler.utility.MetaDataUtility.reduceCatalog;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.GZIPInputStream;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
-import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.property.PropertyName;
 
 public final class OfflineCatalogLoader extends BaseCatalogLoader {
@@ -56,13 +51,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       }
 
       final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
-      try (final InputStream inputFileStream =
-          new GZIPInputStream(newInputStream(offlineDatabasePath)); ) {
-        final JavaSerializedCatalog deserializedCatalog =
-            new JavaSerializedCatalog(inputFileStream);
-        catalog = deserializedCatalog.getCatalog();
-        LOGGER.log(Level.INFO, () -> MetaDataUtility.summarizeCatalog(catalog));
-      }
+      catalog = deserializeCatalog(offlineDatabasePath);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
       reduceCatalog(catalog, schemaCrawlerOptions);

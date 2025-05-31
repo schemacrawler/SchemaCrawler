@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -37,7 +35,7 @@ import java.io.Serializable;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
 
@@ -82,9 +80,8 @@ class DatabaseObjectReference<D extends DatabaseObject> implements Serializable 
 
     if (dereferencedDatabaseObject == null) {
       return partial;
-    } else {
-      return dereferencedDatabaseObject;
     }
+    return dereferencedDatabaseObject;
   }
 
   @Override
@@ -110,7 +107,7 @@ class DatabaseObjectReference<D extends DatabaseObject> implements Serializable 
   private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
     if (in != null) {
       partial = (D) in.readObject();
-      databaseObjectRef = new WeakReference(in.readObject());
+      databaseObjectRef = new WeakReference<>((D) in.readObject());
     }
   }
 

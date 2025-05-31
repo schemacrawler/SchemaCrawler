@@ -35,13 +35,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
+import static schemacrawler.test.utility.DatabaseTestUtility.validateSchema;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import java.io.IOException;
@@ -92,6 +91,7 @@ public class CatalogJsonSerializationTest {
 
     final Catalog catalog =
         getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+    validateSchema(catalog);
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");
     try (final OutputStream out =
@@ -99,7 +99,6 @@ public class CatalogJsonSerializationTest {
       new JsonSerializedCatalog(catalog).save(out);
     }
     assertThat("Catalog was not serialized", isFileReadable(testOutputFile), is(true));
-    assertThat(fileHeaderOf(testOutputFile), is(oneOf("7B0D", "7B0A")));
 
     if (DEBUG) {
       final Path copied = directory.resolve(testContext.testMethodFullName() + ".json");
@@ -124,6 +123,7 @@ public class CatalogJsonSerializationTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       allTableColumnsNode
+          .get(1)
           .elements()
           .forEachRemaining(
               columnNode -> {
