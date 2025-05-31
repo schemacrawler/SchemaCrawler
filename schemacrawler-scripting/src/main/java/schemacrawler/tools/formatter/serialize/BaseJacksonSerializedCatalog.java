@@ -28,12 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.formatter.serialize;
 
+import static com.fasterxml.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -48,12 +50,16 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
@@ -114,7 +120,79 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   private static final Logger LOGGER =
       Logger.getLogger(BaseJacksonSerializedCatalog.class.getName());
 
+  protected static Catalog readCatalog(final InputStream in) {
+    requireNonNull(in, "No input stream provided");
+    try {
+      final ObjectMapper jsonMapper =
+          JsonMapper.builder().enable(INCLUDE_SOURCE_IN_LOCATION).build();
+      final ObjectMapper mapper = newConfiguredObjectMapper(jsonMapper);
+      final Catalog catalog = mapper.readValue(in, Catalog.class);
+      return catalog;
+    } catch (final IOException e) {
+      throw new IORuntimeException("Could not deserialize catalog", e);
+    }
+  }
+
+  private static ObjectMapper newConfiguredObjectMapper(final ObjectMapper mapper) {
+    requireNonNull(mapper, "No object mapper provided");
+
+    @JsonIgnoreProperties({
+      "parent",
+      "referenced-column",
+      "exported-foreign-keys",
+      "imported-foreign-keys"
+    })
+    @JsonPropertyOrder(
+        value = {
+          "@uuid",
+          "@class",
+          "name",
+          "short-name",
+          "full-name",
+          "crawl-info",
+          "schema-crawler-info",
+          "jvm-system-info",
+          "operating-system-info",
+          "database-info",
+          "jdbc-driver-info",
+          "schemas",
+          "system-column-data-types",
+          "column-data-types",
+          "all-table-columns"
+        },
+        alphabetic = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.CLASS,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "@class")
+    @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
+    @JsonFilter("ignore-getter-errors-filter")
+    class JacksonAnnotationMixIn {}
+
+    final FilterProvider filters =
+        new SimpleFilterProvider()
+            .addFilter(
+                "ignore-getter-errors-filter",
+                (PropertyFilter) new IgnoreExceptionBeanPropertyFilter());
+
+    final PolymorphicTypeValidator typeValidator =
+        BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build();
+
+    mapper.enable(
+        ORDER_MAP_ENTRIES_BY_KEYS,
+        INDENT_OUTPUT,
+        USE_EQUALITY_FOR_OBJECT_ID,
+        WRITE_ENUMS_USING_TO_STRING);
+    mapper.registerModule(new JavaTimeModule());
+    mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
+    mapper.setFilterProvider(filters);
+    mapper.activateDefaultTyping(typeValidator);
+    return mapper;
+  }
+
   private final Catalog catalog;
+
   private final SortedSet<Column> allTableColumns;
 
   public BaseJacksonSerializedCatalog(final Catalog catalog) {
@@ -144,8 +222,9 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   public void save(final Writer out) {
     requireNonNull(out, "No writer provided");
     try {
-      final ObjectMapper mapper = newConfiguredObjectMapper();
+      final ObjectMapper mapper = newConfiguredObjectMapper(newObjectMapper());
       mapper.writeValue(out, this);
+      // Jackson will flush and close the stream
     } catch (final IOException e) {
       throw new IORuntimeException("Could not serialize catalog", e);
     }
@@ -157,54 +236,5 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
     for (final Table table : catalog.getTables()) {
       allTableColumns.addAll(table.getColumns());
     }
-  }
-
-  private ObjectMapper newConfiguredObjectMapper() {
-
-    @JsonIgnoreProperties({
-      "parent",
-      "referenced-column",
-      "exported-foreign-keys",
-      "imported-foreign-keys"
-    })
-    @JsonPropertyOrder(
-        value = {
-          "@uuid",
-          "name",
-          "short-name",
-          "full-name",
-          "crawl-info",
-          "schema-crawler-info",
-          "jvm-system-info",
-          "operating-system-info",
-          "database-info",
-          "jdbc-driver-info",
-          "schemas",
-          "system-column-data-types",
-          "column-data-types",
-          "all-table-columns"
-        },
-        alphabetic = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
-    @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
-    @JsonFilter("ignore-getter-errors-filter")
-    class JacksonAnnotationMixIn {}
-
-    final FilterProvider filters =
-        new SimpleFilterProvider()
-            .addFilter(
-                "ignore-getter-errors-filter",
-                (PropertyFilter) new IgnoreExceptionBeanPropertyFilter());
-
-    final ObjectMapper mapper = newObjectMapper();
-    mapper.enable(
-        ORDER_MAP_ENTRIES_BY_KEYS,
-        INDENT_OUTPUT,
-        USE_EQUALITY_FOR_OBJECT_ID,
-        WRITE_ENUMS_USING_TO_STRING);
-    mapper.registerModule(new JavaTimeModule());
-    mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
-    mapper.setFilterProvider(filters);
-    return mapper;
   }
 }

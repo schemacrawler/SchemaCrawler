@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -35,6 +38,7 @@ import java.util.Map;
 import java.util.Properties;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -100,5 +104,21 @@ public final class DatabaseTestUtility {
 
   private DatabaseTestUtility() {
     // Prevent instantiation
+  }
+
+  public static void validateSchema(final Catalog catalog) {
+    assertThat("Could not obtain catalog", catalog, notNullValue());
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertThat("Could not obtain schema", schema, notNullValue());
+    assertThat(
+        "Unexpected number of tables in the schema", catalog.getColumnDataTypes(), hasSize(32));
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
+    assertThat(
+        "Unexpected number of routines in the schema", catalog.getRoutines(schema), hasSize(4));
+    assertThat(
+        "Unexpected number of synonyms in the schema", catalog.getSynonyms(schema), hasSize(0));
+    assertThat(
+        "Unexpected number of sequences in the schema", catalog.getSequences(schema), hasSize(0));
   }
 }

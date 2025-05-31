@@ -28,8 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.formatter.serialize;
 
+import static com.fasterxml.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import schemacrawler.schema.Catalog;
 
 /** Decorates a database to allow for serialization to JSON serialization. */
@@ -41,6 +42,6 @@ public final class JsonSerializedCatalog extends BaseJacksonSerializedCatalog {
 
   @Override
   protected ObjectMapper newObjectMapper() {
-    return new ObjectMapper();
+    return JsonMapper.builder().enable(INCLUDE_SOURCE_IN_LOCATION).build();
   }
 }
