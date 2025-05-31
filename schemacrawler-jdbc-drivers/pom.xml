@@ -45,7 +45,7 @@
     <dependency>
       <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
-      <version>21.17.0.0</version>
+      <version>21.18.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.db2</groupId>
