@@ -114,7 +114,7 @@ public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noInfo();
+    textOptionsBuilder.noInfo().noRoutines();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
     final Config config = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
 
