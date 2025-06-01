@@ -81,6 +81,10 @@ public final class RoutineDocument implements Serializable {
     return definition;
   }
 
+  public List<RoutineParameterDocument> getParameters() {
+    return parameters;
+  }
+
   public String getRemarks() {
     return remarks;
   }
