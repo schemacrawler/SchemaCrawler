@@ -39,6 +39,7 @@ Indexes
   firstname                         ascending                   
 
                                                       [non-unique index]
+Index on author's location
   city                              ascending                   
   state                             descending                  
   postalcode                        ascending                   
@@ -282,6 +283,7 @@ Foreign Keys
 Indexes
 
                                                           [unique index]
+Primary key constraint on βιβλία
   "Μοναδικός"                       ascending                   
 
 
