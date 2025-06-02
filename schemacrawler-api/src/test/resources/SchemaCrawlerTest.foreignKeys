@@ -2,7 +2,6 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
     foreign key: Z_FK_AUTHOR
       definition: 
-      specific name: Z_FK_AUTHOR
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -19,7 +18,6 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.BOOKAUTHORS
     foreign key: Z_FK_AUTHOR
       definition: 
-      specific name: Z_FK_AUTHOR
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -32,9 +30,8 @@ schema: PUBLIC.BOOKS
       table constraint: 
         parent (dependent table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
-    foreign key: SYS_FK_10120
+    foreign key: SYS_FK_10118
       definition: 
-      specific name: SYS_FK_10120
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -50,7 +47,6 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.BOOKS
     foreign key: FK_PREVIOUSEDITION
       definition: 
-      specific name: FK_PREVIOUSEDITION
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -65,7 +61,6 @@ schema: PUBLIC.BOOKS
           constrained column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
     foreign key: FK_SALES_BOOK
       definition: 
-      specific name: FK_SALES_BOOK
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -78,9 +73,8 @@ schema: PUBLIC.BOOKS
       table constraint: 
         parent (dependent table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
-    foreign key: SYS_FK_10120
+    foreign key: SYS_FK_10118
       definition: 
-      specific name: SYS_FK_10120
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -94,9 +88,8 @@ schema: PUBLIC.BOOKS
         parent (dependent table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   table: PUBLIC.BOOKS."Celebrities"
-    foreign key: SYS_FK_10130
+    foreign key: SYS_FK_10128
       definition: 
-      specific name: SYS_FK_10130
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -110,9 +103,8 @@ schema: PUBLIC.BOOKS
         parent (dependent table): PUBLIC.BOOKS."Celebrity Updates"
           constrained column: PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"
   table: PUBLIC.BOOKS."Celebrity Updates"
-    foreign key: SYS_FK_10130
+    foreign key: SYS_FK_10128
       definition: 
-      specific name: SYS_FK_10130
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -131,7 +123,6 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.PUBLISHERS
     foreign key: FK_ΒΙΒΛΊΑ_PUBLISHERS
       definition: 
-      specific name: FK_ΒΙΒΛΊΑ_PUBLISHERS
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -147,7 +138,6 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     foreign key: FK_ΒΙΒΛΊΑ_PUBLISHERS
       definition: 
-      specific name: FK_ΒΙΒΛΊΑ_PUBLISHERS
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -166,7 +156,6 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
     foreign key: FK_SALES_REGIONS
       definition: 
-      specific name: FK_SALES_REGIONS
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -185,7 +174,6 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".SALES
     foreign key: FK_SALES_BOOK
       definition: 
-      specific name: FK_SALES_BOOK
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -200,7 +188,6 @@ schema: PUBLIC."PUBLISHER SALES"
           constrained column: PUBLIC."PUBLISHER SALES".SALES.BOOKID
     foreign key: FK_SALES_SALESDATA
       definition: 
-      specific name: FK_SALES_SALESDATA
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -215,7 +202,6 @@ schema: PUBLIC."PUBLISHER SALES"
           constrained column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
     foreign key: FK_SALES_REGIONS
       definition: 
-      specific name: FK_SALES_REGIONS
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -234,7 +220,6 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".SALESDATA
     foreign key: FK_SALES_SALESDATA
       definition: 
-      specific name: FK_SALES_SALESDATA
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action

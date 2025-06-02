@@ -32,6 +32,6 @@ for table in catalog.tables:
     print('')
 
 for table in catalog.tables:
-    for childTable in table.referencingTables:
+    for childTable in table.dependentTables:
         print('  ' + cleanname(table.fullName) + ' ||--o{ ' +
               cleanname(childTable.fullName) + ' : "foreign key"')

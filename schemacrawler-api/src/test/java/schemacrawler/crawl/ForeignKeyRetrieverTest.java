@@ -100,7 +100,6 @@ public class ForeignKeyRetrieverTest {
           for (final ForeignKey foreignKey : foreignKeys) {
             out.println("    foreign key: " + foreignKey.getName());
             out.println("      definition: " + foreignKey.getDefinition());
-            out.println("      specific name: " + foreignKey.getSpecificName());
             out.println("      deferrability: " + foreignKey.getDeferrability());
             out.println("      initially deferred: " + foreignKey.isInitiallyDeferred());
             out.println("      delete rule: " + foreignKey.getDeleteRule());

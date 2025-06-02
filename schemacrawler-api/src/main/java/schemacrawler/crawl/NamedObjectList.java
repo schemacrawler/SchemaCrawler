@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
-import static java.util.Objects.requireNonNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,6 +39,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
@@ -48,7 +48,7 @@ import us.fatehi.utility.ObjectToString;
 
 /**
  * Ordered list of named objects, that can be searched associatively. NamedObjectList has the
- * ability to look up by dependent object which is not created yet. That is, by NamedObject +
+ * ability to look up by dependant object which is not created yet. That is, by NamedObject +
  * String. Returns values sorted in natural sort order, and is iterable. The iterator does not allow
  * modifications to the underlying data structure.
  */

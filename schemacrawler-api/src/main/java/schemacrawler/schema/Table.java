@@ -121,15 +121,6 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
   }
 
   /**
-   * @deprecated
-   * @see #getDependentTables()
-   */
-  @Deprecated
-  default Collection<Table> getReferencingTables() {
-    return getRelatedTables(child);
-  }
-
-  /**
    * Gets the tables related to this one, based on the specified relationship type. Child tables are
    * those who have a foreign key from this table. Parent tables are those to which this table has a
    * foreign key.

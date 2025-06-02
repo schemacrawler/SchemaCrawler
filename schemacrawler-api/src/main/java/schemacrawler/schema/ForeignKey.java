@@ -46,17 +46,6 @@ public interface ForeignKey extends TableReference {
   ForeignKeyUpdateRule getDeleteRule();
 
   /**
-   * Gets a generated specific name for databases that support non-unique foreign key names.
-   *
-   * @return Specific name of a foreign key
-   * @deprecated
-   */
-  @Deprecated
-  default String getSpecificName() {
-    return getName();
-  }
-
-  /**
    * Gets the update rule.
    *
    * @return Update rule

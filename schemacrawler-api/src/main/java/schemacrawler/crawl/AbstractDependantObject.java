@@ -28,18 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import java.util.Objects;
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
-
-import java.util.Objects;
-
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.Identifiers;
 
 /**
- * Represents the dependent of a database object, such as a column or an index, which are dependents
+ * Represents the dependant of a database object, such as a column or an index, which are dependants
  * of a table.
  */
 abstract class AbstractDependantObject<D extends DatabaseObject> extends AbstractDatabaseObject
@@ -61,7 +59,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
    */
   AbstractDependantObject(final DatabaseObjectReference<D> parent, final String name) {
     super(
-        requireNonNull(parent, "Parent of dependent object not provided").get().getSchema(), name);
+        requireNonNull(parent, "Parent of dependant object not provided").get().getSchema(), name);
     this.parent = parent;
   }
 
@@ -70,10 +68,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
     if (this == obj) {
       return true;
     }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    if (!(obj instanceof DependantObject)) {
+    if (!super.equals(obj) || !(obj instanceof DependantObject)) {
       return false;
     }
     return Objects.equals(parent, ((DependantObject<?>) obj).getParent());
@@ -142,7 +137,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
     if (key != null) {
       return;
     }
-    this.key = parent.get().key().with(getName());
+    key = parent.get().key().with(getName());
   }
 
   private void buildShortName() {
