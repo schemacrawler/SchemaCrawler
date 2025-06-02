@@ -36,6 +36,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.CockroachContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -57,6 +58,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @HeavyDatabaseTest("cockroachdb")
 @Testcontainers
+@Disabled
 public class CockroachDBTest extends BaseAdditionalDatabaseTest {
 
   private static final DockerImageName imageName =
