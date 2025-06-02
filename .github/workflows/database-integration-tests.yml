@@ -37,7 +37,6 @@ jobs:
         - db2
         - mariadb
         - cassandra
-        - cockroachdb
         - firebird
         - informix
         - trino
@@ -106,9 +105,6 @@ jobs:
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cassandra" ]; then
             docker pull cassandra:5.0.2
-            dbproject="dbtest"
-        elif [ "${{ matrix.database }}" == "cockroachdb" ]; then
-            docker pull cockroachdb/cockroach:v24.3.13
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "firebird" ]; then
             docker pull jacobalberty/firebird:v4.0.2
