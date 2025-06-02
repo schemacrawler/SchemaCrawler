@@ -76,13 +76,4 @@ public interface TableReference
   default Table getReferencedTable() {
     return getPrimaryKeyTable();
   }
-
-  /**
-   * @deprecated
-   * @see #getDependentTable()
-   */
-  @Deprecated
-  default Table getReferencingTable() {
-    return getForeignKeyTable();
-  }
 }
