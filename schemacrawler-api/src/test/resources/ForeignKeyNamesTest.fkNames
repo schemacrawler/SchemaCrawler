@@ -4,7 +4,6 @@ schema: PUBLIC.SCHEMA1
   table: PUBLIC.SCHEMA1.TABLEA
     foreign key: FK_TABLEA
       definition: 
-      specific name: FK_TABLEA
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -20,7 +19,6 @@ schema: PUBLIC.SCHEMA1
   table: PUBLIC.SCHEMA1.TABLEB
     foreign key: FK_TABLEA
       definition: 
-      specific name: FK_TABLEA
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -37,7 +35,6 @@ schema: PUBLIC.SCHEMA2
   table: PUBLIC.SCHEMA2.TABLEA
     foreign key: FK_TABLEA
       definition: 
-      specific name: FK_TABLEA
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
@@ -53,7 +50,6 @@ schema: PUBLIC.SCHEMA2
   table: PUBLIC.SCHEMA2.TABLEB
     foreign key: FK_TABLEA
       definition: 
-      specific name: FK_TABLEA
       deferrability: not deferrable
       initially deferred: false
       delete rule: no action
