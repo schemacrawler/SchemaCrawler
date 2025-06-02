@@ -29,14 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 /**
- * Represents the dependent of a database object, such as a column or an index, which are dependents
+ * Represents the dependant of a database object, such as a column or an index, which are dependants
  * of a table.
  */
 public interface DependantObject<P extends DatabaseObject>
     extends DatabaseObject, ContainedObject<P> {
 
   /**
-   * Gets the name of the dependent object and the name of the parent. The parent name is not
+   * Gets the name of the dependant object and the name of the parent. The parent name is not
    * fully-qualified.
    */
   String getShortName();
