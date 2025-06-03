@@ -9,8 +9,8 @@ SchemaCrawler release notes.
 - Removed deprecated methods
 
 
-<a name="v16.25.5"></a>
-## Release 16.25.5 - 2025-05-24
+<a name="v16.26.1"></a>
+## Release 16.26.1 - 2025-05-24
 
 - Released SchemaCrawler MCP Server
 
@@ -181,8 +181,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.25.5"></a>
-## Release 16.25.5 - 2023-06-03
+<a name="v16.26.1"></a>
+## Release 16.26.1 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
