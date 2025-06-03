@@ -9,11 +9,15 @@ SchemaCrawler release notes.
 - Removed deprecated methods
 
 
-<a name="v16.26.1"></a>
-## Release 16.26.1 - 2025-05-24
+<a name="v16.25.5"></a>
+## Release 16.25.5 - 2025-05-24
 
 - Released SchemaCrawler MCP Server
 
+<a name="v16.25.4"></a>
+## Release 16.25.4 - 2025-05-20
+
+- Interim release of SchemaCrawler MCP Server
 
 <a name="v16.25.3"></a>
 ## Release 16.25.3 - 2025-03-24
