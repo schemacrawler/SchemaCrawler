@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -40,6 +38,8 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
@@ -94,7 +94,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     }
   }
 
-  private void createFunctionParameter(
+  private boolean createFunctionParameter(
       final MetadataResultSet results,
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<FunctionParameter> parameterFilter) {
@@ -117,19 +117,19 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       columnName = "<return value>";
     }
     if (isBlank(columnName)) {
-      return;
+      return false;
     }
 
     final Optional<MutableRoutine> optionalRoutine =
         allRoutines.lookup(
             new NamedObjectKey(columnCatalogName, schemaName, functionName, specificName));
     if (!optionalRoutine.isPresent()) {
-      return;
+      return false;
     }
 
     final MutableRoutine routine = optionalRoutine.get();
     if (routine.getRoutineType() != RoutineType.function) {
-      return;
+      return false;
     }
 
     final MutableFunction function = (MutableFunction) routine;
@@ -144,8 +144,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       final int length = results.getInt("LENGTH", 0);
       final int precision = results.getInt("PRECISION", 0);
       final boolean isNullable =
-          results.getShort("NULLABLE", (short) DatabaseMetaData.functionNullableUnknown)
-              == (short) DatabaseMetaData.functionNullable;
+          results.getShort("NULLABLE", (short) DatabaseMetaData.functionNullableUnknown) > 0;
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
@@ -160,7 +159,9 @@ final class FunctionParameterRetriever extends AbstractRetriever {
 
       LOGGER.log(Level.FINER, new StringFormat("Adding parameter to function <%s>", parameter));
       function.addParameter(parameter);
+      return true;
     }
+    return false;
   }
 
   private ParameterModeType getFunctionParameterMode(final int columnType) {
@@ -200,9 +201,17 @@ final class FunctionParameterRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionColumnsSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
-        createFunctionParameter(results, allRoutines, parameterFilter);
+        count = count + 1;
+        final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
+        if (added) {
+          addedCount = addedCount + 1;
+        }
       }
+      LOGGER.log(
+          Level.INFO, new StringFormat("Processed %d/%d function parameters", addedCount, count));
     }
   }
 
@@ -227,9 +236,17 @@ final class FunctionParameterRetriever extends AbstractRetriever {
                           function.getName(),
                           null),
                   "DatabaseMetaData::getFunctionColumns"); ) {
+        int count = 0;
+        int addedCount = 0;
         while (results.next()) {
-          createFunctionParameter(results, allRoutines, parameterFilter);
+          count = count + 1;
+          final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
+          if (added) {
+            addedCount = addedCount + 1;
+          }
         }
+        LOGGER.log(
+            Level.INFO, new StringFormat("Processed %d/%d function parameters", addedCount, count));
       } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(
             new StringFormat("Could not retrieve parameters for function %s", function), e);

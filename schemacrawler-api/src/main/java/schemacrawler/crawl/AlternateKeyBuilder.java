@@ -28,16 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.crawl.MutablePrimaryKey.newAlternateKey;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PrimaryKey;
@@ -59,7 +57,7 @@ public final class AlternateKeyBuilder {
         final String alternateKeyName,
         final List<String> columns) {
       this.schema = requireNonNull(schema, "No schema provided");
-      this.tableName = requireNotBlank(table, "No table name provided");
+      tableName = requireNotBlank(table, "No table name provided");
       this.alternateKeyName = requireNotBlank(alternateKeyName, "No alternate key name provided");
 
       if (columns == null || columns.isEmpty()) {
@@ -110,12 +108,11 @@ public final class AlternateKeyBuilder {
     final Optional<Table> lookupTable =
         catalog.lookupTable(
             alternateKeyDefinition.getSchema(), alternateKeyDefinition.getTableName());
-    if (lookupTable.isPresent()) {
-      table = (MutableTable) lookupTable.get();
-    } else {
+    if (!lookupTable.isPresent()) {
       LOGGER.log(Level.CONFIG, "Table not found, for " + alternateKeyDefinition);
       return Optional.empty();
     }
+    table = (MutableTable) lookupTable.get();
 
     final MutablePrimaryKey alternateKey =
         newAlternateKey(table, alternateKeyDefinition.getAlternateKeyName());
@@ -124,14 +121,13 @@ public final class AlternateKeyBuilder {
       final String columnName = columns.get(i);
       final Column column;
       final Optional<MutableColumn> lookupColumn = table.lookupColumn(columnName);
-      if (lookupColumn.isPresent()) {
-        column = lookupColumn.get();
-      } else {
+      if (!lookupColumn.isPresent()) {
         LOGGER.log(
             Level.CONFIG,
             String.format("Column <%s> not found, for %s", columnName, alternateKeyDefinition));
         return Optional.empty();
       }
+      column = lookupColumn.get();
 
       final MutableTableConstraintColumn pkColumn =
           new MutableTableConstraintColumn(alternateKey, column);

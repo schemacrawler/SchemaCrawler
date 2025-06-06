@@ -28,19 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -106,8 +104,10 @@ final class IndexRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extIndexesInformationSql, statement, getLimitMap()); ) {
-
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("INDEX_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("INDEX_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
@@ -143,33 +143,30 @@ final class IndexRetriever extends AbstractRetriever {
         index.setRemarks(remarks);
 
         index.addAttributes(results.getAttributes());
+
+        addedCount = addedCount + 1;
       }
+      LOGGER.log(
+          Level.INFO,
+          new StringFormat("Processed %d/%d indexes for index information", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve index information", e);
     }
   }
 
-  private void createIndexes(final MutableTable table, final MetadataResultSet results)
-      throws SQLException {
-    while (results.next()) {
-      createIndexForTable(table, results);
-    }
-  }
-
-  private void createIndexForTable(final MutableTable table, final MetadataResultSet results) {
+  private boolean createIndexForTable(final MutableTable table, final MetadataResultSet results) {
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
     String indexName = results.getString("INDEX_NAME");
     LOGGER.log(Level.FINE, new StringFormat("Retrieving index <%s.%s>", table, indexName));
 
-    // Work-around PostgreSQL JDBC driver bugs by unquoting column
-    // names first
+    // Work-around PostgreSQL JDBC driver bugs by unquoting column names first
     // #3480 -
     // http://www.postgresql.org/message-id/200707231358.l6NDwlWh026230@wwwmaster.postgresql.org
     // #6253 -
     // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
     final String columnName = results.getString("COLUMN_NAME");
     if (isBlank(columnName)) {
-      return;
+      return false;
     }
     LOGGER.log(
         Level.FINE,
@@ -225,6 +222,8 @@ final class IndexRetriever extends AbstractRetriever {
     index.setCardinality(cardinality);
     index.setPages(pages);
     index.addAttributes(results.getAttributes());
+
+    return true;
   }
 
   private void retrieveIndexesFromDataDictionary() throws WrappedSQLException {
@@ -241,7 +240,10 @@ final class IndexRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
@@ -252,8 +254,12 @@ final class IndexRetriever extends AbstractRetriever {
           continue;
         }
         final MutableTable table = optionalTable.get();
-        createIndexForTable(table, results);
+        final boolean added = createIndexForTable(table, results);
+        if (added) {
+          addedCount = addedCount + 1;
+        }
       }
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d indexes", addedCount, count));
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve indexes from SQL:%n%s", indexesSql), e);
@@ -276,7 +282,16 @@ final class IndexRetriever extends AbstractRetriever {
                           false /* return indices regardless of whether unique or not */,
                           true /* approximate - reflect approximate or out of data values */),
                   "DatabaseMetaData::getIndexInfo"); ) {
-        createIndexes(table, results);
+        int count = 0;
+        int addedCount = 0;
+        while (results.next()) {
+          count = count + 1;
+          final boolean added = createIndexForTable(table, results);
+          if (added) {
+            addedCount = addedCount + 1;
+          }
+        }
+        LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d indexes", addedCount, count));
       } catch (final SQLException e) {
         logPossiblyUnsupportedSQLFeature(
             new StringFormat("Could not retrieve indexes for table <%s>", table), e);

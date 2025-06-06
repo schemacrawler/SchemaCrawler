@@ -349,7 +349,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   }
 
   private void buildFullName(final Identifiers identifiers) {
-    if ((identifiers == null) || (fullName != null)) {
+    if (identifiers == null || fullName != null) {
       return;
     }
     final Schema schema = getSchema();

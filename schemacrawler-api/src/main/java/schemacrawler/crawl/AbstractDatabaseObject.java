@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import java.util.Objects;
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
-
-import java.util.Objects;
-
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
@@ -101,10 +99,7 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
     if (this == obj) {
       return true;
     }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    if (!(obj instanceof DatabaseObject)) {
+    if (!super.equals(obj) || !(obj instanceof DatabaseObject)) {
       return false;
     }
     return Objects.equals(schema, ((DatabaseObject) obj).getSchema());
@@ -155,6 +150,6 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
     if (key != null) {
       return;
     }
-    this.key = schema.key().with(getName());
+    key = schema.key().with(getName());
   }
 }

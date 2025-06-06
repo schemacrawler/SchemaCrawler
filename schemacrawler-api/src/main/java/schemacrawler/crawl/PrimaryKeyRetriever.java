@@ -28,17 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -126,7 +124,10 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
@@ -138,7 +139,9 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         }
         final MutableTable table = optionalTable.get();
         createPrimaryKeyForTable(table, results);
+        addedCount = addedCount + 1;
       }
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d primary keys", addedCount, count));
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve primary keys from SQL:%n%s", pkSql), e);
@@ -160,9 +163,14 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
                       .getPrimaryKeys(
                           tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
                   "DatabaseMetaData::getPrimaryKeys"); ) {
+        int count = 0;
+        int addedCount = 0;
         while (results.next()) {
+          count = count + 1;
           createPrimaryKeyForTable(table, results);
+          addedCount = addedCount + 1;
         }
+        LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d primary keys", addedCount, count));
       } catch (final SQLException e) {
         logPossiblyUnsupportedSQLFeature(
             new StringFormat("Could not retrieve primary keys for table <%s>", table), e);

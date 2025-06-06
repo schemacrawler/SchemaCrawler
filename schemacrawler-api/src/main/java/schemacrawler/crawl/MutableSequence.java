@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import java.math.BigInteger;
-
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 

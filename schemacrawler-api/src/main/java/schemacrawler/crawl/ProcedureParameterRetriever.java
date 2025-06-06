@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -40,6 +38,8 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -98,7 +98,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     }
   }
 
-  private void createProcedureParameter(
+  private boolean createProcedureParameter(
       final MetadataResultSet results,
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<ProcedureParameter> parameterFilter) {
@@ -121,19 +121,19 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       columnName = "<return value>";
     }
     if (isBlank(columnName)) {
-      return;
+      return false;
     }
 
     final Optional<MutableRoutine> optionalRoutine =
         allRoutines.lookup(
             new NamedObjectKey(columnCatalogName, schemaName, procedureName, specificName));
     if (!optionalRoutine.isPresent()) {
-      return;
+      return false;
     }
 
     final MutableRoutine routine = optionalRoutine.get();
     if (routine.getRoutineType() != RoutineType.procedure) {
-      return;
+      return false;
     }
 
     final MutableProcedure procedure = (MutableProcedure) routine;
@@ -148,8 +148,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       final int length = results.getInt("LENGTH", 0);
       final int precision = results.getInt("PRECISION", 0);
       final boolean isNullable =
-          results.getShort("NULLABLE", (short) DatabaseMetaData.procedureNullableUnknown)
-              == (short) DatabaseMetaData.procedureNullable;
+          results.getShort("NULLABLE", (short) DatabaseMetaData.procedureNullableUnknown) > 0;
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
@@ -164,7 +163,9 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
 
       LOGGER.log(Level.FINER, new StringFormat("Adding parameter to procedure <%s>", parameter));
       procedure.addParameter(parameter);
+      return true;
     }
+    return false;
   }
 
   private ParameterModeType getProcedureParameterMode(final int columnType) {
@@ -205,9 +206,16 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
-        createProcedureParameter(results, allRoutines, parameterFilter);
+        count = count + 1;
+        final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);
+        if (added) {
+          addedCount = addedCount + 1;
+        }
       }
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d sequences", addedCount, count));
     }
   }
 
@@ -233,9 +241,16 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
                           procedure.getName(),
                           null),
                   "DatabaseMetaData::getProcedureColumns"); ) {
+        int count = 0;
+        int addedCount = 0;
         while (results.next()) {
-          createProcedureParameter(results, allRoutines, parameterFilter);
+          count = count + 1;
+          final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);
+          if (added) {
+            addedCount = addedCount + 1;
+          }
         }
+        LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d sequences", addedCount, count));
       } catch (final SQLException e) {
         throw new WrappedSQLException(
             String.format("Could not retrieve procedure parameters for procedure <%s>", procedure),

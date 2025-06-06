@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -69,9 +68,8 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
   public TableConstraintType getType() {
     if (tableConstraintType != null) {
       return tableConstraintType;
-    } else {
-      return TableConstraintType.unknown;
     }
+    return TableConstraintType.unknown;
   }
 
   @Override

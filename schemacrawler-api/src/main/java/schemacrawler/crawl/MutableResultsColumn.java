@@ -160,6 +160,6 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
     if (key != null) {
       return;
     }
-    this.key = super.key().with(label);
+    key = super.key().with(label);
   }
 }

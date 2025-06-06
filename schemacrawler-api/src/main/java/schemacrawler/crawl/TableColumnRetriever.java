@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -43,6 +41,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -104,7 +104,7 @@ final class TableColumnRetriever extends AbstractRetriever {
     }
   }
 
-  private void createTableColumn(
+  private boolean createTableColumn(
       final MetadataResultSet results,
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
@@ -125,13 +125,13 @@ final class TableColumnRetriever extends AbstractRetriever {
             "Retrieving table column <%s.%s.%s.%s>",
             catalogName, schemaName, tableName, columnName));
     if (isBlank(columnName)) {
-      return;
+      return false;
     }
 
     final Optional<MutableTable> optionalTable =
         allTables.lookup(new NamedObjectKey(catalogName, schemaName, tableName));
     if (!optionalTable.isPresent()) {
-      return;
+      return false;
     }
 
     final MutableTable table = optionalTable.get();
@@ -145,8 +145,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final int size = results.getInt("COLUMN_SIZE", 0);
       final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
       final boolean isNullable =
-          results.getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown)
-              == DatabaseMetaData.columnNullable;
+          results.getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown) > 0;
       final boolean isAutoIncremented = results.getBoolean("IS_AUTOINCREMENT");
       final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
       final String remarks = results.getString("REMARKS");
@@ -178,7 +177,9 @@ final class TableColumnRetriever extends AbstractRetriever {
       } else {
         table.addColumn(column);
       }
+      return true;
     }
+    return false;
   }
 
   private String getColumnTypeName(final String typeName) {
@@ -219,7 +220,9 @@ final class TableColumnRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(hiddenColumnsSql, statement, getLimitMap()); ) {
+      int count = 0;
       while (results.next()) {
+        count = count + 1;
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -237,6 +240,7 @@ final class TableColumnRetriever extends AbstractRetriever {
             new NamedObjectKey(catalogName, schemaName, tableName, columnName);
         hiddenTableColumnsLookupKeys.add(lookupKey);
       }
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d hidden table columns", count));
     }
 
     return hiddenTableColumnsLookupKeys;
@@ -253,13 +257,21 @@ final class TableColumnRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table columns SQL provided");
     }
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
+    int count = 0;
+    int addedCount = 0;
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableColumnsSql, statement, getLimitMap()); ) {
+      count = count + 1;
       while (results.next()) {
-        createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
+        final boolean added =
+            createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
+        if (added) {
+          addedCount = addedCount + 1;
+        }
       }
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d table columns", addedCount, count));
     }
   }
 

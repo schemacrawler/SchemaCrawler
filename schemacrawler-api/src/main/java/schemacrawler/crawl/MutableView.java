@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-
 import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;

@@ -73,20 +73,6 @@ class ImmutableDatabaseProperty extends AbstractProperty {
     acronyms = unmodifiableSet(acronymsMap.entrySet());
   }
 
-  ImmutableDatabaseProperty(final String name, final Object value) {
-    super(new PropertyName(name, buildDescription(name)), (Serializable) value);
-  }
-
-  @Override
-  public int compareTo(final Property otherProperty) {
-    return compare(this, otherProperty, comparator);
-  }
-
-  @Override
-  public String toString() {
-    return getDescription() + " = " + getValue();
-  }
-
   /**
    * This function splits DatabaseMetaData method names into words. It is not intended to be a
    * general purpose word splitting algorithm.
@@ -128,5 +114,19 @@ class ImmutableDatabaseProperty extends AbstractProperty {
     description = description.trim();
 
     return description;
+  }
+
+  ImmutableDatabaseProperty(final String name, final Object value) {
+    super(new PropertyName(name, buildDescription(name)), (Serializable) value);
+  }
+
+  @Override
+  public int compareTo(final Property otherProperty) {
+    return compare(this, otherProperty, comparator);
+  }
+
+  @Override
+  public String toString() {
+    return getDescription() + " = " + getValue();
   }
 }

@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,7 +35,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
@@ -133,14 +131,13 @@ abstract class AbstractTableReference extends MutableTableConstraint implements 
       columnReferences.add(columnReference);
       addTableConstraintColumn(columnReference);
       return true;
-    } else {
-      LOGGER.log(
-          Level.CONFIG,
-          new StringFormat(
-              "Column reference <%s> not added, since it is not consistent with <%s --> %s>",
-              columnReference, fkTable, pkTable));
-      return false;
     }
+    LOGGER.log(
+        Level.CONFIG,
+        new StringFormat(
+            "Column reference <%s> not added, since it is not consistent with <%s --> %s>",
+            columnReference, fkTable, pkTable));
+    return false;
   }
 
   private void addTableConstraintColumn(final ColumnReference columnReference) {
