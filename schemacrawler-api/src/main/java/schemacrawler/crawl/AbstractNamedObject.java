@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static schemacrawler.utility.NamedObjectSort.alphabetical;
+import java.util.Objects;
 import static java.util.Objects.compare;
 import static java.util.Objects.hash;
-import static schemacrawler.utility.NamedObjectSort.alphabetical;
-
-import java.util.Objects;
-
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 
@@ -66,10 +64,7 @@ abstract class AbstractNamedObject implements NamedObject {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof NamedObject)) {
+    if ((obj == null) || !(obj instanceof NamedObject)) {
       return false;
     }
     return Objects.equals(name, ((NamedObject) obj).getName());
@@ -108,6 +103,6 @@ abstract class AbstractNamedObject implements NamedObject {
     if (key != null) {
       return;
     }
-    this.key = new NamedObjectKey(name);
+    key = new NamedObjectKey(name);
   }
 }

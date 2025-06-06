@@ -29,14 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import us.fatehi.utility.property.BaseProductVersion;
@@ -77,7 +77,7 @@ final class MutableJdbcDriverInfo extends BaseProductVersion implements JdbcDriv
     this.jdbcMajorVersion = jdbcMajorVersion;
     this.jdbcMinorVersion = jdbcMinorVersion;
     this.jdbcCompliant = jdbcCompliant;
-    this.jdbcDriverProperties = new HashSet<>();
+    jdbcDriverProperties = new HashSet<>();
     this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
   }
 

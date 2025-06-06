@@ -28,10 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.HashMap;
@@ -40,6 +38,8 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
@@ -215,16 +215,14 @@ abstract class AbstractRetriever {
   final String normalizeCatalogName(final String name) {
     if (retrieverConnection.isSupportsCatalogs()) {
       return name;
-    } else {
-      return null;
     }
+    return null;
   }
 
   final String normalizeSchemaName(final String name) {
     if (retrieverConnection.isSupportsSchemas()) {
       return name;
-    } else {
-      return null;
     }
+    return null;
   }
 }

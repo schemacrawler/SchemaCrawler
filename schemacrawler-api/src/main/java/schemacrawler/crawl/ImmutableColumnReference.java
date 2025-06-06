@@ -28,10 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Objects;
-
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 
@@ -87,10 +85,7 @@ final class ImmutableColumnReference implements ColumnReference {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof ImmutableColumnReference)) {
+    if ((obj == null) || !(obj instanceof ImmutableColumnReference)) {
       return false;
     }
     final ColumnReference other = (ColumnReference) obj;

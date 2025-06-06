@@ -28,15 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ResultsColumns;

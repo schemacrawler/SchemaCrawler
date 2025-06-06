@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import java.util.EnumSet;
 import java.util.Set;
-
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
@@ -46,7 +45,7 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
   private int actionOrder;
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
-  private Set<EventManipulationType> eventManipulationType;
+  private final Set<EventManipulationType> eventManipulationType;
 
   MutableTrigger(final Table parent, final String name) {
     super(new TablePointer(parent), name);
@@ -120,9 +119,9 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
 
   void setEventManipulationTypes(final Set<EventManipulationType> eventManipulationTypes) {
     if (eventManipulationTypes == null) {
-      this.eventManipulationType.add(EventManipulationType.unknown);
+      eventManipulationType.add(EventManipulationType.unknown);
     } else {
-      this.eventManipulationType.addAll(eventManipulationTypes);
+      eventManipulationType.addAll(eventManipulationTypes);
     }
   }
 }

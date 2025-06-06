@@ -29,16 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.Privilege;
@@ -73,16 +71,14 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
       if (compare == 0) {
         if (grantor == null) {
           return -1;
-        } else {
-          compare = grantor.compareTo(otherGrant.getGrantor());
         }
+        compare = grantor.compareTo(otherGrant.getGrantor());
       }
       if (compare == 0) {
         if (grantee == null) {
           return -1;
-        } else {
-          compare = grantee.compareTo(otherGrant.getGrantee());
         }
+        compare = grantee.compareTo(otherGrant.getGrantee());
       }
       return compare;
     }
@@ -92,10 +88,7 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
       if (this == obj) {
         return true;
       }
-      if (obj == null) {
-        return false;
-      }
-      if (getClass() != obj.getClass()) {
+      if ((obj == null) || (getClass() != obj.getClass())) {
         return false;
       }
       final PrivilegeGrant other = (PrivilegeGrant) obj;

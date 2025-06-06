@@ -30,9 +30,7 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schema.TableConstraintType.alternate_key;
 import static schemacrawler.schema.TableConstraintType.primary_key;
-
 import java.util.EnumSet;
-
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintType;

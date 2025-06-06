@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
@@ -46,6 +45,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
@@ -271,8 +271,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableConstraintsInformationSql, statement, getLimitMap()); ) {
-
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -305,6 +307,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
         // Add constraint to table
         table.addTableConstraint(tableConstraint);
+        addedCount = addedCount + 1;
 
         // Add to map, since we will need this later
         final Schema schema = table.getSchema();
@@ -312,6 +315,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
             Arrays.asList(schema.getCatalogName(), schema.getName(), constraintName),
             tableConstraint);
       }
+      LOGGER.log(
+          Level.INFO, new StringFormat("Processed %d/%d table constraints", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
       return;
@@ -353,7 +358,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(
                 tableConstraintsColumnsInformationSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -400,7 +408,12 @@ final class TableConstraintRetriever extends AbstractRetriever {
         constraintColumn.setKeyOrdinalPosition(ordinalPosition);
 
         tableConstraint.addColumn(constraintColumn);
+
+        addedCount = addedCount + 1;
       }
+      LOGGER.log(
+          Level.INFO,
+          new StringFormat("Processed %d/%d table constraints columns", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
     }

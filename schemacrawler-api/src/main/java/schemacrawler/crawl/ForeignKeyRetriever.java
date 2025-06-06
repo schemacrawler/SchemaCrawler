@@ -28,10 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -42,6 +40,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
@@ -90,9 +90,12 @@ final class ForeignKeyRetriever extends AbstractRetriever {
   private void createForeignKeys(
       final MetadataResultSet results, final Map<NamedObjectKey, MutableForeignKey> foreignKeys)
       throws SQLException {
+    int count = 0;
+    int addedCount = 0;
     while (results.next()) {
+      count = count + 1;
       String foreignKeyName = results.getString("FK_NAME");
-      LOGGER.log(Level.FINE, new StringFormat("Retrieving foreign key: %s", foreignKeyName));
+      LOGGER.log(Level.FINE, new StringFormat("Retrieving foreign key <%s>", foreignKeyName));
 
       final String pkTableCatalogName = normalizeCatalogName(results.getString("PKTABLE_CAT"));
       final String pkTableSchemaName = normalizeSchemaName(results.getString("PKTABLE_SCHEM"));
@@ -175,10 +178,13 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
       if (pkColumn instanceof MutableColumn) {
         ((MutableTable) pkTable).addForeignKey(foreignKey);
+        addedCount = addedCount + 1;
       } else if (isPkColumnPartial) {
         ((TablePartial) pkTable).addForeignKey(foreignKey);
+        addedCount = addedCount + 1;
       }
     }
+    LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d foreign keys", addedCount, count));
   }
 
   /**

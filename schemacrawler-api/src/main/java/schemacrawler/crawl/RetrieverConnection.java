@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.sql.SQLException;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.Identifiers;

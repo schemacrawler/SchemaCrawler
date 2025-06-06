@@ -77,7 +77,10 @@ final class RoutineExtRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
+      int count = 0;
+      int addedCount = 0;
       while (results.next()) {
+        count = count + 1;
         final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
         final String routineName = results.getString("ROUTINE_NAME");
@@ -98,10 +101,13 @@ final class RoutineExtRetriever extends AbstractRetriever {
           routine.appendDefinition(definition);
 
           routine.addAttributes(results.getAttributes());
+          addedCount = addedCount + 1;
         }
       }
+      LOGGER.log(
+          Level.INFO, new StringFormat("Processed %d/%d routine definitions", addedCount, count));
     } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve routines", e);
+      LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
     }
   }
 }
