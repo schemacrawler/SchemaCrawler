@@ -28,12 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.sql.DatabaseMetaData.typeNullable;
+import static java.sql.DatabaseMetaData.typeNullableUnknown;
 import static schemacrawler.schema.DataTypeType.system;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -114,8 +115,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     final String literalSuffix = results.getString("LITERAL_SUFFIX");
     final String createParameters = results.getString("CREATE_PARAMS");
     final boolean isNullable =
-        results.getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown)
-            == DatabaseMetaData.typeNullable;
+        results.getInt("NULLABLE", typeNullableUnknown) == typeNullable;
     final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
     final SearchableType searchable = results.getEnumFromId("SEARCHABLE", SearchableType.unknown);
     final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");

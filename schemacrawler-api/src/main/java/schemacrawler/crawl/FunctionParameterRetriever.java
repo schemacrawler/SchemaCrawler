@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.sql.DatabaseMetaData.functionNullable;
+import static java.sql.DatabaseMetaData.functionNullableUnknown;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
@@ -144,7 +146,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       final int length = results.getInt("LENGTH", 0);
       final int precision = results.getInt("PRECISION", 0);
       final boolean isNullable =
-          results.getShort("NULLABLE", (short) DatabaseMetaData.functionNullableUnknown) > 0;
+          results.getShort("NULLABLE", (short) functionNullableUnknown) == functionNullable;
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
