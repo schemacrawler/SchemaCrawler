@@ -140,7 +140,8 @@ final class ResultsRetriever {
   private void retrieveAdditionalColumnData(
       final int columnIndex, final MutableResultsColumn column) {
     try {
-      final boolean isNullable = resultsMetaData.isNullable(columnIndex) > 0;
+      final boolean isNullable =
+          resultsMetaData.isNullable(columnIndex) == ResultSetMetaData.columnNullable;
 
       column.setOrdinalPosition(columnIndex);
       column.setDisplaySize(resultsMetaData.getColumnDisplaySize(columnIndex));

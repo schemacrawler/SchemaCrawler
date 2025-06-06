@@ -113,7 +113,9 @@ final class DataTypeRetriever extends AbstractRetriever {
     final String literalPrefix = results.getString("LITERAL_PREFIX");
     final String literalSuffix = results.getString("LITERAL_SUFFIX");
     final String createParameters = results.getString("CREATE_PARAMS");
-    final boolean isNullable = results.getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) > 0;
+    final boolean isNullable =
+        results.getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown)
+            == DatabaseMetaData.typeNullable;
     final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
     final SearchableType searchable = results.getEnumFromId("SEARCHABLE", SearchableType.unknown);
     final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
