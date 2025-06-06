@@ -28,12 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.sql.DatabaseMetaData.columnNullable;
+import static java.sql.DatabaseMetaData.columnNullableUnknown;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -145,7 +146,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final int size = results.getInt("COLUMN_SIZE", 0);
       final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
       final boolean isNullable =
-          results.getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown) > 0;
+          results.getInt("NULLABLE", columnNullableUnknown) == columnNullable;
       final boolean isAutoIncremented = results.getBoolean("IS_AUTOINCREMENT");
       final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
       final String remarks = results.getString("REMARKS");
