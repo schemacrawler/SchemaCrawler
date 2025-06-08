@@ -234,16 +234,14 @@ final class IndexRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Extended indexes SQL statement was not provided");
       return;
     }
-
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("indexes");
     final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
@@ -255,11 +253,9 @@ final class IndexRetriever extends AbstractRetriever {
         }
         final MutableTable table = optionalTable.get();
         final boolean added = createIndexForTable(table, results);
-        if (added) {
-          addedCount = addedCount + 1;
-        }
+        retrievalCounts.countIfIncluded(added);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d indexes", addedCount, count));
+      retrievalCounts.log(Level.INFO);
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve indexes from SQL:%n%s", indexesSql), e);
@@ -268,6 +264,7 @@ final class IndexRetriever extends AbstractRetriever {
 
   private void retrieveIndexesFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("indexes");
     for (final MutableTable table : allTables) {
       final Schema tableSchema = table.getSchema();
       try (final Connection connection = getRetrieverConnection().getConnection();
@@ -282,20 +279,16 @@ final class IndexRetriever extends AbstractRetriever {
                           false /* return indices regardless of whether unique or not */,
                           true /* approximate - reflect approximate or out of data values */),
                   "DatabaseMetaData::getIndexInfo"); ) {
-        int count = 0;
-        int addedCount = 0;
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           final boolean added = createIndexForTable(table, results);
-          if (added) {
-            addedCount = addedCount + 1;
-          }
+          retrievalCounts.countIfIncluded(added);
         }
-        LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d indexes", addedCount, count));
       } catch (final SQLException e) {
         logPossiblyUnsupportedSQLFeature(
             new StringFormat("Could not retrieve indexes for table <%s>", table), e);
       }
     }
+    retrievalCounts.log(Level.INFO);
   }
 }

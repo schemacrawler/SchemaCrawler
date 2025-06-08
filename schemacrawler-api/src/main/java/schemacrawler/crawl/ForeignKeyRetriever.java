@@ -88,12 +88,13 @@ final class ForeignKeyRetriever extends AbstractRetriever {
   }
 
   private void createForeignKeys(
-      final MetadataResultSet results, final Map<NamedObjectKey, MutableForeignKey> foreignKeys)
+      final MetadataResultSet results,
+      final Map<NamedObjectKey, MutableForeignKey> foreignKeys,
+      final RetrievalCounts retrievalCounts)
       throws SQLException {
-    int count = 0;
-    int addedCount = 0;
+    requireNonNull(retrievalCounts, "No retrieval counts provided");
     while (results.next()) {
-      count = count + 1;
+      retrievalCounts.count();
       String foreignKeyName = results.getString("FK_NAME");
       LOGGER.log(Level.FINE, new StringFormat("Retrieving foreign key <%s>", foreignKeyName));
 
@@ -178,13 +179,12 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
       if (pkColumn instanceof MutableColumn) {
         ((MutableTable) pkTable).addForeignKey(foreignKey);
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       } else if (isPkColumnPartial) {
         ((TablePartial) pkTable).addForeignKey(foreignKey);
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
     }
-    LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d foreign keys", addedCount, count));
   }
 
   /**
@@ -215,7 +215,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(fkSql, statement, getLimitMap()); ) {
-      createForeignKeys(results, foreignKeys);
+      final RetrievalCounts retrievalCounts = new RetrievalCounts("foreign keys");
+      createForeignKeys(results, foreignKeys, retrievalCounts);
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve foreign keys from SQL:%n%s", fkSql), e);
@@ -227,6 +228,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     try (final Connection connection = getRetrieverConnection().getConnection(); ) {
       final DatabaseMetaData metaData = connection.getMetaData();
       final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new ConcurrentHashMap<>();
+      final RetrievalCounts retrievalCounts = new RetrievalCounts("foreign keys");
       for (final MutableTable table : allTables) {
         if (table instanceof View) {
           continue;
@@ -240,7 +242,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
                     table.getSchema().getName(),
                     table.getName()),
                 "DatabaseMetaData::getImportedKeys")) {
-          createForeignKeys(results, foreignKeys);
+          createForeignKeys(results, foreignKeys, retrievalCounts);
         } catch (final SQLException e) {
           logPossiblyUnsupportedSQLFeature(
               new StringFormat("Could not retrieve foreign keys for table <%s>", table), e);
@@ -256,13 +258,14 @@ final class ForeignKeyRetriever extends AbstractRetriever {
                     table.getSchema().getName(),
                     table.getName()),
                 "DatabaseMetaData::getExportedKeys")) {
-          createForeignKeys(results, foreignKeys);
+          createForeignKeys(results, foreignKeys, retrievalCounts);
         } catch (final SQLException e) {
           logPossiblyUnsupportedSQLFeature(
               new StringFormat("Could not retrieve exported foreign keys for table <%s>", table),
               e);
         }
       }
+      retrievalCounts.log(Level.INFO);
     }
   }
 }

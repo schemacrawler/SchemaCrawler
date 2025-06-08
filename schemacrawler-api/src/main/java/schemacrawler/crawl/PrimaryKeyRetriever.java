@@ -119,15 +119,14 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       return;
     }
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("primary keys");
     final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
@@ -139,9 +138,9 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         }
         final MutableTable table = optionalTable.get();
         createPrimaryKeyForTable(table, results);
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d primary keys", addedCount, count));
+      retrievalCounts.log(Level.INFO);
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve primary keys from SQL:%n%s", pkSql), e);
@@ -150,6 +149,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
 
   private void retrievePrimaryKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("primary keys");
     for (final MutableTable table : allTables) {
       if (table instanceof View) {
         continue;
@@ -163,18 +163,16 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
                       .getPrimaryKeys(
                           tableSchema.getCatalogName(), tableSchema.getName(), table.getName()),
                   "DatabaseMetaData::getPrimaryKeys"); ) {
-        int count = 0;
-        int addedCount = 0;
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           createPrimaryKeyForTable(table, results);
-          addedCount = addedCount + 1;
+          retrievalCounts.countIncluded();
         }
-        LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d primary keys", addedCount, count));
       } catch (final SQLException e) {
         logPossiblyUnsupportedSQLFeature(
             new StringFormat("Could not retrieve primary keys for table <%s>", table), e);
       }
     }
+    retrievalCounts.log(Level.INFO);
   }
 }
