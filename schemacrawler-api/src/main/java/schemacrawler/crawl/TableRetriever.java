@@ -159,6 +159,8 @@ final class TableRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(TABLES)) {
       throw new ExecutionRuntimeException("No tables SQL provided");
     }
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("tables");
     final Query tablesSql = informationSchemaViews.getQuery(TABLES);
     final TableTypes supportedTableTypes = getRetrieverConnection().getTableTypes();
     final TableTypes filteredTableTypes;
@@ -171,17 +173,13 @@ final class TableRetriever extends AbstractRetriever {
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final boolean added = createTable(results, schemas, tableFilter, filteredTableTypes);
-        if (added) {
-          addedCount = addedCount + 1;
-        }
+        retrievalCounts.countIfIncluded(added);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d tables", addedCount, count));
     }
+    retrievalCounts.log();
   }
 
   private void retrieveTablesFromMetadata(
@@ -190,6 +188,7 @@ final class TableRetriever extends AbstractRetriever {
       final TableTypes tableTypes,
       final InclusionRuleFilter<Table> tableFilter) {
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("tables");
     for (final Schema schema : schemas) {
       LOGGER.log(Level.INFO, new StringFormat("Retrieving tables for schema <%s>", schema));
 
@@ -208,17 +207,16 @@ final class TableRetriever extends AbstractRetriever {
                       .getTables(
                           catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()),
                   "DatabaseMetaData::getTables"); ) {
-        int count = 0;
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           createTable(results, schemas, tableFilter, supportedTableTypes);
+          retrievalCounts.countIncluded();
         }
-        LOGGER.log(
-            Level.INFO, new StringFormat("Processed %d tables in schema <%s>", count, schema));
       } catch (final Exception e) {
         LOGGER.log(
             Level.WARNING, e, new StringFormat("Could not obtain tables in schema <%s>", schema));
       }
+      retrievalCounts.log();
     }
   }
 }

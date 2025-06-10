@@ -201,28 +201,26 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(PROCEDURE_COLUMNS)) {
       throw new ExecutionRuntimeException("No procedure parameters SQL provided");
     }
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedure parameters");
     final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);
-        if (added) {
-          addedCount = addedCount + 1;
-        }
+        retrievalCounts.countIfIncluded(added);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d sequences", addedCount, count));
     }
+    retrievalCounts.log();
   }
 
   private void retrieveProcedureParametersFromMetadata(
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
       throws SQLException {
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedure parameters");
     for (final MutableRoutine routine : allRoutines) {
       if (routine.getRoutineType() != RoutineType.procedure) {
         continue;
@@ -241,21 +239,17 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
                           procedure.getName(),
                           null),
                   "DatabaseMetaData::getProcedureColumns"); ) {
-        int count = 0;
-        int addedCount = 0;
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);
-          if (added) {
-            addedCount = addedCount + 1;
-          }
+          retrievalCounts.countIfIncluded(added);
         }
-        LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d sequences", addedCount, count));
       } catch (final SQLException e) {
         throw new WrappedSQLException(
             String.format("Could not retrieve procedure parameters for procedure <%s>", procedure),
             e);
       }
     }
+    retrievalCounts.log();
   }
 }

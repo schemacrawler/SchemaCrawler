@@ -140,7 +140,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         createPrimaryKeyForTable(table, results);
         retrievalCounts.countIncluded();
       }
-      retrievalCounts.log(Level.INFO);
+      retrievalCounts.log();
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve primary keys from SQL:%n%s", pkSql), e);
@@ -173,6 +173,6 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
             new StringFormat("Could not retrieve primary keys for table <%s>", table), e);
       }
     }
-    retrievalCounts.log(Level.INFO);
+    retrievalCounts.log();
   }
 }

@@ -76,15 +76,14 @@ final class TriggerRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("trigger definitions");
     final Query triggerInformationSql = informationSchemaViews.getQuery(TRIGGERS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("TRIGGER_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("TRIGGER_SCHEMA"));
         final String triggerName = results.getString("TRIGGER_NAME");
@@ -137,12 +136,12 @@ final class TriggerRetriever extends AbstractRetriever {
 
         // Add trigger to the table
         table.addTrigger(trigger);
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d triggers", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve triggers", e);
     }
+    retrievalCounts.log();
   }
 
   private Set<EventManipulationType> getEventManipulationType(final MetadataResultSet results) {

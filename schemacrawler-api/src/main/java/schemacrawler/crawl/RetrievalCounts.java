@@ -45,6 +45,10 @@ final class RetrievalCounts {
     includedCount = includedCount + 1;
   }
 
+  void log() {
+    log(Level.INFO);
+  }
+
   void log(final Level level) {
     if (level == null) {
       return;

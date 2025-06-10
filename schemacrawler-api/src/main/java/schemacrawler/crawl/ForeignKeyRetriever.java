@@ -265,7 +265,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
               e);
         }
       }
-      retrievalCounts.log(Level.INFO);
+      retrievalCounts.log();
     }
   }
 }

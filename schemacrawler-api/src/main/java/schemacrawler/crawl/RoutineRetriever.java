@@ -202,27 +202,26 @@ final class RoutineRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(FUNCTIONS)) {
       throw new ExecutionRuntimeException("No functions SQL provided");
     }
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("functions");
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final boolean added = createFunction(results, schemas, functionFilter);
-        if (added) {
-          addedCount = addedCount + 1;
-        }
+        retrievalCounts.countIfIncluded(added);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d functions", addedCount, count));
     }
+    retrievalCounts.log();
   }
 
   private void retrieveFunctionsFromMetadata(
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Function> functionFilter) {
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("functions");
     for (final Schema schema : schemas) {
       LOGGER.log(Level.INFO, new StringFormat("Retrieving functions for schema <%s>", schema));
 
@@ -234,25 +233,18 @@ final class RoutineRetriever extends AbstractRetriever {
               new MetadataResultSet(
                   connection.getMetaData().getFunctions(catalogName, schemaName, null),
                   "DatabaseMetaData::getFunctions"); ) {
-        int count = 0;
-        int addedCount = 0;
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           final boolean added = createFunction(results, schemas, functionFilter);
-          if (added) {
-            addedCount = addedCount + 1;
-          }
+          retrievalCounts.countIfIncluded(added);
         }
-        LOGGER.log(
-            Level.INFO,
-            new StringFormat(
-                "Processed %d/%d functions in schema <%s>", addedCount, count, schema));
       } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"), e);
       } catch (final SQLException e) {
         logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"), e);
       }
     }
+    retrievalCounts.log();
   }
 
   private void retrieveProcedures(final InclusionRule routineInclusionRule) throws SQLException {
@@ -291,28 +283,26 @@ final class RoutineRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(PROCEDURES)) {
       throw new ExecutionRuntimeException("No procedures SQL provided");
     }
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedures");
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final boolean added = createProcedure(results, schemas, procedureFilter);
-        if (added) {
-          addedCount = addedCount + 1;
-        }
+        retrievalCounts.countIfIncluded(added);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d procedures", addedCount, count));
     }
+    retrievalCounts.log();
   }
 
   private void retrieveProceduresFromMetadata(
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Procedure> procedureFilter)
       throws SQLException {
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedures");
     for (final Schema schema : schemas) {
       LOGGER.log(Level.INFO, new StringFormat("Retrieving procedures for schema <%s>", schema));
 
@@ -324,23 +314,16 @@ final class RoutineRetriever extends AbstractRetriever {
               new MetadataResultSet(
                   connection.getMetaData().getProcedures(catalogName, schemaName, null),
                   "DatabaseMetaData::getProcedures"); ) {
-        int count = 0;
-        int addedCount = 0;
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           final boolean added = createProcedure(results, schemas, procedureFilter);
-          if (added) {
-            addedCount = addedCount + 1;
-          }
+          retrievalCounts.countIfIncluded(added);
         }
-        LOGGER.log(
-            Level.INFO,
-            new StringFormat(
-                "Processed %d/%d procedures in schema <%s>", addedCount, count, schema));
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
         logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve procedures"), e);
       }
     }
+    retrievalCounts.log();
   }
 }

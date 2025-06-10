@@ -198,34 +198,31 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS)) {
       throw new ExecutionRuntimeException("No function columns SQL provided");
     }
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("function parameters");
     final Query functionColumnsSql = informationSchemaViews.getQuery(FUNCTION_COLUMNS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionColumnsSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
-        if (added) {
-          addedCount = addedCount + 1;
-        }
+        retrievalCounts.countIfIncluded(added);
       }
-      LOGGER.log(
-          Level.INFO, new StringFormat("Processed %d/%d function parameters", addedCount, count));
     }
+    retrievalCounts.log();
   }
 
   private void retrieveFunctionParametersFromMetadata(
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<FunctionParameter> parameterFilter) {
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("function parameters");
     for (final MutableRoutine routine : allRoutines) {
       if (routine.getRoutineType() != RoutineType.function) {
         continue;
       }
-      final MutableFunction function = (MutableFunction) routine;
 
+      final MutableFunction function = (MutableFunction) routine;
       LOGGER.log(Level.FINE, "Retrieving function parameters for " + function);
       try (final Connection connection = getRetrieverConnection().getConnection();
           final MetadataResultSet results =
@@ -238,17 +235,11 @@ final class FunctionParameterRetriever extends AbstractRetriever {
                           function.getName(),
                           null),
                   "DatabaseMetaData::getFunctionColumns"); ) {
-        int count = 0;
-        int addedCount = 0;
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
-          if (added) {
-            addedCount = addedCount + 1;
-          }
+          retrievalCounts.log();
         }
-        LOGGER.log(
-            Level.INFO, new StringFormat("Processed %d/%d function parameters", addedCount, count));
       } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(
             new StringFormat("Could not retrieve parameters for function %s", function), e);
@@ -257,5 +248,6 @@ final class FunctionParameterRetriever extends AbstractRetriever {
             new StringFormat("Could not retrieve parameters for function %s", function), e);
       }
     }
+    retrievalCounts.log();
   }
 }

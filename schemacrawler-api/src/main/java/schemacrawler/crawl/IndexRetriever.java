@@ -99,15 +99,14 @@ final class IndexRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("indexes for index information");
     final Query extIndexesInformationSql = informationSchemaViews.getQuery(EXT_INDEXES);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extIndexesInformationSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("INDEX_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("INDEX_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
@@ -144,14 +143,12 @@ final class IndexRetriever extends AbstractRetriever {
 
         index.addAttributes(results.getAttributes());
 
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d/%d indexes for index information", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve index information", e);
     }
+    retrievalCounts.log();
   }
 
   private boolean createIndexForTable(final MutableTable table, final MetadataResultSet results) {
@@ -255,7 +252,7 @@ final class IndexRetriever extends AbstractRetriever {
         final boolean added = createIndexForTable(table, results);
         retrievalCounts.countIfIncluded(added);
       }
-      retrievalCounts.log(Level.INFO);
+      retrievalCounts.log();
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve indexes from SQL:%n%s", indexesSql), e);
@@ -289,6 +286,6 @@ final class IndexRetriever extends AbstractRetriever {
             new StringFormat("Could not retrieve indexes for table <%s>", table), e);
       }
     }
-    retrievalCounts.log(Level.INFO);
+    retrievalCounts.log();
   }
 }

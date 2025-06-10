@@ -71,16 +71,16 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Additional column attributes SQL statement was not provided");
       return;
     }
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("columns with attibutes");
     final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(columnAttributesSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
@@ -107,29 +107,26 @@ final class TableExtRetriever extends AbstractRetriever {
         } else {
           final MutableColumn column = columnOptional.get();
           column.addAttributes(results.getAttributes());
-          addedCount = addedCount + 1;
+          retrievalCounts.countIncluded();
         }
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d/%d columns with attibutes", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve additional column attributes", e);
     }
+    retrievalCounts.log();
   }
 
   /** Retrieves additional column metadata. */
   void retrieveAdditionalColumnMetadata() {
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("columns with additional metadata");
     try (final Connection connection = getRetrieverConnection().getConnection(); ) {
       final EnumDataTypeHelper enumDataTypeHelper =
           getRetrieverConnection().getEnumDataTypeHelper();
 
       final NamedObjectList<MutableTable> tables = catalog.getAllTables();
-      int count = 0;
-      int addedCount = 0;
       for (final MutableTable table : tables) {
-        count = count + 1;
+        retrievalCounts.count();
         final NamedObjectList<MutableColumn> columns = table.getAllColumns();
         for (final MutableColumn column : columns) {
           MutableColumnDataType columnDataType = (MutableColumnDataType) column.getColumnDataType();
@@ -144,12 +141,12 @@ final class TableExtRetriever extends AbstractRetriever {
                   new MutableColumnDataType(columnDataType);
               columnDataType = copiedColumnDataType; // overwrite with new column data-type
               columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
-              addedCount = addedCount + 1;
+              retrievalCounts.countIncluded();
               break;
             case enumerated_data_type:
               // Update column data-type with enumeration
               columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
-              addedCount = addedCount + 1;
+              retrievalCounts.countIncluded();
               break;
             default:
               break;
@@ -158,12 +155,10 @@ final class TableExtRetriever extends AbstractRetriever {
           column.setColumnDataType(columnDataType);
         }
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d/%d columns with additional metadata", addedCount, count));
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not retrieve additional column metadata", e);
     }
+    retrievalCounts.log();
   }
 
   /**
@@ -180,16 +175,16 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Additional table attributes SQL statement was not provided");
       return;
     }
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("tables with attributes");
     final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableAttributesSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
@@ -206,14 +201,12 @@ final class TableExtRetriever extends AbstractRetriever {
 
         final MutableTable table = tableOptional.get();
         table.addAttributes(results.getAttributes());
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d/%d tables with attributes", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve additional table attributes", e);
     }
+    retrievalCounts.log();
   }
 
   /**
@@ -233,15 +226,14 @@ final class TableExtRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("table definitions");
     final Query tableDefinitionsInformationSql = informationSchemaViews.getQuery(EXT_TABLES);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableDefinitionsInformationSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
@@ -263,13 +255,11 @@ final class TableExtRetriever extends AbstractRetriever {
         table.appendDefinition(definition);
 
         table.addAttributes(results.getAttributes());
-
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(
-          Level.INFO, new StringFormat("Processed %d/%d table definitions", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table definitions", e);
     }
+    retrievalCounts.log();
   }
 }
