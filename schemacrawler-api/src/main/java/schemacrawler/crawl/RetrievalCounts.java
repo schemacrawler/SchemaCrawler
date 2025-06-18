@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static us.fatehi.utility.Utility.requireNotBlank;
@@ -36,9 +37,15 @@ import schemacrawler.schema.NamedObjectKey;
 
 public final class RetrievalCounts {
 
-  private static class Counts extends HashMap<NamedObjectKey, Integer> {
+  private static class Counts {
 
     private static final long serialVersionUID = 697885728400512077L;
+
+    private final Map<NamedObjectKey, Integer> counts;
+
+    public Counts() {
+      counts = new HashMap<>();
+    }
 
     int count(final NamedObjectKey key) {
       if (key == null) {
@@ -46,11 +53,11 @@ public final class RetrievalCounts {
       }
 
       int count = 0;
-      if (containsKey(key)) {
+      if (counts.containsKey(key)) {
         count = get(key);
       }
       count = count + 1;
-      super.put(key, count);
+      counts.put(key, count);
       return count;
     }
 
@@ -59,8 +66,8 @@ public final class RetrievalCounts {
         return 0;
       }
       int count = 0;
-      if (containsKey(key)) {
-        count = get(key);
+      if (counts.containsKey(key)) {
+        count = counts.get(key);
       }
       return count;
     }
