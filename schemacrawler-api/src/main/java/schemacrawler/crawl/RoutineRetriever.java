@@ -234,15 +234,16 @@ final class RoutineRetriever extends AbstractRetriever {
                   connection.getMetaData().getFunctions(catalogName, schemaName, null),
                   "DatabaseMetaData::getFunctions"); ) {
         while (results.next()) {
-          retrievalCounts.count();
+          retrievalCounts.count(schema.key());
           final boolean added = createFunction(results, schemas, functionFilter);
-          retrievalCounts.countIfIncluded(added);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
       } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"), e);
       } catch (final SQLException e) {
         logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"), e);
       }
+      retrievalCounts.log(schema.key());
     }
     retrievalCounts.log();
   }
@@ -315,10 +316,11 @@ final class RoutineRetriever extends AbstractRetriever {
                   connection.getMetaData().getProcedures(catalogName, schemaName, null),
                   "DatabaseMetaData::getProcedures"); ) {
         while (results.next()) {
-          retrievalCounts.count();
+          retrievalCounts.count(schema.key());
           final boolean added = createProcedure(results, schemas, procedureFilter);
-          retrievalCounts.countIfIncluded(added);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
+        retrievalCounts.log(schema.key());
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
         logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve procedures"), e);

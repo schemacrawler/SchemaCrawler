@@ -208,15 +208,16 @@ final class TableRetriever extends AbstractRetriever {
                           catalogName, schemaName, tableNamePattern, filteredTableTypes.toArray()),
                   "DatabaseMetaData::getTables"); ) {
         while (results.next()) {
-          retrievalCounts.count();
+          retrievalCounts.count(schema.key());
           createTable(results, schemas, tableFilter, supportedTableTypes);
-          retrievalCounts.countIncluded();
+          retrievalCounts.countIncluded(schema.key());
         }
       } catch (final Exception e) {
         LOGGER.log(
             Level.WARNING, e, new StringFormat("Could not obtain tables in schema <%s>", schema));
       }
-      retrievalCounts.log();
+      retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }
