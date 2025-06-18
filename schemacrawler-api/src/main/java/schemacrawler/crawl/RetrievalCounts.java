@@ -39,8 +39,6 @@ public final class RetrievalCounts {
 
   private static class Counts {
 
-    private static final long serialVersionUID = 697885728400512077L;
-
     private final Map<NamedObjectKey, Integer> counts;
 
     public Counts() {
