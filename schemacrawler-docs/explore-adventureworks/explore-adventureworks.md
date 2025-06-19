@@ -3,7 +3,7 @@
 ## Setup
 
 - Start SchemaCrawler with the AdventureWorks Database on Microsoft SQL Server
-  `docker-compose -f adventureworks.yaml up -d`
+  `docker compose -f adventureworks.yaml up -d`
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 
@@ -83,4 +83,4 @@
 - Exit SchemaCrawler bash with
   `exit`
 - Stop the SchemaCrawler and database Docker containers
-  `docker-compose -f adventureworks.yaml down -t0`
+  `docker compose -f adventureworks.yaml down -t0`

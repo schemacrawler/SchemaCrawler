@@ -1,16 +1,13 @@
 services:
 
-  adventureworks:
-    image: chriseaton/adventureworks
-    container_name: adventureworks
+  sakila:
+    image: sakiladb/mysql
+    container_name: sakila
     ports:
-      - target: 1433
-        published: 1433
+      - target: 3306
+        published: 3306
         protocol: tcp
         mode: host
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: Schem#Crawl3r
 
   schemacrawler:
     image: schemacrawler/schemacrawler:extra-early-access-release
