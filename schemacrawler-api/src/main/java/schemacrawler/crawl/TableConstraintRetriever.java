@@ -266,15 +266,14 @@ final class TableConstraintRetriever extends AbstractRetriever {
       return;
     }
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraints");
     final Query tableConstraintsInformationSql = informationSchemaViews.getQuery(TABLE_CONSTRAINTS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableConstraintsInformationSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -307,7 +306,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
         // Add constraint to table
         table.addTableConstraint(tableConstraint);
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
 
         // Add to map, since we will need this later
         final Schema schema = table.getSchema();
@@ -315,12 +314,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
             Arrays.asList(schema.getCatalogName(), schema.getName(), constraintName),
             tableConstraint);
       }
-      LOGGER.log(
-          Level.INFO, new StringFormat("Processed %d/%d table constraints", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
       return;
     }
+    retrievalCounts.log();
   }
 
   private void matchPrimaryKey(final MutableTable table) {
@@ -350,6 +348,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Table constraints columns usage SQL statement was not provided");
       return;
     }
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraints columns");
     final Query tableConstraintsColumnsInformationSql =
         informationSchemaViews.getQuery(CONSTRAINT_COLUMN_USAGE);
 
@@ -358,10 +358,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(
                 tableConstraintsColumnsInformationSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -408,14 +406,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
         constraintColumn.setKeyOrdinalPosition(ordinalPosition);
 
         tableConstraint.addColumn(constraintColumn);
-
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat("Processed %d/%d table constraints columns", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
     }
+    retrievalCounts.log();
   }
 }

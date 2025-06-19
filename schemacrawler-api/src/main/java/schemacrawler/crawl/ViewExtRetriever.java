@@ -73,15 +73,14 @@ final class ViewExtRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("views for definitions");
     final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         // Get the "VIEW_DEFINITION" value first as it the Oracle driver
         // don't handle it properly otherwise.
         // https://github.com/schemacrawler/SchemaCrawler/issues/835
@@ -112,13 +111,12 @@ final class ViewExtRetriever extends AbstractRetriever {
 
         view.addAttributes(results.getAttributes());
 
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(
-          Level.INFO, new StringFormat("Processed %d/%d views for definitions", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve views", e);
     }
+    retrievalCounts.log();
   }
 
   /**
@@ -139,15 +137,14 @@ final class ViewExtRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving view table usage");
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("views for table usage");
     final Query viewTableUsageSql = informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("VIEW_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("VIEW_SCHEMA"));
         final String viewName = results.getString("VIEW_NAME");
@@ -182,12 +179,11 @@ final class ViewExtRetriever extends AbstractRetriever {
 
         view.addTableUsage(table);
 
-        addedCount = addedCount + 1;
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(
-          Level.INFO, new StringFormat("Processed %d/%d views for table usage", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table usage for views", e);
     }
+    retrievalCounts.log();
   }
 }

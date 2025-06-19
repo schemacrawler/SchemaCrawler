@@ -98,15 +98,14 @@ final class SynonymRetriever extends AbstractRetriever {
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("synonyms");
     final Query synonymsDefinitionSql = informationSchemaViews.getQuery(EXT_SYNONYMS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(synonymsDefinitionSql, statement, getLimitMap()); ) {
-      int count = 0;
-      int addedCount = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("SYNONYM_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("SYNONYM_SCHEMA"));
         final String synonymName = results.getString("SYNONYM_NAME");
@@ -157,12 +156,12 @@ final class SynonymRetriever extends AbstractRetriever {
           synonym.addAttributes(results.getAttributes());
 
           catalog.addSynonym(synonym);
-          addedCount = addedCount + 1;
+          retrievalCounts.countIncluded();
         }
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d synonyms", addedCount, count));
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve synonyms", e);
     }
+    retrievalCounts.log();
   }
 }

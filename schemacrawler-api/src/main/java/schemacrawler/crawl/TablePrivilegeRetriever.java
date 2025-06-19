@@ -44,7 +44,6 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the extended details about the database tables. */
 final class TablePrivilegeRetriever extends AbstractRetriever {
@@ -98,10 +97,11 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
 
   private void createPrivileges(final MetadataResultSet results, final boolean privilegesForColumn)
       throws SQLException {
-    int count = 0;
-    int addedCount = 0;
+    final RetrievalCounts retrievalCounts =
+        new RetrievalCounts(
+            String.format("%s privileges", privilegesForColumn ? "column" : "table"));
     while (results.next()) {
-      count = count + 1;
+      retrievalCounts.count();
       final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
       final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
       final String tableName = results.getString("TABLE_NAME");
@@ -157,13 +157,9 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       } else {
         table.addPrivilege((MutablePrivilege<Table>) privilege);
       }
-      addedCount = addedCount + 1;
+      retrievalCounts.countIncluded();
     }
-    LOGGER.log(
-        Level.INFO,
-        new StringFormat(
-            "Processed %d/%d %s privileges",
-            addedCount, count, privilegesForColumn ? "column" : "table"));
+    retrievalCounts.log();
   }
 
   private void retrieveTableColumnPrivilegesFromDataDictionary() throws SQLException {

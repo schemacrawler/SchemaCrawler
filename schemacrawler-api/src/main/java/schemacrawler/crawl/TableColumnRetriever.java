@@ -216,14 +216,15 @@ final class TableColumnRetriever extends AbstractRetriever {
       LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
       return hiddenTableColumnsLookupKeys;
     }
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("hidden table columns");
     final Query hiddenColumnsSql = informationSchemaViews.getQuery(EXT_HIDDEN_TABLE_COLUMNS);
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(hiddenColumnsSql, statement, getLimitMap()); ) {
-      int count = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
         final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
@@ -240,9 +241,10 @@ final class TableColumnRetriever extends AbstractRetriever {
         final NamedObjectKey lookupKey =
             new NamedObjectKey(catalogName, schemaName, tableName, columnName);
         hiddenTableColumnsLookupKeys.add(lookupKey);
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d hidden table columns", count));
     }
+    retrievalCounts.log();
 
     return hiddenTableColumnsLookupKeys;
   }
@@ -257,23 +259,21 @@ final class TableColumnRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(TABLE_COLUMNS)) {
       throw new ExecutionRuntimeException("No table columns SQL provided");
     }
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("table columns");
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
-    int count = 0;
-    int addedCount = 0;
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableColumnsSql, statement, getLimitMap()); ) {
-      count = count + 1;
+      retrievalCounts.count();
       while (results.next()) {
         final boolean added =
             createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
-        if (added) {
-          addedCount = addedCount + 1;
-        }
+        retrievalCounts.countIfIncluded(added);
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d/%d table columns", addedCount, count));
     }
+    retrievalCounts.log();
   }
 
   private void retrieveTableColumnsFromMetadata(

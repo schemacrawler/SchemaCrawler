@@ -127,18 +127,19 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> catalogNames = new HashSet<>();
 
     if (supportsCatalogs) {
+      final RetrievalCounts retrievalCounts = new RetrievalCounts("catalogs");
       try (final Connection connection = getRetrieverConnection().getConnection();
           final ResultSet catalogsResults = connection.getMetaData().getCatalogs(); ) {
-        int count = 0;
         final List<String> metaDataCatalogNames = readResultsVector(catalogsResults);
         for (final String catalogName : metaDataCatalogNames) {
-          count = count + 1;
+          retrievalCounts.count();
           catalogNames.add(catalogName);
+          retrievalCounts.countIncluded();
         }
-        LOGGER.log(Level.INFO, new StringFormat("Processed %d catalogs", count));
       } catch (final SQLException e) {
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
+      retrievalCounts.log();
       LOGGER.log(Level.FINER, new StringFormat("Retrieved catalogs <%s>", catalogNames));
     }
 
@@ -151,13 +152,13 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<SchemaReference> schemaRefs = new HashSet<>();
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas) {
-      int count = 0;
+      final RetrievalCounts retrievalCounts = new RetrievalCounts("schemas");
       try (final Connection connection = getRetrieverConnection().getConnection();
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection.getMetaData().getSchemas(), "DatabaseMetaData::getSchemas"); ) {
         while (results.next()) {
-          count = count + 1;
+          retrievalCounts.count();
           final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
           final String schemaName = results.getString("TABLE_SCHEM");
           LOGGER.log(
@@ -174,9 +175,10 @@ final class SchemaRetriever extends AbstractRetriever {
           } else {
             schemaRefs.add(new SchemaReference(catalogName, schemaName));
           }
+          retrievalCounts.countIncluded();
         }
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d schemas", count));
+      retrievalCounts.log();
     } else {
       for (final String catalogName : allCatalogNames) {
         LOGGER.log(
@@ -196,22 +198,22 @@ final class SchemaRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
       return schemaRefs;
     }
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("schemas");
     final Query schemataSql = informationSchemaViews.getQuery(SCHEMATA);
-
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(schemataSql, statement, getLimitMap()); ) {
-      int count = 0;
       while (results.next()) {
-        count = count + 1;
+        retrievalCounts.count();
         final String catalogName = results.getString("CATALOG_NAME");
         final String schemaName = results.getString("SCHEMA_NAME");
         LOGGER.log(
             Level.FINER, new StringFormat("Retrieving schema: %s --> %s", catalogName, schemaName));
         schemaRefs.add(new SchemaReference(catalogName, schemaName));
+        retrievalCounts.countIncluded();
       }
-      LOGGER.log(Level.INFO, new StringFormat("Processed %d schemas", count));
+      retrievalCounts.log();
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve schemas", e);
     }
