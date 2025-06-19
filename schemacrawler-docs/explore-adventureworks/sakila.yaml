@@ -1,16 +1,13 @@
 services:
 
-  adventureworks:
-    image: chriseaton/adventureworks:postgres
-    container_name: adventureworks
+  sakila:
+    image: sakiladb/mysql
+    container_name: sakila
     ports:
-      - target: 5432
-        published: 5432
+      - target: 3306
+        published: 3306
         protocol: tcp
         mode: host
-    environment:
-      POSTGRES_USER: schemacrawler
-      POSTGRES_PASSWORD: schemacrawler
 
   schemacrawler:
     image: schemacrawler/schemacrawler:extra-early-access-release
