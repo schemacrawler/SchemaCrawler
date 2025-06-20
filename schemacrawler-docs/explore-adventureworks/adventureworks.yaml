@@ -1,16 +1,16 @@
 services:
 
   adventureworks:
-    image: chriseaton/adventureworks
+    image: chriseaton/adventureworks:postgres
     container_name: adventureworks
     ports:
-      - target: 1433
-        published: 1433
+      - target: 5432
+        published: 5432
         protocol: tcp
         mode: host
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: Schem#Crawl3r
+      POSTGRES_USER: schemacrawler
+      POSTGRES_PASSWORD: schemacrawler
 
   schemacrawler:
     image: schemacrawler/schemacrawler
