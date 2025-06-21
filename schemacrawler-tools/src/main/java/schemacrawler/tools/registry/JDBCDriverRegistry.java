@@ -50,8 +50,8 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
   public static JDBCDriverRegistry getJDBCDriverRegistry() {
     if (jdbcDriverRegistrySingleton == null) {
       jdbcDriverRegistrySingleton = new JDBCDriverRegistry();
+      jdbcDriverRegistrySingleton.log();
     }
-    jdbcDriverRegistrySingleton.log();
     return jdbcDriverRegistrySingleton;
   }
 

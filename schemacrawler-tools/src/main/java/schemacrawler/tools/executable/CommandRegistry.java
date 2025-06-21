@@ -81,8 +81,8 @@ public final class CommandRegistry extends BasePluginRegistry implements PluginC
   public static CommandRegistry getCommandRegistry() {
     if (commandRegistrySingleton == null) {
       commandRegistrySingleton = new CommandRegistry();
+      commandRegistrySingleton.log();
     }
-    commandRegistrySingleton.log();
     return commandRegistrySingleton;
   }
 
