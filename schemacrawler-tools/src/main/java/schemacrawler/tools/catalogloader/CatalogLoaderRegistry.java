@@ -55,8 +55,8 @@ public final class CatalogLoaderRegistry extends BasePluginRegistry
   public static CatalogLoaderRegistry getCatalogLoaderRegistry() {
     if (catalogLoaderRegistrySingleton == null) {
       catalogLoaderRegistrySingleton = new CatalogLoaderRegistry();
+      catalogLoaderRegistrySingleton.log();
     }
-    catalogLoaderRegistrySingleton.log();
     return catalogLoaderRegistrySingleton;
   }
 

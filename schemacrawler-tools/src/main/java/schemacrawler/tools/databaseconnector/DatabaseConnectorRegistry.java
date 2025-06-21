@@ -62,8 +62,8 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry
   public static DatabaseConnectorRegistry getDatabaseConnectorRegistry() {
     if (databaseConnectorRegistrySingleton == null) {
       databaseConnectorRegistrySingleton = new DatabaseConnectorRegistry();
+      databaseConnectorRegistrySingleton.log();
     }
-    databaseConnectorRegistrySingleton.log();
     return databaseConnectorRegistrySingleton;
   }
 

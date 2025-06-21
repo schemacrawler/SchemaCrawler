@@ -57,8 +57,8 @@ public final class LinterRegistry extends BasePluginRegistry implements LinterIn
   public static LinterRegistry getLinterRegistry() {
     if (linterRegistrySingleton == null) {
       linterRegistrySingleton = new LinterRegistry();
+      linterRegistrySingleton.log();
     }
-    linterRegistrySingleton.log();
     return linterRegistrySingleton;
   }
 
