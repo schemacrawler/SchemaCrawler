@@ -41,8 +41,15 @@ jobs:
       if: matrix.os == 'windows-latest'
       shell: powershell
       run: |
+        # Install MSYS2
         choco install -y msys2
-        setx PATH "%PATH%;C:\tools\msys64\usr\bin"
+        # Persist PATH for future sessions
+        $oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
+        $newPath = "$oldPath;C:\tools\msys64\usr\bin"
+        [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+        # Update PATH current session too
+        $env:PATH += ";C:\tools\msys64\usr\bin"
+        # Install zip
         C:\tools\msys64\usr\bin\bash -lc "pacman -Sy --noconfirm zip"
         echo "Check zip version:"
         zip --version
