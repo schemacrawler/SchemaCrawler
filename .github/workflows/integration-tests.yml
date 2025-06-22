@@ -39,8 +39,11 @@ jobs:
     - id: install-zip
       name: Install zip on Windows
       if: matrix.os == 'windows-latest'
-      shell: bash
+      shell: powershell
       run: |
+        choco install -y msys2
+        setx PATH "%PATH%;C:\tools\msys64\usr\bin"
+        C:\tools\msys64\usr\bin\bash -lc "pacman -Sy --noconfirm zip"
         echo "Check zip version:"
         zip --version
 
@@ -75,7 +78,7 @@ jobs:
         zip --version
         # Save expected results files
         echo "Zip expected results:"
-        .github/scripts/unit-tests-results-output.sh $(realpath .)        
+        .github/scripts/unit-tests-results-output.sh $(realpath .)
     - id: upload-unit-tests-results-output
       name: Upload expected results files
       uses: actions/upload-artifact@v4
