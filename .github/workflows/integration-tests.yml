@@ -40,10 +40,25 @@ jobs:
       if: matrix.os == 'windows-latest'
       shell: powershell
       run: |
-        Set-ExecutionPolicy Bypass -Scope Process -Force; `
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
-        iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-        choco install zip -y
+        # Install MSYS2
+        choco install -y msys2
+        # Persist PATH for future sessions
+        $oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
+        $newPath = "$oldPath;C:\tools\msys64\usr\bin"
+        [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+        # Update PATH current session too
+        $env:PATH += ";C:\tools\msys64\usr\bin"
+        # Install zip
+        C:\tools\msys64\usr\bin\bash -lc "pacman -Sy --noconfirm zip"
+        echo "Check zip version:"
+        zip --version
+    - id: install-zip-on-git-bash
+      name: Add MSYS2 to PATH for Git Bash
+      if: matrix.os == 'windows-latest'
+      shell: bash
+      run: |
+        echo "Add MSYS2 to PATH"
+        echo "C:/tools/msys64/usr/bin" >> $GITHUB_PATH
 
 # BUILD AND TEST
     - id: build-test
@@ -76,7 +91,7 @@ jobs:
         zip --version
         # Save expected results files
         echo "Zip expected results:"
-        .github/scripts/unit-tests-results-output.sh $(realpath .)        
+        .github/scripts/unit-tests-results-output.sh $(realpath .)
     - id: upload-unit-tests-results-output
       name: Upload expected results files
       uses: actions/upload-artifact@v4
