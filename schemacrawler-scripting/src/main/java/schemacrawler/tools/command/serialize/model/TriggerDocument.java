@@ -32,6 +32,7 @@ public final class TriggerDocument implements Serializable {
 
   private final String triggerName;
   private final String actionCondition;
+  private final String actionStatement;
   private final int actionOrder;
   private final String actionOrientation;
   private final String conditionTiming;
@@ -42,6 +43,7 @@ public final class TriggerDocument implements Serializable {
 
     triggerName = trigger.getName();
     actionCondition = trigger.getActionCondition();
+    actionStatement = trigger.getActionStatement();
     actionOrder = trigger.getActionOrder();
     actionOrientation = trigger.getActionOrientation().toString();
     conditionTiming = trigger.getConditionTiming().toString();
@@ -61,6 +63,10 @@ public final class TriggerDocument implements Serializable {
 
   public String getActionOrientation() {
     return actionOrientation;
+  }
+
+  public String getActionStatement() {
+    return actionStatement;
   }
 
   public String getConditionTiming() {
