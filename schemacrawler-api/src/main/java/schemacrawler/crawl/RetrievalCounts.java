@@ -151,7 +151,7 @@ public final class RetrievalCounts {
     if (key == null) {
       return;
     }
-    log(Level.FINE, keyCount.get(key), includedKeyCount.get(key), key);
+    log(Level.INFO, keyCount.get(key), includedKeyCount.get(key), key);
   }
 
   private void log(

@@ -238,7 +238,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
         while (results.next()) {
           retrievalCounts.count();
           final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
-          retrievalCounts.log();
+          retrievalCounts.countIfIncluded(added);
         }
       } catch (final AbstractMethodError e) {
         logSQLFeatureNotSupported(
