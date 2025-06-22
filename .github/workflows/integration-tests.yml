@@ -53,6 +53,12 @@ jobs:
         C:\tools\msys64\usr\bin\bash -lc "pacman -Sy --noconfirm zip"
         echo "Check zip version:"
         zip --version
+    - id: install-zip-on-git-bash
+        name: Add MSYS2 to PATH for Git Bash
+        shell: bash
+        run: |
+          echo "Add MSYS2 to PATH"
+          echo "C:/tools/msys64/usr/bin" >> $GITHUB_PATH
 
 # BUILD AND TEST
     - id: build-test
