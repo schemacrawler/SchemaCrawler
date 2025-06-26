@@ -1,7 +1,0 @@
-
-
-TEST_TABLE                                                     [unknown]
-------------------------------------------------------------------------
-  HIDDEN_COLUMN                     DATA_TYPE NOT NULL          
-                                    hidden                      
-
