@@ -1,7 +1,0 @@
-
-
-TEST_TABLE                                                     [unknown]
-------------------------------------------------------------------------
-  ENUM_VALUES_COLUMN                DATA_TYPE NOT NULL          
-                                    'VALUE1', VALUE2'           
-

@@ -1,7 +1,0 @@
-
-
-TEST_TABLE                                                     [unknown]
-------------------------------------------------------------------------
-  GENERATED_COLUMN                  DATA_TYPE NOT NULL          
-                                    generated                   
-
