@@ -1,0 +1,523 @@
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS                                                          [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  ADDRESS1                          VARCHAR(255)                
+  ADDRESS2                          VARCHAR(255)                
+  CITY                              VARCHAR(50)                 
+  STATE                             CHAR(2)                     
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+                                    default 'USA'               
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
+
+                                                      [non-unique index]
+  CITY                              ascending                   
+  STATE                             ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Triggers
+
+                                                               [trigger]
+  after delete, per row
+
+Table Constraints
+
+                                                      [check constraint]
+  STATE                                                         
+
+                                                      [check constraint]
+  ID                                                            
+
+                                                      [check constraint]
+  FIRSTNAME                                                     
+
+                                                      [check constraint]
+  LASTNAME                                                      
+
+
+
+AUTHORSLIST                                                       [view]
+------------------------------------------------------------------------
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(20)                 
+  LASTNAME                          VARCHAR(20)                 
+
+
+
+BOOKAUTHORS                                                      [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, 
+along with the latest updated information
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
+  SOMEDATA                          VARCHAR(30)                 
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  AUTHORID (0..many)--> AUTHORS.ID                              
+
+                                           [foreign key, with no action]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+Indexes
+
+                                                      [non-unique index]
+  AUTHORID                          ascending                   
+
+                                                      [non-unique index]
+  BOOKID                            ascending                   
+
+                                                          [unique index]
+  BOOKID                            ascending                   
+  AUTHORID                          ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  BOOKID                                                        
+
+                                                      [check constraint]
+  AUTHORID                                                      
+
+
+
+BOOKS                                                            [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
+  TITLE                             VARCHAR(255) NOT NULL       
+                                    Book title                  
+  DESCRIPTION                       VARCHAR(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  PUBLISHERID                       INTEGER NOT NULL            
+                                    Foreign key to the book publisher
+  PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
+  PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
+  PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) SALES.BOOKID                                  
+
+                                           [foreign key, with no action]
+  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+                                                          [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+                                                      [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+  PREVIOUSEDITIONID                                             
+
+                                                      [check constraint]
+  ID                                                            
+
+                                                      [check constraint]
+  TITLE                                                         
+
+                                                      [check constraint]
+  PUBLISHERID                                                   
+
+
+
+"Celebrities"                                                    [table]
+------------------------------------------------------------------------
+  "Id"                              INTEGER NOT NULL            
+  NAME                              VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Id"                                                          
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Id"                              ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  "Id"                                                          
+
+
+
+"Celebrity Updates"                                              [table]
+------------------------------------------------------------------------
+  "Celebrity Id"                    INTEGER NOT NULL            
+  "UPDATE"                          VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  "Celebrity Id"                                                
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+
+Indexes
+
+                                                          [unique index]
+  "Celebrity Id"                    ascending                   
+
+                                                      [non-unique index]
+  "Celebrity Id"                    ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  "Celebrity Id"                                                
+
+
+
+COUPONS                                                          [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  DATA                              CLOB                        
+  COUPONS                           ARRAY                       
+                                    default ARRAY[]             
+  BOOKS                             ARRAY                       
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ID                                                            
+
+
+
+CUSTOMERDATA                                                     [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  DATA                              VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ID                                                            
+
+
+
+CUSTOMERS                                                        [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         DISTINCT NOT NULL           
+  LASTNAME                          DISTINCT NOT NULL           
+  AGE                               DISTINCT                    
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ID                                                            
+
+                                                      [check constraint]
+  FIRSTNAME                                                     
+
+                                                      [check constraint]
+  LASTNAME                                                      
+
+
+
+PUBLISHERS                                                       [table]
+------------------------------------------------------------------------
+List of book publishers
+  ID                                INTEGER NOT NULL            
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+  PUBLISHER                         VARCHAR(255)                
+                                    Name of book publisher      
+
+Primary Key
+
+                                                           [primary key]
+  ID                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+
+Indexes
+
+                                                          [unique index]
+  ID                                ascending                   
+
+
+
+ΒΙΒΛΊΑ                                                           [table]
+------------------------------------------------------------------------
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
+  ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
+
+Primary Key
+
+                                                           [primary key]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+
+Indexes
+
+                                                      [non-unique index]
+  ΕΚΔΌΤΗΣ                           ascending                   
+
+                                                          [unique index]
+  ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  ΜΟΝΑΔΙΚΌΣ                                                     
+
+                                                      [check constraint]
+  ΤΊΤΛΟΣ                                                        
+
+                                                      [check constraint]
+  ΕΚΔΌΤΗΣ                                                       
+
+
+
+REGIONS                                                          [table]
+------------------------------------------------------------------------
+  CITY                              VARCHAR(50) NOT NULL        
+  STATE                             VARCHAR(2) NOT NULL         
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+
+Primary Key
+
+                                                           [primary key]
+  POSTALCODE                                                    
+  COUNTRY                                                       
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  POSTALCODE <--(0..many) SALES.POSTALCODE                              
+  COUNTRY <--(0..many) SALES.COUNTRY                              
+
+Indexes
+
+                                                          [unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  CITY                                                          
+
+                                                      [check constraint]
+  STATE                                                         
+
+                                                      [check constraint]
+  POSTALCODE                                                    
+
+                                                      [check constraint]
+  COUNTRY                                                       
+
+
+
+SALES                                                            [table]
+------------------------------------------------------------------------
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+  BOOKID                            INTEGER                     
+  COUPON_ID                         INTEGER                     
+  PERIODENDDATE                     DATE                        
+  TOTALAMOUNT                       DOUBLE(64, 0)               
+  SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  BOOKID (0..many)--> BOOKS.ID                                  
+
+                                           [foreign key, with no action]
+  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
+
+                                           [foreign key, with no action]
+  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> REGIONS.COUNTRY                              
+
+Indexes
+
+                                                      [non-unique index]
+  BOOKID                            ascending                   
+
+                                                      [non-unique index]
+  SALESDATAID                       ascending                   
+
+                                                      [non-unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Table Constraints
+
+                                                      [check constraint]
+  POSTALCODE                                                    
+
+                                                      [check constraint]
+  COUNTRY                                                       
+
+
+
+SALESDATA                                                        [table]
+------------------------------------------------------------------------
+  SALESDATAID                       INTEGER                     
+  YEARLYAMOUNT                      DOUBLE(64, 0)               
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  SALESDATAID <--(0..many) SALES.SALESDATAID                              
+
+Indexes
+
+                                                          [unique index]
+  SALESDATAID                       ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+  SALESDATAID                                                   
+
+
+
+Routines
+========================================================================
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+  PUBLISHER                         VARCHAR, out                
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+  NEWPUBLISHER                      VARCHAR, in                 
+  PUBLISHER                         VARCHAR, out                
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
+
+
+
+Sequences
+========================================================================
+
+
+
+PUBLISHER_ID_SEQ                                              [sequence]
+------------------------------------------------------------------------
+  increment                         1                           
+  start value                       1                           
+  minimum value                     -2147483648                 
+  maximum value                     2147483647                  
+  cycle                             false                       
+
