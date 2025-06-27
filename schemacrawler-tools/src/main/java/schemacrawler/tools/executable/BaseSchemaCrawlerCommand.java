@@ -30,6 +30,8 @@ package schemacrawler.tools.executable;
 
 import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.OutputOptions;
@@ -41,6 +43,7 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     extends BaseCommand<C, Void> implements SchemaCrawlerCommand<C> {
 
   protected Identifiers identifiers;
+  protected InformationSchemaViews informationSchemaViews;
   protected OutputOptions outputOptions;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
 
@@ -51,6 +54,7 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     outputOptions = OutputOptionsBuilder.newOutputOptions();
   }
 
+  /** {@inheritDoc} */
   @Override
   public final Void call() {
     execute();
@@ -61,19 +65,31 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   @Override
   public abstract void checkAvailability() throws RuntimeException;
 
+  /** {@inheritDoc} */
   @Override
   public final void configure(final C commandOptions) {
     this.commandOptions = requireNonNull(commandOptions, "No command options provided");
   }
 
+  /** {@inheritDoc} */
   @Override
   public final C getCommandOptions() {
     return commandOptions;
   }
 
+  /** {@inheritDoc} */
   @Override
   public Identifiers getIdentifiers() {
     return identifiers;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final InformationSchemaViews getInformationSchemaViews() {
+    if (informationSchemaViews == null) {
+      return InformationSchemaViewsBuilder.newInformationSchemaViews();
+    }
+    return informationSchemaViews;
   }
 
   /** {@inheritDoc} */
@@ -88,14 +104,22 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     return schemaCrawlerOptions;
   }
 
+  /** {@inheritDoc} */
   @Override
   public void initialize() {
     checkOptions();
   }
 
+  /** {@inheritDoc} */
   @Override
   public void setIdentifiers(final Identifiers identifiers) {
     this.identifiers = identifiers;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews) {
+    this.informationSchemaViews = informationSchemaViews;
   }
 
   /** {@inheritDoc} */
