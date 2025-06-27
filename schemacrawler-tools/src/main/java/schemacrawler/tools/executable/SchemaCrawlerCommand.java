@@ -9,6 +9,7 @@
 package schemacrawler.tools.executable;
 
 import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -30,11 +31,15 @@ public interface SchemaCrawlerCommand<C extends CommandOptions> extends Command<
 
   Identifiers getIdentifiers();
 
+  InformationSchemaViews getInformationSchemaViews();
+
   OutputOptions getOutputOptions();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
   void setIdentifiers(Identifiers identifiers);
+
+  void setInformationSchemaViews(InformationSchemaViews informationSchemaViews);
 
   void setOutputOptions(OutputOptions outputOptions);
 

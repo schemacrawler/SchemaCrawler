@@ -67,6 +67,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
       setConnection(scCommand.getConnection());
     }
     setIdentifiers(scCommand.getIdentifiers());
+    setInformationSchemaViews(scCommand.getInformationSchemaViews());
   }
 
   public SchemaCrawlerCommand<?> addNext(
@@ -121,6 +122,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
         scCommand.setConnection(connection);
       }
       scCommand.setIdentifiers(identifiers);
+      scCommand.setInformationSchemaViews(informationSchemaViews);
 
       scCommands.add(scCommand);
 

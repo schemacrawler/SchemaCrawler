@@ -159,6 +159,8 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
 
     // Set identifiers strategy
     scCommand.setIdentifiers(identifiers);
+    // Set information schema queries
+    scCommand.setInformationSchemaViews(informationSchemaViews);
 
     // Initialize, and check if the command is available
     scCommand.initialize();
