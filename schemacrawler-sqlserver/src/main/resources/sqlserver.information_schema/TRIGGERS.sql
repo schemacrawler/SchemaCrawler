@@ -1,40 +1,39 @@
 SELECT
-  information_schema_tables.TABLE_CATALOG
+  ist.TABLE_CATALOG
     AS TRIGGER_CATALOG,
-  information_schema_tables.TABLE_SCHEMA
+  ist.TABLE_SCHEMA
     AS TRIGGER_SCHEMA,
-  triggers.name
+  tr.name
     AS TRIGGER_NAME,
   CONCAT(
     CASE
-      WHEN OBJECTPROPERTY(triggers.id, 'ExecIsInsertTrigger') = 1 THEN 'INSERT'
+      WHEN OBJECTPROPERTY(tr.object_id, 'ExecIsInsertTrigger') = 1 THEN 'INSERT'
       ELSE 'UNKNOWN'
     END,
     ', ',
     CASE
-      WHEN OBJECTPROPERTY(triggers.id, 'ExecIsUpdateTrigger') = 1 THEN 'UPDATE'
+      WHEN OBJECTPROPERTY(tr.object_id, 'ExecIsUpdateTrigger') = 1 THEN 'UPDATE'
       ELSE 'UNKNOWN'
     END,
     ', ',
     CASE
-      WHEN OBJECTPROPERTY(triggers.id, 'ExecIsDeleteTrigger') = 1 THEN 'DELETE'
+      WHEN OBJECTPROPERTY(tr.object_id, 'ExecIsDeleteTrigger') = 1 THEN 'DELETE'
       ELSE 'UNKNOWN'
     END
   )
     AS EVENT_MANIPULATION,
-  information_schema_tables.TABLE_CATALOG
+  ist.TABLE_CATALOG
     AS EVENT_OBJECT_CATALOG,
-  information_schema_tables.TABLE_SCHEMA
+  ist.TABLE_SCHEMA
     AS EVENT_OBJECT_SCHEMA,
-  information_schema_tables.TABLE_NAME
+  ist.TABLE_NAME
     AS EVENT_OBJECT_TABLE,
-  OBJECT_DEFINITION(OBJECT_ID(information_schema_tables.TABLE_CATALOG + '.' +
-  information_schema_tables.TABLE_SCHEMA + '.' +  triggers.name))
+  OBJECT_DEFINITION(tr.object_id)
     AS ACTION_STATEMENT,
   CASE
-    WHEN OBJECTPROPERTY(triggers.id, 'ExecIsInsertTrigger') = 1 THEN OBJECTPROPERTY(triggers.id, 'TriggerInsertOrder')
-    WHEN OBJECTPROPERTY(triggers.id, 'ExecIsUpdateTrigger') = 1 THEN OBJECTPROPERTY(triggers.id, 'TriggerUpdateOrder')
-    WHEN OBJECTPROPERTY(triggers.id, 'ExecIsDeleteTrigger') = 1 THEN OBJECTPROPERTY(triggers.id, 'TriggerDeleteOrder')
+    WHEN OBJECTPROPERTY(tr.object_id, 'ExecIsInsertTrigger') = 1 THEN OBJECTPROPERTY(tr.object_id, 'TriggerInsertOrder')
+    WHEN OBJECTPROPERTY(tr.object_id, 'ExecIsUpdateTrigger') = 1 THEN OBJECTPROPERTY(tr.object_id, 'TriggerUpdateOrder')
+    WHEN OBJECTPROPERTY(tr.object_id, 'ExecIsDeleteTrigger') = 1 THEN OBJECTPROPERTY(tr.object_id, 'TriggerDeleteOrder')
     ELSE 1
   END
     AS ACTION_ORDER,
@@ -43,18 +42,14 @@ SELECT
   'STATEMENT'
     AS ACTION_ORIENTATION,
   CASE
-    WHEN OBJECTPROPERTY(triggers.id, 'ExecIsAfterTrigger') = 1 THEN 'AFTER'
+    WHEN OBJECTPROPERTY(tr.object_id, 'ExecIsAfterTrigger') = 1 THEN 'AFTER'
     ELSE 'INSTEAD OF'
   END
     AS CONDITION_TIMING
 FROM
-  sysobjects
-    AS triggers
-  INNER JOIN sysobjects
-    AS tables
-    ON triggers.parent_obj = tables.id
-  INNER JOIN INFORMATION_SCHEMA.TABLES
-    AS information_schema_tables
-    ON tables.name = information_schema_tables.TABLE_NAME
-WHERE
-  triggers.type = 'TR'
+  sys.triggers AS tr
+  INNER JOIN sys.all_objects AS tbl
+    ON tr.parent_id = tbl.object_id
+  INNER JOIN INFORMATION_SCHEMA.TABLES AS ist
+    ON tbl.name = ist.TABLE_NAME
+      AND SCHEMA_NAME(tbl.schema_id) = ist.TABLE_SCHEMA
