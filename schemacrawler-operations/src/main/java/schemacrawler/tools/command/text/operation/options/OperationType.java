@@ -30,6 +30,15 @@ public enum OperationType implements Operation {
           + "but row order is not guaranteed - "
           + "this can be used with a minimum info-level for speed",
       "SELECT * FROM ${table}"),
+  /**
+   * Quick dump operation, where columns do not need to be retrieved (minimum infolevel), but the
+   * order of rows may not be preserved from run to run.
+   */
+  tablesample(
+      "Table sample",
+      "Show sample data from tables, "
+          + "but the samples are not the same from run to run",
+      "SELECT * FROM ${table}"),
   ;
 
   private final String description;

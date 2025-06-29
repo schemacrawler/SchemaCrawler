@@ -154,7 +154,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
   private void iterateRows(final MetadataResultSet dataRows) throws SQLException {
     final int maxRows;
-    if ("tablesample".equals(operation.getName())) {
+    if (OperationType.tablesample.name().equals(operation.getName())) {
       maxRows = 10;
     } else {
       maxRows = options.getMaxRows();
