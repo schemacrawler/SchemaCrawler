@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.text.operation.options;
 
 import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schemacrawler.Query;
 
 public class QueryOperation implements Operation {
@@ -43,6 +42,11 @@ public class QueryOperation implements Operation {
   @Override
   public String getDescription() {
     return "User defined query";
+  }
+
+  @Override
+  public String getName() {
+    return "query";
   }
 
   @Override
