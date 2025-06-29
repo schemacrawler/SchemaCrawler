@@ -114,7 +114,7 @@ final class ViewExtRetriever extends AbstractRetriever {
         retrievalCounts.countIncluded();
       }
     } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve views", e);
+      LOGGER.log(Level.WARNING, "Could not retrieve additional view information", e);
     }
     retrievalCounts.log();
   }
