@@ -52,7 +52,8 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
                     "jdbc:sqlserver://${host}:${port};databaseName=${database}")
                 .withDefaultPort(1433)
                 .withDefaultUrlx("applicationName", "SchemaCrawler")
-                .withDefaultUrlx("encrypt", false));
+                .withDefaultUrlx("encrypt", false)
+                .withConnectionInitializer(new SqlServerConnectionInitializer()));
   }
 
   @Override

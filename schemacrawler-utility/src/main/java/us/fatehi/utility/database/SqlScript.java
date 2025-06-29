@@ -56,14 +56,19 @@ public class SqlScript implements Runnable {
           System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
   public static void executeScriptFromResource(
-      final String scriptResource, final Connection connection) {
+	      final String scriptResource, final Connection connection) {
+	  executeScriptFromResource(scriptResource, ";", connection);
+  }
+  
+  public static void executeScriptFromResource(
+      final String scriptResource, final String delimiter, final Connection connection) {
 
     requireNotBlank(scriptResource, "No script resource line provided");
     requireNonNull(connection, "No database connection provided");
 
     try (final Reader scriptReader =
         new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)) {
-      new SqlScript(scriptReader, ";", connection).run();
+      new SqlScript(scriptReader, delimiter, connection).run();
     } catch (final Exception e) {
       throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
     }
