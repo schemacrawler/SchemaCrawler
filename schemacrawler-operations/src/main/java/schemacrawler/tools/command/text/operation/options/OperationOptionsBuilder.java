@@ -14,7 +14,9 @@ import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
 public final class OperationOptionsBuilder
     extends BaseTextOptionsBuilder<OperationOptionsBuilder, OperationOptions> {
+
   private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX + "data.show_lobs";
+  private static final String MAX_ROWS = SCHEMACRAWLER_FORMAT_PREFIX + "data.max_rows";
 
   public static OperationOptionsBuilder builder() {
     return new OperationOptionsBuilder();
@@ -23,6 +25,7 @@ public final class OperationOptionsBuilder
   private String command;
   protected Operation operation;
   protected boolean isShowLobs;
+  protected int maxRows;
 
   private OperationOptionsBuilder() {
     // Set default values, if any
@@ -36,6 +39,12 @@ public final class OperationOptionsBuilder
     super.fromConfig(config);
 
     isShowLobs = config.getBooleanValue(SHOW_LOBS, false);
+
+    maxRows = config.getIntegerValue(MAX_ROWS, -1);
+    if (maxRows < 0) {
+      maxRows = Integer.MAX_VALUE;
+    }
+
     operation = getQueryFromCommand(config);
 
     return this;
@@ -49,6 +58,7 @@ public final class OperationOptionsBuilder
     super.fromOptions(options);
 
     isShowLobs = options.isShowLobs();
+    maxRows = options.getMaxRows();
 
     return this;
   }
@@ -68,10 +78,25 @@ public final class OperationOptionsBuilder
     return this;
   }
 
+  /**
+   * Show LOB data, or not.
+   *
+   * @param value Whether to show LOB data.
+   * @return Builder
+   */
+  public OperationOptionsBuilder maxRows(final int value) {
+    maxRows = value;
+    if (maxRows < 0) {
+      maxRows = Integer.MAX_VALUE;
+    }
+    return this;
+  }
+
   @Override
   public Config toConfig() {
     final Config config = super.toConfig();
     config.put(SHOW_LOBS, isShowLobs);
+    config.put(MAX_ROWS, maxRows);
     return config;
   }
 

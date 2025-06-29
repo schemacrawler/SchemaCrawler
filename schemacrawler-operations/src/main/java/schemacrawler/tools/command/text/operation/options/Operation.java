@@ -20,6 +20,13 @@ public interface Operation {
   String getDescription();
 
   /**
+   * Operation name.
+   *
+   * @return Operation name
+   */
+  String getName();
+
+  /**
    * Query.
    *
    * @return Query

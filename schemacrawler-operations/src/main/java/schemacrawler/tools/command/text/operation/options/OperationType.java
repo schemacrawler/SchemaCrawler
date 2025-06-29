@@ -47,6 +47,11 @@ public enum OperationType implements Operation {
     return description;
   }
 
+  @Override
+  public String getName() {
+    return name();
+  }
+
   /**
    * Query.
    *

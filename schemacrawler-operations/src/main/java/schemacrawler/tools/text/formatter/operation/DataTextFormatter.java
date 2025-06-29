@@ -153,7 +153,18 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
   }
 
   private void iterateRows(final MetadataResultSet dataRows) throws SQLException {
+    final int maxRows;
+    if ("tablesample".equals(operation.getName())) {
+      maxRows = 10;
+    } else {
+      maxRows = options.getMaxRows();
+    }
+    int row = 0;
     while (dataRows.next()) {
+      row = row + 1;
+      if (row > maxRows) {
+        break;
+      }
       final List<Object> currentRow = dataRows.row();
       final Object[] columnData = currentRow.toArray();
       formattingHelper.writeRow(columnData);
