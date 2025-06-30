@@ -46,6 +46,7 @@ public final class SqlServerConnectionInitializer implements Consumer<Connection
     SqlScript.executeScriptFromResource("/initialize-all-routines.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-triggers.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-views.sql", "@", connection);
+    SqlScript.executeScriptFromResource("/initialize-all-table-constraints-metadata.sql", "@", connection);
     LOGGER.log(Level.FINE, new StringFormat("Initialized SQL Server connection <%s>", connection));
   }
 }
