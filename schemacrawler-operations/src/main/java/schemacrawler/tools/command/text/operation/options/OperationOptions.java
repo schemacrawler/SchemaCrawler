@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.text.operation.options;
 
 import static java.util.Objects.requireNonNull;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.text.options.BaseTextOptions;
 
@@ -62,8 +63,8 @@ public final class OperationOptions extends BaseTextOptions {
     return operation;
   }
 
-  public Query getQuery() {
-    return operation.getQuery();
+  public Query getQuery(final InformationSchemaViews views) {
+    return operation.getQuery(views);
   }
 
   /**

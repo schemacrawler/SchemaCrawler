@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.operation.options;
 
+import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 
 /** Database operations. */
@@ -58,17 +60,24 @@ public enum OperationType implements Operation {
       "Table sample",
       "Show sample data from tables, "
           + "but the samples are not the same from run to run",
-      "SELECT * FROM ${table}"),
+      "SELECT * FROM ${table}",
+      InformationSchemaKey.TABLESAMPLE),
   ;
 
   private final String description;
   private final String queryString;
   private final String title;
+  private final InformationSchemaKey viewKey;
 
   OperationType(final String title, final String description, final String queryString) {
+    this(title, description, queryString, null);
+  }
+
+  OperationType(final String title, final String description, final String queryString, final InformationSchemaKey viewKey) {
     this.title = title;
     this.description = description;
     this.queryString = queryString;
+    this.viewKey = viewKey; // Can be null
   }
 
   @Override
@@ -87,8 +96,12 @@ public enum OperationType implements Operation {
    * @return Query
    */
   @Override
-  public Query getQuery() {
-    return new Query(name(), queryString);
+  public Query getQuery(final InformationSchemaViews views) {
+    if (viewKey == null || views == null || !views.hasQuery(viewKey)) {
+      return new Query(name(), queryString);
+    }
+    final String overriddenQueryString = views.getQuery(viewKey).getQuery();
+    return new Query(name(), overriddenQueryString);
   }
 
   /**

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.operation.options;
 
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 
 public interface Operation {
@@ -47,11 +48,11 @@ public interface Operation {
   String getName();
 
   /**
-   * Query.
+   * Query, with override from information schema views.
    *
    * @return Query
    */
-  Query getQuery();
+  Query getQuery(InformationSchemaViews views);
 
   /**
    * Operation title.
