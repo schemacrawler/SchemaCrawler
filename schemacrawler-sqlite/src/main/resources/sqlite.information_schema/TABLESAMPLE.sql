@@ -1,0 +1,7 @@
+SELECT 
+  *
+FROM 
+  ${table}
+ORDER BY 
+  RANDOM()
+LIMIT 10

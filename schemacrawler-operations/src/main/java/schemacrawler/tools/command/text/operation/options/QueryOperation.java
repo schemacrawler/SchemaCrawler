@@ -9,6 +9,7 @@
 package schemacrawler.tools.command.text.operation.options;
 
 import static java.util.Objects.requireNonNull;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 
 public class QueryOperation implements Operation {
@@ -30,7 +31,8 @@ public class QueryOperation implements Operation {
   }
 
   @Override
-  public Query getQuery() {
+  public Query getQuery(final InformationSchemaViews views) {
+    // Query is not overridden from information schema views
     return query;
   }
 

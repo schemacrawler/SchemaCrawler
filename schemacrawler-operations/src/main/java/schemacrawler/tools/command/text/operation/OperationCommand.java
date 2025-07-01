@@ -61,7 +61,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
     }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
-    final Query query = commandOptions.getQuery();
+    final Query query = commandOptions.getQuery(informationSchemaViews);
 
     handler.begin();
 
