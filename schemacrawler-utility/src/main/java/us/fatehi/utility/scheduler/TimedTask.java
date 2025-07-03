@@ -31,6 +31,8 @@ package us.fatehi.utility.scheduler;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +49,7 @@ class TimedTask implements Callable<TimedTaskResult> {
 
   private final TaskDefinition taskDefinition;
   private final Clock clock;
+  private Instant start;
 
   TimedTask(final TaskDefinition task, final Clock clock) {
     taskDefinition = requireNonNull(task, "Task not provided");
@@ -62,7 +65,7 @@ class TimedTask implements Callable<TimedTaskResult> {
             "Running <%s> on thread <%s>",
             taskDefinition.getTaskName(), Thread.currentThread().getName()));
 
-    final Instant start = Instant.now(clock);
+    start = Instant.now(clock);
 
     Exception ex = null;
     try {
@@ -85,5 +88,13 @@ class TimedTask implements Callable<TimedTaskResult> {
           ex);
     }
     return timedTaskResult;
+  }
+  
+  public String getTaskName() {
+	    return taskDefinition.getTaskName();
+	  }
+
+  public ZonedDateTime getStart() {
+	return start.atZone(ZoneId.systemDefault());
   }
 }
