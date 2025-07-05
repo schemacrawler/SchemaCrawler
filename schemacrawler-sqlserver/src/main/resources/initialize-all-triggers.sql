@@ -54,11 +54,15 @@ BEGIN
                 WHEN OBJECTPROPERTY(tr.object_id, ''ExecIsAfterTrigger'') = 1 THEN ''AFTER''
                 ELSE ''INSTEAD OF''
             END AS CONDITION_TIMING
-        FROM [?].sys.triggers AS tr
-        INNER JOIN [?].sys.all_objects AS tbl
-            ON tr.parent_id = tbl.object_id
-        INNER JOIN [?].INFORMATION_SCHEMA.TABLES AS ist
-            ON tbl.name = ist.TABLE_NAME AND SCHEMA_NAME(tbl.schema_id) = ist.TABLE_SCHEMA;
+        FROM 
+            [?].sys.triggers AS tr
+            INNER JOIN [?].sys.all_objects AS tbl
+                ON tr.parent_id = tbl.object_id
+            INNER JOIN [?].INFORMATION_SCHEMA.TABLES AS ist
+                ON tbl.name = ist.TABLE_NAME AND SCHEMA_NAME(tbl.schema_id) = ist.TABLE_SCHEMA
+        WHERE 
+            tr.IS_MS_SHIPPED = 0
+            AND tbl.IS_MS_SHIPPED = 0;
     END';
 
     SELECT * FROM ##AllTriggerMetadata;

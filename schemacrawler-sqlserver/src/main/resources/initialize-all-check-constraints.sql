@@ -26,7 +26,8 @@ BEGIN
             CONSTRAINT_SCHEMA,
             CONSTRAINT_NAME,
             CHECK_CLAUSE
-        FROM [?].INFORMATION_SCHEMA.CHECK_CONSTRAINTS;
+        FROM 
+            [?].INFORMATION_SCHEMA.CHECK_CONSTRAINTS;
     END';
 
     SELECT * FROM ##AllCheckConstraintMetadata;

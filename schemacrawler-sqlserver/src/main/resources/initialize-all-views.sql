@@ -30,7 +30,8 @@ BEGIN
             V.CHECK_OPTION,
             V.IS_UPDATABLE,
             OBJECT_DEFINITION(OBJECT_ID(V.TABLE_CATALOG + ''.'' + V.TABLE_SCHEMA + ''.'' + V.TABLE_NAME))
-        FROM [?].INFORMATION_SCHEMA.VIEWS V;
+        FROM 
+            [?].INFORMATION_SCHEMA.VIEWS V;
     END';
 
     SELECT * FROM ##AllViewMetadata;
