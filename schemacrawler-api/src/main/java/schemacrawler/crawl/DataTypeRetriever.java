@@ -94,12 +94,44 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
+
+	final RetrievalCounts retrievalCounts = new RetrievalCounts("user-defined column data types");
     for (final Schema schema : schemas) {
       LOGGER.log(
           Level.INFO,
           new StringFormat("Retrieving user-defined data types for schema <%s>", schema));
-      retrieveUserDefinedColumnDataTypesFromMetadata(schema);
+      requireNonNull(schema, "No schema provided");
+	
+	final Optional<SchemaReference> schemaOptional = catalog.lookupSchema(schema.getFullName());
+	if (!schemaOptional.isPresent()) {
+	  LOGGER.log(
+	      Level.INFO,
+	      new StringFormat(
+	          "Cannot locate schema, so not retrieving data types for schema: %s", schema));
+	  continue;
+	}
+	
+	LOGGER.log(Level.INFO, new StringFormat("Retrieving data types for schema <%s>", schema));
+	
+	final String catalogName = schema.getCatalogName();
+	final String schemaName = schema.getName();
+	try (final Connection connection = getRetrieverConnection().getConnection();
+	    final MetadataResultSet results =
+	        new MetadataResultSet(
+	            connection.getMetaData().getUDTs(catalogName, schemaName, null, null),
+	            "DatabaseMetaData::getUDTs"); ) {
+	  while (results.next()) {
+	    retrievalCounts.count(schema.key());
+	    createUserDefinedColumnDataType(results, schema);
+	    retrievalCounts.countIncluded(schema.key());
+	  }
+	} catch (final SQLException e) {
+	  logPossiblyUnsupportedSQLFeature(
+	      new StringFormat("Could not retrieve user-defined column data types"), e);
+	}
+	retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 
   private void createSystemColumnDataType(
@@ -215,40 +247,6 @@ final class DataTypeRetriever extends AbstractRetriever {
     } catch (final SQLException e) {
       logPossiblyUnsupportedSQLFeature(
           new StringFormat("Could not retrieve system column data types"), e);
-    }
-    retrievalCounts.log();
-  }
-
-  private void retrieveUserDefinedColumnDataTypesFromMetadata(final Schema schema) {
-    requireNonNull(schema, "No schema provided");
-
-    final Optional<SchemaReference> schemaOptional = catalog.lookupSchema(schema.getFullName());
-    if (!schemaOptional.isPresent()) {
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat(
-              "Cannot locate schema, so not retrieving data types for schema: %s", schema));
-      return;
-    }
-
-    LOGGER.log(Level.INFO, new StringFormat("Retrieving data types for schema <%s>", schema));
-
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("user-defined column data types");
-    final String catalogName = schema.getCatalogName();
-    final String schemaName = schema.getName();
-    try (final Connection connection = getRetrieverConnection().getConnection();
-        final MetadataResultSet results =
-            new MetadataResultSet(
-                connection.getMetaData().getUDTs(catalogName, schemaName, null, null),
-                "DatabaseMetaData::getUDTs"); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        createUserDefinedColumnDataType(results, schema);
-        retrievalCounts.countIncluded();
-      }
-    } catch (final SQLException e) {
-      logPossiblyUnsupportedSQLFeature(
-          new StringFormat("Could not retrieve user-defined column data types"), e);
     }
     retrievalCounts.log();
   }
