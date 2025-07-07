@@ -51,7 +51,9 @@ public final class SqlServerConnectionInitializer implements Consumer<Connection
     SqlScript.executeScriptFromResource("/initialize-all-check-constraints.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-constraint-column-usage.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-sequences.sql", "@", connection);
-    SqlScript.executeScriptFromResource("/initialize-all-synonyms.sql", "@", connection);    
+    SqlScript.executeScriptFromResource("/initialize-all-synonyms.sql", "@", connection);
+    SqlScript.executeScriptFromResource("/initialize-all-additional-column-attributes.sql", "@", connection);
+    SqlScript.executeScriptFromResource("/initialize-all-additional-table-attributes.sql", "@", connection);  
     LOGGER.log(Level.FINE, new StringFormat("Initialized SQL Server connection <%s>", connection));
   }
 }
