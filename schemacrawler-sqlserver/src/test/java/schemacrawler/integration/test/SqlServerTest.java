@@ -174,10 +174,10 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     assertThat(serverInfo.get(0).getValue(), is(nullValue()));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
-    assertThat(databaseUsers, hasSize(12));
+    assertThat(databaseUsers, hasSize(1));
     assertThat(
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
-        hasItems("dbo", "public", "db_datareader"));
+        hasItems("OTHERUSER"));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())

@@ -30,12 +30,14 @@ BEGIN
             TYPE_DESC AS TYPE,
             AUTHENTICATION_TYPE_DESC AS AUTHENTICATION_TYPE,
             ''?'' AS DATABASE_NAME
-        FROM [?].SYS.DATABASE_PRINCIPALS
+        FROM
+            [?].SYS.DATABASE_PRINCIPALS
         WHERE
-            TYPE_DESC NOT IN (''A'', ''G'', ''R'', ''X'')
+            TYPE IN (''S'', ''U'')
             AND SID IS NOT NULL
-            AND NAME != ''GUEST''
-        ORDER BY NAME;
+            AND NAME NOT IN (''dbo'', ''guest'', ''INFORMATION_SCHEMA'', ''sys'')
+            AND principal_id > 4 -- Excludes fixed system roles and internal users
+        ;
     END';
 
     SELECT * FROM ##AllDatabaseUsers;
