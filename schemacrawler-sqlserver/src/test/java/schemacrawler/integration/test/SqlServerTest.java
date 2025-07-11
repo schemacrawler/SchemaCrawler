@@ -182,7 +182,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
-        hasItems(4));
+        hasItems(5));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
