@@ -100,11 +100,13 @@ final class TableConstraintRetriever extends AbstractRetriever {
         informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
 
     // Get check constraint definitions
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraint definitions");
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extTableConstraintInformationSql, statement, getLimitMap()); ) {
       while (results.next()) {
+    	retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -124,10 +126,13 @@ final class TableConstraintRetriever extends AbstractRetriever {
         tableConstraint.appendDefinition(definition);
 
         tableConstraint.addAttributes(results.getAttributes());
+        
+        retrievalCounts.countIncluded();
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
     }
+    retrievalCounts.log();
   }
 
   /**
@@ -153,12 +158,15 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
     final Query extTableConstraintsInformationSql =
         informationSchemaViews.getQuery(EXT_TABLE_CONSTRAINTS);
+
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraint information");
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extTableConstraintsInformationSql, statement, getLimitMap()); ) {
 
       while (results.next()) {
+    	retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
@@ -201,10 +209,13 @@ final class TableConstraintRetriever extends AbstractRetriever {
         for (final Entry<String, Object> entry : entrySet) {
           tableConstraint.setAttribute(entry.getKey(), entry.getValue());
         }
+        
+        retrievalCounts.countIncluded();
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
     }
+    retrievalCounts.log();
   }
 
   /**

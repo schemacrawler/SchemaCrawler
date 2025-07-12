@@ -35,6 +35,10 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -74,7 +78,7 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
   @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
-  public void createDatabase() {
+  public void createDatabase() throws SQLException {
 
     if (!dbContainer.isRunning()) {
       fail("Testcontainer for database is not available");
@@ -82,6 +86,11 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    
+    // Note: The database connection needs to be closed for the new schemas to be recognized
+    try (final Connection connection = getConnection()) {
+      SqlScript.executeScriptFromResource("/additional-database.sql", connection);
+    }    
   }
 
   @Test
@@ -92,7 +101,7 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("master\\.dbo"))
+            .includeSchemas(new RegularExpressionInclusionRule("ADDITIONAL_DATABASE\\.dbo"))
             .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -122,7 +131,7 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("master\\.dbo"))
+            .includeSchemas(new RegularExpressionInclusionRule("ADDITIONAL_DATABASE\\.dbo"))
             .includeTables(new ExcludeAll())
             .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder =

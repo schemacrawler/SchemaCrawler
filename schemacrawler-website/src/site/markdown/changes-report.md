@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.26.3"></a>
+## Release 16.26.3 - 2025-07-30
+
+- Fixed SQL Server metadata queries to get objects across all databases
+- Added stdio MCP Server
+
+
 <a name="v16.26.2"></a>
 ## Release 16.26.2 - 2025-06-19
 

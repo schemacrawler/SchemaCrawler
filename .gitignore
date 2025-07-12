@@ -32,6 +32,7 @@
 tree.txt
 **/gpl*.*
 **/DeserializeJavaSerFile.java
+**/*.ser
 
 .idea/
 

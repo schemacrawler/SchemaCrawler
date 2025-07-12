@@ -243,11 +243,13 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
     final Query databaseUsersSql = informationSchemaViews.getQuery(DATABASE_USERS);
 
+    final RetrievalCounts retrievalCounts = new RetrievalCounts("database users");
     try (final Connection connection = getRetrieverConnection().getConnection();
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(databaseUsersSql, statement, new HashMap<>()); ) {
       while (results.next()) {
+    	  retrievalCounts.count();
         final String username = results.getString("USERNAME");
         if (isBlank(username)) {
           continue;
@@ -257,10 +259,12 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
         final ImmutableDatabaseUser databaseUser = new ImmutableDatabaseUser(username);
         databaseUser.addAttributes(results.getAttributes());
         catalog.addDatabaseUser(databaseUser);
+        retrievalCounts.countIncluded();
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve database users", e);
     }
+    retrievalCounts.log();
   }
 
   void retrieveServerInfo() {

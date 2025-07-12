@@ -35,15 +35,18 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -82,7 +85,7 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
-    try (Connection connection = getConnection()) {
+    try (final Connection connection = getConnection()) {
       SqlScript.executeScriptFromResource("/multiple-databases.sql", connection);
     }
   }
