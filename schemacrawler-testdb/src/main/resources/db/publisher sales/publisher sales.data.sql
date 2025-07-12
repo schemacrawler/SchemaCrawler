@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 INSERT INTO Regions (City,State,PostalCode,Country) VALUES ('Duluth','ND','82539','USA');
 INSERT INTO Regions (City,State,PostalCode,Country) VALUES ('Ogdensburg','AZ','50786','USA');
 INSERT INTO Regions (City,State,PostalCode,Country) VALUES ('Del Rio','CA','24179','USA');

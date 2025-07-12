@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 SELECT
   NULL AS CONSTRAINT_CATALOG,
   TABLE_CONTRAINTS.OWNER AS CONSTRAINT_SCHEMA,

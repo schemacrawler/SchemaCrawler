@@ -9,7 +9,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 SchemaCrawler and the accompanying materials are made available under the terms of any one
 of these licenses, as long as you have downloaded SchemaCrawler that is not bundled with JDBC drivers:
 
-- [Eclipse Public License v1.0](https://www.eclipse.org/legal/epl-v10.html)
+- [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
 - ![GNU General Public License v3](https://www.gnu.org/graphics/gplv3-88x31.png) 
  [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html) 
 - ![GNU Lesser General Public License v3](https://www.gnu.org/graphics/lgplv3-88x31.png) 

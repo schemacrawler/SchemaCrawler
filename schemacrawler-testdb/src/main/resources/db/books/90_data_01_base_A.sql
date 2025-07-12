@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 INSERT INTO Authors (Id,FirstName,LastName,Address1,Address2,City,State,PostalCode,Country) VALUES (1,'Oren','Shaffer','900-2273 Integer Avenue','','Farmer City','MD','37032','Cook Islands');
 INSERT INTO Authors (Id,FirstName,LastName,Address1,Address2,City,State,PostalCode,Country) VALUES (2,'Octavia','Burke','955-7635 Natoque St.','','Kalispell','MS','66863','Cape Verde');
 INSERT INTO Authors (Id,FirstName,LastName,Address1,Address2,City,State,PostalCode,Country) VALUES (3,'Aiko','Stafford','Ap #554-7132 Dictum Street','','Kankakee','ID','59675','Brunei Darussalam');

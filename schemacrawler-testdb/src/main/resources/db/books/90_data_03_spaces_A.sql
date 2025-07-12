@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 INSERT INTO "Celebrities" ("Id", Name) VALUES (1, 'Hop Whitney');
 INSERT INTO "Celebrities" ("Id", Name) VALUES (2, 'Cherokee Cantrell');
 INSERT INTO "Celebrities" ("Id", Name) VALUES (3, 'Giselle Dillon');

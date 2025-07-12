@@ -1,3 +1,6 @@
+// Copyright (c) Sualeh Fatehi
+// SPDX-License-Identifier: EPL-2.0
+
 println catalog.crawlInfo
 
 for (table in catalog.tables)

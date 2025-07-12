@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 -- Table and column with mixed-case name 
 -- (SchemaCrawler does not quote mixed case names by default,
 -- but SQL queries like counts may fail on mixed-case names if they are not quoted.)

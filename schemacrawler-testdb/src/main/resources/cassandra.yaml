@@ -1,3 +1,6 @@
+# Copyright (c) Sualeh Fatehi
+# SPDX-License-Identifier: EPL-2.0
+
 # This file overrides the /etc/cassandra/cassandra.yaml file used in the Cassandra test containers.
 # The overridden properties are:
 # - user_defined_functions_enabled => set to true

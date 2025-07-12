@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Sualeh Fatehi
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
 var scCommands = function () {
 
   // Add command to run against the schema metadata
