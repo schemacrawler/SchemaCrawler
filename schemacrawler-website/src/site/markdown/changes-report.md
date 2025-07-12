@@ -3,10 +3,11 @@
 SchemaCrawler release notes.
 
 <a name="v16.26.3"></a>
-## Release 16.26.3 - 2025-07-30
+## Release 16.26.3 - 2025-07-13
 
 - Fixed SQL Server metadata queries to get objects across all databases
-- Added stdio MCP Server
+- Move compact catalog to SchemaCrawler AI
+- Update copyright notices and license to EPL 2.0
 
 
 <a name="v16.26.2"></a>
@@ -199,8 +200,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.26.2"></a>
-## Release 16.26.2 - 2023-06-03
+<a name="v16.26.3"></a>
+## Release 16.26.3 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
