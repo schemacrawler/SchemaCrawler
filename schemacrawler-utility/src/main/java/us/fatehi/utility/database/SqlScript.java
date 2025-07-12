@@ -56,10 +56,10 @@ public class SqlScript implements Runnable {
           System.getProperty(SqlScript.class.getCanonicalName() + ".debug", "false"));
 
   public static void executeScriptFromResource(
-	      final String scriptResource, final Connection connection) {
-	  executeScriptFromResource(scriptResource, ";", connection);
+      final String scriptResource, final Connection connection) {
+    executeScriptFromResource(scriptResource, ";", connection);
   }
-  
+
   public static void executeScriptFromResource(
       final String scriptResource, final String delimiter, final Connection connection) {
 

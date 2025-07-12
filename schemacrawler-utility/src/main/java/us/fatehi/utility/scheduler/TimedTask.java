@@ -89,12 +89,12 @@ class TimedTask implements Callable<TimedTaskResult> {
     }
     return timedTaskResult;
   }
-  
+
   public String getTaskName() {
-	    return taskDefinition.getTaskName();
-	  }
+    return taskDefinition.getTaskName();
+  }
 
   public ZonedDateTime getStart() {
-	return start.atZone(ZoneId.systemDefault());
+    return start.atZone(ZoneId.systemDefault());
   }
 }

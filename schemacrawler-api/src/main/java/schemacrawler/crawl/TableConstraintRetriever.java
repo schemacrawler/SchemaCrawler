@@ -106,7 +106,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(extTableConstraintInformationSql, statement, getLimitMap()); ) {
       while (results.next()) {
-    	retrievalCounts.count();
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -126,7 +126,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         tableConstraint.appendDefinition(definition);
 
         tableConstraint.addAttributes(results.getAttributes());
-        
+
         retrievalCounts.countIncluded();
       }
     } catch (final Exception e) {
@@ -166,7 +166,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
             new MetadataResultSet(extTableConstraintsInformationSql, statement, getLimitMap()); ) {
 
       while (results.next()) {
-    	retrievalCounts.count();
+        retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
@@ -209,7 +209,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         for (final Entry<String, Object> entry : entrySet) {
           tableConstraint.setAttribute(entry.getKey(), entry.getValue());
         }
-        
+
         retrievalCounts.countIncluded();
       }
     } catch (final Exception e) {

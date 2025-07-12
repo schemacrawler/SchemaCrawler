@@ -86,11 +86,11 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
-    
+
     // Note: The database connection needs to be closed for the new schemas to be recognized
     try (final Connection connection = getConnection()) {
       SqlScript.executeScriptFromResource("/additional-database.sql", connection);
-    }    
+    }
   }
 
   @Test

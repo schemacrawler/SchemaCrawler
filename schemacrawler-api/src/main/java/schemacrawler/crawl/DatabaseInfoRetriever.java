@@ -249,7 +249,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
         final MetadataResultSet results =
             new MetadataResultSet(databaseUsersSql, statement, new HashMap<>()); ) {
       while (results.next()) {
-    	  retrievalCounts.count();
+        retrievalCounts.count();
         final String username = results.getString("USERNAME");
         if (isBlank(username)) {
           continue;
