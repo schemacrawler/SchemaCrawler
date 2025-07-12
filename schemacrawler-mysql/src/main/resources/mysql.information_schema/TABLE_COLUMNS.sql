@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 -- Not used by default. Used only when table column retrieval strategy is
 -- explicitly set to data_dictionary_all
 SELECT

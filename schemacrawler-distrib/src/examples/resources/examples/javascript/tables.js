@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Sualeh Fatehi
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
 var printChildren = function()
 {
   var forEach = Array.prototype.forEach;

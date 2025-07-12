@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 INSERT INTO Coupons (Id,Data) VALUES (1,'sollicitudin commodo ipsum. Suspendisse non');
 INSERT INTO Coupons (Id,Data) VALUES (2,'Nunc ut erat. Sed nunc est, mollis non, cursus non,');
 INSERT INTO Coupons (Id,Data) VALUES (3,'turpis non enim. Mauris quis');

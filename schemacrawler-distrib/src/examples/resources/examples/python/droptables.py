@@ -1,3 +1,6 @@
+# Copyright (c) Sualeh Fatehi
+# SPDX-License-Identifier: EPL-2.0
+
 print("WARNING: DROPPING ALL TABLES. RESTART THE DATABASE SERVER TO GET THEM BACK")
 
 statement = connection.createStatement()

@@ -1,3 +1,8 @@
+<!--
+ Copyright (c) Sualeh Fatehi
+ SPDX-License-Identifier: EPL-2.0
+-->
+
 <project xmlns:ivy="antlib:org.apache.ivy.ant"
     name="schemacrawler"
     default="make"

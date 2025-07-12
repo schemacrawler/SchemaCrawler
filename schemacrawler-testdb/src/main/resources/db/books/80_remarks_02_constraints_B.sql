@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 -- Remarks on primary and foreign keys, indexes and other constraints (unique constraint)
 -- Microsoft SQL Server syntax
 

@@ -1,3 +1,9 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 IF OBJECT_ID('tempdb..#schcrwlr_CollectRoutineMetadata') IS NOT NULL
     DROP PROCEDURE #schcrwlr_CollectRoutineMetadata;
 @

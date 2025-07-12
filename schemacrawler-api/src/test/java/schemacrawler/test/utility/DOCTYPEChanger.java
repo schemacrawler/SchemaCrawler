@@ -1,15 +1,11 @@
 /*
- * Copyright (c) 1999-2000 by Simon St.Laurent.  All Rights Reserved.
- *
- * This program is open source software; you may use, copy, modify, and
- * redistribute it under the terms of the LICENSE with which it was
- * originally distributed.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * LICENSE for more details.
+ * SchemaCrawler
+ * http://www.schemacrawler.com
+ * Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
  */
+
 
 // package com.simonstl.xml;
 package schemacrawler.test.utility;
