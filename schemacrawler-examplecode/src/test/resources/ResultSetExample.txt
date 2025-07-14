@@ -1,40 +1,40 @@
-o--> TABLE1_PK.TABLE1_PK.ENTITY_ID
+o--> TABLE1_PK.ENTITY_ID
      - label:     ENTITY_ID
-     - data-type: TABLE1_PK."INTEGER"
-     - table:     TABLE1_PK.TABLE1_PK
-o--> TABLE1_PK.TABLE1_PK.COL12
+     - data-type: INTEGER
+     - table:     TABLE1_PK
+o--> TABLE1_PK.COL12
      - label:     COL12
-     - data-type: TABLE1_PK."CHAR"
-     - table:     TABLE1_PK.TABLE1_PK
-o--> TABLE1_PK.TABLE1_PK.COL13
+     - data-type: CHAR
+     - table:     TABLE1_PK
+o--> TABLE1_PK.COL13
      - label:     COL13
-     - data-type: TABLE1_PK."VARCHAR"
-     - table:     TABLE1_PK.TABLE1_PK
-o--> TABLE1_PK.TABLE1_PK.COL14
+     - data-type: VARCHAR
+     - table:     TABLE1_PK
+o--> TABLE1_PK.COL14
      - label:     COL14
-     - data-type: TABLE1_PK."NUMERIC"
-     - table:     TABLE1_PK.TABLE1_PK
-o--> TABLE1_PK.TABLE1_PK.COL15
+     - data-type: NUMERIC
+     - table:     TABLE1_PK
+o--> TABLE1_PK.COL15
      - label:     COL15
-     - data-type: TABLE1_PK.TEXT
-     - table:     TABLE1_PK.TABLE1_PK
-o--> TABLE2_PK.TABLE2_PK.ENTITY_ID
+     - data-type: TEXT
+     - table:     TABLE1_PK
+o--> TABLE2_PK.ENTITY_ID
      - label:     ENTITY_ID
-     - data-type: TABLE2_PK."INTEGER"
-     - table:     TABLE2_PK.TABLE2_PK
-o--> TABLE2_PK.TABLE2_PK.COL22
+     - data-type: INTEGER
+     - table:     TABLE2_PK
+o--> TABLE2_PK.COL22
      - label:     COL22
-     - data-type: TABLE2_PK."CHAR"
-     - table:     TABLE2_PK.TABLE2_PK
-o--> TABLE2_PK.TABLE2_PK.COL23
+     - data-type: CHAR
+     - table:     TABLE2_PK
+o--> TABLE2_PK.COL23
      - label:     COL23
-     - data-type: TABLE2_PK."VARCHAR"
-     - table:     TABLE2_PK.TABLE2_PK
-o--> TABLE2_PK.TABLE2_PK.COL24
+     - data-type: VARCHAR
+     - table:     TABLE2_PK
+o--> TABLE2_PK.COL24
      - label:     COL24
-     - data-type: TABLE2_PK."NUMERIC"
-     - table:     TABLE2_PK.TABLE2_PK
-o--> TABLE2_PK.TABLE2_PK.COL25
+     - data-type: NUMERIC
+     - table:     TABLE2_PK
+o--> TABLE2_PK.COL25
      - label:     COL25
-     - data-type: TABLE2_PK.TEXT
-     - table:     TABLE2_PK.TABLE2_PK
+     - data-type: TEXT
+     - table:     TABLE2_PK
