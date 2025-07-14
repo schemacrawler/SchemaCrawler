@@ -115,16 +115,6 @@ jobs:
           ./schemacrawler-distrib/target/schemacrawler-16.26.3-bin.zip.SHA-512
 
 # PUBLISH TO CENTRAL REPOSITORY
-    - id: install-secret-key
-      name: Install secret key
-      if: startsWith(github.ref, 'refs/tags/')
-      # Note: OSSRH_GPG_SECRET_KEY is exported using gpg --export-secret-keys -a <keyid>
-      # and has newlines substituted with a literal \n
-      shell: bash
-      run: |
-        # Install secret key
-        cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
-        gpg --list-secret-keys --keyid-format LONG
     - id: publish-to-central
       name: Publish to Central Repository
       if: startsWith(github.ref, 'refs/tags/')
