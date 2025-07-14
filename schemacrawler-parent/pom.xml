@@ -71,9 +71,13 @@
   </dependencyManagement>
   <dependencies>
 
-    <!-- NOTES: 1. Jackson is distributed with the SchemaCrawler distribution
-      2. Used in "loader", "diagram" and "text" for tests of catalog attributes
-      for weak associations 3. Used in "scripting" for catalog YAML and XML serialization -->
+    <!--
+      NOTES: On Jackson
+          1. Jackson is distributed with the SchemaCrawler distribution
+          2. Used in "loader", "diagram" and "text" for tests of catalog attributes
+          for weak associations
+          3. Used in "scripting" for catalog YAML and XML serialization
+    -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -306,9 +310,9 @@
           <version>3.1.4</version>
         </plugin>
         <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>1.7.0</version>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>0.8.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -433,17 +437,13 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
         <extensions>true</extensions>
         <configuration>
-          <serverId>sonatype-nexus</serverId>
-          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
-          <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
-          <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
-          <stagingProgressPauseDurationSeconds>10</stagingProgressPauseDurationSeconds>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+          <waitUntil>published</waitUntil>
         </configuration>
       </plugin>
     </plugins>
