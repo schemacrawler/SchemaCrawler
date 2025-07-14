@@ -35,6 +35,8 @@ jobs:
       uses: sualeh/prepare-maven-build@v1.6.1
       with:
         java-version: 8
+        gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+        gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
@@ -127,8 +129,8 @@ jobs:
       name: Publish to Central Repository
       if: startsWith(github.ref, 'refs/tags/')
       env:
-        MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-        MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+        MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       shell: bash
       run: |
