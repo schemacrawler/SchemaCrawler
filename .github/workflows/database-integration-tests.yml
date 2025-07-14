@@ -69,7 +69,7 @@ jobs:
         df -h
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.4.0
+      uses: sualeh/prepare-maven-build@v1.6.0
       with:
         java-version: ${{ github.event.inputs.java_version || '8' }}
     - id: install-graphviz

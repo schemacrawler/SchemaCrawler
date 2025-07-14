@@ -32,7 +32,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.4.0
+      uses: sualeh/prepare-maven-build@v1.6.0
       with:
         java-version: 8
     - id: install-graphviz
@@ -129,6 +129,7 @@ jobs:
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       shell: bash
       run: |
         # Publish to Central Repository
@@ -139,5 +140,4 @@ jobs:
           -Ddistrib \
           -Dmaven.javadoc.skip=false \
           -Dskip.signing.artifacts=false \
-          -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
           clean deploy
