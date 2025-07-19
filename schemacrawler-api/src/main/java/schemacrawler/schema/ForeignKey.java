@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.schema;
 
 /** Represents a foreign-key mapping to a primary key in another table. */

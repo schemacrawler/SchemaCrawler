@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTIONS;
@@ -184,9 +183,10 @@ final class RoutineRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No functions SQL provided");
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("functions");
+    final String name = "functions from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getLimitMap()); ) {
@@ -202,14 +202,15 @@ final class RoutineRetriever extends AbstractRetriever {
   private void retrieveFunctionsFromMetadata(
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Function> functionFilter) {
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("functions");
+    final String name = "functions from metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
       LOGGER.log(Level.INFO, new StringFormat("Retrieving functions for schema <%s>", schema));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection.getMetaData().getFunctions(catalogName, schemaName, null),
@@ -265,9 +266,10 @@ final class RoutineRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(PROCEDURES)) {
       throw new ExecutionRuntimeException("No procedures SQL provided");
     }
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedures");
+    final String name = "procedures from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getLimitMap()); ) {
@@ -284,14 +286,15 @@ final class RoutineRetriever extends AbstractRetriever {
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Procedure> procedureFilter)
       throws SQLException {
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedures");
+    final String name = "procedures from metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
       LOGGER.log(Level.INFO, new StringFormat("Retrieving procedures for schema <%s>", schema));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection.getMetaData().getProcedures(catalogName, schemaName, null),

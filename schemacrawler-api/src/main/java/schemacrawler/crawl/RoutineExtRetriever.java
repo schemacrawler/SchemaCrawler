@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
@@ -53,9 +52,10 @@ final class RoutineExtRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving routine definitions");
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("routine definitions");
+    final String name = "routine definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query routineDefinitionsSql = informationSchemaViews.getQuery(ROUTINES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {

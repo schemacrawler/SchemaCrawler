@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.databaseconnector;
 
 import static org.hamcrest.CoreMatchers.is;

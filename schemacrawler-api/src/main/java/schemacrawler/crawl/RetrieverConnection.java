@@ -6,12 +6,14 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.Identifiers;
@@ -25,6 +27,8 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 /** A connection for the retriever. Wraps a live database connection. */
 final class RetrieverConnection {
+
+  private static final Logger LOGGER = Logger.getLogger(RetrieverConnection.class.getName());
 
   private final DatabaseConnectionSource dataSource;
   private final JavaSqlTypes javaSqlTypes;
@@ -48,7 +52,15 @@ final class RetrieverConnection {
     return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
   }
 
-  Connection getConnection() {
+  Connection getConnection(final String reason) {
+    LOGGER.log(
+        Level.INFO,
+        () -> {
+          if (!isBlank(reason)) {
+            return String.format("Getting database connnection for %s", reason);
+          }
+          return "Getting database connnection";
+        });
     return dataSource.get();
   }
 

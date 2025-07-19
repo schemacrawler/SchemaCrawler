@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
@@ -53,10 +52,11 @@ final class TableExtRetriever extends AbstractRetriever {
       return;
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("columns with attibutes");
+    final String name = "columns with attibutes";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(columnAttributesSql, statement, getLimitMap()); ) {
@@ -100,8 +100,9 @@ final class TableExtRetriever extends AbstractRetriever {
   /** Retrieves additional column metadata. */
   void retrieveAdditionalColumnMetadata() {
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("columns with additional metadata");
-    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+    final String name = "columns with additional metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name); ) {
       final EnumDataTypeHelper enumDataTypeHelper =
           getRetrieverConnection().getEnumDataTypeHelper();
 
@@ -157,10 +158,11 @@ final class TableExtRetriever extends AbstractRetriever {
       return;
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("tables with attributes");
+    final String name = "tables with attributes";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableAttributesSql, statement, getLimitMap()); ) {
@@ -207,9 +209,10 @@ final class TableExtRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("table definitions");
+    final String name = "table definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tableDefinitionsInformationSql = informationSchemaViews.getQuery(EXT_TABLES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableDefinitionsInformationSql, statement, getLimitMap()); ) {

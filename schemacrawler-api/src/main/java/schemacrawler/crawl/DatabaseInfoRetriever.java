@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static java.util.Collections.sort;
@@ -119,7 +118,8 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
    * @throws SQLException On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo() {
-    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+    try (final Connection connection =
+        getRetrieverConnection().getConnection("additional database information"); ) {
       final DatabaseMetaData dbMetaData = connection.getMetaData();
       final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
 
@@ -194,7 +194,8 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       return;
     }
 
-    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+    try (final Connection connection =
+        getRetrieverConnection().getConnection("additional JDBC driver information"); ) {
       final DatabaseMetaData dbMetaData = connection.getMetaData();
       final String url = dbMetaData.getURL();
 
@@ -224,8 +225,9 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
     final Query databaseUsersSql = informationSchemaViews.getQuery(DATABASE_USERS);
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("database users");
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    final String name = "database users";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(databaseUsersSql, statement, new HashMap<>()); ) {
@@ -263,7 +265,8 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
     final Query serverInfoSql = informationSchemaViews.getQuery(SERVER_INFORMATION);
 
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection =
+            getRetrieverConnection().getConnection("server information");
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(serverInfoSql, statement, new HashMap<>()); ) {

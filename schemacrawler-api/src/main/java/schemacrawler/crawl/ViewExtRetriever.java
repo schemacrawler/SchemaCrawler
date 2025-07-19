@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
@@ -54,9 +53,10 @@ final class ViewExtRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("views for definitions");
+    final String name = "views for definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
@@ -118,9 +118,10 @@ final class ViewExtRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving view table usage");
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("views for table usage");
+    final String name = "views for table usage";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query viewTableUsageSql = informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {

@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static java.sql.DatabaseMetaData.columnNullable;
@@ -198,9 +197,10 @@ final class TableColumnRetriever extends AbstractRetriever {
       return hiddenTableColumnsLookupKeys;
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("hidden table columns");
+    final String name = "hidden table columns";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query hiddenColumnsSql = informationSchemaViews.getQuery(EXT_HIDDEN_TABLE_COLUMNS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(hiddenColumnsSql, statement, getLimitMap()); ) {
@@ -241,9 +241,10 @@ final class TableColumnRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table columns SQL provided");
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("table columns");
+    final String name = "table columns";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableColumnsSql, statement, getLimitMap()); ) {
@@ -271,7 +272,8 @@ final class TableColumnRetriever extends AbstractRetriever {
                 () -> {
                   LOGGER.log(
                       Level.FINE, new StringFormat("Retrieving table columns for <%s>", table));
-                  try (final Connection connection = getRetrieverConnection().getConnection();
+                  try (final Connection connection =
+                          getRetrieverConnection().getConnection("table columns from metadata");
                       final MetadataResultSet results =
                           new MetadataResultSet(
                               connection

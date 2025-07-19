@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.schema;
 
 public interface TypedObject<T extends Comparable<? super T>> {

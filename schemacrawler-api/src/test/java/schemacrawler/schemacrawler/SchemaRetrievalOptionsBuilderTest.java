@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.schemacrawler;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;

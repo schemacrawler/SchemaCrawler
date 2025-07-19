@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.loader.attributes.model;
 
 import static java.nio.charset.StandardCharsets.UTF_8;

@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.schemacrawler;
 
 /** SchemaCrawler filter options builder, to build the immutable options to crawl a schema. */

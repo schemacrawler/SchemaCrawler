@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
@@ -57,9 +56,10 @@ final class TriggerRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("trigger definitions");
+    final String name = "trigger definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query triggerInformationSql = informationSchemaViews.getQuery(TRIGGERS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {

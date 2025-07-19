@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.loader.weakassociations;
 
 import static java.util.Objects.requireNonNull;

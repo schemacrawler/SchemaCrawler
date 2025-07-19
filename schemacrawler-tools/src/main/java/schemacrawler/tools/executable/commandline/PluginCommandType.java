@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.executable.commandline;
 
 import static us.fatehi.utility.Utility.isBlank;

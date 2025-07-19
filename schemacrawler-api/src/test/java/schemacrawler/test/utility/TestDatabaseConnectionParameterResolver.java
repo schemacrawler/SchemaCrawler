@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.utility;
 
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
