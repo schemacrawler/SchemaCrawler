@@ -16,9 +16,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -32,6 +30,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithLocale;
+import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -44,7 +43,7 @@ public class VirtualTablesTest extends BaseSqliteTest {
   @Test
   @WithLocale("us-US")
   public void count(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.minimum, "count", new IncludeAll());
+    run(testContext.testMethodFullName(), InfoLevel.minimum, OperationType.count.name(), new IncludeAll());
   }
 
   @Test
