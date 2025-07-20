@@ -73,7 +73,7 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.newSchemaTextOptions();
+    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.builder().noInfo().toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
