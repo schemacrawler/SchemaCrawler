@@ -40,7 +40,7 @@ public abstract class AbstractParameterRetrieverTest {
     connection = TestObjectUtility.mockConnection();
 
     retrieverConnection = mock(RetrieverConnection.class);
-    when(retrieverConnection.getConnection()).thenReturn(connection);
+    when(retrieverConnection.getConnection("test")).thenReturn(connection);
     when(retrieverConnection.getJavaSqlTypes()).thenReturn(new JavaSqlTypes());
     when(retrieverConnection.getTypeMap()).thenReturn(new TypeMap());
 

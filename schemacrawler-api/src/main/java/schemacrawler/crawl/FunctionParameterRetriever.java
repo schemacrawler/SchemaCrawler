@@ -178,9 +178,10 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS)) {
       throw new ExecutionRuntimeException("No function columns SQL provided");
     }
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("function parameters");
+    final String name = "function parameters from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query functionColumnsSql = informationSchemaViews.getQuery(FUNCTION_COLUMNS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionColumnsSql, statement, getLimitMap()); ) {
@@ -196,7 +197,8 @@ final class FunctionParameterRetriever extends AbstractRetriever {
   private void retrieveFunctionParametersFromMetadata(
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<FunctionParameter> parameterFilter) {
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("function parameters");
+    final String name = "function parameters from metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final MutableRoutine routine : allRoutines) {
       if (routine.getRoutineType() != RoutineType.function) {
         continue;
@@ -204,7 +206,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
 
       final MutableFunction function = (MutableFunction) routine;
       LOGGER.log(Level.FINE, "Retrieving function parameters for " + function);
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection
