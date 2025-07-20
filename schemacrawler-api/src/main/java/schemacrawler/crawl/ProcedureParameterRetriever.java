@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schema.DataTypeType.user_defined;
@@ -182,9 +181,10 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(PROCEDURE_COLUMNS)) {
       throw new ExecutionRuntimeException("No procedure parameters SQL provided");
     }
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedure parameters");
+    final String name = "procedure parameters from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
@@ -201,7 +201,8 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       final NamedObjectList<MutableRoutine> allRoutines,
       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
       throws SQLException {
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("procedure parameters");
+    final String name = "procedure parameters from metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final MutableRoutine routine : allRoutines) {
       if (routine.getRoutineType() != RoutineType.procedure) {
         continue;
@@ -209,7 +210,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
 
       final MutableProcedure procedure = (MutableProcedure) routine;
       LOGGER.log(Level.FINE, "Retrieving procedure parameters for " + procedure);
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection

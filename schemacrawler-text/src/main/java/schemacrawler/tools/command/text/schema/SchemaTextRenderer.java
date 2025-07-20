@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.schema;
 
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;

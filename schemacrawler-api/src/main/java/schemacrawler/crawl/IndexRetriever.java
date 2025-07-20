@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
@@ -80,9 +79,10 @@ final class IndexRetriever extends AbstractRetriever {
 
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("indexes for index information");
+    final String name = "indexes for index information";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query extIndexesInformationSql = informationSchemaViews.getQuery(EXT_INDEXES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extIndexesInformationSql, statement, getLimitMap()); ) {
@@ -212,9 +212,10 @@ final class IndexRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Extended indexes SQL statement was not provided");
       return;
     }
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("indexes");
+    final String name = "indexes from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
@@ -242,10 +243,11 @@ final class IndexRetriever extends AbstractRetriever {
 
   private void retrieveIndexesFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("indexes");
+    final String name = "indexes from metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final MutableTable table : allTables) {
       final Schema tableSchema = table.getSchema();
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection

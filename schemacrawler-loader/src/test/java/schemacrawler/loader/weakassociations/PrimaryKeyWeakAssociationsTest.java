@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.loader.weakassociations;
 
 import static schemacrawler.test.utility.ProposedWeakAssociationsTestUtility.weakAssociations;

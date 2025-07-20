@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package us.fatehi.utility.scheduler;
 
 import static java.util.Objects.requireNonNull;

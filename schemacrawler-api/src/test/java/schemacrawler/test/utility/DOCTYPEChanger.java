@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 // package com.simonstl.xml;
 package schemacrawler.test.utility;
 

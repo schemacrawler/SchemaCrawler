@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
@@ -120,7 +119,8 @@ public final class SchemaCrawler {
    */
   public Catalog crawl() {
     try {
-      try (final Connection connection = retrieverConnection.getConnection(); ) {
+      try (final Connection connection =
+          retrieverConnection.getConnection("crawl connection information"); ) {
         final ConnectionInfoBuilder connectionInfoBuilder =
             ConnectionInfoBuilder.builder(connection);
         final DatabaseInfo databaseInfo = connectionInfoBuilder.buildDatabaseInfo();
@@ -196,7 +196,7 @@ public final class SchemaCrawler {
   private void crawlRoutines() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if (!(infoLevel.is(retrieveRoutines) && !limitOptions.isExcludeAll(ruleForRoutineInclusion))) {
+    if ((!infoLevel.is(retrieveRoutines) || limitOptions.isExcludeAll(ruleForRoutineInclusion))) {
       LOGGER.log(Level.INFO, "Not retrieving routines, since this was not requested");
       return;
     }
@@ -279,8 +279,8 @@ public final class SchemaCrawler {
   private void crawlSequences() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if (!(infoLevel.is(retrieveSequenceInformation)
-        && !limitOptions.isExcludeAll(ruleForSequenceInclusion))) {
+    if ((!infoLevel.is(retrieveSequenceInformation)
+        || limitOptions.isExcludeAll(ruleForSequenceInclusion))) {
       LOGGER.log(Level.INFO, "Not retrieving sequences, since this was not requested");
       return;
     }
@@ -306,8 +306,8 @@ public final class SchemaCrawler {
   private void crawlSynonyms() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if (!(infoLevel.is(retrieveSynonymInformation)
-        && !limitOptions.isExcludeAll(ruleForSynonymInclusion))) {
+    if ((!infoLevel.is(retrieveSynonymInformation)
+        || limitOptions.isExcludeAll(ruleForSynonymInclusion))) {
       LOGGER.log(Level.INFO, "Not retrieving synonyms, since this was not requested");
       return;
     }
@@ -332,7 +332,7 @@ public final class SchemaCrawler {
   private void crawlTables() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if (!(infoLevel.is(retrieveTables) && !limitOptions.isExcludeAll(ruleForTableInclusion))) {
+    if ((!infoLevel.is(retrieveTables) || limitOptions.isExcludeAll(ruleForTableInclusion))) {
       LOGGER.log(Level.INFO, "Not retrieving tables, since this was not requested");
       return;
     }

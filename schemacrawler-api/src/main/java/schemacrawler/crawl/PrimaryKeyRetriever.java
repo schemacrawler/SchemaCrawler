@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
@@ -100,9 +99,10 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       return;
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("primary keys");
+    final String name = "primary keys from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
@@ -130,13 +130,14 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
 
   private void retrievePrimaryKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("primary keys");
+    final String name = "primary keys from metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final MutableTable table : allTables) {
       if (table instanceof View) {
         continue;
       }
       final Schema tableSchema = table.getSchema();
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection

@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.utility.crawl;
 
 import static java.lang.reflect.Proxy.newProxyInstance;

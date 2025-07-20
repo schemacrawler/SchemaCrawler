@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static java.sql.DatabaseMetaData.typeNullable;
@@ -75,7 +74,8 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("user-defined column data types");
+    final String name = "user-defined column data types";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
       LOGGER.log(
           Level.INFO,
@@ -95,7 +95,7 @@ final class DataTypeRetriever extends AbstractRetriever {
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection.getMetaData().getUDTs(catalogName, schemaName, null, null),
@@ -197,9 +197,10 @@ final class DataTypeRetriever extends AbstractRetriever {
     if (!informationSchemaViews.hasQuery(TYPE_INFO)) {
       throw new ExecutionRuntimeException("No system column data types SQL provided");
     }
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("system column data types");
+    String name = "system column data types";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query typeInfoSql = informationSchemaViews.getQuery(TYPE_INFO);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(typeInfoSql, statement, getLimitMap()); ) {
@@ -214,8 +215,9 @@ final class DataTypeRetriever extends AbstractRetriever {
 
   private void retrieveSystemColumnDataTypesFromMetadata(final Schema systemSchema)
       throws SQLException {
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("system column data types");
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    final String name = "system column data types";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final MetadataResultSet results =
             new MetadataResultSet(
                 connection.getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo"); ) {

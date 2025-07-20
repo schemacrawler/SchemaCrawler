@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
@@ -81,8 +80,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
         informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
 
     // Get check constraint definitions
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraint definitions");
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    final String name = "table constraint definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extTableConstraintInformationSql, statement, getLimitMap()); ) {
@@ -140,8 +140,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final Query extTableConstraintsInformationSql =
         informationSchemaViews.getQuery(EXT_TABLE_CONSTRAINTS);
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraint information");
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    final String name = "table constraint information";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extTableConstraintsInformationSql, statement, getLimitMap()); ) {
@@ -258,9 +259,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
       return;
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraints");
+    final String name = "table constraints";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tableConstraintsInformationSql = informationSchemaViews.getQuery(TABLE_CONSTRAINTS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableConstraintsInformationSql, statement, getLimitMap()); ) {
@@ -341,11 +343,12 @@ final class TableConstraintRetriever extends AbstractRetriever {
       return;
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("table constraints columns");
+    final String name = "table constraints columns";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tableConstraintsColumnsInformationSql =
         informationSchemaViews.getQuery(CONSTRAINT_COLUMN_USAGE);
 
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(

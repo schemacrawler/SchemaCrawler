@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
@@ -79,9 +78,10 @@ final class SynonymRetriever extends AbstractRetriever {
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("synonyms");
+    final String name = "synonyms";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query synonymsDefinitionSql = informationSchemaViews.getQuery(EXT_SYNONYMS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(synonymsDefinitionSql, statement, getLimitMap()); ) {

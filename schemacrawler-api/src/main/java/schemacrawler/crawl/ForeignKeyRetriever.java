@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
@@ -190,13 +189,14 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       return;
     }
 
+    final String name = "foreign keys";
     final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(fkSql, statement, getLimitMap()); ) {
-      final RetrievalCounts retrievalCounts = new RetrievalCounts("foreign keys");
+      final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
       createForeignKeys(results, foreignKeys, retrievalCounts);
     } catch (final SQLException e) {
       throw new WrappedSQLException(
@@ -206,7 +206,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
   private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SQLException {
-    try (final Connection connection = getRetrieverConnection().getConnection(); ) {
+    try (final Connection connection =
+        getRetrieverConnection().getConnection("foreign keys from metadata"); ) {
       final DatabaseMetaData metaData = connection.getMetaData();
       final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new ConcurrentHashMap<>();
       final RetrievalCounts retrievalCounts = new RetrievalCounts("foreign keys");

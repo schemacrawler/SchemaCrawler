@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.text.formatter.base.helper;
 
 import static us.fatehi.utility.Utility.isBlank;

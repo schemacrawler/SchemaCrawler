@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.plugin;
 
 import static java.util.Collections.emptyList;

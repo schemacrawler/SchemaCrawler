@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
@@ -108,8 +107,9 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> catalogNames = new HashSet<>();
 
     if (supportsCatalogs) {
-      final RetrievalCounts retrievalCounts = new RetrievalCounts("catalogs");
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      final String name = "catalogs";
+      final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final ResultSet catalogsResults = connection.getMetaData().getCatalogs(); ) {
         final List<String> metaDataCatalogNames = readResultsVector(catalogsResults);
         for (final String catalogName : metaDataCatalogNames) {
@@ -133,8 +133,9 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<SchemaReference> schemaRefs = new HashSet<>();
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas) {
-      final RetrievalCounts retrievalCounts = new RetrievalCounts("schemas");
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      final String name = "schemas";
+      final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection.getMetaData().getSchemas(), "DatabaseMetaData::getSchemas"); ) {
@@ -179,9 +180,10 @@ final class SchemaRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
       return schemaRefs;
     }
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("schemas");
+    final String name = "schemas from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query schemataSql = informationSchemaViews.getQuery(SCHEMATA);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(schemataSql, statement, getLimitMap()); ) {

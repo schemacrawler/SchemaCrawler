@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
@@ -67,9 +66,10 @@ final class SequenceRetriever extends AbstractRetriever {
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("sequences");
+    final String name = "sequences";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query sequencesDefinitionSql = informationSchemaViews.getQuery(SEQUENCES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(sequencesDefinitionSql, statement, getLimitMap()); ) {

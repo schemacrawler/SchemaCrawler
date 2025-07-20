@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMN_PRIVILEGES;
@@ -150,7 +149,8 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table column privileges SQL provided");
     }
     final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_COLUMN_PRIVILEGES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection =
+            getRetrieverConnection().getConnection("table column privileges from data dictionary");
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablePrivelegesSql, statement, getLimitMap()); ) {
@@ -159,7 +159,8 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
   }
 
   private void retrieveTableColumnPrivilegesFromMetadata() {
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection =
+            getRetrieverConnection().getConnection("table column privileges from metadata");
         final MetadataResultSet results =
             new MetadataResultSet(
                 connection.getMetaData().getColumnPrivileges(null, null, null, null),
@@ -177,7 +178,8 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No table privileges SQL provided");
     }
     final Query tablePrivelegesSql = informationSchemaViews.getQuery(TABLE_PRIVILEGES);
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection =
+            getRetrieverConnection().getConnection("table privileges from data dictionary");
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablePrivelegesSql, statement, getLimitMap()); ) {
@@ -186,7 +188,8 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
   }
 
   private void retrieveTablePrivilegesFromMetadata() {
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection =
+            getRetrieverConnection().getConnection("table privileges from metadata");
         final MetadataResultSet results =
             new MetadataResultSet(
                 connection.getMetaData().getTablePrivileges(null, null, null),

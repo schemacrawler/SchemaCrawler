@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.text.formatter.schema;
 
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;

@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
@@ -141,7 +140,8 @@ final class TableRetriever extends AbstractRetriever {
       throw new ExecutionRuntimeException("No tables SQL provided");
     }
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("tables");
+    final String name = "tables from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tablesSql = informationSchemaViews.getQuery(TABLES);
     final TableTypes supportedTableTypes = getRetrieverConnection().getTableTypes();
     final TableTypes filteredTableTypes;
@@ -150,7 +150,7 @@ final class TableRetriever extends AbstractRetriever {
     } else {
       filteredTableTypes = tableTypes;
     }
-    try (final Connection connection = getRetrieverConnection().getConnection();
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getLimitMap()); ) {
@@ -169,7 +169,8 @@ final class TableRetriever extends AbstractRetriever {
       final TableTypes tableTypes,
       final InclusionRuleFilter<Table> tableFilter) {
 
-    final RetrievalCounts retrievalCounts = new RetrievalCounts("tables");
+    final String name = "tables from metadata";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
       LOGGER.log(Level.INFO, new StringFormat("Retrieving tables for schema <%s>", schema));
 
@@ -180,7 +181,7 @@ final class TableRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final Connection connection = getRetrieverConnection().getConnection();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection
