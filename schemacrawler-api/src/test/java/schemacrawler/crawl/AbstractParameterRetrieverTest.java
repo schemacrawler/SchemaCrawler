@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.sql.Connection;
@@ -40,7 +41,7 @@ public abstract class AbstractParameterRetrieverTest {
     connection = TestObjectUtility.mockConnection();
 
     retrieverConnection = mock(RetrieverConnection.class);
-    when(retrieverConnection.getConnection("test")).thenReturn(connection);
+    when(retrieverConnection.getConnection(anyString())).thenReturn(connection);
     when(retrieverConnection.getJavaSqlTypes()).thenReturn(new JavaSqlTypes());
     when(retrieverConnection.getTypeMap()).thenReturn(new TypeMap());
 
