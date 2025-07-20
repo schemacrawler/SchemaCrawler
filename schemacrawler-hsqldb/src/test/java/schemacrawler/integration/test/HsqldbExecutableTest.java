@@ -1,11 +1,30 @@
 /*
- * SchemaCrawler
- * http://www.schemacrawler.com
- * Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
- * All rights reserved.
- * SPDX-License-Identifier: EPL-2.0
- */
+========================================================================
+SchemaCrawler
+http://www.schemacrawler.com
+Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+All rights reserved.
+------------------------------------------------------------------------
 
+SchemaCrawler is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+SchemaCrawler and the accompanying materials are made available under
+the terms of the Eclipse Public License v1.0, GNU General Public License
+v3 or GNU Lesser General Public License v3.
+
+You may elect to redistribute this code under any of these licenses.
+
+The Eclipse Public License is available at:
+http://www.eclipse.org/legal/epl-v10.html
+
+The GNU General Public License v3 and the GNU Lesser General Public
+License v3 are available at:
+http://www.gnu.org/licenses/
+
+========================================================================
+*/
 
 package schemacrawler.integration.test;
 
@@ -25,10 +44,10 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -36,36 +55,49 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
+@WithTestDatabase
 @ResolveTestContext
-public class SQLiteExecutableTest extends BaseSqliteTest {
+public class HsqldbExecutableTest {
 
   @Test
-  public void count(final TestContext testContext) throws Exception {
+  public void count(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
     runWithContentComparison(
-        testContext.testMethodFullName(), InfoLevel.minimum, OperationType.count.name());
+        testContext.testMethodFullName(),
+        dataSource,
+        InfoLevel.minimum,
+        OperationType.count.name());
   }
 
   @Test
-  public void dump(final TestContext testContext) throws Exception {
+  public void dump(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
     runWithContentComparison(
-        testContext.testMethodFullName(), InfoLevel.standard, OperationType.dump.name());
+        testContext.testMethodFullName(),
+        dataSource,
+        InfoLevel.standard,
+        OperationType.dump.name());
   }
 
   @Test
-  public void list(final TestContext testContext) throws Exception {
-    runWithContentComparison(testContext.testMethodFullName(), InfoLevel.minimum, "list");
+  public void list(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    runWithContentComparison(
+        testContext.testMethodFullName(), dataSource, InfoLevel.minimum, "list");
   }
 
   @Test
-  public void tablesample(final TestContext testContext) throws Exception {
-    runWithFileSizeCheck(InfoLevel.standard, OperationType.tablesample.name());
+  public void tablesample(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    runWithFileSizeCheck(dataSource, InfoLevel.standard, OperationType.tablesample.name());
   }
 
   private void runExecutable(
-      final InfoLevel infoLevel, final String command, final Consumer<Path> outputAssertion)
+      final DatabaseConnectionSource dataSource,
+      final InfoLevel infoLevel,
+      final String command,
+      final Consumer<Path> outputAssertion)
       throws Exception {
-    final Path sqliteDbFile = createTestDatabase();
-    final DatabaseConnectionSource dataSource = createDataSourceFromFile(sqliteDbFile);
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
@@ -84,17 +116,21 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
   }
 
   private void runWithContentComparison(
-      final String currentMethodFullName, final InfoLevel infoLevel, final String command)
+      final String currentMethodFullName,
+      final DatabaseConnectionSource dataSource,
+      final InfoLevel infoLevel,
+      final String command)
       throws Exception {
     final Consumer<Path> assertion =
         outputFile ->
             assertThat(
                 outputOf(outputFile), hasSameContentAs(classpathResource(currentMethodFullName)));
 
-    runExecutable(infoLevel, command, assertion);
+    runExecutable(dataSource, infoLevel, command, assertion);
   }
 
-  private void runWithFileSizeCheck(final InfoLevel infoLevel, final String command)
+  private void runWithFileSizeCheck(
+      final DatabaseConnectionSource dataSource, final InfoLevel infoLevel, final String command)
       throws Exception {
     final Consumer<Path> assertion =
         outputFile -> {
@@ -106,6 +142,6 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
           }
         };
 
-    runExecutable(infoLevel, command, assertion);
+    runExecutable(dataSource, infoLevel, command, assertion);
   }
 }

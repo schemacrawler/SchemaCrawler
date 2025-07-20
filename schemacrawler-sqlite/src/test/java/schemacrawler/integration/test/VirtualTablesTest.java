@@ -43,7 +43,11 @@ public class VirtualTablesTest extends BaseSqliteTest {
   @Test
   @WithLocale("us-US")
   public void count(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), InfoLevel.minimum, OperationType.count.name(), new IncludeAll());
+    run(
+        testContext.testMethodFullName(),
+        InfoLevel.minimum,
+        OperationType.count.name(),
+        new IncludeAll());
   }
 
   @Test
