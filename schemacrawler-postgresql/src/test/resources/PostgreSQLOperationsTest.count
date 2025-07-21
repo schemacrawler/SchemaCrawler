@@ -1,0 +1,20 @@
+
+
+Row Count
+========================================================================
+
+Row Count                                                               
+------------------------------------------------------------------------
+books.authors                                                    20 rows
+books.authorslist                                                20 rows
+books.bookauthors                                                20 rows
+books.books                                                      20 rows
+books."Celebrities"                                               5 rows
+books."Celebrity Updates"                                         5 rows
+books.coupons                                                    10 rows
+books.customerdata                                                 empty
+books.customers                                                    empty
+books.person                                                       empty
+books.publishers                                                 20 rows
+books."Βιβλία"                                                     empty
+
