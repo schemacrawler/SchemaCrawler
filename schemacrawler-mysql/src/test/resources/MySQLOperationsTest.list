@@ -1,0 +1,23 @@
+
+
+Tables
+========================================================================
+
+books.authors                                                    [table]
+  Contact details for book authors
+books.authorslist                                                 [view]
+  VIEW
+books.bookauthors                                                [table]
+  Relationship between books and their authors, 
+along with the latest updated information
+books.books                                                      [table]
+  Details for published books
+books.celebrities                                                [table]
+books.`celebrity updates`                                        [table]
+books.coupons                                                    [table]
+books.person                                                     [table]
+books.publishers                                                 [table]
+  List of book publishers
+books.x_customers                                                [table]
+books.x_employees                                                [table]
+

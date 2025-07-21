@@ -1,0 +1,8 @@
+SELECT
+  *
+FROM
+  ${table}
+WHERE
+  RAND() < 0.7
+-- TABLESAMPLE SYSTEM (70)
+LIMIT 10
