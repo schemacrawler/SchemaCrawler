@@ -1,0 +1,6 @@
+SELECT 
+  * 
+FROM 
+  ${table} 
+TABLESAMPLE BERNOULLI(70)
+LIMIT 10
