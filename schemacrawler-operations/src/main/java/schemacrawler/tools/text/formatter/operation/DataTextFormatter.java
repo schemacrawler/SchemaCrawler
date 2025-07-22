@@ -144,7 +144,8 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
         iterateRows(dataRows);
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(e);
+        throw new DatabaseAccessException(
+            String.format("Could not handle rows for <%s>", title), e);
       }
       formattingHelper.writeObjectEnd();
     }

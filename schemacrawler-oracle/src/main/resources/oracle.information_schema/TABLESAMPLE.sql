@@ -4,11 +4,10 @@
 -- All rights reserved.
 -- SPDX-License-Identifier: EPL-2.0
 
-SELECT
-  ${basiccolumns}
-FROM
-  ${table}
-WHERE
-  RAND() < 0.7
--- TABLESAMPLE SYSTEM (70)
-LIMIT 10
+SELECT 
+  ${basiccolumns} 
+FROM 
+  ${table} 
+SAMPLE(70)
+WHERE 
+  ROWNUM <= 10

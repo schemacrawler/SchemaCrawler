@@ -21,7 +21,7 @@ public enum OperationType implements Operation {
   dump(
       "Dump",
       "Show data from all rows in the tables",
-      "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
+      "SELECT ${columns} FROM ${table} ORDER BY ${basiccolumns}"),
   /**
    * Quick dump operation, where columns do not need to be retrieved (minimum infolevel), but the
    * order of rows may not be preserved from run to run.
@@ -38,9 +38,8 @@ public enum OperationType implements Operation {
    */
   tablesample(
       "Table sample",
-      "Show sample data from tables, "
-          + "but the samples are not the same from run to run",
-      "SELECT * FROM ${table}",
+      "Show sample data from tables, " + "but the samples are not the same from run to run",
+      "SELECT ${basiccolumns} FROM ${table}",
       InformationSchemaKey.TABLESAMPLE),
   ;
 
@@ -53,7 +52,11 @@ public enum OperationType implements Operation {
     this(title, description, queryString, null);
   }
 
-  OperationType(final String title, final String description, final String queryString, final InformationSchemaKey viewKey) {
+  OperationType(
+      final String title,
+      final String description,
+      final String queryString,
+      final InformationSchemaKey viewKey) {
     this.title = title;
     this.description = description;
     this.queryString = queryString;

@@ -46,7 +46,7 @@ public class OperationsCommandsOutputTest {
     final String queryCommand = "dump_tables_sorted_columns";
     final Config config = new Config();
     config.put("schemacrawler.format.sort_alphabetically.table_columns", Boolean.TRUE.toString());
-    config.put(queryCommand, "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}");
+    config.put(queryCommand, "SELECT ${columns} FROM ${table} ORDER BY ${basiccolumns}");
 
     textOutputTest(queryCommand, dataSource, config);
   }
@@ -68,7 +68,7 @@ public class OperationsCommandsOutputTest {
   public void queryOverOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "dump_tables";
     final Config config = new Config();
-    config.put(queryCommand, "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
+    config.put(queryCommand, "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${basiccolumns}");
 
     textOutputTest(queryCommand, dataSource, config);
   }

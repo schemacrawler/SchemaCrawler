@@ -183,7 +183,7 @@ public final class QueryUtility {
       tableProperties.put("tablename", table.getName());
       tableProperties.put("columns", MetaDataUtility.joinColumns(columns, false, identifiers));
       tableProperties.put(
-          "orderbycolumns", MetaDataUtility.joinColumns(columns, true, identifiers));
+          "basiccolumns", MetaDataUtility.joinColumns(columns, true, identifiers));
       tableProperties.put("tabletype", table.getTableType().toString());
     }
 
