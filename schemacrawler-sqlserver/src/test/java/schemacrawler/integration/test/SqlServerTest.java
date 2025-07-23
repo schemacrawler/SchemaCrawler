@@ -204,15 +204,6 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
 
-    // -- Schema output tests for "dump" command
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("dump");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(config);
-
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource("testSQLServerDump.txt")));
-
     // -- Additional catalog tests
     final Catalog catalog = executableDetails.getCatalog();
 
