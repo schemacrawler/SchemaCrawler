@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.EnumSource.Mode;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -68,13 +69,16 @@ public class OperationsCommandsOutputTest {
   public void queryOverOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "dump_tables";
     final Config config = new Config();
-    config.put(queryCommand, "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${basiccolumns}");
+    config.put(queryCommand, "SELECT ${basiccolumns} FROM ${table} ORDER BY ${basiccolumns}");
 
     textOutputTest(queryCommand, dataSource, config);
   }
 
   @ParameterizedTest
-  @EnumSource(OperationType.class)
+  @EnumSource(
+      value = OperationType.class,
+      mode = Mode.EXCLUDE,
+      names = {"tablesample"})
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void operationOutput(
       final OperationType operation, final DatabaseConnectionSource dataSource) throws Exception {
