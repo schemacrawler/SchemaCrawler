@@ -45,7 +45,7 @@ public class AvailablePluginsTest {
     assertThat(
         new AvailableCommands(),
         contains(
-            "brief", "count", "details", "dump", "list", "quickdump", "schema", "tablesample", "test-command"));
+            "brief", "count", "details", "dump", "list", "schema", "tablesample", "test-command"));
   }
 
   @Test
