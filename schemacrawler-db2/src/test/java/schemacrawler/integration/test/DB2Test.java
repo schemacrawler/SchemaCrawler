@@ -115,16 +115,6 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
 
-    // -- Schema output tests for "dump" command
-    final SchemaCrawlerExecutable executableDump = new SchemaCrawlerExecutable("dump");
-    executableDump.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executableDump.setAdditionalConfiguration(
-        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executableDump)),
-        hasSameContentAs(classpathResource("testDB2Dump.txt")));
-
     // -- Additional catalog tests
     final Catalog catalog = executableDetails.getCatalog();
 
