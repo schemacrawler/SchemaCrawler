@@ -6,6 +6,7 @@ SchemaCrawler release notes.
 ## Release 16.26.4 - 2025-07-30
 
 - Remove the "quickdump" command
+- Add the "tablesample" command
 
 
 <a name="v16.26.3"></a>

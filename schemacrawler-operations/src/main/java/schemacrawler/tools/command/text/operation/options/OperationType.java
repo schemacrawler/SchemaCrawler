@@ -22,10 +22,7 @@ public enum OperationType implements Operation {
       "Dump",
       "Show data from all rows in the tables",
       "SELECT ${columns} FROM ${table} ORDER BY ${basiccolumns}"),
-  /**
-   * Quick dump operation, where columns do not need to be retrieved (minimum infolevel), but the
-   * order of rows may not be preserved from run to run.
-   */
+  /** Table sample operation */
   tablesample(
       "Table sample",
       "Show sample data from tables, " + "but the samples are not the same from run to run",
