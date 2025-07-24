@@ -27,7 +27,7 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-text</artifactId>
       <version>${project.version}</version>
-    </dependency>	
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
