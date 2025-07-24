@@ -1,0 +1,23 @@
+
+
+Tables
+========================================================================
+
+books.authors                                                    [table]
+  Contact details for book authors
+books.authorslist                                                 [view]
+books.bookauthors                                                [table]
+  Relationship between books and their authors, 
+along with the latest updated information
+books.books                                                      [table]
+  Details for published books
+books."Celebrities"                                              [table]
+books."Celebrity Updates"                                        [table]
+books.coupons                                                    [table]
+books.customerdata                                               [table]
+books.customers                                                  [table]
+books.person                                                     [table]
+books.publishers                                                 [table]
+  List of book publishers
+books."Βιβλία"                                                   [table]
+

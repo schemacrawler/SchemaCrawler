@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.26.4"></a>
+## Release 16.26.4 - 2025-07-30
+
+- Remove the "quickdump" command
+
+
 <a name="v16.26.3"></a>
 ## Release 16.26.3 - 2025-07-13
 

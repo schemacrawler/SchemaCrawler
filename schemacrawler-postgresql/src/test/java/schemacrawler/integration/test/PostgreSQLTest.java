@@ -110,16 +110,6 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResultsResource)));
 
-    // -- Schema output tests for "dump" command
-    final SchemaCrawlerExecutable executableDump = new SchemaCrawlerExecutable("dump");
-    executableDump.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executableDump.setAdditionalConfiguration(
-        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executableDump)),
-        hasSameContentAs(classpathResource("testPostgreSQLDump.txt")));
-
     // -- Additional catalog tests
     final Catalog catalog = executableDetails.getCatalog();
 

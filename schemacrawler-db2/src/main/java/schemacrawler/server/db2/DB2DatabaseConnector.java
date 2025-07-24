@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.server.db2;
 
 import schemacrawler.schemacrawler.DatabaseServerType;

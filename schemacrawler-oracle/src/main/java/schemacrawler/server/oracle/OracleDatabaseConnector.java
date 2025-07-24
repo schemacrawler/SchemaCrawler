@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.server.oracle;
 
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;

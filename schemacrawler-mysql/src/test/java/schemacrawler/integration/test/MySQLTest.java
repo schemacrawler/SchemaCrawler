@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -124,16 +123,6 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
-
-    // -- Schema output tests for "dump" command
-    final SchemaCrawlerExecutable executableDump = new SchemaCrawlerExecutable("dump");
-    executableDump.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executableDump.setAdditionalConfiguration(
-        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executableDump)),
-        hasSameContentAs(classpathResource("testMySQLDump.txt")));
 
     // Additional catalog tests
     final Catalog catalog = executableDetails.getCatalog();

@@ -46,7 +46,7 @@ public class SpinThroughOperationsCommandLineTest {
   }
 
   protected static Stream<Arguments> spinThroughArguments() {
-    return EnumSet.allOf(OperationType.class).stream()
+    return EnumSet.complementOf(EnumSet.of(OperationType.tablesample)).stream()
         .flatMap(
             operation ->
                 EnumSet.complementOf(EnumSet.of(InfoLevel.unknown)).stream()

@@ -8,8 +8,11 @@
 
 package schemacrawler.integration.test.utility;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
 import org.testcontainers.utility.DockerImageName;
 
 public final class DB2TestUtility {
@@ -39,7 +42,11 @@ public final class DB2TestUtility {
         .withEnv("DB2INST1_PASSWORD", DB2INST1_PASSWORD)
         // Other settings
         .withEnv("TO_CREATE_SAMPLEDB", "false")
-        .withEnv("REPODB", "false");
+        .withEnv("REPODB", "false")
+        .waitingFor(
+            new LogMessageWaitStrategy()
+                .withRegEx(".*Setup has completed\\..*")
+                .withStartupTimeout(Duration.of(20, ChronoUnit.MINUTES)));
   }
 
   private DB2TestUtility() {

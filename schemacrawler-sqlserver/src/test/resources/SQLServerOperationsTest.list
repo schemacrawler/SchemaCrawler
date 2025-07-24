@@ -1,0 +1,17 @@
+
+
+Tables
+========================================================================
+
+BOOKS.dbo.Authors                                                [table]
+BOOKS.dbo.AuthorsCountries                                        [view]
+BOOKS.dbo.AuthorsList                                             [view]
+BOOKS.dbo.BookAuthors                                            [table]
+BOOKS.dbo.Books                                                  [table]
+BOOKS.dbo.Celebrities                                            [table]
+BOOKS.dbo."Celebrity Updates"                                    [table]
+BOOKS.dbo.Customers                                              [table]
+BOOKS.dbo.Publishers                                             [table]
+BOOKS.dbo.X_EMPLOYEES                                            [table]
+BOOKS.dbo.Βιβλία                                                 [table]
+

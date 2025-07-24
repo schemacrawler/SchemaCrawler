@@ -1,0 +1,19 @@
+
+
+Row Count
+========================================================================
+
+Row Count                                                               
+------------------------------------------------------------------------
+BOOKS.dbo.Authors                                                20 rows
+BOOKS.dbo.AuthorsCountries                                       20 rows
+BOOKS.dbo.AuthorsList                                            20 rows
+BOOKS.dbo.BookAuthors                                            20 rows
+BOOKS.dbo.Books                                                  20 rows
+BOOKS.dbo.Celebrities                                             5 rows
+BOOKS.dbo."Celebrity Updates"                                     5 rows
+BOOKS.dbo.Customers                                                empty
+BOOKS.dbo.Publishers                                             20 rows
+BOOKS.dbo.X_EMPLOYEES                                              empty
+BOOKS.dbo.Βιβλία                                                   empty
+

@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -26,9 +25,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -54,18 +55,17 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.Property;
 
+@DisableLogging
+@TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("db2")
 @Testcontainers
 @ResolveTestContext
-@EnabledOnOs(
-    architectures = {"x64", "x86_64", "amd64"},
-    disabledReason = "IBM DB2 Docker container does not run on ARM")
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
   private String schemaName;
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
@@ -114,16 +114,6 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
-
-    // -- Schema output tests for "dump" command
-    final SchemaCrawlerExecutable executableDump = new SchemaCrawlerExecutable("dump");
-    executableDump.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executableDump.setAdditionalConfiguration(
-        SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executableDump)),
-        hasSameContentAs(classpathResource("testDB2Dump.txt")));
 
     // -- Additional catalog tests
     final Catalog catalog = executableDetails.getCatalog();

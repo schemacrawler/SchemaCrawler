@@ -104,6 +104,7 @@ public class DiagramRendererTest {
       final SchemaRetrievalOptions schemaRetrievalOptions =
           SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);
       scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
+      scCommand.setInformationSchemaViews(schemaRetrievalOptions.getInformationSchemaViews());
 
       // Initialize, and check if the command is available
       scCommand.initialize();
