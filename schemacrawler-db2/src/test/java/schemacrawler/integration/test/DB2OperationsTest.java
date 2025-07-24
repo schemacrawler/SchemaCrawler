@@ -26,7 +26,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -53,9 +52,6 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @Testcontainers
 @ResolveTestContext
 @DisplayName("Test for operations including tablesample")
-@EnabledOnOs(
-    architectures = {"x64", "x86_64", "amd64"},
-    disabledReason = "IBM DB2 Docker container does not run on ARM")
 public class DB2OperationsTest extends BaseAdditionalDatabaseTest {
 
   @Container private static final JdbcDatabaseContainer<?> dbContainer = newDB2Container();

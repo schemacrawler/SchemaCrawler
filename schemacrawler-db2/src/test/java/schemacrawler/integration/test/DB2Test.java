@@ -25,8 +25,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -42,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -52,15 +55,17 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.Property;
 
+@DisableLogging
+@TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("db2")
 @Testcontainers
 @ResolveTestContext
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
   private String schemaName;
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
