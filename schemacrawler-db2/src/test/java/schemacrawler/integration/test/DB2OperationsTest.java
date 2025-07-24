@@ -54,31 +54,31 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 @DisplayName("Test for operations including tablesample")
 @EnabledOnOs(
-        architectures = {"x64", "x86_64", "amd64"},
-        disabledReason = "IBM DB2 Docker container does not run on ARM")
+    architectures = {"x64", "x86_64", "amd64"},
+    disabledReason = "IBM DB2 Docker container does not run on ARM")
 public class DB2OperationsTest extends BaseAdditionalDatabaseTest {
 
-      @Container private static final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
-      private String schemaName;
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newDB2Container();
+  private String schemaName;
 
-      @BeforeAll
-      public void createDatabase() {
+  @BeforeAll
+  public void createDatabase() {
 
-        if (!dbContainer.isRunning()) {
-          fail("Testcontainer for database is not available");
-        }
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
 
-        // Add the following trace properties to the URL for debugging
-        // Set the trace directory appropriately
-        // final String traceProperties = ":traceDirectory=C:\\Java" + ";traceFile=trace3" +
-        // ";traceFileAppend=false" + ";traceLevel=" + (DB2BaseDataSource.TRACE_ALL) + ";";
+    // Add the following trace properties to the URL for debugging
+    // Set the trace directory appropriately
+    // final String traceProperties = ":traceDirectory=C:\\Java" + ";traceFile=trace3" +
+    // ";traceFileAppend=false" + ";traceLevel=" + (DB2BaseDataSource.TRACE_ALL) + ";";
 
-        final String username = dbContainer.getUsername();
-        createDataSource(dbContainer.getJdbcUrl(), username, dbContainer.getPassword());
-        schemaName = username.toUpperCase();
+    final String username = dbContainer.getUsername();
+    createDataSource(dbContainer.getJdbcUrl(), username, dbContainer.getPassword());
+    schemaName = username.toUpperCase();
 
-        createDatabase("/db2.scripts.txt");
-      }
+    createDatabase("/db2.scripts.txt");
+  }
 
   @Test
   public void count(final TestContext testContext) throws Exception {
@@ -116,12 +116,14 @@ public class DB2OperationsTest extends BaseAdditionalDatabaseTest {
       final Consumer<Path> outputAssertion)
       throws Exception {
 
-      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder().includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
-        final LoadOptionsBuilder loadOptionsBuilder =
-            LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
-        final SchemaCrawlerOptions options =
-            SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-                .withLoadOptions(loadOptionsBuilder.toOptions()).withLimitOptions(limitOptionsBuilder.toOptions());
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+    final SchemaCrawlerOptions options =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLoadOptions(loadOptionsBuilder.toOptions())
+            .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.builder().noInfo().toOptions();
 

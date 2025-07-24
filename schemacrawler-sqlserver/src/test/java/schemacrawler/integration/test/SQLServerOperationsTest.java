@@ -12,7 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracleContainer;
 import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServerContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -23,7 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -57,30 +55,30 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 @DisplayName("Test for operations including tablesample")
 @EnabledOnOs(
-	    architectures = {"x64", "x86_64", "amd64"},
-	    disabledReason = "SQL Server Docker container does not run on ARM")
+    architectures = {"x64", "x86_64", "amd64"},
+    disabledReason = "SQL Server Docker container does not run on ARM")
 public class SQLServerOperationsTest extends BaseAdditionalDatabaseTest {
 
-	@Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newSqlServerContainer();
 
   @BeforeAll
   public void createDatabase() {
 
-	    if (!dbContainer.isRunning()) {
-	      fail("Testcontainer for database is not available");
-	    }
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
+    }
 
-	    createDataSource(
-	        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
-	    createDatabase("/sqlserver.scripts.txt");
+    createDatabase("/sqlserver.scripts.txt");
 
-	    createDataSource(
-	        dbContainer.getJdbcUrl(),
-	        dbContainer.getUsername(),
-	        dbContainer.getPassword(),
-	        "database=BOOKS");
-	  }
+    createDataSource(
+        dbContainer.getJdbcUrl(),
+        dbContainer.getUsername(),
+        dbContainer.getPassword(),
+        "database=BOOKS");
+  }
 
   @Test
   public void count(final TestContext testContext) throws Exception {
@@ -118,12 +116,15 @@ public class SQLServerOperationsTest extends BaseAdditionalDatabaseTest {
       final Consumer<Path> outputAssertion)
       throws Exception {
 
-	  final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder().includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"));
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"));
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
     final SchemaCrawlerOptions options =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLoadOptions(loadOptionsBuilder.toOptions()).withLimitOptions(limitOptionsBuilder.toOptions());
+            .withLoadOptions(loadOptionsBuilder.toOptions())
+            .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.builder().noInfo().toOptions();
 

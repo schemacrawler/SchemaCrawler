@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.server.mysql;
 
 import java.util.regex.Pattern;
