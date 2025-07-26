@@ -59,7 +59,7 @@ public final class RetrievalCounts {
   private final Counts keyCount;
   private final Counts includedKeyCount;
 
-  RetrievalCounts(final String name) {
+  public RetrievalCounts(final String name) {
     this.name = requireNotBlank(name, "No name provided");
     count = 0;
     includedCount = 0;
@@ -80,7 +80,7 @@ public final class RetrievalCounts {
     return String.format("%d/%d %s", includedCount, count, name);
   }
 
-  void count() {
+  public void count() {
     count = count + 1;
   }
 
@@ -93,7 +93,7 @@ public final class RetrievalCounts {
     count = count + 1;
   }
 
-  void countIfIncluded(final boolean included) {
+  public void countIfIncluded(final boolean included) {
     if (included) {
       includedCount = includedCount + 1;
     }
@@ -110,7 +110,7 @@ public final class RetrievalCounts {
     }
   }
 
-  void countIncluded() {
+  public void countIncluded() {
     includedCount = includedCount + 1;
   }
 
@@ -123,7 +123,7 @@ public final class RetrievalCounts {
     includedCount = includedCount + 1;
   }
 
-  void log() {
+  public void log() {
     log(Level.INFO, count, includedCount, null);
   }
 

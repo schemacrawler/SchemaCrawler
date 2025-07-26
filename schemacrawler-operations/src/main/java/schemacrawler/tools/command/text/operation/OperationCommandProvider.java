@@ -14,7 +14,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationOptionsBuilder;
 import schemacrawler.tools.command.text.operation.options.OperationType;
+import schemacrawler.tools.command.text.operation.options.OperationsOutputFormat;
 import schemacrawler.tools.executable.BaseCommandProvider;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.utility.property.PropertyName;
@@ -55,7 +57,20 @@ public final class OperationCommandProvider extends BaseCommandProvider {
 
   @Override
   public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
-    return true;
+    return supportsOutputFormat(command, outputOptions, OperationsOutputFormat::isSupportedFormat);
+  }
+
+  @Override
+  public PluginCommand getHelpCommand() {
+    final PluginCommand pluginCommand = getCommandLineCommand();
+    pluginCommand.addOption(
+        "output-format",
+        OperationsOutputFormat.class,
+        "Supported data output formats",
+        "<output-format> is one of ${COMPLETION-CANDIDATES}",
+        "Optional, inferred from the extension of the output file",
+        "Defaults to " + OperationsOutputFormat.json.name());
+    return pluginCommand;
   }
 
   @Override

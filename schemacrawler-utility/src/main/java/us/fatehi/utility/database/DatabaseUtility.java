@@ -61,31 +61,6 @@ public final class DatabaseUtility {
     return connection.createStatement();
   }
 
-  /**
-   * Load registered database drivers, and throw exception if any driver cannot be loaded. Cycling
-   * through the service loader and loading driver classes allows for dependencies to be vetted out.
-   *
-   * <p>Do not use DriverManager.getDrivers(), since that swallows exceptions.
-   *
-   * @throws SQLException
-   */
-  public static Collection<Driver> getAvailableJdbcDrivers() throws SQLException {
-    final Collection<Driver> drivers = new ArrayList<>();
-    try {
-      final ServiceLoader<Driver> serviceLoader = ServiceLoader.load(Driver.class);
-      for (final Driver driver : serviceLoader) {
-        drivers.add(driver);
-      }
-    } catch (final Throwable e) {
-      throw new SQLException(
-          String.format("Could not load database drivers: %s", e.getMessage()), e);
-    }
-    if (drivers.isEmpty()) {
-      throw new SQLException("No database drivers are available");
-    }
-    return drivers;
-  }
-
   public static ResultSet executeSql(final Statement statement, final String sql)
       throws SQLException {
     if (statement == null) {
@@ -105,8 +80,7 @@ public final class DatabaseUtility {
         return statement.getResultSet();
       }
       final int updateCount = statement.getUpdateCount();
-      LOGGER.log(
-          Level.FINE,
+      LOGGER.log(Level.FINE,
           new StringFormat("No results. Update count of %d for query: %s", updateCount, sql));
       return null;
 
@@ -118,7 +92,53 @@ public final class DatabaseUtility {
 
   public static long executeSqlForLong(final Connection connection, final String sql)
       throws SQLException {
-    final Object longValue = executeSqlForScalar(connection, sql);
+    try (final Statement statement = createStatement(connection);
+        final ResultSet resultSet = executeSql(statement, sql)) {
+      return readResultsForLong(sql, resultSet);
+    } catch (final SQLException e) {
+      throw new SQLException(String.format("%s%n%s", e.getMessage(), sql), e);
+    }
+  }
+
+  public static Object executeSqlForScalar(final Connection connection, final String sql)
+      throws SQLException {
+    try (final Statement statement = createStatement(connection);
+        final ResultSet resultSet = executeSql(statement, sql)) {
+      return readResultsForScalar(sql, resultSet);
+    } catch (final SQLException e) {
+      throw new SQLException(String.format("%s%n%s", e.getMessage(), sql), e);
+    }
+  }
+
+  /**
+   * Load registered database drivers, and throw exception if any driver cannot be loaded. Cycling
+   * through the service loader and loading driver classes allows for dependencies to be vetted out.
+   *
+   * <p>
+   * Do not use DriverManager.getDrivers(), since that swallows exceptions.
+   *
+   * @throws SQLException
+   */
+  public static Collection<Driver> getAvailableJdbcDrivers() throws SQLException {
+    final Collection<Driver> drivers = new ArrayList<>();
+    try {
+      final ServiceLoader<Driver> serviceLoader = ServiceLoader.load(Driver.class);
+      for (final Driver driver : serviceLoader) {
+        drivers.add(driver);
+      }
+    } catch (final Throwable e) {
+      throw new SQLException(String.format("Could not load database drivers: %s", e.getMessage()),
+          e);
+    }
+    if (drivers.isEmpty()) {
+      throw new SQLException("No database drivers are available");
+    }
+    return drivers;
+  }
+
+  public static long readResultsForLong(final String sql, final ResultSet resultSet)
+      throws SQLException {
+    final Object longValue = readResultsForScalar(sql, resultSet);
     // Error checking
     if (longValue == null || !(longValue instanceof Number)) {
       throw new SQLException("Cannot get a long value result from SQL query");
@@ -127,39 +147,45 @@ public final class DatabaseUtility {
     return ((Number) longValue).longValue();
   }
 
-  public static Object executeSqlForScalar(final Connection connection, final String sql)
+  public static Object readResultsForScalar(final String sql, final ResultSet resultSet)
       throws SQLException {
-    try (final Statement statement = createStatement(connection);
-        final ResultSet resultSet = executeSql(statement, sql)) {
-      if (resultSet == null) {
-        return null;
-      }
+    if (resultSet == null) {
+      return null;
+    }
 
-      // Error checking
-      if (resultSet.getMetaData().getColumnCount() != 1) {
-        throw new SQLException("Too many columns of data returned");
-      }
+    // Error checking
+    if (resultSet.getMetaData().getColumnCount() != 1) {
+      throw new SQLException("Too many columns of data returned");
+    }
 
-      Object scalar;
-      if (resultSet.next()) {
-        scalar = resultSet.getObject(1);
-        if (resultSet.wasNull()) {
-          scalar = null;
-        }
-      } else {
-        LOGGER.log(Level.WARNING, new StringFormat("No rows of data returned for query <%s>", sql));
+    Object scalar;
+    if (resultSet.next()) {
+      scalar = resultSet.getObject(1);
+      if (resultSet.wasNull()) {
         scalar = null;
       }
-
-      // Error checking
-      if (resultSet.next()) {
-        throw new SQLException("Too many rows of data returned");
-      }
-
-      return scalar;
-    } catch (final SQLException e) {
-      throw new SQLException(String.format("%s%n%s", e.getMessage(), sql), e);
+    } else {
+      LOGGER.log(Level.WARNING, new StringFormat("No rows of data returned for query <%s>", sql));
+      scalar = null;
     }
+
+    // Error checking
+    if (resultSet.next()) {
+      throw new SQLException("Too many rows of data returned");
+    }
+
+    return scalar;
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   *
+   * @param results Result set
+   * @return List
+   * @throws SQLException On an exception
+   */
+  public static List<String> readResultsVector(final ResultSet results) throws SQLException {
+    return readResultsVector(results, 1);
   }
 
   /**
@@ -172,7 +198,7 @@ public final class DatabaseUtility {
   public static List<String> readResultsVector(final ResultSet results, final int columnNumber)
       throws SQLException {
     final List<String> values = new ArrayList<>();
-    if ((results == null) || (columnNumber <= 0)) {
+    if (results == null || columnNumber <= 0) {
       return values;
     }
 
@@ -187,17 +213,6 @@ public final class DatabaseUtility {
       results.close();
     }
     return values;
-  }
-
-  /**
-   * Reads a single column result set as a list.
-   *
-   * @param results Result set
-   * @return List
-   * @throws SQLException On an exception
-   */
-  public static List<String> readResultsVector(final ResultSet results) throws SQLException {
-    return readResultsVector(results, 1);
   }
 
   private DatabaseUtility() {

@@ -14,8 +14,7 @@ import schemacrawler.schemacrawler.Query;
 
 /** Database operations. */
 public enum OperationType implements Operation {
-
-  count("Row Count", "Show counts of rows in the tables", "SELECT COUNT(*) FROM ${table}"),
+  count("Row Count", "Show counts of rows in the tables", "SELECT COUNT(*) AS COUNT FROM ${table}"),
   dump(
       "Dump",
       "Show data from all rows in the tables",

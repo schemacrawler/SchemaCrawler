@@ -7,6 +7,7 @@ SchemaCrawler release notes.
 
 - Remove the "quickdump" command
 - Add the "tablesample" command
+- Add JSON output format for operations like "count", "dump" and "tablesample"
 
 
 <a name="v16.26.3"></a>

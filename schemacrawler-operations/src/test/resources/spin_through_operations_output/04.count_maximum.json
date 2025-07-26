@@ -1,0 +1,104 @@
+{
+  "db" : "HSQL Database Engine",
+  "operation" : "count",
+  "0" : {
+    "table" : "AUTHORS",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 20
+  },
+  "1" : {
+    "view" : "AUTHORSLIST",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 20
+  },
+  "2" : {
+    "table" : "BOOKAUTHORS",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 20
+  },
+  "3" : {
+    "table" : "BOOKS",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 20
+  },
+  "4" : {
+    "table" : "Celebrities",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 5
+  },
+  "5" : {
+    "table" : "Celebrity Updates",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 5
+  },
+  "6" : {
+    "table" : "COUPONS",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 10
+  },
+  "7" : {
+    "table" : "CUSTOMERDATA",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 0
+  },
+  "8" : {
+    "table" : "CUSTOMERS",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 0
+  },
+  "9" : {
+    "table" : "PUBLISHERS",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 20
+  },
+  "10" : {
+    "table" : "ΒΙΒΛΊΑ",
+    "schema" : "PUBLIC.BOOKS",
+    "count" : 0
+  },
+  "11" : {
+    "table" : "EXTRA_PK",
+    "schema" : "PUBLIC.FOR_LINT",
+    "count" : 0
+  },
+  "12" : {
+    "table" : "Global Counts",
+    "schema" : "PUBLIC.FOR_LINT",
+    "count" : 0
+  },
+  "13" : {
+    "table" : "PUBLICATIONS",
+    "schema" : "PUBLIC.FOR_LINT",
+    "count" : 0
+  },
+  "14" : {
+    "table" : "PUBLICATIONWRITERS",
+    "schema" : "PUBLIC.FOR_LINT",
+    "count" : 0
+  },
+  "15" : {
+    "table" : "SELFREFERENCE",
+    "schema" : "PUBLIC.FOR_LINT",
+    "count" : 0
+  },
+  "16" : {
+    "table" : "WRITERS",
+    "schema" : "PUBLIC.FOR_LINT",
+    "count" : 0
+  },
+  "17" : {
+    "table" : "REGIONS",
+    "schema" : "PUBLIC.\"PUBLISHER SALES\"",
+    "count" : 20
+  },
+  "18" : {
+    "table" : "SALES",
+    "schema" : "PUBLIC.\"PUBLISHER SALES\"",
+    "count" : 20
+  },
+  "19" : {
+    "table" : "SALESDATA",
+    "schema" : "PUBLIC.\"PUBLISHER SALES\"",
+    "count" : 0
+  }
+}

@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.schema.Table;
@@ -28,11 +30,15 @@ import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.string.StringFormat;
 
 /** Text formatting of data. */
 public final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
     implements DataTraversalHandler {
+
+  private static final Logger LOGGER = Logger.getLogger(DataTextFormatter.class.getName());
 
   private static String getMessage(final double aggregate) {
     final Number number;
@@ -108,16 +114,15 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
    * @param results Results
    */
   private void handleAggregateOperationForTable(final String title, final ResultSet results) {
-    long aggregate = 0;
+    long aggregate;
     try {
-      if (results.next()) {
-        aggregate = results.getLong(1);
-      }
+      aggregate = DatabaseUtility.readResultsForLong(title, results);
     } catch (final SQLException e) {
-      throw new DatabaseAccessException("Could not obtain aggregate data", e);
+      LOGGER.log(
+          Level.WARNING, e, new StringFormat("Could not obtain aggregate data for <%s>", title));
+      aggregate = 0;
     }
     final String message = getMessage(aggregate);
-    //
     formattingHelper.writeNameValueRow(title, message, Alignment.right);
   }
 
@@ -150,7 +155,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       formattingHelper.writeObjectEnd();
     }
 
-    dataBlockCount++;
+    dataBlockCount = dataBlockCount + 1;
   }
 
   private void iterateRows(final MetadataResultSet dataRows) throws SQLException {
