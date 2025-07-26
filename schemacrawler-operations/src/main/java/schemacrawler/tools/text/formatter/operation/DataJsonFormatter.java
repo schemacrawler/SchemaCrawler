@@ -54,9 +54,7 @@ public final class DataJsonFormatter implements DataTraversalHandler {
    * @param outputOptions Options for text formatting of data
    * @param identifierQuoteString Quote character for identifier
    */
-  public DataJsonFormatter(
-      final Operation operation,
-      final OperationOptions options,
+  public DataJsonFormatter(final Operation operation, final OperationOptions options,
       final OutputOptions outputOptions) {
 
     this.options = requireNonNull(options, "Operation options not provided");
@@ -136,18 +134,14 @@ public final class DataJsonFormatter implements DataTraversalHandler {
         generator.writeStringField(tableType, tableName);
         generator.writeStringField("schema", table.getSchema().getFullName());
       } catch (final IOException e) {
-        throw new IORuntimeException(
-            String.format("Could not write table name <%s>", tableName), e);
+        throw new IORuntimeException(String.format("Could not write table name <%s>", tableName),
+            e);
       }
     } else {
       tableName = "";
     }
 
-    if (operation == OperationType.count) {
-      handleAggregateOperationForTable(tableName, rows);
-    } else {
-      handleData(tableName, rows);
-    }
+    handleData(tableName, rows);
 
     writeEndDataBlock();
 
@@ -179,19 +173,27 @@ public final class DataJsonFormatter implements DataTraversalHandler {
     // No-op
   }
 
+  private void handleData(final String tableName, final ResultSet rows) {
+    if (operation == OperationType.count) {
+      handleTableAggregate(tableName, rows);
+    } else {
+      handleTableData(tableName, rows);
+    }
+  }
+
   /**
    * Handles an aggregate operation, such as a count, for a given table.
    *
    * @param title Title
    * @param results Results
    */
-  private void handleAggregateOperationForTable(final String title, final ResultSet results) {
+  private void handleTableAggregate(final String title, final ResultSet results) {
     long aggregate = 0;
     try {
       aggregate = DatabaseUtility.readResultsForLong(title, results);
     } catch (final SQLException e) {
-      LOGGER.log(
-          Level.WARNING, e, new StringFormat("Could not obtain aggregate data for <%s>", title));
+      LOGGER.log(Level.WARNING, e,
+          new StringFormat("Could not obtain aggregate data for <%s>", title));
       aggregate = 0;
     }
     try {
@@ -201,7 +203,7 @@ public final class DataJsonFormatter implements DataTraversalHandler {
     }
   }
 
-  private void handleData(final String title, final ResultSet rows) {
+  private void handleTableData(final String title, final ResultSet rows) {
     if (rows == null) {
       return;
     }
@@ -213,18 +215,8 @@ public final class DataJsonFormatter implements DataTraversalHandler {
       generator.writeStartArray();
       try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {
         dataRows.setShowLobs(options.isShowLobs());
-        final int maxRows;
-        if (OperationType.tablesample.name().equals(operation.getName())) {
-          maxRows = 10;
-        } else {
-          maxRows = options.getMaxRows();
-        }
-        int row = 0;
+        dataRows.setMaxRows(options.getMaxRows());
         while (dataRows.next()) {
-          row = row + 1;
-          if (row > maxRows) {
-            break;
-          }
           generator.writeStartObject();
           final String[] columnNames = dataRows.getColumnNames();
           final List<Object> currentRow = dataRows.row();
@@ -244,8 +236,8 @@ public final class DataJsonFormatter implements DataTraversalHandler {
           retrievalCounts.countIncluded();
         }
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(
-            String.format("Could not handle rows for <%s>", title), e);
+        throw new DatabaseAccessException(String.format("Could not handle rows for <%s>", title),
+            e);
       }
       generator.writeEndArray();
       retrievalCounts.log();

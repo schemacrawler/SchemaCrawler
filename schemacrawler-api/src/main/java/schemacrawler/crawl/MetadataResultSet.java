@@ -47,7 +47,7 @@ import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * A wrapper around a JDBC resultset obtained from a database metadata call. This allows type-safe
+ * A wrapper around a JDBC ResultSet obtained from a database metadata call. This allows type-safe
  * methods to obtain boolean, integer and string data, while abstracting away the quirks of the JDBC
  * metadata API.
  */
@@ -63,6 +63,7 @@ public final class MetadataResultSet implements AutoCloseable {
   private Set<ResultsColumn> readColumns;
   private int rowCount;
   private boolean showLobs;
+  private int maxRows;
 
   public MetadataResultSet(
       final Query query, final Statement statement, final Map<String, InclusionRule> limitMap)
@@ -83,6 +84,7 @@ public final class MetadataResultSet implements AutoCloseable {
     resultsColumns = new ResultsCrawler(results).crawl();
     readColumns = new HashSet<>();
     showLobs = true;
+    maxRows = Integer.MAX_VALUE;
   }
 
   /**
@@ -358,6 +360,10 @@ public final class MetadataResultSet implements AutoCloseable {
    * @throws SQLException On a database access error
    */
   public boolean next() throws SQLException {
+    if (rowCount == maxRows) {
+      return false;
+    }
+
     readColumns = new HashSet<>();
 
     final boolean next = results.next();
@@ -368,6 +374,10 @@ public final class MetadataResultSet implements AutoCloseable {
     return next;
   }
 
+  public void resetMaxRows() {
+    maxRows = Integer.MAX_VALUE;
+  }
+
   public List<Object> row() throws SQLException {
     final List<Object> currentRow = new ArrayList<>();
     for (final ResultsColumn resultsColumn : resultsColumns) {
@@ -375,6 +385,13 @@ public final class MetadataResultSet implements AutoCloseable {
     }
 
     return currentRow;
+  }
+
+  public void setMaxRows(final int maxRows) {
+    if (maxRows < 0) {
+      return;
+    }
+    this.maxRows = maxRows;
   }
 
   public void setShowLobs(final boolean showLobs) {
