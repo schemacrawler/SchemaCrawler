@@ -56,7 +56,7 @@ public class SpinThroughOperationsExecutableTest {
                 EnumSet.complementOf(EnumSet.of(InfoLevel.unknown)).stream()
                     .flatMap(
                         infoLevel ->
-                            EnumSet.of(TextOutputFormat.text, TextOutputFormat.html).stream()
+                            EnumSet.allOf(OperationsOutputFormat.class).stream()
                                 .map(
                                     outputFormat ->
                                         Arguments.of(operation, infoLevel, outputFormat))));
