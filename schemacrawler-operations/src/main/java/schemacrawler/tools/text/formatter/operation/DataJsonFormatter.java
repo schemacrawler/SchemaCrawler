@@ -117,7 +117,7 @@ public final class DataJsonFormatter implements DataTraversalHandler {
       title = "";
     }
 
-    handleTableData(title, rows);
+    handleData(title, rows);
 
     writeEndDataBlock();
   }

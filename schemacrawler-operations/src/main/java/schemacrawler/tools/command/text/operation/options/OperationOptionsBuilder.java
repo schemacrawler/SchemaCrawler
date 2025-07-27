@@ -102,6 +102,10 @@ public final class OperationOptionsBuilder
 
   @Override
   public OperationOptions toOptions() {
+    // Force maximum rows value for tablesample opertion
+    if (OperationType.tablesample.equals(operation)) {
+      maxRows = 10;
+    }
     return new OperationOptions(this);
   }
 
