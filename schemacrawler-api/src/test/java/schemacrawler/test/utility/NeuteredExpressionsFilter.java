@@ -26,6 +26,9 @@ final class NeuteredExpressionsFilter implements Function<String, String> {
     // SQL Server
     // -- primary key names
     Pattern.compile("PK__.{8}__[0-9A-F]{16}"),
+    // DuckDB
+    // -- JDBC driver configured values
+    Pattern.compile("  value                             .*"),
     // Multi-threading
     Pattern.compile("main|pool-\\d+-thread-\\d+"),
   };
