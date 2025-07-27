@@ -46,11 +46,6 @@
       <artifactId>schemacrawler-diagram</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-operations</artifactId>
-      <version>${project.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>us.fatehi</groupId>

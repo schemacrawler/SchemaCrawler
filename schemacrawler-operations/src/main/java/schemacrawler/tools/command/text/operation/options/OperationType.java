@@ -14,18 +14,11 @@ import schemacrawler.schemacrawler.Query;
 
 /** Database operations. */
 public enum OperationType implements Operation {
-
-  /** Count operation */
-  count("Row Count", "Show counts of rows in the tables", "SELECT COUNT(*) FROM ${table}"),
-  /** Dump operation */
+  count("Row Count", "Show counts of rows in the tables", "SELECT COUNT(*) AS COUNT FROM ${table}"),
   dump(
       "Dump",
       "Show data from all rows in the tables",
       "SELECT ${columns} FROM ${table} ORDER BY ${basiccolumns}"),
-  /**
-   * Quick dump operation, where columns do not need to be retrieved (minimum infolevel), but the
-   * order of rows may not be preserved from run to run.
-   */
   tablesample(
       "Table sample",
       "Show sample data from tables, " + "but the samples are not the same from run to run",

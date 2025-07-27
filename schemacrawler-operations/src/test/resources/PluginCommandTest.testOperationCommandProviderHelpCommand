@@ -2,3 +2,9 @@ unknown:unknown
 
 
 
+output-format
+Supported data output formats
+<output-format> is one of ${COMPLETION-CANDIDATES}
+Optional, inferred from the extension of the output file
+Defaults to json
+

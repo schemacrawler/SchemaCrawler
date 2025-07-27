@@ -76,7 +76,8 @@
           1. Jackson is distributed with the SchemaCrawler distribution
           2. Used in "loader", "diagram" and "text" for tests of catalog attributes
           for weak associations
-          3. Used in "scripting" for catalog YAML and XML serialization
+          3. Used in "operations" for data XML serialization
+          4. Used in "scripting" for catalog YAML and XML serialization
     -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>

@@ -27,8 +27,9 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
+import schemacrawler.tools.command.text.operation.options.OperationsOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.text.formatter.operation.DataJsonFormatter;
 import schemacrawler.tools.text.formatter.operation.DataTextFormatter;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
@@ -36,6 +37,7 @@ import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
+
   private static final Logger LOGGER = Logger.getLogger(OperationCommand.class.getName());
 
   public OperationCommand(final PropertyName command) {
@@ -117,9 +119,20 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
 
   private DataTraversalHandler getDataTraversalHandler() {
     final Operation operation = commandOptions.getOperation();
+    final OperationsOutputFormat outputFormat =
+        OperationsOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final DataTraversalHandler formatter =
-        new DataTextFormatter(operation, commandOptions, outputOptions, identifiers);
+    final DataTraversalHandler formatter;
+    switch (outputFormat) {
+      case text:
+      case html:
+        formatter = new DataTextFormatter(operation, commandOptions, outputOptions, identifiers);
+        break;
+      case json:
+      default:
+        formatter = new DataJsonFormatter(operation, commandOptions, outputOptions);
+        break;
+    }
     return formatter;
   }
 
@@ -131,7 +144,8 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
 
   private boolean isOutputFormatSupported() {
     final String outputFormatValue = outputOptions.getOutputFormatValue();
-    final boolean isOutputFormatSupported = TextOutputFormat.isSupportedFormat(outputFormatValue);
+    final boolean isOutputFormatSupported =
+        OperationsOutputFormat.isSupportedFormat(outputFormatValue);
     return isOutputFormatSupported;
   }
 }

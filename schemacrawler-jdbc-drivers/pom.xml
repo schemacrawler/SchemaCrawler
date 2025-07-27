@@ -9,7 +9,7 @@
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-jdbc-drivers</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <name>SchemaCrawler - JDBC Drivers Distribution</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -127,7 +127,8 @@
             <format>dir</format>
           </formats>
           <appendAssemblyId>false</appendAssemblyId>
-          <finalName>_jdbc-drivers/lib</finalName>
+          <finalName>lib</finalName>
+          <outputDirectory>${project.build.directory}/_jdbc-drivers</outputDirectory>
         </configuration>
         <executions>
           <execution>

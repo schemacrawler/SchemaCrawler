@@ -14,8 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.crawl.MetadataResultSet;
+import schemacrawler.crawl.RetrievalCounts;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
@@ -28,11 +31,15 @@ import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.string.StringFormat;
 
 /** Text formatting of data. */
 public final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
     implements DataTraversalHandler {
+
+  private static final Logger LOGGER = Logger.getLogger(DataTextFormatter.class.getName());
 
   private static String getMessage(final double aggregate) {
     final Number number;
@@ -101,26 +108,6 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     handleData(tableName, rows);
   }
 
-  /**
-   * Handles an aggregate operation, such as a count, for a given table.
-   *
-   * @param title Title
-   * @param results Results
-   */
-  private void handleAggregateOperationForTable(final String title, final ResultSet results) {
-    long aggregate = 0;
-    try {
-      if (results.next()) {
-        aggregate = results.getLong(1);
-      }
-    } catch (final SQLException e) {
-      throw new DatabaseAccessException("Could not obtain aggregate data", e);
-    }
-    final String message = getMessage(aggregate);
-    //
-    formattingHelper.writeNameValueRow(title, message, Alignment.right);
-  }
-
   private void handleData(final String title, final ResultSet rows) {
     if (rows == null) {
       return;
@@ -131,45 +118,59 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     }
 
     if (operation == OperationType.count) {
-      handleAggregateOperationForTable(title, rows);
+      handleTableAggregateData(title, rows);
     } else {
-      formattingHelper.println();
-      formattingHelper.println();
-      formattingHelper.writeObjectStart();
-      formattingHelper.writeObjectNameRow("", title, "", Color.white);
-      try (final MetadataResultSet dataRows = new MetadataResultSet(rows, "Data")) {
-        dataRows.setShowLobs(options.isShowLobs());
-
-        formattingHelper.writeRowHeader(quoteColumnNames(dataRows.getColumnNames()));
-
-        iterateRows(dataRows);
-      } catch (final SQLException e) {
-        throw new DatabaseAccessException(
-            String.format("Could not handle rows for <%s>", title), e);
-      }
-      formattingHelper.writeObjectEnd();
+      handleTableData(title, rows);
     }
 
-    dataBlockCount++;
+    dataBlockCount = dataBlockCount + 1;
   }
 
-  private void iterateRows(final MetadataResultSet dataRows) throws SQLException {
-    final int maxRows;
-    if (OperationType.tablesample.name().equals(operation.getName())) {
-      maxRows = 10;
-    } else {
-      maxRows = options.getMaxRows();
+  /**
+   * Handles an aggregate operation, such as a count, for a given table.
+   *
+   * @param title Title
+   * @param results Results
+   */
+  private void handleTableAggregateData(final String title, final ResultSet results) {
+    long aggregate;
+    try {
+      aggregate = DatabaseUtility.readResultsForLong(title, results);
+    } catch (final SQLException e) {
+      LOGGER.log(
+          Level.WARNING, e, new StringFormat("Could not obtain aggregate data for <%s>", title));
+      aggregate = 0;
     }
-    int row = 0;
-    while (dataRows.next()) {
-      row = row + 1;
-      if (row > maxRows) {
-        break;
+    final String message = getMessage(aggregate);
+    formattingHelper.writeNameValueRow(title, message, Alignment.right);
+  }
+
+  private void handleTableData(final String title, final ResultSet rows) {
+    formattingHelper.println();
+    formattingHelper.println();
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeObjectNameRow("", title, "", Color.white);
+
+    final String name = String.format("Data for %s for <%s>", operation, title);
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name.toLowerCase());
+    try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {
+      dataRows.setShowLobs(options.isShowLobs());
+      dataRows.setMaxRows(options.getMaxRows());
+
+      formattingHelper.writeRowHeader(quoteColumnNames(dataRows.getColumnNames()));
+
+      while (dataRows.next()) {
+        final List<Object> currentRow = dataRows.row();
+        final Object[] columnData = currentRow.toArray();
+        formattingHelper.writeRow(columnData);
+        retrievalCounts.countIncluded();
       }
-      final List<Object> currentRow = dataRows.row();
-      final Object[] columnData = currentRow.toArray();
-      formattingHelper.writeRow(columnData);
+    } catch (final SQLException e) {
+      throw new DatabaseAccessException(String.format("Could not handle rows for <%s>", title), e);
     }
+    formattingHelper.writeObjectEnd();
+
+    retrievalCounts.log();
   }
 
   private void printHeader() {
