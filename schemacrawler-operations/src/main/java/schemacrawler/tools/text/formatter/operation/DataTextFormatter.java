@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 import schemacrawler.crawl.MetadataResultSet;
+import schemacrawler.crawl.RetrievalCounts;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
@@ -62,8 +63,11 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
    * @param outputOptions Options for text formatting of data
    * @param identifierQuoteString Quote character for identifier
    */
-  public DataTextFormatter(final Operation operation, final OperationOptions options,
-      final OutputOptions outputOptions, final Identifiers identifiers) {
+  public DataTextFormatter(
+      final Operation operation,
+      final OperationOptions options,
+      final OutputOptions outputOptions,
+      final Identifiers identifiers) {
     super(schema, options, outputOptions, identifiers);
     this.operation = requireNonNull(operation, "No operation provided");
   }
@@ -133,8 +137,8 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     try {
       aggregate = DatabaseUtility.readResultsForLong(title, results);
     } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, e,
-          new StringFormat("Could not obtain aggregate data for <%s>", title));
+      LOGGER.log(
+          Level.WARNING, e, new StringFormat("Could not obtain aggregate data for <%s>", title));
       aggregate = 0;
     }
     final String message = getMessage(aggregate);
@@ -146,7 +150,10 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     formattingHelper.println();
     formattingHelper.writeObjectStart();
     formattingHelper.writeObjectNameRow("", title, "", Color.white);
-    try (final MetadataResultSet dataRows = new MetadataResultSet(rows, "Data")) {
+
+    final String name = String.format("Data for %s for <%s>", operation, title);
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name.toLowerCase());
+    try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {
       dataRows.setShowLobs(options.isShowLobs());
       dataRows.setMaxRows(options.getMaxRows());
 
@@ -156,11 +163,14 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
         final List<Object> currentRow = dataRows.row();
         final Object[] columnData = currentRow.toArray();
         formattingHelper.writeRow(columnData);
+        retrievalCounts.countIncluded();
       }
     } catch (final SQLException e) {
       throw new DatabaseAccessException(String.format("Could not handle rows for <%s>", title), e);
     }
     formattingHelper.writeObjectEnd();
+
+    retrievalCounts.log();
   }
 
   private void printHeader() {
