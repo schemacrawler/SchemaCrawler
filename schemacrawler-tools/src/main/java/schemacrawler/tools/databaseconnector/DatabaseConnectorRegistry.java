@@ -10,7 +10,9 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Comparator.naturalOrder;
 import static schemacrawler.tools.databaseconnector.UnknownDatabaseConnector.UNKNOWN;
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +24,6 @@ import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.registry.BasePluginRegistry;
@@ -117,6 +118,15 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry
     return UNKNOWN;
   }
 
+  public List<DatabaseServerType> getDatabaseServerTypes() {
+    final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
+      databaseServerTypes.add(databaseConnector.getDatabaseServerType());
+    }
+    databaseServerTypes.sort(naturalOrder());
+    return databaseServerTypes;
+  }
+
   @Override
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineHelpCommands = new ArrayList<>();
@@ -126,11 +136,9 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry
     return commandLineHelpCommands;
   }
 
-  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
-    if (isBlank(databaseSystemIdentifier)) {
-      return false;
-    }
-    return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
+  @Override
+  public String getName() {
+    return "SchemaCrawler Database Server Plugins";
   }
 
   @Override
@@ -146,17 +154,10 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry
     return availableServers;
   }
 
-  public List<DatabaseServerType> getDatabaseServerTypes() {
-    final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
-    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
-      databaseServerTypes.add(databaseConnector.getDatabaseServerType());
+  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
+    if (isBlank(databaseSystemIdentifier)) {
+      return false;
     }
-    databaseServerTypes.sort(naturalOrder());
-    return databaseServerTypes;
-  }
-
-  @Override
-  public String getName() {
-    return "SchemaCrawler Database Server Plugins";
+    return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
   }
 }

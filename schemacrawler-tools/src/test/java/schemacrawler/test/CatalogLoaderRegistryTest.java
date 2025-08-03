@@ -16,6 +16,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

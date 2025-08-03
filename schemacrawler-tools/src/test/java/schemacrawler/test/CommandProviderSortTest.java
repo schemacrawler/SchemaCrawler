@@ -15,9 +15,7 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.test.utility.testcommand.TestCommandProvider;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProvider;

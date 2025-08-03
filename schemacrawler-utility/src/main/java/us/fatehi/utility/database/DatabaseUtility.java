@@ -80,7 +80,8 @@ public final class DatabaseUtility {
         return statement.getResultSet();
       }
       final int updateCount = statement.getUpdateCount();
-      LOGGER.log(Level.FINE,
+      LOGGER.log(
+          Level.FINE,
           new StringFormat("No results. Update count of %d for query: %s", updateCount, sql));
       return null;
 
@@ -114,8 +115,7 @@ public final class DatabaseUtility {
    * Load registered database drivers, and throw exception if any driver cannot be loaded. Cycling
    * through the service loader and loading driver classes allows for dependencies to be vetted out.
    *
-   * <p>
-   * Do not use DriverManager.getDrivers(), since that swallows exceptions.
+   * <p>Do not use DriverManager.getDrivers(), since that swallows exceptions.
    *
    * @throws SQLException
    */
@@ -127,8 +127,8 @@ public final class DatabaseUtility {
         drivers.add(driver);
       }
     } catch (final Throwable e) {
-      throw new SQLException(String.format("Could not load database drivers: %s", e.getMessage()),
-          e);
+      throw new SQLException(
+          String.format("Could not load database drivers: %s", e.getMessage()), e);
     }
     if (drivers.isEmpty()) {
       throw new SQLException("No database drivers are available");

@@ -22,9 +22,7 @@ import static schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder.newSchemaC
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;

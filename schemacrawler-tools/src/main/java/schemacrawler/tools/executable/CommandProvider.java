@@ -9,7 +9,6 @@
 package schemacrawler.tools.executable;
 
 import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;

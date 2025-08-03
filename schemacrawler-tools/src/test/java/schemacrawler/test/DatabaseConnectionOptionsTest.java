@@ -10,6 +10,7 @@ package schemacrawler.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

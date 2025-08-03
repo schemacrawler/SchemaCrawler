@@ -10,11 +10,12 @@ package schemacrawler.tools.catalogloader;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
+import static java.util.Objects.requireNonNull;
+
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.compare;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;

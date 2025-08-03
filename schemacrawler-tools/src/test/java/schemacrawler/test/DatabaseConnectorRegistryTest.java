@@ -18,6 +18,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
+
 import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.Test;

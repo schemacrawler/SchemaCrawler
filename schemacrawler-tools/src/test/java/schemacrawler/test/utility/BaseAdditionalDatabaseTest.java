@@ -14,11 +14,8 @@ import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import schemacrawler.testdb.TestSchemaCreator;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;

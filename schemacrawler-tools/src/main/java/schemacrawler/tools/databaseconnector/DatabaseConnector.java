@@ -8,15 +8,16 @@
 
 package schemacrawler.tools.databaseconnector;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newDatabasePluginCommand;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -139,7 +140,7 @@ public abstract class DatabaseConnector implements Options {
       final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
 
       final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder =
-          dbConnectionSourceBuildProcess.get();
+          databaseConnectionSourceBuilder();
       dbConnectionSourceBuilder.withHost(host);
       dbConnectionSourceBuilder.withPort(port);
       dbConnectionSourceBuilder.withDatabase(database);
@@ -176,5 +177,9 @@ public abstract class DatabaseConnector implements Options {
       return "Database connector for unknown database system type";
     }
     return "Database connector for " + dbServerType;
+  }
+
+  protected DatabaseConnectionSourceBuilder databaseConnectionSourceBuilder() {
+    return dbConnectionSourceBuildProcess.get();
   }
 }

@@ -8,12 +8,13 @@
 
 package schemacrawler.tools.executable;
 
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;

@@ -21,6 +21,7 @@ import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.TestUtility.readFileFully;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
+
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
