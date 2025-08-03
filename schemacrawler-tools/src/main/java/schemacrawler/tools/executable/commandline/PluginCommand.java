@@ -22,8 +22,8 @@ import java.util.StringJoiner;
 import java.util.function.Supplier;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.trimToEmpty;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import us.fatehi.utility.Nullable;
+import us.fatehi.utility.datasource.DatabaseServerType;
 import us.fatehi.utility.property.PropertyName;
 
 public class PluginCommand implements Iterable<PluginCommandOption> {

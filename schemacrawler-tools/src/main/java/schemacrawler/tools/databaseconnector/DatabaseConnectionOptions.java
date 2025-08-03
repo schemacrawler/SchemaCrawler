@@ -8,8 +8,8 @@
 
 package schemacrawler.tools.databaseconnector;
 
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.Options;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public interface DatabaseConnectionOptions extends Options {
 

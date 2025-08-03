@@ -25,8 +25,8 @@ import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.test.utility.TestDatabaseConnector;
+import us.fatehi.utility.datasource.DatabaseServerType;
 import us.fatehi.utility.property.PropertyName;
 
 public class PluginCommandPojoTest {

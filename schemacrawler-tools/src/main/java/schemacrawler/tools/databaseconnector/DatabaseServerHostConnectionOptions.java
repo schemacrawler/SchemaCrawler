@@ -9,7 +9,7 @@
 package schemacrawler.tools.databaseconnector;
 
 import java.util.Map;
-import schemacrawler.schemacrawler.DatabaseServerType;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOptions {
 

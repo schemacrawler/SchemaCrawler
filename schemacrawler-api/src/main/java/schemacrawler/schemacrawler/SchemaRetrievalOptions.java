@@ -17,6 +17,7 @@ import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
 import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 /**
  * Provides for database specific overrides for SchemaCrawler functionality. This can add or inject

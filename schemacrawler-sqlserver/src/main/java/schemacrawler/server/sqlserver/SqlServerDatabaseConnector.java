@@ -9,10 +9,10 @@
 package schemacrawler.server.sqlserver;
 
 import schemacrawler.inclusionrule.RegularExpressionRule;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public final class SqlServerDatabaseConnector extends DatabaseConnector {
 

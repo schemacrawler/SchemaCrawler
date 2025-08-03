@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.databaseconnector;
 
-import schemacrawler.schemacrawler.DatabaseServerType;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public class DatabaseUrlConnectionOptions implements DatabaseConnectionOptions {
 

@@ -10,10 +10,10 @@
 package schemacrawler.server.postgresql;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
 

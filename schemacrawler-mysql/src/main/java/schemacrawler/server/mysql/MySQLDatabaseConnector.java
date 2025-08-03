@@ -10,10 +10,10 @@ package schemacrawler.server.mysql;
 
 import java.util.regex.Pattern;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public final class MySQLDatabaseConnector extends DatabaseConnector {
 
