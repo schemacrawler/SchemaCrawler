@@ -127,6 +127,9 @@ public final class DatabaseConnectorRegistry extends BasePluginRegistry
   }
 
   public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
+    if (isBlank(databaseSystemIdentifier)) {
+      return false;
+    }
     return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
   }
 

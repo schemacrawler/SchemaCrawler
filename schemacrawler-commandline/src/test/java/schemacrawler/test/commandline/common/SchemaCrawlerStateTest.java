@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.commandline.common;
 
 import static org.hamcrest.MatcherAssert.assertThat;

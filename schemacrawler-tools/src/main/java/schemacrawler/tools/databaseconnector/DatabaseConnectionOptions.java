@@ -8,9 +8,10 @@
 
 package schemacrawler.tools.databaseconnector;
 
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.Options;
 
 public interface DatabaseConnectionOptions extends Options {
 
-  DatabaseConnector getDatabaseConnector();
+  DatabaseServerType getDatabaseServerType();
 }

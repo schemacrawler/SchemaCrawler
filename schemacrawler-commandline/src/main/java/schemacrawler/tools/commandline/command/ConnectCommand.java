@@ -6,16 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.commandline.command;
-
-import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static java.util.Objects.requireNonNull;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
@@ -32,6 +29,7 @@ import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.UserCredentials;
@@ -93,8 +91,16 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       // server argument, or the JDBC connection URL
       final DatabaseConnectionOptions databaseConnectionOptions = getDatabaseConnectionOptions();
       requireNonNull(databaseConnectionOptions, "No database connection options provided");
-      final DatabaseConnector databaseConnector = databaseConnectionOptions.getDatabaseConnector();
+
+      final String databaseSystemIdentifier =
+          databaseConnectionOptions.getDatabaseServerType().getDatabaseSystemIdentifier();
+      final DatabaseConnectorRegistry databaseConnectorRegistry =
+          DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+      final DatabaseConnector databaseConnector =
+          databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
+              databaseSystemIdentifier);
       requireNonNull(databaseConnector, "No database plugin located (not even unknown)");
+
       LOGGER.log(
           Level.INFO,
           new StringFormat(

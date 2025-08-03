@@ -9,14 +9,25 @@
 package schemacrawler.tools.databaseconnector;
 
 import java.util.Map;
+import schemacrawler.schemacrawler.DatabaseServerType;
 
 public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOptions {
 
-  private final String database;
-  private final String databaseSystemIdentifier;
+  private static DatabaseServerType lookupDatabaseServerType(
+      final String databaseSystemIdentifier) {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseConnector =
+        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
+            databaseSystemIdentifier);
+    return databaseConnector.getDatabaseServerType();
+  }
+
+  private final DatabaseServerType databaseServerType;
   private final String host;
   private final Integer port;
   private final Map<String, String> urlx;
+  private final String database;
 
   public DatabaseServerHostConnectionOptions(
       final String databaseSystemIdentifier,
@@ -24,7 +35,7 @@ public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOp
       final Integer port,
       final String database,
       final Map<String, String> urlx) {
-    this.databaseSystemIdentifier = databaseSystemIdentifier;
+    databaseServerType = lookupDatabaseServerType(databaseSystemIdentifier);
     this.host = host;
     this.port = port;
     this.database = database;
@@ -36,11 +47,8 @@ public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOp
   }
 
   @Override
-  public DatabaseConnector getDatabaseConnector() {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    return databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
-        databaseSystemIdentifier);
+  public DatabaseServerType getDatabaseServerType() {
+    return databaseServerType;
   }
 
   public String getHost() {
