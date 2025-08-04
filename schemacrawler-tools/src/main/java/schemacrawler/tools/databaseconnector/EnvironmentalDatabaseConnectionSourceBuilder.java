@@ -1,5 +1,6 @@
 package schemacrawler.tools.databaseconnector;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -15,11 +16,22 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
   /**
    * Builds a database connection reading standard environmental variables.
    *
-   * @param envAccessor Environment accessor.
    * @return Builder
    */
   public static DatabaseConnectionSourceBuilder builder() {
-    final EnvironmentVariableAccessor envAccessor = System::getenv;
+    return builder(System::getenv);
+  }
+
+  /**
+   * Builds a database connection reading standard environmental variables.
+   *
+   * @param envAccessor Environment accessor.
+   * @return Builder
+   */
+  public static DatabaseConnectionSourceBuilder builder(
+      final EnvironmentVariableAccessor envAccessor) {
+
+    requireNonNull(envAccessor, "No environmental accessor provided");
 
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
     final String connectionUrl = envAccessor.getenv("SCHCRWLR_JDBC_URL");
