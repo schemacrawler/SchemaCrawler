@@ -14,9 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.CommandlineTestUtility.executeCommandInTest;
 
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.GrepOptions;

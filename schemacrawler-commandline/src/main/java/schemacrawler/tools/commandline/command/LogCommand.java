@@ -9,7 +9,6 @@
 package schemacrawler.tools.commandline.command;
 
 import java.util.logging.Level;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import us.fatehi.utility.LoggingConfig;

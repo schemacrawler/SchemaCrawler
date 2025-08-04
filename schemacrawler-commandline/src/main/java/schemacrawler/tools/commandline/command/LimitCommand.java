@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.regex.Pattern;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;

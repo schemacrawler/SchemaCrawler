@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.CommandlineTestUtility.executeCommandIn
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;

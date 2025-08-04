@@ -20,6 +20,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;

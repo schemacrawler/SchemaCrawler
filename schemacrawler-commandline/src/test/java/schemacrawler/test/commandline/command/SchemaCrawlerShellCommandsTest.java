@@ -11,7 +11,6 @@ package schemacrawler.test.commandline.command;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;

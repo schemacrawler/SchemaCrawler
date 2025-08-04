@@ -13,14 +13,12 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
+import com.typesafe.config.ConfigFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import com.typesafe.config.ConfigFactory;
-
 import picocli.CommandLine;
 import picocli.CommandLine.PicocliException;
 import schemacrawler.Main;

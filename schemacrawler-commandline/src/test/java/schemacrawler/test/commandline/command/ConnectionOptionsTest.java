@@ -10,9 +10,9 @@ package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.ConnectCommand;
@@ -21,7 +21,6 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.datasource.DatabaseServerType;
 
 public class ConnectionOptionsTest {
 
@@ -78,11 +77,9 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
 
     assertThat(
         ((DatabaseUrlConnectionOptions) databaseConnectorOptions).getConnectionUrl(), is(" "));
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is(nullValue()));
   }
 
   @Test
@@ -108,7 +105,6 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
 
     assertThat(
         ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).getHost(), is("somehost"));
@@ -117,7 +113,6 @@ public class ConnectionOptionsTest {
     assertThat(
         ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).getDatabase(),
         is("adatabase"));
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("test-db"));
   }
 
   @Test
@@ -176,12 +171,10 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
 
     assertThat(
         ((DatabaseUrlConnectionOptions) databaseConnectorOptions).getConnectionUrl(),
         is("jdbc:database_url"));
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is(nullValue()));
   }
 
   @Test
@@ -198,9 +191,6 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
-
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("test-db"));
 
     // TODO: test urlx parameters
   }

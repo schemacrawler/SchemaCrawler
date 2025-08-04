@@ -8,10 +8,11 @@
 
 package schemacrawler;
 
+import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.ConnectionTest;
 import schemacrawler.tools.commandline.ConnectionTestOptions;

@@ -8,11 +8,12 @@
 
 package schemacrawler.tools.commandline.command;
 
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 

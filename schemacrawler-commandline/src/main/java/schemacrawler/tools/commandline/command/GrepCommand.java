@@ -9,7 +9,6 @@
 package schemacrawler.tools.commandline.command;
 
 import java.util.regex.Pattern;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;

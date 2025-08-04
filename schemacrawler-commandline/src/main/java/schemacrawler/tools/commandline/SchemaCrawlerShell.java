@@ -8,11 +8,14 @@
 
 package schemacrawler.tools.commandline;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Supplier;
@@ -31,8 +34,6 @@ import org.jline.reader.impl.DefaultParser;
 import org.jline.reader.impl.LineReaderImpl;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine;
 import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliCommands;

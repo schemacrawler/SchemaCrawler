@@ -13,7 +13,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.matched
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Model;

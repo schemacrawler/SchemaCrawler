@@ -13,7 +13,6 @@ import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.nio.file.Path;
 import java.util.Map;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.tools.commandline.state.BaseStateHolder;

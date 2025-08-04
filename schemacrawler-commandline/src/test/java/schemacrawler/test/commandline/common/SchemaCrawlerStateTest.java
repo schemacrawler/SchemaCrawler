@@ -13,9 +13,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 import java.lang.reflect.Field;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 

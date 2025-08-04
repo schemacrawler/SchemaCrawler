@@ -14,6 +14,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

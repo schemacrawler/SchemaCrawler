@@ -8,7 +8,10 @@
 
 package schemacrawler.tools.commandline.utility;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -17,8 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;

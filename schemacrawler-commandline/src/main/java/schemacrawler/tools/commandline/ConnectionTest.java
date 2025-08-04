@@ -8,11 +8,12 @@
 
 package schemacrawler.tools.commandline;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.ShellState;

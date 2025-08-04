@@ -11,7 +11,6 @@ package schemacrawler.tools.commandline.state;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.GrepOptions;

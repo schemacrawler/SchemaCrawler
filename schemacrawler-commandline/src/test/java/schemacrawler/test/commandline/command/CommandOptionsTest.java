@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.CommandOptions;
 

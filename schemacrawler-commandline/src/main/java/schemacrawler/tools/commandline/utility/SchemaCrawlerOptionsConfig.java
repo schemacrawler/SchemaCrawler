@@ -10,6 +10,7 @@ package schemacrawler.tools.commandline.utility;
 
 import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.routine;
 import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.table;
+
 import java.util.Optional;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval;

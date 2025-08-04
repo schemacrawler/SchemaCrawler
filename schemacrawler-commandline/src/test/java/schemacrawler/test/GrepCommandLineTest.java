@@ -13,6 +13,7 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.nio.file.Path;
 import java.util.AbstractMap;
 import java.util.Arrays;
