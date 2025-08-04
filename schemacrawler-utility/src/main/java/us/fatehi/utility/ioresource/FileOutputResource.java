@@ -13,6 +13,8 @@ import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -20,7 +22,6 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 public final class FileOutputResource implements OutputResource {

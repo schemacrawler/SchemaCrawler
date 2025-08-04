@@ -8,10 +8,11 @@
 
 package us.fatehi.utility;
 
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.function.Supplier;
-import static us.fatehi.utility.Utility.trimToEmpty;
 
 /** Allows a main method to exit without a stack trace, but with an exit code */
 public class SystemExitException extends RuntimeException {

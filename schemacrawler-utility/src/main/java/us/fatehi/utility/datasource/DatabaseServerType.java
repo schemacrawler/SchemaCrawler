@@ -8,10 +8,11 @@
 
 package us.fatehi.utility.datasource;
 
-import java.io.Serializable;
-import java.util.Objects;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Class that represents an id for SchemaCrawler plugin that allows for crawl customizations for a

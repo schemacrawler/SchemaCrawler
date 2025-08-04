@@ -9,6 +9,9 @@
 package us.fatehi.utility.database;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -22,8 +25,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import us.fatehi.utility.SQLRuntimeException;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 

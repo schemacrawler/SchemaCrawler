@@ -19,7 +19,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
 import us.fatehi.utility.string.StringFormat;
 
 public class RegularExpressionColorMap {

@@ -12,13 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import org.apache.commons.collections.MapUtils;
-import org.junit.jupiter.api.Test;
 import static us.fatehi.utility.Utility.commonPrefix;
 import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
@@ -30,6 +23,14 @@ import static us.fatehi.utility.Utility.join;
 import static us.fatehi.utility.Utility.stripEnd;
 import static us.fatehi.utility.Utility.stripStart;
 import static us.fatehi.utility.Utility.toSnakeCase;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.collections.MapUtils;
+import org.junit.jupiter.api.Test;
 
 public class UtilityTest {
 

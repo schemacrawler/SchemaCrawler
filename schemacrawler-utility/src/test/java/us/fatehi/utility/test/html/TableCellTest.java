@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

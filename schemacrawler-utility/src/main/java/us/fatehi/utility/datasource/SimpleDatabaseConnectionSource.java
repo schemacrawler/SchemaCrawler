@@ -11,6 +11,7 @@ package us.fatehi.utility.datasource;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;

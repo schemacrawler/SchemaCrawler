@@ -11,8 +11,9 @@ package us.fatehi.utility.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import org.junit.jupiter.api.Test;
+
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.jupiter.api.Test;
 import us.fatehi.utility.property.PropertyName;
 
 public class PropertyNameTest {

@@ -11,9 +11,10 @@ package us.fatehi.utility.test.graph;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
-import org.junit.jupiter.api.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.jupiter.api.Test;
 import us.fatehi.utility.graph.DirectedEdge;
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.GraphException;

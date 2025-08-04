@@ -20,9 +20,7 @@ import static us.fatehi.utility.IOUtility.readFully;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.ioresource.WriterOutputResource;
 
 public class WriterOutputResourceTest {

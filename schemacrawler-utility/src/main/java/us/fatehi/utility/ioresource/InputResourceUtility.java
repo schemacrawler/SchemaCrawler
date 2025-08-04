@@ -8,12 +8,13 @@
 
 package us.fatehi.utility.ioresource;
 
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.string.StringFormat;
 
 public class InputResourceUtility {

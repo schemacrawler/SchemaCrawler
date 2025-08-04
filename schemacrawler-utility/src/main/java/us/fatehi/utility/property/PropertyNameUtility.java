@@ -8,10 +8,11 @@
 
 package us.fatehi.utility.property;
 
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 
 public abstract class PropertyNameUtility {
 

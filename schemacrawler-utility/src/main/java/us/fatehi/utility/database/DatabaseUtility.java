@@ -8,6 +8,9 @@
 
 package us.fatehi.utility.database;
 
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.ResultSet;
@@ -19,8 +22,6 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;

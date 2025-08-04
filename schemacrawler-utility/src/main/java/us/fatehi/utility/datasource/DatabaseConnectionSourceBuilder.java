@@ -8,14 +8,15 @@
 
 package us.fatehi.utility.datasource;
 
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import us.fatehi.utility.Builder;
 import us.fatehi.utility.TemplatingUtility;
 
@@ -51,8 +52,7 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
     defaultHost = "localhost";
     defaultDatabase = "";
     userCredentials = new MultiUseUserCredentials();
-    connectionInitializer = connection -> {
-    };
+    connectionInitializer = connection -> {};
   }
 
   @Override
@@ -60,8 +60,8 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
     final String connectionUrl = toURL();
     final Map<String, String> connectionUrlx = toUrlx();
     final DatabaseConnectionSource databaseConnectionSource =
-        DatabaseConnectionSources.newDatabaseConnectionSource(connectionUrl, connectionUrlx,
-            userCredentials, connectionInitializer);
+        DatabaseConnectionSources.newDatabaseConnectionSource(
+            connectionUrl, connectionUrlx, userCredentials, connectionInitializer);
     return databaseConnectionSource;
   }
 
@@ -92,8 +92,7 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
   public DatabaseConnectionSourceBuilder withConnectionInitializer(
       final Consumer<Connection> connectionInitializer) {
     if (connectionInitializer == null) {
-      this.connectionInitializer = connection -> {
-      };
+      this.connectionInitializer = connection -> {};
     } else {
       this.connectionInitializer = connectionInitializer;
     }
@@ -125,13 +124,13 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
     return this;
   }
 
-  public DatabaseConnectionSourceBuilder withDefaultUrlx(final String property,
-      final boolean value) {
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(
+      final String property, final boolean value) {
     return withDefaultUrlx(property, String.valueOf(value));
   }
 
-  public DatabaseConnectionSourceBuilder withDefaultUrlx(final String property,
-      final String value) {
+  public DatabaseConnectionSourceBuilder withDefaultUrlx(
+      final String property, final String value) {
     if (defaultUrlx == null) {
       defaultUrlx = new HashMap<>();
     }

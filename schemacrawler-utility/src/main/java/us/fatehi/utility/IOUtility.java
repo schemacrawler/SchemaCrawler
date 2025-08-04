@@ -17,6 +17,8 @@ import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.isWritable;
 import static java.nio.file.Files.size;
 import static java.util.UUID.randomUUID;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -27,7 +29,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 

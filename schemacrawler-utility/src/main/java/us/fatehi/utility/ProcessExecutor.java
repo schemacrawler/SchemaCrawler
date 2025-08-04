@@ -8,14 +8,15 @@
 
 package us.fatehi.utility;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 public class ProcessExecutor implements Callable<Integer> {

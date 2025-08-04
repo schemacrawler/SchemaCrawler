@@ -13,8 +13,9 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import org.junit.jupiter.api.Test;
+
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.jupiter.api.Test;
 import us.fatehi.utility.property.BaseProductVersion;
 import us.fatehi.utility.property.ProductVersion;
 

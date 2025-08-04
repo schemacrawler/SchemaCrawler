@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;

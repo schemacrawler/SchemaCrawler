@@ -19,7 +19,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;

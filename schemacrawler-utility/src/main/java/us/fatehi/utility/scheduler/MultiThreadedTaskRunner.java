@@ -18,7 +18,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import us.fatehi.utility.string.StringFormat;
 
 final class MultiThreadedTaskRunner extends AbstractTaskRunner {

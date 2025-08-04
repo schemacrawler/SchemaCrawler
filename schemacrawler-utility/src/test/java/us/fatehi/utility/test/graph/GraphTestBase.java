@@ -10,7 +10,6 @@ package us.fatehi.utility.test.graph;
 
 import java.util.Collection;
 import java.util.List;
-
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.GraphException;
 import us.fatehi.utility.graph.SimpleCycleDetector;

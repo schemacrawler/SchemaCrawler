@@ -9,13 +9,14 @@
 package us.fatehi.utility.datasource;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
+import static java.util.Objects.requireNonNull;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-import static java.util.Objects.requireNonNull;
 
 public class PooledConnectionUtility {
 

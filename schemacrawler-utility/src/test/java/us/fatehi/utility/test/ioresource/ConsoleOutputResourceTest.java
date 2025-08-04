@@ -21,11 +21,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.ioresource.ConsoleOutputResource;
 
 public class ConsoleOutputResourceTest {

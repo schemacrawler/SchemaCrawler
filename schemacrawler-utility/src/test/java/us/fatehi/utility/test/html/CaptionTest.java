@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.caption;
 import static us.fatehi.utility.html.TagBuilder.span;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

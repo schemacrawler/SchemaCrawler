@@ -9,6 +9,7 @@
 package us.fatehi.utility;
 
 import static java.lang.System.lineSeparator;
+
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;

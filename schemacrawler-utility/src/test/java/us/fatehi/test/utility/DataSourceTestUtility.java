@@ -9,6 +9,7 @@
 package us.fatehi.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
