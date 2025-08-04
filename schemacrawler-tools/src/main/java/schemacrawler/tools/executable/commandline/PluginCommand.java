@@ -8,10 +8,13 @@
 
 package schemacrawler.tools.executable.commandline;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.command;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.loader;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.unknown;
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,10 +23,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.trimToEmpty;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import us.fatehi.utility.Nullable;
+import us.fatehi.utility.datasource.DatabaseServerType;
 import us.fatehi.utility.property.PropertyName;
 
 public class PluginCommand implements Iterable<PluginCommandOption> {

@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
+
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;

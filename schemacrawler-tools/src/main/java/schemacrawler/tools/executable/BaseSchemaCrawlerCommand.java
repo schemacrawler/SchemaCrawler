@@ -9,6 +9,7 @@
 package schemacrawler.tools.executable;
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;

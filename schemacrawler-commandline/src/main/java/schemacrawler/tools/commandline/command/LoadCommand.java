@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.commandline.command;
 
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.matchedOptionValues;

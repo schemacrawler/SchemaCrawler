@@ -9,6 +9,8 @@
 package us.fatehi.test.utility;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -17,7 +19,6 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 
 public class TestDatabaseDriver implements Driver {
 

@@ -8,22 +8,34 @@
 
 package us.fatehi.utility.datasource;
 
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import us.fatehi.utility.Builder;
 import us.fatehi.utility.TemplatingUtility;
 
 public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnectionSource> {
 
+  /**
+   * Builds a database connection based on a JDBC connection template provided by a database
+   * connector. It has subsitutable variables.
+   *
+   * @param connectionUrlTemplate URL template
+   * @return Builder
+   */
   public static DatabaseConnectionSourceBuilder builder(final String connectionUrlTemplate) {
-    return new DatabaseConnectionSourceBuilder().withConnectionUrl(connectionUrlTemplate);
+    // NOTE: No check is done for a blank template. This exception is handled downstream,
+    // and a database exception is thrown instead of a generic exception.
+    return new DatabaseConnectionSourceBuilder(connectionUrlTemplate);
   }
 
-  private String connectionUrlTemplate;
+  private final String connectionUrlTemplate;
   private String defaultDatabase;
   private String defaultHost;
   private int defaultPort;
@@ -35,7 +47,8 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
   private Integer providedPort;
   private Map<String, String> providedUrlx;
 
-  private DatabaseConnectionSourceBuilder() {
+  private DatabaseConnectionSourceBuilder(final String connectionUrlTemplate) {
+    this.connectionUrlTemplate = connectionUrlTemplate;
     defaultHost = "localhost";
     defaultDatabase = "";
     userCredentials = new MultiUseUserCredentials();
@@ -56,6 +69,26 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
     return connectionInitializer;
   }
 
+  public final List<String> toArguments() {
+    final List<String> arguments = new ArrayList<>();
+
+    arguments.add("--url");
+    arguments.add(toURL());
+
+    final String user = userCredentials.getUser();
+    if (!isBlank(user)) {
+      arguments.add("--user");
+      arguments.add(user);
+    }
+    final String password = userCredentials.getPassword();
+    if (!isBlank(password)) {
+      arguments.add("--password");
+      arguments.add(password);
+    }
+
+    return arguments;
+  }
+
   public DatabaseConnectionSourceBuilder withConnectionInitializer(
       final Consumer<Connection> connectionInitializer) {
     if (connectionInitializer == null) {
@@ -63,11 +96,6 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
     } else {
       this.connectionInitializer = connectionInitializer;
     }
-    return this;
-  }
-
-  public DatabaseConnectionSourceBuilder withConnectionUrl(final String connectionUrlTemplate) {
-    this.connectionUrlTemplate = connectionUrlTemplate;
     return this;
   }
 
@@ -116,7 +144,12 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
   }
 
   public DatabaseConnectionSourceBuilder withPort(final Integer port) {
-    providedPort = port;
+    if (port != null && (port < 1024 || port > 65535)) {
+      // Port is out of range
+      providedPort = null;
+    } else {
+      providedPort = port;
+    }
     return this;
   }
 

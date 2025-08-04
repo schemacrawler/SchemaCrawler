@@ -8,11 +8,12 @@
 
 package us.fatehi.utility.ioresource;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 
 public final class WriterOutputResource implements OutputResource {
 

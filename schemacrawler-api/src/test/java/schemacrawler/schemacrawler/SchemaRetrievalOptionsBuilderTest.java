@@ -33,6 +33,7 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public class SchemaRetrievalOptionsBuilderTest {
 

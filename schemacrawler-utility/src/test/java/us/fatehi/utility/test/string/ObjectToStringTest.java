@@ -11,6 +11,7 @@ package us.fatehi.utility.test.string;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.nio.file.AccessMode;
 import org.junit.jupiter.api.Test;
 import us.fatehi.test.utility.TestObject;

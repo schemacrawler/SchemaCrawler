@@ -16,9 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import java.io.Serializable;
-import org.junit.jupiter.api.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.jupiter.api.Test;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.property.PropertyName;

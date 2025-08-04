@@ -9,6 +9,7 @@
 package schemacrawler.tools.catalogloader;
 
 import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

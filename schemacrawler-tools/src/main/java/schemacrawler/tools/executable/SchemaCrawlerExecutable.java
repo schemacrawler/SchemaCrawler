@@ -8,14 +8,15 @@
 
 package schemacrawler.tools.executable;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.updateConnectionDataSource;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;

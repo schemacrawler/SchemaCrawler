@@ -11,11 +11,12 @@ package us.fatehi.utility.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+
 import java.io.Serializable;
 import java.util.Arrays;
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
-import nl.jqno.equalsverifier.EqualsVerifier;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.BaseProductVersion;
 import us.fatehi.utility.property.Property;

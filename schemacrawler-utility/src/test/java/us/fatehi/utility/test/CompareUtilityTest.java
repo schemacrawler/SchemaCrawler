@@ -15,9 +15,7 @@ import static org.hamcrest.Matchers.lessThan;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.CompareUtility;
 
 public class CompareUtilityTest {

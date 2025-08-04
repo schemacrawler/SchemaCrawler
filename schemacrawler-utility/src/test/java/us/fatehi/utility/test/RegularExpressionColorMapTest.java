@@ -12,6 +12,7 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;

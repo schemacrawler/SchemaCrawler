@@ -8,8 +8,9 @@
 
 package schemacrawler.tools.executable;
 
-import java.sql.Connection;
 import static java.util.Objects.requireNonNull;
+
+import java.sql.Connection;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import us.fatehi.utility.property.PropertyName;

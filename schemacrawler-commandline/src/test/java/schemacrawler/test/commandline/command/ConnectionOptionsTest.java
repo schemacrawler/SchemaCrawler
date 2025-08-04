@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,17 +13,15 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.commandline.command.ConnectCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public class ConnectionOptionsTest {
 
@@ -81,8 +78,7 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType =
-        databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
+    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
 
     assertThat(
         ((DatabaseUrlConnectionOptions) databaseConnectorOptions).getConnectionUrl(), is(" "));
@@ -112,8 +108,7 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType =
-        databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
+    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
 
     assertThat(
         ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).getHost(), is("somehost"));
@@ -144,7 +139,7 @@ public class ConnectionOptionsTest {
 
   @Test
   public void noArgs() {
-    final String[] args = new String[0];
+    final String[] args = {};
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     new CommandLine(optionsParser).parseArgs(args);
@@ -181,8 +176,7 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType =
-        databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
+    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
 
     assertThat(
         ((DatabaseUrlConnectionOptions) databaseConnectorOptions).getConnectionUrl(),
@@ -204,8 +198,7 @@ public class ConnectionOptionsTest {
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
-    final DatabaseServerType databaseServerType =
-        databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
+    final DatabaseServerType databaseServerType = databaseConnectorOptions.getDatabaseServerType();
 
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("test-db"));
 

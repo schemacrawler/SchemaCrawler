@@ -10,9 +10,10 @@ package us.fatehi.utility;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.floor;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
-import static us.fatehi.utility.Utility.requireNotBlank;
 
 /**
  * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of baggage, and is not

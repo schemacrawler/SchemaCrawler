@@ -9,6 +9,7 @@
 package us.fatehi.utility;
 
 import static java.lang.Character.isWhitespace;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;

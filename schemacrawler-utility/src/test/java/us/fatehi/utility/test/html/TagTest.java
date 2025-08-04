@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagOutputFormat.html;
 import static us.fatehi.utility.html.TagOutputFormat.text;
 import static us.fatehi.utility.html.TagOutputFormat.tsv;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

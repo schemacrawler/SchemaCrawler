@@ -22,6 +22,7 @@ import java.util.function.Consumer;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public final class SchemaRetrievalOptionsBuilder
     implements OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions> {

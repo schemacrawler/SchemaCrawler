@@ -6,12 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.schemacrawler;
+package us.fatehi.utility.datasource;
 
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Class that represents an id for SchemaCrawler plugin that allows for crawl customizations for a
@@ -45,7 +46,8 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
   public int compareTo(final DatabaseServerType other) {
     if (this == other) {
       return 0;
-    } else if (other == null) {
+    }
+    if (other == null) {
       return -1;
     }
 
@@ -53,11 +55,11 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
     final boolean otherUnknown = other.databaseSystemIdentifier == null;
     if (otherUnknown && !thisUnknown) {
       return 1;
-    } else if (!otherUnknown && thisUnknown) {
-      return -1;
-    } else {
-      return databaseSystemIdentifier.compareTo(other.databaseSystemIdentifier);
     }
+    if (!otherUnknown && thisUnknown) {
+      return -1;
+    }
+    return databaseSystemIdentifier.compareTo(other.databaseSystemIdentifier);
   }
 
   @Override
@@ -65,18 +67,14 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if ((obj == null) || (getClass() != obj.getClass())) {
       return false;
     }
     final DatabaseServerType other = (DatabaseServerType) obj;
     if (databaseSystemIdentifier == null) {
       return other.databaseSystemIdentifier == null;
-    } else {
-      return databaseSystemIdentifier.equals(other.databaseSystemIdentifier);
     }
+    return databaseSystemIdentifier.equals(other.databaseSystemIdentifier);
   }
 
   public String getDatabaseSystemIdentifier() {
@@ -89,12 +87,7 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result =
-        prime * result
-            + (databaseSystemIdentifier == null ? 0 : databaseSystemIdentifier.hashCode());
-    return result;
+    return Objects.hash(databaseSystemIdentifier);
   }
 
   public boolean isUnknownDatabaseSystem() {
@@ -105,8 +98,7 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
   public String toString() {
     if (isUnknownDatabaseSystem()) {
       return "";
-    } else {
-      return String.format("%s - %s", databaseSystemIdentifier, databaseSystemName);
     }
+    return String.format("%s - %s", databaseSystemIdentifier, databaseSystemName);
   }
 }

@@ -10,6 +10,7 @@ package schemacrawler.test.utility.testcommand;
 
 import static schemacrawler.test.utility.testcommand.TestCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;

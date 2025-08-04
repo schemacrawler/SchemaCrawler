@@ -17,9 +17,7 @@ import static org.hamcrest.Matchers.is;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.TemplatingUtility;
 
 public class TemplatingTest {

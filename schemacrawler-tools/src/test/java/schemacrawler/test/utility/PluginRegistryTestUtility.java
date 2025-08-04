@@ -9,6 +9,7 @@
 package schemacrawler.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;

@@ -13,9 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 
@@ -28,11 +26,7 @@ public class DatabaseConnectionOptionsTest {
 
     assertThat(connectionOptions.getConnectionUrl(), is("jdbc:test-db:test"));
     assertThat(
-        connectionOptions
-            .getDatabaseConnector()
-            .getDatabaseServerType()
-            .getDatabaseSystemIdentifier(),
-        is("test-db"));
+        connectionOptions.getDatabaseServerType().getDatabaseSystemIdentifier(), is("test-db"));
   }
 
   @Test
@@ -49,10 +43,6 @@ public class DatabaseConnectionOptionsTest {
     assertThat(connectionOptions.getDatabase(), is("database"));
     assertThat(connectionOptions.getUrlx(), is(map));
     assertThat(
-        connectionOptions
-            .getDatabaseConnector()
-            .getDatabaseServerType()
-            .getDatabaseSystemIdentifier(),
-        is("test-db"));
+        connectionOptions.getDatabaseServerType().getDatabaseSystemIdentifier(), is("test-db"));
   }
 }

@@ -8,6 +8,9 @@
 
 package us.fatehi.utility;
 
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.join;
+
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +24,6 @@ import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.join;
 
 public final class UtilityLogger {
 

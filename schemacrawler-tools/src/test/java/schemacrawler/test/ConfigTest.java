@@ -17,9 +17,7 @@ import static org.hamcrest.Matchers.nullValue;
 import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.options.Config;
 

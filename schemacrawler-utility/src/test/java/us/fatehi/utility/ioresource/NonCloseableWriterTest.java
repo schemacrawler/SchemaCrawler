@@ -10,6 +10,7 @@ package us.fatehi.utility.ioresource;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import org.junit.jupiter.api.Test;

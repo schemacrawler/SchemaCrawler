@@ -9,11 +9,12 @@
 package us.fatehi.utility.ioresource;
 
 import static java.nio.file.Files.newInputStream;
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import static java.util.Objects.requireNonNull;
 
 public class FileInputResource extends BaseInputResource {
 

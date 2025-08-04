@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.CoreMatchers.containsString;

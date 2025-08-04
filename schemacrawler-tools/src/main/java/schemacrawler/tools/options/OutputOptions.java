@@ -18,7 +18,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
-
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ObjectToString;

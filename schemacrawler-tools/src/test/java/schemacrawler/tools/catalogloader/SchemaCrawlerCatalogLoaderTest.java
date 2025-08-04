@@ -16,9 +16,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import us.fatehi.test.utility.TestDatabaseDriver;

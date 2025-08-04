@@ -15,9 +15,7 @@ import static org.hamcrest.Matchers.not;
 
 import java.util.Map;
 import java.util.Properties;
-
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.PropertiesUtility;
 
 public class PropertiesUtilityTest {

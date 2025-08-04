@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.sql.DataSource;
 
 public class DatabaseConnectionSources {

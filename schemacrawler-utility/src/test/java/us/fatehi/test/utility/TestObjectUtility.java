@@ -9,10 +9,14 @@
 package us.fatehi.test.utility;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
+import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.AccessMode;
@@ -26,9 +30,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 
 public class TestObjectUtility {
 

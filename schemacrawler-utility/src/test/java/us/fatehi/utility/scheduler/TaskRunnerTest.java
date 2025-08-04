@@ -11,6 +11,7 @@ package us.fatehi.utility.scheduler;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;

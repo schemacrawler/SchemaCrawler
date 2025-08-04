@@ -8,16 +8,16 @@
 
 package schemacrawler.tools.databaseconnector;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newDatabasePluginCommand;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -28,7 +28,7 @@ import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.DatabaseServerType;
 import us.fatehi.utility.datasource.UserCredentials;
 
 public abstract class DatabaseConnector implements Options {
@@ -122,13 +122,14 @@ public abstract class DatabaseConnector implements Options {
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    final DatabaseConnectionSource databaseConnectionSource;
+    final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
     if (connectionOptions instanceof DatabaseUrlConnectionOptions) {
       final DatabaseUrlConnectionOptions databaseUrlConnectionOptions =
           (DatabaseUrlConnectionOptions) connectionOptions;
-      databaseConnectionSource =
-          DatabaseConnectionSources.newDatabaseConnectionSource(
-              databaseUrlConnectionOptions.getConnectionUrl(), userCredentials);
+
+      final String connectionUrl = databaseUrlConnectionOptions.getConnectionUrl();
+
+      dbConnectionSourceBuilder = DatabaseConnectionSourceBuilder.builder(connectionUrl);
     } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions) {
       final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
           (DatabaseServerHostConnectionOptions) connectionOptions;
@@ -138,19 +139,18 @@ public abstract class DatabaseConnector implements Options {
       final String database = serverHostConnectionOptions.getDatabase();
       final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
 
-      final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder =
-          dbConnectionSourceBuildProcess.get();
+      dbConnectionSourceBuilder = databaseConnectionSourceBuilder();
       dbConnectionSourceBuilder.withHost(host);
       dbConnectionSourceBuilder.withPort(port);
       dbConnectionSourceBuilder.withDatabase(database);
       dbConnectionSourceBuilder.withUrlx(urlx);
-      dbConnectionSourceBuilder.withUserCredentials(userCredentials);
 
-      databaseConnectionSource = dbConnectionSourceBuilder.build();
     } else {
       throw new ConfigurationException("Could not create new database connection source");
     }
 
+    dbConnectionSourceBuilder.withUserCredentials(userCredentials);
+    final DatabaseConnectionSource databaseConnectionSource = dbConnectionSourceBuilder.build();
     return databaseConnectionSource;
   }
 
@@ -176,5 +176,9 @@ public abstract class DatabaseConnector implements Options {
       return "Database connector for unknown database system type";
     }
     return "Database connector for " + dbServerType;
+  }
+
+  protected DatabaseConnectionSourceBuilder databaseConnectionSourceBuilder() {
+    return dbConnectionSourceBuildProcess.get();
   }
 }

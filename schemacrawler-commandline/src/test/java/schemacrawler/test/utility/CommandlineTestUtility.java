@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.utility;
 
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;

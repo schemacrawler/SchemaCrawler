@@ -10,12 +10,13 @@ package us.fatehi.utility.property;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
-import java.io.Serializable;
-import java.util.Comparator;
-import java.util.Objects;
 import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Objects;
 
 public final class PropertyName implements Serializable, Comparable<PropertyName> {
 

@@ -8,14 +8,15 @@
 
 package us.fatehi.utility.html;
 
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagOutputFormat.html;
 import static us.fatehi.utility.html.TagOutputFormat.tsv;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.Color;
 
 public class Tag {

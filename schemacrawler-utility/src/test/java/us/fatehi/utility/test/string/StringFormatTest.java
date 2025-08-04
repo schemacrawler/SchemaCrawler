@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.string.StringFormat;
 
 public class StringFormatTest {

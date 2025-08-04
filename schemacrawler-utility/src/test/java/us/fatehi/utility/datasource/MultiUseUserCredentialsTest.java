@@ -11,6 +11,7 @@ package us.fatehi.utility.datasource;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+
 import org.junit.jupiter.api.Test;
 
 class MultiUseUserCredentialsTest {

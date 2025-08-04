@@ -8,15 +8,16 @@
 
 package schemacrawler.tools.options;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.EnumUtility.enumValue;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.Options;

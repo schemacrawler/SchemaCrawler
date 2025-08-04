@@ -8,8 +8,8 @@
 
 package schemacrawler.tools.databaseconnector;
 
-import schemacrawler.schemacrawler.DatabaseServerType;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
+import us.fatehi.utility.datasource.DatabaseServerType;
 
 public final class UnknownDatabaseConnector extends DatabaseConnector {
 
