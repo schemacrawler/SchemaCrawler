@@ -25,7 +25,7 @@ public class VersionTest {
 
   @Test
   public void version(final CapturedSystemStreams streams) throws Exception {
-    final Pattern VERSION = Pattern.compile("SchemaCrawler 16\\.26\\.\\d{1,2}\\R.*", DOTALL);
+    final Pattern VERSION = Pattern.compile("SchemaCrawler 16\\.2[67]\\.\\d{1,2}\\R.*", DOTALL);
 
     Version.main(new String[0]);
 

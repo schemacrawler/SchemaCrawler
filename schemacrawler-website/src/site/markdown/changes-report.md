@@ -2,12 +2,13 @@
 
 SchemaCrawler release notes.
 
-<a name="v16.26.4"></a>
-## Release 16.26.4 - 2025-07-30
+<a name="v16.27.1"></a>
+## Release 16.27.1 - 2025-08-11
 
 - Remove the "quickdump" command
 - Add the "tablesample" command
 - Add JSON output format for operations like "count", "dump" and "tablesample"
+- Read connection properties from standard environmental variables
 
 
 <a name="v16.26.3"></a>
@@ -208,8 +209,8 @@ SchemaCrawler release notes.
 - Fix issue #1179 for Mermaid diagram generation
 
 
-<a name="v16.26.3"></a>
-## Release 16.26.3 - 2023-06-03
+<a name="v16.19.11"></a>
+## Release 16.19.11 - 2023-06-03
 
 - Fix issue #1146 for version of Apache Ivy 2.5.1
 - Fix issue #1139 with allowing overrides of connection initializers in data sources
