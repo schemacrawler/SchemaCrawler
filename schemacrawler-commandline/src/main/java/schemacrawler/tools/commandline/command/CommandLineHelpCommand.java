@@ -19,10 +19,11 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalog
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.serverPluginHelpCommands;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
-import static us.fatehi.utility.Utility.isBlank;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help;

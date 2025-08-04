@@ -15,9 +15,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 
 import java.nio.file.Paths;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.CommandOutputOptions;
 

@@ -18,9 +18,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.UserCredentialsOptions;
 import us.fatehi.utility.datasource.UserCredentials;

@@ -15,6 +15,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;

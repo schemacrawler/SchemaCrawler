@@ -21,6 +21,7 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.text;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.utility.datasource.DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource;
+
 import java.sql.Connection;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;

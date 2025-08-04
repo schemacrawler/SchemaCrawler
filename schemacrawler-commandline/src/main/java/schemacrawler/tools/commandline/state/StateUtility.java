@@ -10,7 +10,6 @@ package schemacrawler.tools.commandline.state;
 
 import java.util.function.Supplier;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;

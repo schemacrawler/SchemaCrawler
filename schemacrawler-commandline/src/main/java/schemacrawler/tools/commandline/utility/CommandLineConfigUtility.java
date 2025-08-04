@@ -14,15 +14,13 @@ import static com.typesafe.config.ConfigFactory.parseResourcesAnySyntax;
 import static com.typesafe.config.ConfigValueFactory.fromMap;
 import static java.util.stream.Collectors.toMap;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigParseOptions;
 import java.io.File;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigParseOptions;
-
 import java.util.logging.Logger;
 
 public class CommandLineConfigUtility {

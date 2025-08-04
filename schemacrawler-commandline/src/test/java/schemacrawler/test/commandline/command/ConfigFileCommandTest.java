@@ -21,13 +21,11 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Properties;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-
 import picocli.CommandLine;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;

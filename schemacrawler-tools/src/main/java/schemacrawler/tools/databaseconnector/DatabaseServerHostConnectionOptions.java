@@ -8,22 +8,13 @@
 
 package schemacrawler.tools.databaseconnector;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Map;
-import us.fatehi.utility.datasource.DatabaseServerType;
 
 public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOptions {
 
-  private static DatabaseServerType lookupDatabaseServerType(
-      final String databaseSystemIdentifier) {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseConnector =
-        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
-            databaseSystemIdentifier);
-    return databaseConnector.getDatabaseServerType();
-  }
-
-  private final DatabaseServerType databaseServerType;
+  private final String databaseSystemIdentifier;
   private final String host;
   private final Integer port;
   private final Map<String, String> urlx;
@@ -35,7 +26,7 @@ public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOp
       final Integer port,
       final String database,
       final Map<String, String> urlx) {
-    databaseServerType = lookupDatabaseServerType(databaseSystemIdentifier);
+    this.databaseSystemIdentifier = requireNonNull(databaseSystemIdentifier, "No server provided");
     this.host = host;
     this.port = port;
     this.database = database;
@@ -46,9 +37,8 @@ public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOp
     return database;
   }
 
-  @Override
-  public DatabaseServerType getDatabaseServerType() {
-    return databaseServerType;
+  public String getDatabaseSystemIdentifier() {
+    return databaseSystemIdentifier;
   }
 
   public String getHost() {

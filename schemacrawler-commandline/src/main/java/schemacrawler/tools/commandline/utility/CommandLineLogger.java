@@ -8,9 +8,10 @@
 
 package schemacrawler.tools.commandline.utility;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.tools.commandline.state.ShellState;
 
 public final class CommandLineLogger {

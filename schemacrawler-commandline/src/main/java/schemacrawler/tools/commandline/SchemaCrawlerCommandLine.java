@@ -15,6 +15,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.command
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
 import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;

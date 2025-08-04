@@ -8,8 +8,10 @@
 
 package schemacrawler.tools.commandline.command;
 
+import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.Help.TextTable.forColumns;
 import static picocli.CommandLine.Model.UsageMessageSpec.DEFAULT_USAGE_WIDTH;
+
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,7 +19,6 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import static java.util.Objects.requireNonNull;
 import picocli.CommandLine;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.Column.Overflow;

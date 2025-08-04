@@ -18,6 +18,7 @@ import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.test.utility.CaptureSystemStreams;

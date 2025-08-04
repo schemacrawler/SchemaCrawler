@@ -17,6 +17,7 @@ import static schemacrawler.test.utility.FileHasContent.text;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.test.utility.ResolveTestContext;

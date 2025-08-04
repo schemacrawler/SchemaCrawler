@@ -19,9 +19,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.command
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
-
 import picocli.CommandLine;
 import picocli.CommandLine.IExecutionExceptionHandler;
 import picocli.CommandLine.ParseResult;

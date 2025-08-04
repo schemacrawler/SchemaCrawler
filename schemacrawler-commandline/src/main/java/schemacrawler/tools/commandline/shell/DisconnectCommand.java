@@ -9,9 +9,8 @@
 package schemacrawler.tools.commandline.shell;
 
 import java.util.logging.Level;
-
-import picocli.CommandLine.Command;
 import java.util.logging.Logger;
+import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 

@@ -9,7 +9,6 @@
 package schemacrawler.tools.commandline.command;
 
 import java.util.Map;
-
 import picocli.CommandLine.Option;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;

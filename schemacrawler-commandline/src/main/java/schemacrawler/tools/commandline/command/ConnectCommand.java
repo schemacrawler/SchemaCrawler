@@ -8,11 +8,12 @@
 
 package schemacrawler.tools.commandline.command;
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
@@ -22,6 +23,7 @@ import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -30,6 +32,8 @@ import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.UserCredentials;
@@ -89,17 +93,30 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     try {
       // Match the database connector in the best possible way, using the
       // server argument, or the JDBC connection URL
-      final DatabaseConnectionOptions databaseConnectionOptions = getDatabaseConnectionOptions();
-      requireNonNull(databaseConnectionOptions, "No database connection options provided");
+      final DatabaseConnectionOptions connectionOptions = getDatabaseConnectionOptions();
+      requireNonNull(connectionOptions, "No database connection options provided");
 
-      final String databaseSystemIdentifier =
-          databaseConnectionOptions.getDatabaseServerType().getDatabaseSystemIdentifier();
       final DatabaseConnectorRegistry databaseConnectorRegistry =
           DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-      final DatabaseConnector databaseConnector =
-          databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
-              databaseSystemIdentifier);
-      requireNonNull(databaseConnector, "No database plugin located (not even unknown)");
+      final DatabaseConnector databaseConnector;
+
+      if (connectionOptions instanceof DatabaseUrlConnectionOptions) {
+        final String connectionUrl =
+            ((DatabaseUrlConnectionOptions) connectionOptions).getConnectionUrl();
+        databaseConnector = databaseConnectorRegistry.findDatabaseConnectorFromUrl(connectionUrl);
+      } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions) {
+        final String databaseSystemIdentifier =
+            ((DatabaseServerHostConnectionOptions) connectionOptions).getDatabaseSystemIdentifier();
+        if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
+          throw new ConfigurationException(
+              String.format("Unknown server <%s>", databaseSystemIdentifier));
+        }
+        databaseConnector =
+            databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
+                databaseSystemIdentifier);
+      } else {
+        throw new ConfigurationException("Could not create new database connection source");
+      }
 
       LOGGER.log(
           Level.INFO,
@@ -107,7 +124,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
               "Using database plugin <%s>", databaseConnector.getDatabaseServerType()));
 
       loadSchemaCrawlerOptionsBuilder(databaseConnector);
-      createDataSource(databaseConnector, databaseConnectionOptions, getUserCredentials());
+      createDataSource(databaseConnector, connectionOptions, getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
     } catch (final SQLException e) {

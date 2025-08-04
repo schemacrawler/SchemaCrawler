@@ -12,7 +12,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
 import java.util.Optional;
-
 import picocli.CommandLine.Option;
 
 public final class CommandOutputOptions {
