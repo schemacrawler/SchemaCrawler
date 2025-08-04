@@ -28,7 +28,6 @@ import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.datasource.DatabaseServerType;
 import us.fatehi.utility.datasource.UserCredentials;
 
@@ -123,13 +122,14 @@ public abstract class DatabaseConnector implements Options {
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    final DatabaseConnectionSource databaseConnectionSource;
+    final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
     if (connectionOptions instanceof DatabaseUrlConnectionOptions) {
       final DatabaseUrlConnectionOptions databaseUrlConnectionOptions =
           (DatabaseUrlConnectionOptions) connectionOptions;
-      databaseConnectionSource =
-          DatabaseConnectionSources.newDatabaseConnectionSource(
-              databaseUrlConnectionOptions.getConnectionUrl(), userCredentials);
+
+      final String connectionUrl = databaseUrlConnectionOptions.getConnectionUrl();
+
+      dbConnectionSourceBuilder = DatabaseConnectionSourceBuilder.builder(connectionUrl);
     } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions) {
       final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
           (DatabaseServerHostConnectionOptions) connectionOptions;
@@ -139,19 +139,18 @@ public abstract class DatabaseConnector implements Options {
       final String database = serverHostConnectionOptions.getDatabase();
       final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
 
-      final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder =
-          databaseConnectionSourceBuilder();
+      dbConnectionSourceBuilder = databaseConnectionSourceBuilder();
       dbConnectionSourceBuilder.withHost(host);
       dbConnectionSourceBuilder.withPort(port);
       dbConnectionSourceBuilder.withDatabase(database);
       dbConnectionSourceBuilder.withUrlx(urlx);
-      dbConnectionSourceBuilder.withUserCredentials(userCredentials);
 
-      databaseConnectionSource = dbConnectionSourceBuilder.build();
     } else {
       throw new ConfigurationException("Could not create new database connection source");
     }
 
+    dbConnectionSourceBuilder.withUserCredentials(userCredentials);
+    final DatabaseConnectionSource databaseConnectionSource = dbConnectionSourceBuilder.build();
     return databaseConnectionSource;
   }
 
