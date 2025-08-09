@@ -12,9 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.ListExclusionRule;
 

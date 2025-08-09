@@ -8,10 +8,13 @@
 
 package schemacrawler.schemacrawler;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.TemplatingUtility.expandTemplate;
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForLong;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForScalar;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +25,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
@@ -182,8 +183,7 @@ public final class QueryUtility {
       tableProperties.put("table", identifiers.quoteFullName(table));
       tableProperties.put("tablename", table.getName());
       tableProperties.put("columns", MetaDataUtility.joinColumns(columns, false, identifiers));
-      tableProperties.put(
-          "basiccolumns", MetaDataUtility.joinColumns(columns, true, identifiers));
+      tableProperties.put("basiccolumns", MetaDataUtility.joinColumns(columns, true, identifiers));
       tableProperties.put("tabletype", table.getTableType().toString());
     }
 

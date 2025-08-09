@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.matchesRegex;
 import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 import schemacrawler.Version;

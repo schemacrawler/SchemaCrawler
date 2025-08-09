@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

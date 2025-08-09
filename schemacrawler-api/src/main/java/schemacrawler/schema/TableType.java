@@ -10,6 +10,7 @@ package schemacrawler.schema;
 
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.io.Serializable;
 
 /**

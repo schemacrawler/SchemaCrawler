@@ -15,7 +15,6 @@ import static us.fatehi.utility.Utility.convertForComparison;
 
 import java.util.Comparator;
 import java.util.Objects;
-
 import schemacrawler.schema.NamedObject;
 
 public enum NamedObjectSort implements Comparator<NamedObject> {

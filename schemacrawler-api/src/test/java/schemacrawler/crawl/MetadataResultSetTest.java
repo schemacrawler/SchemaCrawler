@@ -27,11 +27,9 @@ import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.ResolveTestContext;

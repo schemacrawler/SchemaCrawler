@@ -12,7 +12,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.scheduler.TaskRunner;
 
 public class LoadOptionsBuilderTest {

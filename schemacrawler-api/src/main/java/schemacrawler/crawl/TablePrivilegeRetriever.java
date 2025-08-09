@@ -12,6 +12,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMN_PRIV
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_PRIVILEGES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

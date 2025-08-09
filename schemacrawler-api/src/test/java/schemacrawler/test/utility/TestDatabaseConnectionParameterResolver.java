@@ -9,6 +9,8 @@
 package schemacrawler.test.utility;
 
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.util.Optional;
@@ -21,7 +23,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.testdb.TestDatabase;
 import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.LoggingConfig;

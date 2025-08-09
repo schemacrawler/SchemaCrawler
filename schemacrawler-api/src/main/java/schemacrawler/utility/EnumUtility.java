@@ -13,7 +13,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumSet;
 import java.util.Set;
-
 import schemacrawler.schema.IdentifiedEnum;
 import us.fatehi.utility.UtilityMarker;
 

@@ -9,13 +9,14 @@
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.DriverPropertyInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.JdbcDriverProperty;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.PropertyName;

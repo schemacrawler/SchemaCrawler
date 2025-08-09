@@ -8,8 +8,9 @@
 
 package schemacrawler.crawl;
 
-import java.util.List;
 import static us.fatehi.utility.Utility.isBlank;
+
+import java.util.List;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Routine;

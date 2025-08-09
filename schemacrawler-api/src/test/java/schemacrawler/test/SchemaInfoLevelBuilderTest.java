@@ -18,9 +18,7 @@ import static org.hamcrest.Matchers.not;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -188,18 +186,25 @@ public class SchemaInfoLevelBuilderTest {
     assertThat(
         options.toString().replaceAll(lineSeparator(), ""),
         is(
-            "{  \"retrieveAdditionalColumnAttributes\": false,  \"retrieveAdditionalColumnMetadata\": false,  "
-                + "\"retrieveAdditionalDatabaseInfo\": false,  \"retrieveAdditionalJdbcDriverInfo\": false,  "
-                + "\"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\": true,  "
-                + "\"retrieveDatabaseInfo\": true,  \"retrieveDatabaseUsers\": false,  \"retrieveForeignKeys\": true,  "
-                + "\"retrieveIndexInformation\": false,  \"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true,  "
-                + "\"retrieveRoutineInformation\": false,  \"retrieveRoutineParameters\": true,  \"retrieveRoutines\": true,  "
-                + "\"retrieveSequenceInformation\": false,  \"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false,  "
-                + "\"retrieveTableColumnPrivileges\": false,  \"retrieveTableColumns\": true,  "
-                + "\"retrieveTableConstraintDefinitions\": false,  \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\": false,  "
-                + "\"retrieveTableDefinitionsInformation\": false,  \"retrieveTablePrivileges\": false,  \"retrieveTables\": true,  "
-                + "\"retrieveTriggerInformation\": false,  \"retrieveUserDefinedColumnDataTypes\": false,  "
-                + "\"retrieveViewInformation\": false,  \"retrieveViewTableUsage\": false}"));
+            "{  \"retrieveAdditionalColumnAttributes\": false, "
+                + " \"retrieveAdditionalColumnMetadata\": false, "
+                + " \"retrieveAdditionalDatabaseInfo\": false, "
+                + " \"retrieveAdditionalJdbcDriverInfo\": false, "
+                + " \"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\":"
+                + " true,  \"retrieveDatabaseInfo\": true,  \"retrieveDatabaseUsers\": false, "
+                + " \"retrieveForeignKeys\": true,  \"retrieveIndexInformation\": false, "
+                + " \"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true, "
+                + " \"retrieveRoutineInformation\": false,  \"retrieveRoutineParameters\": true, "
+                + " \"retrieveRoutines\": true,  \"retrieveSequenceInformation\": false, "
+                + " \"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false, "
+                + " \"retrieveTableColumnPrivileges\": false,  \"retrieveTableColumns\": true, "
+                + " \"retrieveTableConstraintDefinitions\": false, "
+                + " \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\":"
+                + " false,  \"retrieveTableDefinitionsInformation\": false, "
+                + " \"retrieveTablePrivileges\": false,  \"retrieveTables\": true, "
+                + " \"retrieveTriggerInformation\": false,  \"retrieveUserDefinedColumnDataTypes\":"
+                + " false,  \"retrieveViewInformation\": false,  \"retrieveViewTableUsage\":"
+                + " false}"));
 
     builder.withTag("custom");
     options = builder.toOptions();
@@ -208,18 +213,25 @@ public class SchemaInfoLevelBuilderTest {
     assertThat(
         options.toString().replaceAll(lineSeparator(), ""),
         is(
-            "{  \"retrieveAdditionalColumnAttributes\": false,  \"retrieveAdditionalColumnMetadata\": false,  "
-                + "\"retrieveAdditionalDatabaseInfo\": false,  \"retrieveAdditionalJdbcDriverInfo\": false,  "
-                + "\"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\": true,  \"retrieveDatabaseInfo\": true,  "
-                + "\"retrieveDatabaseUsers\": false,  \"retrieveForeignKeys\": true,  \"retrieveIndexInformation\": false,  "
-                + "\"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true,  \"retrieveRoutineInformation\": false,  "
-                + "\"retrieveRoutineParameters\": true,  \"retrieveRoutines\": true,  \"retrieveSequenceInformation\": false,  "
-                + "\"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false,  \"retrieveTableColumnPrivileges\": false,  "
-                + "\"retrieveTableColumns\": true,  "
-                + "\"retrieveTableConstraintDefinitions\": false,  \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\": false,  "
-                + "\"retrieveTableDefinitionsInformation\": false,  "
-                + "\"retrieveTablePrivileges\": false,  \"retrieveTables\": true,  \"retrieveTriggerInformation\": false,  "
-                + "\"retrieveUserDefinedColumnDataTypes\": false,  \"retrieveViewInformation\": false,  \"retrieveViewTableUsage\": false}"));
+            "{  \"retrieveAdditionalColumnAttributes\": false, "
+                + " \"retrieveAdditionalColumnMetadata\": false, "
+                + " \"retrieveAdditionalDatabaseInfo\": false, "
+                + " \"retrieveAdditionalJdbcDriverInfo\": false, "
+                + " \"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\":"
+                + " true,  \"retrieveDatabaseInfo\": true,  \"retrieveDatabaseUsers\": false, "
+                + " \"retrieveForeignKeys\": true,  \"retrieveIndexInformation\": false, "
+                + " \"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true, "
+                + " \"retrieveRoutineInformation\": false,  \"retrieveRoutineParameters\": true, "
+                + " \"retrieveRoutines\": true,  \"retrieveSequenceInformation\": false, "
+                + " \"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false, "
+                + " \"retrieveTableColumnPrivileges\": false,  \"retrieveTableColumns\": true, "
+                + " \"retrieveTableConstraintDefinitions\": false, "
+                + " \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\":"
+                + " false,  \"retrieveTableDefinitionsInformation\": false, "
+                + " \"retrieveTablePrivileges\": false,  \"retrieveTables\": true, "
+                + " \"retrieveTriggerInformation\": false,  \"retrieveUserDefinedColumnDataTypes\":"
+                + " false,  \"retrieveViewInformation\": false,  \"retrieveViewTableUsage\":"
+                + " false}"));
 
     builder.withTag("\t\t");
     options = builder.toOptions();

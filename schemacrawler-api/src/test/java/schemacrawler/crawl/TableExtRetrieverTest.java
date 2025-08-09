@@ -23,12 +23,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
@@ -183,9 +181,9 @@ public class TableExtRetrieverTest {
             .withSql(
                 InformationSchemaKey.EXT_TABLE_CONSTRAINTS,
                 String.format(
-                    "SELECT DISTINCT CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, "
-                        + "TABLE_NAME, CONSTRAINT_NAME, '%s' AS REMARKS, '%s' AS CONSTRAINT_DEFINITION "
-                        + "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS",
+                    "SELECT DISTINCT CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, TABLE_NAME,"
+                        + " CONSTRAINT_NAME, '%s' AS REMARKS, '%s' AS CONSTRAINT_DEFINITION FROM"
+                        + " INFORMATION_SCHEMA.TABLE_CONSTRAINTS",
                     remarks, definition))
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =

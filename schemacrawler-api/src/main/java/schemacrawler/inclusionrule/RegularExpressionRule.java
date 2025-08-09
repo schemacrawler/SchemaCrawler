@@ -10,6 +10,7 @@ package schemacrawler.inclusionrule;
 
 import static java.util.regex.Pattern.DOTALL;
 import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.logging.Level;

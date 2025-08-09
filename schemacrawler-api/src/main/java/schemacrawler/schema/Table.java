@@ -10,6 +10,7 @@ package schemacrawler.schema;
 
 import static schemacrawler.schema.TableRelationshipType.child;
 import static schemacrawler.schema.TableRelationshipType.parent;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

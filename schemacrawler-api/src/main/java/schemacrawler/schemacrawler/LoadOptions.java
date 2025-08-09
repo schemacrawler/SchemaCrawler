@@ -9,6 +9,7 @@
 package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
+
 import us.fatehi.utility.ObjectToString;
 
 public final class LoadOptions implements Options {

@@ -8,12 +8,13 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;

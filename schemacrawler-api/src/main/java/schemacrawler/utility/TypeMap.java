@@ -9,6 +9,7 @@
 package schemacrawler.utility;
 
 import static java.util.stream.Collectors.toMap;
+
 import java.sql.Connection;
 import java.sql.JDBCType;
 import java.sql.SQLType;

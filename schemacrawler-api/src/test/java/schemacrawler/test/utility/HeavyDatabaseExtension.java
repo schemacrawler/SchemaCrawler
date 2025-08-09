@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.extension.ConditionEvaluationResult.disabled
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.enabled;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.Optional;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
@@ -36,7 +37,8 @@ public final class HeavyDatabaseExtension implements ExecutionCondition {
 
     if (!isDockerAvailable()) {
       return disabled(
-          "Do NOT run heavy Testcontainers test for databases: Docker is not available on this system");
+          "Do NOT run heavy Testcontainers test for databases: Docker is not available on this"
+              + " system");
     }
 
     if (isSetOverrideForDev()) {
@@ -53,7 +55,8 @@ public final class HeavyDatabaseExtension implements ExecutionCondition {
     }
 
     return disabled(
-        "Do NOT run heavy Testcontainers test for databases: no environmental variables set to run tests");
+        "Do NOT run heavy Testcontainers test for databases: no environmental variables set to run"
+            + " tests");
   }
 
   private String findValue(final ExtensionContext context) {

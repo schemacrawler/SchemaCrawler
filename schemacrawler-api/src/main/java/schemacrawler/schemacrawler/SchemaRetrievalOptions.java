@@ -9,6 +9,7 @@
 package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.EnumMap;
 import java.util.Map;

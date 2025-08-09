@@ -8,12 +8,13 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.Identifiers;
