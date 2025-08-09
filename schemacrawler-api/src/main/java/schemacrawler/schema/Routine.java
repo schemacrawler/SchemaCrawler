@@ -11,7 +11,8 @@ package schemacrawler.schema;
 import java.util.List;
 import java.util.Optional;
 
-public interface Routine extends DatabaseObject, TypedObject<RoutineType>, DefinedObject {
+public interface Routine
+    extends DatabaseObject, TypedObject<RoutineType>, DefinedObject, ReferencingObject {
 
   /**
    * Gets the list of parameters in ordinal order.

@@ -8,6 +8,8 @@
 
 package schemacrawler.crawl;
 
+import java.util.Collection;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
@@ -32,6 +34,11 @@ abstract class RoutinePartial extends AbstractDatabaseObject
 
   @Override
   public final String getDefinition() {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public Collection<? extends DatabaseObject> getReferencedObjects() {
     throw new NotLoadedException(this);
   }
 

@@ -10,9 +10,7 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.jupiter.api.Test;
+
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.PojoClassFilter;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -26,6 +24,9 @@ import com.openpojo.validation.rule.impl.NoStaticExceptFinalRule;
 import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.Test;
 
 public class GettersSettersTest {
 
