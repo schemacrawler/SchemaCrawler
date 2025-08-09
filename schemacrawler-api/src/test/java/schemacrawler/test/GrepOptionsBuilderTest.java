@@ -15,9 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.GrepOptions;

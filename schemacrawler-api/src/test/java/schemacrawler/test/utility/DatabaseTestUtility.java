@@ -11,6 +11,7 @@ package schemacrawler.test.utility;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;

@@ -10,7 +10,6 @@ package schemacrawler.test.utility;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-
 import us.fatehi.utility.LoggingConfig;
 
 public class DisableLoggingExtension implements BeforeAllCallback {

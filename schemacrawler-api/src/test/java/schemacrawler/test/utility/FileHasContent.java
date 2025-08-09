@@ -11,9 +11,13 @@ package schemacrawler.test.utility;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.move;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.buildDirectory;
 import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -35,9 +39,6 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import us.fatehi.utility.IOUtility;
 
 public class FileHasContent extends BaseMatcher<ResultsResource> {

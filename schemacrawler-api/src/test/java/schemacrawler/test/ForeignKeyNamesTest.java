@@ -10,6 +10,7 @@ package schemacrawler.test;
 
 import static schemacrawler.crawl.ForeignKeyRetrieverTest.verifyRetrieveForeignKeys;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+
 import java.io.IOException;
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeEach;

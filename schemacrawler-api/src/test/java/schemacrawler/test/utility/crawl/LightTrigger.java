@@ -8,10 +8,11 @@
 
 package schemacrawler.test.utility.crawl;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;

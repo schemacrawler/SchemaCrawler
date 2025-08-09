@@ -26,12 +26,10 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;

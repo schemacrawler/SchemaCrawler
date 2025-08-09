@@ -28,9 +28,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
 import us.fatehi.utility.datasource.DatabaseServerType;

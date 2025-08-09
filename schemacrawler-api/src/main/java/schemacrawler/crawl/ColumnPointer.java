@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Column;
 
 final class ColumnPointer extends DatabaseObjectReference<Column> {

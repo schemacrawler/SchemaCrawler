@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

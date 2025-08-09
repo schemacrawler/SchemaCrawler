@@ -11,13 +11,14 @@ package schemacrawler.test.utility;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.IOUtility.locateResource;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
 

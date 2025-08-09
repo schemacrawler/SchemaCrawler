@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -100,9 +101,9 @@ public class QueryUtilityTest {
         new Query(
             "Tables for schema",
             tablesWhere(
-                "REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}')"
-                    + " AND "
-                    + "REGEXP_MATCHES(TABLE_SCHEMA || '.' || TABLE_NAME, '${table-inclusion-rule}')"));
+                "REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}') AND"
+                    + " REGEXP_MATCHES(TABLE_SCHEMA || '.' || TABLE_NAME,"
+                    + " '${table-inclusion-rule}')"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
     final InclusionRule tableInclusionRule = new RegularExpressionInclusionRule(".*\\.AUTHORS");
 
@@ -117,9 +118,9 @@ public class QueryUtilityTest {
         new Query(
             "Tables for schema",
             tablesWhere(
-                "REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}')"
-                    + " AND "
-                    + "REGEXP_MATCHES(TABLE_SCHEMA || '.' || TABLE_NAME, '${table-inclusion-rule}')"));
+                "REGEXP_MATCHES(TABLE_SCHEMA, '${schema-inclusion-rule}') AND"
+                    + " REGEXP_MATCHES(TABLE_SCHEMA || '.' || TABLE_NAME,"
+                    + " '${table-inclusion-rule}')"));
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("(?!.*INF).*");
     final InclusionRule tableInclusionRule =
         new RegularExpressionInclusionRule(".*\\.(?!.*AUTH).*");

@@ -26,6 +26,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;

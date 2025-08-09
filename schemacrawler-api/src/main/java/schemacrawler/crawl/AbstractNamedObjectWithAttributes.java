@@ -8,13 +8,14 @@
 
 package schemacrawler.crawl;
 
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.DescribedObject;
 

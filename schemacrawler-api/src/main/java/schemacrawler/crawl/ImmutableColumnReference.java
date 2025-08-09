@@ -8,8 +8,9 @@
 
 package schemacrawler.crawl;
 
-import java.util.Objects;
 import static java.util.Objects.requireNonNull;
+
+import java.util.Objects;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 

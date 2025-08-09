@@ -9,7 +9,6 @@
 package schemacrawler.filter;
 
 import java.util.function.Predicate;
-
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;

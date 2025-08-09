@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import us.fatehi.utility.ObjectToString;
 
 /** Descriptor for level of schema detail to be retrieved when crawling a schema. */

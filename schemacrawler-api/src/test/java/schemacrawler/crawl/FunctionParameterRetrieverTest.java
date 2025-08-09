@@ -20,6 +20,7 @@ import static schemacrawler.schema.ParameterModeType.result;
 import static schemacrawler.schema.ParameterModeType.returnValue;
 import static schemacrawler.schema.ParameterModeType.unknown;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
+
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;

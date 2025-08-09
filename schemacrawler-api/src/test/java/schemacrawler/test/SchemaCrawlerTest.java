@@ -28,6 +28,8 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -40,7 +42,6 @@ import java.util.TreeMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;

@@ -8,9 +8,10 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 

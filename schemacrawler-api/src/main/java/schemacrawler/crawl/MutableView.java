@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import schemacrawler.schema.CheckOptionType;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -32,6 +33,11 @@ class MutableView extends MutableTable implements View {
   @Override
   public CheckOptionType getCheckOption() {
     return checkOption;
+  }
+
+  @Override
+  public Collection<? extends DatabaseObject> getReferencedObjects() {
+    return getTableUsage();
   }
 
   /** {@inheritDoc} */

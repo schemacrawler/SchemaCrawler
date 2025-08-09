@@ -18,11 +18,9 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.sql.Connection;
 import java.util.Collection;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;

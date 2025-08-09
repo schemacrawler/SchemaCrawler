@@ -8,11 +8,12 @@
 
 package schemacrawler.crawl;
 
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.NamedObjectKey;
 
 public final class RetrievalCounts {

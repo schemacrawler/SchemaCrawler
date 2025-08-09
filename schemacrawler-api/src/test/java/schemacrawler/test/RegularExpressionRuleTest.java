@@ -11,6 +11,7 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
+
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionRule;

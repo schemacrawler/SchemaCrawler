@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+
 import java.sql.Connection;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;

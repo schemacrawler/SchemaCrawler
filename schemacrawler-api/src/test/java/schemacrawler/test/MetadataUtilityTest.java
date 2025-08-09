@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -123,7 +124,8 @@ public class MetadataUtilityTest {
     assertThat(
         columnsListAsStringChild,
         is(
-            "'ID', 'TITLE', 'DESCRIPTION', 'PUBLISHERID', 'PUBLICATIONDATE', 'PRICE', 'PREVIOUSEDITIONID'"));
+            "'ID', 'TITLE', 'DESCRIPTION', 'PUBLISHERID', 'PUBLICATIONDATE', 'PRICE',"
+                + " 'PREVIOUSEDITIONID'"));
   }
 
   @Test

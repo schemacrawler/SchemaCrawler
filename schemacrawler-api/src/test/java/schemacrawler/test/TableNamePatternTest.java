@@ -17,9 +17,7 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;

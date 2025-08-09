@@ -16,10 +16,8 @@ import static org.hamcrest.Matchers.nullValue;
 
 import java.sql.JDBCType;
 import java.sql.SQLType;
-
-import org.junit.jupiter.api.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.jupiter.api.Test;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlTypeGroup;
 

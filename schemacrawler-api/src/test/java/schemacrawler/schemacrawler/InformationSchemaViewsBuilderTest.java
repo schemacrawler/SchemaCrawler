@@ -17,7 +17,6 @@ import static org.mockito.Mockito.mock;
 
 import java.sql.Connection;
 import java.util.function.BiConsumer;
-
 import org.junit.jupiter.api.Test;
 
 public class InformationSchemaViewsBuilderTest {

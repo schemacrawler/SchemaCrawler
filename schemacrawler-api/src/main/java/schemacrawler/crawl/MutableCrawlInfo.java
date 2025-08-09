@@ -17,13 +17,14 @@ import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
+import static java.util.Objects.requireNonNull;
+
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.util.UUID;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.Version;
 import schemacrawler.schema.CrawlInfo;
 import us.fatehi.utility.property.BaseProductVersion;

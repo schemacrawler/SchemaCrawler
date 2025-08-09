@@ -27,12 +27,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Schema;

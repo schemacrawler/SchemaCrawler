@@ -8,11 +8,13 @@
 
 package schemacrawler.utility;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
 import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
 import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;

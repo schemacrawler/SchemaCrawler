@@ -8,9 +8,10 @@
 
 package schemacrawler.crawl;
 
-import java.util.Objects;
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
+
+import java.util.Objects;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;

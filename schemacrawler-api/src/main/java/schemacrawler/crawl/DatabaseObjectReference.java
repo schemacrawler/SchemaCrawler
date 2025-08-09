@@ -8,6 +8,8 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,7 +17,6 @@ import java.io.Serializable;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
 

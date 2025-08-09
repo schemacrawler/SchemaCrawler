@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
