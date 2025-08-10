@@ -33,6 +33,9 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,8 +45,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -51,6 +52,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.DescribedObject;
 import schemacrawler.schema.EventManipulationType;
@@ -74,6 +76,7 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
+import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.Identifiers;
@@ -168,6 +171,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           formattingHelper.writeWideRow(identifiers.quoteName(specificName), "");
         }
       }
+      printRoutineReferences(routine);
       printDefinition(routine);
     }
 
@@ -874,6 +878,31 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       }
       formattingHelper.writeDetailRow(
           ordinalNumberString, identifiers.quoteName(parameter), columnType.toString());
+    }
+  }
+
+  private void printRoutineReferences(final Routine routine) {
+    if (routine == null) {
+      return;
+    }
+    final Collection<? extends DatabaseObject> references = routine.getReferencedObjects();
+    if (references.isEmpty()) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("References", "section");
+
+    formattingHelper.writeEmptyRow();
+    for (final DatabaseObject reference : references) {
+      final String objectName = quoteName(reference);
+      final String objectType;
+      if (reference instanceof TypedObject<?>) {
+        objectType = "[" + ((TypedObject<?>) reference).getType() + "]";
+      } else {
+        objectType = "";
+      }
+      formattingHelper.writeNameRow(objectName, objectType);
     }
   }
 
