@@ -34,6 +34,7 @@ public enum SchemaInfoRetrieval {
   retrievePrimaryKeys(table, standard),
   retrieveRoutineParameters(routine, standard),
   retrieveRoutineInformation(routine, detailed),
+  retrieveRoutineReferences(routine, detailed),
   retrieveRoutines(routine, minimum),
   retrieveSequenceInformation(other, maximum),
   retrieveServerInfo(database, maximum),

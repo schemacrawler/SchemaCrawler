@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINE_REFERENCES;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -89,5 +91,80 @@ final class RoutineExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
     }
     retrievalCounts.log();
+  }
+
+  /**
+   * Retrieves objects that a routine references from the database.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  void retrieveRoutineReferences() throws SQLException {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(ROUTINE_REFERENCES)) {
+      LOGGER.log(Level.INFO, "Not retrieving routine references, since this was not requested");
+      LOGGER.log(Level.FINE, "Routine references SQL statement was not provided");
+      return;
+    }
+
+    LOGGER.log(Level.INFO, "Retrieving routine references");
+
+    final String name = "routine references";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    final Query routineReferencesSql = informationSchemaViews.getQuery(ROUTINE_REFERENCES);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(routineReferencesSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
+        final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
+        final String routineName = results.getString("ROUTINE_NAME");
+        final String specificName = results.getString("SPECIFIC_NAME");
+        final String referencedObjectCatalogName = results.getString("REFERENCED_OBJECT_CATALOG");
+        final String referencedObjectSchemaName = results.getString("REFERENCED_OBJECT_SCHEMA");
+        final String referencedObjectName = results.getString("REFERENCED_OBJECT_NAME");
+        // final String referencedObjectType = results.getString("REFERENCED_OBJECT_TYPE");
+
+        final Optional<MutableRoutine> routineOptional =
+            lookupRoutine(catalogName, schemaName, routineName, specificName);
+        if (routineOptional.isPresent()) {
+          final MutableRoutine routine = routineOptional.get();
+          LOGGER.log(
+              Level.FINER, new StringFormat("Retrieving routine references for <%s>", routineName));
+
+          final Optional<DatabaseObject> referencedObjectOptional =
+              lookupReferencedObject(
+                  referencedObjectCatalogName,
+                  referencedObjectSchemaName,
+                  referencedObjectName,
+                  specificName);
+          if (referencedObjectOptional.isPresent()) {
+            routine.addReferencedObject(referencedObjectOptional.get());
+            retrievalCounts.countIncluded();
+          }
+        }
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
+    }
+    retrievalCounts.log();
+  }
+
+  private Optional<DatabaseObject> lookupReferencedObject(
+      final String catalogName,
+      final String schemaName,
+      final String objectName,
+      final String specificName) {
+    final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, objectName);
+    if (tableOptional.isPresent()) {
+      return Optional.of((DatabaseObject) tableOptional.get());
+    }
+    lookupRoutine(catalogName, schemaName, objectName, specificName);
+    if (tableOptional.isPresent()) {
+      return Optional.of((DatabaseObject) tableOptional.get());
+    }
+    return Optional.empty();
   }
 }
