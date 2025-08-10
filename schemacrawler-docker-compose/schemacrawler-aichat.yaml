@@ -1,0 +1,19 @@
+services:
+
+  schemacrawler-aichat:
+    image: schemacrawler/schemacrawler-ai:latest
+    container_name: schemacrawler-aichat
+    stdin_open: true
+    tty: true
+    volumes:
+    - type: bind
+      source: ./
+      target: /home/schcrwlr/share
+    entrypoint: [ '/opt/schemacrawler/bin/schemacrawler.sh' ]
+    command: >
+      --server sqlite
+      --database sc.db
+      --command aichat
+      --info-level maximum
+      --log-level INFO
+    # See https://www.schemacrawler.com/database-support.html for connecting to other databases
