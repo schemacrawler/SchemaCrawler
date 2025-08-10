@@ -19,6 +19,7 @@
 #,/db/books/37_views_json_relational_duality_A.sql
 #,/db/books/40_procedures_A.sql
 #,/db/books/41_functions_A.sql
+#,/db/books/42_procedures_with_references_A.sql
 #,/db/books/50_triggers_A.sql
 ;,/db/books/70_grants_A.sql
 ;,/db/books/71_synonyms_01_base_A.sql

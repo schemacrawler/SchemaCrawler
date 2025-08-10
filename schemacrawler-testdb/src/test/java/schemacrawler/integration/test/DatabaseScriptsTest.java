@@ -110,7 +110,7 @@ public class DatabaseScriptsTest {
   @Test
   public void booksDatabaseScripts() throws Exception {
     final List<String> scripts = loadResources("**/*.scripts.txt");
-    assertThat(scripts, hasSize(15));
+    assertThat(scripts, hasSize(14));
     final List<String> failedScripts = new ArrayList<>();
     for (final String scriptName : scripts) {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
@@ -156,7 +156,7 @@ public class DatabaseScriptsTest {
   @BeforeEach
   public void setup() throws Exception {
     booksDatabaseScriptSections = makeScriptSections("**/db/books/*.sql");
-    assertThat(booksDatabaseScriptSections.size(), is(32));
+    assertThat(booksDatabaseScriptSections.size(), is(33));
   }
 
   private String getScriptName(final String path) {
