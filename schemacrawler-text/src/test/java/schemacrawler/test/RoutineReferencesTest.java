@@ -36,8 +36,6 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
@@ -50,7 +48,7 @@ public class RoutineReferencesTest {
       names = {"text", "html"})
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void schemaTextOutput(
-      final TextOutputFormat textOutputFormat,
+      final TextOutputFormat outputFormat,
       final DatabaseConnectionSource dataSource,
       final TestContext testContext)
       throws Exception {
@@ -95,19 +93,15 @@ public class RoutineReferencesTest {
     commonTextOptions.noInfo();
     config.merge(commonTextOptions.toConfig());
 
-    final OutputOptions outputOptions =
-        OutputOptionsBuilder.builder().withOutputFormat(textOutputFormat).toOptions();
-
     final SchemaCrawlerExecutable executable =
         new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
-    executable.setOutputOptions(outputOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(dataSource, executable, outputFormat)),
         hasSameContentAs(
-            classpathResource(testContext.testMethodFullName() + "." + textOutputFormat.name())));
+            classpathResource(testContext.testMethodFullName() + "." + outputFormat.name())));
   }
 }
