@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import schemacrawler.schema.CheckOptionType;
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -36,7 +35,7 @@ class MutableView extends MutableTable implements View {
   }
 
   @Override
-  public Collection<? extends DatabaseObject> getReferencedObjects() {
+  public Collection<Table> getReferencedObjects() {
     return getTableUsage();
   }
 

@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /** Represents a view in the database. */
-public interface View extends Table, ReferencingObject {
+public interface View extends Table {
 
   /**
    * Type of WITH CHECK OPTION. Is CASCADE if the original view was created by using the WITH CHECK
