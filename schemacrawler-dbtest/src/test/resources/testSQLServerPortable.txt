@@ -260,6 +260,15 @@ Routines
 
 
 
+"GetTableColumnCount;1"                        [function, returns table]
+------------------------------------------------------------------------
+  "@RETURN_VALUE"                   INTEGER, result             
+  "@TableSchema"                    NVARCHAR(256), in           
+  "@TableName"                      NVARCHAR(256), in           
+  "@ColumnCount"                    INTEGER, in/ out            
+
+
+
 "New_Publisher;1"                              [function, returns table]
 ------------------------------------------------------------------------
   "@RETURN_VALUE"                   INTEGER, result             
