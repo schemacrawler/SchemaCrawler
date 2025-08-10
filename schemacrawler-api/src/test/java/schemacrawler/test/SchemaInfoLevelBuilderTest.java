@@ -14,6 +14,9 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +26,11 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestWriter;
 
+@ResolveTestContext
 public class SchemaInfoLevelBuilderTest {
 
   @Test
@@ -168,75 +175,48 @@ public class SchemaInfoLevelBuilderTest {
   }
 
   @Test
-  public void tag() {
-    final SchemaInfoLevelBuilder builder = SchemaInfoLevelBuilder.builder();
-    SchemaInfoLevel options;
+  public void schemaInfoLevelTag(final TestContext testContext) {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final SchemaInfoLevelBuilder builder = SchemaInfoLevelBuilder.builder();
+      SchemaInfoLevel options;
 
-    assertThat(builder.toString(), equalTo(""));
+      assertThat(builder.toString(), equalTo(""));
 
-    options = builder.toOptions();
-    assertThat(builder.toString(), equalTo(options.getTag()));
-    assertThat(options.getTag(), equalTo(""));
-    assertThat(options.toString().replaceAll(lineSeparator(), "\n"), startsWith("{"));
+      options = builder.toOptions();
+      assertThat(builder.toString(), equalTo(options.getTag()));
+      assertThat(options.getTag(), equalTo(""));
+      assertThat(options.toString().replaceAll(lineSeparator(), "\n"), startsWith("{"));
 
-    builder.withInfoLevel(InfoLevel.standard);
-    options = builder.toOptions();
-    assertThat(builder.toString(), equalTo(options.getTag()));
-    assertThat(options.getTag(), equalTo("standard"));
+      builder.withInfoLevel(InfoLevel.standard);
+      options = builder.toOptions();
+      assertThat(builder.toString(), equalTo(options.getTag()));
+      assertThat(options.getTag(), equalTo("standard"));
+      // Print to actual test results file
+      out.println(options.getTag());
+      out.println(options);
+      out.println();
+
+      builder.withTag("custom");
+      options = builder.toOptions();
+      assertThat(builder.toString(), equalTo(options.getTag()));
+      assertThat(options.getTag(), equalTo("custom"));
+      // Print to actual test results file
+      out.println(options.getTag());
+      out.println(options);
+      out.println();
+
+      builder.withTag("\t\t");
+      options = builder.toOptions();
+      assertThat(builder.toString(), equalTo(options.getTag()));
+      assertThat(options.getTag(), equalTo(""));
+      // Print to actual test results file
+      out.println(options.getTag());
+      out.println(options);
+      out.println();
+    }
     assertThat(
-        options.toString().replaceAll(lineSeparator(), ""),
-        is(
-            "{  \"retrieveAdditionalColumnAttributes\": false, "
-                + " \"retrieveAdditionalColumnMetadata\": false, "
-                + " \"retrieveAdditionalDatabaseInfo\": false, "
-                + " \"retrieveAdditionalJdbcDriverInfo\": false, "
-                + " \"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\":"
-                + " true,  \"retrieveDatabaseInfo\": true,  \"retrieveDatabaseUsers\": false, "
-                + " \"retrieveForeignKeys\": true,  \"retrieveIndexInformation\": false, "
-                + " \"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true, "
-                + " \"retrieveRoutineInformation\": false,  \"retrieveRoutineParameters\": true, "
-                + " \"retrieveRoutines\": true,  \"retrieveSequenceInformation\": false, "
-                + " \"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false, "
-                + " \"retrieveTableColumnPrivileges\": false,  \"retrieveTableColumns\": true, "
-                + " \"retrieveTableConstraintDefinitions\": false, "
-                + " \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\":"
-                + " false,  \"retrieveTableDefinitionsInformation\": false, "
-                + " \"retrieveTablePrivileges\": false,  \"retrieveTables\": true, "
-                + " \"retrieveTriggerInformation\": false,  \"retrieveUserDefinedColumnDataTypes\":"
-                + " false,  \"retrieveViewInformation\": false,  \"retrieveViewTableUsage\":"
-                + " false}"));
-
-    builder.withTag("custom");
-    options = builder.toOptions();
-    assertThat(builder.toString(), equalTo(options.getTag()));
-    assertThat(options.getTag(), equalTo("custom"));
-    assertThat(
-        options.toString().replaceAll(lineSeparator(), ""),
-        is(
-            "{  \"retrieveAdditionalColumnAttributes\": false, "
-                + " \"retrieveAdditionalColumnMetadata\": false, "
-                + " \"retrieveAdditionalDatabaseInfo\": false, "
-                + " \"retrieveAdditionalJdbcDriverInfo\": false, "
-                + " \"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\":"
-                + " true,  \"retrieveDatabaseInfo\": true,  \"retrieveDatabaseUsers\": false, "
-                + " \"retrieveForeignKeys\": true,  \"retrieveIndexInformation\": false, "
-                + " \"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true, "
-                + " \"retrieveRoutineInformation\": false,  \"retrieveRoutineParameters\": true, "
-                + " \"retrieveRoutines\": true,  \"retrieveSequenceInformation\": false, "
-                + " \"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false, "
-                + " \"retrieveTableColumnPrivileges\": false,  \"retrieveTableColumns\": true, "
-                + " \"retrieveTableConstraintDefinitions\": false, "
-                + " \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\":"
-                + " false,  \"retrieveTableDefinitionsInformation\": false, "
-                + " \"retrieveTablePrivileges\": false,  \"retrieveTables\": true, "
-                + " \"retrieveTriggerInformation\": false,  \"retrieveUserDefinedColumnDataTypes\":"
-                + " false,  \"retrieveViewInformation\": false,  \"retrieveViewTableUsage\":"
-                + " false}"));
-
-    builder.withTag("\t\t");
-    options = builder.toOptions();
-    assertThat(builder.toString(), equalTo(options.getTag()));
-    assertThat(options.getTag(), equalTo(""));
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
