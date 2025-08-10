@@ -18,3 +18,7 @@ BEGIN
     FROM 
 	  BOOKS.dbo.Books
 END
+@
+
+EXEC sp_recompile 'GetBooksCount'
+@
