@@ -35,6 +35,7 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveIndexes;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrievePrimaryKeys;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutineInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutineParameters;
+import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutineReferences;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutines;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveSequenceInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveServerInfo;
@@ -254,6 +255,7 @@ public final class SchemaCrawler {
         .submit();
 
     taskRunner.add(retrieveRoutineInformation, retrieverExtra::retrieveRoutineInformation).submit();
+    taskRunner.add(retrieveRoutineReferences, retrieverExtra::retrieveRoutineReferences).submit();
   }
 
   private void crawlSchemas() throws Exception {
