@@ -7,19 +7,14 @@
 -- Microsoft SQL Server syntax
 
 -- Stored procedures
-CREATE PROCEDURE GetTableColumnCount
-    @TableSchema NVARCHAR(128),
-    @TableName NVARCHAR(128),
-    @ColumnCount INT OUTPUT
+CREATE PROCEDURE GetBooksCount
+    @BooksCount INT OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-	  @ColumnCount = COUNT(*)
+	  @BooksCount = COUNT(*)
     FROM 
-	  INFORMATION_SCHEMA.COLUMNS
-    WHERE 
-	  TABLE_SCHEMA = @TableSchema
-      AND TABLE_NAME = @TableName;
+	  BOOKS.dbo.Books
 END
