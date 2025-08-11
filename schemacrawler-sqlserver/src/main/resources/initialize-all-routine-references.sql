@@ -37,11 +37,11 @@ BEGIN
         INSERT INTO ##ProcedureReferences
         SELECT 
             ''?'' AS ROUTINE_CATALOG,
-            OBJECT_ROUTINE_SCHEMA(d.referencing_id, DB_ID(''?'')) AS ROUTINE_SCHEMA,
+            OBJECT_SCHEMA_NAME(d.referencing_id, DB_ID(''?'')) AS ROUTINE_SCHEMA,
             OBJECT_NAME(d.referencing_id, DB_ID(''?'')) AS ROUTINE_NAME,
             NULL AS SPECIFIC_NAME,
 			''?'' AS REFERENCED_OBJECT_CATALOG,
-			OBJECT_ROUTINE_SCHEMA(o.object_id, DB_ID(DB_NAME())) AS REFERENCED_OBJECT_SCHEMA,
+			OBJECT_SCHEMA_NAME(o.object_id, DB_ID(DB_NAME())) AS REFERENCED_OBJECT_SCHEMA,
             o.name AS REFERENCED_OBJECT_NAME,
             NULL AS REFERENCED_OBJECT_SPECIFIC_NAME,
             o.type_desc AS REFERENCED_OBJECT_TYPE
