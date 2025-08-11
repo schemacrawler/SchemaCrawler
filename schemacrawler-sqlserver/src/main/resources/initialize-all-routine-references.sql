@@ -22,11 +22,11 @@ BEGIN
         ROUTINE_CATALOG SYSNAME,
         ROUTINE_SCHEMA SYSNAME,
         ROUTINE_NAME SYSNAME,
-		SPECIFIC_NAME SYSNAME NULL,
+        SPECIFIC_NAME SYSNAME NULL,
         REFERENCED_OBJECT_CATALOG SYSNAME NULL,
         REFERENCED_OBJECT_SCHEMA SYSNAME NULL,
         REFERENCED_OBJECT_NAME SYSNAME NULL,
-		REFERENCED_OBJECT_SPECIFIC_NAME SYSNAME NULL,
+        REFERENCED_OBJECT_SPECIFIC_NAME SYSNAME NULL,
         REFERENCED_OBJECT_TYPE NVARCHAR(60) NULL
     );
 
@@ -38,16 +38,23 @@ BEGIN
         SELECT 
             ''?'' AS ROUTINE_CATALOG,
             OBJECT_SCHEMA_NAME(d.referencing_id, DB_ID(''?'')) AS ROUTINE_SCHEMA,
-            OBJECT_NAME(d.referencing_id, DB_ID(''?'')) AS ROUTINE_NAME,
+            OBJECT_NAME(d.referencing_id, DB_ID(''?'')) + '';'' + 
+                CASE 
+                    WHEN ao.IS_MS_SHIPPED = 1 THEN ''0''
+                    ELSE COALESCE(CAST(np.PROCEDURE_NUMBER AS CHAR), ''1'')
+                END AS ROUTINE_NAME,
             NULL AS SPECIFIC_NAME,
-			''?'' AS REFERENCED_OBJECT_CATALOG,
-			OBJECT_SCHEMA_NAME(o.object_id, DB_ID(DB_NAME())) AS REFERENCED_OBJECT_SCHEMA,
+            ''?'' AS REFERENCED_OBJECT_CATALOG,
+            OBJECT_SCHEMA_NAME(o.object_id, DB_ID(''?'')) AS REFERENCED_OBJECT_SCHEMA,
             o.name AS REFERENCED_OBJECT_NAME,
             NULL AS REFERENCED_OBJECT_SPECIFIC_NAME,
             o.type_desc AS REFERENCED_OBJECT_TYPE
         FROM [?].sys.sql_expression_dependencies AS d
         JOIN [?].sys.objects AS o ON d.referenced_id = o.object_id
-        WHERE OBJECTPROPERTY(d.referencing_id, ''IsProcedure'') = 1;
+        JOIN [?].sys.all_objects AS ao ON d.referencing_id = ao.object_id
+        LEFT JOIN [?].sys.numbered_procedures AS np ON ao.object_id = np.object_id
+        WHERE OBJECTPROPERTY(d.referencing_id, ''IsProcedure'') = 1
+          AND ao.IS_MS_SHIPPED = 0;
     END';
 
     -- Return the combined results
