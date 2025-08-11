@@ -10,9 +10,6 @@ services:
     tty: true
     volumes:
       - type: bind
-        source: ./target
-        target: /home/schcrwlr/testdb
-      - type: bind
         source: ./
         target: /home/schcrwlr/share
     entrypoint: /bin/bash
