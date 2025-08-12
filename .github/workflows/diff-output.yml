@@ -15,7 +15,7 @@ jobs:
 
     - id: checkout-code
       name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - id: install-diff2html
       name: Install diff2html
