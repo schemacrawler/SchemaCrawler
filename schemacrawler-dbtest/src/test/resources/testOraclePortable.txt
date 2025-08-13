@@ -285,6 +285,13 @@ Routines
 
 
 
+GETBOOKSCOUNT                                     [procedure, no result]
+------------------------------------------------------------------------
+Standalone procedure or function
+  BOOKSCOUNT                        BIT, out                    
+
+
+
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
 Standalone procedure or function
