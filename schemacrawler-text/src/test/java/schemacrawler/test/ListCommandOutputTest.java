@@ -15,6 +15,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
+
 import java.io.IOException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,6 +48,11 @@ public class ListCommandOutputTest {
 
   private static final String LIST_OUTPUT = "list_output/";
 
+  @BeforeAll
+  public static void cleanListOutput() throws Exception {
+    clean(LIST_OUTPUT);
+  }
+
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
   @DisplayName("Compare list output")
@@ -56,8 +62,6 @@ public class ListCommandOutputTest {
       names = {"text", "html"})
   public void compareListOutput(
       final OutputFormat outputFormat, final DatabaseConnectionSource dataSource) throws Exception {
-    clean(LIST_OUTPUT);
-
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))

@@ -96,7 +96,7 @@ public final class DatabaseTestUtility {
         "Unexpected number of tables in the schema", catalog.getColumnDataTypes(), hasSize(32));
     assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
     assertThat(
-        "Unexpected number of routines in the schema", catalog.getRoutines(schema), hasSize(4));
+        "Unexpected number of routines in the schema", catalog.getRoutines(schema), hasSize(5));
     assertThat(
         "Unexpected number of synonyms in the schema", catalog.getSynonyms(schema), hasSize(0));
     assertThat(

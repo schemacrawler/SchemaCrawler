@@ -390,7 +390,7 @@ public class SchemaCrawlerTest {
     try (final TestWriter out = testout) {
       final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
       final Routine[] routines = catalog.getRoutines(schema).toArray(new Routine[0]);
-      assertThat("Routine count does not match", routines, arrayWithSize(4));
+      assertThat("Routine count does not match", routines, arrayWithSize(5));
       for (final Routine routine : routines) {
         assertThat(routine, notNullValue());
         out.println("routine: " + routine.getName());
@@ -421,7 +421,7 @@ public class SchemaCrawlerTest {
     try (final TestWriter out = testout) {
       final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
       final Routine[] routines = catalog.getRoutines(schema).toArray(new Routine[0]);
-      assertThat("Routine count does not match", routines, arrayWithSize(4));
+      assertThat("Routine count does not match", routines, arrayWithSize(5));
       for (final Routine routine : routines) {
         assertThat(routine, notNullValue());
         out.println("routine: " + routine.getName());
@@ -441,7 +441,7 @@ public class SchemaCrawlerTest {
 
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertThat("Could not find any tables", catalog.getTables(schema1), not(empty()));
-    assertThat("Wrong number of routines", catalog.getRoutines(schema1), hasSize(4));
+    assertThat("Wrong number of routines", catalog.getRoutines(schema1), hasSize(5));
 
     final Schema schema2 = new SchemaReference("PUBLIC", "BOOKS");
 

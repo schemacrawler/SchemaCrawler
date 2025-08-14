@@ -4,9 +4,8 @@
 -- All rights reserved.
 -- SPDX-License-Identifier: EPL-2.0
 
--- Microsoft SQL Server syntax
-
 -- Stored procedures
+-- Microsoft SQL Server syntax
 CREATE PROCEDURE GetBooksCount
     @BooksCount INT OUTPUT
 AS

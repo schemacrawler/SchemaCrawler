@@ -482,6 +482,12 @@ Routines
 
 
 
+GETBOOKSCOUNT                                     [procedure, no result]
+------------------------------------------------------------------------
+  BOOKSCOUNT                        INTEGER, out                
+
+
+
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
   PUBLISHER                         VARCHAR, out                
