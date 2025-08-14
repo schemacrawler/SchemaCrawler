@@ -3,12 +3,13 @@
 SchemaCrawler release notes.
 
 <a name="v16.27.1"></a>
-## Release 16.27.1 - 2025-08-11
+## Release 16.27.1 - 2025-08-20
 
 - Remove the "quickdump" command
 - Add the "tablesample" command
 - Add JSON output format for operations like "count", "dump" and "tablesample"
 - Read connection properties from standard environmental variables
+- Retrieve objects referenced by routines 
 
 
 <a name="v16.26.3"></a>
