@@ -4,6 +4,12 @@
 -- All rights reserved.
 -- SPDX-License-Identifier: EPL-2.0
 
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
 SELECT
   NULLIF(1, 1) 
     AS ROUTINE_CATALOG,
@@ -21,7 +27,24 @@ SELECT
     AS REFERENCED_OBJECT_NAME,
   NULLIF(1, 1) 
     AS REFERENCED_OBJECT_SPECIFIC_NAME,
-  'TABLE' 
+  CASE BTYPE
+    WHEN 'T' THEN 'Table'
+    WHEN 'V' THEN 'View'
+    WHEN 'P' THEN 'Stored Procedure'
+    WHEN 'F' THEN 'Function'
+    WHEN 'M' THEN 'Module'
+    WHEN 'R' THEN 'Sequence'
+    WHEN 'G' THEN 'Global Variable'
+    WHEN 'X' THEN 'Index'
+    WHEN 'Y' THEN 'Trigger'
+    WHEN 'Q' THEN 'Package'
+    WHEN 'L' THEN 'Alias'
+    WHEN 'S' THEN 'Synonym'
+    WHEN 'C' THEN 'Type'
+    WHEN 'D' THEN 'Data Type'
+    WHEN 'B' THEN 'Bufferpool'
+    ELSE 'Unknown'
+  END
     AS REFERENCED_OBJECT_TYPE
 FROM
   SYSCAT.ROUTINEDEP d
@@ -32,8 +55,9 @@ FROM
     ON d.BSCHEMA = t.TABSCHEMA 
    AND d.BNAME = t.TABNAME
 WHERE
-  d.BTYPE = 'T'  -- 'T' = Table
-  AND r.ROUTINETYPE IN ('F', 'P')  -- 'F' = Function, 'P' = Procedure
+  d.BTYPE IN ('T', 'V', 'F', 'P')
+  AND r.ROUTINETYPE IN ('F', 'P')
+  AND r.ROUTINESCHEMA != 'SYSPROC'
 ORDER BY
   r.ROUTINESCHEMA,
   r.ROUTINENAME,
