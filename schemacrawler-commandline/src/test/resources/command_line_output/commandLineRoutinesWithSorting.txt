@@ -15,6 +15,11 @@ PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 
 
 
+PUBLIC.BOOKS.GETBOOKSCOUNT                        [procedure, no result]
+------------------------------------------------------------------------
+
+
+
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 

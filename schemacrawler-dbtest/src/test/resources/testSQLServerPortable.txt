@@ -260,6 +260,13 @@ Routines
 
 
 
+"GetBooksCount;1"                              [function, returns table]
+------------------------------------------------------------------------
+  "@RETURN_VALUE"                   INTEGER, result             
+  "@BooksCount"                     INTEGER, in/ out            
+
+
+
 "New_Publisher;1"                              [function, returns table]
 ------------------------------------------------------------------------
   "@RETURN_VALUE"                   INTEGER, result             

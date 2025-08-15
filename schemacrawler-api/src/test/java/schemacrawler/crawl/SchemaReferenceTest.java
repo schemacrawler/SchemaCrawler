@@ -18,7 +18,6 @@ import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.SchemaReference;
 
 public class SchemaReferenceTest {

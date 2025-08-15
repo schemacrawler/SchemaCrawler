@@ -9,6 +9,7 @@
 package schemacrawler.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;

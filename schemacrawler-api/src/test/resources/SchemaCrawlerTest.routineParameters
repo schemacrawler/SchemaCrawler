@@ -1,3 +1,13 @@
+routine: GETBOOKSCOUNT
+  parameter: BOOKSCOUNT
+  - data-type=INTEGER
+  - size=0
+  - decimal digits=32
+  - width=
+  - nullable=true
+  - ordinal position=1
+  - remarks=
+  - attibutes=
 routine: NEW_PUBLISHER
   parameter: PUBLISHER
   - data-type=PUBLIC.BOOKS."CHARACTER VARYING"

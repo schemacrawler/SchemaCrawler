@@ -9,6 +9,7 @@
 package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 
 final class TestDatabaseConnectionSource extends AbstractDatabaseConnectionSource {

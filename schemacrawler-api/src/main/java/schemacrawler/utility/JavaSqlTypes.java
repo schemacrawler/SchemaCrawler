@@ -15,7 +15,6 @@ import java.sql.SQLType;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlTypeGroup;
 

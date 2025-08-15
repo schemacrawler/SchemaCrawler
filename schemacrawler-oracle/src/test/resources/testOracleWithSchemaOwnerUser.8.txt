@@ -668,6 +668,29 @@ Routines
 
 
 
+BOOKS.GETBOOKSCOUNT                               [procedure, no result]
+------------------------------------------------------------------------
+  BOOKSCOUNT                        NUMBER(22, 0), out          
+
+                                                         [specific name]
+GETBOOKSCOUNT
+
+References
+
+BOOKS.BOOKS                                                      [table]
+
+Definition
+                                                            [definition]
+CREATE OR REPLACE EDITIONABLE PROCEDURE "GETBOOKSCOUNT" (BooksCount OUT NUMBER) 
+IS
+BEGIN
+    SELECT COUNT(*) INTO BooksCount
+    FROM BOOKS.BOOKS;
+END;
+/
+
+
+
 BOOKS.NEW_PUBLISHER                               [procedure, no result]
 ------------------------------------------------------------------------
   NEWPUBLISHER                      VARCHAR2, in                

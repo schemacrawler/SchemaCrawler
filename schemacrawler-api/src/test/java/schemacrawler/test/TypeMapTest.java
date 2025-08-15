@@ -18,10 +18,8 @@ import static org.mockito.Mockito.when;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.utility.TypeMap;
 
 public class TypeMapTest {

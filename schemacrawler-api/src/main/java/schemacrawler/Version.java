@@ -11,6 +11,7 @@ package schemacrawler;
 import static java.lang.System.lineSeparator;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
+
 import java.io.BufferedReader;
 import java.util.List;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;

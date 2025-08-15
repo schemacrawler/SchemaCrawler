@@ -372,6 +372,12 @@ Routines
 
 
 
+PUBLIC.BOOKS.GETBOOKSCOUNT                        [procedure, no result]
+------------------------------------------------------------------------
+  BOOKSCOUNT                        INTEGER, out                
+
+
+
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
   PUBLISHER                         CHARACTER VARYING, out      

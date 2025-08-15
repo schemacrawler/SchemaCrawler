@@ -13,7 +13,9 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
+
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -22,7 +24,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
-import static java.util.Objects.compare;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.property.PropertyName;

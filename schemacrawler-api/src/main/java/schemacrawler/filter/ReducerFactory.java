@@ -14,6 +14,7 @@ import static schemacrawler.filter.FilterFactory.schemaFilter;
 import static schemacrawler.filter.FilterFactory.sequenceFilter;
 import static schemacrawler.filter.FilterFactory.synonymFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
+
 import java.util.function.Predicate;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;

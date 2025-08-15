@@ -22,7 +22,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <-- SALES.BOOKID                                           
 
-SYS_FK_10120                               [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
   ID <-- BOOKAUTHORS.BOOKID                                     
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -41,7 +41,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10130                               [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
 
 
@@ -57,7 +57,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10130                               [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
 
 
@@ -93,7 +93,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10126                                               [primary key]
+SYS_PK_10124                                               [primary key]
   ID                                                            
 
 Foreign Keys
@@ -122,6 +122,11 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Routines
 ========================================================================
+
+
+
+GETBOOKSCOUNT                                     [procedure, no result]
+------------------------------------------------------------------------
 
 
 

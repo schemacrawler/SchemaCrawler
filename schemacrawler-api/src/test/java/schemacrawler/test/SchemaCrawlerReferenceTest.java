@@ -17,9 +17,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.sql.Connection;
 import java.util.Collection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -195,14 +193,16 @@ public class SchemaCrawlerReferenceTest {
       try {
         table.getTableType();
         fail(
-            "An exception should be thrown indicating that this table was not loaded from the database");
+            "An exception should be thrown indicating that this table was not loaded from the"
+                + " database");
       } catch (final NotLoadedException e) {
         // Expected exception
       }
       try {
         column.getColumnDataType();
         fail(
-            "An exception should be thrown indicating that this table was not loaded from the database");
+            "An exception should be thrown indicating that this table was not loaded from the"
+                + " database");
       } catch (final NotLoadedException e) {
         // Expected exception
       }

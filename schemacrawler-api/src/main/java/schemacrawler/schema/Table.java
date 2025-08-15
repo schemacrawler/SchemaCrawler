@@ -10,12 +10,14 @@ package schemacrawler.schema;
 
 import static schemacrawler.schema.TableRelationshipType.child;
 import static schemacrawler.schema.TableRelationshipType.parent;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 /** Represents a table in the database. */
-public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedObject {
+public interface Table
+    extends DatabaseObject, TypedObject<TableType>, DefinedObject, ReferencingObject {
 
   /**
    * Gets the list of all alternate keys of the table.
@@ -90,6 +92,16 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
    * @return Privileges for the table.
    */
   Collection<Privilege<Table>> getPrivileges();
+
+  /**
+   * Gets parent tables to which this table has a foreign key.
+   *
+   * @return Referenced or parent tables.
+   */
+  @Override
+  default Collection<Table> getReferencedObjects() {
+    return getRelatedTables(parent);
+  }
 
   /**
    * Gets parent tables to which this table has a foreign key.

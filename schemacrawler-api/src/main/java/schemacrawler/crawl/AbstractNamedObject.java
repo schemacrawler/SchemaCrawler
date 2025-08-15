@@ -8,10 +8,11 @@
 
 package schemacrawler.crawl;
 
-import static schemacrawler.utility.NamedObjectSort.alphabetical;
-import java.util.Objects;
 import static java.util.Objects.compare;
 import static java.util.Objects.hash;
+import static schemacrawler.utility.NamedObjectSort.alphabetical;
+
+import java.util.Objects;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 

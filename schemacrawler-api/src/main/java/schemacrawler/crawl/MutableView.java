@@ -34,6 +34,11 @@ class MutableView extends MutableTable implements View {
     return checkOption;
   }
 
+  @Override
+  public Collection<Table> getReferencedObjects() {
+    return getTableUsage();
+  }
+
   /** {@inheritDoc} */
   @Override
   public Collection<Table> getTableUsage() {

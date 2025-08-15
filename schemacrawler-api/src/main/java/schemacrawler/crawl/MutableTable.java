@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsLast;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

@@ -24,6 +24,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
@@ -110,10 +111,10 @@ public class IndexRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 EXT_INDEXES,
-                "SELECT 'NON_EXISTENT_CATALOG' AS INDEX_CATALOG, 'NON_EXISTENT_SCHEMA' AS INDEX_SCHEMA, "
-                    + "'NON_EXISTENT_TABLE' AS TABLE_NAME, 'NON_EXISTENT_INDEX' AS INDEX_NAME, "
-                    + "'Test remarks' AS REMARKS, 'Test definition' AS INDEX_DEFINITION "
-                    + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=1")
+                "SELECT 'NON_EXISTENT_CATALOG' AS INDEX_CATALOG, 'NON_EXISTENT_SCHEMA' AS"
+                    + " INDEX_SCHEMA, 'NON_EXISTENT_TABLE' AS TABLE_NAME, 'NON_EXISTENT_INDEX' AS"
+                    + " INDEX_NAME, 'Test remarks' AS REMARKS, 'Test definition' AS"
+                    + " INDEX_DEFINITION FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=1")
             .toOptions();
     final SchemaRetrievalOptionsBuilder edgeCaseOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();

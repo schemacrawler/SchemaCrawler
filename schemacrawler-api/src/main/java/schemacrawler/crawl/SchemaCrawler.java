@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
 import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
@@ -34,6 +35,7 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveIndexes;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrievePrimaryKeys;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutineInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutineParameters;
+import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutineReferences;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveRoutines;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveSequenceInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveServerInfo;
@@ -50,12 +52,12 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTriggerInf
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -253,6 +255,7 @@ public final class SchemaCrawler {
         .submit();
 
     taskRunner.add(retrieveRoutineInformation, retrieverExtra::retrieveRoutineInformation).submit();
+    taskRunner.add(retrieveRoutineReferences, retrieverExtra::retrieveRoutineReferences).submit();
   }
 
   private void crawlSchemas() throws Exception {

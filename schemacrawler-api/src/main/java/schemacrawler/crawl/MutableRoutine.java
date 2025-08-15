@@ -8,8 +8,12 @@
 
 package schemacrawler.crawl;
 
-import java.util.List;
 import static us.fatehi.utility.Utility.isBlank;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Routine;
@@ -24,10 +28,11 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
 
   private static final long serialVersionUID = 3906925686089134130L;
 
-  private final StringBuffer definition;
-  private RoutineBodyType routineBodyType;
-  private final String specificName;
   private transient NamedObjectKey key;
+  private final String specificName;
+  private RoutineBodyType routineBodyType;
+  private final Collection<DatabaseObject> referencedObjects;
+  private final StringBuffer definition;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -40,6 +45,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     super(schema, name);
     this.specificName = specificName;
     routineBodyType = RoutineBodyType.unknown;
+    referencedObjects = new HashSet<>();
     definition = new StringBuffer();
   }
 
@@ -77,6 +83,11 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     return definition.toString();
   }
 
+  @Override
+  public Collection<DatabaseObject> getReferencedObjects() {
+    return new HashSet<>(referencedObjects);
+  }
+
   /** {@inheritDoc} */
   @Override
   public final RoutineBodyType getRoutineBodyType() {
@@ -111,6 +122,12 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   public final NamedObjectKey key() {
     buildKey();
     return key;
+  }
+
+  void addReferencedObject(final DatabaseObject referencedObject) {
+    if (referencedObject != null) {
+      referencedObjects.add(referencedObject);
+    }
   }
 
   final void appendDefinition(final String definition) {

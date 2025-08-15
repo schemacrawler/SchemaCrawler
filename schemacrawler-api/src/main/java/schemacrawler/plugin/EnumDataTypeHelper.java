@@ -11,7 +11,6 @@ package schemacrawler.plugin;
 import static schemacrawler.plugin.EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO;
 
 import java.sql.Connection;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 

@@ -10,7 +10,6 @@ package schemacrawler.schemacrawler;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 

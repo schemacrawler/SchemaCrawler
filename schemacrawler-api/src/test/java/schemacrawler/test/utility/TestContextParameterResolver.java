@@ -9,7 +9,6 @@
 package schemacrawler.test.utility;
 
 import java.lang.reflect.Parameter;
-
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;

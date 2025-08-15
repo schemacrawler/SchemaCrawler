@@ -28,6 +28,8 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -40,7 +42,6 @@ import java.util.TreeMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
@@ -389,7 +390,7 @@ public class SchemaCrawlerTest {
     try (final TestWriter out = testout) {
       final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
       final Routine[] routines = catalog.getRoutines(schema).toArray(new Routine[0]);
-      assertThat("Routine count does not match", routines, arrayWithSize(4));
+      assertThat("Routine count does not match", routines, arrayWithSize(5));
       for (final Routine routine : routines) {
         assertThat(routine, notNullValue());
         out.println("routine: " + routine.getName());
@@ -420,7 +421,7 @@ public class SchemaCrawlerTest {
     try (final TestWriter out = testout) {
       final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
       final Routine[] routines = catalog.getRoutines(schema).toArray(new Routine[0]);
-      assertThat("Routine count does not match", routines, arrayWithSize(4));
+      assertThat("Routine count does not match", routines, arrayWithSize(5));
       for (final Routine routine : routines) {
         assertThat(routine, notNullValue());
         out.println("routine: " + routine.getName());
@@ -440,7 +441,7 @@ public class SchemaCrawlerTest {
 
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertThat("Could not find any tables", catalog.getTables(schema1), not(empty()));
-    assertThat("Wrong number of routines", catalog.getRoutines(schema1), hasSize(4));
+    assertThat("Wrong number of routines", catalog.getRoutines(schema1), hasSize(5));
 
     final Schema schema2 = new SchemaReference("PUBLIC", "BOOKS");
 

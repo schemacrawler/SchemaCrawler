@@ -28,6 +28,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 Routines
 ========================================================================
 
+PUBLIC.BOOKS.GETBOOKSCOUNT                        [procedure, no result]
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]

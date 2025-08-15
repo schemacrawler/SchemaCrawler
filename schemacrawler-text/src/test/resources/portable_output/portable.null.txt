@@ -399,16 +399,16 @@ PK_CUSTOMERS                                              [unique index]
 
 Table Constraints
 
-SYS_CT_10202                                          [check constraint]
+SYS_CT_10204                                          [check constraint]
   CITY                                                          
 
-SYS_CT_10203                                          [check constraint]
+SYS_CT_10205                                          [check constraint]
   STATE                                                         
 
-SYS_CT_10204                                          [check constraint]
+SYS_CT_10206                                          [check constraint]
   POSTALCODE                                                    
 
-SYS_CT_10205                                          [check constraint]
+SYS_CT_10207                                          [check constraint]
   COUNTRY                                                       
 
 
@@ -449,10 +449,10 @@ FK_SALES_REGIONS                                      [non-unique index]
 
 Table Constraints
 
-SYS_CT_10211                                          [check constraint]
+SYS_CT_10213                                          [check constraint]
   POSTALCODE                                                    
 
-SYS_CT_10212                                          [check constraint]
+SYS_CT_10214                                          [check constraint]
   COUNTRY                                                       
 
 
@@ -481,6 +481,12 @@ UQ_CUSTOMERS                                         [unique constraint]
 
 Routines
 ========================================================================
+
+
+
+PUBLIC.BOOKS.GETBOOKSCOUNT                        [procedure, no result]
+------------------------------------------------------------------------
+  BOOKSCOUNT                        INTEGER, out                
 
 
 

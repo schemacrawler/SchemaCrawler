@@ -8,9 +8,9 @@
 
 package schemacrawler.crawl;
 
-import org.junit.jupiter.api.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.jupiter.api.Test;
 import schemacrawler.crawl.MutablePrivilege.PrivilegeGrant;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;

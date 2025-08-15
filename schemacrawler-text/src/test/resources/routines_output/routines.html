@@ -241,6 +241,45 @@ td.section {
 
 <table>
 	<caption style='background-color: #C2DCF2;'>
+		<span id='getbookscount_10155_e0b12ab5' class='caption_name'>GETBOOKSCOUNT</span>
+		<span class='caption_description'>[procedure, no result]</span>
+	</caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>BOOKSCOUNT</td>
+		<td class='minwidth'>INTEGER, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3'>GETBOOKSCOUNT_10155</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Definition</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.GETBOOKSCOUNT(OUT BOOKSCOUNT INTEGER) SPECIFIC GETBOOKSCOUNT_10155 LANGUAGE SQL NOT DETERMINISTIC READS SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC SELECT COUNT(*)INTO BOOKSCOUNT FROM BOOKS.BOOKS;END</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+	<caption style='background-color: #C2DCF2;'>
 		<span id='new_publisher_force_value_7d16ddc0' class='caption_name'>NEW_PUBLISHER</span>
 		<span class='caption_description'>[procedure, no result]</span>
 	</caption>

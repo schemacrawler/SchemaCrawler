@@ -19,6 +19,8 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.utility.EnumUtility.enumValue;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.EnumSet;
@@ -26,7 +28,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;

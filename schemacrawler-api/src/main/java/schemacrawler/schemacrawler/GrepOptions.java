@@ -9,7 +9,6 @@
 package schemacrawler.schemacrawler;
 
 import java.util.Optional;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import us.fatehi.utility.ObjectToString;
 
