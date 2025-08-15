@@ -17,3 +17,5 @@ buildNumber.properties
 .cache/
 dbeaver-workspace/
 *.log
+.dbeaver/
+.cloudbeaver/

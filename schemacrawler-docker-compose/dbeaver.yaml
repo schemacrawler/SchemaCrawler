@@ -7,8 +7,13 @@ services:
     image: dbeaver/cloudbeaver
     container_name: dbeaver
     ports:
-      - 8081:8978
+      - target: 8978
+        published: 8978
+        protocol: tcp
+        mode: host
     volumes:
       - type: bind
-        source: ./dbeaver-workspace
+        source: ./.dbeaver
         target: /opt/cloudbeaver/workspace
+    stdin_open: true
+    tty: true
