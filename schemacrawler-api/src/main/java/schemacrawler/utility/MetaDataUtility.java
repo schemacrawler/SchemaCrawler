@@ -26,10 +26,13 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Function;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
@@ -39,6 +42,7 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
+import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.UtilityMarker;
@@ -62,6 +66,16 @@ public final class MetaDataUtility {
     public String toString() {
       return description;
     }
+  }
+
+  public enum SimpleDatabaseObjectType {
+    unknown,
+    table,
+    view,
+    procedure,
+    function,
+    synonym,
+    sequence;
   }
 
   public static Collection<List<String>> allIndexCoumnNames(final Table table) {
@@ -195,6 +209,30 @@ public final class MetaDataUtility {
     return joinColumns(columns, false, identifiers);
   }
 
+  public static SimpleDatabaseObjectType getSimpleTypeName(final DatabaseObject databaseObject) {
+    if (databaseObject == null) {}
+    if (databaseObject instanceof Synonym) {
+      return SimpleDatabaseObjectType.synonym;
+    }
+    if (databaseObject instanceof Sequence) {
+      return SimpleDatabaseObjectType.sequence;
+    }
+    if (databaseObject instanceof Function) {
+      return SimpleDatabaseObjectType.function;
+    }
+    if (databaseObject instanceof Procedure) {
+      return SimpleDatabaseObjectType.procedure;
+    }
+    // NOTE: Check View before Table, since View is a subclass of Table
+    if (databaseObject instanceof View) {
+      return SimpleDatabaseObjectType.view;
+    }
+    if (databaseObject instanceof Table) {
+      return SimpleDatabaseObjectType.table;
+    }
+    return SimpleDatabaseObjectType.unknown;
+  }
+
   public static boolean isForeignKeyUnique(final TableReference tableRef) {
     if (tableRef == null) {
       return false;
@@ -221,9 +259,9 @@ public final class MetaDataUtility {
       }
       final JavaSqlTypeGroup javaSqlTypeGroup =
           column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
-      if ((!omitLargeObjectColumns
-          || ((javaSqlTypeGroup != JavaSqlTypeGroup.large_object)
-              && (javaSqlTypeGroup != JavaSqlTypeGroup.object)))) {
+      if (!omitLargeObjectColumns
+          || javaSqlTypeGroup != JavaSqlTypeGroup.large_object
+              && javaSqlTypeGroup != JavaSqlTypeGroup.object) {
         columnsList.add(identifiers.quoteName(column.getName()));
       }
     }
