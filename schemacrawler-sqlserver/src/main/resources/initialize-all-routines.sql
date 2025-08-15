@@ -50,11 +50,7 @@ BEGIN
         SELECT 
             R.ROUTINE_CATALOG,
             R.ROUTINE_SCHEMA,
-            R.ROUTINE_NAME + '';'' + 
-                CASE 
-                    WHEN AO.IS_MS_SHIPPED = 1 THEN ''0'' 
-                    ELSE COALESCE(CAST(NUM.PROCEDURE_NUMBER AS CHAR), ''1'') 
-                END AS ROUTINE_NAME,
+            R.ROUTINE_NAME,
             NULL AS SPECIFIC_NAME,
             R.ROUTINE_TYPE,
             R.DATA_TYPE,
@@ -77,8 +73,6 @@ BEGIN
             [?].INFORMATION_SCHEMA.ROUTINES R
             INNER JOIN [?].SYS.ALL_OBJECTS AO
                 ON OBJECT_ID(R.ROUTINE_CATALOG + ''.'' + R.ROUTINE_SCHEMA + ''.'' + R.ROUTINE_NAME) = AO.OBJECT_ID
-            LEFT JOIN [?].SYS.NUMBERED_PROCEDURES NUM
-                ON AO.OBJECT_ID = NUM.OBJECT_ID
         WHERE 
             AO.IS_MS_SHIPPED = 0;
     END';
