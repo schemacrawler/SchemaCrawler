@@ -56,15 +56,16 @@
 }
       </script>
       <!-- End SEO -->
-      <!-- Bootstrap 5.0.1 -->
+      <!-- Bootstrap 5.3.7 -->
       <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
         rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
         crossorigin="anonymous">
       <!-- End Bootstrap -->
       <!-- Lightbox2 -->
-      <link rel="stylesheet"
+      <link
+        rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css"
         integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA=="
         crossorigin="anonymous" />
@@ -72,10 +73,10 @@
    </head>
    <body>
 
-      <!-- Bootstrap 5.0.1 -->
+      <!-- Bootstrap 5.3.7 -->
       <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous">
       </script>
       <!-- End Bootstrap -->
@@ -132,7 +133,7 @@
                     <a class="dropdown-item" href="scripting.html">Scripting</a>
                     <a class="dropdown-item" href="lint.html">Lint</a>
                     <a class="dropdown-item" href="mcpserver.html">MCP Server</a>
-					<a class="dropdown-item" href="aichat.html">AI Chat with ChatGPT</a>
+                    <a class="dropdown-item" href="aichat.html">AI Chat with ChatGPT</a>
                     <a class="dropdown-item" href="serialize.html">Serialization</a>
                     <a class="dropdown-item" href="weak-associations.html">Weak Associations</a>
                     <a class="dropdown-item" href="offline.html">Offline Snapshots</a>
