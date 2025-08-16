@@ -26,7 +26,30 @@ import us.fatehi.utility.datasource.MultiUseUserCredentials;
 public class DatabaseConnectionSourcesTest {
 
   @Test
-  public void test() throws SQLException {
+  public void fromConnection() throws SQLException {
+
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
+    final Connection wrappedConnection = db.getConnection();
+
+    final DatabaseConnectionSource databaseConnectionSource =
+        DatabaseConnectionSources.fromConnection(wrappedConnection);
+
+    assertConnection(databaseConnectionSource);
+  }
+
+  @Test
+  public void fromDataSource() throws SQLException {
+
+    final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
+
+    final DatabaseConnectionSource databaseConnectionSource =
+        DatabaseConnectionSources.fromDataSource(db);
+
+    assertConnection(databaseConnectionSource);
+  }
+
+  @Test
+  public void newDatabaseConnectionSource() throws SQLException {
 
     final DataSource db = DataSourceTestUtility.newEmbeddedDatabase("/testdb.sql");
     final Connection wrappedConnection = db.getConnection();
@@ -39,6 +62,12 @@ public class DatabaseConnectionSourcesTest {
         DatabaseConnectionSources.newDatabaseConnectionSource(
             connectionUrl, new MultiUseUserCredentials(userName, password));
 
+    assertConnection(databaseConnectionSource);
+  }
+
+  private void assertConnection(final DatabaseConnectionSource databaseConnectionSource)
+      throws SQLException {
     assertThat(databaseConnectionSource.get(), is(not(nullValue())));
+    assertThat(databaseConnectionSource.get().isClosed(), is(false));
   }
 }
