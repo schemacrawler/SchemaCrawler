@@ -1,17 +1,16 @@
 /*
- * SchemaCrawler AI
+ * SchemaCrawler
  * http://www.schemacrawler.com
  * Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
  * All rights reserved.
- * SPDX-License-Identifier: CC-BY-NC-4.0
+ * SPDX-License-Identifier: EPL-2.0
  */
 
 package us.fatehi.utility.datasource;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.function.Consumer;
+import static java.util.Objects.requireNonNull;
 
 public final class ConnectionDatabaseConnectionSource implements DatabaseConnectionSource {
 
