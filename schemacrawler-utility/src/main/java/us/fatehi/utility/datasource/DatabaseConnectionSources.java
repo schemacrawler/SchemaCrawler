@@ -21,6 +21,10 @@ public class DatabaseConnectionSources {
 
   private static final Logger LOGGER = Logger.getLogger(DatabaseConnectionSources.class.getName());
 
+  public static DatabaseConnectionSource fromConnection(final Connection connection) {
+    return new ConnectionDatabaseConnectionSource(connection);
+  }
+
   public static DatabaseConnectionSource fromDataSource(final DataSource dataSource) {
     return new DataSourceConnectionSource(dataSource);
   }
@@ -38,11 +42,10 @@ public class DatabaseConnectionSources {
       LOGGER.log(Level.CONFIG, "Loading database schema in the main thread");
       return new SingleDatabaseConnectionSource(
           connectionUrl, connectionProperties, userCredentials, connectionInitializer);
-    } else {
-      LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
-      return new SimpleDatabaseConnectionSource(
-          connectionUrl, connectionProperties, userCredentials, connectionInitializer);
     }
+    LOGGER.log(Level.CONFIG, "Loading database schema using multiple threads");
+    return new SimpleDatabaseConnectionSource(
+        connectionUrl, connectionProperties, userCredentials, connectionInitializer);
   }
 
   public static DatabaseConnectionSource newDatabaseConnectionSource(
