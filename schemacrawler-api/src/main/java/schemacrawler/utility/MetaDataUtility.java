@@ -210,7 +210,9 @@ public final class MetaDataUtility {
   }
 
   public static SimpleDatabaseObjectType getSimpleTypeName(final DatabaseObject databaseObject) {
-    if (databaseObject == null) {}
+    if (databaseObject == null) {
+      return SimpleDatabaseObjectType.unknown;
+    }
     if (databaseObject instanceof Synonym) {
       return SimpleDatabaseObjectType.synonym;
     }
