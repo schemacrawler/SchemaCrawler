@@ -16,6 +16,11 @@ convenience is [bundled with drivers](database-support.html) for some commonly u
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java SE 8 or better.
 
+<div class="alert alert-info" role="alert">
+  Use the <a href="https://github.com/schemacrawler/SchemaCrawler-MCP-Server-Usage" target="_blank" rel="noopener noreferrer">SchemaCrawler MCP Server</a> to get deep insights into your database.
+</div>
+
+
 [![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)](https://github.com/schemacrawler/SchemaCrawler)
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
@@ -26,7 +31,6 @@ Java SE 8 or better.
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler)](https://community.chocolatey.org/packages/schemacrawler)
 [![Scoop](https://img.shields.io/scoop/v/schemacrawler.svg)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
-
 
 
 ## SchemaCrawler Command-line
