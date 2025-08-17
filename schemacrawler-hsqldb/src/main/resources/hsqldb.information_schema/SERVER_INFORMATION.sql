@@ -4,9 +4,19 @@
 -- All rights reserved.
 -- SPDX-License-Identifier: EPL-2.0
 
-SELECT
-  'CATALOG_NAME' AS NAME,
-  CATALOG_NAME AS VALUE,
-  '' AS DESCRIPTION
-FROM
-  INFORMATION_SCHEMA.INFORMATION_SCHEMA_CATALOG_NAME
+SELECT name, value, description
+FROM (
+  VALUES
+    ('PRODUCT_NAME',
+     'HyperSQL (HSQLDB)',
+     'Product family name (Java-based embedded/remote DB)'),
+
+    ('PRODUCT_VERSION',
+     DATABASE_VERSION(),
+     'HSQLDB engine version'),
+     
+    ('CATALOG_NAME', 
+     (SELECT CATALOG_NAME FROM INFORMATION_SCHEMA.INFORMATION_SCHEMA_CATALOG_NAME), 
+     'Current catalog name')
+     
+) AS server_information(name, value, description)
