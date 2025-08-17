@@ -25,6 +25,7 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile("\\s+<product(Name|Version)>.*"),
     Pattern.compile("PRODUCT_(NAME|VERSION).*"),
     Pattern.compile("DATABASE_(NAME|VERSION).*"),
+    Pattern.compile("TIMEZONE.*"),
     Pattern.compile(".*[A-Za-z]+ \\d+, 20[12]\\d \\d+:\\d+ [AP]M.*"), // date and time
     Pattern.compile(".*20[12]\\d-\\d\\d-\\d\\d[ T]\\d\\d:\\d\\d.*"), // date and time
     // ANSI color sequences
