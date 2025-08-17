@@ -11,6 +11,7 @@ package us.fatehi.utility.property;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -45,4 +46,12 @@ public interface Property extends Serializable, Comparable<Property> {
    * @return Value
    */
   Object getValue();
+
+  default boolean hasDescription() {
+    return !isBlank(getDescription());
+  }
+
+  default boolean hasValue() {
+    return getValue() != null;
+  }
 }
