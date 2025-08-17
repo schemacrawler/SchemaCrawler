@@ -20,7 +20,6 @@ import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_diction
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -273,9 +272,7 @@ public class IndexRetrieverTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
-    catalog =
-        (MutableCatalog)
-            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
+    catalog = (MutableCatalog) getCatalog(connection, schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(14));

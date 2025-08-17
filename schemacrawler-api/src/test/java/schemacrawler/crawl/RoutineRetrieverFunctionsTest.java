@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -27,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -86,7 +84,7 @@ public class RoutineRetrieverFunctionsTest {
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final Routine[] functions = ((Catalog) catalog).getRoutines().toArray(new Routine[0]);
+      final Routine[] functions = catalog.getRoutines().toArray(new Routine[0]);
       Arrays.sort(functions, NamedObjectSort.alphabetical);
       for (final Routine function : functions) {
         out.println(
@@ -115,9 +113,7 @@ public class RoutineRetrieverFunctionsTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
-    catalog =
-        (MutableCatalog)
-            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
+    catalog = (MutableCatalog) getCatalog(connection, schemaCrawlerOptions);
 
     assertThat(catalog.getRoutines(), is(empty()));
   }

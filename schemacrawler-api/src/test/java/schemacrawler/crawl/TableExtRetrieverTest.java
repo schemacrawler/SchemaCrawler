@@ -16,7 +16,6 @@ import static org.hamcrest.Matchers.not;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -151,10 +150,7 @@ public class TableExtRetrieverTest {
   public void loadBaseCatalog(final Connection connection) {
     catalog =
         (MutableCatalog)
-            getCatalog(
-                connection,
-                schemaRetrievalOptionsDefault,
-                SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+            getCatalog(connection, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(20));

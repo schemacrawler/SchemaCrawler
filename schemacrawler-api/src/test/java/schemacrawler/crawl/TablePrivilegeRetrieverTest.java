@@ -21,7 +21,6 @@ import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.none;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.sql.Connection;
 import java.util.Collection;
@@ -135,10 +134,7 @@ public class TablePrivilegeRetrieverTest {
     try (final Connection connection = dataSource.get(); ) {
       catalog =
           (MutableCatalog)
-              getCatalog(
-                  connection,
-                  schemaRetrievalOptionsDefault,
-                  SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+              getCatalog(connection, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
       final Collection<Table> tables = catalog.getTables();
       assertThat(tables, hasSize(20));

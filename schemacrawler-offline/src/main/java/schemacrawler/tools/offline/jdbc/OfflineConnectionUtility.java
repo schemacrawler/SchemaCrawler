@@ -10,13 +10,13 @@
 package schemacrawler.tools.offline.jdbc;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
-import static java.util.Objects.requireNonNull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Collections;
+import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class OfflineConnectionUtility {
@@ -24,6 +24,7 @@ public class OfflineConnectionUtility {
   private static class OfflineConnectionInvocationHandler implements InvocationHandler {
 
     private final Path offlineDatabasePath;
+    private boolean isClosed;
 
     public OfflineConnectionInvocationHandler(final Path offlineDatabasePath) {
       this.offlineDatabasePath = offlineDatabasePath;
@@ -35,6 +36,8 @@ public class OfflineConnectionUtility {
       final String methodName = method.getName();
       switch (methodName) {
         case "close":
+          isClosed = true;
+          return null;
         case "setAutoCommit":
           // Do nothing
           return null;
@@ -48,10 +51,9 @@ public class OfflineConnectionUtility {
           return clazz.isAssignableFrom(Connection.class);
         case "unwrap":
           return proxy;
-        case "isClosed":
-          return false;
         case "isValid":
-          return true;
+        case "isClosed":
+          return isClosed;
         case "getTypeMap":
           return Collections.emptyMap();
         case "hashCode":

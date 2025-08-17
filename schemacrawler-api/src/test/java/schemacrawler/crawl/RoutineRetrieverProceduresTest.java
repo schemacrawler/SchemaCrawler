@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -27,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -71,9 +69,7 @@ public class RoutineRetrieverProceduresTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
-    catalog =
-        (MutableCatalog)
-            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
+    catalog = (MutableCatalog) getCatalog(connection, schemaCrawlerOptions);
 
     assertThat(catalog.getRoutines(), is(empty()));
   }
@@ -105,7 +101,7 @@ public class RoutineRetrieverProceduresTest {
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final Routine[] procedures = ((Catalog) catalog).getRoutines().toArray(new Routine[0]);
+      final Routine[] procedures = catalog.getRoutines().toArray(new Routine[0]);
       Arrays.sort(procedures, NamedObjectSort.alphabetical);
       for (final Routine procedure : procedures) {
         out.println(

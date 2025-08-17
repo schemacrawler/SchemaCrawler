@@ -66,9 +66,7 @@ public abstract class AbstractRetrieverTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    catalog =
-        (MutableCatalog)
-            getCatalog(connection, schemaRetrievalOptionsDefault, schemaCrawlerOptions);
+    catalog = (MutableCatalog) getCatalog(connection, schemaCrawlerOptions);
 
     assertThat(catalog, is(notNullValue()));
   }
