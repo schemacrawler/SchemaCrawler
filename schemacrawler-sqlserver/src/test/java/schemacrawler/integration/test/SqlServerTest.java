@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServerContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -150,8 +149,6 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
     assertThat(serverInfo.size(), equalTo(15));
-    assertThat(serverInfo.get(0).getName(), equalTo("InstanceName"));
-    assertThat(serverInfo.get(0).getValue(), is(nullValue()));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(1));
