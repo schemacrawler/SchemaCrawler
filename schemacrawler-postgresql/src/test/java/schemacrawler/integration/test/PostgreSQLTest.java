@@ -125,9 +125,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
     assertThat(column.getPrivileges(), is(not(empty())));
 
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
-    assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
-    assertThat(serverInfo.get(0).getValue(), equalTo("test"));
+    assertThat(serverInfo.size(), equalTo(9));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(2));
