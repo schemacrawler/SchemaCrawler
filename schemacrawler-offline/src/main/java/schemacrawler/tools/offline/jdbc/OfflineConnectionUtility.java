@@ -52,6 +52,7 @@ public class OfflineConnectionUtility {
         case "unwrap":
           return proxy;
         case "isValid":
+          return !isClosed;
         case "isClosed":
           return isClosed;
         case "getTypeMap":
