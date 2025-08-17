@@ -149,7 +149,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     final Catalog catalog = schemaCrawler.crawl();
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
-    assertThat(serverInfo.size(), equalTo(3));
+    assertThat(serverInfo.size(), equalTo(15));
     assertThat(serverInfo.get(0).getName(), equalTo("InstanceName"));
     assertThat(serverInfo.get(0).getValue(), is(nullValue()));
 

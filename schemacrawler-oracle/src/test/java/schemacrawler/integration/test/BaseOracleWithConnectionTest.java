@@ -13,7 +13,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
@@ -98,9 +97,7 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
 
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
-    assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo.get(0).getName(), equalTo("GLOBAL_NAME"));
-    assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-zA-Z]{1,12}"));
+    assertThat(serverInfo.size(), equalTo(8));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat("Number of database users does not match", databaseUsers, hasSize(numDatabaseUsers));

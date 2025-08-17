@@ -14,35 +14,64 @@ FROM (
 
   UNION ALL
 
-  -- Product Name
-  SELECT 'PRODUCT_NAME' AS NAME,
-         'Oracle Database' AS VALUE,
-         'Product family name' AS DESCRIPTION
-  FROM DUAL
-
-  UNION ALL
-
-  -- Version (e.g., 19c, 21c)
-  SELECT 'VERSION' AS NAME,
-         VERSION AS VALUE,
-         'Full Oracle version string (e.g., 19.0.0.0.0)' AS DESCRIPTION
-  FROM V$INSTANCE
-
-  UNION ALL
-
-  -- Edition (e.g., Enterprise Edition)
-  SELECT 'EDITION' AS NAME,
-         BANNER AS VALUE,
-         'Edition and release info from V$VERSION' AS DESCRIPTION
-  FROM V$VERSION
-  WHERE BANNER LIKE 'Oracle%Edition%'
-
-  UNION ALL
-
   -- Collation (NLS_SORT or NLS_COMP)
   SELECT 'COLLATION' AS NAME,
          VALUE AS VALUE,
          'NLS collation setting (NLS_SORT)' AS DESCRIPTION
   FROM NLS_DATABASE_PARAMETERS
   WHERE PARAMETER = 'NLS_SORT'
+
+  UNION ALL
+
+  -- Character Set: NLS_CHARACTERSET
+  SELECT 'NLS_CHARACTERSET' AS NAME,
+         VALUE AS VALUE,
+         'Database character set encoding for CHAR/VARCHAR2/CLOB' AS DESCRIPTION
+  FROM NLS_DATABASE_PARAMETERS
+  WHERE PARAMETER = 'NLS_CHARACTERSET'
+
+  UNION ALL
+
+  -- Character Set: NLS_NCHAR_CHARACTERSET
+  SELECT 'NLS_NCHAR_CHARACTERSET' AS NAME,
+         VALUE AS VALUE,
+         'Character set for NCHAR/NVARCHAR2/NCLOB types' AS DESCRIPTION
+  FROM NLS_DATABASE_PARAMETERS
+  WHERE PARAMETER = 'NLS_NCHAR_CHARACTERSET'
+
+  UNION ALL
+
+  -- Locale: NLS_LANGUAGE
+  SELECT 'NLS_LANGUAGE' AS NAME,
+         VALUE AS VALUE,
+         'Language used for sorting, day/month names, and formatting' AS DESCRIPTION
+  FROM NLS_DATABASE_PARAMETERS
+  WHERE PARAMETER = 'NLS_LANGUAGE'
+
+  UNION ALL
+
+  -- Locale: NLS_TERRITORY
+  SELECT 'NLS_TERRITORY' AS NAME,
+         VALUE AS VALUE,
+         'Territory setting for date, currency, and numeric formats' AS DESCRIPTION
+  FROM NLS_DATABASE_PARAMETERS
+  WHERE PARAMETER = 'NLS_TERRITORY'
+
+  UNION ALL
+
+  -- Product Name
+  SELECT 'PRODUCT_NAME' AS NAME,
+         PRODUCT AS VALUE,
+         'Oracle Database product name and edition' AS DESCRIPTION
+  FROM SYS.PRODUCT_COMPONENT_VERSION
+  WHERE UPPER(PRODUCT) LIKE 'ORACLE%'
+
+  UNION ALL
+
+  -- Product Version
+  SELECT 'PRODUCT_VERSION' AS NAME,
+         VERSION AS VALUE,
+         'Oracle Database software version' AS DESCRIPTION
+  FROM SYS.PRODUCT_COMPONENT_VERSION
+  WHERE UPPER(PRODUCT) LIKE 'ORACLE%'
 )
