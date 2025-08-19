@@ -16,6 +16,7 @@ import static org.hamcrest.Matchers.not;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -257,7 +258,7 @@ public class TableExtRetrieverTest {
     viewCount = 0;
     assertThat(tables, hasSize(20));
     for (final Table table : tables) {
-      if (!(table instanceof View)) {
+      if (!isView(table)) {
         continue;
       }
       viewCount = viewCount + 1;
@@ -291,7 +292,7 @@ public class TableExtRetrieverTest {
     viewCount = 0;
     assertThat(tables, hasSize(20));
     for (final Table table : tables) {
-      if (!(table instanceof View)) {
+      if (!isView(table)) {
         continue;
       }
       viewCount = viewCount + 1;

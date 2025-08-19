@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
+import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,7 +20,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -134,7 +134,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     final String name = "primary keys from metadata";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final MutableTable table : allTables) {
-      if (table instanceof View) {
+      if (isView(table)) {
         continue;
       }
       final Schema tableSchema = table.getSchema();

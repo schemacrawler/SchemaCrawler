@@ -6,20 +6,20 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.linter;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
 import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
+import static schemacrawler.utility.MetaDataUtility.isView;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintCollector;
@@ -65,7 +65,7 @@ class LinterForeignKeyWithNoIndexes extends BaseLinter {
 
   private List<ForeignKey> findForeignKeysWithoutIndexes(final Table table) {
     final List<ForeignKey> foreignKeysWithoutIndexes = new ArrayList<>();
-    if (!(table instanceof View)) {
+    if (!isView(table)) {
       final Collection<List<String>> allIndexCoumns = allIndexCoumnNames(table);
       for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
         final List<String> foreignKeyColumns = foreignKeyColumnNames(foreignKey);

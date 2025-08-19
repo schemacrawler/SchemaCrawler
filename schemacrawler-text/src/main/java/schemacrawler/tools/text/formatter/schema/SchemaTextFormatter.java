@@ -33,6 +33,7 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
+import static schemacrawler.utility.MetaDataUtility.isView;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -1168,7 +1169,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printViewTableUsage(final Table table) {
-    if (table == null || !(table instanceof View)) {
+    if (table == null || !isView(table)) {
       return;
     }
     final View view = (View) table;

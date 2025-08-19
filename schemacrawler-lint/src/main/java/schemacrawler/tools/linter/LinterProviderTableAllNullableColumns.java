@@ -6,15 +6,15 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.linter;
+
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.sql.Connection;
 import java.util.Collection;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintCollector;
@@ -51,7 +51,7 @@ class LinterTableAllNullableColumns extends BaseLinter {
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (!(table instanceof View) && hasAllNullableColumns(getColumns(table))) {
+    if (!isView(table) && hasAllNullableColumns(getColumns(table))) {
       addTableLint(table, getSummary());
     }
   }
