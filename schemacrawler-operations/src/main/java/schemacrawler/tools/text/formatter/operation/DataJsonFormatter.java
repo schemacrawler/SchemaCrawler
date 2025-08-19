@@ -8,6 +8,11 @@
 
 package schemacrawler.tools.text.formatter.operation;
 
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -15,10 +20,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.crawl.RetrievalCounts;
 import schemacrawler.schema.CrawlInfo;
@@ -217,6 +218,7 @@ public final class DataJsonFormatter implements DataTraversalHandler {
         dataRows.setShowLobs(options.isShowLobs());
         dataRows.setMaxRows(options.getMaxRows());
         while (dataRows.next()) {
+          retrievalCounts.count();
           generator.writeStartObject();
           final String[] columnNames = dataRows.getColumnNames();
           final List<Object> currentRow = dataRows.row();

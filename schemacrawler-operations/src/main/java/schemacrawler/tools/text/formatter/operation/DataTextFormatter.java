@@ -8,15 +8,16 @@
 
 package schemacrawler.tools.text.formatter.operation;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.crawl.RetrievalCounts;
 import schemacrawler.schema.Table;
@@ -160,6 +161,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       formattingHelper.writeRowHeader(quoteColumnNames(dataRows.getColumnNames()));
 
       while (dataRows.next()) {
+        retrievalCounts.count();
         final List<Object> currentRow = dataRows.row();
         final Object[] columnData = currentRow.toArray();
         formattingHelper.writeRow(columnData);
