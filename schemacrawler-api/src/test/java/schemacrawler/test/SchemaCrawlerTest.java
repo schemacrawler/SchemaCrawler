@@ -28,6 +28,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+import static schemacrawler.utility.MetaDataUtility.isView;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -666,7 +667,7 @@ public class SchemaCrawlerTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
-          if (!(table instanceof View)) {
+          if (!isView(table)) {
             continue;
           }
           final View view = (View) table;

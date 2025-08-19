@@ -245,6 +245,10 @@ public final class MetaDataUtility {
     return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
   }
 
+  public static boolean isView(final Table table) {
+    return table instanceof View;
+  }
+
   public static String joinColumns(
       final List<? extends Column> columns,
       final boolean omitLargeObjectColumns,
