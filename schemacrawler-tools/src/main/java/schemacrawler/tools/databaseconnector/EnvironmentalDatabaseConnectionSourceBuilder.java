@@ -34,33 +34,12 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
     requireNonNull(envAccessor, "No environmental accessor provided");
 
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
-    final String connectionUrl = envAccessor.getenv("SCHCRWLR_JDBC_URL");
+    final String connectionUrl = trimToEmpty(envAccessor.getenv("SCHCRWLR_JDBC_URL"));
 
-    if (isBlank(connectionUrl)) {
-      final String databaseSystemIdentifier = trimToEmpty(envAccessor.getenv("SCHCRWLR_SERVER"));
-
-      final DatabaseConnectorRegistry databaseConnectorRegistry =
-          DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-      final DatabaseConnector databaseConnector =
-          databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
-              databaseSystemIdentifier);
-
-      dbConnectionSourceBuilder = databaseConnector.databaseConnectionSourceBuilder();
-
-      final String host = trimToEmpty(envAccessor.getenv("SCHCRWLR_HOST"));
-      dbConnectionSourceBuilder.withHost(host);
-
-      final String port = trimToEmpty(envAccessor.getenv("SCHCRWLR_PORT"));
-      if (isValidPort(port)) {
-        dbConnectionSourceBuilder.withPort(Integer.valueOf(port));
-      }
-
-      final String database = trimToEmpty(envAccessor.getenv("SCHCRWLR_DATABASE"));
-      dbConnectionSourceBuilder.withDatabase(database);
+    if (!isBlank(connectionUrl)) {
+      dbConnectionSourceBuilder = builderFromUrl(connectionUrl);
     } else {
-      // This JDBC URL is not expected to have any substitutable parameters, so subsequent
-      // settings should not have any effect
-      dbConnectionSourceBuilder = DatabaseConnectionSourceBuilder.builder(connectionUrl);
+      dbConnectionSourceBuilder = builderForServer(envAccessor);
     }
 
     final UserCredentials userCredentials =
@@ -68,6 +47,50 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
             trimToEmpty(envAccessor.getenv("SCHCRWLR_DATABASE_USER")),
             trimToEmpty(envAccessor.getenv("SCHCRWLR_DATABASE_PASSWORD")));
     dbConnectionSourceBuilder.withUserCredentials(userCredentials);
+
+    return dbConnectionSourceBuilder;
+  }
+
+  private static DatabaseConnectionSourceBuilder builderForServer(
+      final EnvironmentVariableAccessor envAccessor) {
+    final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
+    final String databaseSystemIdentifier = trimToEmpty(envAccessor.getenv("SCHCRWLR_SERVER"));
+
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseConnector =
+        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
+            databaseSystemIdentifier);
+
+    dbConnectionSourceBuilder = databaseConnector.databaseConnectionSourceBuilder();
+
+    final String host = trimToEmpty(envAccessor.getenv("SCHCRWLR_HOST"));
+    dbConnectionSourceBuilder.withHost(host);
+
+    final String port = trimToEmpty(envAccessor.getenv("SCHCRWLR_PORT"));
+    if (isValidPort(port)) {
+      dbConnectionSourceBuilder.withPort(Integer.valueOf(port));
+    }
+
+    final String database = trimToEmpty(envAccessor.getenv("SCHCRWLR_DATABASE"));
+    dbConnectionSourceBuilder.withDatabase(database);
+
+    return dbConnectionSourceBuilder;
+  }
+
+  private static DatabaseConnectionSourceBuilder builderFromUrl(final String connectionUrl) {
+    final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
+
+    // This JDBC URL is not expected to have any substitutable parameters, so subsequent
+    // settings should not have any effect
+    dbConnectionSourceBuilder = DatabaseConnectionSourceBuilder.builder(connectionUrl);
+
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    DatabaseConnector databaseConnector =
+        databaseConnectorRegistry.findDatabaseConnectorFromUrl(connectionUrl);
+    dbConnectionSourceBuilder.withConnectionInitializer(
+        databaseConnector.databaseConnectionSourceBuilder().getConnectionInitializer());
 
     return dbConnectionSourceBuilder;
   }
