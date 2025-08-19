@@ -17,8 +17,6 @@ import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.isWritable;
 import static java.nio.file.Files.size;
 import static java.util.UUID.randomUUID;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -29,6 +27,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 
@@ -180,7 +179,7 @@ public final class IOUtility {
       return writer.toString();
     } catch (final IOException e) {
       // This is the error thrown while closing the writer itself, not during copy
-      LOGGER.log(Level.INFO, e.getMessage());
+      LOGGER.log(Level.CONFIG, e.getMessage());
       LOGGER.log(Level.FINE, e.getMessage(), e);
       return "";
     }
@@ -191,7 +190,7 @@ public final class IOUtility {
       final InputResource inputResource = new ClasspathInputResource(resource);
       return readFully(inputResource.openNewInputReader(UTF_8));
     } catch (final IOException e) {
-      LOGGER.log(Level.INFO, e.getMessage());
+      LOGGER.log(Level.CONFIG, e.getMessage());
       LOGGER.log(Level.FINE, e.getMessage(), e);
       return "";
     }
