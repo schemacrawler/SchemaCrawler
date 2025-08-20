@@ -248,7 +248,8 @@ final class IndexRetriever extends AbstractRetriever {
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final MutableTable table : allTables) {
       final Schema tableSchema = table.getSchema();
-      try (final Connection connection = getRetrieverConnection().getConnection(name);
+      final String connectionReason = String.format("%s for %s", name, table);
+      try (final Connection connection = getRetrieverConnection().getConnection(connectionReason);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection

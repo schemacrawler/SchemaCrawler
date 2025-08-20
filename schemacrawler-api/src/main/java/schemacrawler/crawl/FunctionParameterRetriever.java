@@ -207,7 +207,8 @@ final class FunctionParameterRetriever extends AbstractRetriever {
 
       final MutableFunction function = (MutableFunction) routine;
       LOGGER.log(Level.FINE, "Retrieving function parameters for " + function);
-      try (final Connection connection = getRetrieverConnection().getConnection(name);
+      final String connectionReason = String.format("%s for %s", name, function);
+      try (final Connection connection = getRetrieverConnection().getConnection(connectionReason);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection

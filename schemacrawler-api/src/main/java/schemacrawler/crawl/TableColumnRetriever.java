@@ -266,6 +266,8 @@ final class TableColumnRetriever extends AbstractRetriever {
       throws SQLException {
     try (final TaskRunner taskRunner =
         TaskRunners.getTaskRunner("retrieve-table-columns-from-metadata", 5); ) {
+      final String name = "table columns from metadata";
+      final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
       for (final MutableTable table : allTables) {
         taskRunner.add(
             new TaskDefinition(
@@ -273,8 +275,9 @@ final class TableColumnRetriever extends AbstractRetriever {
                 () -> {
                   LOGGER.log(
                       Level.FINE, new StringFormat("Retrieving table columns for <%s>", table));
+                  final String connectionReason = String.format("%s for %s", name, table);
                   try (final Connection connection =
-                          getRetrieverConnection().getConnection("table columns from metadata");
+                          getRetrieverConnection().getConnection(connectionReason);
                       final MetadataResultSet results =
                           new MetadataResultSet(
                               connection
@@ -286,8 +289,11 @@ final class TableColumnRetriever extends AbstractRetriever {
                                       null),
                               "DatabaseMetaData::getColumns"); ) {
                     while (results.next()) {
-                      createTableColumn(
-                          results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
+                      retrievalCounts.count();
+                      final boolean added =
+                          createTableColumn(
+                              results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
+                      retrievalCounts.countIfIncluded(added);
                     }
                   } catch (final SQLException e) {
                     throw new WrappedSQLException(

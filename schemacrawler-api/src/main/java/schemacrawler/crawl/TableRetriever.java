@@ -182,7 +182,8 @@ final class TableRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final Connection connection = getRetrieverConnection().getConnection(name);
+      final String connectionReason = String.format("%s for %s", name, schema);
+      try (final Connection connection = getRetrieverConnection().getConnection(connectionReason);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection
