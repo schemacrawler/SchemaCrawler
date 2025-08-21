@@ -204,11 +204,10 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       if (routine.getRoutineType() != RoutineType.function) {
         continue;
       }
+      LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, routine));
 
       final MutableFunction function = (MutableFunction) routine;
-      LOGGER.log(Level.FINE, "Retrieving function parameters for " + function);
-      final String connectionReason = String.format("%s for %s", name, function);
-      try (final Connection connection = getRetrieverConnection().getConnection(connectionReason);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
                   connection

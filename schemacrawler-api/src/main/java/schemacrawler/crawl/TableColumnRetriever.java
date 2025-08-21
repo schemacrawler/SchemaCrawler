@@ -273,11 +273,8 @@ final class TableColumnRetriever extends AbstractRetriever {
             new TaskDefinition(
                 table.getFullName(),
                 () -> {
-                  LOGGER.log(
-                      Level.FINE, new StringFormat("Retrieving table columns for <%s>", table));
-                  final String connectionReason = String.format("%s for %s", name, table);
-                  try (final Connection connection =
-                          getRetrieverConnection().getConnection(connectionReason);
+                  LOGGER.log(Level.FINE, new StringFormat("Retrieving %s for %s", name, table));
+                  try (final Connection connection = getRetrieverConnection().getConnection(name);
                       final MetadataResultSet results =
                           new MetadataResultSet(
                               connection
