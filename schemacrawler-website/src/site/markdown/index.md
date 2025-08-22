@@ -20,17 +20,15 @@ Java SE 8 or better.
   Use the <a href="https://github.com/schemacrawler/SchemaCrawler-MCP-Server-Usage" target="_blank" rel="noopener noreferrer">SchemaCrawler MCP Server</a> to get deep insights into your database.
 </div>
 
+[![Codacy Grade](https://app.codacy.com/project/badge/Grade/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard)
+[![Codacy Coverage](https://img.shields.io/codacy/coverage/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard)
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)](https://github.com/schemacrawler/SchemaCrawler)
-[![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
-[![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
-[![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
+[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler?color=FFDAB9)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
+![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)
 
-[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
-[![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://www.schemacrawler.com/downloads.html#running-examples-locally)
-[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
-[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler)](https://community.chocolatey.org/packages/schemacrawler)
-[![Scoop](https://img.shields.io/scoop/v/schemacrawler.svg)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
+[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
+[![Scoop](https://img.shields.io/scoop/v/schemacrawler?color=0F80C1)](https://github.com/ScoopInstaller/Main/blob/master/bucket/schemacrawler.json)
+[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler?color=0F80C1)]( https://community.chocolatey.org/packages/schemacrawler)
 
 
 ## SchemaCrawler Command-line

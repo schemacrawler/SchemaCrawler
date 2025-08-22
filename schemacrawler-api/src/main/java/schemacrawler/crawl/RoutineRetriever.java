@@ -206,11 +206,10 @@ final class RoutineRetriever extends AbstractRetriever {
     final String name = "functions from metadata";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
-      LOGGER.log(Level.INFO, new StringFormat("Retrieving functions for schema <%s>", schema));
+      LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, schema));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
-
       try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(
@@ -290,11 +289,10 @@ final class RoutineRetriever extends AbstractRetriever {
     final String name = "procedures from metadata";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
-      LOGGER.log(Level.INFO, new StringFormat("Retrieving procedures for schema <%s>", schema));
+      LOGGER.log(Level.INFO, new StringFormat(String.format("%s for %s", name, schema)));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
-
       try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
               new MetadataResultSet(

@@ -55,7 +55,7 @@ final class RetrieverConnection {
 
   Connection getConnection(final String reason) {
     LOGGER.log(
-        Level.INFO,
+        Level.FINE,
         () -> {
           if (!isBlank(reason)) {
             return String.format("Getting database connnection for %s", reason);

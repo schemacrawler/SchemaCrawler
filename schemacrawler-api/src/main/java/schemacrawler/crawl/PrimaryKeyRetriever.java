@@ -137,6 +137,8 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       if (isView(table)) {
         continue;
       }
+      LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, table));
+
       final Schema tableSchema = table.getSchema();
       try (final Connection connection = getRetrieverConnection().getConnection(name);
           final MetadataResultSet results =
