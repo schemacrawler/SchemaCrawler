@@ -8,17 +8,16 @@
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 import static schemacrawler.utility.MetaDataUtility.isView;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -137,7 +136,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       if (isView(table)) {
         continue;
       }
-      LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, table));
+      LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, table.key()));
 
       final Schema tableSchema = table.getSchema();
       try (final Connection connection = getRetrieverConnection().getConnection(name);

@@ -8,16 +8,15 @@
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -192,8 +191,8 @@ final class TableRetriever extends AbstractRetriever {
                   "DatabaseMetaData::getTables"); ) {
         while (results.next()) {
           retrievalCounts.count(schema.key());
-          createTable(results, schemas, tableFilter, supportedTableTypes);
-          retrievalCounts.countIncluded(schema.key());
+          final boolean added = createTable(results, schemas, tableFilter, supportedTableTypes);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
       } catch (final Exception e) {
         LOGGER.log(

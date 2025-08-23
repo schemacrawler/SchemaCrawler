@@ -10,12 +10,9 @@ package schemacrawler.crawl;
 
 import static java.sql.DatabaseMetaData.functionNullable;
 import static java.sql.DatabaseMetaData.functionNullableUnknown;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -23,6 +20,8 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
@@ -204,7 +203,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       if (routine.getRoutineType() != RoutineType.function) {
         continue;
       }
-      LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, routine));
+      LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, routine.key()));
 
       final MutableFunction function = (MutableFunction) routine;
       try (final Connection connection = getRetrieverConnection().getConnection(name);
