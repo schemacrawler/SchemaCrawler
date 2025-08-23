@@ -10,13 +10,10 @@ package schemacrawler.crawl;
 
 import static java.sql.DatabaseMetaData.columnNullable;
 import static java.sql.DatabaseMetaData.columnNullableUnknown;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,6 +22,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -273,7 +272,7 @@ final class TableColumnRetriever extends AbstractRetriever {
             new TaskDefinition(
                 table.getFullName(),
                 () -> {
-                  LOGGER.log(Level.FINE, new StringFormat("Retrieving %s for %s", name, table));
+                  LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, table.key()));
                   try (final Connection connection = getRetrieverConnection().getConnection(name);
                       final MetadataResultSet results =
                           new MetadataResultSet(
