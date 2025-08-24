@@ -23,8 +23,15 @@ public final class SqlServerConnectionInitializer implements Consumer<Connection
   @Override
   public void accept(final Connection connection) {
     LOGGER.log(Level.FINE, new StringFormat("Initializing SQL Server connection <%s>", connection));
+
+    SqlScript.executeScriptFromResource("/initialize-all-procedures.sql", "@", connection);
+    SqlScript.executeScriptFromResource("/initialize-all-functions.sql", "@", connection);
+    SqlScript.executeScriptFromResource(
+        "/initialize-all-procedure-parameters.sql", "@", connection);
+    SqlScript.executeScriptFromResource("/initialize-all-function-parameters.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-routines.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-routine-references.sql", "@", connection);
+
     SqlScript.executeScriptFromResource("/initialize-all-triggers.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-views.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-view-table-usage.sql", "@", connection);

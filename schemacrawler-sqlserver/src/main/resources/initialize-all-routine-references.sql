@@ -35,24 +35,20 @@ BEGIN
     IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
     BEGIN
         INSERT INTO ##ProcedureReferences
-        SELECT 
-            ''?'' AS ROUTINE_CATALOG,
-            OBJECT_SCHEMA_NAME(d.referencing_id, DB_ID(''?'')) AS ROUTINE_SCHEMA,
-            OBJECT_NAME(d.referencing_id, DB_ID(''?'')) AS ROUTINE_NAME,
-            NULL AS SPECIFIC_NAME,
+        SELECT
+            R.ROUTINE_CATALOG,
+            R.ROUTINE_SCHEMA,
+            R.ROUTINE_NAME,
+            R.SPECIFIC_NAME,
             ''?'' AS REFERENCED_OBJECT_CATALOG,
-            OBJECT_SCHEMA_NAME(o.object_id, DB_ID(''?'')) AS REFERENCED_OBJECT_SCHEMA,
+            OBJECT_SCHEMA_NAME(d.referenced_id, DB_ID(R.ROUTINE_CATALOG)) AS REFERENCED_OBJECT_SCHEMA,
             o.name AS REFERENCED_OBJECT_NAME,
-            NULL AS REFERENCED_OBJECT_SPECIFIC_NAME,
             o.type_desc AS REFERENCED_OBJECT_TYPE
-        FROM 
-        	[?].sys.sql_expression_dependencies AS d
-        	INNER JOIN [?].sys.objects AS o 
-        		ON d.referenced_id = o.object_id
-        	INNER JOIN [?].sys.all_objects AS ao 
-        		ON d.referencing_id = ao.object_id
-        WHERE OBJECTPROPERTY(d.referencing_id, ''IsProcedure'') = 1
-          AND ao.IS_MS_SHIPPED = 0;
+        FROM [?].INFORMATION_SCHEMA.ROUTINES R
+        INNER JOIN [?].sys.sql_expression_dependencies d
+            ON OBJECT_ID(R.ROUTINE_SCHEMA + ''.'' + R.ROUTINE_NAME) = d.referencing_id
+        INNER JOIN [?].sys.objects o
+            ON d.referenced_id = o.object_id;
     END';
 
     -- Return the combined results

@@ -8,6 +8,12 @@
 
 package schemacrawler.server.sqlserver;
 
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
+
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -22,7 +28,12 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
         url -> url != null && url.startsWith("jdbc:sqlserver:"),
         (informationSchemaViewsBuilder, connection) ->
             informationSchemaViewsBuilder.fromResourceFolder("/sqlserver.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) -> {},
+        (schemaRetrievalOptionsBuilder, connection) ->
+            schemaRetrievalOptionsBuilder
+                .with(proceduresRetrievalStrategy, data_dictionary_all)
+                .with(procedureParametersRetrievalStrategy, data_dictionary_all)
+                .with(functionsRetrievalStrategy, data_dictionary_all)
+                .with(functionParametersRetrievalStrategy, data_dictionary_all),
         limitOptionsBuilder ->
             limitOptionsBuilder.includeSchemas(
                 new RegularExpressionRule(
