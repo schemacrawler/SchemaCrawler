@@ -281,25 +281,23 @@ Routines
 
 
 
-"CustomAdd;0"                                  [function, returns table]
+GetBooksCount                                     [procedure, no result]
 ------------------------------------------------------------------------
-  "@RETURN_VALUE"                   INTEGER, result             
-  "@One"                            INTEGER, in                 
-  "@Two"                            INTEGER, in                 
-
-
-
-"GetBooksCount;1"                              [function, returns table]
-------------------------------------------------------------------------
-  "@RETURN_VALUE"                   INTEGER, result             
   "@BooksCount"                     INTEGER, in/ out            
 
 
 
-"New_Publisher;1"                              [function, returns table]
+New_Publisher                                     [procedure, no result]
 ------------------------------------------------------------------------
-  "@RETURN_VALUE"                   INTEGER, result             
   "@Publisher"                      VARCHAR(50), in             
+
+
+
+CustomAdd                            [function, does not return a table]
+------------------------------------------------------------------------
+  "@RETURN_VALUE"                   INTEGER, return             
+  "@One"                            INTEGER, in                 
+  "@Two"                            INTEGER, in                 
 
 
 

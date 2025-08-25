@@ -14,15 +14,10 @@ import static java.sql.Types.LONGNVARCHAR;
 import static java.sql.Types.LONGVARBINARY;
 import static java.sql.Types.LONGVARCHAR;
 import static java.sql.Types.NCLOB;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static schemacrawler.utility.EnumUtility.enumValueFromId;
 import static us.fatehi.utility.IOUtility.readFully;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.isIntegral;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.io.Reader;
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -38,6 +33,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.isIntegral;
+import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.schema.ResultsColumn;
@@ -56,8 +55,6 @@ public final class MetadataResultSet implements AutoCloseable {
 
   private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class.getName());
 
-  private static final int FETCHSIZE = 20;
-
   private final ResultsColumns resultsColumns;
   private final ResultSet results;
   private final String description;
@@ -75,11 +72,6 @@ public final class MetadataResultSet implements AutoCloseable {
   public MetadataResultSet(final ResultSet resultSet, final String description)
       throws SQLException {
     results = requireNonNull(resultSet, "Cannot use null results");
-    try {
-      results.setFetchSize(FETCHSIZE);
-    } catch (final NullPointerException | SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not set fetch size", e);
-    }
     this.description = requireNotBlank(description, "No result-set description provided");
 
     resultsColumns = new ResultsCrawler(results).crawl();
