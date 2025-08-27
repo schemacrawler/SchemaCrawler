@@ -27,9 +27,21 @@ BEGIN
         ORDINAL_POSTION INT
     );
 
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
+        SET @sql = N'
         INSERT INTO ##AllConstraintColumnUsage
         SELECT
             CONSTRAINT_CATALOG,
@@ -41,8 +53,21 @@ BEGIN
             COLUMN_NAME,
             0 AS ORDINAL_POSTION
         FROM 
-            [?].INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE;
-    END';
+            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE;';
+
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
 
     SELECT * FROM ##AllConstraintColumnUsage;
 END;
