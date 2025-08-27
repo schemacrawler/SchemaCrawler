@@ -13,11 +13,9 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Drop the global temp table if it exists
     IF OBJECT_ID('tempdb..##ProcedureReferences') IS NOT NULL
         DROP TABLE ##ProcedureReferences;
 
-    -- Create the global temp table for collecting procedure references
     CREATE TABLE ##ProcedureReferences (
         ROUTINE_CATALOG SYSNAME,
         ROUTINE_SCHEMA SYSNAME,
@@ -30,30 +28,53 @@ BEGIN
         REFERENCED_OBJECT_TYPE NVARCHAR(60) NULL
     );
 
-    -- Execute against each non-system database
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
+        SET @sql = N'
         INSERT INTO ##ProcedureReferences
         SELECT
             R.ROUTINE_CATALOG,
             R.ROUTINE_SCHEMA,
             R.ROUTINE_NAME,
             R.SPECIFIC_NAME,
-            ''?'' AS REFERENCED_OBJECT_CATALOG,
-            OBJECT_SCHEMA_NAME(d.referenced_id, DB_ID(R.ROUTINE_CATALOG))
-              AS REFERENCED_OBJECT_SCHEMA,
+            ''' + @dbName + ''' AS REFERENCED_OBJECT_CATALOG,
+            OBJECT_SCHEMA_NAME(d.referenced_id, DB_ID(''' + @dbName + ''')) AS REFERENCED_OBJECT_SCHEMA,
             o.name AS REFERENCED_OBJECT_NAME,
             o.name AS REFERENCED_OBJECT_SPECIFIC_NAME,
             o.type_desc AS REFERENCED_OBJECT_TYPE
-        FROM [?].INFORMATION_SCHEMA.ROUTINES R
-        INNER JOIN [?].sys.sql_expression_dependencies d
-            ON OBJECT_ID(R.ROUTINE_SCHEMA + ''.'' + R.ROUTINE_NAME) = d.referencing_id
-        INNER JOIN [?].sys.objects o
-            ON d.referenced_id = o.object_id;
-    END';
+        FROM
+            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.ROUTINES R
+            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.sql_expression_dependencies d
+                ON OBJECT_ID(R.ROUTINE_CATALOG + ''.'' + R.ROUTINE_SCHEMA + ''.'' + R.ROUTINE_NAME) = d.referencing_id
+            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.objects o
+                ON d.referenced_id = o.object_id;';
 
-    -- Return the combined results
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
+
     SELECT * FROM ##ProcedureReferences;
 END;
 @
