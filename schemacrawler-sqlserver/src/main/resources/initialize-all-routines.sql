@@ -13,11 +13,9 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Drop the global temp table if it exists
     IF OBJECT_ID('tempdb..##AllRoutineMetadata') IS NOT NULL
         DROP TABLE ##AllRoutineMetadata;
 
-    -- Create the global temp table for collecting routine metadata
     CREATE TABLE ##AllRoutineMetadata (
         ROUTINE_CATALOG SYSNAME,
         ROUTINE_SCHEMA SYSNAME,
@@ -27,23 +25,46 @@ BEGIN
         ROUTINE_DEFINITION NVARCHAR(MAX)
     );
 
-    -- Execute against each non-system database
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
+        SET @sql = N'
         INSERT INTO ##AllRoutineMetadata
-        SELECT 
+        SELECT
             R.ROUTINE_CATALOG,
             R.ROUTINE_SCHEMA,
             R.ROUTINE_NAME,
             R.SPECIFIC_NAME,
             R.ROUTINE_BODY,
             R.ROUTINE_DEFINITION
-        FROM 
-            [?].INFORMATION_SCHEMA.ROUTINES R
-    END';
-    
-    -- Return the combined results
+        FROM
+            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.ROUTINES R;';
+
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
+
     SELECT * FROM ##AllRoutineMetadata;
 END;
 @
