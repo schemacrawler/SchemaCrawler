@@ -62,7 +62,14 @@ BEGIN
             END
               AS NULLABLE,
             cu.COLUMN_DEFAULT AS COLUMN_DEF,
-            CAST(cu.DATA_TYPE AS SYSNAME) AS TYPE_NAME,
+            CAST(
+                CASE
+                    WHEN ty.is_user_defined = 1
+                    THEN ts.name + ''.'' + ty.name
+                    ELSE ty.name
+                END AS SYSNAME
+            )
+                AS TYPE_NAME,
             CAST(COALESCE(cu.CHARACTER_MAXIMUM_LENGTH, cu.NUMERIC_PRECISION) AS INTEGER) AS COLUMN_SIZE,
             CAST(cu.NUMERIC_SCALE AS INTEGER) AS DECIMAL_DIGITS,
             CAST(cu.CHARACTER_OCTET_LENGTH AS INTEGER) AS CHAR_OCTET_LENGTH,
@@ -103,6 +110,10 @@ BEGIN
             AND so.type IN (''U'', ''V'') -- U = table, V = view
         INNER JOIN ' + QUOTENAME(@dbName) + '.sys.columns sc
             ON sc.object_id = so.object_id AND sc.name = cu.COLUMN_NAME
+        INNER JOIN ' + QUOTENAME(@dbName) + '.sys.types ty
+            ON sc.user_type_id = ty.user_type_id
+        INNER JOIN ' + QUOTENAME(@dbName) + '.sys.schemas ts
+            ON ty.schema_id = ts.schema_id
         ';
 
         EXEC sp_executesql @sql;
