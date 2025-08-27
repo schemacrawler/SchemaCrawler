@@ -116,7 +116,13 @@ BEGIN
             ON ty.schema_id = ts.schema_id
         ';
 
-        EXEC sp_executesql @sql;
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
 
         FETCH NEXT FROM db_cursor INTO @dbName;
     END;
