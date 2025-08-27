@@ -25,9 +25,21 @@ BEGIN
         DATABASE_NAME SYSNAME
     );
 
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'', ''model'', ''msdb'', ''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
+        SET @sql = N'
         INSERT INTO ##AllDatabaseUsers
         SELECT
             NAME AS USERNAME,
@@ -35,16 +47,27 @@ BEGIN
             MODIFY_DATE,
             TYPE_DESC AS TYPE,
             AUTHENTICATION_TYPE_DESC AS AUTHENTICATION_TYPE,
-            ''?'' AS DATABASE_NAME
-        FROM
-            [?].SYS.DATABASE_PRINCIPALS
+            ''' + @dbName + ''' AS DATABASE_NAME
+        FROM ' + QUOTENAME(@dbName) + '.SYS.DATABASE_PRINCIPALS
         WHERE
             TYPE IN (''S'', ''U'')
             AND SID IS NOT NULL
             AND NAME NOT IN (''dbo'', ''guest'', ''INFORMATION_SCHEMA'', ''sys'')
-            AND principal_id > 4 -- Excludes fixed system roles and internal users
-        ;
-    END';
+            AND principal_id > 4;';
+
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
 
     SELECT * FROM ##AllDatabaseUsers;
 END;
