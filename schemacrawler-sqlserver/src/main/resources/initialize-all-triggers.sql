@@ -31,9 +31,21 @@ BEGIN
         CONDITION_TIMING NVARCHAR(20)
     );
 
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
+        SET @sql = N'
         INSERT INTO ##AllTriggerMetadata
         SELECT
             ist.TABLE_CATALOG,
@@ -54,22 +66,35 @@ BEGIN
                 WHEN OBJECTPROPERTY(tr.object_id, ''ExecIsDeleteTrigger'') = 1 THEN OBJECTPROPERTY(tr.object_id, ''TriggerDeleteOrder'')
                 ELSE 1
             END AS ACTION_ORDER,
-            '''',
-            ''STATEMENT'',
+            '''' AS ACTION_CONDITION,
+            ''STATEMENT'' AS ACTION_ORIENTATION,
             CASE
                 WHEN OBJECTPROPERTY(tr.object_id, ''ExecIsAfterTrigger'') = 1 THEN ''AFTER''
                 ELSE ''INSTEAD OF''
             END AS CONDITION_TIMING
-        FROM 
-            [?].sys.triggers AS tr
-            INNER JOIN [?].sys.all_objects AS tbl
+        FROM
+            ' + QUOTENAME(@dbName) + '.sys.triggers AS tr
+            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.all_objects AS tbl
                 ON tr.parent_id = tbl.object_id
-            INNER JOIN [?].INFORMATION_SCHEMA.TABLES AS ist
+            INNER JOIN ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.TABLES AS ist
                 ON tbl.name = ist.TABLE_NAME AND SCHEMA_NAME(tbl.schema_id) = ist.TABLE_SCHEMA
-        WHERE 
+        WHERE
             tr.IS_MS_SHIPPED = 0
-            AND tbl.IS_MS_SHIPPED = 0;
-    END';
+            AND tbl.IS_MS_SHIPPED = 0;';
+
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
 
     SELECT * FROM ##AllTriggerMetadata;
 END;
