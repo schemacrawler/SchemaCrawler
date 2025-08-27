@@ -13,7 +13,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.fu
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
-
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -30,6 +30,7 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
             informationSchemaViewsBuilder.fromResourceFolder("/sqlserver.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) ->
             schemaRetrievalOptionsBuilder
+                .with(tableColumnsRetrievalStrategy, data_dictionary_all)
                 .with(proceduresRetrievalStrategy, data_dictionary_all)
                 .with(procedureParametersRetrievalStrategy, data_dictionary_all)
                 .with(functionsRetrievalStrategy, data_dictionary_all)
