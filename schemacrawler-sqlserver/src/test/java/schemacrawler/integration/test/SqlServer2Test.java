@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -56,7 +57,7 @@ import us.fatehi.utility.property.Property;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ResolveTestContext
-//@Disabled("For testing against test server")
+@Disabled("For testing against test server")
 public class SqlServer2Test extends BaseAdditionalDatabaseTest {
 
   @BeforeAll
