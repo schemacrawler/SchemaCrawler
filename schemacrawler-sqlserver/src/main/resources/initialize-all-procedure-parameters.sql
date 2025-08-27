@@ -13,11 +13,9 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Drop the global temp table if it exists
     IF OBJECT_ID('tempdb..##AllProcedureParameters') IS NOT NULL
         DROP TABLE ##AllProcedureParameters;
 
-    -- Create the global temp table for collecting procedure parameter metadata
     CREATE TABLE ##AllProcedureParameters (
         PROCEDURE_CAT SYSNAME,
         PROCEDURE_SCHEM SYSNAME,
@@ -34,10 +32,21 @@ BEGIN
         REMARKS NVARCHAR(128) NULL
     );
 
-    -- Execute against each non-system database
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
+        SET @sql = N'
         INSERT INTO ##AllProcedureParameters
         SELECT
             R.ROUTINE_CATALOG AS PROCEDURE_CAT,
@@ -45,8 +54,8 @@ BEGIN
             R.ROUTINE_NAME AS PROCEDURE_NAME,
             R.SPECIFIC_NAME,
             CASE DATALENGTH(P.PARAMETER_NAME)
-              WHEN 0 THEN ''@RETURN_VALUE''
-              ELSE P.PARAMETER_NAME
+                WHEN 0 THEN ''@RETURN_VALUE''
+                ELSE P.PARAMETER_NAME
             END
                 AS COLUMN_NAME,
             CASE
@@ -63,15 +72,28 @@ BEGIN
             P.ORDINAL_POSITION,
             -1 AS DATA_TYPE,
             NULL AS REMARKS
-        FROM [?].INFORMATION_SCHEMA.PARAMETERS P
-        INNER JOIN [?].INFORMATION_SCHEMA.ROUTINES R
-            ON P.SPECIFIC_NAME = R.SPECIFIC_NAME
-            AND P.SPECIFIC_SCHEMA = R.SPECIFIC_SCHEMA
-        WHERE R.ROUTINE_TYPE = ''PROCEDURE'';
-    END';
+        FROM
+            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.PARAMETERS P
+            INNER JOIN ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.ROUTINES R
+                ON P.SPECIFIC_NAME = R.SPECIFIC_NAME
+                    AND P.SPECIFIC_SCHEMA = R.SPECIFIC_SCHEMA
+        WHERE
+            R.ROUTINE_TYPE = ''PROCEDURE'';';
 
-    -- Return the combined results
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
+
     SELECT * FROM ##AllProcedureParameters;
 END;
 @
-
