@@ -26,22 +26,48 @@ BEGIN
         REFERENCED_OBJECT_NAME SYSNAME
     );
 
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
+        SET @sql = N'
         INSERT INTO ##AllSynonymMetadata
         SELECT
-            DB_NAME() AS SYNONYM_CATALOG,
+            ''' + @dbName + ''' AS SYNONYM_CATALOG,
             SCHEMA_NAME(SCHEMA_ID) AS SYNONYM_SCHEMA,
             NAME AS SYNONYM_NAME,
-            PARSENAME(BASE_OBJECT_NAME, 4),
-            PARSENAME(BASE_OBJECT_NAME, 3),
-            PARSENAME(BASE_OBJECT_NAME, 2),
-            PARSENAME(BASE_OBJECT_NAME, 1)
-        FROM 
-            [?].SYS.SYNONYMS;
-    END';
+            PARSENAME(BASE_OBJECT_NAME, 4) AS REFERENCED_OBJECT_SERVER,
+            PARSENAME(BASE_OBJECT_NAME, 3) AS REFERENCED_OBJECT_CATALOG,
+            PARSENAME(BASE_OBJECT_NAME, 2) AS REFERENCED_OBJECT_SCHEMA,
+            PARSENAME(BASE_OBJECT_NAME, 1) AS REFERENCED_OBJECT_NAME
+        FROM
+            ' + QUOTENAME(@dbName) + '.SYS.SYNONYMS;';
+
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
 
     SELECT * FROM ##AllSynonymMetadata;
 END;
 @
+
