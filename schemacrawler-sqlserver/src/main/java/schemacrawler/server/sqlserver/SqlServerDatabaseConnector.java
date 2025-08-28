@@ -11,9 +11,12 @@ package schemacrawler.server.sqlserver;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -31,6 +34,8 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
         (schemaRetrievalOptionsBuilder, connection) ->
             schemaRetrievalOptionsBuilder
                 .with(tableColumnsRetrievalStrategy, data_dictionary_all)
+                .with(indexesRetrievalStrategy, data_dictionary_all)
+                .with(primaryKeysRetrievalStrategy, data_dictionary_all)
                 .with(proceduresRetrievalStrategy, data_dictionary_all)
                 .with(procedureParametersRetrievalStrategy, data_dictionary_all)
                 .with(functionsRetrievalStrategy, data_dictionary_all)
