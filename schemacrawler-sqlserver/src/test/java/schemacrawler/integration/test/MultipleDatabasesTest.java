@@ -15,18 +15,16 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-
+import java.util.logging.Level;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -41,6 +39,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.database.SqlScript;
 
 @DisableLogging
@@ -56,6 +55,8 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws SQLException {
+
+    new LoggingConfig(Level.INFO);
 
     if (!dbContainer.isRunning()) {
       fail("Testcontainer for database is not available");
