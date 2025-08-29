@@ -6,17 +6,19 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.offline.jdbc;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
+import static java.util.Objects.requireNonNull;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Collections;
-import static java.util.Objects.requireNonNull;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class OfflineConnectionUtility {
@@ -83,6 +85,10 @@ public class OfflineConnectionUtility {
     requireNonNull(offlineDatabasePath, "No offline catalog snapshot path provided");
 
     final Path absoluteOfflineDatabasePath = offlineDatabasePath.toAbsolutePath();
+    if (!IOUtility.isFileReadable(absoluteOfflineDatabasePath)) {
+      throw new IORuntimeException(
+          String.format("Cannot read offline database <%s>", absoluteOfflineDatabasePath));
+    }
     final OfflineConnection offlineConnection =
         (OfflineConnection)
             newProxyInstance(
