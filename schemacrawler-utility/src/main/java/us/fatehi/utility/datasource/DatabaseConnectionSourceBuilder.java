@@ -69,26 +69,6 @@ public class DatabaseConnectionSourceBuilder implements Builder<DatabaseConnecti
     return connectionInitializer;
   }
 
-  public final List<String> toArguments() {
-    final List<String> arguments = new ArrayList<>();
-
-    arguments.add("--url");
-    arguments.add(toURL());
-
-    final String user = userCredentials.getUser();
-    if (!isBlank(user)) {
-      arguments.add("--user");
-      arguments.add(user);
-    }
-    final String password = userCredentials.getPassword();
-    if (!isBlank(password)) {
-      arguments.add("--password");
-      arguments.add(password);
-    }
-
-    return arguments;
-  }
-
   public DatabaseConnectionSourceBuilder withConnectionInitializer(
       final Consumer<Connection> connectionInitializer) {
     if (connectionInitializer == null) {
