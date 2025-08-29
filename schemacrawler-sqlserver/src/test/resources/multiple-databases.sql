@@ -36,4 +36,4 @@ CREATE TABLE DBO.B_DBO_TABLE2
 
 -- ---------------------------
 
-USE DATABASE master;
+USE master;
