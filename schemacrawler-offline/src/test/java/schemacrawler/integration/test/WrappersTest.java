@@ -31,7 +31,7 @@ public class WrappersTest {
   @BeforeAll
   public static void createTempFile() throws IOException {
     offlineDatabasePath = Files.createTempFile(WrappersTest.class.getCanonicalName() + ".", ".ser");
-    Files.writeString(offlineDatabasePath, "some offline database metadata ...");
+    Files.write(offlineDatabasePath, "some offline database metadata ...".getBytes());
   }
 
   @Test
