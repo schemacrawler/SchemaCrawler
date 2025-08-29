@@ -42,19 +42,23 @@ BEGIN
         SET @sql = N'
         SELECT
             ''' + @dbName + ''' AS TABLE_CAT,
-            CAST(tc.TABLE_SCHEMA AS SYSNAME) AS TABLE_SCHEM,
-            CAST(tc.TABLE_NAME AS SYSNAME) AS TABLE_NAME,
-            CAST(tc.CONSTRAINT_NAME AS SYSNAME) AS PK_NAME,
-            CAST(kcu.COLUMN_NAME AS SYSNAME) AS COLUMN_NAME,
-            CAST(kcu.ORDINAL_POSITION AS SMALLINT) AS KEY_SEQ
+            CAST(s.name AS SYSNAME) AS TABLE_SCHEM,
+            CAST(t.name AS SYSNAME) AS TABLE_NAME,
+            CAST(kc.name AS SYSNAME) AS PK_NAME,
+            CAST(c.name AS SYSNAME) AS COLUMN_NAME,
+            CAST(ic.key_ordinal AS SMALLINT) AS KEY_SEQ
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc
-            INNER JOIN ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu
-                ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
-                    AND tc.TABLE_SCHEMA = kcu.TABLE_SCHEMA
-                    AND tc.TABLE_NAME = kcu.TABLE_NAME
+            ' + QUOTENAME(@dbName) + '.sys.key_constraints kc
+            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.tables t
+                ON kc.parent_object_id = t.object_id
+            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.schemas s
+                ON t.schema_id = s.schema_id
+            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.index_columns ic
+                ON kc.unique_index_id = ic.index_id AND kc.parent_object_id = ic.object_id
+            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.columns c
+                ON ic.object_id = c.object_id AND ic.column_id = c.column_id
         WHERE
-            tc.CONSTRAINT_TYPE = ''PRIMARY KEY'';';
+            kc.type = ''PK'';';
 
         BEGIN TRY
             INSERT INTO ##AllPrimaryKeyMetadata
