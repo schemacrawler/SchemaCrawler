@@ -14,6 +14,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
@@ -30,20 +31,23 @@ public class WrappersTest {
   @BeforeAll
   public static void createTempFile() throws IOException {
     offlineDatabasePath = Files.createTempFile(WrappersTest.class.getCanonicalName() + ".", ".ser");
-    Files.writeString(offlineDatabasePath, "some offline database metadata...");
+    Files.writeString(offlineDatabasePath, "some offline database metadata ...");
   }
-
 
   @Test
   public void createStatement() {
     final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
 
-    assertThrows(InvocationTargetException.class, () -> invokeMethod(connection, "createStatement"),
+    assertThrows(
+        InvocationTargetException.class,
+        () -> invokeMethod(connection, "createStatement"),
         "Testing connection method, createStatement");
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "createStatement", 0, 0),
         "Testing connection method, createStatement");
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "createStatement", 0, 0, 0),
         "Testing connection method, createStatement");
   }
@@ -52,12 +56,16 @@ public class WrappersTest {
   public void prepareCall() {
     final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
 
-    assertThrows(InvocationTargetException.class, () -> invokeMethod(connection, "prepareCall", ""),
+    assertThrows(
+        InvocationTargetException.class,
+        () -> invokeMethod(connection, "prepareCall", ""),
         "Testing connection method, prepareCall - 0");
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "prepareCall", "", 0, 0),
         "Testing connection method, prepareCall - 1");
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "prepareCall", "", 0, 0, 0),
         "Testing connection method, prepareCall - 2");
   }
@@ -66,16 +74,20 @@ public class WrappersTest {
   public void prepareStatement() {
     final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
 
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "prepareStatement", ""),
         "Testing connection method, prepareStatement - 1");
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "prepareStatement", "", 0),
         "Testing connection method, prepareStatement - 1");
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "prepareStatement", "", 0, 0),
         "Testing connection method, prepareStatement - 2");
-    assertThrows(InvocationTargetException.class,
+    assertThrows(
+        InvocationTargetException.class,
         () -> invokeMethod(connection, "prepareCall", "", 0, 0, 0),
         "Testing connection method, prepareStatement - 3");
   }
@@ -87,33 +99,53 @@ public class WrappersTest {
     String methodName;
 
     methodName = "toString";
-    assertThat("Testing connection method, " + methodName,
+    assertThat(
+        "Testing connection method, " + methodName,
         (String) invokeMethod(connection, methodName),
         startsWith(OfflineConnection.class.getName()));
 
     methodName = "isValid";
-    assertThat("Testing connection method, " + methodName, invokeMethod(connection, methodName, 0),
+    assertThat(
+        "Testing connection method, " + methodName,
+        invokeMethod(connection, methodName, 0),
         is(true));
 
     methodName = "isWrapperFor";
-    assertThat("Testing connection method, " + methodName,
-        invokeMethod(connection, methodName, Connection.class), is(true));
+    assertThat(
+        "Testing connection method, " + methodName,
+        invokeMethod(connection, methodName, Connection.class),
+        is(true));
     methodName = "isWrapperFor";
-    assertThat("Testing connection method, " + methodName,
-        invokeMethod(connection, methodName, String.class), is(false));
+    assertThat(
+        "Testing connection method, " + methodName,
+        invokeMethod(connection, methodName, String.class),
+        is(false));
     methodName = "isWrapperFor";
-    assertThat("Testing connection method, " + methodName,
-        invokeMethod(connection, methodName, (Class<?>) null), is(false));
+    assertThat(
+        "Testing connection method, " + methodName,
+        invokeMethod(connection, methodName, (Class<?>) null),
+        is(false));
   }
 
   @Test
   public void testConnectionMethodsNoArguments() {
     final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
 
-    for (final String methodName : new String[] {"clearWarnings", "commit", "createBlob",
-        "createClob", "createNClob", "createSQLXML", "createStatement", "getClientInfo",
-        "setSavepoint",}) {
-      assertThrows(InvocationTargetException.class, () -> invokeMethod(connection, methodName),
+    for (final String methodName :
+        new String[] {
+          "clearWarnings",
+          "commit",
+          "createBlob",
+          "createClob",
+          "createNClob",
+          "createSQLXML",
+          "createStatement",
+          "getClientInfo",
+          "setSavepoint",
+        }) {
+      assertThrows(
+          InvocationTargetException.class,
+          () -> invokeMethod(connection, methodName),
           "Testing connection method, " + methodName);
     }
   }
