@@ -70,6 +70,7 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
     try (final Connection connection = getConnection()) {
+      connection.setAutoCommit(true);
       SqlScript.executeScriptFromResource("/multiple-databases.sql", connection);
     }
   }
