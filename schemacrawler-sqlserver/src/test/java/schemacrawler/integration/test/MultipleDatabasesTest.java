@@ -15,6 +15,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -62,8 +63,10 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    final String user = dbContainer.getUsername();
+    final String password = dbContainer.getPassword();
+    createDataSource(jdbcUrl, user, password);
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
     try (final Connection connection = getConnection()) {
