@@ -40,6 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllRoutineMetadata
         SELECT
             R.ROUTINE_CATALOG,
@@ -49,7 +50,7 @@ BEGIN
             R.ROUTINE_BODY,
             R.ROUTINE_DEFINITION
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.ROUTINES R;';
+            INFORMATION_SCHEMA.ROUTINES R;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

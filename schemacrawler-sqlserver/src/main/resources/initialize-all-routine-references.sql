@@ -43,6 +43,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO ##ProcedureReferences
         SELECT
             R.ROUTINE_CATALOG,
@@ -55,10 +56,10 @@ BEGIN
             o.name AS REFERENCED_OBJECT_SPECIFIC_NAME,
             o.type_desc AS REFERENCED_OBJECT_TYPE
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.ROUTINES R
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.sql_expression_dependencies d
+            INFORMATION_SCHEMA.ROUTINES R
+            INNER JOIN sys.sql_expression_dependencies d
                 ON OBJECT_ID(R.ROUTINE_CATALOG + ''.'' + R.ROUTINE_SCHEMA + ''.'' + R.ROUTINE_NAME) = d.referencing_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.objects o
+            INNER JOIN sys.objects o
                 ON d.referenced_id = o.object_id;';
 
         BEGIN TRY

@@ -42,6 +42,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllConstraintColumnUsage
         SELECT
             CONSTRAINT_CATALOG,
@@ -53,7 +54,7 @@ BEGIN
             COLUMN_NAME,
             0 AS ORDINAL_POSTION
         FROM 
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE;';
+            INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

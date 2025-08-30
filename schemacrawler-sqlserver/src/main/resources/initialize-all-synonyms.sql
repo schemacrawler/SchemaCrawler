@@ -41,6 +41,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllSynonymMetadata
         SELECT
             ''' + @dbName + ''' AS SYNONYM_CATALOG,
@@ -51,7 +52,7 @@ BEGIN
             PARSENAME(BASE_OBJECT_NAME, 2) AS REFERENCED_OBJECT_SCHEMA,
             PARSENAME(BASE_OBJECT_NAME, 1) AS REFERENCED_OBJECT_NAME
         FROM
-            ' + QUOTENAME(@dbName) + '.SYS.SYNONYMS;';
+            SYS.SYNONYMS;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

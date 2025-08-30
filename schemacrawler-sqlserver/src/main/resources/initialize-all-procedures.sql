@@ -46,6 +46,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllStoredProcedures
         SELECT
             R.ROUTINE_CATALOG AS PROCEDURE_CAT,
@@ -61,7 +62,7 @@ BEGIN
             R.CREATED,
             R.LAST_ALTERED
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.ROUTINES R
+            INFORMATION_SCHEMA.ROUTINES R
         WHERE
             R.ROUTINE_TYPE = ''PROCEDURE'';';
 

@@ -38,14 +38,15 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllCheckConstraintMetadata
         SELECT
             ''' + @dbName + ''' AS CONSTRAINT_CATALOG,
             CONSTRAINT_SCHEMA,
             CONSTRAINT_NAME,
             CHECK_CLAUSE
-        FROM 
-		    ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.CHECK_CONSTRAINTS;';
+        FROM
+            INFORMATION_SCHEMA.CHECK_CONSTRAINTS;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

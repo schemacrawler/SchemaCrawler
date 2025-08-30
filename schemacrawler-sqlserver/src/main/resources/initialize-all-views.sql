@@ -40,6 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllViewMetadata
         SELECT
             V.TABLE_CATALOG,
@@ -49,7 +50,7 @@ BEGIN
             V.IS_UPDATABLE,
             V.VIEW_DEFINITION
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.VIEWS V;';
+            INFORMATION_SCHEMA.VIEWS V;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

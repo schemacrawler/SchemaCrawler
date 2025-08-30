@@ -49,6 +49,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         DECLARE @sql NVARCHAR(MAX) = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllTableColumns
         SELECT
             CAST(cu.TABLE_CATALOG AS SYSNAME) AS TABLE_CAT,
@@ -102,17 +103,17 @@ BEGIN
                 WHEN ''image'' THEN -4
                 ELSE 1111
             END AS DATA_TYPE
-        FROM ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.COLUMNS cu
-        INNER JOIN ' + QUOTENAME(@dbName) + '.sys.schemas ss
+        FROM INFORMATION_SCHEMA.COLUMNS cu
+        INNER JOIN sys.schemas ss
             ON ss.name = cu.TABLE_SCHEMA
-        INNER JOIN ' + QUOTENAME(@dbName) + '.sys.objects so
+        INNER JOIN sys.objects so
             ON so.name = cu.TABLE_NAME AND so.schema_id = ss.schema_id
             AND so.type IN (''U'', ''V'') -- U = table, V = view
-        INNER JOIN ' + QUOTENAME(@dbName) + '.sys.columns sc
+        INNER JOIN sys.columns sc
             ON sc.object_id = so.object_id AND sc.name = cu.COLUMN_NAME
-        INNER JOIN ' + QUOTENAME(@dbName) + '.sys.types ty
+        INNER JOIN sys.types ty
             ON sc.user_type_id = ty.user_type_id
-        INNER JOIN ' + QUOTENAME(@dbName) + '.sys.schemas ts
+        INNER JOIN sys.schemas ts
             ON ty.schema_id = ts.schema_id
         ';
 
