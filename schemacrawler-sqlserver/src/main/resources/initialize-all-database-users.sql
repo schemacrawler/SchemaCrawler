@@ -40,6 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllDatabaseUsers
         SELECT
             NAME AS USERNAME,
@@ -48,7 +49,8 @@ BEGIN
             TYPE_DESC AS TYPE,
             AUTHENTICATION_TYPE_DESC AS AUTHENTICATION_TYPE,
             ''' + @dbName + ''' AS DATABASE_NAME
-        FROM ' + QUOTENAME(@dbName) + '.SYS.DATABASE_PRINCIPALS
+        FROM
+            SYS.DATABASE_PRINCIPALS
         WHERE
             TYPE IN (''S'', ''U'')
             AND SID IS NOT NULL

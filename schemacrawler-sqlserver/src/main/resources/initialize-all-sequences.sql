@@ -49,6 +49,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllSequenceMetadata
         SELECT
             SEQUENCE_CATALOG,
@@ -67,7 +68,7 @@ BEGIN
             DECLARED_NUMERIC_PRECISION,
             DECLARED_NUMERIC_SCALE
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.SEQUENCES;';
+            INFORMATION_SCHEMA.SEQUENCES;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

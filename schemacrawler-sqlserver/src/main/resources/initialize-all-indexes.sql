@@ -52,6 +52,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         SELECT
             ''' + @dbName + ''' AS TABLE_CAT,
             CAST(t.TABLE_SCHEMA AS SYSNAME) AS TABLE_SCHEM,
@@ -76,16 +77,16 @@ BEGIN
             i.auto_created,
             i.type_desc
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.TABLES t
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.schemas s
+            INFORMATION_SCHEMA.TABLES t
+            INNER JOIN sys.schemas s
                 ON s.name = t.TABLE_SCHEMA
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.tables st
+            INNER JOIN sys.tables st
                 ON st.name = t.TABLE_NAME AND st.schema_id = s.schema_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.indexes i
+            INNER JOIN sys.indexes i
                 ON i.object_id = st.object_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.index_columns ic
+            INNER JOIN sys.index_columns ic
                 ON ic.object_id = i.object_id AND ic.index_id = i.index_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.columns c
+            INNER JOIN sys.columns c
                 ON c.object_id = ic.object_id AND c.column_id = ic.column_id
         WHERE
             i.name IS NOT NULL
@@ -117,14 +118,14 @@ BEGIN
             i.auto_created,
             i.type_desc
         FROM
-            ' + QUOTENAME(@dbName) + '.sys.views v
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.schemas vs
+            sys.views v
+            INNER JOIN sys.schemas vs
                 ON v.schema_id = vs.schema_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.indexes i
+            INNER JOIN sys.indexes i
                 ON i.object_id = v.object_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.index_columns ic
+            INNER JOIN sys.index_columns ic
                 ON ic.object_id = i.object_id AND ic.index_id = i.index_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.columns c
+            INNER JOIN sys.columns c
                 ON c.object_id = ic.object_id AND c.column_id = ic.column_id
         WHERE
             i.name IS NOT NULL

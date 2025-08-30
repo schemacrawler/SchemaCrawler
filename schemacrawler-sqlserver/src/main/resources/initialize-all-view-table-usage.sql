@@ -40,6 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllViewTableUsage
         SELECT
             VIEW_CATALOG,
@@ -49,7 +50,7 @@ BEGIN
             TABLE_SCHEMA,
             TABLE_NAME
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.VIEW_TABLE_USAGE;';
+            INFORMATION_SCHEMA.VIEW_TABLE_USAGE;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

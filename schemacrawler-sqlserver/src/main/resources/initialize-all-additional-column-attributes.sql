@@ -39,6 +39,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllAdditionalColumnAttributes
         SELECT
             ''' +@dbName + ''' AS TABLE_CATALOG,
@@ -47,10 +48,10 @@ BEGIN
             C.NAME AS COLUMN_NAME,
             CONVERT(NVARCHAR(MAX), EP.VALUE) AS REMARKS
         FROM
-             ' + QUOTENAME(@dbName) + '.SYS.COLUMNS AS C
-            INNER JOIN  ' + QUOTENAME(@dbName) + '.SYS.ALL_OBJECTS O
+            SYS.COLUMNS AS C
+            INNER JOIN SYS.ALL_OBJECTS O
                 ON C.OBJECT_ID = O.OBJECT_ID
-            INNER JOIN  ' + QUOTENAME(@dbName) + '.SYS.EXTENDED_PROPERTIES EP
+            INNER JOIN SYS.EXTENDED_PROPERTIES EP
                 ON EP.MAJOR_ID = C.OBJECT_ID AND EP.MINOR_ID = C.COLUMN_ID
         WHERE
             O.IS_MS_SHIPPED != 1

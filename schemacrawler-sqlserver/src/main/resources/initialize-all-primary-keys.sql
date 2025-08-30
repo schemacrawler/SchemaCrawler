@@ -40,6 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         SELECT
             ''' + @dbName + ''' AS TABLE_CAT,
             CAST(s.name AS SYSNAME) AS TABLE_SCHEM,
@@ -48,14 +49,14 @@ BEGIN
             CAST(c.name AS SYSNAME) AS COLUMN_NAME,
             CAST(ic.key_ordinal AS SMALLINT) AS KEY_SEQ
         FROM
-            ' + QUOTENAME(@dbName) + '.sys.key_constraints kc
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.tables t
+            sys.key_constraints kc
+            INNER JOIN sys.tables t
                 ON kc.parent_object_id = t.object_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.schemas s
+            INNER JOIN sys.schemas s
                 ON t.schema_id = s.schema_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.index_columns ic
+            INNER JOIN sys.index_columns ic
                 ON kc.unique_index_id = ic.index_id AND kc.parent_object_id = ic.object_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.columns c
+            INNER JOIN sys.columns c
                 ON ic.object_id = c.object_id AND ic.column_id = c.column_id
         WHERE
             kc.type = ''PK'';';

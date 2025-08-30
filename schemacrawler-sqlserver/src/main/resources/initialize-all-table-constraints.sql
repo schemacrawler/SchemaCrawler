@@ -43,6 +43,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllTableConstraintMetadata
         SELECT
             CONSTRAINT_CATALOG,
@@ -55,7 +56,7 @@ BEGIN
             IS_DEFERRABLE,
             INITIALLY_DEFERRED
         FROM
-           ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+           INFORMATION_SCHEMA.TABLE_CONSTRAINTS
         WHERE
            TABLE_NAME IS NOT NULL;';
 

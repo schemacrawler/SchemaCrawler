@@ -46,6 +46,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllTriggerMetadata
         SELECT
             ist.TABLE_CATALOG,
@@ -73,10 +74,10 @@ BEGIN
                 ELSE ''INSTEAD OF''
             END AS CONDITION_TIMING
         FROM
-            ' + QUOTENAME(@dbName) + '.sys.triggers AS tr
-            INNER JOIN ' + QUOTENAME(@dbName) + '.sys.all_objects AS tbl
+            sys.triggers AS tr
+            INNER JOIN sys.all_objects AS tbl
                 ON tr.parent_id = tbl.object_id
-            INNER JOIN ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.TABLES AS ist
+            INNER JOIN INFORMATION_SCHEMA.TABLES AS ist
                 ON tbl.name = ist.TABLE_NAME AND SCHEMA_NAME(tbl.schema_id) = ist.TABLE_SCHEMA
         WHERE
             tr.IS_MS_SHIPPED = 0

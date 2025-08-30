@@ -47,6 +47,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllFunctionParameters
         SELECT
             R.ROUTINE_CATALOG AS FUNCTION_CAT,
@@ -73,8 +74,8 @@ BEGIN
             -1 AS DATA_TYPE,
             NULL AS REMARKS
         FROM
-            ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.PARAMETERS P
-            INNER JOIN ' + QUOTENAME(@dbName) + '.INFORMATION_SCHEMA.ROUTINES R
+            INFORMATION_SCHEMA.PARAMETERS P
+            INNER JOIN INFORMATION_SCHEMA.ROUTINES R
                 ON P.SPECIFIC_NAME = R.SPECIFIC_NAME
                     AND P.SPECIFIC_SCHEMA = R.SPECIFIC_SCHEMA
         WHERE
