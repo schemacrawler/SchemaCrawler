@@ -54,10 +54,15 @@ BEGIN
                 ON kc.parent_object_id = t.object_id
             INNER JOIN sys.schemas s
                 ON t.schema_id = s.schema_id
+            INNER JOIN sys.indexes i
+                ON i.object_id = kc.parent_object_id
+                    AND i.index_id  = kc.unique_index_id
             INNER JOIN sys.index_columns ic
-                ON kc.unique_index_id = ic.index_id AND kc.parent_object_id = ic.object_id
+                ON ic.object_id = i.object_id
+                    AND ic.index_id  = i.index_id
             INNER JOIN sys.columns c
-                ON ic.object_id = c.object_id AND ic.column_id = c.column_id
+                ON ic.object_id = c.object_id
+                    AND ic.column_id = c.column_id
         WHERE
             kc.type = ''PK'';';
 
