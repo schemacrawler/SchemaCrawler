@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllSynonymMetadata') IS NOT NULL
-        DROP TABLE ##AllSynonymMetadata;
+    IF OBJECT_ID('tempdb..#AllSynonymMetadata') IS NOT NULL
+        DROP TABLE #AllSynonymMetadata;
 
-    CREATE TABLE ##AllSynonymMetadata (
+    CREATE TABLE #AllSynonymMetadata (
         SYNONYM_CATALOG SYSNAME,
         SYNONYM_SCHEMA SYSNAME,
         SYNONYM_NAME SYSNAME,
@@ -41,7 +41,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllSynonymMetadata
+        INSERT INTO #AllSynonymMetadata
         SELECT
             ''' + @dbName + ''' AS SYNONYM_CATALOG,
             SCHEMA_NAME(SCHEMA_ID) AS SYNONYM_SCHEMA,
@@ -67,7 +67,7 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllSynonymMetadata;
+    SELECT * FROM #AllSynonymMetadata;
 END;
 @
 

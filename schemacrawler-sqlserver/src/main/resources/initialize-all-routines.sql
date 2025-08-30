@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllRoutineMetadata') IS NOT NULL
-        DROP TABLE ##AllRoutineMetadata;
+    IF OBJECT_ID('tempdb..#AllRoutineMetadata') IS NOT NULL
+        DROP TABLE #AllRoutineMetadata;
 
-    CREATE TABLE ##AllRoutineMetadata (
+    CREATE TABLE #AllRoutineMetadata (
         ROUTINE_CATALOG SYSNAME,
         ROUTINE_SCHEMA SYSNAME,
         ROUTINE_NAME SYSNAME,
@@ -40,7 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllRoutineMetadata
+        INSERT INTO #AllRoutineMetadata
         SELECT
             R.ROUTINE_CATALOG,
             R.ROUTINE_SCHEMA,
@@ -65,6 +65,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllRoutineMetadata;
+    SELECT * FROM #AllRoutineMetadata;
 END;
 @

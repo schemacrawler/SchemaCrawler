@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllIndexMetadata') IS NOT NULL
-        DROP TABLE ##AllIndexMetadata;
+    IF OBJECT_ID('tempdb..#AllIndexMetadata') IS NOT NULL
+        DROP TABLE #AllIndexMetadata;
 
-    CREATE TABLE ##AllIndexMetadata (
+    CREATE TABLE #AllIndexMetadata (
         TABLE_CAT SYSNAME,
         TABLE_SCHEM SYSNAME,
         TABLE_NAME SYSNAME,
@@ -132,7 +132,7 @@ BEGIN
             AND OBJECTPROPERTY(v.object_id, ''IsSchemaBound'') = 1;';
 
         BEGIN TRY
-            INSERT INTO ##AllIndexMetadata
+            INSERT INTO #AllIndexMetadata
             EXEC sp_executesql @sql;
         END TRY
         BEGIN CATCH
@@ -146,6 +146,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllIndexMetadata;
+    SELECT * FROM #AllIndexMetadata;
 END;
 @
