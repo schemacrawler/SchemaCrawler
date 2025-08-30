@@ -55,8 +55,8 @@ BEGIN
         USE ' + QUOTENAME(@dbName) + ';
         SELECT
             ''' + @dbName + ''' AS TABLE_CAT,
-            CAST(t.TABLE_SCHEMA AS SYSNAME) AS TABLE_SCHEM,
-            CAST(t.TABLE_NAME AS SYSNAME) AS TABLE_NAME,
+            CAST(ts.name AS SYSNAME) AS TABLE_SCHEM,
+            CAST(t.name AS SYSNAME) AS TABLE_NAME,
             CAST(CASE WHEN i.is_unique = 1 THEN 0 ELSE 1 END AS SMALLINT) AS NON_UNIQUE,
             CAST(NULL AS SYSNAME) AS INDEX_QUALIFIER,
             CAST(i.name AS SYSNAME) AS INDEX_NAME,
@@ -77,13 +77,11 @@ BEGIN
             i.auto_created,
             i.type_desc
         FROM
-            INFORMATION_SCHEMA.TABLES t
-            INNER JOIN sys.schemas s
-                ON s.name = t.TABLE_SCHEMA
-            INNER JOIN sys.tables st
-                ON st.name = t.TABLE_NAME AND st.schema_id = s.schema_id
+            sys.tables t
+            INNER JOIN sys.schemas ts
+                ON t.schema_id = ts.schema_id
             INNER JOIN sys.indexes i
-                ON i.object_id = st.object_id
+                ON i.object_id = t.object_id
             INNER JOIN sys.index_columns ic
                 ON ic.object_id = i.object_id AND ic.index_id = i.index_id
             INNER JOIN sys.columns c
