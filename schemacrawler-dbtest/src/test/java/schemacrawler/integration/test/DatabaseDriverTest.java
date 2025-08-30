@@ -24,6 +24,6 @@ public class DatabaseDriverTest {
     assertThat(
         "Number of of avilable JDBC drivers is not correct - found " + numJDBCDrivers,
         numJDBCDrivers,
-        is(19));
+        is(20));
   }
 }
