@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -57,8 +56,6 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
   @BeforeEach
   public void createDatabase() throws SQLException {
 
-    new LoggingConfig(Level.INFO);
-
     if (!dbContainer.isRunning()) {
       fail("Testcontainer for database is not available");
     }
@@ -70,7 +67,6 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
     try (final Connection connection = getConnection()) {
-      connection.setAutoCommit(true);
       SqlScript.executeScriptFromResource("/multiple-databases.sql", connection);
     }
   }
@@ -81,6 +77,8 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
    */
   @Test
   public void multipleDatabases(final TestContext testContext) throws Exception {
+
+    new LoggingConfig(Level.INFO);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
