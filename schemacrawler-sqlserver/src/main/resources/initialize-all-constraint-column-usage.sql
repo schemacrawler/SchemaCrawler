@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllConstraintColumnUsage') IS NOT NULL
-        DROP TABLE ##AllConstraintColumnUsage;
+    IF OBJECT_ID('tempdb..#AllConstraintColumnUsage') IS NOT NULL
+        DROP TABLE #AllConstraintColumnUsage;
 
-    CREATE TABLE ##AllConstraintColumnUsage (
+    CREATE TABLE #AllConstraintColumnUsage (
         CONSTRAINT_CATALOG SYSNAME,
         CONSTRAINT_SCHEMA SYSNAME,
         CONSTRAINT_NAME SYSNAME,
@@ -42,7 +42,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllConstraintColumnUsage
+        INSERT INTO #AllConstraintColumnUsage
         SELECT
             CONSTRAINT_CATALOG,
             CONSTRAINT_SCHEMA,
@@ -69,6 +69,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllConstraintColumnUsage;
+    SELECT * FROM #AllConstraintColumnUsage;
 END;
 @

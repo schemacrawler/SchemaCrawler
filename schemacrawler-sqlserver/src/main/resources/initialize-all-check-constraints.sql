@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllCheckConstraintMetadata') IS NOT NULL
-        DROP TABLE ##AllCheckConstraintMetadata;
+    IF OBJECT_ID('tempdb..#AllCheckConstraintMetadata') IS NOT NULL
+        DROP TABLE #AllCheckConstraintMetadata;
 
-    CREATE TABLE ##AllCheckConstraintMetadata (
+    CREATE TABLE #AllCheckConstraintMetadata (
         CONSTRAINT_CATALOG SYSNAME,
         CONSTRAINT_SCHEMA SYSNAME,
         CONSTRAINT_NAME SYSNAME,
@@ -38,7 +38,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllCheckConstraintMetadata
+        INSERT INTO #AllCheckConstraintMetadata
         SELECT
             ''' + @dbName + ''' AS CONSTRAINT_CATALOG,
             CONSTRAINT_SCHEMA,
@@ -61,6 +61,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllCheckConstraintMetadata;
+    SELECT * FROM #AllCheckConstraintMetadata;
 END;
 @

@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllPrimaryKeyMetadata') IS NOT NULL
-        DROP TABLE ##AllPrimaryKeyMetadata;
+    IF OBJECT_ID('tempdb..#AllPrimaryKeyMetadata') IS NOT NULL
+        DROP TABLE #AllPrimaryKeyMetadata;
 
-    CREATE TABLE ##AllPrimaryKeyMetadata (
+    CREATE TABLE #AllPrimaryKeyMetadata (
         TABLE_CAT SYSNAME,
         TABLE_SCHEM SYSNAME,
         TABLE_NAME SYSNAME,
@@ -61,7 +61,7 @@ BEGIN
             kc.type = ''PK'';';
 
         BEGIN TRY
-            INSERT INTO ##AllPrimaryKeyMetadata
+            INSERT INTO #AllPrimaryKeyMetadata
             EXEC sp_executesql @sql;
         END TRY
         BEGIN CATCH
@@ -75,6 +75,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllPrimaryKeyMetadata;
+    SELECT * FROM #AllPrimaryKeyMetadata;
 END;
 @

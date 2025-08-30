@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllFunctionParameters') IS NOT NULL
-        DROP TABLE ##AllFunctionParameters;
+    IF OBJECT_ID('tempdb..#AllFunctionParameters') IS NOT NULL
+        DROP TABLE #AllFunctionParameters;
 
-    CREATE TABLE ##AllFunctionParameters (
+    CREATE TABLE #AllFunctionParameters (
         FUNCTION_CAT SYSNAME,
         FUNCTION_SCHEM SYSNAME,
         FUNCTION_NAME SYSNAME,
@@ -47,7 +47,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllFunctionParameters
+        INSERT INTO #AllFunctionParameters
         SELECT
             R.ROUTINE_CATALOG AS FUNCTION_CAT,
             R.ROUTINE_SCHEMA AS FUNCTION_SCHEM,
@@ -94,6 +94,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllFunctionParameters;
+    SELECT * FROM #AllFunctionParameters;
 END;
 @

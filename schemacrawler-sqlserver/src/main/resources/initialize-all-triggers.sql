@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllTriggerMetadata') IS NOT NULL
-        DROP TABLE ##AllTriggerMetadata;
+    IF OBJECT_ID('tempdb..#AllTriggerMetadata') IS NOT NULL
+        DROP TABLE #AllTriggerMetadata;
 
-    CREATE TABLE ##AllTriggerMetadata (
+    CREATE TABLE #AllTriggerMetadata (
         TRIGGER_CATALOG SYSNAME,
         TRIGGER_SCHEMA SYSNAME,
         TRIGGER_NAME SYSNAME,
@@ -46,7 +46,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllTriggerMetadata
+        INSERT INTO #AllTriggerMetadata
         SELECT
             ist.TABLE_CATALOG,
             ist.TABLE_SCHEMA,
@@ -96,6 +96,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllTriggerMetadata;
+    SELECT * FROM #AllTriggerMetadata;
 END;
 @

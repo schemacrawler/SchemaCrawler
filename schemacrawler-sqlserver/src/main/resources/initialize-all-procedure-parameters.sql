@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllProcedureParameters') IS NOT NULL
-        DROP TABLE ##AllProcedureParameters;
+    IF OBJECT_ID('tempdb..#AllProcedureParameters') IS NOT NULL
+        DROP TABLE #AllProcedureParameters;
 
-    CREATE TABLE ##AllProcedureParameters (
+    CREATE TABLE #AllProcedureParameters (
         PROCEDURE_CAT SYSNAME,
         PROCEDURE_SCHEM SYSNAME,
         PROCEDURE_NAME SYSNAME,
@@ -47,7 +47,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllProcedureParameters
+        INSERT INTO #AllProcedureParameters
         SELECT
             R.ROUTINE_CATALOG AS PROCEDURE_CAT,
             R.ROUTINE_SCHEMA AS PROCEDURE_SCHEM,
@@ -94,6 +94,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllProcedureParameters;
+    SELECT * FROM #AllProcedureParameters;
 END;
 @

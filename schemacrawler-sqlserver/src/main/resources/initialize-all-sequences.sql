@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllSequenceMetadata') IS NOT NULL
-        DROP TABLE ##AllSequenceMetadata;
+    IF OBJECT_ID('tempdb..#AllSequenceMetadata') IS NOT NULL
+        DROP TABLE #AllSequenceMetadata;
 
-    CREATE TABLE ##AllSequenceMetadata (
+    CREATE TABLE #AllSequenceMetadata (
         SEQUENCE_CATALOG SYSNAME,
         SEQUENCE_SCHEMA SYSNAME,
         SEQUENCE_NAME SYSNAME,
@@ -49,7 +49,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllSequenceMetadata
+        INSERT INTO #AllSequenceMetadata
         SELECT
             SEQUENCE_CATALOG,
             SEQUENCE_SCHEMA,
@@ -83,6 +83,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllSequenceMetadata;
+    SELECT * FROM #AllSequenceMetadata;
 END;
 @

@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllViewTableUsage') IS NOT NULL
-        DROP TABLE ##AllViewTableUsage;
+    IF OBJECT_ID('tempdb..#AllViewTableUsage') IS NOT NULL
+        DROP TABLE #AllViewTableUsage;
 
-    CREATE TABLE ##AllViewTableUsage (
+    CREATE TABLE #AllViewTableUsage (
         VIEW_CATALOG SYSNAME,
         VIEW_SCHEMA SYSNAME,
         VIEW_NAME SYSNAME,
@@ -40,7 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllViewTableUsage
+        INSERT INTO #AllViewTableUsage
         SELECT
             VIEW_CATALOG,
             VIEW_SCHEMA,
@@ -65,6 +65,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllViewTableUsage;
+    SELECT * FROM #AllViewTableUsage;
 END;
 @

@@ -14,11 +14,11 @@ BEGIN
     SET NOCOUNT ON;
 
     -- Drop the global temp table if it exists
-    IF OBJECT_ID('tempdb..##AllTableColumns') IS NOT NULL
-        DROP TABLE ##AllTableColumns;
+    IF OBJECT_ID('tempdb..#AllTableColumns') IS NOT NULL
+        DROP TABLE #AllTableColumns;
 
     -- Create the global temp table for collecting column metadata
-    CREATE TABLE ##AllTableColumns (
+    CREATE TABLE #AllTableColumns (
         TABLE_CAT SYSNAME,
         TABLE_SCHEM SYSNAME,
         TABLE_NAME SYSNAME,
@@ -49,7 +49,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         DECLARE @sql NVARCHAR(MAX) = N'
-        INSERT INTO ##AllTableColumns
+        INSERT INTO #AllTableColumns
         SELECT
             CAST(cu.TABLE_CATALOG AS SYSNAME) AS TABLE_CAT,
             CAST(cu.TABLE_SCHEMA AS SYSNAME) AS TABLE_SCHEM,
@@ -131,6 +131,6 @@ BEGIN
     DEALLOCATE db_cursor;
 
     -- Return the combined results
-    SELECT * FROM ##AllTableColumns;
+    SELECT * FROM #AllTableColumns;
 END;
 @

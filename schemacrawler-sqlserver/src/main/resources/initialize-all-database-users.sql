@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllDatabaseUsers') IS NOT NULL
-        DROP TABLE ##AllDatabaseUsers;
+    IF OBJECT_ID('tempdb..#AllDatabaseUsers') IS NOT NULL
+        DROP TABLE #AllDatabaseUsers;
 
-    CREATE TABLE ##AllDatabaseUsers (
+    CREATE TABLE #AllDatabaseUsers (
         USERNAME SYSNAME,
         CREATE_DATE DATETIME,
         MODIFY_DATE DATETIME,
@@ -40,7 +40,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllDatabaseUsers
+        INSERT INTO #AllDatabaseUsers
         SELECT
             NAME AS USERNAME,
             CREATE_DATE,
@@ -69,6 +69,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllDatabaseUsers;
+    SELECT * FROM #AllDatabaseUsers;
 END;
 @

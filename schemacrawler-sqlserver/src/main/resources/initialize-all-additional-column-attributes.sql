@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllAdditionalColumnAttributes') IS NOT NULL
-        DROP TABLE ##AllAdditionalColumnAttributes;
+    IF OBJECT_ID('tempdb..#AllAdditionalColumnAttributes') IS NOT NULL
+        DROP TABLE #AllAdditionalColumnAttributes;
 
-    CREATE TABLE ##AllAdditionalColumnAttributes (
+    CREATE TABLE #AllAdditionalColumnAttributes (
         TABLE_CATALOG SYSNAME,
         TABLE_SCHEMA SYSNAME,
         TABLE_NAME SYSNAME,
@@ -39,7 +39,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         SET @sql = N'
-        INSERT INTO ##AllAdditionalColumnAttributes
+        INSERT INTO #AllAdditionalColumnAttributes
         SELECT
             ''' +@dbName + ''' AS TABLE_CATALOG,
             SCHEMA_NAME(O.SCHEMA_ID) AS TABLE_SCHEMA,
@@ -73,6 +73,6 @@ BEGIN
     CLOSE db_cursor;
     DEALLOCATE db_cursor;
 
-    SELECT * FROM ##AllAdditionalColumnAttributes;
+    SELECT * FROM #AllAdditionalColumnAttributes;
 END;
 @
