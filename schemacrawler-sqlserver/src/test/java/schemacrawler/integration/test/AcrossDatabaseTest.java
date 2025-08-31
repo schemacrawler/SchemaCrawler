@@ -103,7 +103,7 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
     createDataSource(jdbcUrl, user, password);
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
-    try (Connection connection = getConnection()) {
+    try (final Connection connection = getConnection()) {
       SqlScript.executeScriptFromResource("/across-database.sql", connection);
     }
 
