@@ -104,8 +104,12 @@ public final class TestUtility {
     return args;
   }
 
+  public static boolean isJre8() {
+    return JRE.currentJre() == JAVA_8;
+  }
+
   public static String javaVersion() {
-    if (JRE.currentVersion() == JAVA_8) {
+    if (JRE.currentJre() == JAVA_8) {
       return "8";
     }
     return "LTE";
