@@ -92,7 +92,7 @@
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.4.13.0</version>
+      <version>9.4.14.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
