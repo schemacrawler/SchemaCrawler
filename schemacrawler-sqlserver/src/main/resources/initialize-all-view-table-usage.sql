@@ -43,14 +43,29 @@ BEGIN
         USE ' + QUOTENAME(@dbName) + ';
         INSERT INTO #AllViewTableUsage
         SELECT
-            VIEW_CATALOG,
-            VIEW_SCHEMA,
-            VIEW_NAME,
-            TABLE_CATALOG,
-            TABLE_SCHEMA,
-            TABLE_NAME
+            ''' + @dbName + '''
+                AS VIEW_CATALOG,
+            vs.name
+                AS VIEW_SCHEMA,
+            v.name
+                AS VIEW_NAME,
+            COALESCE(sed.referenced_database_name, ''' + @dbName + ''')
+                AS TABLE_CATALOG,
+            ISNULL(sed.referenced_schema_name, ts.name)
+                AS TABLE_SCHEMA,
+            ISNULL(sed.referenced_entity_name, t.name)
+                AS TABLE_NAME
         FROM
-            INFORMATION_SCHEMA.VIEW_TABLE_USAGE;';
+            sys.views v
+            INNER JOIN sys.schemas vs
+                ON v.schema_id = vs.schema_id
+            INNER JOIN sys.sql_expression_dependencies sed
+                ON sed.referencing_id = v.object_id
+            INNER JOIN sys.objects t
+                ON sed.referenced_id = t.object_id
+            INNER JOIN sys.schemas ts
+                ON t.schema_id = ts.schema_id
+        ;';
 
         BEGIN TRY
             EXEC sp_executesql @sql;

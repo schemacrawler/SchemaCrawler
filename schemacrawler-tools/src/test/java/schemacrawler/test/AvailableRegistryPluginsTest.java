@@ -12,13 +12,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.hasItemInArray;
-import static schemacrawler.test.utility.TestUtility.isJre8;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -45,13 +46,9 @@ public class AvailableRegistryPluginsTest {
   }
 
   @Test
+  // No script engines ship with Java versions later than 8
+  @EnabledOnJre(JRE.JAVA_8)
   public void availableScriptEngines() throws UnsupportedEncodingException {
-    int size = ScriptEngineRegistry.getScriptEngineRegistry().getRegisteredPlugins().size();
-    if (isJre8() && size == 0) {
-      // No script engines ship with Java versions later than 8
-      return;
-    }
-
     final String scriptEngineName =
         ScriptEngineRegistry.getScriptEngineRegistry().getRegisteredPlugins().stream()
             .findAny()

@@ -55,16 +55,18 @@ BEGIN
             INNER JOIN sys.schemas s
                 ON t.schema_id = s.schema_id
             INNER JOIN sys.indexes i
-                ON i.object_id = kc.parent_object_id
+                ON i.object_id = t.object_id
                     AND i.index_id  = kc.unique_index_id
             INNER JOIN sys.index_columns ic
                 ON ic.object_id = i.object_id
-                    AND ic.index_id  = i.index_id
+                    AND ic.index_id = i.index_id
             INNER JOIN sys.columns c
-                ON ic.object_id = c.object_id
-                    AND ic.column_id = c.column_id
+                ON c.object_id = ic.object_id
+                    AND c.column_id = ic.column_id
         WHERE
-            kc.type = ''PK'';';
+            kc.type = ''PK''
+            AND i.name IS NOT NULL
+            AND i.is_hypothetical = 0;';
 
         BEGIN TRY
             INSERT INTO #AllPrimaryKeyMetadata
