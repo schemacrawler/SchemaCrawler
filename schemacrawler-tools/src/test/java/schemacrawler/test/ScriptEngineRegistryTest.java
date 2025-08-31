@@ -11,11 +11,10 @@ package schemacrawler.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.condition.JRE.JAVA_8;
+import static schemacrawler.test.utility.TestUtility.isJre8;
 
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.utility.property.PropertyName;
 
@@ -23,7 +22,7 @@ public class ScriptEngineRegistryTest {
 
   @Test
   public void registeredPlugins() {
-    if (JRE.currentVersion() != JAVA_8) {
+    if (isJre8()) {
       // No script engines ship with Java versions later than 8
       return;
     }

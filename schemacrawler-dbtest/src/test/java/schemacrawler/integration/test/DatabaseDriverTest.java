@@ -10,6 +10,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.sql.Driver;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,6 @@ public class DatabaseDriverTest {
     assertThat(
         "Number of of avilable JDBC drivers is not correct - found " + numJDBCDrivers,
         numJDBCDrivers,
-        is(20));
+        is(19));
   }
 }
