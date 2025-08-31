@@ -13,10 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllSequenceMetadata') IS NOT NULL
-        DROP TABLE ##AllSequenceMetadata;
+    IF OBJECT_ID('tempdb..#AllSequenceMetadata') IS NOT NULL
+        DROP TABLE #AllSequenceMetadata;
 
-    CREATE TABLE ##AllSequenceMetadata (
+    CREATE TABLE #AllSequenceMetadata (
         SEQUENCE_CATALOG SYSNAME,
         SEQUENCE_SCHEMA SYSNAME,
         SEQUENCE_NAME SYSNAME,
@@ -34,10 +34,23 @@ BEGIN
         DECLARED_NUMERIC_SCALE INT
     );
 
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
-        INSERT INTO ##AllSequenceMetadata
+        SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
+        INSERT INTO #AllSequenceMetadata
         SELECT
             SEQUENCE_CATALOG,
             SEQUENCE_SCHEMA,
@@ -54,13 +67,23 @@ BEGIN
             DECLARED_DATA_TYPE,
             DECLARED_NUMERIC_PRECISION,
             DECLARED_NUMERIC_SCALE
-        FROM [?].INFORMATION_SCHEMA.SEQUENCES
-        ORDER BY
-            SEQUENCE_CATALOG,
-            SEQUENCE_SCHEMA,
-            SEQUENCE_NAME;
-    END';
+        FROM
+            INFORMATION_SCHEMA.SEQUENCES;';
 
-    SELECT * FROM ##AllSequenceMetadata;
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
+
+    SELECT * FROM #AllSequenceMetadata;
 END;
 @

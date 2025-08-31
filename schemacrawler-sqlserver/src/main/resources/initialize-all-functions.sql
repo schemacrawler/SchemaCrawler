@@ -13,12 +13,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Drop the global temp table if it exists
-    IF OBJECT_ID('tempdb..##AllFunctions') IS NOT NULL
-        DROP TABLE ##AllFunctions;
+    IF OBJECT_ID('tempdb..#AllFunctions') IS NOT NULL
+        DROP TABLE #AllFunctions;
 
-    -- Create the global temp table for collecting function metadata
-    CREATE TABLE ##AllFunctions (
+    CREATE TABLE #AllFunctions (
         FUNCTION_CAT SYSNAME,
         FUNCTION_SCHEM SYSNAME,
         FUNCTION_NAME SYSNAME,
@@ -33,11 +31,23 @@ BEGIN
         LAST_ALTERED DATETIME
     );
 
-    -- Execute against each non-system database
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'',''model'',''msdb'',''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
-        INSERT INTO ##AllFunctions
+        SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
+        INSERT INTO #AllFunctions
         SELECT
             R.ROUTINE_CATALOG AS FUNCTION_CAT,
             R.ROUTINE_SCHEMA AS FUNCTION_SCHEM,
@@ -51,13 +61,25 @@ BEGIN
             R.MAX_DYNAMIC_RESULT_SETS,
             R.CREATED,
             R.LAST_ALTERED
-        FROM 
-            [?].INFORMATION_SCHEMA.ROUTINES R
-        WHERE 
-            R.ROUTINE_TYPE = ''FUNCTION'';
-    END';
+        FROM
+            INFORMATION_SCHEMA.ROUTINES R
+        WHERE
+            R.ROUTINE_TYPE = ''FUNCTION'';';
 
-    -- Return the combined results
-    SELECT * FROM ##AllFunctions;
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
+
+    SELECT * FROM #AllFunctions;
 END;
 @

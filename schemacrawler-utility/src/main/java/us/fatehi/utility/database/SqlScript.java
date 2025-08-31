@@ -49,7 +49,8 @@ public class SqlScript implements Runnable {
 
     try (final Reader scriptReader =
         new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)) {
-      new SqlScript(scriptReader, delimiter, connection).run();
+      final SqlScript sqlScript = new SqlScript(scriptReader, delimiter, connection);
+      sqlScript.run();
     } catch (final Exception e) {
       throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
     }

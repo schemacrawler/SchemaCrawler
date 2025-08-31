@@ -22,6 +22,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,16 +83,15 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    final String user = dbContainer.getUsername();
+    final String password = dbContainer.getPassword();
+
+    createDataSource(jdbcUrl, user, password);
 
     createDatabase("/sqlserver.scripts.txt");
 
-    createDataSource(
-        dbContainer.getJdbcUrl(),
-        dbContainer.getUsername(),
-        dbContainer.getPassword(),
-        "database=BOOKS");
+    createDataSource(jdbcUrl, user, password, "database=BOOKS");
   }
 
   @Test

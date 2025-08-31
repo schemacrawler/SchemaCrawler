@@ -20,16 +20,17 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -57,7 +58,10 @@ import us.fatehi.utility.property.Property;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ResolveTestContext
-@Disabled("For testing against test server")
+@EnabledIfEnvironmentVariable(
+    named = "TEST_AGAINST_RUNNING_SERVER",
+    matches = "true",
+    disabledReason = "No running server defined")
 public class SqlServer2Test extends BaseAdditionalDatabaseTest {
 
   @BeforeAll

@@ -13,35 +13,62 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF OBJECT_ID('tempdb..##AllAdditionalTableAttributes') IS NOT NULL
-        DROP TABLE ##AllAdditionalTableAttributes;
+    IF OBJECT_ID('tempdb..#AllAdditionalTableAttributes') IS NOT NULL
+        DROP TABLE #AllAdditionalTableAttributes;
 
-    CREATE TABLE ##AllAdditionalTableAttributes (
+    CREATE TABLE #AllAdditionalTableAttributes (
         TABLE_CATALOG SYSNAME,
         TABLE_SCHEMA SYSNAME,
         TABLE_NAME SYSNAME,
         REMARKS NVARCHAR(MAX)
     );
 
-    EXEC sp_msforeachdb N'
-    IF ''?'' NOT IN (''master'', ''model'', ''msdb'', ''tempdb'')
+    DECLARE @dbName SYSNAME;
+    DECLARE @sql NVARCHAR(MAX);
+
+    DECLARE db_cursor CURSOR FOR
+        SELECT name
+        FROM sys.databases
+        WHERE name NOT IN ('master', 'model', 'msdb', 'tempdb')
+          AND state_desc = 'ONLINE';
+
+    OPEN db_cursor;
+    FETCH NEXT FROM db_cursor INTO @dbName;
+
+    WHILE @@FETCH_STATUS = 0
     BEGIN
-        INSERT INTO ##AllAdditionalTableAttributes
+        SET @sql = N'
+        USE ' + QUOTENAME(@dbName) + ';
+        INSERT INTO #AllAdditionalTableAttributes
         SELECT
-            DB_NAME() AS TABLE_CATALOG,
+            ''' + @dbName + ''' AS TABLE_CATALOG,
             SCHEMA_NAME(O.SCHEMA_ID) AS TABLE_SCHEMA,
             O.NAME AS TABLE_NAME,
             CONVERT(NVARCHAR(MAX), EP.VALUE) AS REMARKS
-        FROM [?].SYS.ALL_OBJECTS O
-        INNER JOIN [?].SYS.EXTENDED_PROPERTIES EP
-            ON O.OBJECT_ID = EP.MAJOR_ID AND EP.MINOR_ID = 0
+        FROM
+            SYS.ALL_OBJECTS O
+        INNER JOIN SYS.EXTENDED_PROPERTIES EP
+                ON O.OBJECT_ID = EP.MAJOR_ID AND EP.MINOR_ID = 0
         WHERE
             O.IS_MS_SHIPPED != 1
             AND O.TYPE = ''U''
-            AND EP.MINOR_ID = 0
-            AND EP.NAME = ''MS_Description'';
-    END';
+            AND EP.CLASS = 1
+            AND EP.NAME = ''MS_Description'';';
 
-    SELECT * FROM ##AllAdditionalTableAttributes;
+        BEGIN TRY
+            EXEC sp_executesql @sql;
+        END TRY
+        BEGIN CATCH
+            DECLARE @error NVARCHAR(MAX) = ERROR_MESSAGE();
+            RAISERROR(@error, 5, 1);
+        END CATCH;
+
+        FETCH NEXT FROM db_cursor INTO @dbName;
+    END;
+
+    CLOSE db_cursor;
+    DEALLOCATE db_cursor;
+
+    SELECT * FROM #AllAdditionalTableAttributes;
 END;
 @

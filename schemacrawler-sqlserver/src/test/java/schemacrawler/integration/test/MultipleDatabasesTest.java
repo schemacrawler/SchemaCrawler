@@ -19,14 +19,13 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-
+import java.util.logging.Level;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -41,6 +40,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.database.SqlScript;
 
 @DisableLogging
@@ -61,8 +61,11 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    final String user = dbContainer.getUsername();
+    final String password = dbContainer.getPassword();
+
+    createDataSource(jdbcUrl, user, password);
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
     try (final Connection connection = getConnection()) {
@@ -76,6 +79,8 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
    */
   @Test
   public void multipleDatabases(final TestContext testContext) throws Exception {
+
+    new LoggingConfig(Level.INFO);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()

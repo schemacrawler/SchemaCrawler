@@ -24,7 +24,7 @@ public final class SqlServerTestUtility {
     final DockerImageName imageName = DockerImageName.parse("mcr.microsoft.com/mssql/server");
     return new MSSQLServerContainer<>(imageName.withTag(version))
         .withUrlParam("encrypt", "false")
-        .withPassword("$ch3maCr@wl3r")
+        .withPassword("Schem#Crawl3r")
         .acceptLicense()
         .withEnv("MSSQL_PID", "Express")
         .withStartupTimeout(Duration.ofMinutes(5));
