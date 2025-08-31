@@ -13,13 +13,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static schemacrawler.test.utility.TestUtility.isJre8;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
@@ -49,15 +50,10 @@ public class AvailablePluginsTest {
   }
 
   @Test
+  // No script engines ship with Java versions later than 8
+  @EnabledOnJre(JRE.JAVA_8)
   public void availableScriptEngines() throws UnsupportedEncodingException {
     final AvailableScriptEngines availableScriptEngines = new AvailableScriptEngines();
-    final int size = availableScriptEngines.size();
-    assertThat("Incorrect number of script engines found", size == 1 || size == 0, is(true));
-    if (isJre8() && size == 0) {
-      // No script engines ship with Java versions later than 8
-      return;
-    }
-
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();
     try (final PrintStream out = new PrintStream(baos, true, utf8)) {
