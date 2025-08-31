@@ -24,6 +24,8 @@ public final class SqlServerConnectionInitializer implements Consumer<Connection
   public void accept(final Connection connection) {
     LOGGER.log(Level.FINE, new StringFormat("Initializing SQL Server connection <%s>", connection));
 
+    SqlScript.executeScriptFromResource("/initialize-all-schemas.sql", "@", connection);
+
     SqlScript.executeScriptFromResource("/initialize-all-procedures.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-functions.sql", "@", connection);
     SqlScript.executeScriptFromResource(
