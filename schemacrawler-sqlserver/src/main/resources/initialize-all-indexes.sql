@@ -55,7 +55,7 @@ BEGIN
         USE ' + QUOTENAME(@dbName) + ';
         SELECT
             ''' + @dbName + ''' AS TABLE_CAT,
-            CAST(ts.name AS SYSNAME) AS TABLE_SCHEM,
+            CAST(s.name AS SYSNAME) AS TABLE_SCHEM,
             CAST(t.name AS SYSNAME) AS TABLE_NAME,
             CAST(CASE WHEN i.is_unique = 1 THEN 0 ELSE 1 END AS SMALLINT) AS NON_UNIQUE,
             CAST(NULL AS SYSNAME) AS INDEX_QUALIFIER,
@@ -78,14 +78,16 @@ BEGIN
             i.type_desc
         FROM
             sys.tables t
-            INNER JOIN sys.schemas ts
-                ON t.schema_id = ts.schema_id
+            INNER JOIN sys.schemas s
+                ON t.schema_id = s.schema_id
             INNER JOIN sys.indexes i
                 ON i.object_id = t.object_id
             INNER JOIN sys.index_columns ic
-                ON ic.object_id = i.object_id AND ic.index_id = i.index_id
+                ON ic.object_id = i.object_id
+                    AND ic.index_id = i.index_id
             INNER JOIN sys.columns c
-                ON c.object_id = ic.object_id AND c.column_id = ic.column_id
+                ON c.object_id = ic.object_id
+                    AND c.column_id = ic.column_id
         WHERE
             i.name IS NOT NULL
             AND i.is_hypothetical = 0
@@ -122,9 +124,11 @@ BEGIN
             INNER JOIN sys.indexes i
                 ON i.object_id = v.object_id
             INNER JOIN sys.index_columns ic
-                ON ic.object_id = i.object_id AND ic.index_id = i.index_id
+                ON ic.object_id = i.object_id
+                    AND ic.index_id = i.index_id
             INNER JOIN sys.columns c
-                ON c.object_id = ic.object_id AND c.column_id = ic.column_id
+                ON c.object_id = ic.object_id
+                    AND c.column_id = ic.column_id
         WHERE
             i.name IS NOT NULL
             AND i.is_hypothetical = 0
