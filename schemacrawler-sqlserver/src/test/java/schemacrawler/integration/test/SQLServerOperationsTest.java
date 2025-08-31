@@ -17,6 +17,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,7 +31,6 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -68,16 +68,15 @@ public class SQLServerOperationsTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    final String user = dbContainer.getUsername();
+    final String password = dbContainer.getPassword();
+
+    createDataSource(jdbcUrl, user, password);
 
     createDatabase("/sqlserver.scripts.txt");
 
-    createDataSource(
-        dbContainer.getJdbcUrl(),
-        dbContainer.getUsername(),
-        dbContainer.getPassword(),
-        "database=BOOKS");
+    createDataSource(jdbcUrl, user, password, "database=BOOKS");
   }
 
   @Test
