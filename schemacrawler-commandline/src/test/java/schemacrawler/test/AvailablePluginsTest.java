@@ -14,7 +14,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.jupiter.api.condition.JRE.JAVA_8;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -74,7 +73,7 @@ public class AvailablePluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     final AvailableJDBCDrivers availableJDBCDrivers = new AvailableJDBCDrivers();
     final int size = availableJDBCDrivers.size();
-    assertThat(size, is(15));
+    assertThat(size, is(16));
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();
