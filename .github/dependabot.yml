@@ -12,6 +12,9 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "nl.jqno.equalsverifier:equalsverifier"
         update-types: ["version-update:semver-major"]
+      # 15.x Informix drivers are not well-behaved
+      - dependency-name: "com.ibm.informix:jdbc"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
       - ":children_crossing: dependencies"
