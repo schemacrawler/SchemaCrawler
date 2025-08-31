@@ -103,18 +103,19 @@ BEGIN
                 WHEN ''image'' THEN -4
                 ELSE 1111
             END AS DATA_TYPE
-        FROM INFORMATION_SCHEMA.COLUMNS cu
-        INNER JOIN sys.schemas ss
-            ON ss.name = cu.TABLE_SCHEMA
-        INNER JOIN sys.objects so
-            ON so.name = cu.TABLE_NAME AND so.schema_id = ss.schema_id
-            AND so.type IN (''U'', ''V'') -- U = table, V = view
-        INNER JOIN sys.columns sc
-            ON sc.object_id = so.object_id AND sc.name = cu.COLUMN_NAME
-        INNER JOIN sys.types ty
-            ON sc.user_type_id = ty.user_type_id
-        INNER JOIN sys.schemas ts
-            ON ty.schema_id = ts.schema_id
+        FROM
+            INFORMATION_SCHEMA.COLUMNS cu
+            INNER JOIN sys.schemas ss
+                ON ss.name = cu.TABLE_SCHEMA
+            INNER JOIN sys.objects so
+                ON so.name = cu.TABLE_NAME AND so.schema_id = ss.schema_id
+                    AND so.type IN (''U'', ''V'') -- U = table, V = view
+            INNER JOIN sys.columns sc
+                ON sc.object_id = so.object_id AND sc.name = cu.COLUMN_NAME
+            INNER JOIN sys.types ty
+                ON sc.user_type_id = ty.user_type_id
+            INNER JOIN sys.schemas ts
+                ON ty.schema_id = ts.schema_id
         ';
 
         BEGIN TRY
