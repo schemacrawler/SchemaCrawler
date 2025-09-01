@@ -72,3 +72,4 @@ FROM (
          current_setting('lc_time') AS value,
          'Locale for time formatting' AS description
 )
+  AS SERVER_INFORMATION
