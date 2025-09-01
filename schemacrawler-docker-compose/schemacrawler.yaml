@@ -4,7 +4,7 @@
 services:
 
   schemacrawler:
-    image: schemacrawler/schemacrawler
+    image: schemacrawler/schemacrawler:early-access-release
     container_name: schemacrawler
     stdin_open: true
     tty: true
