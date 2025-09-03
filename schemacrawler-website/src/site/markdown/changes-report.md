@@ -7,8 +7,8 @@ SchemaCrawler release notes.
 - Add additional SQL Server data dictionary retrieval methods
 
 
-<a name="v16.27.1"></a>
-## Release 16.27.1 - 2025-08-20
+<a name="v16.27.2"></a>
+## Release 16.27.2 - 2025-08-20
 
 - Remove the "quickdump" command
 - Add the "tablesample" command
