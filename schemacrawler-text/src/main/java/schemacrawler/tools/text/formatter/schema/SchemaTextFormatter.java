@@ -34,9 +34,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.isView;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -46,6 +43,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -166,7 +165,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         LOGGER.log(
             Level.FINER, new StringFormat("Not showing routine specific name for <%s>", routine));
         final String specificName = routine.getSpecificName();
-        if (!isBlank(specificName)) {
+        if (!isBlank(specificName) && !routine.getName().equals(specificName)) {
           formattingHelper.writeEmptyRow();
           formattingHelper.writeNameRow("", "[specific name]");
           formattingHelper.writeWideRow(identifiers.quoteName(specificName), "");
