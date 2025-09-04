@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL11Container;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
+
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Collection;
@@ -36,9 +36,11 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
+@DisableLogging
 @HeavyDatabaseTest("postgresql")
 @Testcontainers
 @DisplayName("Test for issue #258 on GitHub")

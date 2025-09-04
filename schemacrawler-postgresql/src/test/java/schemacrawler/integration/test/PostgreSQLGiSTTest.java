@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -37,8 +36,10 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 
+@DisableLogging
 @HeavyDatabaseTest("postgresql")
 @Testcontainers
 @DisplayName("Test for issue #458 - daterange index in Postgres results in NotLoadedException")
@@ -64,11 +65,8 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
     try (final Connection connection = getConnection();
         final Statement stmt = connection.createStatement(); ) {
       stmt.execute(
-          "CREATE TABLE prices ("
-              + "  start_date date NOT NULL,"
-              + "  end_date date NOT NULL,"
-              + "  CONSTRAINT exclude_dates EXCLUDE using gist (daterange(start_date,end_date,'[]') WITH &&)"
-              + ")");
+          "CREATE TABLE prices (start_date date NOT NULL, end_date date NOT NULL, "
+          + "CONSTRAINT exclude_dates EXCLUDE using gist (daterange(start_date,end_date,'[]') WITH &&))");
       // Auto-commited
     }
   }
