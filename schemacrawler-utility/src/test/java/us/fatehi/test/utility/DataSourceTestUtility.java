@@ -28,7 +28,7 @@ public final class DataSourceTestUtility {
   public static DataSource newEmbeddedDatabase(final String script) {
     try {
       // Create data source
-      final String randomDatabaseName = RandomStringUtils.randomAlphabetic(7);
+      final String randomDatabaseName = RandomStringUtils.secure().nextAlphabetic(7);
       final JDBCDataSource hsqlDataSource = new JDBCDataSource();
       hsqlDataSource.setDatabase("jdbc:hsqldb:mem:" + randomDatabaseName);
       // Read script
