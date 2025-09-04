@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-@ExtendWith(DisableLoggingExtension.class)
+@ExtendWith(TestDebugLoggingExtension.class)
 public @interface TestDebugLogging {
 
   String value() default "CONFIG";
