@@ -44,7 +44,7 @@ public final class Config implements Options {
   /**
    * Copies config into a map.
    *
-   * @param configMap Config to copy
+   * @param map Config to copy
    */
   public Config(final Map<String, ? extends Object> map) {
     this();

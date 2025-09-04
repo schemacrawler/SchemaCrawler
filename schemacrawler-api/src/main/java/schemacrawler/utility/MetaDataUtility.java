@@ -127,8 +127,7 @@ public final class MetaDataUtility {
    * Gets a comma-separated list of columns for an index.
    *
    * @param index Index
-   * @param quotingStrategy Identifier quoting strategy
-   * @param quoteString
+   * @param identifiers Identifier quoting strategy
    * @return Comma-separated list of columns
    */
   public static String getColumnsListAsString(final Index index, final Identifiers identifiers) {
@@ -144,8 +143,7 @@ public final class MetaDataUtility {
    * Gets a comma-separated list of columns for a table.
    *
    * @param table Table
-   * @param quotingStrategy Identifier quoting strategy
-   * @param quoteString
+   * @param identifiers Identifier quoting strategy
    * @return Comma-separated list of columns
    */
   public static String getColumnsListAsString(final Table table, final Identifiers identifiers) {
@@ -161,8 +159,7 @@ public final class MetaDataUtility {
    * Gets a comma-separated list of columns for an index.
    *
    * @param tableConstraint Table constraint
-   * @param quotingStrategy Identifier quoting strategy
-   * @param quoteString
+   * @param identifiers Identifier quoting strategy
    * @return Comma-separated list of columns
    */
   public static String getColumnsListAsString(
@@ -179,8 +176,8 @@ public final class MetaDataUtility {
    * Gets a comma-separated list of columns for a foreign key.
    *
    * @param fk Foreign key
-   * @param quotingStrategy Identifier quoting strategy
-   * @param quoteString
+   * @param relationshipType Table relationship type
+   * @param identifiers Identifier quoting strategy
    * @return Comma-separated list of columns
    */
   public static String getColumnsListAsString(
