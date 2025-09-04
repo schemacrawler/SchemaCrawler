@@ -114,7 +114,9 @@ public abstract class DatabaseConnector implements Options {
   /**
    * Creates a datasource for connecting to a database.
    *
-   * @param connectionUrl Database connection URL
+   * @param connectionOptions Connection options
+   * @param userCredentials Username and password
+   * @return Database connection source
    */
   public DatabaseConnectionSource newDatabaseConnectionSource(
       final DatabaseConnectionOptions connectionOptions, final UserCredentials userCredentials) {

@@ -59,11 +59,7 @@ public final class RetrievalTaskRunner {
     return this;
   }
 
-  /**
-   * Allows for a deferred conversion to a string. Useful in logging.
-   *
-   * @return String supplier.
-   */
+  /** Allows for a deferred conversion to a string. Useful in logging. */
   public void stopAndLogTime() {
     try {
       taskRunner.stop();
