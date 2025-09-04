@@ -345,6 +345,41 @@
               <fail>true</fail>
             </configuration>
           </execution>
+          <execution>
+            <id>enforce-dependencies</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <dependencyConvergence/>
+                <bannedDependencies>
+                  <excludes>
+                    <!-- Logging -->
+                    <exclude>commons-logging:commons-logging</exclude>
+                    <exclude>log4j:log4j</exclude>
+                    <!-- Legacy Java EE -->
+                    <exclude>javax.servlet:servlet-api</exclude>
+                    <exclude>javax.servlet:javax.servlet-api</exclude>
+                    <exclude>javax.persistence:persistence-api</exclude>
+                    <exclude>javax.validation:validation-api</exclude>
+                    <exclude>javax.xml.bind:jaxb-api</exclude>
+                    <exclude>javax.ws.rs:jsr311-api</exclude>
+                    <exclude>javax.inject:javax.inject</exclude>
+                    <exclude>javax.annotation:javax.annotation-api</exclude>
+                    <!-- Testing -->
+                    <exclude>org.assertj:assertj-core</exclude>
+                  </excludes>
+                  <message>
+                    Found banned dependencies. Please use:
+                    — Use Java logging instead of commons-logging/ log4j
+                    — Use Jakarta EE instead of javax.* packages
+                    — Hamcrest instead of AssertJ
+                  </message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
