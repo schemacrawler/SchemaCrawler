@@ -21,7 +21,6 @@ import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
-@DisableLogging
 public abstract class BaseAdditionalDatabaseTest {
 
   private DataSource dataSource;
