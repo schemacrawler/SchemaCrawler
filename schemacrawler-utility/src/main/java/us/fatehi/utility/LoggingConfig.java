@@ -8,7 +8,9 @@
 
 package us.fatehi.utility;
 
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.sql.DriverManager;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
@@ -75,6 +77,9 @@ public final class LoggingConfig {
     // Prevent log4j JNDI lookups
     // https://nvd.nist.gov/vuln/detail/CVE-2021-44228
     System.setProperty("log4j2.formatMsgNoLookups", "true");
+
+    // Set DriverManager logging
+    DriverManager.setLogWriter(new PrintWriter(new DriverManagerLogWriter()));
   }
 
   /**
