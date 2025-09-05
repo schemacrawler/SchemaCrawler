@@ -466,7 +466,7 @@ BOOKS.PUBLISHERS                                                 [table]
 ------------------------------------------------------------------------
 List of book publishers
   ID                                NUMBER(38, 0) NOT NULL      
-                                    default "BOOKS"."ISEQ$$_71647".nextval
+                                    default "BOOKS"."ISEQ$$_71700".nextval
                                     auto-incremented            
                                     Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR2(255)               
@@ -667,9 +667,6 @@ BOOKS.GETBOOKSCOUNT                               [procedure, no result]
 ------------------------------------------------------------------------
   BOOKSCOUNT                        NUMBER(22, 0), out          
 
-                                                         [specific name]
-GETBOOKSCOUNT
-
 References
 
 BOOKS.BOOKS                                                      [table]
@@ -691,9 +688,6 @@ BOOKS.NEW_PUBLISHER                               [procedure, no result]
   NEWPUBLISHER                      VARCHAR2, in                
   PUBLISHER                         VARCHAR2, out               
 
-                                                         [specific name]
-NEW_PUBLISHER
-
 Definition
                                                             [definition]
 CREATE OR REPLACE EDITIONABLE PROCEDURE "NEW_PUBLISHER" (NewPublisher IN VARCHAR2, Publisher OUT VARCHAR2)
@@ -709,9 +703,6 @@ BOOKS.CUSTOMADD                      [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               NUMBER(22, 38), in          
   TWO                               NUMBER(22, 38), in          
-
-                                                         [specific name]
-CUSTOMADD
 
 Definition
                                                             [definition]
@@ -730,7 +721,7 @@ Sequences
 
 
 
-BOOKS."ISEQ$$_71647"                                          [sequence]
+BOOKS."ISEQ$$_71700"                                          [sequence]
 ------------------------------------------------------------------------
   increment                         1                           
   start value                                                   
