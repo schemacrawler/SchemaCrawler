@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -77,6 +79,8 @@ public final class MetaDataUtility {
     synonym,
     sequence;
   }
+
+  private static final Logger LOGGER = Logger.getLogger(MetaDataUtility.class.getName());
 
   public static Collection<List<String>> allIndexCoumnNames(final Table table) {
     return indexCoumnNames(table, false);
@@ -271,6 +275,13 @@ public final class MetaDataUtility {
     return String.join(", ", columnsList);
   }
 
+  public static void logCatalogSummary(final Catalog catalog, final Level logLevel) {
+    if (catalog == null || logLevel == null) {
+      return;
+    }
+    LOGGER.log(logLevel, summarizeCatalog(catalog));
+  }
+
   public static void reduceCatalog(
       final Catalog catalog, final SchemaCrawlerOptions schemaCrawlerOptions) {
     requireNonNull(catalog, "No catalog provided");
@@ -293,6 +304,10 @@ public final class MetaDataUtility {
   }
 
   public static String summarizeCatalog(final Catalog catalog) {
+    if (catalog == null) {
+      return "";
+    }
+
     final CrawlInfo crawlInfo = catalog.getCrawlInfo();
 
     final Map<String, Integer> countsMap = new HashMap<>();
