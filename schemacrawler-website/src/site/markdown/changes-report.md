@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.28.1"></a>
+## Release 16.28.1 - 2025-09-18
+- Do not show specific name if the database does not support overloaded routines
+
+
 <a name="v16.27.2"></a>
 ## Release 16.27.2 - 2025-09-05
 - Add additional SQL Server data dictionary retrieval methods
