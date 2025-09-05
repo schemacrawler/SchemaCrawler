@@ -8,13 +8,11 @@
 
 package schemacrawler.utility;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
 import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
 import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -279,7 +278,7 @@ public final class MetaDataUtility {
     if (catalog == null || logLevel == null) {
       return;
     }
-    LOGGER.log(logLevel, summarizeCatalog(catalog));
+    LOGGER.log(logLevel, ()-> summarizeCatalog(catalog));
   }
 
   public static void reduceCatalog(
