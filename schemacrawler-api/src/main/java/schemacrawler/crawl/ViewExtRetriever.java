@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewTableUsageRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -88,25 +89,24 @@ final class ViewExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "View table usage SQL statement was not provided");
       return;
     }
+    final Query viewTableUsageSql = informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
 
     LOGGER.log(Level.INFO, "Retrieving view table usage");
 
-    final String name = "views for table usage";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    final Query viewTableUsageSql = informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
-    try (final Connection connection = getRetrieverConnection().getConnection(name);
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        boolean addedTableUsage = addViewTableUsage(results);
-        retrievalCounts.countIfIncluded(addedTableUsage);
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve table usage for views", e);
+    switch (getRetrieverConnection().get(viewTableUsageRetrievalStrategy)) {
+      case metadata_over_schemas:
+        LOGGER.log(Level.INFO, "Retrieving additional view information, over schemas");
+        retrieveViewTableUsageOverSchemas(viewTableUsageSql);
+        break;
+
+      case data_dictionary_all:
+      default:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional view information, using fast data dictionary retrieval");
+        retrieveViewTableUsageFromDataDictionary(viewTableUsageSql);
+        break;
     }
-    retrievalCounts.log();
   }
 
   private boolean addViewInformation(final MetadataResultSet results) {
@@ -230,6 +230,64 @@ final class ViewExtRetriever extends AbstractRetriever {
           }
         } catch (final Exception e) {
           LOGGER.log(Level.WARNING, "Could not retrieve additional view information", e);
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      }
+    }
+  }
+
+  /**
+   * Retrieves view table usage from the database, in the INFORMATION_SCHEMA format.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  private void retrieveViewTableUsageFromDataDictionary(final Query viewTableUsageSql)
+      throws SQLException {
+    final String name = "views for table usage";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        boolean addedTableUsage = addViewTableUsage(results);
+        retrievalCounts.countIfIncluded(addedTableUsage);
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve table usage for views", e);
+    }
+    retrievalCounts.log();
+  }
+
+  /**
+   * Retrieves view table usage from the database, in the INFORMATION_SCHEMA format.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  private void retrieveViewTableUsageOverSchemas(final Query viewTableUsageSql)
+      throws SQLException {
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "views for table usage";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            boolean addedTableUsage = addViewTableUsage(results);
+            retrievalCounts.countIfIncluded(schema.key(), addedTableUsage);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(Level.WARNING, "Could not retrieve table usage for views", e);
         }
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);
