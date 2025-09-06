@@ -21,6 +21,8 @@ public enum SchemaInfoMetadataRetrievalStrategy {
   tablePrivilegesRetrievalStrategy("tableprivileges"),
   tablesRetrievalStrategy("tables"),
   typeInfoRetrievalStrategy("typeinfo"),
+  viewInformationRetrievalStrategy("view-information"),
+  viewTableUsageRetrievalStrategy("view-table-usage"),
   ;
 
   private final String key;

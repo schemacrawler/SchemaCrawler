@@ -10,14 +10,18 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.CheckOptionType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -51,25 +55,22 @@ final class ViewExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
     }
-
-    LOGGER.log(Level.INFO, "Retrieving additional view information");
-
-    final String name = "views for definitions";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
-    try (final Connection connection = getRetrieverConnection().getConnection(name);
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        boolean addedViewInformation = addViewInformation(results);
-        retrievalCounts.countIfIncluded(addedViewInformation);
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve additional view information", e);
+
+    switch (getRetrieverConnection().get(viewInformationRetrievalStrategy)) {
+      case metadata_over_schemas:
+        LOGGER.log(Level.INFO, "Retrieving additional view information, over schemas");
+        retrieveViewInformationOverSchemas(viewInformationSql);
+        break;
+
+      case data_dictionary_all:
+      default:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional view information, using fast data dictionary retrieval");
+        retrieveViewInformationFromDataDictionary(viewInformationSql);
+        break;
     }
-    retrievalCounts.log();
   }
 
   /**
@@ -99,7 +100,6 @@ final class ViewExtRetriever extends AbstractRetriever {
             new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("VIEW_CATALOG"));
         boolean addedTableUsage = addViewTableUsage(results);
         retrievalCounts.countIfIncluded(addedTableUsage);
       }
@@ -177,5 +177,63 @@ final class ViewExtRetriever extends AbstractRetriever {
 
     view.addTableUsage(table);
     return true;
+  }
+
+  /**
+   * Retrieves view information from the database, in the INFORMATION_SCHEMA format.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  private void retrieveViewInformationFromDataDictionary(final Query viewInformationSql)
+      throws SQLException {
+    final String name = "views for definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        boolean addedViewInformation = addViewInformation(results);
+        retrievalCounts.countIfIncluded(addedViewInformation);
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve additional view information", e);
+    }
+    retrievalCounts.log();
+  }
+
+  /**
+   * Retrieves view information from the database, in the INFORMATION_SCHEMA format.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  private void retrieveViewInformationOverSchemas(final Query viewInformationSql)
+      throws SQLException {
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "views for definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            boolean addedViewInformation = addViewInformation(results);
+            retrievalCounts.countIfIncluded(schema.key(), addedViewInformation);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(Level.WARNING, "Could not retrieve additional view information", e);
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      }
+    }
   }
 }
