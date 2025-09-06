@@ -18,12 +18,12 @@ import static schemacrawler.filter.ReducerFactory.getTableReducer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
@@ -34,6 +34,7 @@ import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -46,6 +47,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.UtilityMarker;
+import us.fatehi.utility.graph.TreeNode;
 
 @UtilityMarker
 public final class MetaDataUtility {
@@ -77,6 +79,8 @@ public final class MetaDataUtility {
     synonym,
     sequence;
   }
+
+  private static final Logger LOGGER = Logger.getLogger(MetaDataUtility.class.getName());
 
   public static Collection<List<String>> allIndexCoumnNames(final Table table) {
     return indexCoumnNames(table, false);
@@ -271,6 +275,13 @@ public final class MetaDataUtility {
     return String.join(", ", columnsList);
   }
 
+  public static void logCatalogSummary(final Catalog catalog, final Level logLevel) {
+    if (catalog == null || logLevel == null) {
+      return;
+    }
+    LOGGER.log(logLevel, () -> summarizeCatalog(catalog));
+  }
+
   public static void reduceCatalog(
       final Catalog catalog, final SchemaCrawlerOptions schemaCrawlerOptions) {
     requireNonNull(catalog, "No catalog provided");
@@ -293,17 +304,80 @@ public final class MetaDataUtility {
   }
 
   public static String summarizeCatalog(final Catalog catalog) {
+    if (catalog == null) {
+      return "";
+    }
+
+    final TreeNode<String> countTree = new TreeNode<>("catalog", catalog.getName());
+
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final TreeNode<?> schemasNode = countTree.addChild(new TreeNode<>("schemas", schemas.size()));
+    for (final Schema schema : schemas) {
+      final TreeNode<?> schemaNode =
+          schemasNode.addChild(new TreeNode<>("schema", schema.getFullName()));
+      // Column data types
+      final Collection<ColumnDataType> columnDataTypes = catalog.getColumnDataTypes(schema);
+      schemaNode.addChild(new TreeNode<>("data-types", columnDataTypes.size()));
+      // Tables
+      final Collection<Table> tables = catalog.getTables(schema);
+      final TreeNode<?> tablesNode = schemaNode.addChild(new TreeNode<>("tables", tables.size()));
+      if (!tables.isEmpty()) {
+        int columnCount = 0;
+        int pkCount = 0;
+        int fkCount = 0;
+        int indexCount = 0;
+        int triggerCount = 0;
+        for (final Table table : tables) {
+          columnCount = columnCount + table.getColumns().size();
+          if (table.hasPrimaryKey()) {
+            pkCount = pkCount + 1;
+          }
+          fkCount = fkCount + table.getImportedForeignKeys().size();
+          indexCount = indexCount + table.getIndexes().size();
+          triggerCount = triggerCount + table.getTriggers().size();
+        }
+        tablesNode.addChild(new TreeNode<>("columns", columnCount));
+        tablesNode.addChild(new TreeNode<>("primary-keys", pkCount));
+        tablesNode.addChild(new TreeNode<>("foreign-keys", fkCount));
+        tablesNode.addChild(new TreeNode<>("indexes", indexCount));
+        tablesNode.addChild(new TreeNode<>("triggers", triggerCount));
+      }
+      // Routines
+      final Collection<Routine> routines = catalog.getRoutines(schema);
+      final TreeNode<?> routinesNode =
+          schemaNode.addChild(new TreeNode<>("routines", routines.size()));
+      if (!routines.isEmpty()) {
+        int procedureCount = 0;
+        int functionCount = 0;
+        int parametersCount = 0;
+        for (final Routine routine : routines) {
+          final RoutineType routineType = routine.getType();
+          switch (routineType) {
+            case procedure:
+              procedureCount = procedureCount + 1;
+              break;
+            case function:
+              functionCount = functionCount + 1;
+              break;
+            default:
+              continue;
+          }
+          parametersCount = parametersCount + routine.getParameters().size();
+        }
+        routinesNode.addChild(new TreeNode<>("procedures", procedureCount));
+        routinesNode.addChild(new TreeNode<>("functions", functionCount));
+        routinesNode.addChild(new TreeNode<>("parameters", parametersCount));
+      }
+      // Synonyms
+      final Collection<Synonym> synonyms = catalog.getSynonyms(schema);
+      schemaNode.addChild(new TreeNode<>("synonyms", synonyms.size()));
+      // Sequences
+      final Collection<Sequence> sequences = catalog.getSequences(schema);
+      schemaNode.addChild(new TreeNode<>("sequences", sequences.size()));
+    }
+
     final CrawlInfo crawlInfo = catalog.getCrawlInfo();
-
-    final Map<String, Integer> countsMap = new HashMap<>();
-    countsMap.put("column-data-types", catalog.getColumnDataTypes().size());
-    countsMap.put("schemas", catalog.getSchemas().size());
-    countsMap.put("tables", catalog.getTables().size());
-    countsMap.put("routines", catalog.getRoutines().size());
-    countsMap.put("sequences", catalog.getSequences().size());
-    countsMap.put("synonyms", catalog.getSynonyms().size());
-
-    return String.format("Loaded catalog%n%s%nCounts:%n%s", crawlInfo, Objects.toString(countsMap));
+    return String.format("Loaded catalog%n%s%n%s", crawlInfo, countTree);
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table) {

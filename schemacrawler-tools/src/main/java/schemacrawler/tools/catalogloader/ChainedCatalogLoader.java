@@ -19,6 +19,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
+import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
@@ -63,6 +64,7 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
 
       catalog = nextCatalogLoader.getCatalog();
     }
+    MetaDataUtility.logCatalogSummary(catalog, Level.INFO);
     setCatalog(catalog);
   }
 

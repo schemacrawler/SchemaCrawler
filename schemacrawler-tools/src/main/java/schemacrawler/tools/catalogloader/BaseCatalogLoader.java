@@ -23,7 +23,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
@@ -107,7 +106,6 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   public final void setCatalog(final Catalog catalog) {
     if (catalog != null) {
       LOGGER.log(Level.INFO, new StringFormat("Loaded catalog with loader <%s>", this.getClass()));
-      LOGGER.log(Level.INFO, () -> MetaDataUtility.summarizeCatalog(catalog));
     }
     this.catalog = catalog;
   }
