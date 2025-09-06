@@ -30,6 +30,7 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
         () ->
             DatabaseConnectionSourceBuilder.builder("jdbc:mysql://${host}:${port}/${database}")
                 .withDefaultPort(3306)
+                .withDefaultUrlx("allowPublicKeyRetrieval", true)
                 .withDefaultUrlx("nullNamePatternMatchesAll", true)
                 .withDefaultUrlx("getProceduresReturnsFunctions", false)
                 .withDefaultUrlx("noAccessToProcedureBodies", true)
