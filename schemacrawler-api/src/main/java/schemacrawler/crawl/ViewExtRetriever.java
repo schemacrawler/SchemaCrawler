@@ -63,37 +63,8 @@ final class ViewExtRetriever extends AbstractRetriever {
             new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        // Get the "VIEW_DEFINITION" value first as it the Oracle driver
-        // don't handle it properly otherwise.
-        // https://github.com/schemacrawler/SchemaCrawler/issues/835
-        final String definition = results.getString("VIEW_DEFINITION");
-
-        final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
-        final String viewName = results.getString("TABLE_NAME");
-
-        final Optional<MutableTable> viewOptional = lookupTable(catalogName, schemaName, viewName);
-        if (!viewOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, viewName));
-          continue;
-        }
-
-        final MutableView view = (MutableView) viewOptional.get();
-        LOGGER.log(Level.FINER, new StringFormat("Retrieving view information <%s>", viewName));
-
-        final CheckOptionType checkOption =
-            results.getEnum("CHECK_OPTION", CheckOptionType.unknown);
-        final boolean updatable = results.getBoolean("IS_UPDATABLE");
-
-        view.appendDefinition(definition);
-        view.setCheckOption(checkOption);
-        view.setUpdatable(updatable);
-
-        view.addAttributes(results.getAttributes());
-
-        retrievalCounts.countIncluded();
+        boolean addedViewInformation = addViewInformation(results);
+        retrievalCounts.countIfIncluded(addedViewInformation);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve additional view information", e);
@@ -129,44 +100,82 @@ final class ViewExtRetriever extends AbstractRetriever {
       while (results.next()) {
         retrievalCounts.count();
         final String catalogName = normalizeCatalogName(results.getString("VIEW_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("VIEW_SCHEMA"));
-        final String viewName = results.getString("VIEW_NAME");
-
-        final Optional<MutableTable> viewOptional = lookupTable(catalogName, schemaName, viewName);
-        if (!viewOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find view <%s.%s.%s>", catalogName, schemaName, viewName));
-          continue;
-        }
-
-        final MutableView view = (MutableView) viewOptional.get();
-        LOGGER.log(Level.FINER, new StringFormat("Retrieving view information <%s>", viewName));
-
-        final String tableCatalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
-        final String tableSchemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
-        final String tableName = results.getString("TABLE_NAME");
-
-        final Optional<MutableTable> tableOptional =
-            lookupTable(tableCatalogName, tableSchemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat(
-                  "Cannot find table <%s.%s.%s>", tableCatalogName, tableSchemaName, tableName));
-          continue;
-        }
-
-        final MutableTable table = tableOptional.get();
-        LOGGER.log(Level.FINER, new StringFormat("Retrieving table information <%s>", tableName));
-
-        view.addTableUsage(table);
-
-        retrievalCounts.countIncluded();
+        boolean addedTableUsage = addViewTableUsage(results);
+        retrievalCounts.countIfIncluded(addedTableUsage);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table usage for views", e);
     }
     retrievalCounts.log();
+  }
+
+  private boolean addViewInformation(final MetadataResultSet results) {
+    // Get the "VIEW_DEFINITION" value first as it the Oracle driver
+    // don't handle it properly otherwise.
+    // https://github.com/schemacrawler/SchemaCrawler/issues/835
+    final String definition = results.getString("VIEW_DEFINITION");
+
+    final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
+    final String viewName = results.getString("TABLE_NAME");
+
+    final Optional<MutableTable> viewOptional = lookupTable(catalogName, schemaName, viewName);
+    if (!viewOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, viewName));
+      return false;
+    }
+
+    final MutableView view = (MutableView) viewOptional.get();
+    LOGGER.log(Level.FINER, new StringFormat("Retrieving view information <%s>", viewName));
+
+    final CheckOptionType checkOption = results.getEnum("CHECK_OPTION", CheckOptionType.unknown);
+    final boolean updatable = results.getBoolean("IS_UPDATABLE");
+
+    view.appendDefinition(definition);
+    view.setCheckOption(checkOption);
+    view.setUpdatable(updatable);
+
+    view.addAttributes(results.getAttributes());
+
+    return true;
+  }
+
+  private boolean addViewTableUsage(final MetadataResultSet results) {
+    final String catalogName = normalizeCatalogName(results.getString("VIEW_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("VIEW_SCHEMA"));
+    final String viewName = results.getString("VIEW_NAME");
+
+    final Optional<MutableTable> viewOptional = lookupTable(catalogName, schemaName, viewName);
+    if (!viewOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find view <%s.%s.%s>", catalogName, schemaName, viewName));
+      return false;
+    }
+
+    final MutableView view = (MutableView) viewOptional.get();
+    LOGGER.log(Level.FINER, new StringFormat("Retrieving view information <%s>", viewName));
+
+    final String tableCatalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
+    final String tableSchemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
+    final String tableName = results.getString("TABLE_NAME");
+
+    final Optional<MutableTable> tableOptional =
+        lookupTable(tableCatalogName, tableSchemaName, tableName);
+    if (!tableOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat(
+              "Cannot find table <%s.%s.%s>", tableCatalogName, tableSchemaName, tableName));
+      return false;
+    }
+
+    final MutableTable table = tableOptional.get();
+    LOGGER.log(Level.FINER, new StringFormat("Retrieving table information <%s>", tableName));
+
+    view.addTableUsage(table);
+    return true;
   }
 }
