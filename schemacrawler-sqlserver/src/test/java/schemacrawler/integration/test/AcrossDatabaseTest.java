@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -107,6 +106,8 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
       SqlScript.executeScriptFromResource("/across-database.sql", connection);
     }
 
-    createDataSource(jdbcUrl, user, password, "database=DATABASE_A");
+    // Create a new set of database connections for crawling the schema,
+    // with the master database as the default
+    createDataSource(jdbcUrl, user, password, "database=master");
   }
 }
