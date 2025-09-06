@@ -349,6 +349,7 @@ public final class MetaDataUtility {
       if (!routines.isEmpty()) {
         int procedureCount = 0;
         int functionCount = 0;
+        int parametersCount = 0;
         for (final Routine routine : routines) {
           final RoutineType routineType = routine.getType();
           switch (routineType) {
@@ -361,9 +362,11 @@ public final class MetaDataUtility {
             default:
               continue;
           }
+          parametersCount = parametersCount + routine.getParameters().size();
         }
         routinesNode.addChild(new TreeNode<>("procedures", procedureCount));
         routinesNode.addChild(new TreeNode<>("functions", functionCount));
+        routinesNode.addChild(new TreeNode<>("parameters", parametersCount));
       }
       // Synonyms
       final Collection<Synonym> synonyms = catalog.getSynonyms(schema);
