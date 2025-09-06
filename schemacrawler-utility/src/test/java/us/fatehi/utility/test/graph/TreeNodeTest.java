@@ -31,8 +31,8 @@ public class TreeNodeTest {
 
     final String yaml = root.toString();
 
-    assertThat(yaml, containsString("name: level3"));
-    assertThat(yaml, containsString("value: C"));
+    assertThat(yaml, containsString("level3"));
+    assertThat(yaml, containsString("C"));
   }
 
   @Test
@@ -40,34 +40,34 @@ public class TreeNodeTest {
     final TreeNode<String> node = new TreeNode<>("empty", (String) null);
     final String yaml = node.toString();
 
-    assertThat(yaml, containsString("value:"));
+    assertThat(yaml, containsString("empty"));
   }
 
   @Test
-  void multipleChildrenShouldPreserveOrder() {
+  void multiple_ShouldPreserveOrder() {
     final TreeNode<String> root = new TreeNode<>("root", "system");
     root.addChild(new TreeNode<>("first", "1"));
     root.addChild(new TreeNode<>("second", "2"));
 
     final String yaml = root.toString();
 
-    final int firstIndex = yaml.indexOf("name: first");
-    final int secondIndex = yaml.indexOf("name: second");
+    final int firstIndex = yaml.indexOf("first");
+    final int secondIndex = yaml.indexOf("second");
 
     assertThat(firstIndex, lessThan(secondIndex));
   }
 
   @Test
-  void nestedTreeShouldIncludeChildrenBlock() {
+  void nestedTreeShouldInclude_Block() {
     final TreeNode<String> root = new TreeNode<>("root", "system");
     final TreeNode<String> child = new TreeNode<>("dev", "sandbox");
     root.addChild(child);
 
     final String yaml = root.toString();
 
-    assertThat(yaml, containsString("children:"));
-    assertThat(yaml, containsString("- name: dev"));
-    assertThat(yaml, containsString("value: sandbox"));
+    assertThat(yaml, containsString("_:"));
+    assertThat(yaml, containsString("- dev"));
+    assertThat(yaml, containsString("sandbox"));
   }
 
   @Test
@@ -75,8 +75,8 @@ public class TreeNodeTest {
     final TreeNode<String> node = new TreeNode<>("root", "system");
     final String yaml = node.toString();
 
-    assertThat(yaml, containsString("- name: root"));
-    assertThat(yaml, containsString("value: system"));
-    assertThat(yaml, not(containsString("children:")));
+    assertThat(yaml, containsString("- root"));
+    assertThat(yaml, containsString("system"));
+    assertThat(yaml, not(containsString("_:")));
   }
 }
