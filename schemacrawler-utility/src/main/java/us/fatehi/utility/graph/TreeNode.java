@@ -10,6 +10,7 @@ package us.fatehi.utility.graph;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class TreeNode<T> {
       final int indentLevel = current.level;
       final boolean isClosing = current.isClosing;
 
-      final String indent = "  ".repeat(indentLevel);
+      final String indent = String.join("", Collections.nCopies(indentLevel, "  "));
 
       if (isClosing) {
         // Close children block
