@@ -113,27 +113,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
             new MetadataResultSet(extTableConstraintSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
-        final String constraintName = results.getString("CONSTRAINT_NAME");
-        LOGGER.log(
-            Level.FINER,
-            new StringFormat("Retrieving definition for constraint <%s>", constraintName));
-        final String definition = results.getString("CHECK_CLAUSE");
-
-        final MutableTableConstraint tableConstraint =
-            tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
-        if (tableConstraint == null) {
-          LOGGER.log(
-              Level.FINEST,
-              new StringFormat("Could not add table constraint <%s>", constraintName));
-          continue;
-        }
-        tableConstraint.setDefinition(definition);
-
-        tableConstraint.addAttributes(results.getAttributes());
-
-        retrievalCounts.countIncluded();
+        final boolean added = addTableConstraintDefinition(results);
+        retrievalCounts.countIfIncluded(added);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
@@ -354,6 +335,28 @@ final class TableConstraintRetriever extends AbstractRetriever {
     constraintColumn.setKeyOrdinalPosition(ordinalPosition);
 
     tableConstraint.addColumn(constraintColumn);
+
+    return true;
+  }
+
+  private boolean addTableConstraintDefinition(final MetadataResultSet results) {
+    final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
+    final String constraintName = results.getString("CONSTRAINT_NAME");
+    LOGGER.log(
+        Level.FINER, new StringFormat("Retrieving definition for constraint <%s>", constraintName));
+    final String definition = results.getString("CHECK_CLAUSE");
+
+    final MutableTableConstraint tableConstraint =
+        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
+    if (tableConstraint == null) {
+      LOGGER.log(
+          Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
+      return false;
+    }
+    tableConstraint.setDefinition(definition);
+
+    tableConstraint.addAttributes(results.getAttributes());
 
     return true;
   }
