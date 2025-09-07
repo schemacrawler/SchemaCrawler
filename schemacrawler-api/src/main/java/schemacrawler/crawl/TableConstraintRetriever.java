@@ -249,12 +249,34 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
   }
 
+  private boolean addTableConstraintDefinition(final MetadataResultSet results) {
+    final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
+    final String constraintName = results.getString("CONSTRAINT_NAME");
+    LOGGER.log(
+        Level.FINER, new StringFormat("Retrieving definition for constraint <%s>", constraintName));
+    final String definition = results.getString("CHECK_CLAUSE");
+
+    final MutableTableConstraint tableConstraint =
+        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
+    if (tableConstraint == null) {
+      LOGGER.log(
+          Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
+      return false;
+    }
+    tableConstraint.setDefinition(definition);
+
+    tableConstraint.addAttributes(results.getAttributes());
+
+    return true;
+  }
+
   /**
    * Retrieves table constraint information from the database, in the INFORMATION_SCHEMA format.
    *
    * @throws SQLException On a SQL exception
    */
-  private boolean addTableConstraint(final MetadataResultSet results) {
+  private boolean createTableConstraint(final MetadataResultSet results) {
     final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
     final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
     final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -292,7 +314,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     return true;
   }
 
-  private boolean addTableConstraintColumn(final MetadataResultSet results) {
+  private boolean createTableConstraintColumn(final MetadataResultSet results) {
     final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
     final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
     final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -342,28 +364,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
     return true;
   }
 
-  private boolean addTableConstraintDefinition(final MetadataResultSet results) {
-    final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
-    final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
-    final String constraintName = results.getString("CONSTRAINT_NAME");
-    LOGGER.log(
-        Level.FINER, new StringFormat("Retrieving definition for constraint <%s>", constraintName));
-    final String definition = results.getString("CHECK_CLAUSE");
-
-    final MutableTableConstraint tableConstraint =
-        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
-    if (tableConstraint == null) {
-      LOGGER.log(
-          Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
-      return false;
-    }
-    tableConstraint.setDefinition(definition);
-
-    tableConstraint.addAttributes(results.getAttributes());
-
-    return true;
-  }
-
   private void retrieveTableConstraintColumnsFromDataDictionary(
       final Query tableConstraintsColumnsSql) {
     final String name = "table constraints columns";
@@ -374,7 +374,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
             new MetadataResultSet(tableConstraintsColumnsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final boolean added = addTableConstraintColumn(results);
+        final boolean added = createTableConstraintColumn(results);
         retrievalCounts.countIfIncluded(added);
       }
     } catch (final Exception e) {
@@ -403,7 +403,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
                 new MetadataResultSet(tableConstraintsColumnsSql, statement, getLimitMap()); ) {
           while (results.next()) {
             retrievalCounts.count(schema.key());
-            final boolean added = addTableConstraintColumn(results);
+            final boolean added = createTableConstraintColumn(results);
             retrievalCounts.countIfIncluded(schema.key(), added);
           }
         } catch (final Exception e) {
@@ -488,7 +488,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
             new MetadataResultSet(tableConstraintsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final boolean added = addTableConstraint(results);
+        final boolean added = createTableConstraint(results);
         retrievalCounts.countIfIncluded(added);
       }
     } catch (final Exception e) {
@@ -523,7 +523,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
                 new MetadataResultSet(tableConstraintsSql, statement, getLimitMap()); ) {
           while (results.next()) {
             retrievalCounts.count(schema.key());
-            final boolean added = addTableConstraint(results);
+            final boolean added = createTableConstraint(results);
             retrievalCounts.countIfIncluded(schema.key(), added);
           }
         } catch (final Exception e) {
