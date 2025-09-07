@@ -5,7 +5,7 @@ SchemaCrawler release notes.
 <a name="v16.28.1"></a>
 ## Release 16.28.1 - 2025-09-18
 - Do not show specific name if the database does not support overloaded routines
-- Refactor metadata retrieval, so that SQL server can run metadata queries per schema
+- Refactor metadata retrieval, so that SQL server plugin can run metadata queries per schema
 
 
 <a name="v16.27.2"></a>
