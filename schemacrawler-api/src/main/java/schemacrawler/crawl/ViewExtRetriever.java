@@ -100,16 +100,13 @@ final class ViewExtRetriever extends AbstractRetriever {
       case data_dictionary_over_schemas:
         LOGGER.log(
             Level.INFO,
-            "Retrieving additional view information, using fast data dictionary retrieval"
-                + " over schemas");
+            "Retrieving view table usage, using fast data dictionary retrieval" + " over schemas");
         retrieveViewTableUsageOverSchemas(viewTableUsageSql);
         break;
 
       case data_dictionary_all:
       default:
-        LOGGER.log(
-            Level.INFO,
-            "Retrieving additional view information, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO, "Retrieving view table usage, using fast data dictionary retrieval");
         retrieveViewTableUsageFromDataDictionary(viewTableUsageSql);
         break;
     }

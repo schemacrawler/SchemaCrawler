@@ -9,7 +9,7 @@
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.triggersRetrievalStrategy;
 import static schemacrawler.utility.EnumUtility.enumValues;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -59,7 +59,7 @@ final class TriggerRetriever extends AbstractRetriever {
     }
     final Query triggerInformationSql = informationSchemaViews.getQuery(TRIGGERS);
 
-    switch (getRetrieverConnection().get(viewInformationRetrievalStrategy)) {
+    switch (getRetrieverConnection().get(triggersRetrievalStrategy)) {
       case data_dictionary_over_schemas:
         LOGGER.log(
             Level.INFO, "Retrieving triggers, using fast data dictionary retrieval over schemas");
