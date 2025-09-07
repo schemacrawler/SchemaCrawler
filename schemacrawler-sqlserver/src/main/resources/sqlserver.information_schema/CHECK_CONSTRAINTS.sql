@@ -4,4 +4,10 @@
 -- All rights reserved.
 -- SPDX-License-Identifier: EPL-2.0
 
-EXEC #schcrwlr_CollectCheckConstraintMetadata
+SELECT
+    DB_NAME() AS CONSTRAINT_CATALOG,
+    CONSTRAINT_SCHEMA,
+    CONSTRAINT_NAME,
+    CHECK_CLAUSE
+FROM
+    INFORMATION_SCHEMA.CHECK_CONSTRAINTS

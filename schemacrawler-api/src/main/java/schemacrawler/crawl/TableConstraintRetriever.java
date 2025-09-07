@@ -12,6 +12,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableCheckConstraintsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintsRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
@@ -90,7 +91,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
   }
 
-  void retrieveTableConstraintDefinitions() {
+  void retrieveTableConstraintDefinitions() throws SQLException {
     if (tableConstraintsMap.isEmpty()) {
       LOGGER.log(Level.FINE, "No table constraints found");
       return;
@@ -100,26 +101,28 @@ final class TableConstraintRetriever extends AbstractRetriever {
         getRetrieverConnection().getInformationSchemaViews();
 
     if (!informationSchemaViews.hasQuery(CHECK_CONSTRAINTS)) {
-      LOGGER.log(Level.FINE, "Extended table constraints SQL statement was not provided");
+      LOGGER.log(Level.FINE, "Extended table check constraints SQL statement was not provided");
       return;
     }
-    final Query extTableConstraintSql = informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
+    final Query checkConstraintSql = informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
 
-    final String name = "table constraint definitions";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    try (final Connection connection = getRetrieverConnection().getConnection(name);
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(extTableConstraintSql, statement, getLimitMap()); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        final boolean added = addTableConstraintDefinition(results);
-        retrievalCounts.countIfIncluded(added);
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
+    switch (getRetrieverConnection().get(tableCheckConstraintsRetrievalStrategy)) {
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving check constraint definitions, using fast data dictionary retrieval"
+                + " over schemas");
+        retrieveTableConstraintDefinitionsOverSchemas(checkConstraintSql);
+        break;
+
+      case data_dictionary_all:
+      default:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving check constraint definitions, using fast data dictionary retrieval");
+        retrieveTableConstraintDefinitionsFromDataDictionary(checkConstraintSql);
+        break;
     }
-    retrievalCounts.log();
   }
 
   /**
@@ -404,7 +407,66 @@ final class TableConstraintRetriever extends AbstractRetriever {
             retrievalCounts.countIfIncluded(schema.key(), added);
           }
         } catch (final Exception e) {
-          LOGGER.log(Level.WARNING, "Could not retrieve table constraint columns", e);
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat(
+                  "Could not retrieve table constraint columns for schema <%s>", schema));
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      }
+    }
+  }
+
+  private void retrieveTableConstraintDefinitionsFromDataDictionary(
+      final Query checkConstraintSql) {
+    final String name = "check constraint definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(checkConstraintSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        final boolean added = addTableConstraintDefinition(results);
+        retrievalCounts.countIfIncluded(added);
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
+    }
+    retrievalCounts.log();
+  }
+
+  private void retrieveTableConstraintDefinitionsOverSchemas(final Query checkConstraintSql)
+      throws SQLException {
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "check constraint definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(checkConstraintSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count();
+            final boolean added = addTableConstraintDefinition(results);
+            retrievalCounts.countIfIncluded(added);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat(
+                  "Could not retrieve check constraint definitions for schema <%s>", schema));
         }
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);
@@ -465,8 +527,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
             retrievalCounts.countIfIncluded(schema.key(), added);
           }
         } catch (final Exception e) {
-          LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
-          return;
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat("Could not retrieve table constraints for schema <%s>", schema));
         }
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);

@@ -25,6 +25,7 @@ public enum SchemaInfoMetadataRetrievalStrategy {
   triggersRetrievalStrategy("triggers"),
   tableConstraintsRetrievalStrategy("table-constraints"),
   tableConstraintColumnsRetrievalStrategy("table-constraint-columns"),
+  tableCheckConstraintsRetrievalStrategy("table-check-constraints"),
   typeInfoRetrievalStrategy("typeinfo"),
   viewInformationRetrievalStrategy("view-information"),
   viewTableUsageRetrievalStrategy("view-table-usage"),
