@@ -10,24 +10,27 @@ package schemacrawler.crawl;
 
 import static java.sql.DatabaseMetaData.columnNullable;
 import static java.sql.DatabaseMetaData.columnNullableUnknown;
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -77,6 +80,12 @@ final class TableColumnRetriever extends AbstractRetriever {
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving table columns");
         retrieveTableColumnsFromMetadata(allTables, columnFilter, hiddenTableColumnsLookupKeys);
+        break;
+
+      case metadata_over_schemas:
+        LOGGER.log(Level.INFO, "Retrieving table columns over schemas");
+        retrieveTableColumnsFromMetadataOverSchemas(
+            allTables, columnFilter, hiddenTableColumnsLookupKeys);
         break;
 
       default:
@@ -272,7 +281,8 @@ final class TableColumnRetriever extends AbstractRetriever {
             new TaskDefinition(
                 table.getFullName(),
                 () -> {
-                  LOGGER.log(Level.INFO, new StringFormat("Retrieving %s for %s", name, table.key()));
+                  LOGGER.log(
+                      Level.INFO, new StringFormat("Retrieving %s for %s", name, table.key()));
                   try (final Connection connection = getRetrieverConnection().getConnection(name);
                       final MetadataResultSet results =
                           new MetadataResultSet(
@@ -305,6 +315,45 @@ final class TableColumnRetriever extends AbstractRetriever {
       throw e;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e.getMessage(), e);
+    }
+  }
+
+  private void retrieveTableColumnsFromMetadataOverSchemas(
+      final NamedObjectList<MutableTable> allTables,
+      final InclusionRuleFilter<Column> columnFilter,
+      final Set<NamedObjectKey> hiddenTableColumnsLookupKeys)
+      throws SQLException {
+
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "table columns from metadata over schemas";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getColumns(catalogName, schema.getName(), null, null),
+                "DatabaseMetaData::getColumns"); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            final boolean added =
+                createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
+            retrievalCounts.countIfIncluded(schema.key(), added);
+          }
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      } catch (final SQLException e) {
+        throw new WrappedSQLException(
+            String.format("Could not retrieve table columns for schema <%s>", schema), e);
+      }
     }
   }
 }

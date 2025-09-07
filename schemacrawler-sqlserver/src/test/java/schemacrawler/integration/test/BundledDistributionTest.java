@@ -31,7 +31,7 @@ public class BundledDistributionTest {
             .toOptions()
             .getInformationSchemaViews()
             .size(),
-        is(23));
+        is(22));
   }
 
   @Test

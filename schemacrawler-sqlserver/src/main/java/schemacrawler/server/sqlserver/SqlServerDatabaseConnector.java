@@ -10,6 +10,7 @@ package schemacrawler.server.sqlserver;
 
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_over_schemas;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata_over_schemas;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
@@ -38,7 +39,7 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
             informationSchemaViewsBuilder.fromResourceFolder("/sqlserver.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) ->
             schemaRetrievalOptionsBuilder
-                .with(tableColumnsRetrievalStrategy, data_dictionary_all)
+                .with(tableColumnsRetrievalStrategy, metadata_over_schemas)
                 .with(primaryKeysRetrievalStrategy, data_dictionary_over_schemas)
                 .with(indexesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(viewInformationRetrievalStrategy, data_dictionary_over_schemas)

@@ -16,6 +16,10 @@ public enum MetadataRetrievalStrategy {
   metadata,
   // use JDBC metadata calls to retrieve information one schema at a time;
   // and the JDBC driver decides how to honor these requests
+  metadata_over_schemas,
+  // use the INFORMATION_SCHEMA or database-specific data dictionary queries
+  // to retrieve information one schema at a time;
+  // and the JDBC driver decides how to honor these requests
   data_dictionary_over_schemas,
   // use the INFORMATION_SCHEMA or database-specific data dictionary queries to
   // retrieve information for all database objects together
