@@ -12,8 +12,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINE_REFERENCES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routineReferencesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +19,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.Schema;
@@ -207,7 +206,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
     final String name = "routine definitions";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
-      if (catalog.getTables(schema).isEmpty()) {
+      if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
       try (final Connection connection = getRetrieverConnection().getConnection(name)) {
@@ -261,7 +260,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
     final String name = "routine references";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
-      if (catalog.getTables(schema).isEmpty()) {
+      if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
       try (final Connection connection = getRetrieverConnection().getConnection(name)) {
