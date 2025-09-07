@@ -6,8 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.server.postgresql;
+
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata_over_schemas;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -24,8 +26,9 @@ public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
         (informationSchemaViewsBuilder, connection) ->
             informationSchemaViewsBuilder.fromResourceFolder("/postgresql.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) ->
-            schemaRetrievalOptionsBuilder.withEnumDataTypeHelper(
-                new PostgreSQLEnumDataTypeHelper()),
+            schemaRetrievalOptionsBuilder
+                .with(tableColumnsRetrievalStrategy, metadata_over_schemas)
+                .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()),
         limitOptionsBuilder ->
             limitOptionsBuilder.includeSchemas(
                 new RegularExpressionExclusionRule("pg_catalog|information_schema")),
