@@ -196,11 +196,13 @@ public class TableConstraintRetrieverTest {
     // Create the constraint retriever
     final TableConstraintRetriever constraintRetriever =
         new TableConstraintRetriever(retrieverConnection, catalog, options);
+    final TableConstraintMatcher constraintMatcher =
+        new TableConstraintMatcher(retrieverConnection, catalog, options);
 
     // Act - retrieve table constraints
     constraintRetriever.retrieveTableConstraints();
     constraintRetriever.retrieveTableConstraintColumns();
-    constraintRetriever.matchTableConstraints(allTables);
+    constraintMatcher.matchTableConstraints(allTables);
 
     int newConstraintsCount = 0;
     for (final Table table : catalog.getTables()) {
@@ -250,11 +252,13 @@ public class TableConstraintRetrieverTest {
     // Create the constraint retriever
     final TableConstraintRetriever constraintRetriever =
         new TableConstraintRetriever(retrieverConnection, catalog, options);
+    final TableConstraintMatcher constraintMatcher =
+        new TableConstraintMatcher(retrieverConnection, catalog, options);
 
     // Act - retrieve table constraints with invalid SQL
     // This should not throw an exception
     constraintRetriever.retrieveTableConstraintInformation();
-    constraintRetriever.matchTableConstraints(allTables);
+    constraintMatcher.matchTableConstraints(allTables);
 
     // Verify that we still have tables
     assertThat(catalog.getTables(), is(not(empty())));

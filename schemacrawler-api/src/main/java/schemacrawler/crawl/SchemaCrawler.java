@@ -350,6 +350,8 @@ public final class SchemaCrawler {
         new ForeignKeyRetriever(retrieverConnection, catalog, options);
     final TableConstraintRetriever constraintRetriever =
         new TableConstraintRetriever(retrieverConnection, catalog, options);
+    final TableConstraintMatcher constraintMatcher =
+        new TableConstraintMatcher(retrieverConnection, catalog, options);
     final TableExtRetriever retrieverExtra =
         new TableExtRetriever(retrieverConnection, catalog, options);
     final ViewExtRetriever viewExtRetriever =
@@ -432,7 +434,7 @@ public final class SchemaCrawler {
     taskRunner
         .add(
             "matchTableConstraints",
-            () -> constraintRetriever.matchTableConstraints(allTables),
+            () -> constraintMatcher.matchTableConstraints(allTables),
             retrieveTableColumns)
         .submit();
 

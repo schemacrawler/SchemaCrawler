@@ -12,10 +12,10 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,9 +23,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableConstraint;
@@ -51,17 +48,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
     // NOTE: This map has a pseudo-lookup key to look up
     // table constraints by name directly, without looking up the table
     tableConstraintsMap = new HashMap<>();
-  }
-
-  public void matchTableConstraints(final NamedObjectList<MutableTable> allTables) {
-    requireNonNull(allTables, "No tables provided");
-    for (final MutableTable mutableTable : allTables) {
-      if (mutableTable == null) {
-        continue;
-      }
-      matchPrimaryKey(mutableTable);
-      addImportedForeignKeys(mutableTable);
-    }
   }
 
   void retrieveTableConstraintDefinitions() {
@@ -350,59 +336,5 @@ final class TableConstraintRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
     }
     retrievalCounts.log();
-  }
-
-  /**
-   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
-   * the information schema views, so they can be added in without fear of duplication.
-   *
-   * @param table Table to add constraints to
-   */
-  private void addImportedForeignKeys(final MutableTable table) {
-    final Collection<ForeignKey> importedForeignKeys = table.getImportedForeignKeys();
-    for (final ForeignKey foreignKey : importedForeignKeys) {
-      final Optional<TableConstraint> lookupTableConstraint =
-          table.lookupTableConstraint(foreignKey.getName());
-      if (lookupTableConstraint.isPresent()) {
-        final TableConstraint tableConstraint = lookupTableConstraint.get();
-        copyRemarksAndAttributes(tableConstraint, foreignKey);
-        table.removeTableConstraint(tableConstraint);
-      }
-      // Add or replace the table constraint with the foreign key, which has more information like
-      // column mappings
-      table.addTableConstraint(foreignKey);
-    }
-  }
-
-  private void copyRemarksAndAttributes(
-      final TableConstraint tableConstraint, final DatabaseObject databaseObject) {
-    // Copy remarks over
-    if (!databaseObject.hasRemarks() && tableConstraint.hasRemarks()) {
-      databaseObject.setRemarks(tableConstraint.getRemarks());
-    }
-    // Copy attributes over
-    for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
-      databaseObject.setAttribute(attribute.getKey(), attribute.getValue());
-    }
-  }
-
-  private void matchPrimaryKey(final MutableTable table) {
-    if (!table.hasPrimaryKey()) {
-      return;
-    }
-    final MutablePrimaryKey primaryKey = table.getPrimaryKey();
-    // Remove table constraints that are primary keys, if the columns match
-    for (final TableConstraint tableConstraint : table.getTableConstraints()) {
-      if (tableConstraint.getType() == TableConstraintType.primary_key
-          && (primaryKey.getName().equals(tableConstraint.getName())
-              || primaryKey
-                  .getConstrainedColumns()
-                  .equals(tableConstraint.getConstrainedColumns()))) {
-        copyRemarksAndAttributes(tableConstraint, primaryKey);
-        table.removeTableConstraint(tableConstraint);
-      }
-    }
-    // Add back primary key as table constraints
-    table.addTableConstraint(primaryKey);
   }
 }
