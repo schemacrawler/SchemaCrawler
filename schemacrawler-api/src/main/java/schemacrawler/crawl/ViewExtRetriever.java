@@ -59,8 +59,11 @@ final class ViewExtRetriever extends AbstractRetriever {
     final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
 
     switch (getRetrieverConnection().get(viewInformationRetrievalStrategy)) {
-      case metadata_over_schemas:
-        LOGGER.log(Level.INFO, "Retrieving additional view information, over schemas");
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional view information, using fast data dictionary retrieval"
+                + " over schemas");
         retrieveViewInformationOverSchemas(viewInformationSql);
         break;
 
@@ -94,8 +97,11 @@ final class ViewExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving view table usage");
 
     switch (getRetrieverConnection().get(viewTableUsageRetrievalStrategy)) {
-      case metadata_over_schemas:
-        LOGGER.log(Level.INFO, "Retrieving additional view information, over schemas");
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional view information, using fast data dictionary retrieval"
+                + " over schemas");
         retrieveViewTableUsageOverSchemas(viewTableUsageSql);
         break;
 

@@ -12,6 +12,8 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINE_REFERENCES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routineReferencesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,7 +21,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.Schema;
@@ -59,8 +60,11 @@ final class RoutineExtRetriever extends AbstractRetriever {
     final Query routineDefinitionsSql = informationSchemaViews.getQuery(ROUTINES);
 
     switch (getRetrieverConnection().get(routinesRetrievalStrategy)) {
-      case metadata_over_schemas:
-        LOGGER.log(Level.INFO, "Retrieving additional view information, over schemas");
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional view information, using fast data dictionary retrieval"
+                + " over schemas");
         retrieveRoutineInformationOverSchemas(routineDefinitionsSql);
         break;
 
@@ -90,8 +94,11 @@ final class RoutineExtRetriever extends AbstractRetriever {
     final Query routineReferencesSql = informationSchemaViews.getQuery(ROUTINE_REFERENCES);
 
     switch (getRetrieverConnection().get(routineReferencesRetrievalStrategy)) {
-      case metadata_over_schemas:
-        LOGGER.log(Level.INFO, "Retrieving additional view information, over schemas");
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional view information, using fast data dictionary retrieval"
+                + " over schemas");
         retrieveRoutineReferencesOverSchemas(routineReferencesSql);
         break;
 
