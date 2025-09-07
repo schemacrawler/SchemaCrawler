@@ -9,17 +9,14 @@
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
-
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -64,12 +61,12 @@ final class SequenceRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Sequence definition SQL statement was not provided");
       return;
     }
+    final Query sequencesDefinitionSql = informationSchemaViews.getQuery(SEQUENCES);
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final String name = "sequences";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    final Query sequencesDefinitionSql = informationSchemaViews.getQuery(SEQUENCES);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
@@ -79,24 +76,23 @@ final class SequenceRetriever extends AbstractRetriever {
         final String catalogName = normalizeCatalogName(results.getString("SEQUENCE_CATALOG"));
         final String schemaName = normalizeSchemaName(results.getString("SEQUENCE_SCHEMA"));
         final String sequenceName = results.getString("SEQUENCE_NAME");
-        final BigInteger startValue = results.getBigInteger("START_VALUE");
-        final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
-        final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
-        final BigInteger increment = results.getBigInteger("INCREMENT");
-        final long longIncrement = increment == null ? 1L : increment.longValue();
-        final boolean cycle = results.getBoolean("CYCLE_OPTION");
 
-        final Optional<SchemaReference> optionalSchema =
-            schemas.lookup(new NamedObjectKey(catalogName, schemaName));
-        if (!optionalSchema.isPresent()) {
+        final Schema schema = new SchemaReference(catalogName, schemaName);
+        if (!schemas.contains(schema)) {
           continue;
         }
-        final Schema schema = optionalSchema.get();
 
         final MutableSequence sequence = new MutableSequence(schema, sequenceName);
         sequence.withQuoting(getRetrieverConnection().getIdentifiers());
 
         if (sequenceFilter.test(sequence)) {
+          final BigInteger startValue = results.getBigInteger("START_VALUE");
+          final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
+          final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
+          final BigInteger increment = results.getBigInteger("INCREMENT");
+          final long longIncrement = increment == null ? 1L : increment.longValue();
+          final boolean cycle = results.getBoolean("CYCLE_OPTION");
+
           sequence.setStartValue(startValue);
           sequence.setMaximumValue(maximumValue);
           sequence.setMinimumValue(minimumValue);
