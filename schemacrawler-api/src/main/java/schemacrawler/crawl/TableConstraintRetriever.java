@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.NamedObjectKey;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintType;
@@ -250,11 +249,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
         table.addTableConstraint(tableConstraint);
         retrievalCounts.countIncluded();
 
-        // Add to map, since we will need this later
-        final Schema schema = table.getSchema();
-        tableConstraintsMap.put(
-            new NamedObjectKey(schema.getCatalogName(), schema.getName(), constraintName),
-            tableConstraint);
+        // Save look up for constraint with a simplified key
+        tableConstraintsMap.put(table.getSchema().key().with(constraintName), tableConstraint);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
