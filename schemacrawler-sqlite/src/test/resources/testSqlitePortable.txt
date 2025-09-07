@@ -31,6 +31,9 @@ Foreign Keys
 Indexes
 
                                                       [non-unique index]
+  Country                           unknown                     
+
+                                                      [non-unique index]
   LastName                          unknown                     
   FirstName                         unknown                     
 

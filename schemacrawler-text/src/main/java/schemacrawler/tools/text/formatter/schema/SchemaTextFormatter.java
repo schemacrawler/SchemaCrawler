@@ -34,9 +34,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.isView;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -46,6 +43,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -761,17 +760,17 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
             "[" + (index.isUnique() ? "" : "non-") + "unique " + indexTypeString + "index]";
         formattingHelper.writeNameRow(indexName, indexDetails);
 
-        // Print filter condition
-        if (index.hasFilterCondition()) {
-          formattingHelper.writeWideRow(index.getFilterCondition(), "filter condition");
-        }
-
         printRemarks(index);
 
         if (!isBrief()) {
           printTableColumns(index.getColumns(), false);
         }
         printDependantObjectDefinition(index);
+        // Print filter condition
+        if (index.hasFilterCondition()) {
+          formattingHelper.writeNameRow("", "[filter condition]");
+          formattingHelper.writeWideRow(index.getFilterCondition(), "definition");
+        }
       }
     }
   }

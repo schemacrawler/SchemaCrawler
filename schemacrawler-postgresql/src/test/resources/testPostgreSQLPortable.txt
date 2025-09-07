@@ -36,6 +36,11 @@ Indexes
   id                                ascending                   
 
                                                       [non-unique index]
+  country                           ascending                   
+                                                      [filter condition]
+((country)::text = 'USA'::text)
+
+                                                      [non-unique index]
   lastname                          ascending                   
   firstname                         ascending                   
 
