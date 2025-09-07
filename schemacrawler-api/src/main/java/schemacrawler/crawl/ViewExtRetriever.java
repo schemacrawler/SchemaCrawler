@@ -134,7 +134,8 @@ final class ViewExtRetriever extends AbstractRetriever {
     }
 
     final MutableView view = (MutableView) viewOptional.get();
-    LOGGER.log(Level.FINER, new StringFormat("Retrieving view information <%s>", viewName));
+    LOGGER.log(
+        Level.FINER, new StringFormat("Retrieving additional view information <%s>", viewName));
 
     final CheckOptionType checkOption = results.getEnum("CHECK_OPTION", CheckOptionType.unknown);
     final boolean updatable = results.getBoolean("IS_UPDATABLE");
@@ -192,7 +193,7 @@ final class ViewExtRetriever extends AbstractRetriever {
    */
   private void retrieveViewInformationFromDataDictionary(final Query viewInformationSql)
       throws SQLException {
-    final String name = "views for definitions";
+    final String name = "additional view information";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
@@ -217,7 +218,7 @@ final class ViewExtRetriever extends AbstractRetriever {
   private void retrieveViewInformationOverSchemas(final Query viewInformationSql)
       throws SQLException {
     final Collection<Schema> schemas = catalog.getSchemas();
-    final String name = "views for definitions";
+    final String name = "additional view information";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
       if (catalog.getTables(schema).isEmpty()) {
@@ -238,7 +239,11 @@ final class ViewExtRetriever extends AbstractRetriever {
             retrievalCounts.countIfIncluded(schema.key(), addedViewInformation);
           }
         } catch (final Exception e) {
-          LOGGER.log(Level.WARNING, "Could not retrieve additional view information", e);
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat(
+                  "Could not retrieve additional view information for schema <%s>", schema));
         }
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);
@@ -299,7 +304,10 @@ final class ViewExtRetriever extends AbstractRetriever {
             retrievalCounts.countIfIncluded(schema.key(), addedTableUsage);
           }
         } catch (final Exception e) {
-          LOGGER.log(Level.WARNING, "Could not retrieve table usage for views", e);
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat("Could not retrieve table usage for views for schema <%s>", schema));
         }
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);

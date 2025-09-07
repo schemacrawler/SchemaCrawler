@@ -328,8 +328,10 @@ final class IndexRetriever extends AbstractRetriever {
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);
       } catch (final SQLException e) {
-        throw new WrappedSQLException(
-            String.format("Could not retrieve indexes for schema <%s>", schema), e);
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve indexes for schema <%s>", schema));
       }
     }
   }

@@ -16,6 +16,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -61,7 +63,7 @@ final class TriggerRetriever extends AbstractRetriever {
       case data_dictionary_over_schemas:
         LOGGER.log(
             Level.INFO, "Retrieving triggers, using fast data dictionary retrieval over schemas");
-        // TODO retrieveTriggerOverSchemas(triggerInformationSql);
+        retrieveTriggerOverSchemas(triggerInformationSql);
         break;
 
       case data_dictionary_all:
@@ -176,5 +178,39 @@ final class TriggerRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve triggers", e);
     }
     retrievalCounts.log();
+  }
+
+  private void retrieveTriggerOverSchemas(final Query triggerInformationSql) throws SQLException {
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "trigger definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            final boolean added = createTrigger(results);
+            retrievalCounts.countIfIncluded(schema.key(), added);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat("Could not retrieve triggers for schema <%s>", schema));
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      }
+    }
   }
 }

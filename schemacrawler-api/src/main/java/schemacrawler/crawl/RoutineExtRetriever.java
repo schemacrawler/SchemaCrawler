@@ -285,7 +285,10 @@ final class RoutineExtRetriever extends AbstractRetriever {
             retrievalCounts.countIfIncluded(schema.key(), addedRoutineReferences);
           }
         } catch (final Exception e) {
-          LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat("Could not retrieve routine references for schema <%s>", schema));
         }
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);
