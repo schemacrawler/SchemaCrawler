@@ -12,7 +12,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -105,6 +104,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
   /**
    * Retrieves table constraint information from the database, in the INFORMATION_SCHEMA format.
+   *
+   * IMPORTANT: This retrieval does not use the table constraint map, since it looks up remarks
+   * for all constraints, including primary keys. In some databases, primary keys do not have
+   * unique names.
    *
    * @throws SQLException On a SQL exception
    */
