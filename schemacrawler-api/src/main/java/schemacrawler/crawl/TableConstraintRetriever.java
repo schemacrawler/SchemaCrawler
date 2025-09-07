@@ -105,7 +105,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
     final Query extTableConstraintSql = informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
 
-    // Get check constraint definitions
     final String name = "table constraint definitions";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
@@ -235,6 +234,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
    * @throws SQLException On a SQL exception
    */
   void retrieveTableConstraints() throws SQLException {
+    if (catalog.getTables().isEmpty()) {
+      LOGGER.log(Level.FINE, "No tables found");
+      return;
+    }
 
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
