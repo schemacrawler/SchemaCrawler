@@ -8,16 +8,19 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 import static schemacrawler.utility.MetaDataUtility.isView;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -50,6 +53,13 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving primary keys");
         retrievePrimaryKeysFromMetadata(allTables);
+        break;
+
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving primary keys, using fast data dictionary retrieval" + " over schemas");
+        retrievePrimaryKeysOverSchemas();
         break;
 
       default:
@@ -98,10 +108,10 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Extended primary keys SQL statement was not provided");
       return;
     }
+    final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
 
     final String name = "primary keys from data dictionary";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
@@ -158,5 +168,56 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       }
     }
     retrievalCounts.log();
+  }
+
+  private void retrievePrimaryKeysOverSchemas() throws WrappedSQLException {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasQuery(PRIMARY_KEYS)) {
+      LOGGER.log(Level.FINE, "Extended primary keys SQL statement was not provided");
+      return;
+    }
+    final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
+
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "primary keys from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            // final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
+            final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
+            final String tableName = results.getString("TABLE_NAME");
+
+            final Optional<MutableTable> optionalTable =
+                lookupTable(catalogName, schemaName, tableName);
+            if (!optionalTable.isPresent()) {
+              continue;
+            }
+            final MutableTable table = optionalTable.get();
+            createPrimaryKeyForTable(table, results);
+            retrievalCounts.countIncluded(schema.key());
+          }
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      } catch (final SQLException e) {
+        throw new WrappedSQLException(
+            String.format("Could not retrieve primary keys for schema <%s>", schema), e);
+      }
+    }
   }
 }
