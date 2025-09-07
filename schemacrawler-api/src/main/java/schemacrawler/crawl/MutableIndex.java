@@ -33,12 +33,14 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   private IndexType indexType;
   private boolean isUnique;
   private long pages;
+  private String filterCondition;
 
   MutableIndex(final Table parent, final String name) {
     super(new TablePointer(parent), name);
     // Default values
     indexType = IndexType.unknown;
     definition = "";
+    filterCondition = "";
   }
 
   /**
@@ -101,6 +103,11 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
     return definition.toString();
   }
 
+  @Override
+  public final String getFilterCondition() {
+    return filterCondition;
+  }
+
   /** {@inheritDoc} */
   @Override
   public final IndexType getIndexType() {
@@ -122,6 +129,11 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   @Override
   public final boolean hasDefinition() {
     return !isBlank(definition);
+  }
+
+  @Override
+  public final boolean hasFilterCondition() {
+    return !isBlank(filterCondition);
   }
 
   /** {@inheritDoc} */
@@ -154,6 +166,12 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   final void setDefinition(final String definition) {
     if (!hasDefinition() && !isBlank(definition)) {
       this.definition = definition;
+    }
+  }
+
+  final void setFilterCondition(final String filterCondition) {
+    if (!hasFilterCondition() && !isBlank(filterCondition)) {
+      this.filterCondition = filterCondition;
     }
   }
 
