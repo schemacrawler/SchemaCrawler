@@ -63,7 +63,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
       case data_dictionary_over_schemas:
         LOGGER.log(
             Level.INFO,
-            "Retrieving additional view information, using fast data dictionary retrieval"
+            "Retrieving additional routine information, using fast data dictionary retrieval"
                 + " over schemas");
         retrieveRoutineInformationOverSchemas(routineDefinitionsSql);
         break;
@@ -72,7 +72,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
       default:
         LOGGER.log(
             Level.INFO,
-            "Retrieving additional view information, using fast data dictionary retrieval");
+            "Retrieving additional routine information, using fast data dictionary retrieval");
         retrieveRoutineInformationFromDataDictionary(routineDefinitionsSql);
         break;
     }
@@ -97,7 +97,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
       case data_dictionary_over_schemas:
         LOGGER.log(
             Level.INFO,
-            "Retrieving additional view information, using fast data dictionary retrieval"
+            "Retrieving routine references, using fast data dictionary retrieval"
                 + " over schemas");
         retrieveRoutineReferencesOverSchemas(routineReferencesSql);
         break;
@@ -105,8 +105,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
       case data_dictionary_all:
       default:
         LOGGER.log(
-            Level.INFO,
-            "Retrieving additional view information, using fast data dictionary retrieval");
+            Level.INFO, "Retrieving routine references, using fast data dictionary retrieval");
         retrieveRoutineReferencesFromDataDictionary(routineReferencesSql);
         break;
     }
