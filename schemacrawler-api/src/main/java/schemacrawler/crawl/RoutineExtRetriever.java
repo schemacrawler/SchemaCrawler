@@ -128,7 +128,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
       final String definition = results.getString("ROUTINE_DEFINITION");
 
       routine.setRoutineBodyType(routineBodyType);
-      routine.appendDefinition(definition);
+      routine.setDefinition(definition);
 
       routine.addAttributes(results.getAttributes());
     }

@@ -133,7 +133,7 @@ final class ViewExtRetriever extends AbstractRetriever {
     final CheckOptionType checkOption = results.getEnum("CHECK_OPTION", CheckOptionType.unknown);
     final boolean updatable = results.getBoolean("IS_UPDATABLE");
 
-    view.appendDefinition(definition);
+    view.setDefinition(definition);
     view.setCheckOption(checkOption);
     view.setUpdatable(updatable);
 

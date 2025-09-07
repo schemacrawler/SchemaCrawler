@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import java.util.ArrayList;
 import java.util.List;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -21,7 +22,7 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
   private static final long serialVersionUID = 1155277343302693656L;
 
   private final NamedObjectList<MutableTableConstraintColumn> columns = new NamedObjectList<>();
-  private final StringBuffer definition;
+  private String definition;
   private boolean deferrable;
   private boolean initiallyDeferred;
 
@@ -29,7 +30,7 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
 
   MutableTableConstraint(final Table parent, final String name) {
     super(new TablePointer(parent), name);
-    definition = new StringBuffer();
+    definition = "";
   }
 
   /** {@inheritDoc} */
@@ -53,8 +54,8 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
   }
 
   @Override
-  public boolean hasDefinition() {
-    return definition.length() > 0;
+  public final boolean hasDefinition() {
+    return !isBlank(definition);
   }
 
   /** {@inheritDoc} */
@@ -69,25 +70,25 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
     return initiallyDeferred;
   }
 
-  void addColumn(final MutableTableConstraintColumn column) {
+  final void addColumn(final MutableTableConstraintColumn column) {
     columns.add(column);
   }
 
-  void appendDefinition(final String definition) {
-    if (definition != null) {
-      this.definition.append(definition);
-    }
-  }
-
-  void setDeferrable(final boolean deferrable) {
+  final void setDeferrable(final boolean deferrable) {
     this.deferrable = deferrable;
   }
 
-  void setInitiallyDeferred(final boolean initiallyDeferred) {
+  final void setDefinition(final String definition) {
+    if (!hasDefinition() && !isBlank(definition)) {
+      this.definition = definition;
+    }
+  }
+
+  final void setInitiallyDeferred(final boolean initiallyDeferred) {
     this.initiallyDeferred = initiallyDeferred;
   }
 
-  void setTableConstraintType(final TableConstraintType tableConstraintType) {
+  final void setTableConstraintType(final TableConstraintType tableConstraintType) {
     this.tableConstraintType = tableConstraintType;
   }
 }

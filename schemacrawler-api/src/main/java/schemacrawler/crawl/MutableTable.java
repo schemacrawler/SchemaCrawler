@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -48,7 +49,6 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<TableConstraint> constraints = new NamedObjectList<>();
-  private final StringBuffer definition; // synchronized implementation
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableWeakAssociation> weakAssociations = new NamedObjectList<>();
   private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
@@ -59,10 +59,11 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   private MutablePrimaryKey primaryKey;
   private int sortIndex;
   private TableType tableType = TableType.UNKNOWN; // Default value
+  private String definition;
 
   MutableTable(final Schema schema, final String name) {
     super(schema, name);
-    definition = new StringBuffer();
+    definition = "";
   }
 
   /**
@@ -213,8 +214,8 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   }
 
   @Override
-  public boolean hasDefinition() {
-    return definition.length() > 0;
+  public final boolean hasDefinition() {
+    return !isBlank(definition);
   }
 
   /** {@inheritDoc} */
@@ -328,18 +329,18 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     weakAssociations.add(weakAssociation);
   }
 
-  final void appendDefinition(final String definition) {
-    if (definition != null) {
-      this.definition.append(definition);
-    }
-  }
-
-  NamedObjectList<MutableColumn> getAllColumns() {
+  final NamedObjectList<MutableColumn> getAllColumns() {
     return columns;
   }
 
-  void removeTableConstraint(final TableConstraint tableConstraint) {
+  final void removeTableConstraint(final TableConstraint tableConstraint) {
     constraints.remove(tableConstraint);
+  }
+
+  final void setDefinition(final String definition) {
+    if (!hasDefinition() && !isBlank(definition)) {
+      this.definition = definition;
+    }
   }
 
   final void setPrimaryKey(final MutablePrimaryKey primaryKey) {

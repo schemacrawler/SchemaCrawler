@@ -105,7 +105,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
               new StringFormat("Could not add table constraint <%s>", constraintName));
           continue;
         }
-        tableConstraint.appendDefinition(definition);
+        tableConstraint.setDefinition(definition);
 
         tableConstraint.addAttributes(results.getAttributes());
 
