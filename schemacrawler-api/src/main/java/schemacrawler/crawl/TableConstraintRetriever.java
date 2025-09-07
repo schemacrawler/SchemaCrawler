@@ -63,12 +63,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Table constraints columns usage SQL statement was not provided");
       return;
     }
-
-    final String name = "table constraints columns";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tableConstraintsColumnsInformationSql =
         informationSchemaViews.getQuery(CONSTRAINT_COLUMN_USAGE);
 
+    final String name = "table constraints columns";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
@@ -76,48 +75,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
                 tableConstraintsColumnsInformationSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
-        final String constraintName = results.getString("CONSTRAINT_NAME");
-        LOGGER.log(
-            Level.FINER,
-            new StringFormat("Retrieving definition for constraint <%s>", constraintName));
-
-        final MutableTableConstraint tableConstraint =
-            tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
-        if (tableConstraint == null) {
-          LOGGER.log(
-              Level.FINEST,
-              new StringFormat("Could not add column constraint <%s>", constraintName));
-          continue;
-        }
-
-        // "TABLE_CATALOG", "TABLE_SCHEMA"
-        final String tableName = results.getString("TABLE_NAME");
-
-        final Table table = tableConstraint.getParent();
-        if (!table.getName().equals(tableName)) {
-          continue;
-        }
-
-        final String columnName = results.getString("COLUMN_NAME");
-        final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-        if (!columnOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat(
-                  "Cannot find column <%s.%s.%s.%s>",
-                  catalogName, schemaName, tableName, columnName));
-          continue;
-        }
-        final MutableColumn column = columnOptional.get();
-        final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-        final MutableTableConstraintColumn constraintColumn =
-            new MutableTableConstraintColumn(tableConstraint, column);
-        constraintColumn.setKeyOrdinalPosition(ordinalPosition);
-
-        tableConstraint.addColumn(constraintColumn);
-        retrievalCounts.countIncluded();
+        final boolean added = addTableConstraintColumn(results);
+        retrievalCounts.countIfIncluded(added);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
@@ -339,6 +298,56 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
     // Save look up for constraint with a simplified key
     tableConstraintsMap.put(table.getSchema().key().with(constraintName), tableConstraint);
+
+    return true;
+  }
+
+  private boolean addTableConstraintColumn(final MetadataResultSet results) {
+    final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
+    final String constraintName = results.getString("CONSTRAINT_NAME");
+
+    LOGGER.log(
+        Level.FINER,
+        new StringFormat(
+            "Retrieving table constraint column for <%s.%s.%s>",
+            catalogName, schemaName, constraintName));
+
+    final MutableTableConstraint tableConstraint =
+        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
+    if (tableConstraint == null) {
+      LOGGER.log(
+          Level.FINEST, new StringFormat("Could not add column constraint <%s>", constraintName));
+      return false;
+    }
+
+    // "TABLE_CATALOG", "TABLE_SCHEMA"
+    final String tableName = results.getString("TABLE_NAME");
+
+    final Table table = tableConstraint.getParent();
+    if (!table.getName().equals(tableName)) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+      return false;
+    }
+
+    final String columnName = results.getString("COLUMN_NAME");
+    final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
+    if (!columnOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat(
+              "Cannot find column <%s.%s.%s.%s>", catalogName, schemaName, tableName, columnName));
+      return false;
+    }
+    final MutableColumn column = columnOptional.get();
+    final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
+    final MutableTableConstraintColumn constraintColumn =
+        new MutableTableConstraintColumn(tableConstraint, column);
+    constraintColumn.setKeyOrdinalPosition(ordinalPosition);
+
+    tableConstraint.addColumn(constraintColumn);
 
     return true;
   }
