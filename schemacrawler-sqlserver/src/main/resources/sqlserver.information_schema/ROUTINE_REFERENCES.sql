@@ -17,6 +17,6 @@ SELECT
 FROM
     INFORMATION_SCHEMA.ROUTINES R
     INNER JOIN sys.sql_expression_dependencies d
-        ON OBJECT_ID(DB_NAME() + '.' + R.ROUTINE_SCHEMA + '.' + R.ROUTINE_NAME) = d.referencing_id
+        ON OBJECT_ID(R.ROUTINE_SCHEMA + '.' + R.ROUTINE_NAME) = d.referencing_id
     INNER JOIN sys.objects o
         ON d.referenced_id = o.object_id
