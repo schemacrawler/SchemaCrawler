@@ -64,28 +64,8 @@ final class RoutineExtRetriever extends AbstractRetriever {
             new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
-        final String routineName = results.getString("ROUTINE_NAME");
-        final String specificName = results.getString("SPECIFIC_NAME");
-
-        final Optional<MutableRoutine> routineOptional =
-            lookupRoutine(catalogName, schemaName, routineName, specificName);
-        if (routineOptional.isPresent()) {
-          final MutableRoutine routine = routineOptional.get();
-          LOGGER.log(
-              Level.FINER,
-              new StringFormat("Retrieving routine information for <%s>", routineName));
-          final RoutineBodyType routineBodyType =
-              results.getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
-          final String definition = results.getString("ROUTINE_DEFINITION");
-
-          routine.setRoutineBodyType(routineBodyType);
-          routine.appendDefinition(definition);
-
-          routine.addAttributes(results.getAttributes());
-          retrievalCounts.countIncluded();
-        }
+        boolean addedRoutineInformation = addRoutineInformation(results);
+        retrievalCounts.countIfIncluded(addedRoutineInformation);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
@@ -118,38 +98,73 @@ final class RoutineExtRetriever extends AbstractRetriever {
             new MetadataResultSet(routineReferencesSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
-        final String routineName = results.getString("ROUTINE_NAME");
-        final String specificName = results.getString("SPECIFIC_NAME");
-        final String referencedObjectCatalogName = results.getString("REFERENCED_OBJECT_CATALOG");
-        final String referencedObjectSchemaName = results.getString("REFERENCED_OBJECT_SCHEMA");
-        final String referencedObjectName = results.getString("REFERENCED_OBJECT_NAME");
-        // final String referencedObjectType = results.getString("REFERENCED_OBJECT_TYPE");
-
-        final Optional<MutableRoutine> routineOptional =
-            lookupRoutine(catalogName, schemaName, routineName, specificName);
-        if (routineOptional.isPresent()) {
-          final MutableRoutine routine = routineOptional.get();
-          LOGGER.log(
-              Level.FINER, new StringFormat("Retrieving routine references for <%s>", routineName));
-
-          final Optional<DatabaseObject> referencedObjectOptional =
-              lookupReferencedObject(
-                  referencedObjectCatalogName,
-                  referencedObjectSchemaName,
-                  referencedObjectName,
-                  specificName);
-          if (referencedObjectOptional.isPresent()) {
-            routine.addReferencedObject(referencedObjectOptional.get());
-            retrievalCounts.countIncluded();
-          }
-        }
+        boolean addedRoutineReferences = addRoutineReferences(results);
+        retrievalCounts.countIfIncluded(addedRoutineReferences);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
     }
     retrievalCounts.log();
+  }
+
+  /**
+   * Retrieves a routine definitions from the database.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  private boolean addRoutineInformation(final MetadataResultSet results) throws SQLException {
+    final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
+    final String routineName = results.getString("ROUTINE_NAME");
+    final String specificName = results.getString("SPECIFIC_NAME");
+
+    final Optional<MutableRoutine> routineOptional =
+        lookupRoutine(catalogName, schemaName, routineName, specificName);
+    if (routineOptional.isPresent()) {
+      final MutableRoutine routine = routineOptional.get();
+      LOGGER.log(
+          Level.FINER, new StringFormat("Retrieving routine information for <%s>", routineName));
+      final RoutineBodyType routineBodyType =
+          results.getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
+      final String definition = results.getString("ROUTINE_DEFINITION");
+
+      routine.setRoutineBodyType(routineBodyType);
+      routine.appendDefinition(definition);
+
+      routine.addAttributes(results.getAttributes());
+    }
+    return routineOptional.isPresent();
+  }
+
+  private boolean addRoutineReferences(final MetadataResultSet results) throws SQLException {
+    final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
+    final String routineName = results.getString("ROUTINE_NAME");
+    final String specificName = results.getString("SPECIFIC_NAME");
+    final String referencedObjectCatalogName = results.getString("REFERENCED_OBJECT_CATALOG");
+    final String referencedObjectSchemaName = results.getString("REFERENCED_OBJECT_SCHEMA");
+    final String referencedObjectName = results.getString("REFERENCED_OBJECT_NAME");
+    // final String referencedObjectType = results.getString("REFERENCED_OBJECT_TYPE");
+
+    final Optional<MutableRoutine> routineOptional =
+        lookupRoutine(catalogName, schemaName, routineName, specificName);
+    if (routineOptional.isPresent()) {
+      final MutableRoutine routine = routineOptional.get();
+      LOGGER.log(
+          Level.FINER, new StringFormat("Retrieving routine references for <%s>", routineName));
+
+      final Optional<DatabaseObject> referencedObjectOptional =
+          lookupReferencedObject(
+              referencedObjectCatalogName,
+              referencedObjectSchemaName,
+              referencedObjectName,
+              specificName);
+      if (referencedObjectOptional.isPresent()) {
+        routine.addReferencedObject(referencedObjectOptional.get());
+      }
+      return referencedObjectOptional.isPresent();
+    }
+    return false;
   }
 
   private Optional<DatabaseObject> lookupReferencedObject(
