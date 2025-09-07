@@ -14,6 +14,7 @@ public enum SchemaInfoMetadataRetrievalStrategy {
   functionsRetrievalStrategy("functions"),
   indexesRetrievalStrategy("indexes"),
   primaryKeysRetrievalStrategy("primarykeys"),
+  routinesRetrievalStrategy("routines"),
   proceduresRetrievalStrategy("procedures"),
   procedureParametersRetrievalStrategy("procedureparameters"),
   tableColumnPrivilegesRetrievalStrategy("tablecolumnprivileges"),

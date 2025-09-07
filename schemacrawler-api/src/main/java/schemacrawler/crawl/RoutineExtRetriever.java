@@ -10,15 +10,19 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINE_REFERENCES;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -52,25 +56,22 @@ final class RoutineExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Routine definition SQL statement was not provided");
       return;
     }
-
-    LOGGER.log(Level.INFO, "Retrieving routine definitions");
-
-    final String name = "routine definitions";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query routineDefinitionsSql = informationSchemaViews.getQuery(ROUTINES);
-    try (final Connection connection = getRetrieverConnection().getConnection(name);
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        boolean addedRoutineInformation = addRoutineInformation(results);
-        retrievalCounts.countIfIncluded(addedRoutineInformation);
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
+
+    switch (getRetrieverConnection().get(routinesRetrievalStrategy)) {
+      case metadata_over_schemas:
+        LOGGER.log(Level.INFO, "Retrieving additional view information, over schemas");
+        retrieveRoutineInformationOverSchemas(routineDefinitionsSql);
+        break;
+
+      case data_dictionary_all:
+      default:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional view information, using fast data dictionary retrieval");
+        retrieveRoutineInformationFromDataDictionary(routineDefinitionsSql);
+        break;
     }
-    retrievalCounts.log();
   }
 
   /**
@@ -181,5 +182,59 @@ final class RoutineExtRetriever extends AbstractRetriever {
       return Optional.of((DatabaseObject) tableOptional.get());
     }
     return Optional.empty();
+  }
+
+  private void retrieveRoutineInformationFromDataDictionary(final Query routineDefinitionsSql)
+      throws SQLException {
+    final String name = "routine definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        boolean addedRoutineInformation = addRoutineInformation(results);
+        retrievalCounts.countIfIncluded(addedRoutineInformation);
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve routine definitions", e);
+    }
+    retrievalCounts.log();
+  }
+
+  private void retrieveRoutineInformationOverSchemas(final Query routineDefinitionsSql)
+      throws SQLException {
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "routine definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count();
+            boolean addedRoutineInformation = addRoutineInformation(results);
+            retrievalCounts.countIfIncluded(addedRoutineInformation);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.WARNING,
+              String.format("Could not retrieve routine definitions for schema <%s>", schema),
+              e);
+        }
+        retrievalCounts.log();
+        connection.setCatalog(currentCatalogName);
+      }
+    }
   }
 }

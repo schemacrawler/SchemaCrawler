@@ -17,6 +17,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.in
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewTableUsageRetrievalStrategy;
@@ -42,6 +43,7 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
                 .with(indexesRetrievalStrategy, metadata)
                 .with(viewInformationRetrievalStrategy, metadata_over_schemas)
                 .with(viewTableUsageRetrievalStrategy, metadata_over_schemas)
+                .with(routinesRetrievalStrategy, metadata_over_schemas)
                 .with(proceduresRetrievalStrategy, data_dictionary_all)
                 .with(procedureParametersRetrievalStrategy, data_dictionary_all)
                 .with(functionsRetrievalStrategy, data_dictionary_all)
