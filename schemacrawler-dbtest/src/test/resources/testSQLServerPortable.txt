@@ -34,6 +34,9 @@ Indexes
   Id                                ascending                   
 
                                                       [non-unique index]
+  Country                           ascending                   
+
+                                                      [non-unique index]
   LastName                          ascending                   
   FirstName                         ascending                   
 
