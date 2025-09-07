@@ -123,10 +123,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
    * @throws SQLException On a SQL exception
    */
   void retrieveTableConstraintInformation() throws SQLException {
-    if (tableConstraintsMap.isEmpty()) {
-      LOGGER.log(Level.FINE, "No table constraints found");
-      return;
-    }
 
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
