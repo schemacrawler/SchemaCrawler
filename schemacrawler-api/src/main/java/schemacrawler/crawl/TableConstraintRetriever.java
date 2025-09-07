@@ -8,27 +8,25 @@
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintType;
@@ -42,7 +40,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableConstraintRetriever.class.getName());
 
-  private final Map<List<String>, MutableTableConstraint> tableConstraintsMap;
+  private final Map<NamedObjectKey, MutableTableConstraint> tableConstraintsMap;
 
   TableConstraintRetriever(
       final RetrieverConnection retrieverConnection,
@@ -50,6 +48,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
       final SchemaCrawlerOptions options)
       throws SQLException {
     super(retrieverConnection, catalog, options);
+    // NOTE: This map has a pseudo-lookup key to look up
+    // table constraints by name directly, without looking up the table
     tableConstraintsMap = new HashMap<>();
   }
 
@@ -98,7 +98,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final String definition = results.getString("CHECK_CLAUSE");
 
         final MutableTableConstraint tableConstraint =
-            tableConstraintsMap.get(Arrays.asList(catalogName, schemaName, constraintName));
+            tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
         if (tableConstraint == null) {
           LOGGER.log(
               Level.FINEST,
@@ -262,7 +262,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         // Add to map, since we will need this later
         final Schema schema = table.getSchema();
         tableConstraintsMap.put(
-            Arrays.asList(schema.getCatalogName(), schema.getName(), constraintName),
+            new NamedObjectKey(schema.getCatalogName(), schema.getName(), constraintName),
             tableConstraint);
       }
     } catch (final Exception e) {
@@ -306,7 +306,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
             new StringFormat("Retrieving definition for constraint <%s>", constraintName));
 
         final MutableTableConstraint tableConstraint =
-            tableConstraintsMap.get(Arrays.asList(catalogName, schemaName, constraintName));
+            tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
         if (tableConstraint == null) {
           LOGGER.log(
               Level.FINEST,
