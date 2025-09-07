@@ -8,12 +8,9 @@
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +18,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -165,6 +164,7 @@ final class IndexRetriever extends AbstractRetriever {
         IndexColumnSortSequence.valueOfFromCode(results.getString("ASC_OR_DESC"));
     final long cardinality = results.getLong("CARDINALITY", 0L);
     final long pages = results.getLong("PAGES", 0L);
+    final String filterCondition = results.getString("FILTER_CONDITION");
 
     final Column column;
     final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
@@ -207,6 +207,7 @@ final class IndexRetriever extends AbstractRetriever {
     index.setIndexType(type);
     index.setCardinality(cardinality);
     index.setPages(pages);
+    index.setFilterCondition(filterCondition);
     index.addAttributes(results.getAttributes());
 
     return true;

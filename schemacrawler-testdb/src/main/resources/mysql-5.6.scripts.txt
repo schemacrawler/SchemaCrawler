@@ -13,7 +13,8 @@
 ;,/db/books/31_views_A.sql
 #,/db/books/32_views_materialized_A.sql
 ;,/db/books/33_temp_tables_B.sql
-;,/db/books/34_indexes_A.sql
+;,/db/books/34_indexes_01_base_A.sql
+#,/db/books/34_indexes_02_filtered_A.sql
 #,/db/books/35_generated_columns_C.sql
 #,/db/books/36_hidden_columns_A.sql
 #,/db/books/37_views_json_relational_duality_A.sql

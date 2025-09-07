@@ -35,6 +35,11 @@ Indexes
   Id                                ascending                   
 
                                                       [non-unique index]
+  Country                           ascending                   
+                                                      [filter condition]
+([Country]='USA')
+
+                                                      [non-unique index]
   LastName                          ascending                   
   FirstName                         ascending                   
 

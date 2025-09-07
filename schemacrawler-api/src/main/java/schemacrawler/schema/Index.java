@@ -31,6 +31,13 @@ public interface Index
   List<IndexColumn> getColumns();
 
   /**
+   * Gets the index filter condition.
+   *
+   * @return Index filter condition
+   */
+  String getFilterCondition();
+
+  /**
    * Gets the index type.
    *
    * @return Index type.
@@ -44,6 +51,8 @@ public interface Index
    * @return Pages
    */
   long getPages();
+
+  boolean hasFilterCondition();
 
   /**
    * If the index is unique.

@@ -766,6 +766,11 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           printTableColumns(index.getColumns(), false);
         }
         printDependantObjectDefinition(index);
+        // Print filter condition
+        if (index.hasFilterCondition()) {
+          formattingHelper.writeNameRow("", "[filter condition]");
+          formattingHelper.writeWideRow(index.getFilterCondition(), "definition");
+        }
       }
     }
   }
