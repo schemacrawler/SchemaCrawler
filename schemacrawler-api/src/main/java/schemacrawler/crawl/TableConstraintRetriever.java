@@ -12,6 +12,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -105,9 +107,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
   /**
    * Retrieves table constraint information from the database, in the INFORMATION_SCHEMA format.
    *
-   * IMPORTANT: This retrieval does not use the table constraint map, since it looks up remarks
-   * for all constraints, including primary keys. In some databases, primary keys do not have
-   * unique names.
+   * <p>IMPORTANT: This retrieval does not use the table constraint map, since it looks up remarks
+   * for all constraints, including primary keys. In some databases, primary keys do not have unique
+   * names.
    *
    * @throws SQLException On a SQL exception
    */
@@ -306,16 +308,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
         // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = results.getString("TABLE_NAME");
 
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+        final Table table = tableConstraint.getParent();
+        if (!table.getName().equals(tableName)) {
           continue;
         }
 
-        final MutableTable table = tableOptional.get();
         final String columnName = results.getString("COLUMN_NAME");
         final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
         if (!columnOptional.isPresent()) {
