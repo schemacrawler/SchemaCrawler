@@ -8,17 +8,19 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -53,6 +55,12 @@ final class IndexRetriever extends AbstractRetriever {
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving indexes");
         retrieveIndexesFromMetadata(allTables);
+        break;
+
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO, "Retrieving indexes, using fast data dictionary retrieval over schemas");
+        retrieveIndexesOverSchemas();
         break;
 
       default:
@@ -119,7 +127,7 @@ final class IndexRetriever extends AbstractRetriever {
         final String definition = results.getString("INDEX_DEFINITION");
         final String remarks = results.getString("REMARKS");
 
-        index.appendDefinition(definition);
+        index.setDefinition(definition);
         index.setRemarks(remarks);
 
         index.addAttributes(results.getAttributes());
@@ -212,9 +220,10 @@ final class IndexRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Extended indexes SQL statement was not provided");
       return;
     }
+    final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
+
     final String name = "indexes from data dictionary";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
@@ -272,5 +281,58 @@ final class IndexRetriever extends AbstractRetriever {
       }
     }
     retrievalCounts.log();
+  }
+
+  private void retrieveIndexesOverSchemas() throws WrappedSQLException {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasQuery(INDEXES)) {
+      LOGGER.log(Level.FINE, "Extended indexes SQL statement was not provided");
+      return;
+    }
+    final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
+
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "indexes from data dictionary";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            // final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
+            final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
+            final String tableName = results.getString("TABLE_NAME");
+
+            final Optional<MutableTable> optionalTable =
+                lookupTable(catalogName, schemaName, tableName);
+            if (!optionalTable.isPresent()) {
+              continue;
+            }
+            final MutableTable table = optionalTable.get();
+            final boolean added = createIndexForTable(table, results);
+            retrievalCounts.countIfIncluded(schema.key(), added);
+          }
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      } catch (final SQLException e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve indexes for schema <%s>", schema));
+      }
+    }
   }
 }

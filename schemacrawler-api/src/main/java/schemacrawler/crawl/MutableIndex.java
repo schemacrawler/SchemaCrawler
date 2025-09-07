@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,7 +28,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   private static final long serialVersionUID = 4051326747138079028L;
 
   private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<>();
-  private final StringBuilder definition;
+  private String definition;
   private long cardinality;
   private IndexType indexType;
   private boolean isUnique;
@@ -37,7 +38,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
     super(new TablePointer(parent), name);
     // Default values
     indexType = IndexType.unknown;
-    definition = new StringBuilder();
+    definition = "";
   }
 
   /**
@@ -120,7 +121,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
 
   @Override
   public final boolean hasDefinition() {
-    return definition.length() > 0;
+    return !isBlank(definition);
   }
 
   /** {@inheritDoc} */
@@ -146,14 +147,14 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
     columns.add(column);
   }
 
-  final void appendDefinition(final String definition) {
-    if (definition != null) {
-      this.definition.append(definition);
-    }
-  }
-
   final void setCardinality(final long cardinality) {
     this.cardinality = cardinality;
+  }
+
+  final void setDefinition(final String definition) {
+    if (!hasDefinition() && !isBlank(definition)) {
+      this.definition = definition;
+    }
   }
 
   final void setIndexType(final IndexType indexType) {

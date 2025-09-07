@@ -8,7 +8,6 @@
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
@@ -17,19 +16,15 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -42,7 +37,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(TableConstraintRetriever.class.getName());
 
-  private final Map<List<String>, MutableTableConstraint> tableConstraintsMap;
+  private final Map<NamedObjectKey, MutableTableConstraint> tableConstraintsMap;
 
   TableConstraintRetriever(
       final RetrieverConnection retrieverConnection,
@@ -50,18 +45,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
       final SchemaCrawlerOptions options)
       throws SQLException {
     super(retrieverConnection, catalog, options);
+    // NOTE: This map has a pseudo-lookup key to look up
+    // table constraints by name directly, without looking up the table
     tableConstraintsMap = new HashMap<>();
-  }
-
-  public void matchTableConstraints(final NamedObjectList<MutableTable> allTables) {
-    requireNonNull(allTables, "No tables provided");
-    for (final MutableTable mutableTable : allTables) {
-      if (mutableTable == null) {
-        continue;
-      }
-      matchPrimaryKey(mutableTable);
-      addImportedForeignKeys(mutableTable);
-    }
   }
 
   void retrieveTableConstraintDefinitions() {
@@ -98,14 +84,14 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final String definition = results.getString("CHECK_CLAUSE");
 
         final MutableTableConstraint tableConstraint =
-            tableConstraintsMap.get(Arrays.asList(catalogName, schemaName, constraintName));
+            tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
         if (tableConstraint == null) {
           LOGGER.log(
               Level.FINEST,
               new StringFormat("Could not add table constraint <%s>", constraintName));
           continue;
         }
-        tableConstraint.appendDefinition(definition);
+        tableConstraint.setDefinition(definition);
 
         tableConstraint.addAttributes(results.getAttributes());
 
@@ -119,6 +105,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
   /**
    * Retrieves table constraint information from the database, in the INFORMATION_SCHEMA format.
+   *
+   * <p>IMPORTANT: This retrieval does not use the table constraint map, since it looks up remarks
+   * for all constraints, including primary keys. In some databases, primary keys do not have unique
+   * names.
    *
    * @throws SQLException On a SQL exception
    */
@@ -211,50 +201,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
-    createTableConstraints(tableConstraintsMap, informationSchemaViews);
-
-    if (!tableConstraintsMap.isEmpty()) {
-      retrieveTableConstraintsColumns(tableConstraintsMap, informationSchemaViews);
-    }
-  }
-
-  /**
-   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
-   * the information schema views, so they can be added in without fear of duplication.
-   *
-   * @param table Table to add constraints to
-   */
-  private void addImportedForeignKeys(final MutableTable table) {
-    final Collection<ForeignKey> importedForeignKeys = table.getImportedForeignKeys();
-    for (final ForeignKey foreignKey : importedForeignKeys) {
-      final Optional<TableConstraint> lookupTableConstraint =
-          table.lookupTableConstraint(foreignKey.getName());
-      if (lookupTableConstraint.isPresent()) {
-        final TableConstraint tableConstraint = lookupTableConstraint.get();
-        copyRemarksAndAttributes(tableConstraint, foreignKey);
-        table.removeTableConstraint(tableConstraint);
-      }
-      // Add or replace the table constraint with the foreign key, which has more information like
-      // column mappings
-      table.addTableConstraint(foreignKey);
-    }
-  }
-
-  private void copyRemarksAndAttributes(
-      final TableConstraint tableConstraint, final DatabaseObject databaseObject) {
-    // Copy remarks over
-    if (!databaseObject.hasRemarks() && tableConstraint.hasRemarks()) {
-      databaseObject.setRemarks(tableConstraint.getRemarks());
-    }
-    // Copy attributes over
-    for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
-      databaseObject.setAttribute(attribute.getKey(), attribute.getValue());
-    }
-  }
-
-  private void createTableConstraints(
-      final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
-      final InformationSchemaViews informationSchemaViews) {
     if (!informationSchemaViews.hasQuery(TABLE_CONSTRAINTS)) {
       LOGGER.log(Level.FINE, "Table constraints SQL statement was not provided");
       return;
@@ -303,11 +249,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
         table.addTableConstraint(tableConstraint);
         retrievalCounts.countIncluded();
 
-        // Add to map, since we will need this later
-        final Schema schema = table.getSchema();
-        tableConstraintsMap.put(
-            Arrays.asList(schema.getCatalogName(), schema.getName(), constraintName),
-            tableConstraint);
+        // Save look up for constraint with a simplified key
+        tableConstraintsMap.put(table.getSchema().key().with(constraintName), tableConstraint);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
@@ -316,29 +259,15 @@ final class TableConstraintRetriever extends AbstractRetriever {
     retrievalCounts.log();
   }
 
-  private void matchPrimaryKey(final MutableTable table) {
-    if (!table.hasPrimaryKey()) {
+  void retrieveTableConstraintColumns() {
+    if (tableConstraintsMap.isEmpty()) {
+      LOGGER.log(Level.FINE, "No table constraints found");
       return;
     }
-    final MutablePrimaryKey primaryKey = table.getPrimaryKey();
-    // Remove table constraints that are primary keys, if the columns match
-    for (final TableConstraint tableConstraint : table.getTableConstraints()) {
-      if (tableConstraint.getType() == TableConstraintType.primary_key
-          && (primaryKey.getName().equals(tableConstraint.getName())
-              || primaryKey
-                  .getConstrainedColumns()
-                  .equals(tableConstraint.getConstrainedColumns()))) {
-        copyRemarksAndAttributes(tableConstraint, primaryKey);
-        table.removeTableConstraint(tableConstraint);
-      }
-    }
-    // Add back primary key as table constraints
-    table.addTableConstraint(primaryKey);
-  }
 
-  private void retrieveTableConstraintsColumns(
-      final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
-      final InformationSchemaViews informationSchemaViews) {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
     if (!informationSchemaViews.hasQuery(CONSTRAINT_COLUMN_USAGE)) {
       LOGGER.log(Level.FINE, "Table constraints columns usage SQL statement was not provided");
       return;
@@ -364,7 +293,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
             new StringFormat("Retrieving definition for constraint <%s>", constraintName));
 
         final MutableTableConstraint tableConstraint =
-            tableConstraintsMap.get(Arrays.asList(catalogName, schemaName, constraintName));
+            tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
         if (tableConstraint == null) {
           LOGGER.log(
               Level.FINEST,
@@ -375,16 +304,11 @@ final class TableConstraintRetriever extends AbstractRetriever {
         // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = results.getString("TABLE_NAME");
 
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+        final Table table = tableConstraint.getParent();
+        if (!table.getName().equals(tableName)) {
           continue;
         }
 
-        final MutableTable table = tableOptional.get();
         final String columnName = results.getString("COLUMN_NAME");
         final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
         if (!columnOptional.isPresent()) {

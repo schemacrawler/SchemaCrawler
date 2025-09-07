@@ -32,7 +32,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   private final String specificName;
   private RoutineBodyType routineBodyType;
   private final Collection<DatabaseObject> referencedObjects;
-  private final StringBuffer definition;
+  private String definition;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -46,7 +46,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     this.specificName = specificName;
     routineBodyType = RoutineBodyType.unknown;
     referencedObjects = new HashSet<>();
-    definition = new StringBuffer();
+    definition = "";
   }
 
   /**
@@ -115,7 +115,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
 
   @Override
   public final boolean hasDefinition() {
-    return definition.length() > 0;
+    return !isBlank(definition);
   }
 
   @Override
@@ -124,15 +124,15 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     return key;
   }
 
-  void addReferencedObject(final DatabaseObject referencedObject) {
+  final void addReferencedObject(final DatabaseObject referencedObject) {
     if (referencedObject != null) {
       referencedObjects.add(referencedObject);
     }
   }
 
-  final void appendDefinition(final String definition) {
-    if (definition != null) {
-      this.definition.append(definition);
+  final void setDefinition(final String definition) {
+    if (!hasDefinition() && !isBlank(definition)) {
+      this.definition = definition;
     }
   }
 

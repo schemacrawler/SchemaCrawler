@@ -9,12 +9,14 @@
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
 import static schemacrawler.utility.EnumUtility.enumValues;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -54,76 +57,82 @@ final class TriggerRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Trigger definition SQL statement was not provided");
       return;
     }
-
-    LOGGER.log(Level.INFO, "Retrieving trigger definitions");
-
-    final String name = "trigger definitions";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query triggerInformationSql = informationSchemaViews.getQuery(TRIGGERS);
-    try (final Connection connection = getRetrieverConnection().getConnection(name);
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("TRIGGER_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("TRIGGER_SCHEMA"));
-        final String triggerName = results.getString("TRIGGER_NAME");
-        LOGGER.log(Level.FINER, new StringFormat("Retrieving trigger <%s>", triggerName));
 
-        // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
-        final String tableName = results.getString("EVENT_OBJECT_TABLE");
+    switch (getRetrieverConnection().get(viewInformationRetrievalStrategy)) {
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO, "Retrieving triggers, using fast data dictionary retrieval over schemas");
+        retrieveTriggerOverSchemas(triggerInformationSql);
+        break;
 
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
-          continue;
-        }
-
-        final MutableTable table = tableOptional.get();
-
-        final Set<EventManipulationType> eventManipulationTypes = getEventManipulationType(results);
-        final int actionOrder = results.getInt("ACTION_ORDER", 0);
-        final String actionCondition = results.getString("ACTION_CONDITION");
-        final String actionStatement = results.getString("ACTION_STATEMENT");
-        final ActionOrientationType actionOrientation =
-            results.getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
-        String conditionTimingString = results.getString("ACTION_TIMING");
-        if (conditionTimingString == null) {
-          conditionTimingString = results.getString("CONDITION_TIMING");
-        }
-        final ConditionTimingType conditionTiming =
-            ConditionTimingType.valueOfFromValue(conditionTimingString);
-
-        final MutableTrigger trigger;
-        final Optional<MutableTrigger> optionalTrigger = table.lookupTrigger(triggerName);
-        if (optionalTrigger.isPresent()) {
-          trigger = optionalTrigger.get();
-        } else {
-          trigger = new MutableTrigger(table, triggerName);
-          // Set fields only for the first time the trigger is seen
-          trigger.setActionOrder(actionOrder);
-          trigger.appendActionCondition(actionCondition);
-          trigger.appendActionStatement(actionStatement);
-          trigger.setActionOrientation(actionOrientation);
-          trigger.setConditionTiming(conditionTiming);
-        }
-        trigger.withQuoting(getRetrieverConnection().getIdentifiers());
-
-        trigger.setEventManipulationTypes(eventManipulationTypes);
-        trigger.addAttributes(results.getAttributes());
-
-        // Add trigger to the table
-        table.addTrigger(trigger);
-        retrievalCounts.countIncluded();
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve triggers", e);
+      case data_dictionary_all:
+      default:
+        LOGGER.log(Level.INFO, "Retrieving triggers, using fast data dictionary retrieval");
+        retrieveTriggerFromDataDictionary(triggerInformationSql);
+        break;
     }
-    retrievalCounts.log();
+  }
+
+  /**
+   * Creates a trigger and adds it to the table.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  private boolean createTrigger(final MetadataResultSet results) throws SQLException {
+    final String catalogName = normalizeCatalogName(results.getString("TRIGGER_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("TRIGGER_SCHEMA"));
+    final String triggerName = results.getString("TRIGGER_NAME");
+    LOGGER.log(Level.FINER, new StringFormat("Retrieving trigger <%s>", triggerName));
+
+    // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
+    final String tableName = results.getString("EVENT_OBJECT_TABLE");
+
+    final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
+    if (!tableOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+      return false;
+    }
+
+    final MutableTable table = tableOptional.get();
+
+    final Set<EventManipulationType> eventManipulationTypes = getEventManipulationType(results);
+    final int actionOrder = results.getInt("ACTION_ORDER", 0);
+    final String actionCondition = results.getString("ACTION_CONDITION");
+    final String actionStatement = results.getString("ACTION_STATEMENT");
+    final ActionOrientationType actionOrientation =
+        results.getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
+    String conditionTimingString = results.getString("ACTION_TIMING");
+    if (conditionTimingString == null) {
+      conditionTimingString = results.getString("CONDITION_TIMING");
+    }
+    final ConditionTimingType conditionTiming =
+        ConditionTimingType.valueOfFromValue(conditionTimingString);
+
+    final MutableTrigger trigger;
+    final Optional<MutableTrigger> optionalTrigger = table.lookupTrigger(triggerName);
+    if (optionalTrigger.isPresent()) {
+      trigger = optionalTrigger.get();
+    } else {
+      trigger = new MutableTrigger(table, triggerName);
+      // Set fields only for the first time the trigger is seen
+      trigger.setActionOrder(actionOrder);
+      trigger.appendActionCondition(actionCondition);
+      trigger.appendActionStatement(actionStatement);
+      trigger.setActionOrientation(actionOrientation);
+      trigger.setConditionTiming(conditionTiming);
+    }
+    trigger.withQuoting(getRetrieverConnection().getIdentifiers());
+
+    trigger.setEventManipulationTypes(eventManipulationTypes);
+    trigger.addAttributes(results.getAttributes());
+
+    // Add trigger to the table
+    table.addTrigger(trigger);
+
+    return true;
   }
 
   private Set<EventManipulationType> getEventManipulationType(final MetadataResultSet results) {
@@ -150,5 +159,58 @@ final class TriggerRetriever extends AbstractRetriever {
     }
 
     return enumValues(eventManipulationString, splitBy, EventManipulationType.unknown);
+  }
+
+  private void retrieveTriggerFromDataDictionary(final Query triggerInformationSql)
+      throws SQLException {
+    final String name = "trigger definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        final boolean added = createTrigger(results);
+        retrievalCounts.countIfIncluded(added);
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve triggers", e);
+    }
+    retrievalCounts.log();
+  }
+
+  private void retrieveTriggerOverSchemas(final Query triggerInformationSql) throws SQLException {
+    final Collection<Schema> schemas = catalog.getSchemas();
+    final String name = "trigger definitions";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            final boolean added = createTrigger(results);
+            retrievalCounts.countIfIncluded(schema.key(), added);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat("Could not retrieve triggers for schema <%s>", schema));
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      }
+    }
   }
 }

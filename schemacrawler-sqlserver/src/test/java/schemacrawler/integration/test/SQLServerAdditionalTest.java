@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,6 +27,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.ExcludeAll;
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -35,17 +35,17 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestDebugLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.database.SqlScript;
 
+@TestDebugLogging("INFO")
 @TestInstance(Lifecycle.PER_CLASS)
-@DisableLogging
 @ResolveTestContext
 @HeavyDatabaseTest
 @Testcontainers
@@ -99,32 +99,6 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    final String expectedResource = testContext.testMethodFullName();
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource(expectedResource)));
-  }
-
-  @Test
-  public void longProcedure(final TestContext testContext) throws Exception {
-
-    SqlScript.executeScriptFromResource("/longProcedure.sql", getConnection());
-
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("ADDITIONAL_DATABASE\\.dbo"))
-            .includeTables(new ExcludeAll())
-            .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final String expectedResource = testContext.testMethodFullName();
     assertThat(

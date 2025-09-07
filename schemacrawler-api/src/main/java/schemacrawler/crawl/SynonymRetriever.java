@@ -9,14 +9,13 @@
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
@@ -76,12 +75,12 @@ final class SynonymRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Synonym definition SQL statement was not provided");
       return;
     }
+    final Query synonymsDefinitionSql = informationSchemaViews.getQuery(EXT_SYNONYMS);
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final String name = "synonyms";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    final Query synonymsDefinitionSql = informationSchemaViews.getQuery(EXT_SYNONYMS);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =

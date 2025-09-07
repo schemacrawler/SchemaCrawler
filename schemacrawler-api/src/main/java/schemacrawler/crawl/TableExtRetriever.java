@@ -237,7 +237,7 @@ final class TableExtRetriever extends AbstractRetriever {
         LOGGER.log(Level.FINER, new StringFormat("Retrieving table information <%s>", tableName));
         final String definition = results.getString("TABLE_DEFINITION");
 
-        table.appendDefinition(definition);
+        table.setDefinition(definition);
 
         table.addAttributes(results.getAttributes());
         retrievalCounts.countIncluded();

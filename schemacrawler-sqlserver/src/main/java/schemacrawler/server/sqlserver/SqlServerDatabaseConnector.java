@@ -9,14 +9,21 @@
 package schemacrawler.server.sqlserver;
 
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
-import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_over_schemas;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata_over_schemas;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routineReferencesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.triggersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewTableUsageRetrievalStrategy;
+
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -33,9 +40,14 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
             informationSchemaViewsBuilder.fromResourceFolder("/sqlserver.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) ->
             schemaRetrievalOptionsBuilder
-                .with(tableColumnsRetrievalStrategy, data_dictionary_all)
-                .with(primaryKeysRetrievalStrategy, metadata)
-                .with(indexesRetrievalStrategy, metadata)
+                .with(tableColumnsRetrievalStrategy, metadata_over_schemas)
+                .with(primaryKeysRetrievalStrategy, data_dictionary_over_schemas)
+                .with(indexesRetrievalStrategy, data_dictionary_over_schemas)
+                .with(viewInformationRetrievalStrategy, data_dictionary_over_schemas)
+                .with(viewTableUsageRetrievalStrategy, data_dictionary_over_schemas)
+                .with(triggersRetrievalStrategy, data_dictionary_over_schemas)
+                .with(routinesRetrievalStrategy, data_dictionary_over_schemas)
+                .with(routineReferencesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(proceduresRetrievalStrategy, data_dictionary_all)
                 .with(procedureParametersRetrievalStrategy, data_dictionary_all)
                 .with(functionsRetrievalStrategy, data_dictionary_all)

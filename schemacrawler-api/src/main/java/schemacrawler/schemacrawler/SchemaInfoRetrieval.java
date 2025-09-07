@@ -42,6 +42,7 @@ public enum SchemaInfoRetrieval {
   retrieveTableColumnPrivileges(table, maximum),
   retrieveTableColumns(table, standard),
   retrieveTableConstraints(table, detailed),
+  retrieveTableConstraintColumns(table, detailed),
   retrieveTableConstraintDefinitions(table, detailed),
   retrieveTableConstraintInformation(table, detailed),
   retrieveTableDefinitionsInformation(table, maximum),

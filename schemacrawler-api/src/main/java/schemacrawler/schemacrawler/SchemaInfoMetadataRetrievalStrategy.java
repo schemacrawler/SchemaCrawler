@@ -14,13 +14,18 @@ public enum SchemaInfoMetadataRetrievalStrategy {
   functionsRetrievalStrategy("functions"),
   indexesRetrievalStrategy("indexes"),
   primaryKeysRetrievalStrategy("primarykeys"),
+  routinesRetrievalStrategy("routines"),
+  routineReferencesRetrievalStrategy("routine-references"),
   proceduresRetrievalStrategy("procedures"),
   procedureParametersRetrievalStrategy("procedureparameters"),
   tableColumnPrivilegesRetrievalStrategy("tablecolumnprivileges"),
   tableColumnsRetrievalStrategy("tablecolumns"),
   tablePrivilegesRetrievalStrategy("tableprivileges"),
   tablesRetrievalStrategy("tables"),
+  triggersRetrievalStrategy("triggers"),
   typeInfoRetrievalStrategy("typeinfo"),
+  viewInformationRetrievalStrategy("view-information"),
+  viewTableUsageRetrievalStrategy("view-table-usage"),
   ;
 
   private final String key;

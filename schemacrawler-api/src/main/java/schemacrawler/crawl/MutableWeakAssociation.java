@@ -32,11 +32,6 @@ final class MutableWeakAssociation extends AbstractTableReference implements Wea
   }
 
   @Override
-  public boolean hasDefinition() {
-    return false;
-  }
-
-  @Override
   public boolean isDeferrable() {
     return false;
   }
