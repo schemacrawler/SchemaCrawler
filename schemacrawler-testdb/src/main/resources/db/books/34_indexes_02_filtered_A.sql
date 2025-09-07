@@ -5,7 +5,7 @@
 -- SPDX-License-Identifier: EPL-2.0
 
 -- Index with filter condition
--- PostgreSQL, SQLite, DB2 syntax
+-- PostgreSQL, SQLite syntax
 CREATE INDEX IDX_USA_Authors
   ON Authors (Country)
   WHERE 
