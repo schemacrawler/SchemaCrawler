@@ -10,9 +10,12 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.in;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.schema.TableConstraintType.foreign_key;
+import static schemacrawler.schema.TableConstraintType.primary_key;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
@@ -20,12 +23,15 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.sql.Connection;
+import java.util.Collection;
+import java.util.EnumSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -69,40 +75,6 @@ public class TableConstraintRetrieverTest {
 
     // Verify that we have tables
     assertThat(catalog.getTables(), is(not(empty())));
-  }
-
-  @Test
-  @DisplayName("Test retrieving table constraints")
-  public void testRetrieveTableConstraints(final DatabaseConnectionSource dataSource)
-      throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsDefault;
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(dataSource, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    // Create a list of tables to retrieve constraints for
-    final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
-    for (final Schema schema : catalog.getSchemas()) {
-      for (final Table table : catalog.getTables(schema)) {
-        if (table instanceof MutableTable) {
-          allTables.add((MutableTable) table);
-        }
-      }
-    }
-
-    assertThat("Should have tables to retrieve constraints for", !allTables.isEmpty(), is(true));
-
-    // Create the constraint retriever
-    final TableConstraintRetriever constraintRetriever =
-        new TableConstraintRetriever(retrieverConnection, catalog, options);
-
-    // Act - retrieve table constraints
-    constraintRetriever.retrieveTableConstraints();
-    constraintRetriever.matchTableConstraints(allTables);
-
-    // We can't easily verify specific constraints were created,
-    // but we can verify the method executed without errors
   }
 
   @Test
@@ -195,6 +167,54 @@ public class TableConstraintRetrieverTest {
 
     // We can't easily verify specific constraint information was created,
     // but we can verify the method executed without errors
+  }
+
+  @Test
+  @DisplayName("Test retrieving table constraints")
+  public void testRetrieveTableConstraints(final DatabaseConnectionSource dataSource)
+      throws Exception {
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsDefault;
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(dataSource, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    // Create a list of tables to retrieve constraints for
+    final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
+    for (final Table table : catalog.getTables()) {
+      if (table instanceof MutableTable) {
+        final Collection<TableConstraint> tableConstraints = table.getTableConstraints();
+        for (final TableConstraint constraint : tableConstraints) {
+          assertThat(constraint.getType(), is(in(EnumSet.of(primary_key, foreign_key))));
+        }
+        allTables.add((MutableTable) table);
+      }
+    }
+
+    assertThat("Should have tables to retrieve constraints for", !allTables.isEmpty(), is(true));
+
+    // Create the constraint retriever
+    final TableConstraintRetriever constraintRetriever =
+        new TableConstraintRetriever(retrieverConnection, catalog, options);
+
+    // Act - retrieve table constraints
+    constraintRetriever.retrieveTableConstraints();
+    constraintRetriever.retrieveTableConstraintColumns();
+    constraintRetriever.matchTableConstraints(allTables);
+
+    int newConstraintsCount = 0;
+    for (final Table table : catalog.getTables()) {
+      if (table instanceof MutableTable) {
+        final Collection<TableConstraint> tableConstraints = table.getTableConstraints();
+        for (final TableConstraint constraint : tableConstraints) {
+          if (!EnumSet.of(primary_key, foreign_key).contains(constraint.getType())) {
+            newConstraintsCount = newConstraintsCount + 1;
+          }
+        }
+      }
+    }
+    // NOTE: THERE IS NO GOOD WAY TO FIND TABLE CONSTRAINTS THAT WERE ADDED
+    assertThat(newConstraintsCount, is(0));
   }
 
   @Test

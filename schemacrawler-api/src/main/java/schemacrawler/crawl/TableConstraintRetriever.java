@@ -123,6 +123,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
    * @throws SQLException On a SQL exception
    */
   void retrieveTableConstraintInformation() throws SQLException {
+    if (tableConstraintsMap.isEmpty()) {
+      LOGGER.log(Level.FINE, "No table constraints found");
+      return;
+    }
 
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
@@ -211,50 +215,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
-    createTableConstraints(tableConstraintsMap, informationSchemaViews);
-
-    if (!tableConstraintsMap.isEmpty()) {
-      retrieveTableConstraintsColumns(tableConstraintsMap, informationSchemaViews);
-    }
-  }
-
-  /**
-   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
-   * the information schema views, so they can be added in without fear of duplication.
-   *
-   * @param table Table to add constraints to
-   */
-  private void addImportedForeignKeys(final MutableTable table) {
-    final Collection<ForeignKey> importedForeignKeys = table.getImportedForeignKeys();
-    for (final ForeignKey foreignKey : importedForeignKeys) {
-      final Optional<TableConstraint> lookupTableConstraint =
-          table.lookupTableConstraint(foreignKey.getName());
-      if (lookupTableConstraint.isPresent()) {
-        final TableConstraint tableConstraint = lookupTableConstraint.get();
-        copyRemarksAndAttributes(tableConstraint, foreignKey);
-        table.removeTableConstraint(tableConstraint);
-      }
-      // Add or replace the table constraint with the foreign key, which has more information like
-      // column mappings
-      table.addTableConstraint(foreignKey);
-    }
-  }
-
-  private void copyRemarksAndAttributes(
-      final TableConstraint tableConstraint, final DatabaseObject databaseObject) {
-    // Copy remarks over
-    if (!databaseObject.hasRemarks() && tableConstraint.hasRemarks()) {
-      databaseObject.setRemarks(tableConstraint.getRemarks());
-    }
-    // Copy attributes over
-    for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
-      databaseObject.setAttribute(attribute.getKey(), attribute.getValue());
-    }
-  }
-
-  private void createTableConstraints(
-      final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
-      final InformationSchemaViews informationSchemaViews) {
     if (!informationSchemaViews.hasQuery(TABLE_CONSTRAINTS)) {
       LOGGER.log(Level.FINE, "Table constraints SQL statement was not provided");
       return;
@@ -316,29 +276,15 @@ final class TableConstraintRetriever extends AbstractRetriever {
     retrievalCounts.log();
   }
 
-  private void matchPrimaryKey(final MutableTable table) {
-    if (!table.hasPrimaryKey()) {
+  void retrieveTableConstraintColumns() {
+    if (tableConstraintsMap.isEmpty()) {
+      LOGGER.log(Level.FINE, "No table constraints found");
       return;
     }
-    final MutablePrimaryKey primaryKey = table.getPrimaryKey();
-    // Remove table constraints that are primary keys, if the columns match
-    for (final TableConstraint tableConstraint : table.getTableConstraints()) {
-      if (tableConstraint.getType() == TableConstraintType.primary_key
-          && (primaryKey.getName().equals(tableConstraint.getName())
-              || primaryKey
-                  .getConstrainedColumns()
-                  .equals(tableConstraint.getConstrainedColumns()))) {
-        copyRemarksAndAttributes(tableConstraint, primaryKey);
-        table.removeTableConstraint(tableConstraint);
-      }
-    }
-    // Add back primary key as table constraints
-    table.addTableConstraint(primaryKey);
-  }
 
-  private void retrieveTableConstraintsColumns(
-      final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
-      final InformationSchemaViews informationSchemaViews) {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
     if (!informationSchemaViews.hasQuery(CONSTRAINT_COLUMN_USAGE)) {
       LOGGER.log(Level.FINE, "Table constraints columns usage SQL statement was not provided");
       return;
@@ -408,5 +354,59 @@ final class TableConstraintRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
     }
     retrievalCounts.log();
+  }
+
+  /**
+   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
+   * the information schema views, so they can be added in without fear of duplication.
+   *
+   * @param table Table to add constraints to
+   */
+  private void addImportedForeignKeys(final MutableTable table) {
+    final Collection<ForeignKey> importedForeignKeys = table.getImportedForeignKeys();
+    for (final ForeignKey foreignKey : importedForeignKeys) {
+      final Optional<TableConstraint> lookupTableConstraint =
+          table.lookupTableConstraint(foreignKey.getName());
+      if (lookupTableConstraint.isPresent()) {
+        final TableConstraint tableConstraint = lookupTableConstraint.get();
+        copyRemarksAndAttributes(tableConstraint, foreignKey);
+        table.removeTableConstraint(tableConstraint);
+      }
+      // Add or replace the table constraint with the foreign key, which has more information like
+      // column mappings
+      table.addTableConstraint(foreignKey);
+    }
+  }
+
+  private void copyRemarksAndAttributes(
+      final TableConstraint tableConstraint, final DatabaseObject databaseObject) {
+    // Copy remarks over
+    if (!databaseObject.hasRemarks() && tableConstraint.hasRemarks()) {
+      databaseObject.setRemarks(tableConstraint.getRemarks());
+    }
+    // Copy attributes over
+    for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
+      databaseObject.setAttribute(attribute.getKey(), attribute.getValue());
+    }
+  }
+
+  private void matchPrimaryKey(final MutableTable table) {
+    if (!table.hasPrimaryKey()) {
+      return;
+    }
+    final MutablePrimaryKey primaryKey = table.getPrimaryKey();
+    // Remove table constraints that are primary keys, if the columns match
+    for (final TableConstraint tableConstraint : table.getTableConstraints()) {
+      if (tableConstraint.getType() == TableConstraintType.primary_key
+          && (primaryKey.getName().equals(tableConstraint.getName())
+              || primaryKey
+                  .getConstrainedColumns()
+                  .equals(tableConstraint.getConstrainedColumns()))) {
+        copyRemarksAndAttributes(tableConstraint, primaryKey);
+        table.removeTableConstraint(tableConstraint);
+      }
+    }
+    // Add back primary key as table constraints
+    table.addTableConstraint(primaryKey);
   }
 }
