@@ -27,6 +27,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.ExcludeAll;
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -112,7 +113,7 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("ADDITIONAL_DATABASE\\.dbo"))
+            .includeSchemas(new IncludeAll())
             .includeTables(new ExcludeAll())
             .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder =
