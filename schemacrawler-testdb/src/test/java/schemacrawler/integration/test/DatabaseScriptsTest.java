@@ -156,7 +156,7 @@ public class DatabaseScriptsTest {
   @BeforeEach
   public void setup() throws Exception {
     booksDatabaseScriptSections = makeScriptSections("**/db/books/*.sql");
-    assertThat(booksDatabaseScriptSections.size(), is(33));
+    assertThat(booksDatabaseScriptSections.size(), is(34));
   }
 
   private String getScriptName(final String path) {
