@@ -19,7 +19,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.logging.Level;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
@@ -40,7 +39,6 @@ import schemacrawler.test.utility.TestDebugLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.utility.LoggingConfig;
 import us.fatehi.utility.database.SqlScript;
 
 @TestDebugLogging("OFF")
@@ -71,16 +69,14 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
     try (final Connection connection = getConnection()) {
       SqlScript.executeScriptFromResource("/multiple-databases.sql", connection);
     }
+
+    // Create a new set of database connections for crawling the schema,
+    // with the master database as the default
+    createDataSource(jdbcUrl, user, password, "database=master");
   }
 
-  /**
-   * @param testContext
-   * @throws Exception
-   */
   @Test
   public void multipleDatabases(final TestContext testContext) throws Exception {
-
-    new LoggingConfig(Level.INFO);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
