@@ -40,7 +40,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.database.SqlScript;
 
-@TestDebugLogging("OFF")
+@TestDebugLogging("INFO")
 @ResolveTestContext
 @HeavyDatabaseTest("sqlserver")
 @Testcontainers
