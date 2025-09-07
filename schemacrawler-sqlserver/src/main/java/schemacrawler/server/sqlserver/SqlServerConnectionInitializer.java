@@ -33,7 +33,6 @@ public final class SqlServerConnectionInitializer implements Consumer<Connection
     SqlScript.executeScriptFromResource("/initialize-all-function-parameters.sql", "@", connection);
 
     SqlScript.executeScriptFromResource("/initialize-all-table-columns.sql", "@", connection);
-    SqlScript.executeScriptFromResource("/initialize-all-indexes.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-triggers.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-table-constraints.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-check-constraints.sql", "@", connection);

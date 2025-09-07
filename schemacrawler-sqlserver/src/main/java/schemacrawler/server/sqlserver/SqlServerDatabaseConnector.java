@@ -10,7 +10,6 @@ package schemacrawler.server.sqlserver;
 
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_over_schemas;
-import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
@@ -22,6 +21,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ro
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewTableUsageRetrievalStrategy;
+
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -40,7 +40,7 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
             schemaRetrievalOptionsBuilder
                 .with(tableColumnsRetrievalStrategy, data_dictionary_all)
                 .with(primaryKeysRetrievalStrategy, data_dictionary_over_schemas)
-                .with(indexesRetrievalStrategy, metadata)
+                .with(indexesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(viewInformationRetrievalStrategy, data_dictionary_over_schemas)
                 .with(viewTableUsageRetrievalStrategy, data_dictionary_over_schemas)
                 .with(routinesRetrievalStrategy, data_dictionary_over_schemas)

@@ -58,7 +58,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       case data_dictionary_over_schemas:
         LOGGER.log(
             Level.INFO,
-            "Retrieving primary keys, using fast data dictionary retrieval" + " over schemas");
+            "Retrieving primary keys, using fast data dictionary retrieval over schemas");
         retrievePrimaryKeysOverSchemas();
         break;
 
