@@ -25,6 +25,8 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import schemacrawler.inclusionrule.ExcludeAll;
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -33,18 +35,57 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.database.SqlScript;
 
 @DisableLogging
+@ResolveTestContext
 @HeavyDatabaseTest("oracle")
 @Testcontainers
 @TestInstance(Lifecycle.PER_CLASS)
 public class IssuesTest extends BaseOracleWithConnectionTest {
 
   @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
+
+  @Test
+  @DisplayName("Issue #1432 - cannot extract check constraints")
+  public void checkConstraints() throws Exception {
+
+    final Connection connection = getConnection();
+    connection.setSchema("BOOKS");
+    SqlScript.executeScriptFromResource("/issue1432.sql", connection);
+
+    final String expectedResource = "issue1432_check_constraints.txt";
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeTables(new RegularExpressionInclusionRule("BOOKS\\.GUY"))
+            .tableTypes("TABLE");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    // -- Schema output tests
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
 
   @BeforeAll
   public void createDatabase() {
@@ -61,21 +102,53 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
   }
 
   @Test
-  @DisplayName("Issue #628 - retrieve table and columns names with a slash or dot")
-  public void slashedName() throws Exception {
+  @DisplayName("Issue #1434 - foreign keys to unique indexes")
+  public void fkToUniqueIndex() throws Exception {
 
     final Connection connection = getConnection();
     connection.setSchema("BOOKS");
-    SqlScript.executeScriptFromResource("/issue628.sql", connection);
+    SqlScript.executeScriptFromResource("/issue1434.sql", connection);
 
-    final String expectedResource = "issue628_slashed_name.txt";
+    final String expectedResource = "issue1434_fk_to_unique_index.txt";
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
-            .includeTables(
-                new RegularExpressionInclusionRule("BOOKS\\.\\\"?(A\\/B|CD|G\\.H|KL)\\\"?"))
+            .includeTables(new RegularExpressionInclusionRule("BOOKS\\.(COMMUNICATION|CHANNEL)"))
             .tableTypes("TABLE");
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+
+    // -- Schema output tests
+    assertThat(
+        outputOf(executableExecution(getDataSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  @DisplayName("Test stored procedures in packaged")
+  public void packages(final TestContext testContext) throws Exception {
+
+    final Connection connection = getConnection();
+    connection.setSchema("BOOKS");
+    SqlScript.executeScriptFromResource("/create-package.sql", connection);
+
+    final String expectedResource = testContext.testMethodFullName() + ".txt";
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeTables(new ExcludeAll())
+            .includeRoutines(new IncludeAll());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions());
@@ -128,55 +201,20 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
   }
 
   @Test
-  @DisplayName("Issue #1432 - cannot extract check constraints")
-  public void checkConstraints() throws Exception {
+  @DisplayName("Issue #628 - retrieve table and columns names with a slash or dot")
+  public void slashedName() throws Exception {
 
     final Connection connection = getConnection();
     connection.setSchema("BOOKS");
-    SqlScript.executeScriptFromResource("/issue1432.sql", connection);
+    SqlScript.executeScriptFromResource("/issue628.sql", connection);
 
-    final String expectedResource = "issue1432_check_constraints.txt";
+    final String expectedResource = "issue628_slashed_name.txt";
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
-            .includeTables(new RegularExpressionInclusionRule("BOOKS\\.GUY"))
-            .tableTypes("TABLE");
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    // -- Schema output tests
-    assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource(expectedResource)));
-  }
-
-  @Test
-  @DisplayName("Issue #1434 - foreign keys to unique indexes")
-  public void fkToUniqueIndex() throws Exception {
-
-    final Connection connection = getConnection();
-    connection.setSchema("BOOKS");
-    SqlScript.executeScriptFromResource("/issue1434.sql", connection);
-
-    final String expectedResource = "issue1434_fk_to_unique_index.txt";
-
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
-            .includeTables(new RegularExpressionInclusionRule("BOOKS\\.(COMMUNICATION|CHANNEL)"))
+            .includeTables(
+                new RegularExpressionInclusionRule("BOOKS\\.\\\"?(A\\/B|CD|G\\.H|KL)\\\"?"))
             .tableTypes("TABLE");
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
