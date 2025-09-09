@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -140,7 +139,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
 
     final Connection connection = getConnection();
     connection.setSchema("BOOKS");
-    SqlScript.executeScriptFromResource("/create-package.sql", connection);
+    SqlScript.executeScriptFromResource("/create-package.sql", "@", connection);
 
     final String expectedResource = testContext.testMethodFullName() + ".txt";
 
