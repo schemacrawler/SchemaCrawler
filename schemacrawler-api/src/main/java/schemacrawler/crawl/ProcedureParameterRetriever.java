@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,7 @@ import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.RoutineType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -65,6 +67,13 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
         LOGGER.log(
             Level.INFO, "Retrieving procedure parameters, using fast data dictionary retrieval");
         retrieveProcedureParametersFromDataDictionary(allRoutines, parameterFilter);
+        break;
+
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving procedure parameters, using fast data dictionary retrieval over schemas");
+        retrieveProcedureParametersOverSchemas(allRoutines, parameterFilter);
         break;
 
       case metadata:
@@ -233,5 +242,51 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       }
     }
     retrievalCounts.log();
+  }
+
+  private void retrieveProcedureParametersOverSchemas(
+      final NamedObjectList<MutableRoutine> allRoutines,
+      final InclusionRuleFilter<ProcedureParameter> parameterFilter)
+      throws SQLException {
+
+    final Collection<Schema> schemas = catalog.getSchemas();
+
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(PROCEDURE_COLUMNS)) {
+      throw new ExecutionRuntimeException("No procedure parameters SQL provided");
+    }
+    final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
+
+    final String name = "procedure parameters from data dictionary over schemas";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getRoutines(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);
+            retrievalCounts.countIfIncluded(schema.key(), added);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat("Could not retrieve procedure parameters for schema <%s>", schema));
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      }
+    }
   }
 }

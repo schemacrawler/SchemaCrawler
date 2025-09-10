@@ -10,24 +10,27 @@ package schemacrawler.crawl;
 
 import static java.sql.DatabaseMetaData.functionNullable;
 import static java.sql.DatabaseMetaData.functionNullableUnknown;
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -63,6 +66,13 @@ final class FunctionParameterRetriever extends AbstractRetriever {
         LOGGER.log(
             Level.INFO, "Retrieving function parameters, using fast data dictionary retrieval");
         retrieveFunctionParametersFromDataDictionary(allRoutines, parameterFilter);
+        break;
+
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving function parameters, using fast data dictionary retrieval over schemas");
+        retrieveFunctionParametersOverSchemas(allRoutines, parameterFilter);
         break;
 
       case metadata:
@@ -231,5 +241,51 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       }
     }
     retrievalCounts.log();
+  }
+
+  private void retrieveFunctionParametersOverSchemas(
+      final NamedObjectList<MutableRoutine> allRoutines,
+      final InclusionRuleFilter<FunctionParameter> parameterFilter)
+      throws SQLException {
+
+    final Collection<Schema> schemas = catalog.getSchemas();
+
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS)) {
+      throw new ExecutionRuntimeException("No function columns SQL provided");
+    }
+    final Query functionColumnsSql = informationSchemaViews.getQuery(FUNCTION_COLUMNS);
+
+    final String name = "function parameters from data dictionary over schemas";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      if (catalog.getRoutines(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        final String catalogName = schema.getCatalogName();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
+        }
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results =
+                new MetadataResultSet(functionColumnsSql, statement, getLimitMap()); ) {
+          while (results.next()) {
+            retrievalCounts.count();
+            final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
+            retrievalCounts.countIfIncluded(added);
+          }
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.WARNING,
+              e,
+              new StringFormat("Could not retrieve function parameters for schema <%s>", schema));
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
+      }
+    }
   }
 }

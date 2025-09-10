@@ -27,12 +27,6 @@ public final class SqlServerConnectionInitializer implements Consumer<Connection
     SqlScript.executeScriptFromResource("/initialize-all-database-users.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-schemas.sql", "@", connection);
 
-    SqlScript.executeScriptFromResource("/initialize-all-procedures.sql", "@", connection);
-    SqlScript.executeScriptFromResource("/initialize-all-functions.sql", "@", connection);
-    SqlScript.executeScriptFromResource(
-        "/initialize-all-procedure-parameters.sql", "@", connection);
-    SqlScript.executeScriptFromResource("/initialize-all-function-parameters.sql", "@", connection);
-
     SqlScript.executeScriptFromResource("/initialize-all-sequences.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-synonyms.sql", "@", connection);
 
