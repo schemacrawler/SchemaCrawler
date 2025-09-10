@@ -8,12 +8,12 @@
 
 package schemacrawler.crawl;
 
-import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
 import us.fatehi.utility.database.DatabaseUtility;
@@ -25,6 +25,8 @@ public class SchemaSetter implements AutoCloseable {
 
   private final Connection connection;
   private final Schema oldSchema;
+  private final boolean isSupportsCatalogs;
+  private final boolean isSupportsSchemas;
 
   public SchemaSetter(final Connection connection, final Schema schema) {
     boolean errored = false;
@@ -39,10 +41,27 @@ public class SchemaSetter implements AutoCloseable {
     if (errored) {
       oldSchema = null;
       this.connection = null;
+      isSupportsCatalogs = false;
+      isSupportsSchemas = false;
       return;
     }
 
     this.connection = connection;
+
+    boolean isSupportsCatalogs;
+    boolean isSupportsSchemas;
+    try {
+      final DatabaseMetaData dbMetadata = connection.getMetaData();
+      isSupportsCatalogs = dbMetadata.supportsCatalogsInTableDefinitions();
+      isSupportsSchemas = dbMetadata.supportsSchemasInTableDefinitions();
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      isSupportsCatalogs = true;
+      isSupportsSchemas = true;
+    }
+    this.isSupportsCatalogs = isSupportsCatalogs;
+    this.isSupportsSchemas = isSupportsSchemas;
+
     oldSchema = setSchema(schema);
   }
 
@@ -52,9 +71,10 @@ public class SchemaSetter implements AutoCloseable {
   }
 
   private Schema setSchema(final Schema schema) {
-
     Schema oldSchema = null;
-
+    if (schema == null) {
+      return oldSchema;
+    }
     try {
       oldSchema = new SchemaReference(connection.getCatalog(), connection.getSchema());
     } catch (final Exception e) {
@@ -63,16 +83,16 @@ public class SchemaSetter implements AutoCloseable {
 
     try {
       final String catalogName = schema.getCatalogName();
-      if (!isBlank(catalogName)) {
+      if (isSupportsCatalogs && !isBlank(catalogName)) {
         connection.setCatalog(catalogName);
       }
       final String schemaName = schema.getName();
-      if (!isBlank(schemaName)) {
+      if (isSupportsSchemas && !isBlank(schemaName)) {
         connection.setSchema(schemaName);
       }
     } catch (final Exception e) {
-      LOGGER.log(
-          Level.WARNING, e, new StringFormat("Could not set schema <%s> on connection", schema));
+      LOGGER.log(Level.WARNING, e,
+          new StringFormat("Could not set schema <%s> on connection", schema));
     }
 
     return oldSchema;
