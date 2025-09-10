@@ -86,6 +86,12 @@ public class SchemaSetter implements AutoCloseable {
       if (isSupportsCatalogs && !isBlank(catalogName)) {
         connection.setCatalog(catalogName);
       }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, e,
+          new StringFormat("Could not set catalog <%s> on connection", schema));
+    }
+
+    try {
       final String schemaName = schema.getName();
       if (isSupportsSchemas && !isBlank(schemaName)) {
         connection.setSchema(schemaName);
