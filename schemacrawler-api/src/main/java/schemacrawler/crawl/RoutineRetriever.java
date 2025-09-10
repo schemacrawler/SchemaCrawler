@@ -230,12 +230,13 @@ final class RoutineRetriever extends AbstractRetriever {
         } catch (final AbstractMethodError e) {
           logSQLFeatureNotSupported(
               new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
-        } catch (final SQLException e) {
-          logPossiblyUnsupportedSQLFeature(
-              new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
         }
         retrievalCounts.log(schema.key());
         connection.setCatalog(currentCatalogName);
+      } catch (final SQLException e) {
+        // Continue with the next schema
+        logPossiblyUnsupportedSQLFeature(
+            new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
       }
     }
     retrievalCounts.log();
@@ -325,8 +326,9 @@ final class RoutineRetriever extends AbstractRetriever {
         }
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
+        // Continue with the next schema
         logPossiblyUnsupportedSQLFeature(
-            new StringFormat("Could not retrieve procedures for schema <%s>", schema), e);
+            new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
       }
     }
     retrievalCounts.log();

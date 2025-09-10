@@ -298,7 +298,7 @@ New_Publisher                                     [procedure, no result]
 
 
 
-CustomAdd                            [function, does not return a table]
+CustomAdd                                      [function, returns table]
 ------------------------------------------------------------------------
   "@RETURN_VALUE"                   INTEGER, return             
   "@One"                            INTEGER, in                 
