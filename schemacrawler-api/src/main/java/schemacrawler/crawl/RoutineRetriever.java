@@ -8,10 +8,13 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTIONS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,8 +22,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Function;
@@ -163,6 +164,7 @@ final class RoutineRetriever extends AbstractRetriever {
         break;
 
       case metadata:
+      case metadata_over_schemas:
         LOGGER.log(Level.INFO, "Retrieving functions");
         retrieveFunctionsFromMetadata(schemas, functionFilter);
         break;
@@ -201,7 +203,8 @@ final class RoutineRetriever extends AbstractRetriever {
 
   private void retrieveFunctionsFromMetadata(
       final NamedObjectList<SchemaReference> schemas,
-      final InclusionRuleFilter<Function> functionFilter) {
+      final InclusionRuleFilter<Function> functionFilter)
+      throws SQLException {
     final String name = "functions from metadata";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
@@ -209,22 +212,31 @@ final class RoutineRetriever extends AbstractRetriever {
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
-      try (final Connection connection = getRetrieverConnection().getConnection(name);
-          final MetadataResultSet results =
-              new MetadataResultSet(
-                  connection.getMetaData().getFunctions(catalogName, schemaName, null),
-                  "DatabaseMetaData::getFunctions"); ) {
-        while (results.next()) {
-          retrievalCounts.count(schema.key());
-          final boolean added = createFunction(results, schemas, functionFilter);
-          retrievalCounts.countIfIncluded(schema.key(), added);
+
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
         }
-      } catch (final AbstractMethodError e) {
-        logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"), e);
-      } catch (final SQLException e) {
-        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"), e);
+        try (final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getFunctions(catalogName, schemaName, null),
+                "DatabaseMetaData::getFunctions"); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            final boolean added = createFunction(results, schemas, functionFilter);
+            retrievalCounts.countIfIncluded(schema.key(), added);
+          }
+        } catch (final AbstractMethodError e) {
+          logSQLFeatureNotSupported(
+              new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
+        } catch (final SQLException e) {
+          logPossiblyUnsupportedSQLFeature(
+              new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
+        }
+        retrievalCounts.log(schema.key());
+        connection.setCatalog(currentCatalogName);
       }
-      retrievalCounts.log(schema.key());
     }
     retrievalCounts.log();
   }
@@ -247,6 +259,7 @@ final class RoutineRetriever extends AbstractRetriever {
         break;
 
       case metadata:
+      case metadata_over_schemas:
         LOGGER.log(Level.INFO, "Retrieving procedures");
         retrieveProceduresFromMetadata(schemas, procedureFilter);
         break;
@@ -292,20 +305,28 @@ final class RoutineRetriever extends AbstractRetriever {
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
-      try (final Connection connection = getRetrieverConnection().getConnection(name);
-          final MetadataResultSet results =
-              new MetadataResultSet(
-                  connection.getMetaData().getProcedures(catalogName, schemaName, null),
-                  "DatabaseMetaData::getProcedures"); ) {
-        while (results.next()) {
-          retrievalCounts.count(schema.key());
-          final boolean added = createProcedure(results, schemas, procedureFilter);
-          retrievalCounts.countIfIncluded(schema.key(), added);
+
+      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
+        final String currentCatalogName = connection.getCatalog();
+        if (!isBlank(catalogName)) {
+          connection.setCatalog(catalogName);
         }
-        retrievalCounts.log(schema.key());
+        try (final MetadataResultSet results =
+            new MetadataResultSet(
+                connection.getMetaData().getProcedures(catalogName, schemaName, null),
+                "DatabaseMetaData::getProcedures"); ) {
+          while (results.next()) {
+            retrievalCounts.count(schema.key());
+            final boolean added = createProcedure(results, schemas, procedureFilter);
+            retrievalCounts.countIfIncluded(schema.key(), added);
+          }
+          retrievalCounts.log(schema.key());
+          connection.setCatalog(currentCatalogName);
+        }
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
-        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve procedures"), e);
+        logPossiblyUnsupportedSQLFeature(
+            new StringFormat("Could not retrieve procedures for schema <%s>", schema), e);
       }
     }
     retrievalCounts.log();

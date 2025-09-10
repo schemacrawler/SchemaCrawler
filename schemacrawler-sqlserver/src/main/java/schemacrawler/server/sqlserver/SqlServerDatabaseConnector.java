@@ -8,7 +8,6 @@
 
 package schemacrawler.server.sqlserver;
 
-import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_over_schemas;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata_over_schemas;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
@@ -54,9 +53,9 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
                 .with(tableCheckConstraintsRetrievalStrategy, data_dictionary_over_schemas)
                 .with(routinesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(routineReferencesRetrievalStrategy, data_dictionary_over_schemas)
-                .with(proceduresRetrievalStrategy, data_dictionary_all)
+                .with(proceduresRetrievalStrategy, metadata_over_schemas)
                 .with(procedureParametersRetrievalStrategy, data_dictionary_over_schemas)
-                .with(functionsRetrievalStrategy, data_dictionary_all)
+                .with(functionsRetrievalStrategy, metadata_over_schemas)
                 .with(functionParametersRetrievalStrategy, data_dictionary_over_schemas),
         limitOptionsBuilder ->
             limitOptionsBuilder.includeSchemas(
