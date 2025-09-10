@@ -261,7 +261,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     final String name = "procedure parameters from data dictionary over schemas";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
-      if (catalog.getTables(schema).isEmpty()) {
+      if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
       try (final Connection connection = getRetrieverConnection().getConnection(name)) {
