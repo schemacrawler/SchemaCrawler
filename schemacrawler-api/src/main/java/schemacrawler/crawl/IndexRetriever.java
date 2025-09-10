@@ -8,9 +8,12 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,8 +21,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -301,33 +302,28 @@ final class IndexRetriever extends AbstractRetriever {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
         final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
-        }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            // final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
-            final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
-            final String tableName = results.getString("TABLE_NAME");
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          // final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
+          final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
+          final String tableName = results.getString("TABLE_NAME");
 
-            final Optional<MutableTable> optionalTable =
-                lookupTable(catalogName, schemaName, tableName);
-            if (!optionalTable.isPresent()) {
-              continue;
-            }
-            final MutableTable table = optionalTable.get();
-            final boolean added = createIndexForTable(table, results);
-            retrievalCounts.countIfIncluded(schema.key(), added);
+          final Optional<MutableTable> optionalTable =
+              lookupTable(catalogName, schemaName, tableName);
+          if (!optionalTable.isPresent()) {
+            continue;
           }
+          final MutableTable table = optionalTable.get();
+          final boolean added = createIndexForTable(table, results);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
         retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,

@@ -12,7 +12,6 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 import static schemacrawler.utility.MetaDataUtility.isView;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -187,33 +186,28 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
         final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
-        }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            // final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
-            final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
-            final String tableName = results.getString("TABLE_NAME");
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          // final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
+          final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
+          final String tableName = results.getString("TABLE_NAME");
 
-            final Optional<MutableTable> optionalTable =
-                lookupTable(catalogName, schemaName, tableName);
-            if (!optionalTable.isPresent()) {
-              continue;
-            }
-            final MutableTable table = optionalTable.get();
-            createPrimaryKeyForTable(table, results);
-            retrievalCounts.countIncluded(schema.key());
+          final Optional<MutableTable> optionalTable =
+              lookupTable(catalogName, schemaName, tableName);
+          if (!optionalTable.isPresent()) {
+            continue;
           }
+          final MutableTable table = optionalTable.get();
+          createPrimaryKeyForTable(table, results);
+          retrievalCounts.countIncluded(schema.key());
         }
         retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,

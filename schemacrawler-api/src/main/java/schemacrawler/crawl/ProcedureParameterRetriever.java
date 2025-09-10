@@ -8,9 +8,12 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -19,8 +22,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -264,29 +265,24 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
         final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);
-            retrievalCounts.countIfIncluded(schema.key(), added);
-          }
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              e,
-              new StringFormat("Could not retrieve procedure parameters for schema <%s>", schema));
-        }
-        retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve procedure parameters for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
   }
 }

@@ -263,29 +263,23 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(functionColumnsSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count();
+          final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
+          retrievalCounts.countIfIncluded(added);
         }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(functionColumnsSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count();
-            final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
-            retrievalCounts.countIfIncluded(added);
-          }
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              e,
-              new StringFormat("Could not retrieve function parameters for schema <%s>", schema));
-        }
-        retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve function parameters for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
   }
 }

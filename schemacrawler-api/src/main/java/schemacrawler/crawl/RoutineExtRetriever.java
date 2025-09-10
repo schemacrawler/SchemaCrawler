@@ -12,7 +12,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINE_REFERENCES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routineReferencesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -215,29 +214,23 @@ final class RoutineExtRetriever extends AbstractRetriever {
       if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          boolean addedRoutineInformation = addRoutineInformation(results);
+          retrievalCounts.countIfIncluded(schema.key(), addedRoutineInformation);
         }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            boolean addedRoutineInformation = addRoutineInformation(results);
-            retrievalCounts.countIfIncluded(schema.key(), addedRoutineInformation);
-          }
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              String.format("Could not retrieve routine definitions for schema <%s>", schema),
-              e);
-        }
-        retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            String.format("Could not retrieve routine definitions for schema <%s>", schema),
+            e);
       }
+      retrievalCounts.log(schema.key());
     }
   }
 
@@ -269,29 +262,23 @@ final class RoutineExtRetriever extends AbstractRetriever {
       if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(routineReferencesSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          boolean addedRoutineReferences = addRoutineReferences(results);
+          retrievalCounts.countIfIncluded(schema.key(), addedRoutineReferences);
         }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(routineReferencesSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            boolean addedRoutineReferences = addRoutineReferences(results);
-            retrievalCounts.countIfIncluded(schema.key(), addedRoutineReferences);
-          }
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              e,
-              new StringFormat("Could not retrieve routine references for schema <%s>", schema));
-        }
-        retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve routine references for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
   }
 }
