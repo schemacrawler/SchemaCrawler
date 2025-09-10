@@ -81,24 +81,24 @@ public class SchemaSetter implements AutoCloseable {
       oldSchema = null;
     }
 
+    final String catalogName = schema.getCatalogName();
     try {
-      final String catalogName = schema.getCatalogName();
       if (isSupportsCatalogs && !isBlank(catalogName)) {
         connection.setCatalog(catalogName);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, e,
-          new StringFormat("Could not set catalog <%s> on connection", schema));
+          new StringFormat("Could not set catalog <%s> on connection", catalogName));
     }
 
+    final String schemaName = schema.getName();
     try {
-      final String schemaName = schema.getName();
       if (isSupportsSchemas && !isBlank(schemaName)) {
         connection.setSchema(schemaName);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, e,
-          new StringFormat("Could not set schema <%s> on connection", schema));
+          new StringFormat("Could not set schema <%s> on connection", schemaName));
     }
 
     return oldSchema;
