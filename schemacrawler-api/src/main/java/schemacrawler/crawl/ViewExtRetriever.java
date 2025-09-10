@@ -12,7 +12,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewTableUsageRetrievalStrategy;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -231,30 +230,24 @@ final class ViewExtRetriever extends AbstractRetriever {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          boolean addedViewInformation = addViewInformation(results);
+          retrievalCounts.countIfIncluded(schema.key(), addedViewInformation);
         }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(viewInformationSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            boolean addedViewInformation = addViewInformation(results);
-            retrievalCounts.countIfIncluded(schema.key(), addedViewInformation);
-          }
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              e,
-              new StringFormat(
-                  "Could not retrieve additional view information for schema <%s>", schema));
-        }
-        retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat(
+                "Could not retrieve additional view information for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
   }
 
@@ -296,29 +289,23 @@ final class ViewExtRetriever extends AbstractRetriever {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          boolean addedTableUsage = addViewTableUsage(results);
+          retrievalCounts.countIfIncluded(schema.key(), addedTableUsage);
         }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(viewTableUsageSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            boolean addedTableUsage = addViewTableUsage(results);
-            retrievalCounts.countIfIncluded(schema.key(), addedTableUsage);
-          }
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              e,
-              new StringFormat("Could not retrieve table usage for views for schema <%s>", schema));
-        }
-        retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve table usage for views for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
   }
 }

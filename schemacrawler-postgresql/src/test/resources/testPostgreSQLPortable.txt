@@ -260,7 +260,7 @@ publishers                                                       [table]
 ------------------------------------------------------------------------
 List of book publishers
   id                                INTEGER NOT NULL            
-                                    default nextval('books.publishers_id_seq'::regclass)
+                                    default nextval('publishers_id_seq'::regclass)
                                     auto-incremented            
                                     Unique (internal) id for book publisher
   publisher                         VARCHAR(255)                

@@ -193,29 +193,23 @@ final class TriggerRetriever extends AbstractRetriever {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        final String catalogName = schema.getCatalogName();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = createTrigger(results);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results =
-                new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            final boolean added = createTrigger(results);
-            retrievalCounts.countIfIncluded(schema.key(), added);
-          }
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.WARNING,
-              e,
-              new StringFormat("Could not retrieve triggers for schema <%s>", schema));
-        }
-        retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve triggers for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
   }
 }

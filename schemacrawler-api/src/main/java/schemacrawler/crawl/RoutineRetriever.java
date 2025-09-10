@@ -213,26 +213,21 @@ final class RoutineRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
-        }
-        try (final MetadataResultSet results =
-            new MetadataResultSet(
-                connection.getMetaData().getFunctions(catalogName, schemaName, null),
-                "DatabaseMetaData::getFunctions"); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            final boolean added = createFunction(results, schemas, functionFilter);
-            retrievalCounts.countIfIncluded(schema.key(), added);
-          }
-        } catch (final AbstractMethodError e) {
-          logSQLFeatureNotSupported(
-              new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getFunctions(catalogName, schemaName, null),
+                  "DatabaseMetaData::getFunctions"); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = createFunction(results, schemas, functionFilter);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
         retrievalCounts.log(schema.key());
-        connection.setCatalog(currentCatalogName);
+      } catch (final AbstractMethodError e) {
+        logSQLFeatureNotSupported(
+            new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
       } catch (final SQLException e) {
         // Continue with the next schema
         logPossiblyUnsupportedSQLFeature(
@@ -307,23 +302,18 @@ final class RoutineRetriever extends AbstractRetriever {
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (final Connection connection = getRetrieverConnection().getConnection(name)) {
-        final String currentCatalogName = connection.getCatalog();
-        if (!isBlank(catalogName)) {
-          connection.setCatalog(catalogName);
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final MetadataResultSet results =
+              new MetadataResultSet(
+                  connection.getMetaData().getProcedures(catalogName, schemaName, null),
+                  "DatabaseMetaData::getProcedures"); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = createProcedure(results, schemas, procedureFilter);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
-        try (final MetadataResultSet results =
-            new MetadataResultSet(
-                connection.getMetaData().getProcedures(catalogName, schemaName, null),
-                "DatabaseMetaData::getProcedures"); ) {
-          while (results.next()) {
-            retrievalCounts.count(schema.key());
-            final boolean added = createProcedure(results, schemas, procedureFilter);
-            retrievalCounts.countIfIncluded(schema.key(), added);
-          }
-          retrievalCounts.log(schema.key());
-          connection.setCatalog(currentCatalogName);
-        }
+        retrievalCounts.log(schema.key());
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
         // Continue with the next schema
