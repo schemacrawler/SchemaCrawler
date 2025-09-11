@@ -305,7 +305,11 @@ final class TableExtRetriever extends AbstractRetriever {
           retrievalCounts.countIfIncluded(schema.key(), added);
         }
       } catch (final Exception e) {
-        LOGGER.log(Level.WARNING, "Could not retrieve additional column attributes", e);
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat(
+                "Could not retrieve additional column attributes for schema <%s>", schema));
       }
       retrievalCounts.log(schema.key());
     }
@@ -351,7 +355,11 @@ final class TableExtRetriever extends AbstractRetriever {
           retrievalCounts.countIfIncluded(schema.key(), added);
         }
       } catch (final Exception e) {
-        LOGGER.log(Level.WARNING, "Could not retrieve additional table attributes", e);
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat(
+                "Could not retrieve additional table attributes for schema <%s>", schema));
       }
       retrievalCounts.log(schema.key());
     }
