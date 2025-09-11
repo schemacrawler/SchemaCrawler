@@ -10,7 +10,6 @@ package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.TemplatingUtility.expandTemplate;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForLong;
 import static us.fatehi.utility.database.DatabaseUtility.executeSqlForScalar;
@@ -22,11 +21,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
@@ -53,11 +49,10 @@ public final class QueryUtility {
   }
 
   public static ResultSet executeAgainstSchema(
-      final Query query, final Statement statement, final Map<String, InclusionRule> limitMap)
+      final Query query, final Statement statement, final Map<String, String> limitMap)
       throws SQLException {
     requireNonNull(query, "No query provided");
-    final Map<String, String> variablesMap = makeVariablesMap(limitMap);
-    final String sql = expandQuery(query, variablesMap);
+    final String sql = expandQuery(query, limitMap);
     LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
@@ -116,20 +111,6 @@ public final class QueryUtility {
     return new Query(name, sql);
   }
 
-  protected static void addInclusionRule(
-      final String limitType,
-      final InclusionRule inclusionRule,
-      final Map<String, String> properties) {
-    properties.put(limitType, ".*");
-    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
-      final String schemaInclusionPattern =
-          ((InclusionRuleWithRegularExpression) inclusionRule).getInclusionPattern().pattern();
-      if (!isBlank(schemaInclusionPattern)) {
-        properties.put(limitType, schemaInclusionPattern);
-      }
-    }
-  }
-
   private static String expandQuery(final Query query) {
     return expandQuery(query, null);
   }
@@ -147,18 +128,6 @@ public final class QueryUtility {
 
     final Map<String, String> variablesMap = new HashMap<>();
     variablesMap.put("column-data-type", columnDataType.getName());
-    return variablesMap;
-  }
-
-  private static Map<String, String> makeVariablesMap(final Map<String, InclusionRule> limitMap) {
-    requireNonNull(limitMap, "No limit map provided");
-
-    final Map<String, String> variablesMap = new HashMap<>();
-
-    for (final Entry<String, InclusionRule> limit : limitMap.entrySet()) {
-      addInclusionRule(limit.getKey(), limit.getValue(), variablesMap);
-    }
-
     return variablesMap;
   }
 

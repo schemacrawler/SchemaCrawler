@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
+import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.SQLException;
@@ -21,7 +22,6 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
@@ -40,6 +40,7 @@ abstract class AbstractRetriever {
 
   final MutableCatalog catalog;
   private final SchemaCrawlerOptions options;
+
   private final RetrieverConnection retrieverConnection;
 
   AbstractRetriever(
@@ -87,10 +88,14 @@ abstract class AbstractRetriever {
     return catalog.getAllSchemas();
   }
 
-  final Map<String, InclusionRule> getLimitMap() {
-    final Map<String, InclusionRule> limitMap = new HashMap<>();
-    limitMap.put("schema-inclusion-rule", options.getLimitOptions().get(ruleForSchemaInclusion));
-    limitMap.put("table-inclusion-rule", options.getLimitOptions().get(ruleForTableInclusion));
+  final Map<String, String> getLimitMap() {
+    final Map<String, String> limitMap = new HashMap<>();
+    limitMap.put(
+        "schema-inclusion-rule",
+        inclusionRuleString(options.getLimitOptions().get(ruleForSchemaInclusion)));
+    limitMap.put(
+        "table-inclusion-rule",
+        inclusionRuleString(options.getLimitOptions().get(ruleForTableInclusion)));
     return limitMap;
   }
 
