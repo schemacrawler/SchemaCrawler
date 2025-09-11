@@ -52,10 +52,10 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Additional column attributes SQL statement was not provided");
       return;
     }
+    final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
     final String name = "columns with attibutes";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
@@ -63,34 +63,8 @@ final class TableExtRetriever extends AbstractRetriever {
             new MetadataResultSet(columnAttributesSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
-        final String tableName = results.getString("TABLE_NAME");
-        final String columnName = results.getString("COLUMN_NAME");
-        LOGGER.log(Level.FINER, "Retrieving additional column attributes: " + columnName);
-
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
-          continue;
-        }
-
-        final MutableTable table = tableOptional.get();
-        final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-        if (!columnOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat(
-                  "Cannot find column <%s.%s.%s.%s>",
-                  catalogName, schemaName, tableName, columnName));
-        } else {
-          final MutableColumn column = columnOptional.get();
-          column.addAttributes(results.getAttributes());
-          retrievalCounts.countIncluded();
-        }
+        final boolean added = addAdditionalColumnAttributes(results);
+        retrievalCounts.countIfIncluded(added);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve additional column attributes", e);
@@ -231,6 +205,37 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve table definitions", e);
     }
     retrievalCounts.log();
+  }
+
+  private boolean addAdditionalColumnAttributes(final MetadataResultSet results)
+      throws SQLException {
+    final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
+    final String tableName = results.getString("TABLE_NAME");
+    final String columnName = results.getString("COLUMN_NAME");
+    LOGGER.log(Level.FINER, "Retrieving additional column attributes: " + columnName);
+
+    final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
+    if (!tableOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+      return false;
+    }
+
+    final MutableTable table = tableOptional.get();
+    final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
+    if (!columnOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat(
+              "Cannot find column <%s.%s.%s.%s>", catalogName, schemaName, tableName, columnName));
+      return false;
+    }
+
+    final MutableColumn column = columnOptional.get();
+    column.addAttributes(results.getAttributes());
+    return true;
   }
 
   private boolean addAdditionalTableAttributes(final MetadataResultSet results)
