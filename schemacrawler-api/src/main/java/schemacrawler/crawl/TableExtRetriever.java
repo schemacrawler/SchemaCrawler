@@ -11,6 +11,8 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableAdditionalAttributesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnAdditionalAttributesRetrievalStrategy;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -52,50 +55,25 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Additional column attributes SQL statement was not provided");
       return;
     }
-
-    final String name = "columns with attibutes";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
-    try (final Connection connection = getRetrieverConnection().getConnection(name);
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(columnAttributesSql, statement, getLimitMap()); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
-        final String tableName = results.getString("TABLE_NAME");
-        final String columnName = results.getString("COLUMN_NAME");
-        LOGGER.log(Level.FINER, "Retrieving additional column attributes: " + columnName);
+    switch (getRetrieverConnection().get(tableColumnAdditionalAttributesRetrievalStrategy)) {
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional column attributes, using fast data dictionary retrieval"
+                + " over schemas");
+        retrieveAdditionalColumnAttributesOverSchemas(columnAttributesSql);
+        break;
 
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
-          continue;
-        }
-
-        final MutableTable table = tableOptional.get();
-        final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-        if (!columnOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat(
-                  "Cannot find column <%s.%s.%s.%s>",
-                  catalogName, schemaName, tableName, columnName));
-        } else {
-          final MutableColumn column = columnOptional.get();
-          column.addAttributes(results.getAttributes());
-          retrievalCounts.countIncluded();
-        }
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve additional column attributes", e);
+      case data_dictionary_all:
+      default:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional column attributes, using fast data dictionary retrieval");
+        retrieveAdditionalColumnAttributesFromDataDictionary(columnAttributesSql);
+        break;
     }
-    retrievalCounts.log();
   }
 
   /** Retrieves additional column metadata. */
@@ -158,39 +136,25 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Additional table attributes SQL statement was not provided");
       return;
     }
-
-    final String name = "tables with attributes";
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
-    try (final Connection connection = getRetrieverConnection().getConnection(name);
-        final Statement statement = connection.createStatement();
-        final MetadataResultSet results =
-            new MetadataResultSet(tableAttributesSql, statement, getLimitMap()); ) {
-      while (results.next()) {
-        retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
-        final String tableName = results.getString("TABLE_NAME");
-        LOGGER.log(Level.FINER, "Retrieving additional table attributes: " + tableName);
+    switch (getRetrieverConnection().get(tableAdditionalAttributesRetrievalStrategy)) {
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional table attributes, using fast data dictionary retrieval"
+                + " over schemas");
+        retrieveAdditionalTableAttributesOverSchemas(tableAttributesSql);
+        break;
 
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
-          continue;
-        }
-
-        final MutableTable table = tableOptional.get();
-        table.addAttributes(results.getAttributes());
-        retrievalCounts.countIncluded();
-      }
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not retrieve additional table attributes", e);
+      case data_dictionary_all:
+      default:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving additional table attributes, using fast data dictionary retrieval");
+        retrieveAdditionalTableAttributesFromDataDictionary(tableAttributesSql);
+        break;
     }
-    retrievalCounts.log();
   }
 
   /**
@@ -246,5 +210,155 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve table definitions", e);
     }
     retrievalCounts.log();
+  }
+
+  private boolean addAdditionalColumnAttributes(final MetadataResultSet results)
+      throws SQLException {
+    final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
+    final String tableName = results.getString("TABLE_NAME");
+    final String columnName = results.getString("COLUMN_NAME");
+    LOGGER.log(Level.FINER, "Retrieving additional column attributes: " + columnName);
+
+    final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
+    if (!tableOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+      return false;
+    }
+
+    final MutableTable table = tableOptional.get();
+    final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
+    if (!columnOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat(
+              "Cannot find column <%s.%s.%s.%s>", catalogName, schemaName, tableName, columnName));
+      return false;
+    }
+
+    final MutableColumn column = columnOptional.get();
+    column.addAttributes(results.getAttributes());
+    return true;
+  }
+
+  private boolean addAdditionalTableAttributes(final MetadataResultSet results)
+      throws SQLException {
+    final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
+    final String tableName = results.getString("TABLE_NAME");
+    LOGGER.log(Level.FINER, "Retrieving additional table attributes: " + tableName);
+
+    final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
+    if (!tableOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+      return false;
+    }
+
+    final MutableTable table = tableOptional.get();
+    table.addAttributes(results.getAttributes());
+
+    return true;
+  }
+
+  private void retrieveAdditionalColumnAttributesFromDataDictionary(final Query columnAttributesSql)
+      throws SQLException {
+    final String name = "columns with attibutes";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(columnAttributesSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        final boolean added = addAdditionalColumnAttributes(results);
+        retrievalCounts.countIfIncluded(added);
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve additional column attributes", e);
+    }
+    retrievalCounts.log();
+  }
+
+  private void retrieveAdditionalColumnAttributesOverSchemas(final Query columnAttributesSql)
+      throws SQLException {
+    final String name = "columns with attibutes over schemas";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : getAllSchemas()) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(columnAttributesSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = addAdditionalColumnAttributes(results);
+          retrievalCounts.countIfIncluded(schema.key(), added);
+        }
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat(
+                "Could not retrieve additional column attributes for schema <%s>", schema));
+      }
+      retrievalCounts.log(schema.key());
+    }
+  }
+
+  private void retrieveAdditionalTableAttributesFromDataDictionary(final Query tableAttributesSql)
+      throws SQLException {
+    final String name = "tables with attributes";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+
+    try (final Connection connection = getRetrieverConnection().getConnection(name);
+        final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(tableAttributesSql, statement, getLimitMap()); ) {
+      while (results.next()) {
+        retrievalCounts.count();
+        final boolean added = addAdditionalTableAttributes(results);
+        retrievalCounts.countIfIncluded(added);
+      }
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not retrieve additional table attributes", e);
+    }
+    retrievalCounts.log();
+  }
+
+  private void retrieveAdditionalTableAttributesOverSchemas(final Query tableAttributesSql)
+      throws SQLException {
+    final String name = "tables with attributes over schemas";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : getAllSchemas()) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(tableAttributesSql, statement, getLimitMap()); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = addAdditionalTableAttributes(results);
+          retrievalCounts.countIfIncluded(schema.key(), added);
+        }
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat(
+                "Could not retrieve additional table attributes for schema <%s>", schema));
+      }
+      retrievalCounts.log(schema.key());
+    }
   }
 }

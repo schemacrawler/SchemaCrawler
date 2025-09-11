@@ -16,7 +16,6 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ro
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -207,10 +206,9 @@ final class RoutineExtRetriever extends AbstractRetriever {
 
   private void retrieveRoutineInformationOverSchemas(final Query routineDefinitionsSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "routine definitions";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }
@@ -255,10 +253,9 @@ final class RoutineExtRetriever extends AbstractRetriever {
 
   private void retrieveRoutineReferencesOverSchemas(final Query routineReferencesSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "routine references";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getRoutines(schema).isEmpty()) {
         continue;
       }

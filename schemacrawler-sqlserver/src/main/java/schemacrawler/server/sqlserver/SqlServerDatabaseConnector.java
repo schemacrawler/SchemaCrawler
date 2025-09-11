@@ -18,7 +18,9 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.pr
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routineReferencesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableAdditionalAttributesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableCheckConstraintsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnAdditionalAttributesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintsRetrievalStrategy;
@@ -51,6 +53,9 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
                 .with(tableConstraintsRetrievalStrategy, data_dictionary_over_schemas)
                 .with(tableConstraintColumnsRetrievalStrategy, data_dictionary_over_schemas)
                 .with(tableCheckConstraintsRetrievalStrategy, data_dictionary_over_schemas)
+                .with(tableAdditionalAttributesRetrievalStrategy, data_dictionary_over_schemas)
+                .with(
+                    tableColumnAdditionalAttributesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(routinesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(routineReferencesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(proceduresRetrievalStrategy, metadata_over_schemas)
