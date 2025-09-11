@@ -195,7 +195,7 @@ final class TriggerRetriever extends AbstractRetriever {
           final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
-              new MetadataResultSet(triggerInformationSql, statement, getLimitMap()); ) {
+              new MetadataResultSet(triggerInformationSql, statement, getLimitMap(schema)); ) {
         while (results.next()) {
           retrievalCounts.count(schema.key());
           final boolean added = createTrigger(results);
@@ -209,5 +209,6 @@ final class TriggerRetriever extends AbstractRetriever {
       }
       retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }

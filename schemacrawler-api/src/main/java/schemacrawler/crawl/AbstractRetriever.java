@@ -13,6 +13,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
@@ -96,6 +97,15 @@ abstract class AbstractRetriever {
     limitMap.put(
         "table-inclusion-rule",
         inclusionRuleString(options.getLimitOptions().get(ruleForTableInclusion)));
+    return limitMap;
+  }
+
+  final Map<String, String> getLimitMap(final Schema schema) {
+    final Map<String, String> limitMap = getLimitMap();
+    if (schema != null) {
+      limitMap.put("catalog-name", trimToEmpty(catalog.getName()));
+      limitMap.put("schema-name", trimToEmpty(schema.getName()));
+    }
     return limitMap;
   }
 
