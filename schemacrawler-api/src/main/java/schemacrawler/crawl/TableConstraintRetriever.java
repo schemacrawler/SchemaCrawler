@@ -19,7 +19,6 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -384,10 +383,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
   private void retrieveTableConstraintColumnsOverSchemas(final Query tableConstraintsColumnsSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "table constraints columns";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
@@ -433,10 +431,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
   private void retrieveTableConstraintDefinitionsOverSchemas(final Query checkConstraintSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "check constraint definitions";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
@@ -492,10 +489,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
    */
   private void retrieveTableConstraintsOverSchemas(final Query tableConstraintsSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "table constraints";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }

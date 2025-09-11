@@ -16,7 +16,6 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.vi
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -223,10 +222,9 @@ final class ViewExtRetriever extends AbstractRetriever {
    */
   private void retrieveViewInformationOverSchemas(final Query viewInformationSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "additional view information";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
@@ -282,10 +280,9 @@ final class ViewExtRetriever extends AbstractRetriever {
    */
   private void retrieveViewTableUsageOverSchemas(final Query viewTableUsageSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "views for table usage";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }

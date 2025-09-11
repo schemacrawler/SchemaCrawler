@@ -16,7 +16,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -186,10 +185,9 @@ final class TriggerRetriever extends AbstractRetriever {
   }
 
   private void retrieveTriggerOverSchemas(final Query triggerInformationSql) throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "trigger definitions";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }

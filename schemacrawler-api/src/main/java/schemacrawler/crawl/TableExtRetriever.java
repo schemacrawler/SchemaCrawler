@@ -17,7 +17,6 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -287,10 +286,9 @@ final class TableExtRetriever extends AbstractRetriever {
 
   private void retrieveAdditionalColumnAttributesOverSchemas(final Query columnAttributesSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "columns with attibutes over schemas";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
@@ -337,10 +335,9 @@ final class TableExtRetriever extends AbstractRetriever {
 
   private void retrieveAdditionalTableAttributesOverSchemas(final Query tableAttributesSql)
       throws SQLException {
-    final Collection<Schema> schemas = catalog.getSchemas();
     final String name = "tables with attributes over schemas";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    for (final Schema schema : schemas) {
+    for (final Schema schema : getAllSchemas()) {
       if (catalog.getTables(schema).isEmpty()) {
         continue;
       }
