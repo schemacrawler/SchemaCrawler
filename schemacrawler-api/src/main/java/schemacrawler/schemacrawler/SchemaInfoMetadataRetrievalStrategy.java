@@ -20,6 +20,7 @@ public enum SchemaInfoMetadataRetrievalStrategy {
   procedureParametersRetrievalStrategy("procedureparameters"),
   tableColumnPrivilegesRetrievalStrategy("tablecolumnprivileges"),
   tableColumnsRetrievalStrategy("tablecolumns"),
+  tableAdditionalAttributesRetrievalStrategy("table-additional-attributes"),
   tableColumnAdditionalAttributesRetrievalStrategy("table-column-additional-attributes"),
   tablePrivilegesRetrievalStrategy("tableprivileges"),
   tablesRetrievalStrategy("tables"),
