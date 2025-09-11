@@ -158,10 +158,10 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Additional table attributes SQL statement was not provided");
       return;
     }
+    final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
     final String name = "tables with attributes";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-    final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
@@ -169,23 +169,8 @@ final class TableExtRetriever extends AbstractRetriever {
             new MetadataResultSet(tableAttributesSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
-        final String tableName = results.getString("TABLE_NAME");
-        LOGGER.log(Level.FINER, "Retrieving additional table attributes: " + tableName);
-
-        final Optional<MutableTable> tableOptional =
-            lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
-          LOGGER.log(
-              Level.FINE,
-              new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
-          continue;
-        }
-
-        final MutableTable table = tableOptional.get();
-        table.addAttributes(results.getAttributes());
-        retrievalCounts.countIncluded();
+        final boolean added = addAdditionalTableAttributes(results);
+        retrievalCounts.countIfIncluded(added);
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve additional table attributes", e);
@@ -246,5 +231,26 @@ final class TableExtRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve table definitions", e);
     }
     retrievalCounts.log();
+  }
+
+  private boolean addAdditionalTableAttributes(final MetadataResultSet results)
+      throws SQLException {
+    final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
+    final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEMA"));
+    final String tableName = results.getString("TABLE_NAME");
+    LOGGER.log(Level.FINER, "Retrieving additional table attributes: " + tableName);
+
+    final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
+    if (!tableOptional.isPresent()) {
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
+      return false;
+    }
+
+    final MutableTable table = tableOptional.get();
+    table.addAttributes(results.getAttributes());
+
+    return true;
   }
 }
