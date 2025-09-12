@@ -190,7 +190,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
           final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
-              new MetadataResultSet(pkSql, statement, getLimitMap()); ) {
+              new MetadataResultSet(pkSql, statement, getLimitMap(schema)); ) {
         final String catalogName = schema.getCatalogName();
         while (results.next()) {
           retrievalCounts.count(schema.key());

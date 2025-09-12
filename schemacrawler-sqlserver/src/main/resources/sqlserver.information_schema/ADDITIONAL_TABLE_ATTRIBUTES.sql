@@ -18,5 +18,4 @@ WHERE
     AND O.TYPE = 'U'
     AND EP.CLASS = 1
     AND EP.NAME = 'MS_Description'
-WHERE
-   SCHEMA_NAME(O.SCHEMA_ID) = '${schema-name}'
+    AND SCHEMA_NAME(O.SCHEMA_ID) = '${schema-name}'

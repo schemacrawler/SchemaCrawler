@@ -269,7 +269,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
           final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
-              new MetadataResultSet(procedureColumnsSql, statement, getLimitMap()); ) {
+              new MetadataResultSet(procedureColumnsSql, statement, getLimitMap(schema)); ) {
         final String catalogName = schema.getCatalogName();
         while (results.next()) {
           retrievalCounts.count(schema.key());
