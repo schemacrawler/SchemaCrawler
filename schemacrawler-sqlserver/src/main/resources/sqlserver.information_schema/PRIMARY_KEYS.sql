@@ -30,3 +30,4 @@ WHERE
     kc.type = 'PK'
     AND i.name IS NOT NULL
     AND i.is_hypothetical = 0
+    AND s.name = '${schema-name}'

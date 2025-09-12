@@ -27,3 +27,5 @@ FROM
         ON sed.referenced_id = t.object_id
     INNER JOIN sys.schemas ts
         ON t.schema_id = ts.schema_id
+WHERE
+   vs.name = '${schema-name}'
