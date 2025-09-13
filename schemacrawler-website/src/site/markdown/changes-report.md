@@ -3,15 +3,15 @@
 SchemaCrawler release notes.
 
 <a name="v16.28.1"></a>
-## Release 16.28.1 - 2025-09-18
+## Release 16.28.1 - 2025-09-13
 - Do not show specific name if the database does not support overloaded routines
 - Refactor metadata retrieval, so that SQL server plugin can run metadata queries per schema
 - Support and output partial indexes (with filter conditions) for databases that support them - PostgreSQL, SQL Server, SQLite and IBM DB2
 - Use metadata over schemas for retrieving PostgreSQL table columns
 
 
-<a name="v16.28.1"></a>
-## Release 16.28.1 - 2025-09-05
+<a name="v16.27.2"></a>
+## Release 16.27.2 - 2025-09-05
 - Add additional SQL Server data dictionary retrieval methods
 
 
