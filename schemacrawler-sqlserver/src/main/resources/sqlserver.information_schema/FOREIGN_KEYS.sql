@@ -1,13 +1,13 @@
 SELECT
-    DB_NAME() AS PKTABLE_QUALIFIER,
-    SCHEMA_NAME(pk.schema_id) AS PKTABLE_OWNER,
-    pk.name AS PKTABLE_NAME,
-    pkc.name AS PKCOLUMN_NAME,
+    DB_NAME() AS PKTABLE_CAT,
+    SCHEMA_NAME(pk_tables.schema_id) AS PKTABLE_SCHEM,
+    pk_tables.name AS PKTABLE_NAME,
+    pk_columns.name AS PKCOLUMN_NAME,
 
-    DB_NAME() AS FKTABLE_QUALIFIER,
-    SCHEMA_NAME(fk.schema_id) AS FKTABLE_OWNER,
-    fk.name AS FKTABLE_NAME,
-    fkc.name AS FKCOLUMN_NAME,
+    DB_NAME() AS FKTABLE_CAT,
+    SCHEMA_NAME(fk_tables.schema_id) AS FKTABLE_SCHEM,
+    fk_tables.name AS FKTABLE_NAME,
+    fk_columns.name AS FKCOLUMN_NAME,
 
     fkc.constraint_column_id AS KEY_SEQ,
 
@@ -33,15 +33,15 @@ FROM
     sys.foreign_keys fk
     INNER JOIN sys.foreign_key_columns fkc
         ON fk.object_id = fkc.constraint_object_id
-    INNER JOIN sys.tables pk
-        ON fkc.referenced_object_id = pk.object_id
-    INNER JOIN sys.columns pkc
-        ON pk.object_id = pkc.object_id
-            AND fkc.referenced_column_id = pkc.column_id
-    INNER JOIN sys.tables fk_table
-        ON fkc.parent_object_id = fk_table.object_id
-    INNER JOIN sys.columns fkc
-        ON fk_table.object_id = fkc.object_id
-            AND fkc.parent_column_id = fkc.column_id
+    INNER JOIN sys.tables pk_tables
+        ON fkc.referenced_object_id = pk_tables.object_id
+    INNER JOIN sys.columns pk_columns
+        ON pk_tables.object_id = pk_columns.object_id
+            AND fkc.referenced_column_id = pk_columns.column_id
+    INNER JOIN sys.tables fk_tables
+        ON fkc.parent_object_id = fk_tables.object_id
+    INNER JOIN sys.columns fk_columns
+        ON fk_tables.object_id = fk_columns.object_id
+            AND fkc.parent_column_id = fk_columns.column_id
 WHERE
-    SCHEMA_NAME(pk.schema_id) = '${schema-name}'
+    SCHEMA_NAME(pk_tables.schema_id) = '${schema-name}'
