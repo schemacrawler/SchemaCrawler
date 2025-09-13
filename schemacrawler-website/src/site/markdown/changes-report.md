@@ -10,8 +10,8 @@ SchemaCrawler release notes.
 - Use metadata over schemas for retrieving PostgreSQL table columns
 
 
-<a name="v16.27.2"></a>
-## Release 16.27.2 - 2025-09-05
+<a name="v16.28.1"></a>
+## Release 16.28.1 - 2025-09-05
 - Add additional SQL Server data dictionary retrieval methods
 
 
