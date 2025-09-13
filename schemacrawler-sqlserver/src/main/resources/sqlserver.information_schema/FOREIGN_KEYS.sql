@@ -11,19 +11,18 @@ SELECT
 
     fkc.constraint_column_id AS KEY_SEQ,
 
-    -- Update and delete rules: 0 = CASCADE, 1 = RESTRICT (NO ACTION), 2 = SET NULL, 3 = SET DEFAULT
     CASE fk.delete_referential_action
-        WHEN 0 THEN 0  -- CASCADE
-        WHEN 1 THEN 1  -- NO ACTION
-        WHEN 2 THEN 2  -- SET NULL
-        WHEN 3 THEN 3  -- SET DEFAULT
+        WHEN 0 THEN 3  -- importedKeyNoAction
+        WHEN 1 THEN 0  -- importedKeyCascade
+        WHEN 2 THEN 2  -- importedKeySetNull
+        WHEN 3 THEN 4  -- importedKeySetDefault
     END AS DELETE_RULE,
 
     CASE fk.update_referential_action
-        WHEN 0 THEN 0
-        WHEN 1 THEN 1
-        WHEN 2 THEN 2
-        WHEN 3 THEN 3
+        WHEN 0 THEN 3  -- importedKeyNoAction
+        WHEN 1 THEN 0  -- importedKeyCascade
+        WHEN 2 THEN 2  -- importedKeySetNull
+        WHEN 3 THEN 4  -- importedKeySetDefault
     END AS UPDATE_RULE,
 
     fk.name AS FK_NAME,
