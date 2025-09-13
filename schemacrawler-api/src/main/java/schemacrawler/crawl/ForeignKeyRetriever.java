@@ -68,104 +68,100 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     }
   }
 
-  private void createForeignKeys(
-      final MetadataResultSet results,
-      final Map<NamedObjectKey, MutableForeignKey> foreignKeys,
-      final RetrievalCounts retrievalCounts)
+  private boolean createForeignKey(
+      final MetadataResultSet results, final Map<NamedObjectKey, MutableForeignKey> foreignKeys)
       throws SQLException {
-    requireNonNull(retrievalCounts, "No retrieval counts provided");
-    while (results.next()) {
-      retrievalCounts.count();
-      String foreignKeyName = results.getString("FK_NAME");
-      LOGGER.log(Level.FINE, new StringFormat("Retrieving foreign key <%s>", foreignKeyName));
+    String foreignKeyName = results.getString("FK_NAME");
+    LOGGER.log(Level.FINE, new StringFormat("Retrieving foreign key <%s>", foreignKeyName));
 
-      final String pkTableCatalogName = normalizeCatalogName(results.getString("PKTABLE_CAT"));
-      final String pkTableSchemaName = normalizeSchemaName(results.getString("PKTABLE_SCHEM"));
-      final String pkTableName = results.getString("PKTABLE_NAME");
-      final String pkColumnName = results.getString("PKCOLUMN_NAME");
+    final String pkTableCatalogName = normalizeCatalogName(results.getString("PKTABLE_CAT"));
+    final String pkTableSchemaName = normalizeSchemaName(results.getString("PKTABLE_SCHEM"));
+    final String pkTableName = results.getString("PKTABLE_NAME");
+    final String pkColumnName = results.getString("PKCOLUMN_NAME");
 
-      final String fkTableCatalogName = normalizeCatalogName(results.getString("FKTABLE_CAT"));
-      final String fkTableSchemaName = normalizeSchemaName(results.getString("FKTABLE_SCHEM"));
-      final String fkTableName = results.getString("FKTABLE_NAME");
-      final String fkColumnName = results.getString("FKCOLUMN_NAME");
+    final String fkTableCatalogName = normalizeCatalogName(results.getString("FKTABLE_CAT"));
+    final String fkTableSchemaName = normalizeSchemaName(results.getString("FKTABLE_SCHEM"));
+    final String fkTableName = results.getString("FKTABLE_NAME");
+    final String fkColumnName = results.getString("FKCOLUMN_NAME");
 
-      final Optional<MutableTable> pkTableOptional =
-          lookupTable(pkTableCatalogName, pkTableSchemaName, pkTableName);
-      final Optional<MutableTable> fkTableOptional =
-          lookupTable(fkTableCatalogName, fkTableSchemaName, fkTableName);
-      if (!pkTableOptional.isPresent() && !fkTableOptional.isPresent()) {
-        continue;
-      }
-
-      final int keySequence = results.getInt("KEY_SEQ", 0);
-      final ForeignKeyUpdateRule updateRule =
-          results.getEnumFromId("UPDATE_RULE", ForeignKeyUpdateRule.unknown);
-      final ForeignKeyUpdateRule deleteRule =
-          results.getEnumFromId("DELETE_RULE", ForeignKeyUpdateRule.unknown);
-      final ForeignKeyDeferrability deferrability =
-          results.getEnumFromId("DEFERRABILITY", ForeignKeyDeferrability.unknown);
-
-      final Column pkColumn =
-          lookupOrCreateColumn(pkTableCatalogName, pkTableSchemaName, pkTableName, pkColumnName);
-      final Column fkColumn =
-          lookupOrCreateColumn(fkTableCatalogName, fkTableSchemaName, fkTableName, fkColumnName);
-      final boolean isPkColumnPartial = pkColumn instanceof ColumnPartial;
-      final boolean isFkColumnPartial = fkColumn instanceof ColumnPartial;
-
-      if (pkColumn == null || fkColumn == null || isFkColumnPartial && isPkColumnPartial) {
-        continue;
-      }
-
-      final Table fkTable = fkColumn.getParent();
-      final Table pkTable = pkColumn.getParent();
-
-      if (isBlank(foreignKeyName)) {
-        foreignKeyName = RetrieverUtility.constructForeignKeyName(fkTable, pkTable);
-        LOGGER.log(
-            Level.CONFIG,
-            new StringFormat(
-                "Identifying foreign key with blank name: %s from %s --> %s",
-                foreignKeyName, fkTable, pkTable));
-      }
-
-      final NamedObjectKey fkLookupKey =
-          new NamedObjectKey(fkTableCatalogName, fkTableSchemaName, fkTableName, foreignKeyName);
-      final ColumnReference columnReference =
-          new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
-
-      final Optional<MutableForeignKey> foreignKeyOptional =
-          Optional.ofNullable(foreignKeys.get(fkLookupKey));
-      final MutableForeignKey foreignKey;
-      if (foreignKeyOptional.isPresent()) {
-        foreignKey = foreignKeyOptional.get();
-        foreignKey.addColumnReference(columnReference);
-      } else {
-        foreignKey = new MutableForeignKey(foreignKeyName, columnReference);
-        foreignKeys.put(fkLookupKey, foreignKey);
-      }
-      foreignKey.withQuoting(getRetrieverConnection().getIdentifiers());
-
-      foreignKey.setUpdateRule(updateRule);
-      foreignKey.setDeleteRule(deleteRule);
-      foreignKey.setDeferrability(deferrability);
-      foreignKey.addAttributes(results.getAttributes());
-
-      if (fkColumn instanceof MutableColumn) {
-        ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
-        ((MutableTable) fkTable).addForeignKey(foreignKey);
-      } else if (isFkColumnPartial) {
-        ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
-        ((TablePartial) fkTable).addForeignKey(foreignKey);
-      }
-
-      if (pkColumn instanceof MutableColumn) {
-        ((MutableTable) pkTable).addForeignKey(foreignKey);
-        retrievalCounts.countIncluded();
-      } else if (isPkColumnPartial) {
-        ((TablePartial) pkTable).addForeignKey(foreignKey);
-        retrievalCounts.countIncluded();
-      }
+    final Optional<MutableTable> pkTableOptional =
+        lookupTable(pkTableCatalogName, pkTableSchemaName, pkTableName);
+    final Optional<MutableTable> fkTableOptional =
+        lookupTable(fkTableCatalogName, fkTableSchemaName, fkTableName);
+    if (!pkTableOptional.isPresent() && !fkTableOptional.isPresent()) {
+      return false;
     }
+
+    final int keySequence = results.getInt("KEY_SEQ", 0);
+    final ForeignKeyUpdateRule updateRule =
+        results.getEnumFromId("UPDATE_RULE", ForeignKeyUpdateRule.unknown);
+    final ForeignKeyUpdateRule deleteRule =
+        results.getEnumFromId("DELETE_RULE", ForeignKeyUpdateRule.unknown);
+    final ForeignKeyDeferrability deferrability =
+        results.getEnumFromId("DEFERRABILITY", ForeignKeyDeferrability.unknown);
+
+    final Column pkColumn =
+        lookupOrCreateColumn(pkTableCatalogName, pkTableSchemaName, pkTableName, pkColumnName);
+    final Column fkColumn =
+        lookupOrCreateColumn(fkTableCatalogName, fkTableSchemaName, fkTableName, fkColumnName);
+    final boolean isPkColumnPartial = pkColumn instanceof ColumnPartial;
+    final boolean isFkColumnPartial = fkColumn instanceof ColumnPartial;
+
+    if (pkColumn == null || fkColumn == null || isFkColumnPartial && isPkColumnPartial) {
+      return false;
+    }
+
+    final Table fkTable = fkColumn.getParent();
+    final Table pkTable = pkColumn.getParent();
+
+    if (isBlank(foreignKeyName)) {
+      foreignKeyName = RetrieverUtility.constructForeignKeyName(fkTable, pkTable);
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Identifying foreign key with blank name: %s from %s --> %s",
+              foreignKeyName, fkTable, pkTable));
+    }
+
+    final NamedObjectKey fkLookupKey =
+        new NamedObjectKey(fkTableCatalogName, fkTableSchemaName, fkTableName, foreignKeyName);
+    final ColumnReference columnReference =
+        new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
+
+    final Optional<MutableForeignKey> foreignKeyOptional =
+        Optional.ofNullable(foreignKeys.get(fkLookupKey));
+    final MutableForeignKey foreignKey;
+    if (foreignKeyOptional.isPresent()) {
+      foreignKey = foreignKeyOptional.get();
+      foreignKey.addColumnReference(columnReference);
+    } else {
+      foreignKey = new MutableForeignKey(foreignKeyName, columnReference);
+      foreignKeys.put(fkLookupKey, foreignKey);
+    }
+    foreignKey.withQuoting(getRetrieverConnection().getIdentifiers());
+
+    foreignKey.setUpdateRule(updateRule);
+    foreignKey.setDeleteRule(deleteRule);
+    foreignKey.setDeferrability(deferrability);
+    foreignKey.addAttributes(results.getAttributes());
+
+    if (fkColumn instanceof MutableColumn) {
+      ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
+      ((MutableTable) fkTable).addForeignKey(foreignKey);
+    } else if (isFkColumnPartial) {
+      ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
+      ((TablePartial) fkTable).addForeignKey(foreignKey);
+    }
+
+    if (pkColumn instanceof MutableColumn) {
+      ((MutableTable) pkTable).addForeignKey(foreignKey);
+      return true;
+    }
+    if (isPkColumnPartial) {
+      ((TablePartial) pkTable).addForeignKey(foreignKey);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -191,18 +187,23 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     }
 
     final String name = "foreign keys";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(fkSql, statement, getLimitMap()); ) {
-      final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
-      createForeignKeys(results, foreignKeys, retrievalCounts);
+      while (results.next()) {
+        retrievalCounts.count();
+        final boolean added = createForeignKey(results, foreignKeys);
+        retrievalCounts.countIfIncluded(added);
+      }
     } catch (final SQLException e) {
       throw new WrappedSQLException(
           String.format("Could not retrieve foreign keys from SQL:%n%s", fkSql), e);
     }
+    retrievalCounts.log();
   }
 
   private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
@@ -225,7 +226,11 @@ final class ForeignKeyRetriever extends AbstractRetriever {
                     table.getSchema().getName(),
                     table.getName()),
                 "DatabaseMetaData::getImportedKeys")) {
-          createForeignKeys(results, foreignKeys, retrievalCounts);
+          while (results.next()) {
+            retrievalCounts.count();
+            final boolean added = createForeignKey(results, foreignKeys);
+            retrievalCounts.countIfIncluded(added);
+          }
         } catch (final SQLException e) {
           logPossiblyUnsupportedSQLFeature(
               new StringFormat("Could not retrieve foreign keys for table <%s>", table), e);
@@ -241,7 +246,11 @@ final class ForeignKeyRetriever extends AbstractRetriever {
                     table.getSchema().getName(),
                     table.getName()),
                 "DatabaseMetaData::getExportedKeys")) {
-          createForeignKeys(results, foreignKeys, retrievalCounts);
+          while (results.next()) {
+            retrievalCounts.count();
+            final boolean added = createForeignKey(results, foreignKeys);
+            retrievalCounts.countIfIncluded(added);
+          }
         } catch (final SQLException e) {
           logPossiblyUnsupportedSQLFeature(
               new StringFormat("Could not retrieve exported foreign keys for table <%s>", table),
