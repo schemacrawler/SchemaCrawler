@@ -296,7 +296,7 @@ final class TableExtRetriever extends AbstractRetriever {
           final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
-              new MetadataResultSet(columnAttributesSql, statement, getLimitMap()); ) {
+              new MetadataResultSet(columnAttributesSql, statement, getLimitMap(schema)); ) {
         while (results.next()) {
           retrievalCounts.count(schema.key());
           final boolean added = addAdditionalColumnAttributes(results);
@@ -311,6 +311,7 @@ final class TableExtRetriever extends AbstractRetriever {
       }
       retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 
   private void retrieveAdditionalTableAttributesFromDataDictionary(final Query tableAttributesSql)
@@ -345,7 +346,7 @@ final class TableExtRetriever extends AbstractRetriever {
           final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
-              new MetadataResultSet(tableAttributesSql, statement, getLimitMap()); ) {
+              new MetadataResultSet(tableAttributesSql, statement, getLimitMap(schema)); ) {
         while (results.next()) {
           retrievalCounts.count(schema.key());
           final boolean added = addAdditionalTableAttributes(results);
@@ -360,5 +361,6 @@ final class TableExtRetriever extends AbstractRetriever {
       }
       retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }

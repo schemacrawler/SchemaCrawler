@@ -306,7 +306,7 @@ final class IndexRetriever extends AbstractRetriever {
           final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
-              new MetadataResultSet(indexesSql, statement, getLimitMap()); ) {
+              new MetadataResultSet(indexesSql, statement, getLimitMap(schema)); ) {
         final String catalogName = schema.getCatalogName();
         while (results.next()) {
           retrievalCounts.count(schema.key());

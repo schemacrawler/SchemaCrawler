@@ -20,3 +20,5 @@ FROM
         ON OBJECT_ID(R.ROUTINE_SCHEMA + '.' + R.ROUTINE_NAME) = d.referencing_id
     INNER JOIN sys.objects o
         ON d.referenced_id = o.object_id
+WHERE
+   R.ROUTINE_SCHEMA = '${schema-name}'

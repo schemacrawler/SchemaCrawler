@@ -267,7 +267,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
           final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
-              new MetadataResultSet(functionColumnsSql, statement, getLimitMap()); ) {
+              new MetadataResultSet(functionColumnsSql, statement, getLimitMap(schema)); ) {
         while (results.next()) {
           retrievalCounts.count();
           final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);

@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -44,14 +45,6 @@ import us.fatehi.test.utility.TestObjectUtility;
 @WithTestDatabase
 @ResolveTestContext
 public class QueryUtilityTest {
-
-  @Test
-  public void getQueryFromResource() throws Exception {
-    final Query query =
-        QueryUtility.getQueryFromResource("Query title", "/EXT_HIDDEN_TABLE_COLUMNS.sql");
-    assertThat(query.getName(), is("Query title"));
-    assertThat(query.getQuery(), containsString("INFORMATION_SCHEMA.COLUMNS"));
-  }
 
   @Test
   public void executeAgainstColumnDataType() throws Exception {
@@ -206,11 +199,19 @@ public class QueryUtilityTest {
     assertThat(scalar, nullValue());
   }
 
+  @Test
+  public void getQueryFromResource() throws Exception {
+    final Query query =
+        QueryUtility.getQueryFromResource("Query title", "/EXT_HIDDEN_TABLE_COLUMNS.sql");
+    assertThat(query.getName(), is("Query title"));
+    assertThat(query.getQuery(), containsString("INFORMATION_SCHEMA.COLUMNS"));
+  }
+
   private void executeAgainstSchemaTest(
       final TestContext testContext,
       final Connection cxn,
       final Query query,
-      final Map<String, InclusionRule> limitMap)
+      final Map<String, String> limitMap)
       throws IOException, SQLException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -229,11 +230,11 @@ public class QueryUtilityTest {
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
-  private Map<String, InclusionRule> makeLimitMap(
+  private Map<String, String> makeLimitMap(
       final InclusionRule schemaInclusionRule, final InclusionRule tableInclusionRule) {
-    final Map<String, InclusionRule> limitMap = new HashMap<>();
-    limitMap.put("schema-inclusion-rule", schemaInclusionRule);
-    limitMap.put("table-inclusion-rule", tableInclusionRule);
+    final Map<String, String> limitMap = new HashMap<>();
+    limitMap.put("schema-inclusion-rule", inclusionRuleString(schemaInclusionRule));
+    limitMap.put("table-inclusion-rule", inclusionRuleString(tableInclusionRule));
     return limitMap;
   }
 

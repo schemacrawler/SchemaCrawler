@@ -14,10 +14,15 @@ import static java.sql.Types.LONGNVARCHAR;
 import static java.sql.Types.LONGVARBINARY;
 import static java.sql.Types.LONGVARCHAR;
 import static java.sql.Types.NCLOB;
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static schemacrawler.utility.EnumUtility.enumValueFromId;
 import static us.fatehi.utility.IOUtility.readFully;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.isIntegral;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.io.Reader;
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -33,11 +38,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.isIntegral;
-import static us.fatehi.utility.Utility.requireNotBlank;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -64,7 +64,7 @@ public final class MetadataResultSet implements AutoCloseable {
   private int maxRows;
 
   public MetadataResultSet(
-      final Query query, final Statement statement, final Map<String, InclusionRule> limitMap)
+      final Query query, final Statement statement, final Map<String, String> limitMap)
       throws SQLException {
     this(executeAgainstSchema(query, statement, limitMap), query.getName());
   }

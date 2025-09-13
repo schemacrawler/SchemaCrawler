@@ -14,6 +14,7 @@ import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
 import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -234,6 +237,18 @@ public final class MetaDataUtility {
       return SimpleDatabaseObjectType.table;
     }
     return SimpleDatabaseObjectType.unknown;
+  }
+
+  public static String inclusionRuleString(final InclusionRule inclusionRule) {
+    String inclusionRuleString = ".*";
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
+      final String schemaInclusionPattern =
+          ((InclusionRuleWithRegularExpression) inclusionRule).getInclusionPattern().pattern();
+      if (!isBlank(schemaInclusionPattern)) {
+        inclusionRuleString = schemaInclusionPattern;
+      }
+    }
+    return inclusionRuleString;
   }
 
   public static boolean isForeignKeyUnique(final TableReference tableRef) {

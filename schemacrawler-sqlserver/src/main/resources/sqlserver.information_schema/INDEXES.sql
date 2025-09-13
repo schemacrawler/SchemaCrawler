@@ -42,6 +42,7 @@ FROM
 WHERE
     i.name IS NOT NULL
     AND i.is_hypothetical = 0
+	AND s.name = '${schema-name}'
 
 UNION ALL
 
@@ -84,3 +85,4 @@ WHERE
     i.name IS NOT NULL
     AND i.is_hypothetical = 0
     AND OBJECTPROPERTY(v.object_id, 'IsSchemaBound') = 1
+	AND vs.name = '${schema-name}'

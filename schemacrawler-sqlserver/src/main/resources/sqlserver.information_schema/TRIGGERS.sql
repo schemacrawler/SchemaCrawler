@@ -45,3 +45,4 @@ FROM
 WHERE
 	tr.IS_MS_SHIPPED = 0
 	AND tbl.IS_MS_SHIPPED = 0
+	AND ist.TABLE_SCHEMA = '${schema-name}'
