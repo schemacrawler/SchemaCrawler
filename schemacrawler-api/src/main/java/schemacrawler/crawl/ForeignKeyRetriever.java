@@ -29,6 +29,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -55,6 +56,13 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       case data_dictionary_all:
         LOGGER.log(Level.INFO, "Retrieving foreign keys, using fast data dictionary retrieval");
         retrieveForeignKeysFromDataDictionary();
+        break;
+
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving foreign keys, using fast data dictionary retrieval over schemas");
+        retrieveForeignKeysOverSchemas();
         break;
 
       case metadata:
@@ -185,11 +193,11 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       LOGGER.log(Level.FINE, "Extended foreign keys SQL statement was not provided");
       return;
     }
+    final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
 
     final String name = "foreign keys";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
-    final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
         final Statement statement = connection.createStatement();
         final MetadataResultSet results =
@@ -259,5 +267,43 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       }
       retrievalCounts.log();
     }
+  }
+
+  private void retrieveForeignKeysOverSchemas() throws WrappedSQLException {
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasQuery(FOREIGN_KEYS)) {
+      LOGGER.log(Level.FINE, "Extended foreign keys SQL statement was not provided");
+      return;
+    }
+    final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
+
+    final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
+    final String name = "foreign keys";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : getAllSchemas()) {
+      if (catalog.getTables(schema).isEmpty()) {
+        continue;
+      }
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(fkSql, statement, getLimitMap(schema)); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = createForeignKey(results, foreignKeys);
+          retrievalCounts.countIfIncluded(schema.key(), added);
+        }
+      } catch (final SQLException e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve foreign keys for schema <%s>", schema));
+      }
+      retrievalCounts.log(schema.key());
+    }
+    retrievalCounts.log();
   }
 }
