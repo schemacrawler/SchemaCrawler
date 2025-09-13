@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import static java.sql.DatabaseMetaData.procedureNullableUnknown;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS;
@@ -137,8 +138,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       final String typeName = results.getString("TYPE_NAME");
       final int length = results.getInt("LENGTH", 0);
       final int precision = results.getInt("PRECISION", 0);
-      final boolean isNullable =
-          results.getShort("NULLABLE", (short) DatabaseMetaData.procedureNullableUnknown) > 0;
+      final boolean isNullable = results.getShort("NULLABLE", (short) procedureNullableUnknown) > 0;
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
@@ -238,8 +238,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
         }
       } catch (final SQLException e) {
         throw new WrappedSQLException(
-            String.format("Could not retrieve procedure parameters for procedure <%s>", procedure),
-            e);
+            String.format("Could not retrieve parameters for procedure <%s>", procedure), e);
       }
     }
     retrievalCounts.log();
@@ -270,7 +269,6 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
           final Statement statement = connection.createStatement();
           final MetadataResultSet results =
               new MetadataResultSet(procedureColumnsSql, statement, getLimitMap(schema)); ) {
-        final String catalogName = schema.getCatalogName();
         while (results.next()) {
           retrievalCounts.count(schema.key());
           final boolean added = createProcedureParameter(results, allRoutines, parameterFilter);

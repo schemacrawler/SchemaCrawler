@@ -103,7 +103,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     LOGGER.log(
         Level.FINE,
         new StringFormat(
-            "Retrieving function column <%s.%s.%s.%s.%s>",
+            "Retrieving function parameter <%s.%s.%s.%s.%s>",
             columnCatalogName, schemaName, functionName, specificName, columnName));
     if (isBlank(columnName) && parameterMode == ParameterModeType.result) {
       columnName = "<return value>";
@@ -175,8 +175,9 @@ final class FunctionParameterRetriever extends AbstractRetriever {
 
   private MutableFunctionParameter lookupOrCreateFunctionParameter(
       final MutableFunction function, final String columnName) {
-    final Optional<MutableFunctionParameter> columnOptional = function.lookupParameter(columnName);
-    return columnOptional.orElseGet(() -> new MutableFunctionParameter(function, columnName));
+    final Optional<MutableFunctionParameter> parameterOptional =
+        function.lookupParameter(columnName);
+    return parameterOptional.orElseGet(() -> new MutableFunctionParameter(function, columnName));
   }
 
   private void retrieveFunctionParametersFromDataDictionary(
@@ -186,7 +187,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS)) {
-      throw new ExecutionRuntimeException("No function columns SQL provided");
+      throw new ExecutionRuntimeException("No function parameters SQL provided");
     }
     final String name = "function parameters from data dictionary";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
@@ -253,7 +254,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS)) {
-      throw new ExecutionRuntimeException("No function columns SQL provided");
+      throw new ExecutionRuntimeException("No function parameters SQL provided");
     }
     final Query functionColumnsSql = informationSchemaViews.getQuery(FUNCTION_COLUMNS);
 
@@ -269,9 +270,9 @@ final class FunctionParameterRetriever extends AbstractRetriever {
           final MetadataResultSet results =
               new MetadataResultSet(functionColumnsSql, statement, getLimitMap(schema)); ) {
         while (results.next()) {
-          retrievalCounts.count();
+          retrievalCounts.count(schema.key());
           final boolean added = createFunctionParameter(results, allRoutines, parameterFilter);
-          retrievalCounts.countIfIncluded(added);
+          retrievalCounts.countIfIncluded(schema.key(), added);
         }
       } catch (final Exception e) {
         LOGGER.log(
