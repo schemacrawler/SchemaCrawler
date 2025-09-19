@@ -24,6 +24,7 @@ Java SE 8 or better.
 [![Codacy Coverage](https://img.shields.io/codacy/coverage/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard)
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler?color=FFDAB9)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
+[![MCP Server Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler-ai?color=FFDAB9)](https://hub.docker.com/r/schemacrawler/schemacrawler-ai/)
 ![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler)](https://central.sonatype.com/search?q=us.fatehi.schemacrawler&sort=name)
