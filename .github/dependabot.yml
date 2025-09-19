@@ -6,6 +6,8 @@ updates:
       interval: "weekly"
       day: "saturday"
     ignore: # Ignore Java 21 only dependency updates
+      - dependency-name: "org.graalvm.js:js-scriptengine"
+        update-types: ["version-update:semver-major"]
       - dependency-name: "org.springframework:spring-context"
         update-types: ["version-update:semver-major"]
       - dependency-name: "org.jruby:jruby"
