@@ -3,7 +3,7 @@
 SchemaCrawler release notes.
 
 <a name="v16.28.2"></a>
-## Release 16.28.2 - 2025-09-19
+## Release 16.28.2 - 2025-09-21
 - Add a method to lookup routines in the catalog
 
 
