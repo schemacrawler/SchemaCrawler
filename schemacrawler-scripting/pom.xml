@@ -209,7 +209,7 @@
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
-      <version>21.3.11</version>
+      <version>21.3.15</version>
       <scope>provided</scope>
     </dependency>
 
