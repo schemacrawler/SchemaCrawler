@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.28.2"></a>
+## Release 16.28.2 - 2025-09-19
+- Add a method to lookup routines in the catalog
+
+
 <a name="v16.28.1"></a>
 ## Release 16.28.1 - 2025-09-13
 - Do not show specific name if the database does not support overloaded routines
