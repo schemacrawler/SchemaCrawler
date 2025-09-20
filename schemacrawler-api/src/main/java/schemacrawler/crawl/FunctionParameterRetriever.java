@@ -282,5 +282,6 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       }
       retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }
