@@ -345,11 +345,14 @@ final class TableColumnRetriever extends AbstractRetriever {
               createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
           retrievalCounts.countIfIncluded(schema.key(), added);
         }
-        retrievalCounts.log(schema.key());
       } catch (final SQLException e) {
-        throw new WrappedSQLException(
-            String.format("Could not retrieve table columns for schema <%s>", schema), e);
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve table columns for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }

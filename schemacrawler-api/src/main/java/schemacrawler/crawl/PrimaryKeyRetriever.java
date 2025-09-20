@@ -207,13 +207,14 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
           createPrimaryKeyForTable(table, results);
           retrievalCounts.countIncluded(schema.key());
         }
-        retrievalCounts.log(schema.key());
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
             e,
             new StringFormat("Could not retrieve primary keys for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }

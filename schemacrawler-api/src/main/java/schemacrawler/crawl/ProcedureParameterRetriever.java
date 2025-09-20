@@ -282,5 +282,6 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       }
       retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }

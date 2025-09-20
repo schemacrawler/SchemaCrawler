@@ -323,13 +323,14 @@ final class IndexRetriever extends AbstractRetriever {
           final boolean added = createIndexForTable(table, results);
           retrievalCounts.countIfIncluded(schema.key(), added);
         }
-        retrievalCounts.log(schema.key());
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
             e,
             new StringFormat("Could not retrieve indexes for schema <%s>", schema));
       }
+      retrievalCounts.log(schema.key());
     }
+    retrievalCounts.log();
   }
 }
