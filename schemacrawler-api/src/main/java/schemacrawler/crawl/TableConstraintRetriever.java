@@ -326,8 +326,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
             "Retrieving table constraint column for <%s.%s.%s>",
             catalogName, schemaName, constraintName));
 
-    final MutableTableConstraint tableConstraint =
-        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, tableName, constraintName));
+    final MutableTableConstraint tableConstraint = tableConstraintsMap.get(
+        new NamedObjectKey(catalogName, schemaName, tableName, constraintName));
     if (tableConstraint == null) {
       LOGGER.log(
           Level.FINEST, new StringFormat("Could not add column constraint <%s>", constraintName));
