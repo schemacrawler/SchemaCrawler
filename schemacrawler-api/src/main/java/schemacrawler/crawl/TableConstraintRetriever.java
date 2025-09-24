@@ -250,13 +250,14 @@ final class TableConstraintRetriever extends AbstractRetriever {
   private boolean addTableConstraintDefinition(final MetadataResultSet results) {
     final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
     final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
+    final String tableName = results.getString("TABLE_NAME");
     final String constraintName = results.getString("CONSTRAINT_NAME");
     LOGGER.log(
         Level.FINER, new StringFormat("Retrieving definition for constraint <%s>", constraintName));
     final String definition = results.getString("CHECK_CLAUSE");
 
     final MutableTableConstraint tableConstraint =
-        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
+        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, tableName, constraintName));
     if (tableConstraint == null) {
       LOGGER.log(
           Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
@@ -307,7 +308,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     table.addTableConstraint(tableConstraint);
 
     // Save look up for constraint with a simplified key
-    tableConstraintsMap.put(table.getSchema().key().with(constraintName), tableConstraint);
+    tableConstraintsMap.put(table.key().with(constraintName), tableConstraint);
 
     return true;
   }
@@ -315,6 +316,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
   private boolean createTableConstraintColumn(final MetadataResultSet results) {
     final String catalogName = normalizeCatalogName(results.getString("CONSTRAINT_CATALOG"));
     final String schemaName = normalizeSchemaName(results.getString("CONSTRAINT_SCHEMA"));
+    // "TABLE_CATALOG", "TABLE_SCHEMA"
+    final String tableName = results.getString("TABLE_NAME");
     final String constraintName = results.getString("CONSTRAINT_NAME");
 
     LOGGER.log(
@@ -324,15 +327,12 @@ final class TableConstraintRetriever extends AbstractRetriever {
             catalogName, schemaName, constraintName));
 
     final MutableTableConstraint tableConstraint =
-        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
+        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, tableName, constraintName));
     if (tableConstraint == null) {
       LOGGER.log(
           Level.FINEST, new StringFormat("Could not add column constraint <%s>", constraintName));
       return false;
     }
-
-    // "TABLE_CATALOG", "TABLE_SCHEMA"
-    final String tableName = results.getString("TABLE_NAME");
 
     final Table table = tableConstraint.getParent();
     if (!table.getName().equals(tableName)) {
