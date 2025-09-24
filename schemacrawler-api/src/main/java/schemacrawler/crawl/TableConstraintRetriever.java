@@ -256,8 +256,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
         Level.FINER, new StringFormat("Retrieving definition for constraint <%s>", constraintName));
     final String definition = results.getString("CHECK_CLAUSE");
 
-    final MutableTableConstraint tableConstraint =
-        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, tableName, constraintName));
+    final MutableTableConstraint tableConstraint = tableConstraintsMap.get(
+        new NamedObjectKey(catalogName, schemaName, tableName, constraintName));
     if (tableConstraint == null) {
       LOGGER.log(
           Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
