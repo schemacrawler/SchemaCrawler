@@ -1,16 +1,16 @@
 CREATE DATABASE duplicate_names;
 USE duplicate_names;
 
-create table alfa (
-  uno int not null,
-  due varchar(45) null,
-  primary key (uno),
-  constraint vincolo unique (due)
+CREATE TABLE alfa (
+  uno INT NOT NULL,
+  due VARCHAR(45) NULL,
+  PRIMARY KEY (uno),
+  CONSTRAINT vincolo UNIQUE (due)
 );
 
-create table beta (
-  uno int not null,
-  due varchar(45) null,
-  primary key (uno),
-  constraint vincolo unique (due)
+CREATE TABLE beta (
+  uno INT NOT NULL,
+  due VARCHAR(45) NULL,
+  PRIMARY KEY (uno),
+  CONSTRAINT vincolo UNIQUE (due)
 );
