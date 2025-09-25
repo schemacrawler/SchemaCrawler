@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
@@ -39,9 +40,37 @@ import us.fatehi.utility.string.StringFormat;
 /** A retriever uses database metadata to get the constraints on the database tables. */
 final class TableConstraintRetriever extends AbstractRetriever {
 
+  static class TableConstraintDefinitions {
+    private final Map<NamedObjectKey, MutableTableConstraint> tableConstraintDefinitionsMap;
+
+    TableConstraintDefinitions() {
+      tableConstraintDefinitionsMap = new HashMap<>();
+    }
+
+    Optional<MutableTableConstraint> lookup(
+        final String catalogName, final String schemaName, final String constraintName) {
+      final NamedObjectKey key = new NamedObjectKey(catalogName, schemaName, constraintName);
+      return Optional.ofNullable(tableConstraintDefinitionsMap.get(key));
+    }
+
+    void put(final MutableTableConstraint tableConstraint) {
+      requireNonNull(tableConstraint, "No table constraint provided");
+      final NamedObjectKey key = tableConstraint.getSchema().key().with(tableConstraint.getName());
+      if (tableConstraintDefinitionsMap.containsKey(key)) {
+        // Duplicate table constraint name found in the same schema,
+        // which could result in ambiguities.
+        // So remove even the first table constraint.
+        tableConstraintDefinitionsMap.remove(key);
+      } else {
+        tableConstraintDefinitionsMap.put(key, tableConstraint);
+      }
+    }
+  }
+
   private static final Logger LOGGER = Logger.getLogger(TableConstraintRetriever.class.getName());
 
   private final Map<NamedObjectKey, MutableTableConstraint> tableConstraintsMap;
+  private final TableConstraintDefinitions tableConstraintsWithDefinitions;
 
   TableConstraintRetriever(
       final RetrieverConnection retrieverConnection,
@@ -50,6 +79,10 @@ final class TableConstraintRetriever extends AbstractRetriever {
       throws SQLException {
     super(retrieverConnection, catalog, options);
     tableConstraintsMap = new HashMap<>();
+    // NOTE: This map has a pseudo-lookup key to look up
+    // table constraints by schema and name directly, without looking up the table
+    // since check constraints does not specify a table name
+    tableConstraintsWithDefinitions = new TableConstraintDefinitions();
   }
 
   void retrieveTableConstraintColumns() throws SQLException {
@@ -253,15 +286,16 @@ final class TableConstraintRetriever extends AbstractRetriever {
         Level.FINER, new StringFormat("Retrieving definition for constraint <%s>", constraintName));
     final String definition = results.getString("CHECK_CLAUSE");
 
-    final MutableTableConstraint tableConstraint =
-        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
-    if (tableConstraint == null) {
+    final Optional<MutableTableConstraint> optionalTableConstraint =
+        tableConstraintsWithDefinitions.lookup(catalogName, schemaName, constraintName);
+    if (!optionalTableConstraint.isPresent()) {
       LOGGER.log(
           Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
       return false;
     }
-    tableConstraint.setDefinition(definition);
 
+    final MutableTableConstraint tableConstraint = optionalTableConstraint.get();
+    tableConstraint.setDefinition(definition);
     tableConstraint.addAttributes(results.getAttributes());
 
     return true;
@@ -304,8 +338,9 @@ final class TableConstraintRetriever extends AbstractRetriever {
     // Add constraint to table
     table.addTableConstraint(tableConstraint);
 
-    // Save look up for constraint with a simplified key
+    // Save for future constraint look up
     tableConstraintsMap.put(tableConstraint.key(), tableConstraint);
+    tableConstraintsWithDefinitions.put(tableConstraint);
 
     return true;
   }
