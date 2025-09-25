@@ -26,6 +26,7 @@ import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrie
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,20 +39,28 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
+import schemacrawler.test.utility.ResolveTestContext;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.database.SqlScript;
 
 @DisableLogging
 @HeavyDatabaseTest("mysql")
 @Testcontainers
+@ResolveTestContext
 public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
   @Container
@@ -59,7 +68,7 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
       newMySQLContainer().withUsername("schemacrawler");
 
   @Test
-  public void columnWithEnum() throws Exception {
+  public void columnWithEnum(final TestContext testContext) throws Exception {
 
     try (final Connection connection = getConnection();
         final Statement stmt = connection.createStatement(); ) {
@@ -67,8 +76,12 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
       // Auto-commited
     }
 
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(schema -> Arrays.asList("test").contains(schema));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel.withLimitOptions(
+            limitOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noInfo();
@@ -80,7 +93,7 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
-        hasSameContentAs(classpathResource("testColumnWithEnum.txt")));
+        hasSameContentAs(classpathResource(testContext.testMethodFullName())));
 
     // Additional programmatic test
     final Catalog catalog = executable.getCatalog();
@@ -107,8 +120,13 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    // IMPORTANT: Use root user, since permissions are not granted to the new databases created by
+    // the script. Also do not verify the server, and allow public key retrieval
+    final String connectionUrl =
+        dbContainer.getJdbcUrl()
+            + "?verifyServerCertificate=false"
+            + "&allowPublicKeyRetrieval=true";
+    createDataSource(connectionUrl, "root", dbContainer.getPassword());
   }
 
   @Test
@@ -140,5 +158,42 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
     assertThat(table, notNullValue());
     final Column column = table.lookupColumn("a.b").orElse(null);
     assertThat(column, notNullValue());
+  }
+
+  @Test
+  @DisplayName("Issue #2065 - Verify that constraint names are scoped within a table")
+  public void duplicateNames(final TestContext testContext) throws Exception {
+
+    // Note: The database connection needs to be closed for the new schemas to be recognized
+    try (final Connection connection = getConnection()) {
+      SqlScript.executeScriptFromResource("/duplicate_names.sql", connection);
+      // Auto-commited
+    }
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(schema -> Arrays.asList("duplicate_names").contains(schema));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel.withLimitOptions(
+            limitOptionsBuilder.toOptions());
+
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource(), schemaCrawlerOptions);
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      for (final Table table : catalog.getTables()) {
+        out.println(String.format("- [table] %s", table.getFullName()));
+        for (final TableConstraint tableConstraint : table.getTableConstraints()) {
+          out.println(
+              String.format("  - [%s] %s", tableConstraint.getType(), tableConstraint.key()));
+          for (final TableConstraintColumn tableConstraintColumn :
+              tableConstraint.getConstrainedColumns()) {
+            out.println(String.format("    - [column] %s", tableConstraintColumn.getFullName()));
+          }
+        }
+      }
+    }
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 }
