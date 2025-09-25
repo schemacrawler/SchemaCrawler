@@ -1,0 +1,9 @@
+- [table] test.alfa
+  - [primary_key] {"key": "test/null/alfa/PRIMARY"}
+    - [column] test.alfa.uno
+  - [unique] {"key": "test/null/alfa/vincolo"}
+- [table] test.beta
+  - [primary_key] {"key": "test/null/beta/PRIMARY"}
+    - [column] test.beta.uno
+  - [unique] {"key": "test/null/beta/vincolo"}
+    - [column] test.beta.due
