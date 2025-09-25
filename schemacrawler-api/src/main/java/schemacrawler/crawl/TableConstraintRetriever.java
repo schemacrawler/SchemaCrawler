@@ -85,6 +85,40 @@ final class TableConstraintRetriever extends AbstractRetriever {
     tableConstraintsWithDefinitions = new TableConstraintDefinitions();
   }
 
+  void retrieveCheckConstraints() throws SQLException {
+    if (tableConstraintsMap.isEmpty()) {
+      LOGGER.log(Level.FINE, "No check constraints found");
+      return;
+    }
+
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasQuery(CHECK_CONSTRAINTS)) {
+      LOGGER.log(Level.FINE, "Extended check constraints SQL statement was not provided");
+      return;
+    }
+    final Query checkConstraintSql = informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
+
+    switch (getRetrieverConnection().get(tableCheckConstraintsRetrievalStrategy)) {
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving check constraint definitions, using fast data dictionary retrieval"
+                + " over schemas");
+        retrieveTableConstraintDefinitionsOverSchemas(checkConstraintSql);
+        break;
+
+      case data_dictionary_all:
+      default:
+        LOGGER.log(
+            Level.INFO,
+            "Retrieving check constraint definitions, using fast data dictionary retrieval");
+        retrieveTableConstraintDefinitionsFromDataDictionary(checkConstraintSql);
+        break;
+    }
+  }
+
   void retrieveTableConstraintColumns() throws SQLException {
     if (tableConstraintsMap.isEmpty()) {
       LOGGER.log(Level.FINE, "No table constraints found");
@@ -116,40 +150,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
             Level.INFO,
             "Retrieving table constraint columns, using fast data dictionary retrieval");
         retrieveTableConstraintColumnsFromDataDictionary(tableConstraintsColumnsSql);
-        break;
-    }
-  }
-
-  void retrieveTableConstraintDefinitions() throws SQLException {
-    if (tableConstraintsMap.isEmpty()) {
-      LOGGER.log(Level.FINE, "No table constraints found");
-      return;
-    }
-
-    final InformationSchemaViews informationSchemaViews =
-        getRetrieverConnection().getInformationSchemaViews();
-
-    if (!informationSchemaViews.hasQuery(CHECK_CONSTRAINTS)) {
-      LOGGER.log(Level.FINE, "Extended table check constraints SQL statement was not provided");
-      return;
-    }
-    final Query checkConstraintSql = informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
-
-    switch (getRetrieverConnection().get(tableCheckConstraintsRetrievalStrategy)) {
-      case data_dictionary_over_schemas:
-        LOGGER.log(
-            Level.INFO,
-            "Retrieving check constraint definitions, using fast data dictionary retrieval"
-                + " over schemas");
-        retrieveTableConstraintDefinitionsOverSchemas(checkConstraintSql);
-        break;
-
-      case data_dictionary_all:
-      default:
-        LOGGER.log(
-            Level.INFO,
-            "Retrieving check constraint definitions, using fast data dictionary retrieval");
-        retrieveTableConstraintDefinitionsFromDataDictionary(checkConstraintSql);
         break;
     }
   }

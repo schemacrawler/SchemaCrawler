@@ -441,7 +441,7 @@ public final class SchemaCrawler {
     taskRunner
         .add(
             retrieveTableConstraintDefinitions,
-            constraintRetriever::retrieveTableConstraintDefinitions,
+            constraintRetriever::retrieveCheckConstraints,
             retrieveTableConstraints)
         .add(
             retrieveTableConstraintInformation,
