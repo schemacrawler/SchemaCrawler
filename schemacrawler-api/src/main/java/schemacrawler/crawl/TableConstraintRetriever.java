@@ -15,7 +15,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableCheckConstraintsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintsRetrievalStrategy;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -260,7 +259,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final String definition = results.getString("CHECK_CLAUSE");
 
     final MutableTableConstraint tableConstraint =
-        tableConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
+        checkConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
     if (tableConstraint == null) {
       LOGGER.log(
           Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
