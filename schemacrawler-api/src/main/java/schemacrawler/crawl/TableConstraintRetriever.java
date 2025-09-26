@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
@@ -15,10 +16,12 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableCheckConstraintsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintsRetrievalStrategy;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -38,10 +41,47 @@ import us.fatehi.utility.string.StringFormat;
 /** A retriever uses database metadata to get the constraints on the database tables. */
 final class TableConstraintRetriever extends AbstractRetriever {
 
+  /**
+   * Special map for check constraints. Check constraint metadata may not include the table name in
+   * many databases. Since some databases allow for duplicate constraint names in the same schema,
+   * this special map does an abbreviated lookup not including table names, and eliminating
+   * duplicates. All constraints are added to this map, since some databases (like Oracle) do not
+   * correctly identify check constraints.
+   */
+  static class ConstraintsShortLookupMap {
+    private final Set<NamedObjectKey> seenConstraintsKeys;
+    private final Map<NamedObjectKey, MutableTableConstraint> constraintsMap;
+
+    ConstraintsShortLookupMap() {
+      seenConstraintsKeys = new HashSet<>();
+      constraintsMap = new HashMap<>();
+    }
+
+    MutableTableConstraint get(
+        final String catalogName, final String schemaName, final String constraintName) {
+      final NamedObjectKey key = new NamedObjectKey(catalogName, schemaName, constraintName);
+      return constraintsMap.get(key);
+    }
+
+    void put(final MutableTableConstraint tableConstraint) {
+      requireNonNull(tableConstraint, "No table constraint provided");
+      final NamedObjectKey key = tableConstraint.getSchema().key().with(tableConstraint.getName());
+      if (seenConstraintsKeys.contains(key)) {
+        // Duplicate table constraint name found in the same schema,
+        // which could result in ambiguities.
+        // So remove even the first seen table constraint.
+        constraintsMap.remove(key);
+      } else {
+        seenConstraintsKeys.add(key);
+        constraintsMap.put(key, tableConstraint);
+      }
+    }
+  }
+
   private static final Logger LOGGER = Logger.getLogger(TableConstraintRetriever.class.getName());
 
   private final Map<NamedObjectKey, MutableTableConstraint> tableConstraintsMap;
-  private final Map<NamedObjectKey, MutableTableConstraint> checkConstraintsMap;
+  private final ConstraintsShortLookupMap constraintsShortLookupMap;
 
   TableConstraintRetriever(
       final RetrieverConnection retrieverConnection,
@@ -53,7 +93,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     // NOTE: This map has a pseudo-lookup key to look up
     // table constraints by schema and name directly, without looking up the table
     // since check constraints does not specify a table name
-    checkConstraintsMap = new HashMap<>();
+    constraintsShortLookupMap = new ConstraintsShortLookupMap();
   }
 
   void retrieveCheckConstraints() throws SQLException {
@@ -259,7 +299,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final String definition = results.getString("CHECK_CLAUSE");
 
     final MutableTableConstraint tableConstraint =
-        checkConstraintsMap.get(new NamedObjectKey(catalogName, schemaName, constraintName));
+        constraintsShortLookupMap.get(catalogName, schemaName, constraintName);
     if (tableConstraint == null) {
       LOGGER.log(
           Level.FINEST, new StringFormat("Could not add table constraint <%s>", constraintName));
@@ -313,10 +353,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
     // Save for future constraint look up
     tableConstraintsMap.put(tableConstraint.key(), tableConstraint);
-    if (tableConstraintType == TableConstraintType.check) {
-      checkConstraintsMap.put(
-          tableConstraint.getSchema().key().with(tableConstraint.getName()), tableConstraint);
-    }
+    constraintsShortLookupMap.put(tableConstraint);
 
     return true;
   }
