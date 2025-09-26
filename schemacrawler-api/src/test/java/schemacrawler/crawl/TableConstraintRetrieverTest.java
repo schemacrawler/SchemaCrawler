@@ -109,7 +109,7 @@ public class TableConstraintRetrieverTest {
         new TableConstraintRetriever(retrieverConnection, catalog, options);
 
     // Act - retrieve table constraint definitions
-    constraintRetriever.retrieveTableConstraintDefinitions();
+    constraintRetriever.retrieveCheckConstraints();
 
     // We can't easily verify specific constraint definitions were created,
     // but we can verify the method executed without errors

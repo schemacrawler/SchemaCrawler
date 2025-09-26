@@ -1,0 +1,10 @@
+- [table] duplicate_names.alfa
+  - [primary_key] {"key": "duplicate_names/null/alfa/PRIMARY"}
+    - [column] duplicate_names.alfa.uno
+  - [unique] {"key": "duplicate_names/null/alfa/vincolo"}
+    - [column] duplicate_names.alfa.due
+- [table] duplicate_names.beta
+  - [primary_key] {"key": "duplicate_names/null/beta/PRIMARY"}
+    - [column] duplicate_names.beta.uno
+  - [unique] {"key": "duplicate_names/null/beta/vincolo"}
+    - [column] duplicate_names.beta.due
