@@ -155,6 +155,7 @@
                  <div class="dropdown-menu" aria-labelledby="navbardrop-2">
                     <a class="dropdown-item" href="getting-started.html">Getting Started</a>
                     <a class="dropdown-item" href="resources.html">Resources</a>
+                    <a class="dropdown-item" href="metadata-retrieval">Metadata Retrieval</a>
                     <a class="dropdown-item" href="code-examples.html">Code Examples</a>
                     <a class="dropdown-item" href="faq.html">FAQS</a>
                     <a class="dropdown-item" href="how-to.html">How-tos</a>
