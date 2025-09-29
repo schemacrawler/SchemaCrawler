@@ -15,7 +15,8 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.nio.file.Files;
@@ -33,10 +34,6 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public final class CatalogSerializationTestUtility {
 
-  private CatalogSerializationTestUtility() {
-    // Utility class
-  }
-
   /**
    * Performs a Java serialization round-trip of a Catalog obtained from the provided data source
    * and asserts that the catalog validates both before and after serialization.
@@ -46,8 +43,14 @@ public final class CatalogSerializationTestUtility {
    */
   public static void assertJavaSerializationRoundTrip(final Catalog catalog) throws Exception {
 
-    validateSchema(catalog);
+    assertThat("No catalog provided", catalog, is(not(nullValue())));
 
+    //  Get number of objects in the catalog
+    final int numColumnDataTypes = catalog.getColumnDataTypes().size();
+    final int numTables = catalog.getTables().size();
+    final int numRoutines = catalog.getRoutines().size();
+
+    // Serialize catalog to a temporary file
     final Path testOutputFile = IOUtility.createTempFilePath("sc_java_serialization", "ser");
     final JavaSerializedCatalog javaSerializedCatalogForSave = new JavaSerializedCatalog(catalog);
     javaSerializedCatalogForSave.save(
@@ -58,14 +61,23 @@ public final class CatalogSerializationTestUtility {
     final JavaSerializedCatalog javaSerializedCatalogForLoad =
         new JavaSerializedCatalog(newInputStream(testOutputFile, READ));
     final Catalog catalogDeserialized = javaSerializedCatalogForLoad.getCatalog();
-    validateSchema(catalogDeserialized);
+
+    // Assert that the deserialized catalog has the same number of objects
+    assertThat(
+        "Different number of data types in deserialized catalog",
+        catalogDeserialized.getColumnDataTypes().size(),
+        is(numColumnDataTypes));
+    assertThat(
+        "Different number of tables in deserialized catalog",
+        catalogDeserialized.getTables().size(),
+        is(numTables));
+    assertThat(
+        "Different number of routines in deserialized catalog",
+        catalogDeserialized.getRoutines().size(),
+        is(numRoutines));
   }
 
-  private static void validateSchema(final Catalog catalog) {
-    assertThat("Could not obtain catalog", catalog, notNullValue());
-
-    assertThat("No data types in the schema", catalog.getColumnDataTypes().isEmpty(), is(false));
-    assertThat("No tables in the schema", catalog.getTables().isEmpty(), is(false));
-    assertThat("No routines in the schema", catalog.getRoutines().isEmpty(), is(false));
+  private CatalogSerializationTestUtility() {
+    // Utility class
   }
 }
