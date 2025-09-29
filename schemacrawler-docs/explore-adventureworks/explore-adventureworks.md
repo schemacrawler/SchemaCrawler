@@ -66,6 +66,18 @@
   `schemacrawler --server postgresql --host adventureworks --database postgres --user schemacrawler --password schemacrawler --info-level maximum --command serialize --grep-tables ".*\.\"Employee\"" --children 1 --output-format json --output-file share/employee-table.json`
 
 
+## Using AI Chat
+
+- Use AI Chat to generate queries
+  `schemacrawler --server postgresql --host adventureworks --database postgres --user schemacrawler --password schemacrawler --info-level maximum --command aichat --use-metadata --api-key <your-api-key>`
+  Ask the following questions
+  - Write a nicely formatted SQL query to find the employee logins and departments, using fully qualified table names.
+  - Write a nicely formatted SQL query to find the number of employees in each shift for each department, using fully qualified table names.
+  - What are the tables in this database?
+  - What is the purpose of this database?
+  - Write a nicely formatted SQL query to find the current employee first and last names and departments, using fully qualified table names. An employee is a person.
+
+
 ## Tear Down
 
 - Exit SchemaCrawler bash with

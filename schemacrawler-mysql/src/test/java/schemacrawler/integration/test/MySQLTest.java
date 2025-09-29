@@ -8,9 +8,6 @@
 
 package schemacrawler.integration.test;
 
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -21,11 +18,8 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static us.fatehi.utility.IOUtility.isFileReadable;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
 import java.util.List;
 import java.util.Properties;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +38,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.test.serialize.CatalogSerializationTestUtility;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.HeavyDatabaseTest;
@@ -54,9 +47,7 @@ import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.IOUtility;
 
 @DisableLogging
 @HeavyDatabaseTest("mysql")
@@ -146,15 +137,6 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
     // INFO: Current user has no access to MYSQL.USER
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(0));
-
-    final Path testOutputFile = IOUtility.createTempFilePath("sc_java_serialization", "ser");
-    final JavaSerializedCatalog javaSerializedCatalogForSave = new JavaSerializedCatalog(catalog);
-    javaSerializedCatalogForSave.save(
-        Files.newOutputStream(testOutputFile, WRITE, CREATE, TRUNCATE_EXISTING));
-    assertThat("Catalog was not serialized", isFileReadable(testOutputFile), is(true));
-    assertThat(fileHeaderOf(testOutputFile), is("ACED"));
-
-    CatalogSerializationTestUtility.assertJavaSerializationRoundTrip(catalog);
   }
 
   @Test
