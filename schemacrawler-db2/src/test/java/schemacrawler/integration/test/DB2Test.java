@@ -16,11 +16,13 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.DB2TestUtility.newDB2Container;
+import static schemacrawler.test.serialize.CatalogSerializationTestUtility.assertJavaSerializationRoundTrip;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -123,6 +125,8 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     final Property property = serverInfo.get(0);
     assertThat(property.getName(), equalTo("CURRENT_SERVER"));
     assertThat(property.getValue(), equalTo("SCHCRWLR"));
+
+    assertJavaSerializationRoundTrip(catalog);
 
     final Table table = catalog.lookupTable(new SchemaReference(null, schemaName), "AUTHORS").get();
     final Column column = table.lookupColumn("FIRSTNAME").get();
