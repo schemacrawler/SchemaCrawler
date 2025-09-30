@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer;
+import static schemacrawler.test.serialize.CatalogSerializationTestUtility.assertJavaSerializationRoundTrip;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -133,6 +134,8 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
     final Table table = catalog.lookupTable(new SchemaReference("books", null), "authors").get();
     final Column column = table.lookupColumn("FirstName").get();
     assertThat(column.getPrivileges(), is(empty()));
+
+    assertJavaSerializationRoundTrip(catalog);
 
     // INFO: Current user has no access to MYSQL.USER
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();

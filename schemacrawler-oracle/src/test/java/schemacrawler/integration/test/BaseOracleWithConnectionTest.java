@@ -14,11 +14,13 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static schemacrawler.test.serialize.CatalogSerializationTestUtility.assertJavaSerializationRoundTrip;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -96,8 +98,9 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
     }
 
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
-
     assertThat(serverInfo.size(), equalTo(8));
+
+    assertJavaSerializationRoundTrip(catalog);
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat("Number of database users does not match", databaseUsers, hasSize(numDatabaseUsers));

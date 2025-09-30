@@ -64,6 +64,13 @@
       <artifactId>schemacrawler-scripting</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+    </dependency>    
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-scripting</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
