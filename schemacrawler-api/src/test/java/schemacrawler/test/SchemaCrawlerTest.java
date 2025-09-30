@@ -54,6 +54,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -71,6 +72,7 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
+import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -561,6 +563,35 @@ public class SchemaCrawlerTest {
       }
     }
 
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void tableReferencingObjects(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas) {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table : tables) {
+          out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
+
+          final Collection<DatabaseObject> referencingObjects = table.getReferencingObjects();
+          for (DatabaseObject databaseObject : referencingObjects) {
+            final String type;
+            if (databaseObject instanceof TypedObject<?>) {
+              type = ((TypedObject<?>) databaseObject).getType().toString();
+            } else {
+              type = "";
+            }
+            out.println(String.format("  ^ %s [%s]", databaseObject.getFullName(), type));
+          }
+        }
+      }
+    }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }

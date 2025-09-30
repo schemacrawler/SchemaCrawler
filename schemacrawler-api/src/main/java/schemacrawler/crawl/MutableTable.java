@@ -327,9 +327,10 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   }
 
   final void addReferencingObjects(final Collection<DatabaseObject> references) {
-    if (references != null && references.isEmpty()) {
-      referencingObjects.addAll(references);
+    if (references == null || references.isEmpty()) {
+      return;
     }
+    referencingObjects.addAll(references);
   }
 
   final void addTableConstraint(final TableConstraint tableConstraint) {
