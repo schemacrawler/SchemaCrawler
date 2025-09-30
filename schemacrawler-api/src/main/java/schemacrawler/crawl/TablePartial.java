@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -90,6 +91,11 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
 
   @Override
   public Collection<Privilege<Table>> getPrivileges() {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public Collection<DatabaseObject> getReferencingObjects() {
     throw new NotLoadedException(this);
   }
 

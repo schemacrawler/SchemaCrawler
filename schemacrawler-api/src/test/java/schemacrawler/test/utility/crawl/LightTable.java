@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
@@ -167,6 +168,11 @@ public final class LightTable implements Table {
 
   @Override
   public Collection<Privilege<Table>> getPrivileges() {
+    return Collections.emptyList();
+  }
+
+  @Override
+  public Collection<DatabaseObject> getReferencingObjects() {
     return Collections.emptyList();
   }
 

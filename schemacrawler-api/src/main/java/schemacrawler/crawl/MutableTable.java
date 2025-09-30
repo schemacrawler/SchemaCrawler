@@ -11,6 +11,8 @@ package schemacrawler.crawl;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsLast;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,9 +22,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
@@ -56,6 +58,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
+  private final Set<DatabaseObject> referencingObjects = new HashSet<>();
   private MutablePrimaryKey primaryKey;
   private int sortIndex;
   private TableType tableType = TableType.UNKNOWN; // Default value
@@ -148,6 +151,12 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   @Override
   public Collection<Privilege<Table>> getPrivileges() {
     return new ArrayList<>(privileges.values());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Collection<DatabaseObject> getReferencingObjects() {
+    return new HashSet<>(referencingObjects);
   }
 
   /** {@inheritDoc} */
@@ -315,6 +324,12 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   final void addPrivilege(final MutablePrivilege<Table> privilege) {
     privileges.add(privilege);
+  }
+
+  final void addReferencingObjects(final Collection<DatabaseObject> references) {
+    if (references != null && references.isEmpty()) {
+      referencingObjects.addAll(references);
+    }
   }
 
   final void addTableConstraint(final TableConstraint tableConstraint) {

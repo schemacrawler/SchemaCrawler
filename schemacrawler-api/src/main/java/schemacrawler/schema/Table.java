@@ -34,6 +34,13 @@ public interface Table
   List<Column> getColumns();
 
   /**
+   * Gets a list of other tables and views, routines and synonyms that reference this table.
+   *
+   * @return Collection of referencing objects.
+   */
+  Collection<DatabaseObject> getReferencingObjects();
+
+  /**
    * Gets child tables which have a foreign key from this table.
    *
    * @return Dependent or child tables.

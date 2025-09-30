@@ -151,6 +151,7 @@ public final class SchemaCrawler {
       crawlRoutines();
       crawlSynonyms();
       crawlSequences();
+      postCrawl();
 
       return catalog;
     } catch (final RuntimeException e) {
@@ -199,7 +200,7 @@ public final class SchemaCrawler {
   private void crawlRoutines() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if ((!infoLevel.is(retrieveRoutines) || limitOptions.isExcludeAll(ruleForRoutineInclusion))) {
+    if (!infoLevel.is(retrieveRoutines) || limitOptions.isExcludeAll(ruleForRoutineInclusion)) {
       LOGGER.log(Level.INFO, "Not retrieving routines, since this was not requested");
       return;
     }
@@ -283,8 +284,8 @@ public final class SchemaCrawler {
   private void crawlSequences() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if ((!infoLevel.is(retrieveSequenceInformation)
-        || limitOptions.isExcludeAll(ruleForSequenceInclusion))) {
+    if (!infoLevel.is(retrieveSequenceInformation)
+        || limitOptions.isExcludeAll(ruleForSequenceInclusion)) {
       LOGGER.log(Level.INFO, "Not retrieving sequences, since this was not requested");
       return;
     }
@@ -310,8 +311,8 @@ public final class SchemaCrawler {
   private void crawlSynonyms() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if ((!infoLevel.is(retrieveSynonymInformation)
-        || limitOptions.isExcludeAll(ruleForSynonymInclusion))) {
+    if (!infoLevel.is(retrieveSynonymInformation)
+        || limitOptions.isExcludeAll(ruleForSynonymInclusion)) {
       LOGGER.log(Level.INFO, "Not retrieving synonyms, since this was not requested");
       return;
     }
@@ -336,7 +337,7 @@ public final class SchemaCrawler {
   private void crawlTables() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
-    if ((!infoLevel.is(retrieveTables) || limitOptions.isExcludeAll(ruleForTableInclusion))) {
+    if (!infoLevel.is(retrieveTables) || limitOptions.isExcludeAll(ruleForTableInclusion)) {
       LOGGER.log(Level.INFO, "Not retrieving tables, since this was not requested");
       return;
     }
@@ -480,6 +481,17 @@ public final class SchemaCrawler {
             retrieveAdditionalColumnMetadata,
             retrieverExtra::retrieveAdditionalColumnMetadata,
             retrieveTableColumns)
+        .submit();
+  }
+
+  private void postCrawl() throws Exception {
+    final TableReferencesMatcher referencesMatcher =
+        new TableReferencesMatcher(retrieverConnection, catalog, options);
+    taskRunner
+        .add(
+            "collectTableReferences",
+            () -> referencesMatcher.collectTableReferences(),
+            retrieveTables)
         .submit();
   }
 }
