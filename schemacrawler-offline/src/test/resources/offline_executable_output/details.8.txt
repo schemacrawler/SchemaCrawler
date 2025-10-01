@@ -54,7 +54,7 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 
@@ -204,7 +204,7 @@ U_PREVIOUSEDITION                                         [unique index]
 FK_PREVIOUSEDITION                                    [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 PUBLIC.BOOKS.BOOKS                                               [table]
@@ -252,7 +252,7 @@ Indexes
 "PK_Celebrities"                                          [unique index]
   "Id"                              ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 
@@ -463,7 +463,7 @@ Indexes
 SYS_PK_10124                                              [unique index]
   ID                                ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 
@@ -654,7 +654,7 @@ FK_PUBLICATIONS_WRITER                                [non-unique index]
 PK_PUBLICATIONS                                           [unique index]
   ID                                ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
@@ -748,7 +748,7 @@ PK_SELFREFERENCE                                          [unique index]
 FK_SELFREFERENCE                                      [non-unique index]
   ID                                ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 
@@ -840,7 +840,7 @@ IDX_A_WRITERS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
@@ -893,7 +893,7 @@ PK_CUSTOMERS                                              [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
@@ -990,7 +990,7 @@ Indexes
 UQ_CUSTOMERS                                              [unique index]
   SALESDATAID                       ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
 

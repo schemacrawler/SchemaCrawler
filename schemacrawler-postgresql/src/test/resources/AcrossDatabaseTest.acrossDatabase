@@ -37,7 +37,7 @@ id IS NOT NULL
 16385_16387_2_not_null                                [check constraint]
 name IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 schema_a_a.a_a_table2                                            [table]
 schema_a_b.a_b_table2                                            [table]
@@ -77,7 +77,7 @@ name IS NOT NULL
 16385_16392_3_not_null                                [check constraint]
 fk_col_to_a_a IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 schema_a_b.a_b_view1                                              [view]
 

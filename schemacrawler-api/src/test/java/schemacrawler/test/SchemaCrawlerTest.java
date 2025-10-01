@@ -579,7 +579,7 @@ public class SchemaCrawlerTest {
         for (final Table table : tables) {
           out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
 
-          final Collection<DatabaseObject> referencingObjects = table.getReferencingObjects();
+          final Collection<DatabaseObject> referencingObjects = table.getUsingObjects();
           for (DatabaseObject databaseObject : referencingObjects) {
             final String type;
             if (databaseObject instanceof TypedObject<?>) {

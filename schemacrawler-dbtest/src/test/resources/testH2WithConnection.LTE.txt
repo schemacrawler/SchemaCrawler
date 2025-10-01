@@ -54,7 +54,7 @@ Indexes
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-Referencing Objects
+Using Objects
 
 SCHEMACRAWLER.BOOKS.BOOKAUTHORS                             [base table]
 
@@ -145,7 +145,7 @@ Indexes
                                                       [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-Referencing Objects
+Using Objects
 
 SCHEMACRAWLER.BOOKS.BOOKAUTHORS                             [base table]
 SCHEMACRAWLER.BOOKS.BOOKS                                   [base table]
@@ -172,7 +172,7 @@ Indexes
                                                           [unique index]
   "Id"                              ascending                   
 
-Referencing Objects
+Using Objects
 
 SCHEMACRAWLER.BOOKS."Celebrity Updates"                     [base table]
 
@@ -300,7 +300,7 @@ Indexes
                                                           [unique index]
   ID                                ascending                   
 
-Referencing Objects
+Using Objects
 
 SCHEMACRAWLER.BOOKS.ΒΙΒΛΊΑ                                  [base table]
 

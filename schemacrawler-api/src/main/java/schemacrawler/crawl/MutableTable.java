@@ -58,7 +58,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
-  private final Set<DatabaseObject> referencingObjects = new HashSet<>();
+  private final Set<DatabaseObject> usingObjects = new HashSet<>();
   private MutablePrimaryKey primaryKey;
   private int sortIndex;
   private TableType tableType = TableType.UNKNOWN; // Default value
@@ -155,8 +155,8 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   /** {@inheritDoc} */
   @Override
-  public Collection<DatabaseObject> getReferencingObjects() {
-    return new HashSet<>(referencingObjects);
+  public Collection<DatabaseObject> getUsingObjects() {
+    return new HashSet<>(usingObjects);
   }
 
   /** {@inheritDoc} */
@@ -330,7 +330,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     if (references == null || references.isEmpty()) {
       return;
     }
-    referencingObjects.addAll(references);
+    usingObjects.addAll(references);
   }
 
   final void addTableConstraint(final TableConstraint tableConstraint) {

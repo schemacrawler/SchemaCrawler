@@ -86,7 +86,7 @@ lastname IS NOT NULL
 check_uppercase_state                                 [check constraint]
 (((state)::text = upper((state)::text)))
 
-Referencing Objects
+Using Objects
 
 books.authorslist                                                 [view]
 books.bookauthors                                                [table]
@@ -304,7 +304,7 @@ title IS NOT NULL
 16385_16446_4_not_null                                [check constraint]
 publisherid IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 books.books                                                      [table]
 books.bookauthors                                                [table]
@@ -360,7 +360,7 @@ Table Constraints
 16385_16480_1_not_null                                [check constraint]
 Id IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 books."Celebrity Updates"                                        [table]
 
@@ -652,7 +652,7 @@ Table Constraints
 16385_16474_1_not_null                                [check constraint]
 id IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 books."Βιβλία"                                                   [table]
 

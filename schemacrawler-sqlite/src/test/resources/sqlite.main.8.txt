@@ -85,7 +85,7 @@ CREATE TABLE Authors
   CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
 )
 
-Referencing Objects
+Using Objects
 
 BookAuthors                                                      [table]
 
@@ -180,7 +180,7 @@ CREATE TABLE Books
   CONSTRAINT U_PreviousEdition UNIQUE (PreviousEditionId)
 )
 
-Referencing Objects
+Using Objects
 
 Books                                                            [table]
 BookAuthors                                                      [table]
@@ -211,7 +211,7 @@ CREATE TABLE "Celebrities"
   CONSTRAINT "PK_Celebrities" PRIMARY KEY ("Id")
 )
 
-Referencing Objects
+Using Objects
 
 "Celebrity Updates"                                              [table]
 
@@ -293,7 +293,7 @@ CREATE TABLE Publishers
   Publisher VARCHAR(255)
 )
 
-Referencing Objects
+Using Objects
 
 Βιβλία                                                           [table]
 

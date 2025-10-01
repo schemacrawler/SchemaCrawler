@@ -95,7 +95,7 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
   }
 
   @Override
-  public Collection<DatabaseObject> getReferencingObjects() {
+  public Collection<DatabaseObject> getUsingObjects() {
     throw new NotLoadedException(this);
   }
 

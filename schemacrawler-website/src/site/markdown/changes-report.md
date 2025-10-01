@@ -4,7 +4,7 @@ SchemaCrawler release notes.
 
 <a name="v16.29.1"></a>
 ## Release 16.29.1 - 2025-10-03
-- Add objects referencing tables to the output
+- Add objects using (or referencing) tables to the output
 
 
 <a name="v16.28.3"></a>

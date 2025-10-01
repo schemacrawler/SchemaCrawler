@@ -31,7 +31,7 @@ Indexes
 PK__A_DBO_TA__3214EC07AD02DA7A                  [unique clustered index]
   Id                                ascending                   
 
-Referencing Objects
+Using Objects
 
 DATABASE_A.SCHEMA_A_A.A_A_TABLE2                                 [table]
 DATABASE_A.SCHEMA_A_B.A_B_TABLE2                                 [table]
@@ -85,7 +85,7 @@ Indexes
 PK__A_A_TABL__3214EC0798003088                  [unique clustered index]
   Id                                ascending                   
 
-Referencing Objects
+Using Objects
 
 DATABASE_A.SCHEMA_A_A.A_A_TABLE2                                 [table]
 DATABASE_A.SCHEMA_A_B.A_B_TABLE2                                 [table]
@@ -117,7 +117,7 @@ Indexes
 PK__A_A_TABL__3214EC0756D1AD0B                  [unique clustered index]
   Id                                ascending                   
 
-Referencing Objects
+Using Objects
 
 DATABASE_A.SCHEMA_A_B.A_B_VIEW1                                   [view]
 

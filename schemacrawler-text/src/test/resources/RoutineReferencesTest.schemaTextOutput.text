@@ -44,7 +44,7 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 
@@ -77,7 +77,7 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.NEW_PUBLISHER                                   [procedure]
 
@@ -198,7 +198,7 @@ U_PREVIOUSEDITION                                         [unique index]
 FK_PREVIOUSEDITION                                    [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.BOOKS                                               [table]
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
@@ -245,7 +245,7 @@ Indexes
 "PK_Celebrities"                                          [unique index]
   "Id"                              ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 
@@ -456,7 +456,7 @@ Indexes
 SYS_PK_10124                                              [unique index]
   ID                                ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 

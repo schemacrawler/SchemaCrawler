@@ -69,7 +69,7 @@ Table Constraints
 `CHECK_UPPERCASE_State`                               [check constraint]
 (`State` = upper(`State`))
 
-Referencing Objects
+Using Objects
 
 books.bookauthors                                                [table]
 books.authorslist                                                 [view]
@@ -170,7 +170,7 @@ Table Constraints
 `U_PreviousEdition`                                  [unique constraint]
   `PreviousEditionId`                                           
 
-Referencing Objects
+Using Objects
 
 books.books                                                      [table]
 books.bookauthors                                                [table]
@@ -197,7 +197,7 @@ Indexes
 `PRIMARY`                                                 [unique index]
   `Id`                              ascending                   
 
-Referencing Objects
+Using Objects
 
 books.`celebrity updates`                                        [table]
 

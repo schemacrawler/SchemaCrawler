@@ -69,7 +69,7 @@ SYS_CT_10104                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 

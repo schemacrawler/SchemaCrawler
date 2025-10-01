@@ -79,7 +79,7 @@ SYS_CT_10104                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -265,7 +265,7 @@ SYS_CT_10111                                          [check constraint]
   PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 PUBLIC.BOOKS.BOOKS                                               [table]
@@ -320,7 +320,7 @@ SYS_CT_10125                                          [check constraint]
   "Id"                                                          
 BOOKS."Celebrities"."Id" IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 
@@ -563,7 +563,7 @@ Indexes
 SYS_PK_10124                                              [unique index]
   ID                                ascending                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 
@@ -796,7 +796,7 @@ SYS_CT_10169                                          [check constraint]
   WRITERID                                                      
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
@@ -910,7 +910,7 @@ SYS_CT_10191                                          [check constraint]
   TITLE                                                         
 FOR_LINT.SELFREFERENCE.TITLE IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 
@@ -1028,7 +1028,7 @@ SYS_CT_10160                                          [check constraint]
   PUBLICATION_ID                                                
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
@@ -1099,7 +1099,7 @@ SYS_CT_10207                                          [check constraint]
   COUNTRY                                                       
 "PUBLISHER SALES".REGIONS.COUNTRY IS NOT NULL
 
-Referencing Objects
+Using Objects
 
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
@@ -1211,7 +1211,7 @@ Table Constraints
 UQ_CUSTOMERS                                         [unique constraint]
   SALESDATAID                                                   
 
-Referencing Objects
+Using Objects
 
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
 

@@ -54,7 +54,7 @@ IDX_A_AUTHORS                               [non-unique clustered index]
   POSTALCODE                        unknown                     
   COUNTRY                           unknown                     
 
-Referencing Objects
+Using Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 
@@ -140,7 +140,7 @@ PK_BOOKS                                        [unique clustered index]
 U_PREVIOUSEDITION                               [unique clustered index]
   PREVIOUSEDITIONID                 unknown                     
 
-Referencing Objects
+Using Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 BOOKS.BOOKS                                                      [table]
@@ -172,7 +172,7 @@ Indexes
 "PK_Celebrities"                                [unique clustered index]
   "Id"                              unknown                     
 
-Referencing Objects
+Using Objects
 
 BOOKS."Celebrity Updates"                                        [table]
 
@@ -241,7 +241,7 @@ Indexes
 SYS_C008663                                     [unique clustered index]
   ID                                unknown                     
 
-Referencing Objects
+Using Objects
 
 BOOKS.ΒΙΒΛΊΑ                                                     [table]
 
