@@ -273,9 +273,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       printTableConstraints(table.getTableConstraints());
 
       if (isVerbose()) {
-        printPrivileges(table.getPrivileges());
         printDefinition(table);
         printViewTableUsage(table);
+        printTableReferencingObjects(table);
+        printPrivileges(table.getPrivileges());
       }
 
       printTableRowCount(table);
@@ -1084,6 +1085,31 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         printTableColumns(constrainedColumns, false);
       }
       printDependantObjectDefinition(constraint);
+    }
+  }
+
+  private void printTableReferencingObjects(final Table table) {
+    if (table == null) {
+      return;
+    }
+    final Collection<DatabaseObject> referencingObjects = table.getReferencingObjects();
+    if (referencingObjects.isEmpty()) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Referencing Objects", "section");
+
+    formattingHelper.writeEmptyRow();
+    for (final DatabaseObject referencingObject : referencingObjects) {
+      final String objectName = quoteName(referencingObject);
+      final String objectType;
+      if (referencingObject instanceof TypedObject<?>) {
+        objectType = "[" + ((TypedObject<?>) referencingObject).getType().toString() + "]";
+      } else {
+        objectType = "";
+      }
+      formattingHelper.writeNameRow(objectName, objectType);
     }
   }
 

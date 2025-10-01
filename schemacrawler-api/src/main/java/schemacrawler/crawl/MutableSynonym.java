@@ -8,10 +8,9 @@
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Arrays;
 import java.util.Collection;
+import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
@@ -39,6 +38,11 @@ final class MutableSynonym extends AbstractDatabaseObject implements Synonym {
   @Override
   public Collection<? extends DatabaseObject> getReferencedObjects() {
     return Arrays.asList(referencedObject);
+  }
+
+  @Override
+  public String getType() {
+    return "synonym";
   }
 
   void setReferencedObject(final DatabaseObject referencedObject) {

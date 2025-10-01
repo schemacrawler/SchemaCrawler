@@ -44,6 +44,10 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Referencing Objects
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -129,6 +133,12 @@ U_PREVIOUSEDITION                                         [unique index]
 FK_PREVIOUSEDITION                                    [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
+Referencing Objects
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+
 
 
 PUBLIC.BOOKS."Celebrities"                                       [table]
@@ -150,6 +160,10 @@ Indexes
 
 "PK_Celebrities"                                          [unique index]
   "Id"                              ascending                   
+
+Referencing Objects
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 
 
 
@@ -258,6 +272,10 @@ Indexes
 SYS_PK_10124                                              [unique index]
   ID                                ascending                   
 
+Referencing Objects
+
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
+
 
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
@@ -312,6 +330,10 @@ PK_CUSTOMERS                                              [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Referencing Objects
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+
 
 
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
@@ -364,6 +386,10 @@ Indexes
 
 UQ_CUSTOMERS                                              [unique index]
   SALESDATAID                       ascending                   
+
+Referencing Objects
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
 
 
