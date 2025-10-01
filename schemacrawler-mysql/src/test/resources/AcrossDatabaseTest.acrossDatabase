@@ -28,6 +28,11 @@ Indexes
 `PRIMARY`                                                 [unique index]
   `Id`                              ascending                   
 
+Referencing Objects
+
+schema_a_b.a_b_table2                                            [table]
+schema_a_a.a_a_table2                                            [table]
+
 
 
 schema_a_a.a_a_table2                                            [table]
@@ -53,6 +58,10 @@ FK_A_A_TO_A_A                                         [non-unique index]
 
 `PRIMARY`                                                 [unique index]
   `Id`                              ascending                   
+
+Referencing Objects
+
+schema_a_b.a_b_view1                                              [view]
 
 
 
