@@ -71,13 +71,12 @@ public class GrepCommandLineTest {
   @ParameterizedTest
   @MethodSource("_grepTestArguments")
   public void grep(
-      int testCaseCounter,
+      final int testCaseCounter,
       final List<Map.Entry<String, String>> grepArguments,
       final DatabaseConnectionInfo connectionInfo)
       throws Exception {
 
-    testCaseCounter = testCaseCounter + 1;
-    final String referenceFile = String.format("grep%02d.txt", testCaseCounter);
+    final String referenceFile = String.format("grep%02d.txt", testCaseCounter + 1);
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
 
     final Map<String, String> args =
