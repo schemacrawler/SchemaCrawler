@@ -133,6 +133,10 @@ SYS_CT_10111                                          [check constraint]
   PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
+Referencing Objects
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+
 
 
 PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
@@ -176,15 +180,15 @@ PK_PUBLICATIONS                                           [unique index]
 
 Table Constraints
 
-SYS_CT_10165                                          [check constraint]
+SYS_CT_10167                                          [check constraint]
   ID                                                            
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
-SYS_CT_10166                                          [check constraint]
+SYS_CT_10168                                          [check constraint]
   TITLE                                                         
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
-SYS_CT_10167                                          [check constraint]
+SYS_CT_10169                                          [check constraint]
   WRITERID                                                      
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 

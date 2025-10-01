@@ -69,6 +69,10 @@ SYS_CT_10104                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
+Referencing Objects
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -220,23 +224,23 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10154                                          [check constraint]
+SYS_CT_10156                                          [check constraint]
   ID                                                            
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10155                                          [check constraint]
+SYS_CT_10157                                          [check constraint]
   FIRSTNAME                                                     
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10156                                          [check constraint]
+SYS_CT_10158                                          [check constraint]
   LASTNAME                                                      
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10157                                          [check constraint]
+SYS_CT_10159                                          [check constraint]
   ADDRESS2                                                      
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10158                                          [check constraint]
+SYS_CT_10160                                          [check constraint]
   PUBLICATION_ID                                                
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
