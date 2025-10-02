@@ -60,7 +60,7 @@ Index on author's location
   postalcode                        ascending                   
   country                           ascending                   
 
-Using Objects
+Used By Objects
 
 books.bookauthors                                                [table]
 
@@ -239,7 +239,7 @@ pk_books                                                  [unique index]
 u_previousedition                                         [unique index]
   previouseditionid                 ascending                   
 
-Using Objects
+Used By Objects
 
 books.books                                                      [table]
 books.bookauthors                                                [table]
@@ -289,7 +289,7 @@ Indexes
 "PK_Celebrities"                                          [unique index]
   "Id"                              ascending                   
 
-Using Objects
+Used By Objects
 
 books."Celebrity Updates"                                        [table]
 
@@ -543,7 +543,7 @@ Indexes
 publishers_pkey                                           [unique index]
   id                                ascending                   
 
-Using Objects
+Used By Objects
 
 books."Βιβλία"                                                   [table]
 

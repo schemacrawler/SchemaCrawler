@@ -54,7 +54,7 @@ IDX_A_Authors                                         [non-unique index]
   PostalCode                        ascending                   
   Country                           ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.BookAuthors                                                [table]
 
@@ -135,7 +135,7 @@ Indexes
 U_PreviousEdition                                         [unique index]
   PreviousEditionId                 ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.Books                                                      [table]
 BOOKS.BookAuthors                                                [table]
@@ -162,7 +162,7 @@ Indexes
 `PRIMARY`                                                 [unique index]
   Id                                ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.`Celebrity Updates`                                        [table]
 

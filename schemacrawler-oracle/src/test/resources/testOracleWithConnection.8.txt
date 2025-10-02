@@ -111,7 +111,7 @@ CREATE TABLE "AUTHORS"
   USING INDEX  ENABLE
    ) ;
 
-Using Objects
+Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 BOOKS.JSON_BOOKS                                                  [view]
@@ -221,7 +221,7 @@ CREATE TABLE "BOOKAUTHORS"
 	  REFERENCES "AUTHORS" ("ID") ENABLE
    ) ;
 
-Using Objects
+Used By Objects
 
 BOOKS.JSON_BOOKS                                                  [view]
 
@@ -307,7 +307,7 @@ CREATE TABLE "BOOKS"
 	  REFERENCES "BOOKS" ("ID") ENABLE
    ) ;
 
-Using Objects
+Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 BOOKS.JSON_BOOKS                                                  [view]
@@ -359,7 +359,7 @@ CREATE TABLE "Celebrities"
   USING INDEX  ENABLE
    ) ;
 
-Using Objects
+Used By Objects
 
 BOOKS."Celebrity Updates"                                        [table]
 
@@ -537,7 +537,7 @@ CREATE TABLE "PUBLISHERS"
   USING INDEX  ENABLE
    ) ;
 
-Using Objects
+Used By Objects
 
 BOOKS.ΒΙΒΛΊΑ                                                     [table]
 

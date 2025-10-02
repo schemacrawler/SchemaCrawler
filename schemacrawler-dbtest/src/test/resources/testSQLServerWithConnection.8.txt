@@ -56,7 +56,7 @@ IDX_A_Authors                                         [non-unique index]
   PostalCode                        ascending                   
   Country                           ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo.BookAuthors                                            [table]
 
@@ -207,7 +207,7 @@ PK_Books                                        [unique clustered index]
 U_PreviousEdition                                         [unique index]
   PreviousEditionId                 ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo.Books                                                  [table]
 BOOKS.dbo.BookAuthors                                            [table]
@@ -251,7 +251,7 @@ Indexes
 PK_Celebrities                                  [unique clustered index]
   Id                                ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo."Celebrity Updates"                                    [table]
 
@@ -370,7 +370,7 @@ Indexes
 PK__Publishe__3214EC07D3C5E0A0                  [unique clustered index]
   Id                                ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo.Βιβλία                                                 [table]
 

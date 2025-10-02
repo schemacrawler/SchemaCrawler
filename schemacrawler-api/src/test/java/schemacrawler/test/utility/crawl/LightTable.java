@@ -172,7 +172,7 @@ public final class LightTable implements Table {
   }
 
   @Override
-  public Collection<DatabaseObject> getUsingObjects() {
+  public Collection<DatabaseObject> getUsedByObjects() {
     return Collections.emptyList();
   }
 

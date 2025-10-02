@@ -37,7 +37,7 @@ public interface Table
    *
    * @return Collection of using objects.
    */
-  Collection<DatabaseObject> getUsingObjects();
+  Collection<DatabaseObject> getUsedByObjects();
 
   /**
    * Gets child tables which have a foreign key from this table.

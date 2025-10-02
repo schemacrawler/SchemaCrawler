@@ -133,7 +133,7 @@ SYS_CT_10111                                          [check constraint]
   PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
-Using Objects
+Used By Objects
 
 PUBLIC.BOOKS.BOOKS                                               [table]
 

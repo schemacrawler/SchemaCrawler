@@ -54,7 +54,7 @@ IDX_A_AUTHORS                                             [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKAUTHORS                                                      [table]
 
@@ -191,7 +191,7 @@ FK_PREVIOUSEDITION                                        [unique index]
 U_PREVIOUSEDITION                                         [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKAUTHORS                                                      [table]
 BOOKS                                                            [table]
@@ -235,7 +235,7 @@ Indexes
 "PK_Celebrities"                                          [unique index]
   "Id"                              ascending                   
 
-Using Objects
+Used By Objects
 
 "Celebrity Updates"                                              [table]
 

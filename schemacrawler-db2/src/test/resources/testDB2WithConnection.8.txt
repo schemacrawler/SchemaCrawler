@@ -88,7 +88,7 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 STATE=UPPER(STATE)
 
-Using Objects
+Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 BOOKS.AUTHORSLIST                                                 [view]
@@ -342,7 +342,7 @@ Unique constraint on previous edition of books
 
 "1001125205711618060007000200"                        [check constraint]
 
-Using Objects
+Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 BOOKS.BOOKS                                                      [table]
@@ -400,7 +400,7 @@ Table Constraints
 
 100112520580221700000A000200                          [check constraint]
 
-Using Objects
+Used By Objects
 
 BOOKS."Celebrity Updates"                                        [table]
 
@@ -615,7 +615,7 @@ Table Constraints
 
 "1001125205767647000009000200"                        [check constraint]
 
-Using Objects
+Used By Objects
 
 BOOKS.ΒΙΒΛΊΑ                                                     [table]
 

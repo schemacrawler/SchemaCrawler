@@ -54,7 +54,7 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 
@@ -239,7 +239,7 @@ PK_BOOKS                                                  [unique index]
 U_PREVIOUSEDITION                                         [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
 BOOKS.BOOKS                                                      [table]
@@ -292,7 +292,7 @@ Indexes
 "PK_Celebrities"                                          [unique index]
   "Id"                              ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS."Celebrity Updates"                                        [table]
 
@@ -487,7 +487,7 @@ Indexes
 SQL251001021648740                                        [unique index]
   ID                                ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.ΒΙΒΛΊΑ                                                     [table]
 

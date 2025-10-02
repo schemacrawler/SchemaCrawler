@@ -53,7 +53,7 @@ idx_a_authors                                         [non-unique index]
   postalcode                        unknown                     
   country                           unknown                     
 
-Using Objects
+Used By Objects
 
 informix.bookauthors                                             [table]
 
@@ -141,7 +141,7 @@ Indexes
 104_13                                                    [unique index]
   previouseditionid                 unknown                     
 
-Using Objects
+Used By Objects
 
 informix.books                                                   [table]
 informix.bookauthors                                             [table]

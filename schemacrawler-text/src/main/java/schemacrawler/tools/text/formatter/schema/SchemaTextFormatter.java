@@ -1092,13 +1092,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     if (table == null) {
       return;
     }
-    final Collection<DatabaseObject> referencingObjects = table.getUsingObjects();
+    final Collection<DatabaseObject> referencingObjects = table.getUsedByObjects();
     if (referencingObjects.isEmpty()) {
       return;
     }
 
     formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Using Objects", "section");
+    formattingHelper.writeWideRow("Used By Objects", "section");
 
     formattingHelper.writeEmptyRow();
     for (final DatabaseObject referencingObject : referencingObjects) {

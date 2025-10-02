@@ -86,7 +86,7 @@ CHECK_UPPERCASE_State                                 [check constraint]
   State                                                         
 ([State]=upper([State]))
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo.AuthorsCountries                                        [view]
 BOOKS.dbo.BookAuthors                                            [table]
@@ -285,7 +285,7 @@ Table Constraints
 U_PreviousEdition                                    [unique constraint]
   PreviousEditionId                                             
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo.Books                                                  [table]
 BOOKS.dbo.GetBooksCount                                      [procedure]
@@ -330,7 +330,7 @@ Indexes
 PK_Celebrities                                  [unique clustered index]
   Id                                ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo."Celebrity Updates"                                    [table]
 
@@ -452,7 +452,7 @@ Indexes
 PK__Publishe__3214EC07122C37D4                  [unique clustered index]
   Id                                ascending                   
 
-Using Objects
+Used By Objects
 
 BOOKS.dbo.Βιβλία                                                 [table]
 

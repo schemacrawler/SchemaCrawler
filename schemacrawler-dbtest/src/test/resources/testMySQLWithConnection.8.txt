@@ -54,7 +54,7 @@ Indexes
   `PostalCode`                      ascending                   
   `Country`                         ascending                   
 
-Using Objects
+Used By Objects
 
 books.bookauthors                                                [table]
 
@@ -135,7 +135,7 @@ Indexes
 `U_PreviousEdition`                                       [unique index]
   `PreviousEditionId`               ascending                   
 
-Using Objects
+Used By Objects
 
 books.books                                                      [table]
 books.bookauthors                                                [table]
@@ -162,7 +162,7 @@ Indexes
 `PRIMARY`                                                 [unique index]
   `Id`                              ascending                   
 
-Using Objects
+Used By Objects
 
 books.`celebrity updates`                                        [table]
 
