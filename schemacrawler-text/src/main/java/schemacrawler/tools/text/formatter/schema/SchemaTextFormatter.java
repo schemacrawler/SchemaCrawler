@@ -1105,7 +1105,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeEmptyRow();
     for (final DatabaseObject referencingObject : usedByObjects) {
       final String objectName = quoteName(referencingObject);
-      final String objectType = "[" + getTypeName(referencingObject) + "]";
+      final String objectType = "[" + getTypeName(referencingObject).toLowerCase() + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
   }
