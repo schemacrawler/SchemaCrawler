@@ -33,7 +33,11 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
+import static schemacrawler.utility.MetaDataUtility.getTypeName;
 import static schemacrawler.utility.MetaDataUtility.isView;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,8 +47,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -76,7 +78,6 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
-import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.Identifiers;
@@ -273,9 +274,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       printTableConstraints(table.getTableConstraints());
 
       if (isVerbose()) {
-        printPrivileges(table.getPrivileges());
         printDefinition(table);
         printViewTableUsage(table);
+        printTableUsedByObjects(table);
+        printPrivileges(table.getPrivileges());
       }
 
       printTableRowCount(table);
@@ -901,12 +903,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeEmptyRow();
     for (final DatabaseObject reference : references) {
       final String objectName = quoteName(reference);
-      final String objectType;
-      if (reference instanceof TypedObject<?>) {
-        objectType = "[" + ((TypedObject<?>) reference).getType() + "]";
-      } else {
-        objectType = "";
-      }
+      final String objectType = "[" + getTypeName(reference).toLowerCase() + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
   }
@@ -1084,6 +1081,26 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         printTableColumns(constrainedColumns, false);
       }
       printDependantObjectDefinition(constraint);
+    }
+  }
+
+  private void printTableUsedByObjects(final Table table) {
+    if (table == null) {
+      return;
+    }
+    final Collection<DatabaseObject> usedByObjects = table.getUsedByObjects();
+    if (usedByObjects.isEmpty()) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Used By Objects", "section");
+
+    formattingHelper.writeEmptyRow();
+    for (final DatabaseObject referencingObject : usedByObjects) {
+      final String objectName = quoteName(referencingObject);
+      final String objectType = "[" + getTypeName(referencingObject).toLowerCase() + "]";
+      formattingHelper.writeNameRow(objectName, objectType);
     }
   }
 

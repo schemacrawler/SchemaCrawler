@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="v16.29.1"></a>
+## Release 16.29.1 - 2025-10-03
+- Add objects using (or referencing) tables to the output
+
+
 <a name="v16.28.3"></a>
 ## Release 16.28.3 - 2025-09-26
 - Fix issue #2065 to allow constraints with duplicate names to be looked up independently

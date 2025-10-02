@@ -54,6 +54,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -85,6 +86,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.Property;
 
@@ -561,6 +563,30 @@ public class SchemaCrawlerTest {
       }
     }
 
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void tableReferencingObjects(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas) {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table : tables) {
+          out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
+
+          final Collection<DatabaseObject> usedByObjects = table.getUsedByObjects();
+          for (final DatabaseObject usedByObject : usedByObjects) {
+            final String type = MetaDataUtility.getTypeName(usedByObject);
+            out.println(String.format("  ^ %s [%s]", usedByObject.getFullName(), type));
+          }
+        }
+      }
+    }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }

@@ -10,7 +10,6 @@ package schemacrawler.schema;
 
 import static schemacrawler.schema.TableRelationshipType.child;
 import static schemacrawler.schema.TableRelationshipType.parent;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +31,13 @@ public interface Table
    * @return Columns of the table
    */
   List<Column> getColumns();
+
+  /**
+   * Gets a list of other tables and views, routines and synonyms that use or reference this table.
+   *
+   * @return Collection of using objects.
+   */
+  Collection<DatabaseObject> getUsedByObjects();
 
   /**
    * Gets child tables which have a foreign key from this table.

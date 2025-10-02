@@ -20,8 +20,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -36,14 +40,7 @@ public class GrepCommandLineTest {
 
   private static final String GREP_OUTPUT = "grep_output/";
 
-  @BeforeAll
-  public static void clean() throws Exception {
-    TestUtility.clean(GREP_OUTPUT);
-  }
-
-  @Test
-  public void grep(final DatabaseConnectionInfo connectionInfo) throws Exception {
-
+  public static Stream<Arguments> _grepTestArguments() {
     final List<List<Map.Entry<String, String>>> grepArgs =
         Arrays.asList(
             Arrays.asList(
@@ -62,28 +59,41 @@ public class GrepCommandLineTest {
                 new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\.STREET|.*\\.PRICE"),
                 new AbstractMap.SimpleEntry<>("--grep-def", ".*book authors.*")),
             Arrays.asList(new AbstractMap.SimpleEntry<>("--grep-tables", ".*\\.BOOKS")));
-    for (int i = 0; i < grepArgs.size(); i++) {
 
-      final String referenceFile = String.format("grep%02d.txt", i + 1);
-      final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
+    return IntStream.range(0, grepArgs.size()).mapToObj(i -> Arguments.of(i, grepArgs.get(i)));
+  }
 
-      final Map<String, String> args =
-          grepArgs.get(i).stream()
-              .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  @BeforeAll
+  public static void clean() throws Exception {
+    TestUtility.clean(GREP_OUTPUT);
+  }
 
-      args.put("--info-level", InfoLevel.detailed.name());
-      args.put("--no-info", Boolean.TRUE.toString());
+  @ParameterizedTest
+  @MethodSource("_grepTestArguments")
+  public void grep(
+      final int testCaseCounter,
+      final List<Map.Entry<String, String>> grepArguments,
+      final DatabaseConnectionInfo connectionInfo)
+      throws Exception {
 
-      commandlineExecution(
-          connectionInfo,
-          SchemaTextDetailType.details.name(),
-          args,
-          DatabaseTestUtility.tempHsqldbConfig(),
-          TextOutputFormat.text.getFormat(),
-          testOutputFile);
+    final String referenceFile = String.format("grep%02d.txt", testCaseCounter + 1);
+    final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
 
-      final String expectedResource = GREP_OUTPUT + referenceFile;
-      assertThat(outputOf(testOutputFile), hasSameContentAs(classpathResource(expectedResource)));
-    }
+    final Map<String, String> args =
+        grepArguments.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    args.put("--info-level", InfoLevel.detailed.name());
+    args.put("--no-info", Boolean.TRUE.toString());
+
+    commandlineExecution(
+        connectionInfo,
+        SchemaTextDetailType.details.name(),
+        args,
+        DatabaseTestUtility.tempHsqldbConfig(),
+        TextOutputFormat.text.getFormat(),
+        testOutputFile);
+
+    final String expectedResource = GREP_OUTPUT + referenceFile;
+    assertThat(outputOf(testOutputFile), hasSameContentAs(classpathResource(expectedResource)));
   }
 }

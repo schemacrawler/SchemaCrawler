@@ -33,7 +33,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-SYS_FK_10120                               [foreign key, with no action]
+SYS_FK_10118                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -55,15 +55,19 @@ Table Constraints
 U_PREVIOUSEDITION                                    [unique constraint]
   PREVIOUSEDITIONID                                             
 
-SYS_CT_10111                                          [check constraint]
+SYS_CT_10109                                          [check constraint]
   ID                                                            
 BOOKS.BOOKS.ID IS NOT NULL
 
-SYS_CT_10112                                          [check constraint]
+SYS_CT_10110                                          [check constraint]
   TITLE                                                         
 BOOKS.BOOKS.TITLE IS NOT NULL
 
-SYS_CT_10113                                          [check constraint]
+SYS_CT_10111                                          [check constraint]
   PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
+
+Used By Objects
+
+PUBLIC.BOOKS.BOOKS                                               [table]
 

@@ -46,6 +46,7 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
+import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -237,6 +238,17 @@ public final class MetaDataUtility {
       return SimpleDatabaseObjectType.table;
     }
     return SimpleDatabaseObjectType.unknown;
+  }
+
+  public static String getTypeName(final DatabaseObject databaseObject) {
+    if (databaseObject instanceof TypedObject<?>) {
+      return ((TypedObject<?>) databaseObject).getType().toString();
+    }
+    final SimpleDatabaseObjectType simpleTypeName = getSimpleTypeName(databaseObject);
+    if (simpleTypeName == SimpleDatabaseObjectType.unknown) {
+      return "";
+    }
+    return simpleTypeName.name();
   }
 
   public static String inclusionRuleString(final InclusionRule inclusionRule) {

@@ -44,6 +44,10 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Used By Objects
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+
 Privileges and Grants
 
 DELETE                                                       [privilege]
@@ -72,6 +76,10 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
+
+Used By Objects
+
+PUBLIC.BOOKS.NEW_PUBLISHER                                   [procedure]
 
 Privileges and Grants
 
@@ -190,6 +198,11 @@ U_PREVIOUSEDITION                                         [unique index]
 FK_PREVIOUSEDITION                                    [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
+Used By Objects
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+
 Privileges and Grants
 
 DELETE                                                       [privilege]
@@ -231,6 +244,10 @@ Indexes
 
 "PK_Celebrities"                                          [unique index]
   "Id"                              ascending                   
+
+Used By Objects
+
+PUBLIC.BOOKS."Celebrity Updates"                                 [table]
 
 Privileges and Grants
 
@@ -438,6 +455,10 @@ Indexes
 
 SYS_PK_10124                                              [unique index]
   ID                                ascending                   
+
+Used By Objects
+
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 
 Privileges and Grants
 

@@ -100,6 +100,12 @@ CREATE TABLE "AUTHORS"
   USING INDEX  ENABLE
    ) ;
 
+Used By Objects
+
+BOOKS.BOOKAUTHORS                                                [table]
+BOOKS.JSON_BOOKS                                                  [view]
+BOOKS.AUTHORSLIST                                                 [view]
+
 
 
 BOOKS.AUTHORSCOUNTRIES                               [materialized view]
@@ -204,6 +210,10 @@ CREATE TABLE "BOOKAUTHORS"
 	  REFERENCES "AUTHORS" ("ID") ENABLE
    ) ;
 
+Used By Objects
+
+BOOKS.JSON_BOOKS                                                  [view]
+
 
 
 BOOKS.BOOKS                                                      [table]
@@ -268,11 +278,6 @@ SYS_C008654                                           [check constraint]
   PUBLISHERID                                                   
 ALTER TABLE "BOOKS" MODIFY ("PUBLISHERID" NOT NULL ENABLE);
 
-Privileges and Grants
-
-INHERIT PRIVILEGES                                           [privilege]
-  BOOKS --> PUBLIC                                              
-
 Definition
                                                             [definition]
 CREATE TABLE "BOOKS" 
@@ -290,6 +295,19 @@ CREATE TABLE "BOOKS"
 	 CONSTRAINT "FK_PREVIOUSEDITION" FOREIGN KEY ("PREVIOUSEDITIONID")
 	  REFERENCES "BOOKS" ("ID") ENABLE
    ) ;
+
+Used By Objects
+
+BOOKS.BOOKAUTHORS                                                [table]
+BOOKS.JSON_BOOKS                                                  [view]
+BOOKS.BOOKS                                                      [table]
+BOOKS.PUBLICATIONS                                             [synonym]
+BOOKS.GETBOOKSCOUNT                                          [procedure]
+
+Privileges and Grants
+
+INHERIT PRIVILEGES                                           [privilege]
+  BOOKS --> PUBLIC                                              
 
 
 
@@ -329,6 +347,10 @@ CREATE TABLE "Celebrities"
 	 CONSTRAINT "PK_Celebrities" PRIMARY KEY ("Id")
   USING INDEX  ENABLE
    ) ;
+
+Used By Objects
+
+BOOKS."Celebrity Updates"                                        [table]
 
 
 
@@ -503,6 +525,10 @@ CREATE TABLE "PUBLISHERS"
 	 PRIMARY KEY ("ID")
   USING INDEX  ENABLE
    ) ;
+
+Used By Objects
+
+BOOKS.ΒΙΒΛΊΑ                                                     [table]
 
 
 
