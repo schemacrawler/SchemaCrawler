@@ -72,7 +72,6 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
-import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -87,6 +86,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.Property;
 
@@ -579,15 +579,10 @@ public class SchemaCrawlerTest {
         for (final Table table : tables) {
           out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
 
-          final Collection<DatabaseObject> referencingObjects = table.getUsedByObjects();
-          for (DatabaseObject databaseObject : referencingObjects) {
-            final String type;
-            if (databaseObject instanceof TypedObject<?>) {
-              type = ((TypedObject<?>) databaseObject).getType().toString();
-            } else {
-              type = "";
-            }
-            out.println(String.format("  ^ %s [%s]", databaseObject.getFullName(), type));
+          final Collection<DatabaseObject> usedByObjects = table.getUsedByObjects();
+          for (final DatabaseObject usedByObject : usedByObjects) {
+            final String type = MetaDataUtility.getTypeName(usedByObject);
+            out.println(String.format("  ^ %s [%s]", usedByObject.getFullName(), type));
           }
         }
       }

@@ -78,7 +78,6 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
-import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.Identifiers;
@@ -904,12 +903,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeEmptyRow();
     for (final DatabaseObject reference : references) {
       final String objectName = quoteName(reference);
-      final String objectType;
-      if (reference instanceof TypedObject<?>) {
-        objectType = "[" + ((TypedObject<?>) reference).getType() + "]";
-      } else {
-        objectType = "";
-      }
+      final String objectType = "[" + getTypeName(reference).toLowerCase() + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
   }
