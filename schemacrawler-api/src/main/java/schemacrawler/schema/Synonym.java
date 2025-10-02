@@ -13,7 +13,7 @@ package schemacrawler.schema;
  *
  * <p>(Based on an idea from Matt Albrecht)
  */
-public interface Synonym extends DatabaseObject, ReferencingObject, TypedObject<String> {
+public interface Synonym extends DatabaseObject, ReferencingObject {
 
   /**
    * Gets the referenced object, which may or may not actually exist.

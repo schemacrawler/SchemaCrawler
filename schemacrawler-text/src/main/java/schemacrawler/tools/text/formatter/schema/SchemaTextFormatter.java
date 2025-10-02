@@ -33,7 +33,11 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
+import static schemacrawler.utility.MetaDataUtility.getTypeName;
 import static schemacrawler.utility.MetaDataUtility.isView;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,8 +47,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
@@ -275,7 +277,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       if (isVerbose()) {
         printDefinition(table);
         printViewTableUsage(table);
-        printTableReferencingObjects(table);
+        printTableUsedByObjects(table);
         printPrivileges(table.getPrivileges());
       }
 
@@ -1088,12 +1090,12 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
   }
 
-  private void printTableReferencingObjects(final Table table) {
+  private void printTableUsedByObjects(final Table table) {
     if (table == null) {
       return;
     }
-    final Collection<DatabaseObject> referencingObjects = table.getUsedByObjects();
-    if (referencingObjects.isEmpty()) {
+    final Collection<DatabaseObject> usedByObjects = table.getUsedByObjects();
+    if (usedByObjects.isEmpty()) {
       return;
     }
 
@@ -1101,14 +1103,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeWideRow("Used By Objects", "section");
 
     formattingHelper.writeEmptyRow();
-    for (final DatabaseObject referencingObject : referencingObjects) {
+    for (final DatabaseObject referencingObject : usedByObjects) {
       final String objectName = quoteName(referencingObject);
-      final String objectType;
-      if (referencingObject instanceof TypedObject<?>) {
-        objectType = "[" + ((TypedObject<?>) referencingObject).getType().toString() + "]";
-      } else {
-        objectType = "";
-      }
+      final String objectType = "[" + getTypeName(referencingObject) + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
   }
