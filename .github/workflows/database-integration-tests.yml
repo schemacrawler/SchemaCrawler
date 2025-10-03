@@ -9,7 +9,6 @@ on:
         type: choice
         options:
           - 17
-          - 21
           - 25
   push:
   pull_request:
