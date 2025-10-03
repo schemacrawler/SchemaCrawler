@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.text.formatter.diagram;
 
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import schemacrawler.schema.CrawlInfo;
@@ -165,8 +165,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
     final Map<String, String> graphvizAttributes = options.getGraphvizAttributes();
     final String graphvizHeaderTemplate = readResourceFully("/dot.header.txt");
     final String graphvizHeader =
-        String.format(
-            graphvizHeaderTemplate,
+        graphvizHeaderTemplate.formatted(
             makeGraphvizAttributes(graphvizAttributes, "graph"),
             makeGraphvizAttributes(graphvizAttributes, "node"),
             makeGraphvizAttributes(graphvizAttributes, "edge"));

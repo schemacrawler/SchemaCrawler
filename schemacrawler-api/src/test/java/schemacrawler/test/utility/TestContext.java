@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.util.ToStringBuilder;
@@ -39,7 +38,7 @@ public final class TestContext {
     final Path projectRootPath = getProjectRootPath();
     final Path directory =
         projectRootPath
-            .resolve(Paths.get("target"))
+            .resolve(Path.of("target"))
             .resolve(relativePath)
             .normalize()
             .toAbsolutePath();
@@ -51,8 +50,7 @@ public final class TestContext {
     return optionalTestMethod
         .map(
             method ->
-                String.format(
-                    "%s.%s", method.getDeclaringClass().getSimpleName(), method.getName()))
+                "%s.%s".formatted(method.getDeclaringClass().getSimpleName(), method.getName()))
         .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 
@@ -74,7 +72,7 @@ public final class TestContext {
     final Class<?> testClass =
         optionalTestClass.orElseThrow(() -> new RuntimeException("Could not find test class"));
     final Path codePath =
-        Paths.get(testClass.getProtectionDomain().getCodeSource().getLocation().toURI())
+        Path.of(testClass.getProtectionDomain().getCodeSource().getLocation().toURI())
             .normalize()
             .toAbsolutePath();
     final Path projectRoot = codePath.resolve("../..").normalize().toAbsolutePath();

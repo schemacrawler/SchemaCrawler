@@ -12,6 +12,7 @@ import static java.util.Comparator.naturalOrder;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,7 +29,7 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
 
   final class PrivilegeGrant implements Grant<D> {
 
-    private static final long serialVersionUID = 356151825191631484L;
+    @Serial private static final long serialVersionUID = 356151825191631484L;
     private final String grantee;
     private final String grantor;
     private final boolean isGrantable;
@@ -109,13 +110,12 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
 
     @Override
     public String toString() {
-      return String.format(
-          "%s --> %s%s",
-          trimToEmpty(grantor), trimToEmpty(grantee), isGrantable ? " (grantable)" : "");
+      return "%s --> %s%s"
+          .formatted(trimToEmpty(grantor), trimToEmpty(grantee), isGrantable ? " (grantable)" : "");
     }
   }
 
-  private static final long serialVersionUID = -1117664231494271886L;
+  @Serial private static final long serialVersionUID = -1117664231494271886L;
 
   private final Set<Grant<D>> grants;
 

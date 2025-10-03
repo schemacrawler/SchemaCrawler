@@ -123,7 +123,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
 
         final Optional<MutableTable> optionalTable =
             lookupTable(catalogName, schemaName, tableName);
-        if (!optionalTable.isPresent()) {
+        if (optionalTable.isEmpty()) {
           continue;
         }
         final MutableTable table = optionalTable.get();
@@ -133,7 +133,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
       retrievalCounts.log();
     } catch (final SQLException e) {
       throw new WrappedSQLException(
-          String.format("Could not retrieve primary keys from SQL:%n%s", pkSql), e);
+          "Could not retrieve primary keys from SQL:%n%s".formatted(pkSql), e);
     }
   }
 
@@ -200,7 +200,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
 
           final Optional<MutableTable> optionalTable =
               lookupTable(catalogName, schemaName, tableName);
-          if (!optionalTable.isPresent()) {
+          if (optionalTable.isEmpty()) {
             continue;
           }
           final MutableTable table = optionalTable.get();

@@ -108,7 +108,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
         SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     final String expectedResultsResource =
-        String.format("%s.%s.txt", testContext.testMethodName(), javaVersion());
+        "%s.%s.txt".formatted(testContext.testMethodName(), javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResultsResource)));

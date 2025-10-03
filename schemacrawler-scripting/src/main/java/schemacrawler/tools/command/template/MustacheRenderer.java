@@ -6,17 +6,17 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.template;
 
 import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
+
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
@@ -35,7 +35,7 @@ public final class MustacheRenderer extends BaseTemplateRenderer {
             .orElseThrow(
                 () ->
                     new ConfigurationException(
-                        String.format("Mustache template not found <%s>", templateLocation)));
+                        "Mustache template not found <%s>".formatted(templateLocation)));
 
     try (final Reader reader = inputResource.openNewInputReader(StandardCharsets.UTF_8)) {
       final MustacheFactory mustacheFactory = new DefaultMustacheFactory();

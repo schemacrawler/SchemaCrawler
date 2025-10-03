@@ -13,6 +13,7 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ import us.fatehi.utility.property.BaseProductVersion;
  */
 final class MutableJdbcDriverInfo extends BaseProductVersion implements JdbcDriverInfo {
 
-  private static final long serialVersionUID = 8030156654422512161L;
+  @Serial private static final long serialVersionUID = 8030156654422512161L;
 
   private final String connectionUrl;
   private final int driverMajorVersion;

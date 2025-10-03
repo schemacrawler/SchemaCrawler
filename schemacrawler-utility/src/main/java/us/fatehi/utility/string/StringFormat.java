@@ -38,7 +38,7 @@ public final class StringFormat implements Supplier<String> {
     } catch (final Throwable e) {
       // NOTE: Do not output arguments, since the toString on argument may throw an exception
       // obscuring this one
-      LOGGER.log(Level.FINEST, String.format("Error logging message <%s>", format));
+      LOGGER.log(Level.FINEST, "Error logging message <%s>".formatted(format));
       return "";
     }
   }

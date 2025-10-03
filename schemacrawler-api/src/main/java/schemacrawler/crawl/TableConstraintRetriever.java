@@ -208,7 +208,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
         final Optional<MutableTable> tableOptional =
             lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
+        if (tableOptional.isEmpty()) {
           LOGGER.log(
               Level.FINE,
               new StringFormat(
@@ -223,7 +223,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         final MutableTable table = tableOptional.get();
         final Optional<TableConstraint> tableConstraintOptional =
             table.lookupTableConstraint(tableConstraintName);
-        if (!tableConstraintOptional.isPresent()) {
+        if (tableConstraintOptional.isEmpty()) {
           LOGGER.log(
               Level.FINE,
               new StringFormat(
@@ -326,7 +326,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final String tableName = results.getString("TABLE_NAME");
 
     final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
-    if (!tableOptional.isPresent()) {
+    if (tableOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
@@ -384,7 +384,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
 
     final String columnName = results.getString("COLUMN_NAME");
     final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-    if (!columnOptional.isPresent()) {
+    if (columnOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat(

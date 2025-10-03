@@ -58,8 +58,8 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
     final String keyspace = "books";
     final String localDatacenter = dbContainer.getLocalDatacenter();
     final String connectionUrl =
-        String.format(
-            "jdbc:cassandra://%s:%d/%s?localdatacenter=%s", host, port, keyspace, localDatacenter);
+        "jdbc:cassandra://%s:%d/%s?localdatacenter=%s"
+            .formatted(host, port, keyspace, localDatacenter);
     // System.out.printf("url=%s%n", connectionUrl);
     createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
   }
@@ -87,8 +87,7 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource =
-        String.format("testCassandraWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testCassandraWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

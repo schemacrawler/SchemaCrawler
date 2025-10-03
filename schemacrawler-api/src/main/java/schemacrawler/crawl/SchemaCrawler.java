@@ -143,7 +143,7 @@ public final class SchemaCrawler {
       taskRunner = new RetrievalTaskRunner(runId, infoLevel, maxThreads);
 
       crawlDatabaseInfo();
-      LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));
+      LOGGER.log(Level.INFO, "%n%s".formatted(catalog.getCrawlInfo()));
 
       crawlSchemas();
       crawlColumnDataTypes();

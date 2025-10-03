@@ -12,15 +12,15 @@ import static java.util.Collections.unmodifiableList;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.beans.ConstructorProperties;
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
-
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
 
 public class AlternateKeyAttributes extends ObjectAttributes {
 
-  private static final long serialVersionUID = -3510286847668145323L;
+  @Serial private static final long serialVersionUID = -3510286847668145323L;
 
   private final String schemaName;
   private final String catalogName;
@@ -63,8 +63,7 @@ public class AlternateKeyAttributes extends ObjectAttributes {
 
   @Override
   public String toString() {
-    return String.format(
-        "Alternate key attributes <%s.%s.%s.%s[%s]>",
-        schemaName, catalogName, tableName, getName(), columns);
+    return "Alternate key attributes <%s.%s.%s.%s[%s]>"
+        .formatted(schemaName, catalogName, tableName, getName(), columns);
   }
 }

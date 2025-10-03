@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +26,7 @@ import us.fatehi.utility.CompareUtility;
 /** Represents an index on a database table. */
 class MutableIndex extends AbstractDependantObject<Table> implements Index {
 
-  private static final long serialVersionUID = 4051326747138079028L;
+  @Serial private static final long serialVersionUID = 4051326747138079028L;
 
   private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<>();
   private String definition;

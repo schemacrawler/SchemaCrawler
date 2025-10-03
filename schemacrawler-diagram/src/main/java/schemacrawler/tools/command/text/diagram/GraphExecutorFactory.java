@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
 import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizAvailable;
@@ -18,7 +17,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -39,7 +37,7 @@ public class GraphExecutorFactory {
       return;
     } else {
       throw new ExecutionRuntimeException(
-          String.format("Cannot generate diagram in <%s> output format", diagramOutputFormat));
+          "Cannot generate diagram in <%s> output format".formatted(diagramOutputFormat));
     }
   }
 

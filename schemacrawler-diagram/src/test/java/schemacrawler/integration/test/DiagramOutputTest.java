@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static java.nio.file.Files.createDirectories;
@@ -24,13 +23,10 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
@@ -171,7 +167,7 @@ public class DiagramOutputTest {
     final OutputOptionsBuilder outputOptionsBuilder =
         OutputOptionsBuilder.builder(executable.getOutputOptions())
             .withOutputFormatValue(DiagramOutputFormat.png.getFormat())
-            .withOutputFile(Paths.get("bad-path", "filename"));
+            .withOutputFile(Path.of("bad-path", "filename"));
 
     executable.setOutputOptions(outputOptionsBuilder.toOptions());
     executable.setDataSource(dataSource);

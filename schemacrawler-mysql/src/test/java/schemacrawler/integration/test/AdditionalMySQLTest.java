@@ -182,13 +182,12 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       for (final Table table : catalog.getTables()) {
-        out.println(String.format("- [table] %s", table.getFullName()));
+        out.println("- [table] %s".formatted(table.getFullName()));
         for (final TableConstraint tableConstraint : table.getTableConstraints()) {
-          out.println(
-              String.format("  - [%s] %s", tableConstraint.getType(), tableConstraint.key()));
+          out.println("  - [%s] %s".formatted(tableConstraint.getType(), tableConstraint.key()));
           for (final TableConstraintColumn tableConstraintColumn :
               tableConstraint.getConstrainedColumns()) {
-            out.println(String.format("    - [column] %s", tableConstraintColumn.getFullName()));
+            out.println("    - [column] %s".formatted(tableConstraintColumn.getFullName()));
           }
         }
       }

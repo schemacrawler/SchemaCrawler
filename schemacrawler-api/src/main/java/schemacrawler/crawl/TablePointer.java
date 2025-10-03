@@ -10,11 +10,12 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import schemacrawler.schema.Table;
 
 final class TablePointer extends DatabaseObjectReference<Table> {
 
-  private static final long serialVersionUID = 8940800217960888019L;
+  @Serial private static final long serialVersionUID = 8940800217960888019L;
 
   TablePointer(final Table table) {
     super(requireNonNull(table, "No table provided"), new TablePartial(table));

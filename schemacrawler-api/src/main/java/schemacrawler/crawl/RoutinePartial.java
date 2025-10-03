@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import java.util.Collection;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -19,7 +20,7 @@ import schemacrawler.schema.Schema;
 abstract class RoutinePartial extends AbstractDatabaseObject
     implements Routine, PartialDatabaseObject {
 
-  private static final long serialVersionUID = 1508498300413360531L;
+  @Serial private static final long serialVersionUID = 1508498300413360531L;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class

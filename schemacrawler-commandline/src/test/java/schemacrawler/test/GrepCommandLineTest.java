@@ -76,7 +76,7 @@ public class GrepCommandLineTest {
       final DatabaseConnectionInfo connectionInfo)
       throws Exception {
 
-    final String referenceFile = String.format("grep%02d.txt", testCaseCounter + 1);
+    final String referenceFile = "grep%02d.txt".formatted(testCaseCounter + 1);
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
 
     final Map<String, String> args =

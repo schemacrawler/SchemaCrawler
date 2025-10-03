@@ -86,7 +86,7 @@ public class InformixTest extends BaseAdditionalDatabaseTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     final String expectedResultsResource =
-        String.format("testInformixWithConnection.%s.txt", javaVersion());
+        "testInformixWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));

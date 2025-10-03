@@ -12,6 +12,7 @@ import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.database.DatabaseUtility.createStatement;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -97,7 +98,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
           }
         }
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(String.format("Could not run query %n%s%n", query), e);
+        throw new DatabaseAccessException("Could not run query %n%s%n".formatted(query), e);
       }
     } else {
       final String sql = query.getQuery();
@@ -105,7 +106,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
           final ResultSet results = executeSql(statement, sql)) {
         handler.handleData(query, results);
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(String.format("Could not run query %n%s%n", query), e);
+        throw new DatabaseAccessException("Could not run query %n%s%n".formatted(query), e);
       }
     }
 

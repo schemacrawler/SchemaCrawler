@@ -6,22 +6,23 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
 
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.UUID;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.UUID;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import us.fatehi.utility.ObjectToString;
 
 public final class Lint<V extends Serializable> implements Serializable {
 
-  private static final long serialVersionUID = -8627082144974643415L;
+  @Serial private static final long serialVersionUID = -8627082144974643415L;
 
   private final String lintId;
   private final String linterId;
@@ -144,6 +145,6 @@ public final class Lint<V extends Serializable> implements Serializable {
     } else {
       valueString = "";
     }
-    return String.format("[%s] %s%s", objectName, message, valueString);
+    return "[%s] %s%s".formatted(objectName, message, valueString);
   }
 }

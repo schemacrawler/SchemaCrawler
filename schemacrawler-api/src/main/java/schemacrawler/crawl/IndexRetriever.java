@@ -103,7 +103,7 @@ final class IndexRetriever extends AbstractRetriever {
 
         final Optional<MutableTable> tableOptional =
             lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
+        if (tableOptional.isEmpty()) {
           LOGGER.log(
               Level.FINE,
               new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, indexName));
@@ -113,7 +113,7 @@ final class IndexRetriever extends AbstractRetriever {
         LOGGER.log(Level.FINER, new StringFormat("Retrieving index information <%s>", indexName));
         final MutableTable table = tableOptional.get();
         final Optional<MutableIndex> indexOptional = table.lookupIndex(indexName);
-        if (!indexOptional.isPresent()) {
+        if (indexOptional.isEmpty()) {
           LOGGER.log(
               Level.FINE,
               new StringFormat(
@@ -185,8 +185,7 @@ final class IndexRetriever extends AbstractRetriever {
 
     if (isBlank(indexName)) {
       indexName =
-          String.format(
-              "SC_%s", Integer.toHexString(column.getFullName().hashCode()).toUpperCase());
+          "SC_%s".formatted(Integer.toHexString(column.getFullName().hashCode()).toUpperCase());
     }
 
     final Optional<MutableIndex> indexOptional = table.lookupIndex(indexName);
@@ -238,7 +237,7 @@ final class IndexRetriever extends AbstractRetriever {
 
         final Optional<MutableTable> optionalTable =
             lookupTable(catalogName, schemaName, tableName);
-        if (!optionalTable.isPresent()) {
+        if (optionalTable.isEmpty()) {
           continue;
         }
         final MutableTable table = optionalTable.get();
@@ -248,7 +247,7 @@ final class IndexRetriever extends AbstractRetriever {
       retrievalCounts.log();
     } catch (final SQLException e) {
       throw new WrappedSQLException(
-          String.format("Could not retrieve indexes from SQL:%n%s", indexesSql), e);
+          "Could not retrieve indexes from SQL:%n%s".formatted(indexesSql), e);
     }
   }
 
@@ -316,7 +315,7 @@ final class IndexRetriever extends AbstractRetriever {
 
           final Optional<MutableTable> optionalTable =
               lookupTable(catalogName, schemaName, tableName);
-          if (!optionalTable.isPresent()) {
+          if (optionalTable.isEmpty()) {
             continue;
           }
           final MutableTable table = optionalTable.get();

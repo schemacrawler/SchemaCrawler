@@ -8,6 +8,7 @@
 
 package schemacrawler.inclusionrule;
 
+import java.io.Serial;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -17,7 +18,7 @@ import java.util.regex.Pattern;
  */
 public final class RegularExpressionInclusionRule implements InclusionRuleWithRegularExpression {
 
-  private static final long serialVersionUID = 6274652266761961575L;
+  @Serial private static final long serialVersionUID = 6274652266761961575L;
 
   private final InclusionRule inclusionRule;
 
@@ -58,8 +59,8 @@ public final class RegularExpressionInclusionRule implements InclusionRuleWithRe
 
   @Override
   public Pattern getExclusionPattern() {
-    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
-      return ((InclusionRuleWithRegularExpression) inclusionRule).getExclusionPattern();
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression expression) {
+      return expression.getExclusionPattern();
     } else {
       return InclusionRuleWithRegularExpression.super.getExclusionPattern();
     }
@@ -67,8 +68,8 @@ public final class RegularExpressionInclusionRule implements InclusionRuleWithRe
 
   @Override
   public Pattern getInclusionPattern() {
-    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
-      return ((InclusionRuleWithRegularExpression) inclusionRule).getInclusionPattern();
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression expression) {
+      return expression.getInclusionPattern();
     } else {
       return InclusionRuleWithRegularExpression.super.getInclusionPattern();
     }

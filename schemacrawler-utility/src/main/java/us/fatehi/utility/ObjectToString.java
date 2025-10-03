@@ -63,11 +63,11 @@ public class ObjectToString {
       return new ArrayList<>();
     }
 
-    if (object instanceof List) {
-      return (List<?>) object;
+    if (object instanceof List<?> list) {
+      return list;
     }
-    if (object instanceof Collection) {
-      return new ArrayList<>((Collection<?>) object);
+    if (object instanceof Collection<?> collection) {
+      return new ArrayList<>(collection);
     }
     // We have checked earlier if this was an array, so at this point we are pretty sure it is an
     // array
@@ -258,7 +258,7 @@ public class ObjectToString {
         } else if (Map.class.isAssignableFrom(valueClass)) {
           value = printMap(indent + 1, objectMap(value));
         } else if (!isPrimitive(value) || value instanceof String || valueClass.isEnum()) {
-          value = String.format("\"%s\"", value);
+          value = "\"%s\"".formatted(value);
         }
       }
       buffer

@@ -60,7 +60,7 @@ public class H2Test extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = String.format("testH2WithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testH2WithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

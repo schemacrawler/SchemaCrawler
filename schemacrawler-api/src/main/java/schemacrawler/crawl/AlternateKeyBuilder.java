@@ -65,8 +65,7 @@ public final class AlternateKeyBuilder {
 
     @Override
     public String toString() {
-      return String.format(
-          "alternate key <%s.%s.%s[%s]>", schema, tableName, alternateKeyName, columns);
+      return "alternate key <%s.%s.%s[%s]>".formatted(schema, tableName, alternateKeyName, columns);
     }
   }
 
@@ -89,7 +88,7 @@ public final class AlternateKeyBuilder {
     final Optional<Table> lookupTable =
         catalog.lookupTable(
             alternateKeyDefinition.getSchema(), alternateKeyDefinition.getTableName());
-    if (!lookupTable.isPresent()) {
+    if (lookupTable.isEmpty()) {
       LOGGER.log(Level.CONFIG, "Table not found, for " + alternateKeyDefinition);
       return Optional.empty();
     }
@@ -102,10 +101,10 @@ public final class AlternateKeyBuilder {
       final String columnName = columns.get(i);
       final Column column;
       final Optional<MutableColumn> lookupColumn = table.lookupColumn(columnName);
-      if (!lookupColumn.isPresent()) {
+      if (lookupColumn.isEmpty()) {
         LOGGER.log(
             Level.CONFIG,
-            String.format("Column <%s> not found, for %s", columnName, alternateKeyDefinition));
+            "Column <%s> not found, for %s".formatted(columnName, alternateKeyDefinition));
         return Optional.empty();
       }
       column = lookupColumn.get();

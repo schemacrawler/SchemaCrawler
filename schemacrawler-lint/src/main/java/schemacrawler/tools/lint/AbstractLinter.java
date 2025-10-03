@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
+
+import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.tools.executable.BaseCommand;
@@ -114,7 +114,7 @@ public abstract class AbstractLinter extends BaseCommand<LinterConfig, Void> imp
    */
   @Override
   public final String toString() {
-    return String.format("%s [%s] - %s", getLinterInstanceId(), getSeverity(), getSummary());
+    return "%s [%s] - %s".formatted(getLinterInstanceId(), getSeverity(), getSummary());
   }
 
   protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(

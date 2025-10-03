@@ -8,12 +8,13 @@
 
 package schemacrawler.inclusionrule;
 
+import java.io.Serial;
 import java.util.Objects;
 
 /** Include all names, definitions, and other attributes of named objects. */
 public final class IncludeAll implements InclusionRuleWithRegularExpression {
 
-  private static final long serialVersionUID = -2992724018349021861L;
+  @Serial private static final long serialVersionUID = -2992724018349021861L;
 
   @Override
   public boolean equals(final Object obj) {

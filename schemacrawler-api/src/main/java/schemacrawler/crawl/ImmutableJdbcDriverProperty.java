@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Comparator.naturalOrder;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.sql.DriverPropertyInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ import us.fatehi.utility.property.PropertyName;
  */
 final class ImmutableJdbcDriverProperty extends AbstractProperty implements JdbcDriverProperty {
 
-  private static final long serialVersionUID = 8030156654422512161L;
+  @Serial private static final long serialVersionUID = 8030156654422512161L;
   private final List<String> choices;
   private final boolean required;
 
@@ -70,11 +71,11 @@ final class ImmutableJdbcDriverProperty extends AbstractProperty implements Jdbc
   @Override
   public String toString() {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append(String.format("%s = %s%n", getName(), getValue()));
+    buffer.append("%s = %s%n".formatted(getName(), getValue()));
     if (hasDescription()) {
-      buffer.append(getDescription()).append(String.format("%n"));
+      buffer.append(getDescription()).append("%n".formatted());
     }
-    buffer.append(String.format("  is required? %b%n  choices: %s", isRequired(), getChoices()));
+    buffer.append("  is required? %b%n  choices: %s".formatted(isRequired(), getChoices()));
     return buffer.toString();
   }
 }

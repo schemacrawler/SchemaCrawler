@@ -6,14 +6,15 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.linter;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
+
+import java.io.Serial;
+import java.sql.Connection;
+import java.sql.SQLException;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.QueryUtility;
@@ -27,7 +28,7 @@ import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderCatalogSql extends BaseLinterProvider {
 
-  private static final long serialVersionUID = 7775205295917734672L;
+  @Serial private static final long serialVersionUID = 7775205295917734672L;
 
   public LinterProviderCatalogSql() {
     super(LinterCatalogSql.class.getName());
@@ -96,7 +97,7 @@ class LinterCatalogSql extends BaseLinter {
       }
     } catch (final SQLException e) {
       throw new DatabaseAccessException(
-          String.format("Could not execute SQL for catalog lints%n%s", sql), e);
+          "Could not execute SQL for catalog lints%n%s".formatted(sql), e);
     }
   }
 }

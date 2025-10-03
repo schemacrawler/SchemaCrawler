@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
@@ -22,8 +21,8 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -116,7 +115,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
   public void testSqliteMainMissingDatabase(final CapturedSystemStreams streams) throws Exception {
 
     final Path sqliteDbFile =
-        Paths.get(
+        Path.of(
             System.getProperty("java.io.tmpdir"),
             RandomStringUtils.randomAlphanumeric(12).toLowerCase() + ".db");
     assertThat(
@@ -146,7 +145,8 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
         contentsOf(streams.err()),
         matchesPattern(
             Pattern.compile(
-                ".*Error: Could not connect to <.*>, for <unspecified user>, with properties <\\{\\}>.*",
+                ".*Error: Could not connect to <.*>, for <unspecified user>, with properties"
+                    + " <\\{\\}>.*",
                 Pattern.DOTALL)));
     assertThat(outputOf(streams.out()), hasNoContent());
   }

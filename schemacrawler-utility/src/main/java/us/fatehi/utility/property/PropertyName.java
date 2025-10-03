@@ -14,13 +14,14 @@ import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 
 public final class PropertyName implements Serializable, Comparable<PropertyName> {
 
-  private static final long serialVersionUID = 2444083929278551904L;
+  @Serial private static final long serialVersionUID = 2444083929278551904L;
 
   private static Comparator<PropertyName> comparator =
       nullsLast(comparing(PropertyName::getName, String.CASE_INSENSITIVE_ORDER));

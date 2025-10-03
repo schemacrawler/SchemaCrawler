@@ -117,12 +117,12 @@ public class CommandLineUtility {
     if (state == null) {
       return "";
     }
-    return String.format(
-        "Environment:%n  %s%n  %s%n  %s%n  %s",
-        Version.version(),
-        OperatingSystemInfo.operatingSystemInfo(),
-        JvmSystemInfo.jvmSystemInfo(),
-        JvmArchitectureInfo.jvmArchitectureInfo());
+    return "Environment:%n  %s%n  %s%n  %s%n  %s"
+        .formatted(
+            Version.version(),
+            OperatingSystemInfo.operatingSystemInfo(),
+            JvmSystemInfo.jvmSystemInfo(),
+            JvmArchitectureInfo.jvmArchitectureInfo());
   }
 
   /**
@@ -251,12 +251,11 @@ public class CommandLineUtility {
 
   private static OptionSpec toOptionSpec(final PluginCommandOption option) {
     final String optionName = option.getName();
-    final String paramName = String.format("<%s>", optionName);
+    final String paramName = "<%s>".formatted(optionName);
     final String[] helpText;
     if (option.getValueClass().isEnum()) {
       helpText = new String[1];
-      helpText[0] =
-          String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText()[0]);
+      helpText[0] = "%s%nUse one of ${COMPLETION-CANDIDATES}".formatted(option.getHelpText()[0]);
     } else {
       helpText = option.getHelpText();
     }

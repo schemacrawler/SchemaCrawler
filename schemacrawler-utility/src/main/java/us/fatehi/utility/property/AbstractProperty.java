@@ -10,13 +10,14 @@ package us.fatehi.utility.property;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class AbstractProperty implements Property {
 
-  private static final long serialVersionUID = -7150431683440256142L;
+  @Serial private static final long serialVersionUID = -7150431683440256142L;
 
   private final PropertyName propertyName;
   private final Serializable value;
@@ -41,8 +42,8 @@ public abstract class AbstractProperty implements Property {
 
     final Property other = (Property) obj;
     boolean nameEquals;
-    if (obj instanceof AbstractProperty) {
-      nameEquals = Objects.equals(propertyName, ((AbstractProperty) obj).propertyName);
+    if (obj instanceof AbstractProperty property) {
+      nameEquals = Objects.equals(propertyName, property.propertyName);
     } else /* if (obj instanceof Property) */ {
       nameEquals = Objects.equals(propertyName.getName(), other.getName());
     }

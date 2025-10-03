@@ -13,6 +13,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +42,7 @@ import schemacrawler.schemacrawler.SchemaReference;
 
 public final class LightTable implements Table {
 
-  private static final long serialVersionUID = -309232480533750613L;
+  @Serial private static final long serialVersionUID = -309232480533750613L;
 
   private final Schema schema;
   private final String name;

@@ -16,6 +16,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
+
 import java.io.IOException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -565,7 +566,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
       final DatabaseConnectionSource dataSource, final PortableType portableType) throws Exception {
 
     final String referenceFile =
-        String.format("portable.%s.txt", portableType == null ? "null" : portableType.name());
+        "portable.%s.txt".formatted(portableType == null ? "null" : portableType.name());
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -713,8 +714,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
       final String command,
       final OutputFormat outputFormat)
       throws Exception {
-    final String referenceFile =
-        String.format("%s_with_title.%s", command, outputFormat.getFormat());
+    final String referenceFile = "%s_with_title.%s".formatted(command, outputFormat.getFormat());
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()

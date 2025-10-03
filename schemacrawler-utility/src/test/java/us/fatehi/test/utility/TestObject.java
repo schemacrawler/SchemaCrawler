@@ -8,7 +8,7 @@
 
 package us.fatehi.test.utility;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +25,7 @@ public class TestObject {
   private Enum<?> primitiveEnum;
   private List<Integer> integerList;
   private Map<Integer, String> map;
-  private Object subObject = Paths.get(".");
+  private Object subObject = Path.of(".");
   private Object nullValue;
 
   public List<Integer> getIntegerList() {

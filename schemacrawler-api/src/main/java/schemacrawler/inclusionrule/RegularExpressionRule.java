@@ -11,6 +11,7 @@ package schemacrawler.inclusionrule;
 import static java.util.regex.Pattern.DOTALL;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -24,7 +25,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class RegularExpressionRule implements InclusionRuleWithRegularExpression {
 
-  private static final long serialVersionUID = 3443758881974362293L;
+  @Serial private static final long serialVersionUID = 3443758881974362293L;
 
   private static final Logger LOGGER = Logger.getLogger(RegularExpressionRule.class.getName());
 
@@ -127,11 +128,11 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return String.format(
-        "%s@%h {+/%s/ -/%s/}",
-        getClass().getSimpleName(),
-        System.identityHashCode(this),
-        patternInclude.pattern(),
-        patternExclude.pattern());
+    return "%s@%h {+/%s/ -/%s/}"
+        .formatted(
+            getClass().getSimpleName(),
+            System.identityHashCode(this),
+            patternInclude.pattern(),
+            patternExclude.pattern());
   }
 }

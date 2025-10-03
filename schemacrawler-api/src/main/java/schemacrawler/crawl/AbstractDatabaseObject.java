@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.Objects;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
@@ -23,7 +24,7 @@ import schemacrawler.schemacrawler.Identifiers;
 abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
     implements DatabaseObject {
 
-  private static final long serialVersionUID = 3099561832386790624L;
+  @Serial private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
   private transient NamedObjectKey key;
@@ -54,15 +55,14 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
       return -1;
     }
 
-    if (obj instanceof DatabaseObject) {
-      final int schemaCompareTo = getSchema().compareTo(((DatabaseObject) obj).getSchema());
+    if (obj instanceof DatabaseObject object2) {
+      final int schemaCompareTo = getSchema().compareTo(object2.getSchema());
       if (schemaCompareTo != 0) {
         return schemaCompareTo;
       }
-      if (this instanceof TypedObject && obj instanceof TypedObject) {
+      if (this instanceof TypedObject object && obj instanceof TypedObject object1) {
         try {
-          final int typeCompareTo =
-              ((TypedObject) this).getType().compareTo(((TypedObject) obj).getType());
+          final int typeCompareTo = object.getType().compareTo(object1.getType());
           if (typeCompareTo != 0) {
             return typeCompareTo;
           }

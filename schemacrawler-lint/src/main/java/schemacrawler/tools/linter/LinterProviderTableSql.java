@@ -6,17 +6,18 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.linter;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
+import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
@@ -31,7 +32,7 @@ import us.fatehi.utility.string.StringFormat;
 
 public class LinterProviderTableSql extends BaseLinterProvider {
 
-  private static final long serialVersionUID = -7901644028908017034L;
+  @Serial private static final long serialVersionUID = -7901644028908017034L;
 
   public LinterProviderTableSql() {
     super(LinterTableSql.class.getName());

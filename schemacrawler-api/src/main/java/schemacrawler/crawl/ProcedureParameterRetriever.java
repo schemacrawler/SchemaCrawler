@@ -118,7 +118,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     final Optional<MutableRoutine> optionalRoutine =
         allRoutines.lookup(
             new NamedObjectKey(columnCatalogName, schemaName, procedureName, specificName));
-    if (!optionalRoutine.isPresent()) {
+    if (optionalRoutine.isEmpty()) {
       return false;
     }
 
@@ -238,7 +238,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
         }
       } catch (final SQLException e) {
         throw new WrappedSQLException(
-            String.format("Could not retrieve parameters for procedure <%s>", procedure), e);
+            "Could not retrieve parameters for procedure <%s>".formatted(procedure), e);
       }
     }
     retrievalCounts.log();

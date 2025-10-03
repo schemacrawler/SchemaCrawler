@@ -101,8 +101,7 @@ public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
     executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executableDetails.setAdditionalConfiguration(config);
 
-    final String expectedResource =
-        String.format("testSQLServerWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testSQLServerWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));

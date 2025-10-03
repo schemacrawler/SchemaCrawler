@@ -15,6 +15,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+
 import java.util.EnumSet;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -58,14 +59,14 @@ public abstract class AbstractSpinThroughExecutableTest {
       final OutputFormat outputFormat,
       final String javaVersion) {
     final String referenceFile =
-        String.format(
-            "%d%d.%s_%s%s.%s",
-            schemaTextDetailType.ordinal(),
-            infoLevel.ordinal(),
-            schemaTextDetailType,
-            infoLevel,
-            javaVersion,
-            outputFormat.getFormat());
+        "%d%d.%s_%s%s.%s"
+            .formatted(
+                schemaTextDetailType.ordinal(),
+                infoLevel.ordinal(),
+                schemaTextDetailType,
+                infoLevel,
+                javaVersion,
+                outputFormat.getFormat());
     return referenceFile;
   }
 

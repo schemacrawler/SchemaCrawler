@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -19,9 +18,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.Version;
 import schemacrawler.tools.offline.jdbc.OfflineDriver;
 
@@ -35,8 +32,7 @@ public class OfflineDriverTest {
     assertThat(
         Version.version().getProductVersion(),
         startsWith(
-            String.format(
-                "%d.%d", offlineDriver.getMajorVersion(), offlineDriver.getMinorVersion())));
+            "%d.%d".formatted(offlineDriver.getMajorVersion(), offlineDriver.getMinorVersion())));
     assertThat(offlineDriver.jdbcCompliant(), is(false));
     assertThat(
         offlineDriver.getPropertyInfo("jdbc:offline:test", new Properties()), is(arrayWithSize(0)));

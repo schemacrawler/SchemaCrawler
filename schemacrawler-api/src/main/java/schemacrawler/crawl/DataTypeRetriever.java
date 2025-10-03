@@ -84,7 +84,7 @@ final class DataTypeRetriever extends AbstractRetriever {
       requireNonNull(schema, "No schema provided");
 
       final Optional<SchemaReference> schemaOptional = catalog.lookupSchema(schema.getFullName());
-      if (!schemaOptional.isPresent()) {
+      if (schemaOptional.isEmpty()) {
         LOGGER.log(
             Level.INFO,
             new StringFormat(

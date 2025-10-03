@@ -76,7 +76,7 @@ public abstract class AbstractTitleTest {
 
   private String referenceFile(final String command, final OutputFormat outputFormat) {
     final String referenceFile =
-        String.format("commandLineWithTitle_%s.%s", command, outputFormat.getFormat());
+        "commandLineWithTitle_%s.%s".formatted(command, outputFormat.getFormat());
     return referenceFile;
   }
 }

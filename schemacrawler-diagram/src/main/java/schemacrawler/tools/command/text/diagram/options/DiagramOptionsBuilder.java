@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram.options;
 
 import static us.fatehi.utility.Utility.isBlank;
@@ -20,7 +19,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.tools.command.text.schema.options.BaseSchemaTextOptionsBuilder;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.PropertiesUtility;
@@ -192,7 +190,7 @@ public final class DiagramOptionsBuilder
       final Map<String, String> graphvizAttributes, final Config config) {
     for (final Entry<String, String> graphvizAttribute : graphvizAttributes.entrySet()) {
       final String fullKey =
-          String.format("%s.%s", GRAPH_GRAPHVIZ_ATTRIBUTES, graphvizAttribute.getKey());
+          "%s.%s".formatted(GRAPH_GRAPHVIZ_ATTRIBUTES, graphvizAttribute.getKey());
       final String value = graphvizAttribute.getValue();
       config.put(fullKey, value);
     }

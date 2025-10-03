@@ -12,6 +12,7 @@ import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ import schemacrawler.utility.JavaSqlTypes;
 
 public class LightColumn implements Column {
 
-  private static final long serialVersionUID = -1931193814458050468L;
+  @Serial private static final long serialVersionUID = -1931193814458050468L;
 
   public static ColumnDataType integerColumnDataType() {
     return (ColumnDataType)

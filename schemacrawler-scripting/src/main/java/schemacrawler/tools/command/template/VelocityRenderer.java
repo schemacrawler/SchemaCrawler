@@ -6,15 +6,12 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.template;
 
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -23,7 +20,6 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
-
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
@@ -53,7 +49,7 @@ public final class VelocityRenderer extends BaseTemplateRenderer {
     // This allows Velocity to load templates from any directory
     String templateLocation = getResourceFilename();
     String templatePath = ".";
-    final Path templateFilePath = Paths.get(templateLocation);
+    final Path templateFilePath = Path.of(templateLocation);
     if (Files.exists(templateFilePath)) {
       final Path templateFileParentPath = templateFilePath.normalize().getParent();
       if (templateFileParentPath != null) {

@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Optional;
 import schemacrawler.schema.Column;
@@ -18,7 +19,7 @@ import schemacrawler.schema.Table;
 
 class MutableKeyColumn extends AbstractDependantObject<Table> implements Column {
 
-  private static final long serialVersionUID = 6988029161945610279L;
+  @Serial private static final long serialVersionUID = 6988029161945610279L;
 
   private final Column column;
   private int keyOrdinalPosition;
@@ -43,8 +44,7 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column 
 
     int comparison = 0;
 
-    if (obj instanceof MutableKeyColumn) {
-      final MutableKeyColumn other = (MutableKeyColumn) obj;
+    if (obj instanceof MutableKeyColumn other) {
       comparison = keyOrdinalPosition - other.keyOrdinalPosition;
     }
 
@@ -173,8 +173,8 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column 
   }
 
   void setGenerated(final boolean isGenerated) {
-    if (column instanceof MutableColumn) {
-      ((MutableColumn) column).setGenerated(isGenerated);
+    if (column instanceof MutableColumn mutableColumn) {
+      mutableColumn.setGenerated(isGenerated);
     }
   }
 

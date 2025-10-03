@@ -8,9 +8,11 @@
 
 package us.fatehi.utility.scheduler;
 
+import java.io.Serial;
+
 public class RunnerException extends Exception {
 
-  private static final long serialVersionUID = -8904255341894856632L;
+  @Serial private static final long serialVersionUID = -8904255341894856632L;
 
   public RunnerException(final Throwable cause) {
     super(cause);

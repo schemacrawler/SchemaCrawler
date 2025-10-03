@@ -16,6 +16,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
@@ -65,7 +66,8 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
           // Override Oracle plugin behavior, and show schema in DDL
           DatabaseUtility.executeSql(
               connection.createStatement(),
-              "{call DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'EMIT_SCHEMA', TRUE)}");
+              "{call DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM,"
+                  + " 'EMIT_SCHEMA', TRUE)}");
         } catch (final SQLException e) {
           fail(e);
         }
@@ -127,12 +129,14 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
     new SqlScript(reader, ";", connection).run();
     try (final Statement stmt = connection.createStatement()) {
       stmt.execute(
-          "CREATE OR REPLACE FUNCTION CustomAdd(One IN INTEGER) \n"
-              + "RETURN INTEGER \n"
-              + "AS \n"
-              + "BEGIN\n"
-              + "  RETURN One + 1; \n"
-              + "END;");
+          """
+          CREATE OR REPLACE FUNCTION CustomAdd(One IN INTEGER)\s
+          RETURN INTEGER\s
+          AS\s
+          BEGIN
+            RETURN One + 1;\s
+          END;\
+          """);
       // Auto-commited
     }
 
@@ -157,7 +161,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     // -- Schema output tests
-    final String classpathResource = String.format("showSchemaInDDL.%s.txt", schema);
+    final String classpathResource = "showSchemaInDDL.%s.txt".formatted(schema);
     assertThat(
         outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(classpathResource)));

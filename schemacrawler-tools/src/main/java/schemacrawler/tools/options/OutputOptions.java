@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
@@ -58,13 +57,11 @@ public final class OutputOptions implements Options {
 
   public Path getOutputFile(final String extension) {
     final Path outputFile;
-    if (outputResource instanceof FileOutputResource) {
-      outputFile = ((FileOutputResource) outputResource).getOutputFile();
+    if (outputResource instanceof FileOutputResource resource) {
+      outputFile = resource.getOutputFile();
     } else {
       outputFile =
-          Paths.get(
-                  ".",
-                  String.format("schemacrawler-%s.%s", UUID.randomUUID(), trimToEmpty(extension)))
+          Path.of(".", "schemacrawler-%s.%s".formatted(UUID.randomUUID(), trimToEmpty(extension)))
               .normalize()
               .toAbsolutePath();
     }
@@ -115,7 +112,7 @@ public final class OutputOptions implements Options {
           outputResource.openNewOutputWriter(getOutputCharset(), appendOutput), true);
     } catch (final IOException e) {
       throw new IORuntimeException(
-          String.format("Could not open output writer: <%s>", e.getMessage()), e);
+          "Could not open output writer: <%s>".formatted(e.getMessage()), e);
     }
   }
 

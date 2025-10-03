@@ -45,7 +45,7 @@ public class JDBCDriverRegistry extends BasePluginRegistry {
         final String driverName = driver.getClass().getName();
         LOGGER.log(Level.FINE, new StringFormat("Found JDBC driver <%s>", driverName));
         final String driverDescription =
-            String.format("%2d.%d", driver.getMajorVersion(), driver.getMinorVersion());
+            "%2d.%d".formatted(driver.getMajorVersion(), driver.getMinorVersion());
         availableJDBCDrivers.add(new PropertyName(driverName, driverDescription));
       }
     } catch (final Throwable e) {

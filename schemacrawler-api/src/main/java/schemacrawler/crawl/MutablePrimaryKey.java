@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static schemacrawler.schema.TableConstraintType.alternate_key;
 import static schemacrawler.schema.TableConstraintType.primary_key;
 
+import java.io.Serial;
 import java.util.EnumSet;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
@@ -19,7 +20,7 @@ import schemacrawler.schema.TableConstraintType;
 /** Represents a primary key in a table. */
 final class MutablePrimaryKey extends MutableTableConstraint implements PrimaryKey {
 
-  private static final long serialVersionUID = -7169206178562782087L;
+  @Serial private static final long serialVersionUID = -7169206178562782087L;
 
   static MutablePrimaryKey newAlternateKey(final Table parent, final String name) {
     return new MutablePrimaryKey(parent, name, alternate_key);

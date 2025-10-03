@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -51,7 +52,7 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     }
   }
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  @Serial private static final long serialVersionUID = 4051323422934251828L;
 
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<>();
   private final MutableDatabaseInfo databaseInfo;

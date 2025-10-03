@@ -8,10 +8,12 @@
 
 package us.fatehi.utility.property;
 
+import java.io.Serial;
+
 /** JVM CPU architecture information. */
 public final class JvmArchitectureInfo extends BaseProductVersion {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  @Serial private static final long serialVersionUID = 4051323422934251828L;
 
   private static final JvmArchitectureInfo JVM_ARCH_INFO = new JvmArchitectureInfo();
 
@@ -53,7 +55,7 @@ public final class JvmArchitectureInfo extends BaseProductVersion {
         archDescription = "Unknown";
         break;
     }
-    return String.format("%s (%s)", archDescription, arch);
+    return "%s (%s)".formatted(archDescription, arch);
   }
 
   private JvmArchitectureInfo() {

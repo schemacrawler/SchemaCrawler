@@ -23,7 +23,7 @@ public abstract class BasePluginRegistry implements PluginRegistry {
       return;
     }
 
-    final String title = String.format("Registered %s:", getName());
+    final String title = "Registered %s:".formatted(getName());
     final String registeredPlugins = PropertyNameUtility.tableOf(title, getRegisteredPlugins());
     LOGGER.log(Level.CONFIG, registeredPlugins);
   }

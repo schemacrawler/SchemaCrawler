@@ -8,10 +8,12 @@
 
 package us.fatehi.utility.property;
 
+import java.io.Serial;
+
 /** JVM system information. */
 public final class JvmSystemInfo extends BaseProductVersion {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  @Serial private static final long serialVersionUID = 4051323422934251828L;
 
   private static final JvmSystemInfo JVM_SYSTEM_INFO = new JvmSystemInfo();
 
@@ -21,10 +23,10 @@ public final class JvmSystemInfo extends BaseProductVersion {
 
   private JvmSystemInfo() {
     super(
-        String.format(
-            "%s %s",
-            System.getProperty("java.vm.vendor", "<unknown>"),
-            System.getProperty("java.vm.name", "<unknown>")),
+        "%s %s"
+            .formatted(
+                System.getProperty("java.vm.vendor", "<unknown>"),
+                System.getProperty("java.vm.name", "<unknown>")),
         System.getProperty("java.runtime.version", ""));
   }
 }

@@ -12,17 +12,16 @@ import static java.nio.file.Files.lines;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
 import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -56,13 +55,13 @@ public final class GraphvizJavaExecutorUtility {
       final Format format = map(diagramOutputFormat);
       if (format == null) {
         throw new ConfigurationException(
-            String.format("Unsupported output format <%s>", diagramOutputFormat));
+            "Unsupported output format <%s>".formatted(diagramOutputFormat));
       }
 
       Graphviz.fromString(dotSource).render(format).toFile(outputFile.toFile());
     } catch (final Throwable e) {
       throw new ExecutionRuntimeException(
-          String.format("Cannot generate diagram from <%s>", dotFile), e);
+          "Cannot generate diagram from <%s>".formatted(dotFile), e);
     }
   }
 

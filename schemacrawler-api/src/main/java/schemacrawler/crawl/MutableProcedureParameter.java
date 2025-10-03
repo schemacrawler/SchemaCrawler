@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureParameter;
 
@@ -15,7 +16,7 @@ import schemacrawler.schema.ProcedureParameter;
 final class MutableProcedureParameter extends MutableRoutineParameter<Procedure>
     implements ProcedureParameter {
 
-  private static final long serialVersionUID = 3546361725629772857L;
+  @Serial private static final long serialVersionUID = 3546361725629772857L;
 
   MutableProcedureParameter(final Procedure parent, final String name) {
     super(new ProcedurePointer(parent), name);

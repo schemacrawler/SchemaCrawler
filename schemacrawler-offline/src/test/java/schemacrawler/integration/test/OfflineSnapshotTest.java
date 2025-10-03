@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -28,6 +27,7 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -86,7 +86,7 @@ public class OfflineSnapshotTest {
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource = String.format("details.%s.txt", javaVersion());
+    final String expectedResource = "details.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(testout),
         hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT + expectedResource)));
@@ -135,7 +135,7 @@ public class OfflineSnapshotTest {
 
       final List<String> argsList = new ArrayList<>();
       for (final Map.Entry<String, String> arg : argsMap.entrySet()) {
-        argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
+        argsList.add("-%s=%s".formatted(arg.getKey(), arg.getValue()));
       }
 
       Main.main(flattenCommandlineArgs(argsMap));
@@ -169,7 +169,7 @@ public class OfflineSnapshotTest {
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
     executable.setDataSource(dataSource);
 
-    final String expectedResource = String.format("details.%s.txt", javaVersion());
+    final String expectedResource = "details.%s.txt".formatted(javaVersion());
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
   }
 

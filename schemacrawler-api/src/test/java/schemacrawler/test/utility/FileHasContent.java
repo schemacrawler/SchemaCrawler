@@ -24,7 +24,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -166,7 +165,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
 
       // -- Clean up
       // Delete output file if possible
-      final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
+      final Path testOutputTempFile = Path.of(actualResults.getResourceString());
       deleteIfPossible(testOutputTempFile);
       // Flush System streams to prepare for further runs
       System.out.flush();
@@ -256,7 +255,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
 
   private void moveActualToExpected() throws Exception {
 
-    final Path testOutputTempFile = Paths.get(actualResults.getResourceString());
+    final Path testOutputTempFile = Path.of(actualResults.getResourceString());
     final String expectedResultsResource = expectedResults.getResourceString();
 
     final Path buildDirectory = buildDirectory();
@@ -273,7 +272,7 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
             .relativize(testOutputTargetFilePath)
             .toString()
             .replace('\\', '/');
-    failures.add(String.format(">> Actual output in:%n%s", relativePathToTestResultsOutput));
+    failures.add(">> Actual output in:%n%s".formatted(relativePathToTestResultsOutput));
   }
 
   private void validateXML() throws Exception {

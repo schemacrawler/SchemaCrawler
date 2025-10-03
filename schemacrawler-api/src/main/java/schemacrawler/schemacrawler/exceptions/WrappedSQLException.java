@@ -10,11 +10,12 @@ package schemacrawler.schemacrawler.exceptions;
 
 import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
+import java.io.Serial;
 import java.sql.SQLException;
 
 public class WrappedSQLException extends SQLException {
 
-  private static final long serialVersionUID = 3424948223257267142L;
+  @Serial private static final long serialVersionUID = 3424948223257267142L;
 
   public WrappedSQLException(final String message, final SQLException cause) {
     super(

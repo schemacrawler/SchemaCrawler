@@ -8,9 +8,11 @@
 
 package schemacrawler.crawl;
 
+import static us.fatehi.utility.Utility.isBlank;
+
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -19,7 +21,7 @@ import schemacrawler.schema.TableConstraintType;
 /** Represents a table constraint. */
 class MutableTableConstraint extends AbstractDependantObject<Table> implements TableConstraint {
 
-  private static final long serialVersionUID = 1155277343302693656L;
+  @Serial private static final long serialVersionUID = 1155277343302693656L;
 
   private final NamedObjectList<MutableTableConstraintColumn> columns = new NamedObjectList<>();
   private String definition;

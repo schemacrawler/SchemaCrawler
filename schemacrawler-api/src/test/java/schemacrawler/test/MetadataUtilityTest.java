@@ -185,7 +185,7 @@ public class MetadataUtilityTest {
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("BOOKS Schema not found", schema, notNullValue());
 
-    assertThat("BOOKS Table not found", !catalog.lookupTable(schema, "BOOKS").isPresent());
+    assertThat("BOOKS Table not found", catalog.lookupTable(schema, "BOOKS").isEmpty());
 
     // Undo reduce catalog
     MetaDataUtility.reduceCatalog(catalog, SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());

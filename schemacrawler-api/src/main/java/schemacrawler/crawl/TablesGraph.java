@@ -54,14 +54,14 @@ final class TablesGraph extends DirectedGraph<Table> {
       for (final Table table : sortedTables) {
         if (isView(table)) {
           sortedViews.add((View) table);
-        } else if (table instanceof MutableTable) {
-          ((MutableTable) table).setSortIndex(sortIndex);
+        } else if (table instanceof MutableTable mutableTable) {
+          mutableTable.setSortIndex(sortIndex);
           sortIndex++;
         }
       }
       for (final View view : sortedViews) {
-        if (view instanceof MutableView) {
-          ((MutableView) view).setSortIndex(sortIndex);
+        if (view instanceof MutableView mutableView) {
+          mutableView.setSortIndex(sortIndex);
           sortIndex++;
         }
       }

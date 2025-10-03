@@ -65,7 +65,7 @@ public class OracleTest extends BaseOracleWithConnectionTest {
   public void testOracleWithConnection() throws Exception {
     final DatabaseConnectionSource dataSource = getDataSource();
 
-    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testOracleWithConnection.%s.txt".formatted(javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33, false);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");

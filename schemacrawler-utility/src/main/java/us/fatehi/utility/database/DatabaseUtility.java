@@ -98,7 +98,7 @@ public final class DatabaseUtility {
         final ResultSet resultSet = executeSql(statement, sql)) {
       return readResultsForLong(sql, resultSet);
     } catch (final SQLException e) {
-      throw new SQLException(String.format("%s%n%s", e.getMessage(), sql), e);
+      throw new SQLException("%s%n%s".formatted(e.getMessage(), sql), e);
     }
   }
 
@@ -108,7 +108,7 @@ public final class DatabaseUtility {
         final ResultSet resultSet = executeSql(statement, sql)) {
       return readResultsForScalar(sql, resultSet);
     } catch (final SQLException e) {
-      throw new SQLException(String.format("%s%n%s", e.getMessage(), sql), e);
+      throw new SQLException("%s%n%s".formatted(e.getMessage(), sql), e);
     }
   }
 
@@ -128,8 +128,7 @@ public final class DatabaseUtility {
         drivers.add(driver);
       }
     } catch (final Throwable e) {
-      throw new SQLException(
-          String.format("Could not load database drivers: %s", e.getMessage()), e);
+      throw new SQLException("Could not load database drivers: %s".formatted(e.getMessage()), e);
     }
     if (drivers.isEmpty()) {
       throw new SQLException("No database drivers are available");

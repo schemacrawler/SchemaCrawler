@@ -89,7 +89,7 @@ final class RoutineRetriever extends AbstractRetriever {
 
     final Optional<SchemaReference> optionalSchema =
         schemas.lookup(new NamedObjectKey(catalogName, schemaName));
-    if (!optionalSchema.isPresent()) {
+    if (optionalSchema.isEmpty()) {
       return false;
     }
     final Schema schema = optionalSchema.get();
@@ -128,7 +128,7 @@ final class RoutineRetriever extends AbstractRetriever {
 
     final Optional<SchemaReference> optionalSchema =
         schemas.lookup(new NamedObjectKey(catalogName, schemaName));
-    if (!optionalSchema.isPresent()) {
+    if (optionalSchema.isEmpty()) {
       return false;
     }
     final Schema schema = optionalSchema.get();
@@ -297,7 +297,7 @@ final class RoutineRetriever extends AbstractRetriever {
     final String name = "procedures from metadata";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     for (final Schema schema : schemas) {
-      LOGGER.log(Level.INFO, new StringFormat(String.format("%s for %s", name, schema)));
+      LOGGER.log(Level.INFO, new StringFormat("%s for %s".formatted(name, schema)));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();

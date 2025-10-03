@@ -111,7 +111,7 @@ public final class DataJsonFormatter implements DataTraversalHandler {
         try {
           generator.writeStringField("query", title);
         } catch (final IOException e) {
-          throw new IORuntimeException(String.format("Could not write query name <%s>", title), e);
+          throw new IORuntimeException("Could not write query name <%s>".formatted(title), e);
         }
       }
     } else {
@@ -137,8 +137,7 @@ public final class DataJsonFormatter implements DataTraversalHandler {
         generator.writeStringField(tableType, tableName);
         generator.writeStringField("schema", table.getSchema().getFullName());
       } catch (final IOException e) {
-        throw new IORuntimeException(
-            String.format("Could not write table name <%s>", tableName), e);
+        throw new IORuntimeException("Could not write table name <%s>".formatted(tableName), e);
       }
     } else {
       tableName = "";
@@ -204,13 +203,13 @@ public final class DataJsonFormatter implements DataTraversalHandler {
     try {
       generator.writeNumberField(operation.getName(), aggregate);
     } catch (final IOException e) {
-      throw new IORuntimeException(String.format("Could notcount for table", title), e);
+      throw new IORuntimeException("Could notcount for table".formatted(title), e);
     }
   }
 
   private void handleTableData(final String title, final ResultSet rows) {
     try {
-      final String name = String.format("Data for %s for <%s>", operation, title);
+      final String name = "Data for %s for <%s>".formatted(operation, title);
       final RetrievalCounts retrievalCounts = new RetrievalCounts(name.toLowerCase());
       generator.writeFieldName("data");
       generator.writeStartArray();
@@ -238,15 +237,14 @@ public final class DataJsonFormatter implements DataTraversalHandler {
           retrievalCounts.countIncluded();
         }
       } catch (final SQLException e) {
-        throw new DatabaseAccessException(
-            String.format("Could not handle rows for <%s>", title), e);
+        throw new DatabaseAccessException("Could not handle rows for <%s>".formatted(title), e);
       }
       generator.writeEndArray();
 
       retrievalCounts.log();
     } catch (final IOException e) {
       throw new IORuntimeException(
-          String.format("Could not write data in JSON format for <%s>", title), e);
+          "Could not write data in JSON format for <%s>".formatted(title), e);
     }
   }
 

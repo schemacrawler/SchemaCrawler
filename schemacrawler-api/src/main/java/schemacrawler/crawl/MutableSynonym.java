@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.Collection;
 import schemacrawler.schema.DatabaseObject;
@@ -23,7 +24,7 @@ import schemacrawler.schema.Synonym;
  */
 final class MutableSynonym extends AbstractDatabaseObject implements Synonym {
 
-  private static final long serialVersionUID = -5980593047288755771L;
+  @Serial private static final long serialVersionUID = -5980593047288755771L;
 
   private DatabaseObject referencedObject;
 

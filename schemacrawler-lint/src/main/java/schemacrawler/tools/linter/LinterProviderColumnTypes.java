@@ -6,15 +6,16 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.linter;
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.Serial;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
@@ -27,7 +28,7 @@ import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderColumnTypes extends BaseLinterProvider {
 
-  private static final long serialVersionUID = 7775205295917734672L;
+  @Serial private static final long serialVersionUID = 7775205295917734672L;
 
   public LinterProviderColumnTypes() {
     super(LinterColumnTypes.class.getName());

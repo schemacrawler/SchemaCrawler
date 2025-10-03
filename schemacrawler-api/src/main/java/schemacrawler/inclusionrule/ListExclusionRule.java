@@ -10,6 +10,7 @@ package schemacrawler.inclusionrule;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +18,7 @@ import us.fatehi.utility.string.StringFormat;
 
 public class ListExclusionRule implements InclusionRule {
 
-  private static final long serialVersionUID = -6315037625922693976L;
+  @Serial private static final long serialVersionUID = -6315037625922693976L;
 
   private static final Logger LOGGER = Logger.getLogger(ListExclusionRule.class.getName());
 

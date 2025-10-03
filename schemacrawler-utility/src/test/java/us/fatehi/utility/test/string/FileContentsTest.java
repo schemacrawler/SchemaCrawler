@@ -9,7 +9,7 @@
 package us.fatehi.utility.test.string;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Paths.get;
+import static java.nio.file.Path.of;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,13 +59,13 @@ public class FileContentsTest {
 
   @Test
   public void missingFile() {
-    assertThat(new FileContents(get("nofile.txt")).get(), is(""));
+    assertThat(new FileContents(of("nofile.txt")).get(), is(""));
   }
 
   @Test
   public void nullArgs() {
     assertThrows(NullPointerException.class, () -> new FileContents(null));
     assertThrows(NullPointerException.class, () -> new FileContents(null, null));
-    assertThrows(NullPointerException.class, () -> new FileContents(get("nofile.txt"), null));
+    assertThrows(NullPointerException.class, () -> new FileContents(of("nofile.txt"), null));
   }
 }

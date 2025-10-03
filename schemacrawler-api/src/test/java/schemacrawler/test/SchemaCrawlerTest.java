@@ -259,7 +259,7 @@ public class SchemaCrawlerTest {
         out.println("  " + column.getName());
         final Collection<Privilege<Column>> privileges = column.getPrivileges();
         for (final Privilege<Column> privilege : privileges) {
-          out.println(String.format("    privilege: %s", privilege.getName()));
+          out.println("    privilege: %s".formatted(privilege.getName()));
           final Collection<Grant<Column>> grants = privilege.getGrants();
           for (final Grant<Column> grant : grants) {
             out.println("      " + grant);
@@ -306,10 +306,10 @@ public class SchemaCrawlerTest {
       final Collection<Property> dbProperties = databaseInfo.getProperties();
       final Collection<Property> serverInfo = databaseInfo.getServerInfo();
       assertThat("Server info property count does not match", serverInfo, is(empty()));
-      out.println(String.format("user name=%s", databaseInfo.getUserName()));
-      out.println(String.format("product name=%s", databaseInfo.getProductName()));
-      out.println(String.format("product version=%s", databaseInfo.getProductVersion()));
-      out.println(String.format("catalog=%s", catalog.getName()));
+      out.println("user name=%s".formatted(databaseInfo.getUserName()));
+      out.println("product name=%s".formatted(databaseInfo.getProductName()));
+      out.println("product version=%s".formatted(databaseInfo.getProductVersion()));
+      out.println("catalog=%s".formatted(catalog.getName()));
       for (final Property serverInfoProperty : serverInfo) {
         assertThat(serverInfoProperty, notNullValue());
         out.println(serverInfoProperty);
@@ -320,8 +320,8 @@ public class SchemaCrawlerTest {
       }
 
       final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
-      out.println(String.format("connection url=%s", jdbcDriverInfo.getConnectionUrl()));
-      out.println(String.format("driver class=%s", jdbcDriverInfo.getDriverClassName()));
+      out.println("connection url=%s".formatted(jdbcDriverInfo.getConnectionUrl()));
+      out.println("driver class=%s".formatted(jdbcDriverInfo.getDriverClassName()));
       final Collection<JdbcDriverProperty> driverProperties = jdbcDriverInfo.getDriverProperties();
       for (final JdbcDriverProperty driverProperty : driverProperties) {
         assertThat(driverProperty, notNullValue());
@@ -329,7 +329,7 @@ public class SchemaCrawlerTest {
       }
     }
     final String expectedResultsResource =
-        String.format("%s.%s", testContext.testMethodFullName(), javaVersion());
+        "%s.%s".formatted(testContext.testMethodFullName(), javaVersion());
     assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResultsResource)));
   }
 
@@ -400,16 +400,15 @@ public class SchemaCrawlerTest {
         final List<RoutineParameter<? extends Routine>> parameters = routine.getParameters();
         for (final RoutineParameter<? extends Routine> parameter : parameters) {
           out.println("  parameter: " + parameter.getName());
-          out.println(String.format("  - %s=%s", "data-type", parameter.getColumnDataType()));
-          out.println(String.format("  - %s=%s", "size", parameter.getSize()));
-          out.println(String.format("  - %s=%s", "decimal digits", parameter.getDecimalDigits()));
-          out.println(String.format("  - %s=%s", "width", parameter.getWidth()));
-          out.println(String.format("  - %s=%s", "nullable", parameter.isNullable()));
-          out.println(
-              String.format("  - %s=%s", "ordinal position", parameter.getOrdinalPosition()));
-          out.println(String.format("  - %s=%s", "remarks", parameter.getRemarks()));
+          out.println("  - %s=%s".formatted("data-type", parameter.getColumnDataType()));
+          out.println("  - %s=%s".formatted("size", parameter.getSize()));
+          out.println("  - %s=%s".formatted("decimal digits", parameter.getDecimalDigits()));
+          out.println("  - %s=%s".formatted("width", parameter.getWidth()));
+          out.println("  - %s=%s".formatted("nullable", parameter.isNullable()));
+          out.println("  - %s=%s".formatted("ordinal position", parameter.getOrdinalPosition()));
+          out.println("  - %s=%s".formatted("remarks", parameter.getRemarks()));
 
-          out.println(String.format("  - %s=%s", "attibutes", ""));
+          out.println("  - %s=%s".formatted("attibutes", ""));
         }
       }
       out.println();
@@ -550,7 +549,7 @@ public class SchemaCrawlerTest {
       out.println(table.getFullName());
       final Collection<Privilege<Table>> privileges = table.getPrivileges();
       for (final Privilege<Table> privilege : privileges) {
-        out.println(String.format("  privilege: %s", privilege.getName()));
+        out.println("  privilege: %s".formatted(privilege.getName()));
         final Collection<Grant<Table>> grants = privilege.getGrants();
         for (final Grant<Table> grant : grants) {
           if (!"SELECT".equals(privilege.getName())) {
@@ -577,12 +576,12 @@ public class SchemaCrawlerTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
-          out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
+          out.println("%s [%s]".formatted(table.getFullName(), table.getTableType()));
 
           final Collection<DatabaseObject> usedByObjects = table.getUsedByObjects();
           for (final DatabaseObject usedByObject : usedByObjects) {
             final String type = MetaDataUtility.getTypeName(usedByObject);
-            out.println(String.format("  ^ %s [%s]", usedByObject.getFullName(), type));
+            out.println("  ^ %s [%s]".formatted(usedByObject.getFullName(), type));
           }
         }
       }
@@ -601,12 +600,11 @@ public class SchemaCrawlerTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
-          out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
+          out.println("%s [%s]".formatted(table.getFullName(), table.getTableType()));
 
           final SortedMap<String, Object> tableAttributes = new TreeMap<>(table.getAttributes());
           for (final Entry<String, Object> tableAttribute : tableAttributes.entrySet()) {
-            out.println(
-                String.format("  ~ %s=%s", tableAttribute.getKey(), tableAttribute.getValue()));
+            out.println("  ~ %s=%s".formatted(tableAttribute.getKey(), tableAttribute.getValue()));
           }
         }
       }
@@ -667,15 +665,14 @@ public class SchemaCrawlerTest {
       final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
       for (final Table table : tables) {
         for (final Trigger trigger : table.getTriggers()) {
-          out.println(String.format("  trigger: %s", trigger.getFullName()));
-          out.println(String.format("    action condition: %s", trigger.getActionCondition()));
-          out.println(String.format("    condition timing: %s", trigger.getConditionTiming()));
-          out.println(String.format("    action order: %s", trigger.getActionOrder()));
-          out.println(String.format("    action orientation: %s", trigger.getActionOrientation()));
-          out.println(String.format("    action statement: %s", trigger.getActionStatement()));
+          out.println("  trigger: %s".formatted(trigger.getFullName()));
+          out.println("    action condition: %s".formatted(trigger.getActionCondition()));
+          out.println("    condition timing: %s".formatted(trigger.getConditionTiming()));
+          out.println("    action order: %s".formatted(trigger.getActionOrder()));
+          out.println("    action orientation: %s".formatted(trigger.getActionOrientation()));
+          out.println("    action statement: %s".formatted(trigger.getActionStatement()));
           out.println(
-              String.format(
-                  "    event manipulation type: %s", trigger.getEventManipulationTypes()));
+              "    event manipulation type: %s".formatted(trigger.getEventManipulationTypes()));
         }
       }
     }
@@ -697,13 +694,13 @@ public class SchemaCrawlerTest {
             continue;
           }
           final View view = (View) table;
-          out.println(String.format("%s [%s]", view.getFullName(), view.getTableType()));
-          out.println(String.format("  - check option: %s", view.getCheckOption()));
-          out.println(String.format("  - updatable?: %b", view.isUpdatable()));
-          out.println(String.format("  - definition: %s", view.getDefinition()));
+          out.println("%s [%s]".formatted(view.getFullName(), view.getTableType()));
+          out.println("  - check option: %s".formatted(view.getCheckOption()));
+          out.println("  - updatable?: %b".formatted(view.isUpdatable()));
+          out.println("  - definition: %s".formatted(view.getDefinition()));
           out.println("  - table usage");
           for (final Table usedTable : view.getTableUsage()) {
-            out.println(String.format("    - table: %s", usedTable));
+            out.println("    - table: %s".formatted(usedTable));
           }
         }
       }

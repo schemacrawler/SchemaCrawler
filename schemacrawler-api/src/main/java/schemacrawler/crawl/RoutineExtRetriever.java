@@ -225,7 +225,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
       } catch (final Exception e) {
         LOGGER.log(
             Level.WARNING,
-            String.format("Could not retrieve routine definitions for schema <%s>", schema),
+            "Could not retrieve routine definitions for schema <%s>".formatted(schema),
             e);
       }
       retrievalCounts.log(schema.key());

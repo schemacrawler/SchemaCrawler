@@ -14,6 +14,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.util.EnumSet;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -65,13 +66,13 @@ public class SpinThroughOperationsExecutableTest {
   private static String referenceFile(
       final OperationType operation, final InfoLevel infoLevel, final OutputFormat outputFormat) {
     final String referenceFile =
-        String.format(
-            "%d%d.%s_%s.%s",
-            operation.ordinal(),
-            infoLevel.ordinal(),
-            operation,
-            infoLevel,
-            outputFormat.getFormat());
+        "%d%d.%s_%s.%s"
+            .formatted(
+                operation.ordinal(),
+                infoLevel.ordinal(),
+                operation,
+                infoLevel,
+                outputFormat.getFormat());
     return referenceFile;
   }
 

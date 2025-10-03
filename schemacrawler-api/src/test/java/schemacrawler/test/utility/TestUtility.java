@@ -29,7 +29,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -95,9 +94,9 @@ public final class TestUtility {
       final String key = arg.getKey();
       final String value = arg.getValue();
       if (value != null) {
-        argsList.add(String.format("%s=%s", key, value));
+        argsList.add("%s=%s".formatted(key, value));
       } else {
-        argsList.add(String.format("%s", key));
+        argsList.add("%s".formatted(key));
       }
     }
     final String[] args = argsList.toArray(new String[0]);
@@ -138,7 +137,7 @@ public final class TestUtility {
 
     for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey.values()) {
       final String lookupKey =
-          String.format("select.%s.%s", informationSchemaKey.getType(), informationSchemaKey);
+          "select.%s.%s".formatted(informationSchemaKey.getType(), informationSchemaKey);
       if (config.containsKey(lookupKey)) {
         try {
           builder.withSql(informationSchemaKey, config.get(lookupKey));
@@ -173,7 +172,7 @@ public final class TestUtility {
     final StackTraceElement ste = currentMethodStackTraceElement();
     final Class<?> callingClass = Class.forName(ste.getClassName());
     final Path codePath =
-        Paths.get(callingClass.getProtectionDomain().getCodeSource().getLocation().toURI())
+        Path.of(callingClass.getProtectionDomain().getCodeSource().getLocation().toURI())
             .normalize()
             .toAbsolutePath();
     final boolean isInTarget = codePath.toString().contains("target");

@@ -46,7 +46,7 @@ jobs:
       uses: actions/setup-java@v5
       with:
         distribution: temurin
-        java-version: 8
+        java-version: 17
         cache: maven
         server-id: sonatype-nexus
         server-username: MAVEN_USERNAME

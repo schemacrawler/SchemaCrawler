@@ -18,11 +18,9 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.util.Arrays;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -97,10 +95,8 @@ public class TableRowCountsTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         for (final Table table : tables) {
           assertThat(
-              String.format("Table <%s> should have row counts", table),
-              hasRowCount(table),
-              is(true));
-          out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
+              "Table <%s> should have row counts".formatted(table), hasRowCount(table), is(true));
+          out.println("%s [%s]".formatted(table.getFullName(), getRowCountMessage(table)));
         }
       }
     }
@@ -119,10 +115,8 @@ public class TableRowCountsTest {
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
           assertThat(
-              String.format("Table <%s> should have row counts", table),
-              hasRowCount(table),
-              is(true));
-          out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
+              "Table <%s> should have row counts".formatted(table), hasRowCount(table), is(true));
+          out.println("%s [%s]".formatted(table.getFullName(), getRowCountMessage(table)));
         }
       }
     }

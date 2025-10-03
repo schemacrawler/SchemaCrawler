@@ -23,7 +23,7 @@ public class FileInputResource extends BaseInputResource {
   public FileInputResource(final Path filePath) throws IOException {
     inputFile = requireNonNull(filePath, "No file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(inputFile)) {
-      final IOException e = new IOException(String.format("Cannot read file, <%s>", inputFile));
+      final IOException e = new IOException("Cannot read file, <%s>".formatted(inputFile));
       throw e;
     }
   }

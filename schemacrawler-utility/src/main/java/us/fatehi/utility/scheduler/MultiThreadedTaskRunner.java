@@ -88,8 +88,8 @@ final class MultiThreadedTaskRunner extends AbstractTaskRunner {
       return runTaskResults;
     } catch (final ExecutionException e) {
       final Throwable cause = e.getCause();
-      if (cause instanceof Exception) {
-        throw (Exception) cause;
+      if (cause instanceof Exception exception) {
+        throw exception;
       }
       throw new RunnerException(cause);
     }

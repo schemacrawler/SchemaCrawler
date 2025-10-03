@@ -44,9 +44,9 @@ public class ScriptEngineRegistry extends BasePluginRegistry {
         if (scriptEngineFactory != null) {
           availableScriptEngines.add(
               new PropertyName(
-                  String.format(
-                      "%s %s",
-                      scriptEngineFactory.getEngineName(), scriptEngineFactory.getExtensions()),
+                  "%s %s"
+                      .formatted(
+                          scriptEngineFactory.getEngineName(), scriptEngineFactory.getExtensions()),
                   scriptEngineFactory.getEngineVersion()));
         }
       }

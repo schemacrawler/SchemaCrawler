@@ -12,12 +12,13 @@ import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.util.function.Supplier;
 
 /** Allows a main method to exit without a stack trace, but with an exit code */
 public class SystemExitException extends RuntimeException {
 
-  private static final long serialVersionUID = -6142850519050179767L;
+  @Serial private static final long serialVersionUID = -6142850519050179767L;
 
   private final int exitCode;
   private final String message;
@@ -27,7 +28,7 @@ public class SystemExitException extends RuntimeException {
     super(message);
     this.exitCode = exitCode;
     this.message = trimToEmpty(message);
-    messagePrinter = () -> String.format("Exit code %d: %s", exitCode, message);
+    messagePrinter = () -> "Exit code %d: %s".formatted(exitCode, message);
   }
 
   @Override

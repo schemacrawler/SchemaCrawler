@@ -21,11 +21,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.loader.weakassociations.ProposedWeakAssociation;
 import schemacrawler.loader.weakassociations.WeakAssociationsAnalyzer;
@@ -78,7 +76,7 @@ public class WeakAssociationsAnalyzerTest {
       assertThat(
           "Proposed weak association count does not match", proposedWeakAssociations, hasSize(6));
       for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
-        out.println(String.format("weak association: %s", proposedWeakAssociation));
+        out.println("weak association: %s".formatted(proposedWeakAssociation));
         assertThat(
             proposedWeakAssociation.getPrimaryKeyColumn().getParent().getWeakAssociations(),
             is(empty()));

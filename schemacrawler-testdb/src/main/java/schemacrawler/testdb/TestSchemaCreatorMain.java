@@ -95,6 +95,6 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
     if (splitUrl.length < 2) {
       throw new IllegalArgumentException("No connection URL provided");
     }
-    scriptsresource = String.format("/%s.scripts.txt", splitUrl[1]);
+    scriptsresource = "/%s.scripts.txt".formatted(splitUrl[1]);
   }
 }

@@ -9,10 +9,11 @@
 package schemacrawler.schemacrawler.exceptions;
 
 import java.io.IOException;
+import java.io.Serial;
 
 public class IORuntimeException extends SchemaCrawlerException {
 
-  private static final long serialVersionUID = 8143604098031489051L;
+  @Serial private static final long serialVersionUID = 8143604098031489051L;
 
   public IORuntimeException(final String message) {
     super(message);

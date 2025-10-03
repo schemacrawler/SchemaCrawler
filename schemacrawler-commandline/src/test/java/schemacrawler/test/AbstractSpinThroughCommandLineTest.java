@@ -52,14 +52,14 @@ public abstract class AbstractSpinThroughCommandLineTest {
       final OutputFormat outputFormat,
       final String javaVersion) {
     final String referenceFile =
-        String.format(
-            "%d%d.%s_%s%s.%s",
-            schemaTextDetailType.ordinal(),
-            infoLevel.ordinal(),
-            schemaTextDetailType,
-            infoLevel,
-            javaVersion,
-            outputFormat.getFormat());
+        "%d%d.%s_%s%s.%s"
+            .formatted(
+                schemaTextDetailType.ordinal(),
+                infoLevel.ordinal(),
+                schemaTextDetailType,
+                infoLevel,
+                javaVersion,
+                outputFormat.getFormat());
     return referenceFile;
   }
 

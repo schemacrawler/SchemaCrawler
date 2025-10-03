@@ -61,7 +61,7 @@ public class DuckDBTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = String.format("testDuckDBWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testDuckDBWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

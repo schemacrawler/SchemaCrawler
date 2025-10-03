@@ -108,14 +108,12 @@ abstract class AbstractTaskRunner implements TaskRunner {
 
       final LocalTime totalDurationLocal = LocalTime.ofNanoOfDay(totalDuration.toNanos());
       buffer.append(
-          String.format(
-              "Total time taken for <%s> - %s hours%n", id, totalDurationLocal.format(df)));
+          "Total time taken for <%s> - %s hours%n".formatted(id, totalDurationLocal.format(df)));
 
       for (final TimedTaskResult task : taskResults) {
         buffer.append(
-            String.format(
-                "-%5.1f%% - %s%n",
-                calculatePercentage.apply(task.getDuration(), totalDuration), task));
+            "-%5.1f%% - %s%n"
+                .formatted(calculatePercentage.apply(task.getDuration(), totalDuration), task));
       }
 
       taskResults.clear();

@@ -72,7 +72,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(catalogUserDataSource);
     final String expectedResource =
-        String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
+        "testOracleSelectCatalogRoleUser.%s.txt".formatted(javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33, true);
 
     final DatabaseAccessException sqlException =
@@ -105,8 +105,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = noAccessUserDataSource.getConnection();
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
-    final String expectedResource =
-        String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
+    final String expectedResource = "testOracleWithNoAccessUser.%s.txt".formatted(javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33, false);
 
     final DatabaseAccessException sqlException =
@@ -129,8 +128,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = schemaOwnerUserDataSource.getConnection();
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource);
-    final String expectedResource =
-        String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
+    final String expectedResource = "testOracleWithSchemaOwnerUser.%s.txt".formatted(javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
@@ -147,8 +145,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(selectUserDataSource);
 
-    final String expectedResource =
-        String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
+    final String expectedResource = "testOracleWithSelectGrantUser.%s.txt".formatted(javaVersion());
     testOracleWithConnection(dataSource, expectedResource, 33, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");

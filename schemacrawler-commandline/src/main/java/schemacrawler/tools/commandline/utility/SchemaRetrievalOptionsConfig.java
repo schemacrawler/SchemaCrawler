@@ -37,7 +37,7 @@ public final class SchemaRetrievalOptionsConfig {
 
     for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey.values()) {
       final String informationSchemaKeyConfigKey =
-          String.format("select.%s.%s", informationSchemaKey.getType(), informationSchemaKey);
+          "select.%s.%s".formatted(informationSchemaKey.getType(), informationSchemaKey);
       if (informationSchemaViewsSql.containsKey(informationSchemaKeyConfigKey)) {
         try {
           builder.withSql(

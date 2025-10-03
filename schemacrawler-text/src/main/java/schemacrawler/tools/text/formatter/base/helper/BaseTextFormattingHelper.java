@@ -14,6 +14,7 @@ import static us.fatehi.utility.html.TagBuilder.anchor;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
+
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -44,8 +45,7 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
     }
     if (dataElement.getClass().isArray()) {
       return arrayToList(dataElement).toString();
-    } else if (dataElement instanceof Number) {
-      final Number number = (Number) dataElement;
+    } else if (dataElement instanceof Number number) {
       if (number.doubleValue() == number.longValue()) {
         return number.toString();
       } else {

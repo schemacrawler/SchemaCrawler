@@ -11,6 +11,7 @@ package schemacrawler.tools.linter;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.MetaDataUtility.isView;
 
+import java.io.Serial;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderForeignKeySelfReference extends BaseLinterProvider {
 
-  private static final long serialVersionUID = -7901644028908017034L;
+  @Serial private static final long serialVersionUID = -7901644028908017034L;
 
   public LinterProviderForeignKeySelfReference() {
     super(LinterForeignKeySelfReference.class.getName());

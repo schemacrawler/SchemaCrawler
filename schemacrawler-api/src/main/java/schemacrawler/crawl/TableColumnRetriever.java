@@ -120,7 +120,7 @@ final class TableColumnRetriever extends AbstractRetriever {
 
     final Optional<MutableTable> optionalTable =
         allTables.lookup(new NamedObjectKey(catalogName, schemaName, tableName));
-    if (!optionalTable.isPresent()) {
+    if (optionalTable.isEmpty()) {
       return false;
     }
 
@@ -303,9 +303,8 @@ final class TableColumnRetriever extends AbstractRetriever {
                     }
                   } catch (final SQLException e) {
                     throw new WrappedSQLException(
-                        String.format(
-                            "Could not retrieve table columns for %s <%s>",
-                            table.getTableType(), table),
+                        "Could not retrieve table columns for %s <%s>"
+                            .formatted(table.getTableType(), table),
                         e);
                   }
                 }));

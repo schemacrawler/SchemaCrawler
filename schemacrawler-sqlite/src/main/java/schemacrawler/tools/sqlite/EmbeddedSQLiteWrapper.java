@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.sqlite;
 
 import static java.util.Objects.requireNonNull;
@@ -17,7 +16,6 @@ import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.function.Predicate;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.ListExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -115,7 +113,7 @@ public class EmbeddedSQLiteWrapper {
     final Path databaseFile =
         requireNonNull(dbFile, "No database file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(databaseFile)) {
-      throw new IORuntimeException(String.format("Could not read database file <%s>", dbFile));
+      throw new IORuntimeException("Could not read database file <%s>".formatted(dbFile));
     }
     return databaseFile;
   }
@@ -146,7 +144,7 @@ public class EmbeddedSQLiteWrapper {
       return diagramFile;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(
-          String.format("Could not create database schema diagram <%s>", title), e);
+          "Could not create database schema diagram <%s>".formatted(title), e);
     }
   }
 }

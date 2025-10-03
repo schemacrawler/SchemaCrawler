@@ -94,7 +94,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     // -- Schema output tests
-    final String expectedResource = String.format("testDB2WithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testDB2WithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

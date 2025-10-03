@@ -31,9 +31,8 @@ public final class RetrieverUtility {
     requireNonNull(pkTable, "No referenced table provided");
     requireNonNull(fkTable, "No dependent table provided");
 
-    return String.format(
-        "SCHCRWLR_%1$08X_%2$08X",
-        fkTable.getFullName().hashCode(), pkTable.getFullName().hashCode());
+    return "SCHCRWLR_%1$08X_%2$08X"
+        .formatted(fkTable.getFullName().hashCode(), pkTable.getFullName().hashCode());
   }
 
   static Column lookupOrCreateColumn(

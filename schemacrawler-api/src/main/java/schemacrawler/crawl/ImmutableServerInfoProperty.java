@@ -8,12 +8,13 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.PropertyName;
 
 final class ImmutableServerInfoProperty extends AbstractProperty {
 
-  private static final long serialVersionUID = -2744384718272515235L;
+  @Serial private static final long serialVersionUID = -2744384718272515235L;
 
   ImmutableServerInfoProperty(final String name, final String value, final String description) {
     super(new PropertyName(name, description), value);

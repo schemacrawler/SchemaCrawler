@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import java.io.Serial;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -24,7 +25,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
 
   private static final String REMARKS_ATTRIBUTE = "REMARKS";
 
-  private static final long serialVersionUID = -1486322887991472729L;
+  @Serial private static final long serialVersionUID = -1486322887991472729L;
 
   private final Map<String, Object> attributeMap;
 

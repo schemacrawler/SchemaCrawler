@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +29,7 @@ import us.fatehi.utility.string.StringFormat;
 /** Represents a foreign-key mapping to a primary key in another table. */
 abstract class AbstractTableReference extends MutableTableConstraint implements TableReference {
 
-  private static final long serialVersionUID = -5164664131926303038L;
+  @Serial private static final long serialVersionUID = -5164664131926303038L;
 
   private static final Logger LOGGER = Logger.getLogger(AbstractTableReference.class.getName());
 
@@ -63,8 +64,7 @@ abstract class AbstractTableReference extends MutableTableConstraint implements 
       return -1;
     }
 
-    if (obj instanceof TableReference) {
-      final TableReference other = (TableReference) obj;
+    if (obj instanceof TableReference other) {
       final List<ColumnReference> thisColumnReferences = getColumnReferences();
       final List<ColumnReference> otherColumnReferences = other.getColumnReferences();
 

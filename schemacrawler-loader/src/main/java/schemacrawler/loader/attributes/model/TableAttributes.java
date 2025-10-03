@@ -12,16 +12,16 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
 import java.beans.ConstructorProperties;
+import java.io.Serial;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
 
 public class TableAttributes extends ObjectAttributes implements Iterable<ColumnAttributes> {
 
-  private static final long serialVersionUID = -3510286847668145323L;
+  @Serial private static final long serialVersionUID = -3510286847668145323L;
 
   private final String schemaName;
   private final String catalogName;
@@ -56,6 +56,6 @@ public class TableAttributes extends ObjectAttributes implements Iterable<Column
 
   @Override
   public String toString() {
-    return String.format("Table attributes <%s.%s.%s>", schemaName, catalogName, getName());
+    return "Table attributes <%s.%s.%s>".formatted(schemaName, catalogName, getName());
   }
 }

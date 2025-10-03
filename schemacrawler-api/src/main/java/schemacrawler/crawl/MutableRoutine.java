@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +27,7 @@ import us.fatehi.utility.CompareUtility;
 /** Represents a database routine. Created from metadata returned by a JDBC call. */
 abstract class MutableRoutine extends AbstractDatabaseObject implements Routine {
 
-  private static final long serialVersionUID = 3906925686089134130L;
+  @Serial private static final long serialVersionUID = 3906925686089134130L;
 
   private transient NamedObjectKey key;
   private final String specificName;
@@ -60,8 +61,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   public int compareTo(final NamedObject obj) {
     int comparison = super.compareTo(obj);
 
-    if (obj instanceof Routine) {
-      final Routine other = (Routine) obj;
+    if (obj instanceof Routine other) {
       if (comparison == 0) {
         final List<RoutineParameter<? extends Routine>> thisParameters = getParameters();
         final List<RoutineParameter<? extends Routine>> otherParameters = other.getParameters();

@@ -11,6 +11,7 @@ package schemacrawler.schema;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -20,7 +21,7 @@ import java.io.Serializable;
  */
 public final class TableType implements Serializable, Comparable<TableType> {
 
-  private static final long serialVersionUID = -8172248482959041873L;
+  @Serial private static final long serialVersionUID = -8172248482959041873L;
   public static final TableType UNKNOWN = new TableType("unknown");
   private final String tableType;
 

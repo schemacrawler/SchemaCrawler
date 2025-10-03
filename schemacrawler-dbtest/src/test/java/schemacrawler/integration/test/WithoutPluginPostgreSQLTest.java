@@ -88,7 +88,7 @@ public class WithoutPluginPostgreSQLTest extends BaseAdditionalDatabaseTest {
 
     // -- Schema output tests
     final String expectedResource =
-        String.format("%s.%s.txt", testContext.testMethodName(), javaVersion());
+        "%s.%s.txt".formatted(testContext.testMethodName(), javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

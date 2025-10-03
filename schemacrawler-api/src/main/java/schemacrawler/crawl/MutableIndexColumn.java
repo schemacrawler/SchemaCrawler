@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
@@ -15,7 +16,7 @@ import schemacrawler.schema.IndexColumnSortSequence;
 
 final class MutableIndexColumn extends MutableKeyColumn implements IndexColumn {
 
-  private static final long serialVersionUID = -6923211341742623556L;
+  @Serial private static final long serialVersionUID = -6923211341742623556L;
 
   private final Index index;
   private IndexColumnSortSequence sortSequence;

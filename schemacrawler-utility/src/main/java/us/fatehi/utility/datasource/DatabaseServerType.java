@@ -11,6 +11,7 @@ package us.fatehi.utility.datasource;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ import java.util.Objects;
  */
 public final class DatabaseServerType implements Serializable, Comparable<DatabaseServerType> {
 
-  private static final long serialVersionUID = 2160456864554076419L;
+  @Serial private static final long serialVersionUID = 2160456864554076419L;
 
   public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
 
@@ -99,6 +100,6 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
     if (isUnknownDatabaseSystem()) {
       return "";
     }
-    return String.format("%s - %s", databaseSystemIdentifier, databaseSystemName);
+    return "%s - %s".formatted(databaseSystemIdentifier, databaseSystemName);
   }
 }

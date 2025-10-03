@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionParameter;
 
@@ -15,7 +16,7 @@ import schemacrawler.schema.FunctionParameter;
 final class MutableFunctionParameter extends MutableRoutineParameter<Function>
     implements FunctionParameter {
 
-  private static final long serialVersionUID = 3546361725629772857L;
+  @Serial private static final long serialVersionUID = 3546361725629772857L;
 
   MutableFunctionParameter(final Function parent, final String name) {
     super(new FunctionPointer(parent), name);

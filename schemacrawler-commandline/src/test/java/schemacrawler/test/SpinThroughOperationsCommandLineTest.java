@@ -61,13 +61,13 @@ public class SpinThroughOperationsCommandLineTest {
   private static String referenceFile(
       final OperationType operation, final InfoLevel infoLevel, final OutputFormat outputFormat) {
     final String referenceFile =
-        String.format(
-            "%d%d.%s_%s.%s",
-            operation.ordinal(),
-            infoLevel.ordinal(),
-            operation,
-            infoLevel,
-            outputFormat.getFormat());
+        "%d%d.%s_%s.%s"
+            .formatted(
+                operation.ordinal(),
+                infoLevel.ordinal(),
+                operation,
+                infoLevel,
+                outputFormat.getFormat());
     return referenceFile;
   }
 

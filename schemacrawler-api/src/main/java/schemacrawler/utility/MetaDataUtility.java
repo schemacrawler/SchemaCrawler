@@ -241,8 +241,8 @@ public final class MetaDataUtility {
   }
 
   public static String getTypeName(final DatabaseObject databaseObject) {
-    if (databaseObject instanceof TypedObject<?>) {
-      return ((TypedObject<?>) databaseObject).getType().toString();
+    if (databaseObject instanceof TypedObject<?> typedObject) {
+      return typedObject.getType().toString();
     }
     final SimpleDatabaseObjectType simpleTypeName = getSimpleTypeName(databaseObject);
     if (simpleTypeName == SimpleDatabaseObjectType.unknown) {
@@ -253,9 +253,8 @@ public final class MetaDataUtility {
 
   public static String inclusionRuleString(final InclusionRule inclusionRule) {
     String inclusionRuleString = ".*";
-    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
-      final String schemaInclusionPattern =
-          ((InclusionRuleWithRegularExpression) inclusionRule).getInclusionPattern().pattern();
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression expression) {
+      final String schemaInclusionPattern = expression.getInclusionPattern().pattern();
       if (!isBlank(schemaInclusionPattern)) {
         inclusionRuleString = schemaInclusionPattern;
       }
@@ -404,7 +403,7 @@ public final class MetaDataUtility {
     }
 
     final CrawlInfo crawlInfo = catalog.getCrawlInfo();
-    return String.format("Loaded catalog%n%s%n%s", crawlInfo, countTree);
+    return "Loaded catalog%n%s%n%s".formatted(crawlInfo, countTree);
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table) {

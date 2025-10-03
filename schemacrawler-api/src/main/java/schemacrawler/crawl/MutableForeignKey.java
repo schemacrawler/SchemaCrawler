@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
@@ -17,7 +18,7 @@ import schemacrawler.schema.TableConstraintType;
 /** Represents a foreign-key mapping to a primary key in another table. */
 final class MutableForeignKey extends AbstractTableReference implements ForeignKey {
 
-  private static final long serialVersionUID = 4121411795974895671L;
+  @Serial private static final long serialVersionUID = 4121411795974895671L;
 
   private ForeignKeyDeferrability deferrability;
   private ForeignKeyUpdateRule deleteRule;

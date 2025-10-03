@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import java.util.EnumSet;
 import java.util.Set;
 import schemacrawler.schema.ActionOrientationType;
@@ -19,7 +20,7 @@ import schemacrawler.schema.Trigger;
 /** Represents a trigger. */
 class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
 
-  private static final long serialVersionUID = -1619291073229701764L;
+  @Serial private static final long serialVersionUID = -1619291073229701764L;
   private final StringBuffer actionCondition;
   private final StringBuffer actionStatement;
   private int actionOrder;

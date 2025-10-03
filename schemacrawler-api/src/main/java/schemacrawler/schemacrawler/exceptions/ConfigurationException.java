@@ -8,9 +8,11 @@
 
 package schemacrawler.schemacrawler.exceptions;
 
+import java.io.Serial;
+
 public class ConfigurationException extends SchemaCrawlerException {
 
-  private static final long serialVersionUID = 8143604098031489051L;
+  @Serial private static final long serialVersionUID = 8143604098031489051L;
 
   public ConfigurationException(final String message) {
     super(message);

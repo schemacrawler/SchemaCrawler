@@ -10,12 +10,13 @@ package schemacrawler.schema;
 
 import static us.fatehi.utility.Utility.convertForComparison;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 
 public final class NamedObjectKey implements Serializable {
 
-  private static final long serialVersionUID = -5008609072012459037L;
+  @Serial private static final long serialVersionUID = -5008609072012459037L;
 
   private final String[] key;
 

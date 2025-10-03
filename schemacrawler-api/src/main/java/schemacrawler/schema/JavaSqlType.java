@@ -13,6 +13,7 @@ import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.SQLType;
 import java.util.Comparator;
@@ -20,7 +21,7 @@ import java.util.Comparator;
 /** A wrapper around java.sql.Types. */
 public final class JavaSqlType implements SQLType, Serializable, Comparable<JavaSqlType> {
 
-  private static final long serialVersionUID = 2614819974745473431L;
+  @Serial private static final long serialVersionUID = 2614819974745473431L;
 
   /** Unknown SQL data type. */
   public static final JavaSqlType UNKNOWN =
@@ -32,7 +33,7 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
   private static SQLType unknownSQLType() {
     final class UnknownSQLType implements SQLType, Serializable {
 
-      private static final long serialVersionUID = -2579002704227573365L;
+      @Serial private static final long serialVersionUID = -2579002704227573365L;
 
       @Override
       public String getName() {
@@ -125,7 +126,7 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
 
   @Override
   public String toString() {
-    return String.format(
-        "%s\t%d\t%s", sqlType.getName(), sqlType.getVendorTypeNumber(), javaSqlTypeGroup);
+    return "%s\t%d\t%s"
+        .formatted(sqlType.getName(), sqlType.getVendorTypeNumber(), javaSqlTypeGroup);
   }
 }

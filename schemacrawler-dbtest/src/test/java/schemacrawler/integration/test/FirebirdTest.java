@@ -85,7 +85,7 @@ public class FirebirdTest extends BaseAdditionalDatabaseTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     final String expectedResultsResource =
-        String.format("testFirebirdWithConnection.%s.txt", javaVersion());
+        "testFirebirdWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));

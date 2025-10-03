@@ -8,11 +8,12 @@
 
 package schemacrawler.schemacrawler.exceptions;
 
+import java.io.Serial;
 import java.sql.SQLException;
 
 public class DatabaseAccessException extends SchemaCrawlerException {
 
-  private static final long serialVersionUID = 7542373719708607330L;
+  @Serial private static final long serialVersionUID = 7542373719708607330L;
 
   public DatabaseAccessException(final String message, final SQLException cause) {
     super(message, cause);

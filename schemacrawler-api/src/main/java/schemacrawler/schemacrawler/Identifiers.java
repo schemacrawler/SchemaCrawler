@@ -11,6 +11,7 @@ package schemacrawler.schemacrawler;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ import schemacrawler.schema.Schema;
  */
 public final class Identifiers implements Options, Serializable {
 
-  private static final long serialVersionUID = -5108721215361312979L;
+  @Serial private static final long serialVersionUID = -5108721215361312979L;
 
   public static final Identifiers STANDARD = IdentifiersBuilder.builder().toOptions();
 

@@ -221,8 +221,9 @@ public class QueryUtilityTest {
               QueryUtility.executeAgainstSchema(query, statement, limitMap)) {
         while (resultSet.next()) {
           out.println(
-              String.format(
-                  "%s.%s", resultSet.getString("TABLE_SCHEMA"), resultSet.getString("TABLE_NAME")));
+              "%s.%s"
+                  .formatted(
+                      resultSet.getString("TABLE_SCHEMA"), resultSet.getString("TABLE_NAME")));
         }
       }
     }
@@ -239,8 +240,7 @@ public class QueryUtilityTest {
   }
 
   private String tablesWhere(final String where) {
-    return String.format(
-        "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE %s ORDER BY TABLE_SCHEMA, TABLE_NAME",
-        where);
+    return "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE %s ORDER BY TABLE_SCHEMA, TABLE_NAME"
+        .formatted(where);
   }
 }

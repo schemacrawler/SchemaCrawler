@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,7 +27,7 @@ import us.fatehi.utility.property.Property;
  */
 final class MutableDatabaseInfo extends BaseProductVersion implements DatabaseInfo {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  @Serial private static final long serialVersionUID = 4051323422934251828L;
 
   private final String userName;
   // Mutable properties collection

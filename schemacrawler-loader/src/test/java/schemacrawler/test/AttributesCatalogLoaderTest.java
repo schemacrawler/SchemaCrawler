@@ -16,10 +16,8 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.newSchemaRetrievalOptions;
 
 import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -84,10 +82,9 @@ public class AttributesCatalogLoaderTest {
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema : schemas) {
         for (final Table table : catalog.getTables(schema)) {
-          out.println(String.format("- Table %s%n%s", table.getFullName(), table.getRemarks()));
+          out.println("- Table %s%n%s".formatted(table.getFullName(), table.getRemarks()));
           for (final Column column : table.getColumns()) {
-            out.println(
-                String.format("-- Column %s%n%s", column.getFullName(), column.getRemarks()));
+            out.println("-- Column %s%n%s".formatted(column.getFullName(), column.getRemarks()));
           }
           out.println();
         }

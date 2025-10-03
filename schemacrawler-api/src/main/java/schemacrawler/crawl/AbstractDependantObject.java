@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.Objects;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
@@ -24,7 +25,7 @@ import schemacrawler.schemacrawler.Identifiers;
 abstract class AbstractDependantObject<D extends DatabaseObject> extends AbstractDatabaseObject
     implements DependantObject<D> {
 
-  private static final long serialVersionUID = -4327208866052082457L;
+  @Serial private static final long serialVersionUID = -4327208866052082457L;
 
   private final DatabaseObjectReference<D> parent;
   private transient NamedObjectKey key;

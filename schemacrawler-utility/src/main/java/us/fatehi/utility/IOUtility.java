@@ -17,6 +17,8 @@ import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.isWritable;
 import static java.nio.file.Files.size;
 import static java.util.UUID.randomUUID;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -27,7 +29,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 
@@ -76,8 +77,7 @@ public final class IOUtility {
 
   public static Path createTempFilePath(final String stem, final String extension)
       throws IOException {
-    final String filename =
-        String.format("%s%s.%s", Utility.trimToEmpty(stem), randomUUID(), extension);
+    final String filename = "%s%s.%s".formatted(Utility.trimToEmpty(stem), randomUUID(), extension);
     final Path tempFilePath =
         createTempDirectory(null).resolve(filename).normalize().toAbsolutePath();
     tempFilePath.toFile().deleteOnExit();

@@ -12,6 +12,7 @@ import static java.util.Objects.compare;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -23,7 +24,7 @@ import schemacrawler.schema.Schema;
 
 public final class SchemaReference implements Schema {
 
-  private static final long serialVersionUID = -5309848447599233878L;
+  @Serial private static final long serialVersionUID = -5309848447599233878L;
 
   private final Map<String, Object> attributeMap = new ConcurrentHashMap<>();
   private final String catalogName;

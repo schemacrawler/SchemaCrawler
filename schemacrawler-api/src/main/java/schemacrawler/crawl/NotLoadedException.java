@@ -8,20 +8,19 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.TableConstraint;
 
 public class NotLoadedException extends UnsupportedOperationException {
 
-  private static final long serialVersionUID = -1745422469189598709L;
+  @Serial private static final long serialVersionUID = -1745422469189598709L;
 
   public NotLoadedException(final PartialDatabaseObject databaseObject) {
-    super(String.format("Complete metadata has not been loaded for <%s>", databaseObject));
+    super("Complete metadata has not been loaded for <%s>".formatted(databaseObject));
   }
 
   public NotLoadedException(final TableConstraint constraint) {
-    super(
-        String.format(
-            "Complete metadata has not been loaded for table constraint <%s>", constraint));
+    super("Complete metadata has not been loaded for table constraint <%s>".formatted(constraint));
   }
 }

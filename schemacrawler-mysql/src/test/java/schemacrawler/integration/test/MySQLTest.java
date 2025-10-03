@@ -123,7 +123,7 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
     executableDetails.setAdditionalConfiguration(
         SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = String.format("testMySQLWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testMySQLWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));

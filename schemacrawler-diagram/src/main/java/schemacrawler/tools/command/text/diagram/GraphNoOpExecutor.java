@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
 import static java.util.Objects.requireNonNull;
@@ -20,7 +19,7 @@ final class GraphNoOpExecutor implements GraphExecutor {
     requireNonNull(diagramOutputFormat, "No diagram output format provided");
     if (diagramOutputFormat != DiagramOutputFormat.scdot) {
       throw new ExecutionRuntimeException(
-          String.format("Format should be <%s>", DiagramOutputFormat.scdot));
+          "Format should be <%s>".formatted(DiagramOutputFormat.scdot));
     }
   }
 

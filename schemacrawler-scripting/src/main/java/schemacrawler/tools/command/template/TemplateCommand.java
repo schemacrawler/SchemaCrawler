@@ -6,12 +6,12 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.template;
+
+import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -72,7 +72,7 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOpti
       return templateRenderer;
     } catch (final Exception e) {
       throw new InternalRuntimeException(
-          String.format("Could not instantiate template renderer for <%s>", languageType), e);
+          "Could not instantiate template renderer for <%s>".formatted(languageType), e);
     }
   }
 }

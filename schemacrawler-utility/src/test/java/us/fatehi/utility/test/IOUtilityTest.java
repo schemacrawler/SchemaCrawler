@@ -25,7 +25,6 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -63,15 +62,15 @@ public class IOUtilityTest {
   @Test
   public void fileExtension_path() {
     assertThat(IOUtility.getFileExtension((Path) null), is(""));
-    assertThat(IOUtility.getFileExtension(Paths.get("")), is(""));
+    assertThat(IOUtility.getFileExtension(Path.of("")), is(""));
     // assertThat(IOUtility.getFileExtension(Paths.get(" ")), is(""));
-    assertThat(IOUtility.getFileExtension(Paths.get(".")), is(""));
-    assertThat(IOUtility.getFileExtension(Paths.get("abc")), is(""));
-    assertThat(IOUtility.getFileExtension(Paths.get("abc.")), is(""));
+    assertThat(IOUtility.getFileExtension(Path.of(".")), is(""));
+    assertThat(IOUtility.getFileExtension(Path.of("abc")), is(""));
+    assertThat(IOUtility.getFileExtension(Path.of("abc.")), is(""));
 
     // assertThat(IOUtility.getFileExtension(Paths.get("abc. ")), is(" "));
-    assertThat(IOUtility.getFileExtension(Paths.get("abc.xyz")), is("xyz"));
-    assertThat(IOUtility.getFileExtension(Paths.get(".xyz")), is("xyz"));
+    assertThat(IOUtility.getFileExtension(Path.of("abc.xyz")), is("xyz"));
+    assertThat(IOUtility.getFileExtension(Path.of(".xyz")), is("xyz"));
   }
 
   @Test
@@ -92,7 +91,7 @@ public class IOUtilityTest {
   public void fileReadable() throws IOException {
     assertThat(IOUtility.isFileReadable(null), is(false));
     // ("." is not a file, but a directory)
-    assertThat(IOUtility.isFileReadable(Paths.get(".")), is(false));
+    assertThat(IOUtility.isFileReadable(Path.of(".")), is(false));
 
     final Path tempFile = Files.createTempFile("sc", ".dat");
     // (empty file)
@@ -108,7 +107,7 @@ public class IOUtilityTest {
   public void fileWritable() throws IOException {
     assertThat(IOUtility.isFileWritable(null), is(false));
     // ("." is not a file, but a directory)
-    assertThat(IOUtility.isFileWritable(Paths.get(".")), is(false));
+    assertThat(IOUtility.isFileWritable(Path.of(".")), is(false));
 
     final Path tempFile = IOUtility.createTempFilePath("", ".dat");
     Files.write(tempFile, new byte[] {65});

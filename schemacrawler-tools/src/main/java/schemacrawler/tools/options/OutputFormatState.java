@@ -11,12 +11,13 @@ package schemacrawler.tools.options;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class OutputFormatState implements OutputFormat {
 
-  private static final long serialVersionUID = -5715099922209080457L;
+  @Serial private static final long serialVersionUID = -5715099922209080457L;
 
   private final List<String> formatSpecifiers;
   private final String description;
@@ -71,6 +72,6 @@ public final class OutputFormatState implements OutputFormat {
 
   @Override
   public String toString() {
-    return String.format("%s %s", formatSpecifiers, description);
+    return "%s %s".formatted(formatSpecifiers, description);
   }
 }

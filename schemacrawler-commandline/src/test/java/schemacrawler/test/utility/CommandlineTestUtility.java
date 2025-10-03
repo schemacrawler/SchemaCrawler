@@ -152,8 +152,7 @@ public final class CommandlineTestUtility {
           final CommandLine.ParseResult parseResult)
           throws Exception {
         lastException = ex;
-        if (ex instanceof PicocliException) {
-          final PicocliException picocliException = (PicocliException) ex;
+        if (ex instanceof PicocliException picocliException) {
           if (picocliException.getCause() != null) {
             lastException = picocliException.getCause();
           }

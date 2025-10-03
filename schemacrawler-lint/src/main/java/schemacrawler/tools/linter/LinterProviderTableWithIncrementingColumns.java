@@ -6,10 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.linter;
 
 import static java.util.Comparator.naturalOrder;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.convertForComparison;
+
+import java.io.Serial;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +22,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.convertForComparison;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
@@ -33,7 +34,7 @@ import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderTableWithIncrementingColumns extends BaseLinterProvider {
 
-  private static final long serialVersionUID = -7901644028908017034L;
+  @Serial private static final long serialVersionUID = -7901644028908017034L;
 
   public LinterProviderTableWithIncrementingColumns() {
     super(LinterTableWithIncrementingColumns.class.getName());

@@ -6,10 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.LINTER_COMPARATOR;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
@@ -79,12 +79,12 @@ public final class Linters {
     for (final Linter linter : linters) {
       if (linter.getLintCount() > 0) {
         buffer.append(
-            String.format(
-                "%10s%s %5d - %s%n",
-                "[" + linter.getSeverity() + "]",
-                linter.exceedsThreshold() ? "*" : " ",
-                linter.getLintCount(),
-                linter.getSummary()));
+            "%10s%s %5d - %s%n"
+                .formatted(
+                    "[" + linter.getSeverity() + "]",
+                    linter.exceedsThreshold() ? "*" : " ",
+                    linter.getLintCount(),
+                    linter.getSummary()));
       }
     }
 

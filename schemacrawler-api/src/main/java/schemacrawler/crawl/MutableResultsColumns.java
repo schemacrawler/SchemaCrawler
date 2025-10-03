@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +19,7 @@ import schemacrawler.schema.ResultsColumns;
 /** Represents a result set, a result of a query. */
 final class MutableResultsColumns extends AbstractNamedObject implements ResultsColumns {
 
-  private static final long serialVersionUID = 5204766782914559188L;
+  @Serial private static final long serialVersionUID = 5204766782914559188L;
 
   private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<>();
 

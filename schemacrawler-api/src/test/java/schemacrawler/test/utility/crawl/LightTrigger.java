@@ -10,6 +10,7 @@ package schemacrawler.test.utility.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -25,7 +26,7 @@ import schemacrawler.schemacrawler.Identifiers;
 
 public class LightTrigger implements Trigger {
 
-  private static final long serialVersionUID = -2552665161195438344L;
+  @Serial private static final long serialVersionUID = -2552665161195438344L;
 
   private final Schema schema;
   private final String name;

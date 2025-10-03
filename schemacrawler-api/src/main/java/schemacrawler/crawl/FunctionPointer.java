@@ -10,11 +10,12 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import schemacrawler.schema.Function;
 
 final class FunctionPointer extends DatabaseObjectReference<Function> {
 
-  private static final long serialVersionUID = -5166020646865781875L;
+  @Serial private static final long serialVersionUID = -5166020646865781875L;
 
   FunctionPointer(final Function function) {
     super(requireNonNull(function, "No function provided"), new FunctionPartial(function));

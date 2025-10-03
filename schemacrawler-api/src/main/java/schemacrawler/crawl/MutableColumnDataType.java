@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class MutableColumnDataType extends AbstractDatabaseObject implements ColumnDataType {
 
-  private static final long serialVersionUID = 3688503281676530744L;
+  @Serial private static final long serialVersionUID = 3688503281676530744L;
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class.getName());
 

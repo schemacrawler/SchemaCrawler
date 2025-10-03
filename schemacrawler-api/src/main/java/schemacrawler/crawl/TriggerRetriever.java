@@ -93,7 +93,7 @@ final class TriggerRetriever extends AbstractRetriever {
     final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
     final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
-    if (!tableOptional.isPresent()) {
+    if (tableOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));

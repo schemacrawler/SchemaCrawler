@@ -115,7 +115,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     // Output file name has to be specified for diagrams
     // (Check after output options have been built)
     if (DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
-        && !commandOutputOptions.getOutputFile().isPresent()) {
+        && commandOutputOptions.getOutputFile().isEmpty()) {
       throw new ConfigurationException("Output file has to be specified for schema diagrams");
     }
 

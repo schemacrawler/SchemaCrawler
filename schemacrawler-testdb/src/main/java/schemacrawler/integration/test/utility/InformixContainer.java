@@ -9,7 +9,8 @@
 package schemacrawler.integration.test.utility;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
-import java.nio.file.Paths;
+
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class InformixContainer extends JdbcDatabaseContainer<InformixContainer> 
 
   @Override
   public String getJdbcUrl() {
-    return String.format("jdbc:informix-sqli://%s:%d/%s", getHost(), getJdbcPort(), databaseName);
+    return "jdbc:informix-sqli://%s:%d/%s".formatted(getHost(), getJdbcPort(), databaseName);
   }
 
   @Override
@@ -124,7 +125,7 @@ public class InformixContainer extends JdbcDatabaseContainer<InformixContainer> 
 
   private void setEnvAndCopyFile(final MountableFile mountableFile, final FileType fileType) {
     addEnv(
-        fileType.toString(), Paths.get(mountableFile.getFilesystemPath()).getFileName().toString());
+        fileType.toString(), Path.of(mountableFile.getFilesystemPath()).getFileName().toString());
     withCopyFileToContainer(mountableFile, IFX_CONFIG_DIR);
   }
 }

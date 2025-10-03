@@ -126,7 +126,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     // -- Schema output tests
-    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testOracleWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

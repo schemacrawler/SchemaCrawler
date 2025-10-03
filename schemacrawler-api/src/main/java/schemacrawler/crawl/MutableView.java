@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -19,7 +20,7 @@ import schemacrawler.schema.View;
 /** Represents a view in the database. */
 class MutableView extends MutableTable implements View {
 
-  private static final long serialVersionUID = 3257290248802284852L;
+  @Serial private static final long serialVersionUID = 3257290248802284852L;
   private final NamedObjectList<MutableTable> tableUsage = new NamedObjectList<>();
   private CheckOptionType checkOption;
   private boolean updatable;

@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.serialize;
 
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -61,7 +61,7 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand<Seriali
           serializableCatalogClass.getDeclaredConstructor(Catalog.class).newInstance(catalog);
     } catch (final Exception e) {
       throw new InternalRuntimeException(
-          String.format("Could not instantiate catalog serializer<%s>", serializerClassName), e);
+          "Could not instantiate catalog serializer<%s>".formatted(serializerClassName), e);
     }
 
     if (serializationFormat.isBinaryFormat()) {

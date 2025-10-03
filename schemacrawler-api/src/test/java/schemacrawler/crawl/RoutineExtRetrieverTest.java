@@ -123,10 +123,12 @@ public class RoutineExtRetrieverTest {
       Arrays.sort(procedures, NamedObjectSort.alphabetical);
       for (final Routine procedure : procedures) {
         out.println(
-            String.format(
-                "%s (%s) [%s]",
-                procedure.getFullName(), procedure.getSpecificName(), procedure.getRoutineType()));
-        out.println(String.format(" - references: %s", procedure.getReferencedObjects()));
+            "%s (%s) [%s]"
+                .formatted(
+                    procedure.getFullName(),
+                    procedure.getSpecificName(),
+                    procedure.getRoutineType()));
+        out.println(" - references: %s".formatted(procedure.getReferencedObjects()));
       }
     }
     assertThat(

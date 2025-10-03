@@ -13,6 +13,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
 
 import java.io.BufferedReader;
+import java.io.Serial;
 import java.util.List;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
@@ -24,7 +25,7 @@ import us.fatehi.utility.property.BaseProductVersion;
  */
 public final class Version extends BaseProductVersion {
 
-  private static final long serialVersionUID = 1143606778430634288L;
+  @Serial private static final long serialVersionUID = 1143606778430634288L;
 
   private static final String ABOUT;
   private static final Version VERSION;

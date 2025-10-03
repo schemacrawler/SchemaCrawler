@@ -18,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
 
@@ -80,7 +79,7 @@ public final class ResultsResource {
       case classpath:
         return locateResource(resourceString) != null;
       case file:
-        final Path filePath = Paths.get(resourceString);
+        final Path filePath = Path.of(resourceString);
         return isFileReadable(filePath);
       case none:
       // Fall-through
@@ -99,7 +98,7 @@ public final class ResultsResource {
         case classpath:
           return new ClasspathInputResource(resourceString).openNewInputReader(UTF_8);
         case file:
-          return new FileInputResource(Paths.get(resourceString)).openNewInputReader(UTF_8);
+          return new FileInputResource(Path.of(resourceString)).openNewInputReader(UTF_8);
         case none:
         // Fall-through
         default:

@@ -97,7 +97,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = String.format("testTeiidWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testTeiidWithConnection.%s.txt".formatted(javaVersion());
     assertThat(
         outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));

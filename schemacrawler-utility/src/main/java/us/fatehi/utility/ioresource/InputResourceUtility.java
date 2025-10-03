@@ -11,7 +11,6 @@ package us.fatehi.utility.ioresource;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +32,7 @@ public class InputResourceUtility {
     if (!isBlank(inputResourceName)) {
       try {
         LOGGER.log(Level.FINE, new StringFormat("Attempting to read file <%s>", inputResourceName));
-        final Path filePath = Paths.get(inputResourceName);
+        final Path filePath = Path.of(inputResourceName);
         inputResource = new FileInputResource(filePath);
       } catch (final Exception e) {
         // No-op

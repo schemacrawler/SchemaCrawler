@@ -11,6 +11,7 @@ package schemacrawler.crawl;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,7 +36,7 @@ import us.fatehi.utility.ObjectToString;
  */
 final class NamedObjectList<N extends NamedObject> implements Serializable, ReducibleCollection<N> {
 
-  private static final long serialVersionUID = 3257847666804142128L;
+  @Serial private static final long serialVersionUID = 3257847666804142128L;
 
   private static final String SCHEMACRAWLER_FILTERED_OUT = "schemacrawler.filtered_out";
 
@@ -77,8 +78,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
         // Filter object by moving it to the filtered objects map
         iterator.remove();
         filteredObjects.put(namedObjectKey, namedObject);
-        if (namedObject instanceof AttributedObject) {
-          final AttributedObject attributedObject = (AttributedObject) namedObject;
+        if (namedObject instanceof AttributedObject attributedObject) {
           attributedObject.setAttribute(SCHEMACRAWLER_FILTERED_OUT, true);
         }
       }
@@ -126,8 +126,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
       final N namedObject = entry.getValue();
       objects.put(namedObjectKey, namedObject);
       iterator.remove();
-      if (namedObject instanceof AttributedObject) {
-        final AttributedObject attributedObject = (AttributedObject) namedObject;
+      if (namedObject instanceof AttributedObject attributedObject) {
         attributedObject.removeAttribute(SCHEMACRAWLER_FILTERED_OUT);
       }
     }

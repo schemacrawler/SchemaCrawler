@@ -16,6 +16,7 @@ import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ import us.fatehi.utility.property.PropertyName;
 
 class ImmutableDatabaseProperty extends AbstractProperty {
 
-  private static final long serialVersionUID = -7150431683440256142L;
+  @Serial private static final long serialVersionUID = -7150431683440256142L;
 
   private static final Comparator<Property> comparator =
       nullsLast(comparing(Property::getDescription, CASE_INSENSITIVE_ORDER));

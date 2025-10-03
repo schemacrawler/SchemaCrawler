@@ -163,7 +163,7 @@ public final class Utility {
 
     final StringJoiner joiner = new StringJoiner(separator);
     for (final Entry<?, ?> entry : map.entrySet()) {
-      joiner.add(String.format("%s=%s", entry.getKey(), entry.getValue()));
+      joiner.add("%s=%s".formatted(entry.getKey(), entry.getValue()));
     }
 
     return joiner.toString();

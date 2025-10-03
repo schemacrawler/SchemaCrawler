@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -21,7 +22,7 @@ import schemacrawler.schema.Table;
  */
 final class MutableColumn extends AbstractColumn<Table> implements Column {
 
-  private static final long serialVersionUID = 3834591019449528633L;
+  @Serial private static final long serialVersionUID = 3834591019449528633L;
   private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<>();
   private String defaultValue;
   private boolean isAutoIncremented;

@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseObject;
@@ -21,7 +22,7 @@ import schemacrawler.schema.NamedObject;
 abstract class AbstractColumn<P extends DatabaseObject> extends AbstractDependantObject<P>
     implements BaseColumn<P> {
 
-  private static final long serialVersionUID = -8492662324895309485L;
+  @Serial private static final long serialVersionUID = -8492662324895309485L;
 
   private ColumnDataType columnDataType;
   private int decimalDigits;

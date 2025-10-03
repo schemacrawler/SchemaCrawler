@@ -8,13 +8,14 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.DatabaseUser;
 
 final class ImmutableDatabaseUser extends AbstractNamedObjectWithAttributes
     implements DatabaseUser {
 
   /** */
-  private static final long serialVersionUID = -2454810590096151457L;
+  @Serial private static final long serialVersionUID = -2454810590096151457L;
 
   ImmutableDatabaseUser(final String name) {
     super(name);

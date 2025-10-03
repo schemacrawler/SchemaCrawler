@@ -50,7 +50,7 @@ public class TableCellTest {
     assertThat(renderedHtml, not(nullValue()));
 
     final Document doc =
-        Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
+        Jsoup.parseBodyFragment("<table><tr>%s</tr></table>".formatted(renderedHtml));
     final Element td = doc.select("td").first();
 
     assertThat(td.attr("sometag"), is("customvalue"));
@@ -78,7 +78,7 @@ public class TableCellTest {
     // relying on the order that they are generated
     final String renderedHtml = tablecell.render(TagOutputFormat.html);
     final Document doc =
-        Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
+        Jsoup.parseBodyFragment("<table><tr>%s</tr></table>".formatted(renderedHtml));
     final Element td = doc.select("td").first();
 
     assertThat(renderedHtml, not(nullValue()));
@@ -114,7 +114,7 @@ public class TableCellTest {
     assertThat(renderedHtml, not(nullValue()));
 
     final Document doc =
-        Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
+        Jsoup.parseBodyFragment("<table><tr>%s</tr></table>".formatted(renderedHtml));
     final Element th = doc.select("th").first();
 
     assertThat(th.attr("sometag"), is("customvalue"));

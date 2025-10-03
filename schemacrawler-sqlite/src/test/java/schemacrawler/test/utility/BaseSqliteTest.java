@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import schemacrawler.testdb.TestSchemaCreatorMain;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.database.SqlScript;
@@ -36,8 +34,7 @@ public abstract class BaseSqliteTest {
 
     } catch (final SQLException e) {
       failTestSetup(
-          String.format(
-              "Could not create a database connection for SQL script", databaseSqlResource),
+          "Could not create a database connection for SQL script".formatted(databaseSqlResource),
           e);
       return null; // Appease compiler
     }
@@ -57,7 +54,7 @@ public abstract class BaseSqliteTest {
   }
 
   protected DatabaseConnectionSource createDataSourceFromResource(final String sqliteDbResource) {
-    return createDataSource(String.format("jdbc:sqlite::resource:%s", sqliteDbResource));
+    return createDataSource("jdbc:sqlite::resource:%s".formatted(sqliteDbResource));
   }
 
   protected DatabaseConnectionSource createDataSourceInMemory() {

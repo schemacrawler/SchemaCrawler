@@ -8,6 +8,7 @@
 
 package schemacrawler.server.oracle;
 
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -16,7 +17,7 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 
 public final class OracleSchemaExclusionRule implements InclusionRule {
 
-  private static final long serialVersionUID = 4955209955094408513L;
+  @Serial private static final long serialVersionUID = 4955209955094408513L;
 
   private static final Predicate<String> exclusionRule =
       new ListExclusionRule(

@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.Objects;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -17,7 +18,7 @@ import schemacrawler.schema.ColumnReference;
 /** Represents a single column mapping from a primary key column to a foreign key column. */
 final class ImmutableColumnReference implements ColumnReference {
 
-  private static final long serialVersionUID = -4411771492159843382L;
+  @Serial private static final long serialVersionUID = -4411771492159843382L;
 
   private final Column foreignKeyColumn;
   private final Column primaryKeyColumn;
