@@ -79,7 +79,7 @@ jobs:
           linux/amd64
           linux/arm64
         tags: |-
-          schemacrawler/schemacrawler:v16.28.3
+          schemacrawler/schemacrawler:v16.29.1
           schemacrawler/schemacrawler:latest
         sbom: true
         provenance: true
@@ -90,12 +90,12 @@ jobs:
       name: Upload installers
       uses: actions/upload-artifact@v4
       with:
-        name: release-artifacts-v16.28.3
+        name: release-artifacts-v16.29.1
         path: |
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-bin.zip.SHA-512
         retention-days: 1
     - id: create-release
       name: Create GitHub release
@@ -111,10 +111,10 @@ jobs:
           See the change history at https://www.schemacrawler.com/changes-report.html
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-16.28.3-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.29.1-bin.zip.SHA-512
 
 # PUBLISH TO CENTRAL REPOSITORY
     - id: publish-to-central
