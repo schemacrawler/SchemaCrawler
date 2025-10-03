@@ -67,6 +67,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.graalvm.polyglot</groupId>
+        <artifactId>languages</artifactId>
+        <version>24.2.2</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -109,7 +114,6 @@
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
       <version>2.7.4</version>
-      <classifier>jdk8</classifier>
       <scope>provided</scope>
     </dependency>
 
