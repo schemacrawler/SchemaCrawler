@@ -68,6 +68,7 @@ abstract class BaseLintReportJacksonGenerator implements LintReportGenerator {
       @JsonIgnore
       public abstract boolean isEmpty();
 
+      @JsonProperty("key")
       private final String[] key = {};
     }
 
