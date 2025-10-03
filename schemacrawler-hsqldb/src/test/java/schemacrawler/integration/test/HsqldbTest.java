@@ -21,7 +21,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
 import java.util.Collection;
@@ -71,8 +70,7 @@ public class HsqldbTest {
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource =
-        "hsqldb.main.%s.%s".formatted(javaVersion(), outputFormat.getFormat());
+    final String expectedResource = "hsqldb.main.%s".formatted(outputFormat.getFormat());
     assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 

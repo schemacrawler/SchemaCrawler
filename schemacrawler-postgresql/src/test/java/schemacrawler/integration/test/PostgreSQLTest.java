@@ -23,7 +23,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.text;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -107,8 +106,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
     executableDetails.setAdditionalConfiguration(
         SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResultsResource =
-        "%s.%s.txt".formatted(testContext.testMethodName(), javaVersion());
+    final String expectedResultsResource = "%s.txt".formatted(testContext.testMethodName());
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResultsResource)));

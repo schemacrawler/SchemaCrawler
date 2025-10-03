@@ -23,7 +23,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.utility.IOUtility.isFileReadable;
@@ -86,7 +85,7 @@ public class OfflineSnapshotTest {
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource = "details.%s.txt".formatted(javaVersion());
+    final String expectedResource = "details.txt";
     assertThat(
         outputOf(testout),
         hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT + expectedResource)));
@@ -169,7 +168,7 @@ public class OfflineSnapshotTest {
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
     executable.setDataSource(dataSource);
 
-    final String expectedResource = "details.%s.txt".formatted(javaVersion());
+    final String expectedResource = "details.txt";
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
   }
 

@@ -15,7 +15,6 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
-import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
@@ -35,7 +34,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.condition.JRE;
 import org.opentest4j.TestAbortedException;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -101,17 +99,6 @@ public final class TestUtility {
     }
     final String[] args = argsList.toArray(new String[0]);
     return args;
-  }
-
-  public static boolean isJre8() {
-    return JRE.currentJre() == JAVA_8;
-  }
-
-  public static String javaVersion() {
-    if (JRE.currentJre() == JAVA_8) {
-      return "8";
-    }
-    return "LTE";
   }
 
   /**

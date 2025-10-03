@@ -14,7 +14,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -72,8 +71,7 @@ public class SqliteDistributionTest extends BaseSqliteTest {
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    final String expectedResource =
-        "sqlite.main.%s.%s".formatted(javaVersion(), outputFormat.getFormat());
+    final String expectedResource = "sqlite.main.%s".formatted(outputFormat.getFormat());
     assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 }

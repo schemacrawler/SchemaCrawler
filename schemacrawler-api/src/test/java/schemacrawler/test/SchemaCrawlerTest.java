@@ -27,7 +27,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.utility.MetaDataUtility.isView;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -328,8 +327,7 @@ public class SchemaCrawlerTest {
         out.println(driverProperty);
       }
     }
-    final String expectedResultsResource =
-        "%s.%s".formatted(testContext.testMethodFullName(), javaVersion());
+    final String expectedResultsResource = testContext.testMethodFullName();
     assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResultsResource)));
   }
 

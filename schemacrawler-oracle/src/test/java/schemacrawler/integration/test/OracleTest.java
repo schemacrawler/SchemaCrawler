@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,7 +64,7 @@ public class OracleTest extends BaseOracleWithConnectionTest {
   public void testOracleWithConnection() throws Exception {
     final DatabaseConnectionSource dataSource = getDataSource();
 
-    final String expectedResource = "testOracleWithConnection.%s.txt".formatted(javaVersion());
+    final String expectedResource = "testOracleWithConnection.txt";
     testOracleWithConnection(dataSource, expectedResource, 33, false);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");

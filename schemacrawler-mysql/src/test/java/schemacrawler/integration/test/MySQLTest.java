@@ -19,7 +19,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.util.List;
 import java.util.Properties;
@@ -123,7 +122,7 @@ public class MySQLTest extends BaseAdditionalDatabaseTest {
     executableDetails.setAdditionalConfiguration(
         SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = "testMySQLWithConnection.%s.txt".formatted(javaVersion());
+    final String expectedResource = "testMySQLWithConnection.txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));

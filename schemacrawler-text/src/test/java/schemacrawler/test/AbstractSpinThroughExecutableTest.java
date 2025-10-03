@@ -14,7 +14,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.util.EnumSet;
 import java.util.stream.Stream;
@@ -56,16 +55,14 @@ public abstract class AbstractSpinThroughExecutableTest {
   private static String referenceFile(
       final SchemaTextDetailType schemaTextDetailType,
       final InfoLevel infoLevel,
-      final OutputFormat outputFormat,
-      final String javaVersion) {
+      final OutputFormat outputFormat) {
     final String referenceFile =
-        "%d%d.%s_%s%s.%s"
+        "%d%d.%s_%s.%s"
             .formatted(
                 schemaTextDetailType.ordinal(),
                 infoLevel.ordinal(),
                 schemaTextDetailType,
                 infoLevel,
-                javaVersion,
                 outputFormat.getFormat());
     return referenceFile;
   }
@@ -104,14 +101,7 @@ public abstract class AbstractSpinThroughExecutableTest {
       final OutputFormat outputFormat,
       final SchemaTextDetailType schemaTextDetailType)
       throws Exception {
-    final String javaVersion;
-    if (schemaTextDetailType == SchemaTextDetailType.details && infoLevel == InfoLevel.maximum) {
-      javaVersion = "." + javaVersion();
-    } else {
-      javaVersion = "";
-    }
-    final String referenceFile =
-        referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
+    final String referenceFile = referenceFile(schemaTextDetailType, infoLevel, outputFormat);
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
