@@ -53,29 +53,6 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 public class DiagramRendererTest {
 
-  private final class GraphvizJavaExecutorFactory extends GraphExecutorFactory {
-
-    @Override
-    public void canGenerate(final DiagramOutputFormat diagramOutputFormat) {
-      // No-op
-    }
-
-    @Override
-    public GraphExecutor getGraphExecutor(
-        final Path dotFile,
-        final DiagramOutputFormat diagramOutputFormat,
-        final Path outputFile,
-        final DiagramOptions commandOptions) {
-      final GraphExecutor graphExecutor;
-      if (diagramOutputFormat != scdot) {
-        graphExecutor = new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);
-      } else {
-        graphExecutor = new GraphNoOpExecutor(diagramOutputFormat);
-      }
-      return graphExecutor;
-    }
-  }
-
   private static final String DIAGRAM_OUTPUT = "diagram_renderer_output/";
   private static Path directory;
 
@@ -206,26 +183,6 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void diagramRenderer_graphviz_java(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-
-    final DiagramOptionsBuilder diagramOptionsBuilder = builder();
-    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
-
-    final Catalog catalog = getCatalog(dataSource);
-
-    commandDiagram(
-        new DiagramRenderer(
-            SchemaTextDetailType.details.toPropertyName(), new GraphvizJavaExecutorFactory()),
-        dataSource,
-        catalog,
-        diagramOptions,
-        DiagramOutputFormat.svg,
-        testContext.testMethodName());
-  }
-
-  @Test
   @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz(
@@ -244,25 +201,5 @@ public class DiagramRendererTest {
         diagramOptions,
         DiagramOutputFormat.htmlx,
         testContext.testMethodName());
-  }
-
-  @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void embeddedDiagramRenderer_graphviz_java(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
-
-    final DiagramOptionsBuilder diagramOptionsBuilder = builder();
-    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
-
-    final Catalog catalog = getCatalog(dataSource);
-
-    commandDiagram(
-        new EmbeddedDiagramRenderer(
-            SchemaTextDetailType.details.toPropertyName(), new GraphvizJavaExecutorFactory()),
-        dataSource,
-        catalog,
-        diagramOptions,
-        DiagramOutputFormat.htmlx,
-        "embeddedDiagramRenderer_graphviz");
   }
 }
