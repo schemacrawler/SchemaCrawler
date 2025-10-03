@@ -10,7 +10,6 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
-import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.hasItemInArray;
 
 import java.io.UnsupportedEncodingException;
@@ -18,14 +17,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledOnJre;
-import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 import schemacrawler.tools.registry.PluginRegistry;
-import schemacrawler.tools.registry.ScriptEngineRegistry;
 import us.fatehi.test.utility.TestDatabaseDriver;
 import us.fatehi.utility.property.PropertyName;
 
@@ -43,19 +39,6 @@ public class AvailableRegistryPluginsTest {
     assertThat(
         getRegisteredPlugins(CommandRegistry.getCommandRegistry()),
         arrayContainingInAnyOrder("test-command"));
-  }
-
-  @Test
-  // No script engines ship with Java versions later than 8
-  @EnabledOnJre(JRE.JAVA_8)
-  public void availableScriptEngines() throws UnsupportedEncodingException {
-    final String scriptEngineName =
-        ScriptEngineRegistry.getScriptEngineRegistry().getRegisteredPlugins().stream()
-            .findAny()
-            .get()
-            .getName();
-
-    assertThat(scriptEngineName, containsStringIgnoringCase("Nashorn"));
   }
 
   @Test

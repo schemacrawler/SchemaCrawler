@@ -19,12 +19,9 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledOnJre;
-import org.junit.jupiter.api.condition.JRE;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
-import schemacrawler.tools.commandline.command.AvailableScriptEngines;
 import schemacrawler.tools.commandline.command.AvailableServers;
 
 public class AvailablePluginsTest {
@@ -47,22 +44,6 @@ public class AvailablePluginsTest {
         new AvailableCommands(),
         contains(
             "brief", "count", "details", "dump", "list", "schema", "tablesample", "test-command"));
-  }
-
-  @Test
-  // No script engines ship with Java versions later than 8
-  @EnabledOnJre(JRE.JAVA_8)
-  public void availableScriptEngines() throws UnsupportedEncodingException {
-    final AvailableScriptEngines availableScriptEngines = new AvailableScriptEngines();
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    final String utf8 = StandardCharsets.UTF_8.name();
-    try (final PrintStream out = new PrintStream(baos, true, utf8)) {
-      availableScriptEngines.printHelp(out);
-    }
-    final String data = baos.toString(utf8);
-
-    assertThat(data.replace("\r", ""), containsString("Available Script Engines:"));
-    assertThat(data.replace("\r", ""), containsString("Nashorn"));
   }
 
   @Test
