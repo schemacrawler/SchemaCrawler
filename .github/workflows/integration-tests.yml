@@ -22,10 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [8, 21]
-        exclude:
-          - os: macos-latest
-            java: 8
+        java: [17, 21]
     runs-on: ${{ matrix.os }}
     steps:
 
