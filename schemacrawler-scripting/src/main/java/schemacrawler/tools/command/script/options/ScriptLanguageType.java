@@ -13,7 +13,6 @@ import schemacrawler.tools.options.LanguageType;
 public enum ScriptLanguageType implements LanguageType<ScriptLanguageType> {
   unknown(null),
   js("js"),
-  ruby("rb"),
   python("py");
 
   private final String fileExtension;

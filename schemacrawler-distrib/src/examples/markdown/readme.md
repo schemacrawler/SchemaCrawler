@@ -4,8 +4,7 @@
 
 Please review the [SchemaCrawler website](https://www.schemacrawler.com/) for FAQs, how-tos, and so on. 
 This download contains the main SchemaCrawler distribution, as well as examples. You can extend the 
-SchemaCrawler distribution by downloading additional libraries that SchemaCrawler integrates with, such 
-as the pure Java Graphviz library, Spring Framework, Groovy, Ruby, Python and so on. You can also 
+SchemaCrawler distribution by downloading additional libraries that SchemaCrawler integrates with. You can also 
 download additional JDBC drivers, and have SchemaCrawler pick them up automatically. Once you are happy 
 with the customization of your installation, you can copy the `_schemacrawler` folder to any location 
 on your system, and use it from there.
@@ -29,11 +28,8 @@ the provided scripts.
 3. Run `download.cmd` (or `download.sh` on Unix). 
    Provide one of the following arguments:    
     - `plugins` - for additional SchemaCrawler plug-ins  
-    - `graphviz-java` - for a pure Java Gaphviz library to generate diagrams
     - `javascript` - for JavaScript language scripting with SchemaCrawler, for Java 15 and upwards
-    - `groovy` - for Groovy language scripting with SchemaCrawler
     - `python` - for Python language scripting with SchemaCrawler
-    - `ruby` - for Ruby language scripting with SchemaCrawler
     - `velocity` - for Apache Velocity templating with SchemaCrawler
 
 ## Examples

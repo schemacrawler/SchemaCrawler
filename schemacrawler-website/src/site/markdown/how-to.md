@@ -239,12 +239,6 @@ You can provide additional Graphviz command-line options using the `SC_GRAPHVIZ_
 
 ---------
 
-### <a name="graphviz-java">How to use pure-Java Graphviz</a>
-
-In certain situations, it may not be possible to install Graphviz. SchemaCrawler integrates with [nidi3/graphviz-java](https://github.com/nidi3/graphviz-java) to provide a pre-Java approach to generating graphs. Download the [SchemaCrawler distribution](https://www.schemacrawler.com/downloads.html#running-examples-locally), and run through the `diagram` example. This will download the required jar files automatically.
-
----------
-
 
 ## How to Use SchemaCrawler in Projects
 

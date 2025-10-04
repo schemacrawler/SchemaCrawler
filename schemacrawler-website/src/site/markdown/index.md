@@ -50,9 +50,9 @@ you to search for table and column names using regular expressions.
 SchemaCrawler is capable of creating entity-relationship diagrams in
 [DOT format,](https://www.graphviz.org/doc/info/lang.html ) which
 [Graphviz](https://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
-SchemaCrawler has powerful scripting ability,
-using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
-script context to allow you to select from or even modify your database.
+SchemaCrawler has powerful scripting ability, using JavaScript or Python. 
+A live connection is provided to the script context to allow you to select 
+from or even modify your database.
 Examples are provided for all of these with the
 [download](https://www.schemacrawler.com/downloads.html#running-examples-locally/).
 

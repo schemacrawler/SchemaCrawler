@@ -234,7 +234,6 @@
     <java.version>17</java.version>
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <maven.javadoc.skip>true</maven.javadoc.skip>
-    <graphviz.java.version>0.18.1</graphviz.java.version>
     <jacoco.version>0.8.13</jacoco.version>
   </properties>
   <build>

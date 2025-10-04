@@ -8,20 +8,12 @@
 
 package schemacrawler.tools.command.text.diagram;
 
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.plain;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.png;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.ps;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.svg;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.xdot;
 import static us.fatehi.utility.PropertiesUtility.getSystemConfigurationProperty;
-import static us.fatehi.utility.Utility.isClassAvailable;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.ProcessExecutor;
 import us.fatehi.utility.string.FileContents;
 import us.fatehi.utility.string.StringFormat;
@@ -82,25 +74,6 @@ public final class GraphvizUtility {
             successful));
 
     return successful;
-  }
-
-  public static boolean isGraphvizJavaAvailable(final DiagramOutputFormat diagramOutputFormat) {
-    final String className = "guru.nidi.graphviz.engine.Graphviz";
-    final boolean hasClass = isClassAvailable(className);
-    final boolean supportsFormat =
-        EnumSet.of(svg, png, ps, xdot, plain).contains(diagramOutputFormat);
-
-    LOGGER.log(
-        Level.CONFIG,
-        new StringFormat(
-            """
-            Checking if diagram can be generated with the Graphviz Java library -\s
-             can load <%s>? = <%b>,\s
-             can generate format <%s>? = <%b>\
-            """,
-            className, hasClass, diagramOutputFormat.getDescription(), supportsFormat));
-
-    return hasClass && supportsFormat;
   }
 
   private GraphvizUtility() {

@@ -192,11 +192,11 @@ _For more details, look at the [Weak Associations](weak-associations.html) page.
 
 ### <a name="scripting">Can SchemaCrawler be used with scripting languages?</a>
 
-SchemaCrawler has built-in support to be used with JavaScript scripts. SchemaCrawler can be integrated with any other scripting language, for example, Groovy, Ruby, Python, and more.
+SchemaCrawler has built-in support to be used with Python or JavaScript scripts.
 
 Also, look at the [scripting](scripting.html) page.
 
-_For more details, see scripting examples in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
+_For more details, see scripting examples in the [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/) download, in the `examples\javascript`, and `examples\python` directories._
 
 ---------
 

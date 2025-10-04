@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.1.1"></a>
+## Release 17.1.1 - 2025-10-10
+- Build on Java 17
+- Remove support for Ruby and Groovy scripting
+- Remove support for Graphviz Java library
+
+
 <a name="v16.29.1"></a>
 ## Release 16.29.1 - 2025-10-03
 - Add objects using (or referencing) tables to the output

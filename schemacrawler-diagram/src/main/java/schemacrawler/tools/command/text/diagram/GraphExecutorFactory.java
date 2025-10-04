@@ -9,9 +9,9 @@
 package schemacrawler.tools.command.text.diagram;
 
 import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizAvailable;
-import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 import static us.fatehi.utility.IOUtility.readResourceFully;
+
 import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,7 +29,7 @@ public class GraphExecutorFactory {
     if (diagramOutputFormat == null) {
       throw new ConfigurationException("No diagram output format specified");
     }
-    if ((diagramOutputFormat == scdot) || isGraphvizAvailable() || isGraphvizJavaAvailable(diagramOutputFormat)) {
+    if ((diagramOutputFormat == scdot) || isGraphvizAvailable()) {
       return;
     }
     throw new ExecutionRuntimeException(
