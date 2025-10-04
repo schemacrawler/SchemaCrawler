@@ -83,32 +83,6 @@
       <version>4.7.7</version>
     </dependency>
 
-    <!-- graphviz-java dependencies -->
-    <dependency>
-      <groupId>guru.nidi</groupId>
-      <artifactId>graphviz-java</artifactId>
-      <version>${graphviz.java.version}</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jul-to-slf4j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.code.findbugs</groupId>
-          <artifactId>jsr305</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
