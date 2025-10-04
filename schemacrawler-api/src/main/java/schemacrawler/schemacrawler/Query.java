@@ -11,13 +11,14 @@ package schemacrawler.schemacrawler;
 import static us.fatehi.utility.TemplatingUtility.extractTemplateVariables;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
 /** A SQL query. May be parameterized with ant-like variable references. */
 public final class Query implements Serializable {
 
-  private static final long serialVersionUID = 2820769346069413473L;
+  @Serial private static final long serialVersionUID = 2820769346069413473L;
 
   private final String name;
   private final String query;
@@ -65,6 +66,6 @@ public final class Query implements Serializable {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return String.format("-- \"%s\"%n%s", name, query);
+    return "-- \"%s\"%n%s".formatted(name, query);
   }
 }

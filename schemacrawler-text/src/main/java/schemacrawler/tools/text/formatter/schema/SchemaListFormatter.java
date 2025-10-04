@@ -12,6 +12,7 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.ColumnDataType;
@@ -78,7 +79,7 @@ public final class SchemaListFormatter extends BaseTabularFormatter<SchemaTextOp
     }
 
     final String routineTypeDetail =
-        String.format("%s, %s", routine.getRoutineType(), routine.getReturnType());
+        "%s, %s".formatted(routine.getRoutineType(), routine.getReturnType());
     final String routineName = quoteName(routine);
     final String routineType = "[" + routineTypeDetail + "]";
 

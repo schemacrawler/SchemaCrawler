@@ -21,7 +21,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.ProcessExecutor;
 import us.fatehi.utility.string.FileContents;
@@ -76,8 +75,10 @@ public final class GraphvizUtility {
     LOGGER.log(
         Level.CONFIG,
         new StringFormat(
-            "Checking if diagram can be generated with Graphviz - "
-                + "\n is Graphviz installed? = <%s>",
+            """
+            Checking if diagram can be generated with Graphviz -\s
+             is Graphviz installed? = <%s>\
+            """,
             successful));
 
     return successful;
@@ -92,9 +93,11 @@ public final class GraphvizUtility {
     LOGGER.log(
         Level.CONFIG,
         new StringFormat(
-            "Checking if diagram can be generated with the Graphviz Java library - "
-                + "\n can load <%s>? = <%b>, "
-                + "\n can generate format <%s>? = <%b>",
+            """
+            Checking if diagram can be generated with the Graphviz Java library -\s
+             can load <%s>? = <%b>,\s
+             can generate format <%s>? = <%b>\
+            """,
             className, hasClass, diagramOutputFormat.getDescription(), supportsFormat));
 
     return hasClass && supportsFormat;

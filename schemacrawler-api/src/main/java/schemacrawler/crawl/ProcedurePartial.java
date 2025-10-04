@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Optional;
 import schemacrawler.schema.Procedure;
@@ -19,7 +20,7 @@ import schemacrawler.schema.RoutineType;
 
 final class ProcedurePartial extends RoutinePartial implements Procedure {
 
-  private static final long serialVersionUID = -1529756351918040452L;
+  @Serial private static final long serialVersionUID = -1529756351918040452L;
 
   ProcedurePartial(final Procedure procedure) {
     super(requireNonNull(procedure, "No procedure provided").getSchema(), procedure.getName());

@@ -29,7 +29,7 @@ public abstract class PropertyNameUtility {
           maxNameLength = length;
         }
       }
-      final String format = String.format("%%2d %%%ds %%s", maxNameLength);
+      final String format = "%%2d %%%ds %%s".formatted(maxNameLength);
 
       if (!isBlank(title)) {
         buffer.append(title).append(System.lineSeparator());
@@ -38,8 +38,8 @@ public abstract class PropertyNameUtility {
         index++;
         buffer
             .append(
-                String.format(
-                    format, index, registeredPlugin.getName(), registeredPlugin.getDescription()))
+                format.formatted(
+                    index, registeredPlugin.getName(), registeredPlugin.getDescription()))
             .append(System.lineSeparator());
       }
     } catch (final Throwable e) {

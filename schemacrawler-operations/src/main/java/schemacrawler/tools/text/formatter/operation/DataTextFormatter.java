@@ -152,7 +152,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     formattingHelper.writeObjectStart();
     formattingHelper.writeObjectNameRow("", title, "", Color.white);
 
-    final String name = String.format("Data for %s for <%s>", operation, title);
+    final String name = "Data for %s for <%s>".formatted(operation, title);
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name.toLowerCase());
     try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {
       dataRows.setShowLobs(options.isShowLobs());
@@ -168,7 +168,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
         retrievalCounts.countIncluded();
       }
     } catch (final SQLException e) {
-      throw new DatabaseAccessException(String.format("Could not handle rows for <%s>", title), e);
+      throw new DatabaseAccessException("Could not handle rows for <%s>".formatted(title), e);
     }
     formattingHelper.writeObjectEnd();
 

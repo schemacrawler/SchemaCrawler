@@ -21,7 +21,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -199,8 +198,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
     executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executableDetails.setAdditionalConfiguration(config);
 
-    final String expectedResource =
-        String.format("testSQLServerWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testSQLServerWithConnection.txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));

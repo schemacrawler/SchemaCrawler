@@ -8,15 +8,16 @@
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -93,7 +94,7 @@ final class TableRetriever extends AbstractRetriever {
 
     final Optional<SchemaReference> optionalSchema =
         schemas.lookup(new NamedObjectKey(catalogName, schemaName));
-    if (!optionalSchema.isPresent()) {
+    if (optionalSchema.isEmpty()) {
       return false;
     }
     final Schema schema = optionalSchema.get();

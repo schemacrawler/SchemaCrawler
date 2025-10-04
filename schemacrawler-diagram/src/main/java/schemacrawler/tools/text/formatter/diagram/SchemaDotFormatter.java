@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.text.formatter.diagram;
 
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
@@ -23,14 +22,15 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -292,8 +292,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     final String[] portIds = new String[2];
 
     if (!isNewNode) {
-      portIds[0] = String.format("\"%s\":\"%s.start\"", nodeId(column.getParent()), nodeId(column));
-      portIds[1] = String.format("\"%s\":\"%s.end\"", nodeId(column.getParent()), nodeId(column));
+      portIds[0] = "\"%s\":\"%s.start\"".formatted(nodeId(column.getParent()), nodeId(column));
+      portIds[1] = "\"%s\":\"%s.end\"".formatted(nodeId(column.getParent()), nodeId(column));
     } else {
       // Create new node
       final String nodeId = printNewNode(column);
@@ -329,8 +329,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       if (!isBlank(columnsList)) {
         columnsList = " (" + columnsList + ")";
       }
-      final String constraintText =
-          String.format("\u2022 %s%s [alternate key]", akName, columnsList);
+      final String constraintText = "\u2022 %s%s [alternate key]".formatted(akName, columnsList);
 
       formattingHelper
           .append(
@@ -409,9 +408,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       label = associationName;
     }
 
-    return String.format(
-        "  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-        fkPortIds[0], pkPortIds[1], label, lineStyle, pkSymbol, fkSymbol);
+    return "  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n"
+        .formatted(fkPortIds[0], pkPortIds[1], label, lineStyle, pkSymbol, fkSymbol);
   }
 
   private void printForeignKeys(final Table table) {
@@ -497,7 +495,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         columnsList = " (" + columnsList + ")";
       }
       final String constraintText =
-          String.format("\u2022 %s%s [%s]", indexName, columnsList, indexDetails);
+          "\u2022 %s%s [%s]".formatted(indexName, columnsList, indexDetails);
 
       formattingHelper
           .append(
@@ -539,7 +537,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     } else {
       columnName = identifiers.quoteFullName(column);
     }
-    final String columnNode = String.format("  %s [label=<%s>];%n", nodeId, columnName);
+    final String columnNode = "  %s [label=<%s>];%n".formatted(nodeId, columnName);
 
     formattingHelper.append(columnNode);
 
@@ -578,7 +576,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
 
     final String enumValues =
-        String.format("'%s'", String.join("', ", column.getColumnDataType().getEnumValues()));
+        "'%s'".formatted(String.join("', ", column.getColumnDataType().getEnumValues()));
 
     final Tag row = tableRow().make();
     if (options.isShowOrdinalNumbers()) {

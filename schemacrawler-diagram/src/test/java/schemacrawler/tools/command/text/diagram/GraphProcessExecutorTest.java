@@ -21,11 +21,8 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collections;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
@@ -81,9 +78,7 @@ public class GraphProcessExecutorTest {
             IORuntimeException.class,
             () ->
                 new TestGraphProcessExecutor(
-                    dotFile,
-                    Paths.get("/not_a_directory/unwritable_file.dat"),
-                    diagramOutputFormat));
+                    dotFile, Path.of("/not_a_directory/unwritable_file.dat"), diagramOutputFormat));
     assertThat(exception2.getMessage(), containsString("Cannot write output file"));
   }
 

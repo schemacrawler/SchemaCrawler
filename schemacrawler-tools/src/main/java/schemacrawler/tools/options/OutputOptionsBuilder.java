@@ -17,7 +17,6 @@ import static us.fatehi.utility.Utility.trimToEmpty;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import us.fatehi.utility.ioresource.ConsoleOutputResource;
@@ -91,8 +90,8 @@ public final class OutputOptionsBuilder
     // Otherwise, assume text output
     if (isBlank(outputFormatValue)) {
       final String fileExtension;
-      if (outputResource instanceof FileOutputResource) {
-        fileExtension = getFileExtension(((FileOutputResource) outputResource).getOutputFile());
+      if (outputResource instanceof FileOutputResource resource) {
+        fileExtension = getFileExtension(resource.getOutputFile());
       } else {
         fileExtension = null;
       }
@@ -212,7 +211,7 @@ public final class OutputOptionsBuilder
         }
 
         final Path randomOutputFile =
-            Paths.get(".", String.format("schemacrawler-%s.%s", UUID.randomUUID(), extension))
+            Path.of(".", "schemacrawler-%s.%s".formatted(UUID.randomUUID(), extension))
                 .normalize()
                 .toAbsolutePath();
         this.outputResource = new FileOutputResource(randomOutputFile);

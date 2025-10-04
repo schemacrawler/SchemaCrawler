@@ -79,8 +79,7 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
   private void createPrivileges(final MetadataResultSet results, final boolean privilegesForColumn)
       throws SQLException {
     final RetrievalCounts retrievalCounts =
-        new RetrievalCounts(
-            String.format("%s privileges", privilegesForColumn ? "column" : "table"));
+        new RetrievalCounts("%s privileges".formatted(privilegesForColumn ? "column" : "table"));
     while (results.next()) {
       retrievalCounts.count();
       final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
@@ -94,7 +93,7 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       }
 
       final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
-      if (!tableOptional.isPresent()) {
+      if (tableOptional.isEmpty()) {
         continue;
       }
 
@@ -102,7 +101,7 @@ final class TablePrivilegeRetriever extends AbstractRetriever {
       final MutableColumn column;
       if (privilegesForColumn) {
         final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-        if (!columnOptional.isPresent()) {
+        if (columnOptional.isEmpty()) {
           continue;
         }
         column = columnOptional.get();

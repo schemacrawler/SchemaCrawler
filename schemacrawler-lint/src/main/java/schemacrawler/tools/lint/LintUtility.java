@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
 
 import static us.fatehi.utility.IOUtility.readResourceFully;
+
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
@@ -102,7 +102,7 @@ public final class LintUtility {
    * @return Lengthy description of the linter
    */
   public static String readDescription(final String linterId) {
-    final String descriptionResource = String.format("/help/%s.txt", linterId);
+    final String descriptionResource = "/help/%s.txt".formatted(linterId);
     final String descriptionText = readResourceFully(descriptionResource);
     return descriptionText;
   }

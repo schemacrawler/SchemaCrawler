@@ -62,19 +62,19 @@ public class OfflineConnectionUtility {
         case "hashCode":
           return offlineDatabasePath.hashCode();
         case "toString":
-          return String.format(
-              "schemacrawler.tools.offline.jdbc.OfflineConnection@%s",
-              offlineDatabasePath.hashCode());
+          return "schemacrawler.tools.offline.jdbc.OfflineConnection@%s"
+              .formatted(offlineDatabasePath.hashCode());
         case "equals":
-          if (args != null && args.length > 0 && args[0] instanceof OfflineConnection) {
-            final OfflineConnection otherOfflineConnection = (OfflineConnection) args[0];
+          if (args != null
+              && args.length > 0
+              && args[0] instanceof OfflineConnection otherOfflineConnection) {
             return otherOfflineConnection.hashCode() == offlineDatabasePath.hashCode();
           }
         // Fall through
         default:
           throw new SQLFeatureNotSupportedException(
-              String.format(
-                  "Offline catalog snapshot connection does not support method <%s>", methodName),
+              "Offline catalog snapshot connection does not support method <%s>"
+                  .formatted(methodName),
               "HYC00");
       }
     }
@@ -87,7 +87,7 @@ public class OfflineConnectionUtility {
     final Path absoluteOfflineDatabasePath = offlineDatabasePath.toAbsolutePath();
     if (!IOUtility.isFileReadable(absoluteOfflineDatabasePath)) {
       throw new IORuntimeException(
-          String.format("Cannot read offline database <%s>", absoluteOfflineDatabasePath));
+          "Cannot read offline database <%s>".formatted(absoluteOfflineDatabasePath));
     }
     final OfflineConnection offlineConnection =
         (OfflineConnection)

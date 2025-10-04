@@ -16,7 +16,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;
 import org.junit.jupiter.api.AfterAll;
@@ -47,7 +47,7 @@ public class FileHasContentTest {
     final String expectedResource = TEST_DIR + testContext.testMethodName();
     assertFailuresFor(
         testContext,
-        outputOf(Paths.get("no_such_file")),
+        outputOf(Path.of("no_such_file")),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -84,7 +84,7 @@ public class FileHasContentTest {
 
   @Test
   public void successfulNoOutputTest(final TestContext testContext) throws Exception {
-    assertThat(outputOf(Paths.get("no_such_file")), hasNoContent());
+    assertThat(outputOf(Path.of("no_such_file")), hasNoContent());
   }
 
   @Test

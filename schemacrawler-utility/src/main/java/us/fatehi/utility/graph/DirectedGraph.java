@@ -85,13 +85,12 @@ public class DirectedGraph<T extends Comparable<? super T>> {
     final StringBuilder writer = new StringBuilder(4096);
     writer.append("digraph {\n");
     if (name != null && !name.isEmpty()) {
-      writer.append(String.format("  [label=\"%s\"]\n", name));
+      writer.append("  [label=\"%s\"]\n".formatted(name));
     }
     for (final Vertex<T> vertex : verticesMap.values()) {
       writer.append("  ").append(vertex);
       if (vertex.hasAttribute("fillcolor")) {
-        writer.append(
-            String.format(" [fillcolor=%s, style=filled]", vertex.getAttribute("fillcolor")));
+        writer.append(" [fillcolor=%s, style=filled]".formatted(vertex.getAttribute("fillcolor")));
       }
       writer.append(";\n");
     }

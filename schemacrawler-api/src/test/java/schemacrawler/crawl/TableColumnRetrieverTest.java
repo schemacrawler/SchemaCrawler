@@ -79,33 +79,29 @@ public class TableColumnRetrieverTest {
           final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column : columns) {
-            out.println(String.format("%s", column.getFullName()));
+            out.println("%s".formatted(column.getFullName()));
 
-            out.println(String.format("  - %s=%s", "short name", column.getShortName()));
-            out.println(String.format("  - %s=%s", "data-type", column.getColumnDataType()));
-            out.println(String.format("  - %s=%s", "size", column.getSize()));
-            out.println(String.format("  - %s=%s", "decimal digits", column.getDecimalDigits()));
-            out.println(String.format("  - %s=%s", "width", column.getWidth()));
-            out.println(String.format("  - %s=%s", "default value", column.getDefaultValue()));
-            out.println(String.format("  - %s=%s", "auto-incremented", column.isAutoIncremented()));
-            out.println(String.format("  - %s=%s", "nullable", column.isNullable()));
-            out.println(String.format("  - %s=%s", "generated", column.isGenerated()));
-            out.println(String.format("  - %s=%s", "hidden", column.isHidden()));
-            out.println(
-                String.format("  - %s=%s", "part of primary key", column.isPartOfPrimaryKey()));
-            out.println(
-                String.format("  - %s=%s", "part of foreign key", column.isPartOfForeignKey()));
-            out.println(
-                String.format("  - %s=%s", "ordinal position", column.getOrdinalPosition()));
-            out.println(String.format("  - %s=%s", "remarks", column.getRemarks()));
+            out.println("  - %s=%s".formatted("short name", column.getShortName()));
+            out.println("  - %s=%s".formatted("data-type", column.getColumnDataType()));
+            out.println("  - %s=%s".formatted("size", column.getSize()));
+            out.println("  - %s=%s".formatted("decimal digits", column.getDecimalDigits()));
+            out.println("  - %s=%s".formatted("width", column.getWidth()));
+            out.println("  - %s=%s".formatted("default value", column.getDefaultValue()));
+            out.println("  - %s=%s".formatted("auto-incremented", column.isAutoIncremented()));
+            out.println("  - %s=%s".formatted("nullable", column.isNullable()));
+            out.println("  - %s=%s".formatted("generated", column.isGenerated()));
+            out.println("  - %s=%s".formatted("hidden", column.isHidden()));
+            out.println("  - %s=%s".formatted("part of primary key", column.isPartOfPrimaryKey()));
+            out.println("  - %s=%s".formatted("part of foreign key", column.isPartOfForeignKey()));
+            out.println("  - %s=%s".formatted("ordinal position", column.getOrdinalPosition()));
+            out.println("  - %s=%s".formatted("remarks", column.getRemarks()));
 
-            out.println(String.format("  - %s=%s", "attibutes", ""));
+            out.println("  - %s=%s".formatted("attibutes", ""));
             final SortedMap<String, Object> columnAttributes =
                 new TreeMap<>(column.getAttributes());
             for (final Entry<String, Object> columnAttribute : columnAttributes.entrySet()) {
               out.println(
-                  String.format(
-                      "    ~ %s=%s", columnAttribute.getKey(), columnAttribute.getValue()));
+                  "    ~ %s=%s".formatted(columnAttribute.getKey(), columnAttribute.getValue()));
             }
 
             assertThat(column.getType(), is(column.getColumnDataType()));

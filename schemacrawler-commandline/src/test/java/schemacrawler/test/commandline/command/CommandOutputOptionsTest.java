@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
@@ -36,7 +36,7 @@ public class CommandOutputOptionsTest {
             .getOutputFile()
             .orElseThrow(() -> new IllegalArgumentException("No file found"))
             .getFileName(),
-        is(Paths.get("file.txt")));
+        is(Path.of("file.txt")));
     assertThat(options.getOutputFormatValue(), is(Optional.of("tables.js")));
   }
 

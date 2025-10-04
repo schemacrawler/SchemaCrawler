@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
 import static java.util.Objects.requireNonNull;
@@ -14,7 +13,6 @@ import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.IOUtility.isFileWritable;
 
 import java.nio.file.Path;
-
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
@@ -35,11 +33,11 @@ abstract class AbstractGraphProcessExecutor implements GraphExecutor {
     this.diagramOutputFormat = diagramOutputFormat;
 
     if (!isFileReadable(this.dotFile)) {
-      throw new IORuntimeException(String.format("Cannot read DOT file <%s>", this.dotFile));
+      throw new IORuntimeException("Cannot read DOT file <%s>".formatted(this.dotFile));
     }
 
     if (!isFileWritable(this.outputFile)) {
-      throw new IORuntimeException(String.format("Cannot write output file <%s>", this.outputFile));
+      throw new IORuntimeException("Cannot write output file <%s>".formatted(this.outputFile));
     }
   }
 }

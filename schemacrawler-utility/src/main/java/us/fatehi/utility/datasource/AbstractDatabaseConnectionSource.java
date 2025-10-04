@@ -81,7 +81,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
     final String username;
     final String user = jdbcConnectionProperties.getProperty("user");
     if (user != null) {
-      username = String.format("user '%s'", user);
+      username = "user '%s'".formatted(user);
     } else {
       username = "unspecified user";
     }
@@ -104,9 +104,8 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
       return connection;
     } catch (final SQLException e) {
       throw new SQLRuntimeException(
-          String.format(
-              "Could not connect to <%s>, for <%s>, with properties <%s>",
-              connectionUrl, username, safeProperties(jdbcConnectionProperties)),
+          "Could not connect to <%s>, for <%s>, with properties <%s>"
+              .formatted(connectionUrl, username, safeProperties(jdbcConnectionProperties)),
           e);
     }
   }
@@ -116,9 +115,8 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
       return DriverManager.getDriver(connectionUrl);
     } catch (final SQLException e) {
       throw new SQLException(
-          String.format(
-              "Could not find a suitable JDBC driver for database connection URL <%s>",
-              connectionUrl),
+          "Could not find a suitable JDBC driver for database connection URL <%s>"
+              .formatted(connectionUrl),
           e);
     }
   }

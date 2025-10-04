@@ -34,7 +34,7 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>13.2.0.jre8</version>
+      <version>13.2.0.jre11</version>
     </dependency>
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
@@ -61,7 +61,6 @@
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
       <version>2.7.4</version>
-      <classifier>jdk8</classifier>
     </dependency>
     <dependency>
       <groupId>org.xerial</groupId>

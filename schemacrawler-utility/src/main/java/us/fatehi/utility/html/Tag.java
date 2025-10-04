@@ -258,8 +258,8 @@ public class Tag {
     }
     if (characterWidth > 0) {
       final String format =
-          String.format("%%%s%ds", align == Alignment.right ? "" : "-", characterWidth);
-      return String.format(format, text);
+          "%%%s%ds".formatted(align == Alignment.right ? "" : "-", characterWidth);
+      return format.formatted(text);
     }
     return text;
   }

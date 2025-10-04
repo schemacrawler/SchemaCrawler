@@ -130,7 +130,7 @@ public class TableRetrieverTest extends AbstractRetrieverTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
-          out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
+          out.println("%s [%s]".formatted(table.getFullName(), table.getTableType()));
         }
       }
     }

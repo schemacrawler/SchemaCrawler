@@ -43,7 +43,7 @@ public class TimedTaskResultTest {
     assertThat(result.getDuration(), is(duration));
 
     final LocalTime durationLocal = LocalTime.ofNanoOfDay(duration.toNanos());
-    final String expected = String.format("%s - <%s>", durationLocal.format(df), taskName);
+    final String expected = "%s - <%s>".formatted(durationLocal.format(df), taskName);
 
     assertThat(result.toString(), is(expected));
   }

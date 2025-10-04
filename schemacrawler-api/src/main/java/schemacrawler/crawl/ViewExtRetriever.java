@@ -131,7 +131,7 @@ final class ViewExtRetriever extends AbstractRetriever {
     final String viewName = results.getString("TABLE_NAME");
 
     final Optional<MutableTable> viewOptional = lookupTable(catalogName, schemaName, viewName);
-    if (!viewOptional.isPresent()) {
+    if (viewOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, viewName));
@@ -160,7 +160,7 @@ final class ViewExtRetriever extends AbstractRetriever {
     final String viewName = results.getString("VIEW_NAME");
 
     final Optional<MutableTable> viewOptional = lookupTable(catalogName, schemaName, viewName);
-    if (!viewOptional.isPresent()) {
+    if (viewOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat("Cannot find view <%s.%s.%s>", catalogName, schemaName, viewName));
@@ -176,7 +176,7 @@ final class ViewExtRetriever extends AbstractRetriever {
 
     final Optional<MutableTable> tableOptional =
         lookupTable(tableCatalogName, tableSchemaName, tableName);
-    if (!tableOptional.isPresent()) {
+    if (tableOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat(

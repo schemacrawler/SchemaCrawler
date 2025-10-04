@@ -52,7 +52,7 @@ public class SqlScript implements Runnable {
       final SqlScript sqlScript = new SqlScript(scriptReader, delimiter, connection);
       sqlScript.run();
     } catch (final Exception e) {
-      throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
+      throw new SQLRuntimeException("Could not read \"%s\"".formatted(scriptResource), e);
     }
   }
 
@@ -73,8 +73,8 @@ public class SqlScript implements Runnable {
 
     if (debug) {
       final String lineLogMessage =
-          String.format(
-              "%s %s", scriptReader, skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
+          "%s %s"
+              .formatted(scriptReader, skip ? "-- skip" : "-- execute, delimiting by " + delimiter);
       LOGGER.log(Level.INFO, lineLogMessage);
       System.out.println(lineLogMessage);
     }
@@ -126,7 +126,7 @@ public class SqlScript implements Runnable {
   private void executeSql(final String sql, final Statement statement) throws SQLException {
     final boolean hasResults = statement.execute(sql);
     if (hasResults) {
-      throw new SQLWarning(String.format("Results not expected from SQL%n%s%n", sql));
+      throw new SQLWarning("Results not expected from SQL%n%s%n".formatted(sql));
     }
 
     final SQLWarning warnings = statement.getWarnings();

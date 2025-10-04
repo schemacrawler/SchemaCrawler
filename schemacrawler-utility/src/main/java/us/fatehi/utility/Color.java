@@ -29,7 +29,7 @@ public final class Color {
     requireNotBlank(htmlColor, "No color provided");
 
     if (!htmlColorPattern.matcher(htmlColor).matches()) {
-      throw new IllegalArgumentException(String.format("Bad color provided <%s>", htmlColor));
+      throw new IllegalArgumentException("Bad color provided <%s>".formatted(htmlColor));
     }
 
     // Parse color
@@ -127,7 +127,7 @@ public final class Color {
   public String toString() {
     final int rgb = (r & 0xFF) << 16 | (g & 0xFF) << 8 | b & 0xFF;
 
-    final String htmlColor = "#" + String.format("%06x", rgb).toUpperCase();
+    final String htmlColor = "#" + "%06x".formatted(rgb).toUpperCase();
     return htmlColor;
   }
 }

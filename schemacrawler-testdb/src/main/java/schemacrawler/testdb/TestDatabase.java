@@ -12,6 +12,7 @@ import static java.nio.file.Files.createTempDirectory;
 import static java.util.Objects.requireNonNull;
 import static org.hsqldb.server.ServerConstants.SC_DEFAULT_ADDRESS;
 import static org.hsqldb.server.ServerConstants.SC_DEFAULT_HSQL_SERVER_PORT;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -36,7 +37,7 @@ public class TestDatabase {
     try {
       final String host = SC_DEFAULT_ADDRESS;
       final int port = getFreePort();
-      final String database = String.format("schemacrawler%d", port);
+      final String database = "schemacrawler%d".formatted(port);
       final boolean trace = false;
       final TestDatabase testDatabase = new TestDatabase(trace, host, port, database);
       testDatabase.start();
@@ -131,7 +132,7 @@ public class TestDatabase {
 
   /** Load driver, and create database, schema and data. */
   public void start() throws Exception {
-    LOGGER.log(Level.FINE, String.format("%s - Setting up database", toString()));
+    LOGGER.log(Level.FINE, "%s - Setting up database".formatted(toString()));
     startServer();
     createTestDatabase();
   }
@@ -170,7 +171,7 @@ public class TestDatabase {
 
     // Create temp directory
     final Path tempDirectory =
-        createTempDirectory(String.format("%s.%s", HSQLDB_SCHEMACRAWLER, database));
+        createTempDirectory("%s.%s".formatted(HSQLDB_SCHEMACRAWLER, database));
 
     // Start the server
     final Server server = new Server();
@@ -181,7 +182,7 @@ public class TestDatabase {
     server.setAddress(host);
     server.setPort(port);
     server.setDatabaseName(0, database);
-    server.setDatabasePath(0, String.format("file:%s", tempDirectory));
+    server.setDatabasePath(0, "file:%s".formatted(tempDirectory));
 
     if (trace) {
       System.out.printf(

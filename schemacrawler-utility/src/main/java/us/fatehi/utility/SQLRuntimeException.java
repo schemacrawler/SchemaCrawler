@@ -8,9 +8,11 @@
 
 package us.fatehi.utility;
 
+import java.io.Serial;
+
 public class SQLRuntimeException extends RuntimeException {
 
-  private static final long serialVersionUID = 7185042951359266632L;
+  @Serial private static final long serialVersionUID = 7185042951359266632L;
 
   public SQLRuntimeException(final String message) {
     super(message);

@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
@@ -16,7 +17,7 @@ import schemacrawler.schema.RoutineParameter;
 abstract class MutableRoutineParameter<R extends Routine> extends AbstractColumn<R>
     implements RoutineParameter<R> {
 
-  private static final long serialVersionUID = 3546361725629772857L;
+  @Serial private static final long serialVersionUID = 3546361725629772857L;
 
   private ParameterModeType parameterMode;
 

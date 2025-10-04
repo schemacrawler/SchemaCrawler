@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ import schemacrawler.schema.Schema;
 /** Represents a database function. Created from metadata returned by a JDBC call. */
 final class MutableFunction extends MutableRoutine implements Function {
 
-  private static final long serialVersionUID = 3906925686089134130L;
+  @Serial private static final long serialVersionUID = 3906925686089134130L;
 
   private final NamedObjectList<MutableFunctionParameter> columns = new NamedObjectList<>();
   private FunctionReturnType returnType;

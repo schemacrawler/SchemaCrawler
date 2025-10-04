@@ -9,6 +9,8 @@
 package schemacrawler.loader.weakassociations;
 
 import static java.util.Objects.requireNonNull;
+
+import java.io.Serial;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -16,7 +18,7 @@ import schemacrawler.schema.PartialDatabaseObject;
 
 public final class ProposedWeakAssociation implements ColumnReference {
 
-  private static final long serialVersionUID = 2986663326992262188L;
+  @Serial private static final long serialVersionUID = 2986663326992262188L;
 
   private final Column primaryKeyColumn;
   private final Column foreignKeyColumn;

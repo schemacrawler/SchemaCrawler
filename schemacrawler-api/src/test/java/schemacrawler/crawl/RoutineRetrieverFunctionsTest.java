@@ -88,9 +88,9 @@ public class RoutineRetrieverFunctionsTest {
       Arrays.sort(functions, NamedObjectSort.alphabetical);
       for (final Routine function : functions) {
         out.println(
-            String.format(
-                "%s (%s) [%s]",
-                function.getFullName(), function.getSpecificName(), function.getRoutineType()));
+            "%s (%s) [%s]"
+                .formatted(
+                    function.getFullName(), function.getSpecificName(), function.getRoutineType()));
       }
     }
     assertThat(

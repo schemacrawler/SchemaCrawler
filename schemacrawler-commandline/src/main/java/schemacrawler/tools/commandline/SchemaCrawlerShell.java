@@ -17,7 +17,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCo
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +77,7 @@ public final class SchemaCrawlerShell {
             return 0;
           });
 
-      final Supplier<Path> workingDir = () -> Paths.get(".");
+      final Supplier<Path> workingDir = () -> Path.of(".");
       final PicocliCommands picocliCommands = new PicocliCommands(commandLine);
       final Parser parser = new DefaultParser().escapeChars(new char[0]);
 

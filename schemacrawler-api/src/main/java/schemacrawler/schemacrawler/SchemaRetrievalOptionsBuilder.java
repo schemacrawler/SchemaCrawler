@@ -99,7 +99,7 @@ public final class SchemaRetrievalOptionsBuilder
     supportsCatalogs = lookupSupportsCatalogs(metaData);
     supportsSchemas = lookupSupportsSchemas(metaData);
 
-    if (!overridesTypeMap.isPresent()) {
+    if (overridesTypeMap.isEmpty()) {
       overridesTypeMap = Optional.of(new TypeMap(connection));
     }
 

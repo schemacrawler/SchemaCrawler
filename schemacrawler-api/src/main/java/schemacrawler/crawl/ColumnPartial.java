@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Optional;
 import schemacrawler.schema.Column;
@@ -21,7 +22,7 @@ import schemacrawler.schema.Table;
 final class ColumnPartial extends AbstractDependantObject<Table>
     implements Column, PartialDatabaseObject {
 
-  private static final long serialVersionUID = 502720342852782630L;
+  @Serial private static final long serialVersionUID = 502720342852782630L;
 
   private Column referencedColumn;
 

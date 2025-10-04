@@ -10,11 +10,12 @@ package schemacrawler.test.utility;
 
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class DatabaseConnectionInfo implements Serializable {
 
-  private static final long serialVersionUID = 3513025340881301828L;
+  @Serial private static final long serialVersionUID = 3513025340881301828L;
 
   private final String host;
   private final int port;

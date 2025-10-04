@@ -16,7 +16,6 @@ import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Schema;
@@ -69,10 +68,9 @@ public class ProposedWeakAssociationsTestUtility {
         out.println("table: " + table.getFullName());
         final Collection<WeakAssociation> weakAssociations = table.getWeakAssociations();
         for (final WeakAssociation weakFk : weakAssociations) {
-          out.println(
-              String.format("  weak association (1 to %s):", findForeignKeyCardinality(weakFk)));
+          out.println("  weak association (1 to %s):".formatted(findForeignKeyCardinality(weakFk)));
           for (final ColumnReference weakAssociationColumnReference : weakFk) {
-            out.println(String.format("    column reference: %s", weakAssociationColumnReference));
+            out.println("    column reference: %s".formatted(weakAssociationColumnReference));
           }
         }
       }

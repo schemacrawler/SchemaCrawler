@@ -8,10 +8,12 @@
 
 package us.fatehi.utility.property;
 
+import java.io.Serial;
+
 /** Operating system information. */
 public final class OperatingSystemInfo extends BaseProductVersion {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  @Serial private static final long serialVersionUID = 4051323422934251828L;
 
   private static final OperatingSystemInfo OPERATING_SYSTEM_INFO = new OperatingSystemInfo();
 

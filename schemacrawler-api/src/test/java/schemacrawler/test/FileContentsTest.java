@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.string.FileContents;
@@ -48,7 +47,7 @@ public class FileContentsTest {
 
   @Test
   public void notReadable() throws IOException {
-    final FileContents fileContents = new FileContents(Paths.get("fakepath"));
+    final FileContents fileContents = new FileContents(Path.of("fakepath"));
     assertThat(fileContents.get(), is(""));
   }
 

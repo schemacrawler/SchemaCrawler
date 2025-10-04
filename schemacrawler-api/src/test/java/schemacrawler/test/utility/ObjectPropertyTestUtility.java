@@ -42,8 +42,7 @@ public class ObjectPropertyTestUtility {
       final Object object, final String property, final boolean value) throws Exception {
     setProperty(object, property, value);
     assertThat(
-        String.format(
-            "Failed to set %s/%s = %b", object.getClass().getSimpleName(), property, value),
+        "Failed to set %s/%s = %b".formatted(object.getClass().getSimpleName(), property, value),
         Boolean.valueOf(getProperty(object, property)),
         is(value));
   }
@@ -61,8 +60,7 @@ public class ObjectPropertyTestUtility {
       final Object object, final String property, final int value) throws Exception {
     setProperty(object, property, value);
     assertThat(
-        String.format(
-            "Failed to set %s/%s = %d", object.getClass().getSimpleName(), property, value),
+        "Failed to set %s/%s = %d".formatted(object.getClass().getSimpleName(), property, value),
         Integer.valueOf(getProperty(object, property)),
         is(value));
   }

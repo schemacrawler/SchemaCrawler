@@ -33,6 +33,6 @@ public enum PortableType {
 
   @Override
   public String toString() {
-    return String.format("[%s] %s", name(), description);
+    return "[%s] %s".formatted(name(), description);
   }
 }

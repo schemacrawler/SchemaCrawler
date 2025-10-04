@@ -9,8 +9,8 @@
 package com.example;
 
 import static us.fatehi.utility.Utility.isBlank;
+
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -76,6 +76,6 @@ public final class ExecutableExample {
     } else {
       outputfile = "./schemacrawler_output.html";
     }
-    return Paths.get(outputfile).toAbsolutePath().normalize();
+    return Path.of(outputfile).toAbsolutePath().normalize();
   }
 }

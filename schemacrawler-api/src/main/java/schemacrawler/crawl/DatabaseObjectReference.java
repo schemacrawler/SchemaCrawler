@@ -13,6 +13,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
@@ -22,7 +23,7 @@ import schemacrawler.schema.PartialDatabaseObject;
 
 class DatabaseObjectReference<D extends DatabaseObject> implements Serializable {
 
-  private static final long serialVersionUID = 1748828818899660921L;
+  @Serial private static final long serialVersionUID = 1748828818899660921L;
 
   private Reference<D> databaseObjectRef;
   private D partial;

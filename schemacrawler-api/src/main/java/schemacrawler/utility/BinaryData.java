@@ -8,13 +8,14 @@
 
 package schemacrawler.utility;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /** Placeholder for binary column data that was not retrieved from the database. */
 public final class BinaryData implements Serializable {
 
   /** */
-  private static final long serialVersionUID = -6452958466731992721L;
+  @Serial private static final long serialVersionUID = -6452958466731992721L;
 
   @Override
   public String toString() {

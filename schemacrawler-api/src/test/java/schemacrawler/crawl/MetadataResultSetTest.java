@@ -103,8 +103,7 @@ public class MetadataResultSetTest {
                 DatabaseUtility.executeSql(statement, sql), "booleanValues-true")) {
           while (results.next()) {
             final boolean booleanValue = results.getBoolean(column1Name);
-            assertThat(
-                String.format("Incorrect boolean value for '%s'", value), booleanValue, is(true));
+            assertThat("Incorrect boolean value for '%s'".formatted(value), booleanValue, is(true));
           }
         }
       }
@@ -119,7 +118,7 @@ public class MetadataResultSetTest {
           while (results.next()) {
             final boolean booleanValue = results.getBoolean(column1Name);
             assertThat(
-                String.format("Incorrect boolean value for '%s'", value), booleanValue, is(false));
+                "Incorrect boolean value for '%s'".formatted(value), booleanValue, is(false));
           }
         }
       }
@@ -179,7 +178,7 @@ public class MetadataResultSetTest {
               "CHARACTER(1) ", "VARCHAR(1)", "CLOB", "BINARY(1)", "VARBINARY(1)", "BLOB")) {
 
         statement.execute("DROP TABLE IF EXISTS TABLE1");
-        statement.execute(String.format("CREATE TABLE TABLE1(COLUMN1 %s)", dataType));
+        statement.execute("CREATE TABLE TABLE1(COLUMN1 %s)".formatted(dataType));
 
         if (dataType.contains("BINARY") || dataType.equals("BLOB")) {
           final PreparedStatement preparedStatement =

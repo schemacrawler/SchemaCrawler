@@ -14,6 +14,7 @@ import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalTime;
@@ -22,7 +23,7 @@ import java.time.format.DateTimeFormatterBuilder;
 
 final class TimedTaskResult implements Serializable {
 
-  private static final long serialVersionUID = -6572177882937039431L;
+  @Serial private static final long serialVersionUID = -6572177882937039431L;
 
   private static final DateTimeFormatter df =
       new DateTimeFormatterBuilder()
@@ -61,6 +62,6 @@ final class TimedTaskResult implements Serializable {
   @Override
   public String toString() {
     final LocalTime durationLocal = LocalTime.ofNanoOfDay(duration.toNanos());
-    return String.format("%s - <%s>", durationLocal.format(df), taskName);
+    return "%s - <%s>".formatted(durationLocal.format(df), taskName);
   }
 }

@@ -6,19 +6,16 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
 import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 import static us.fatehi.utility.IOUtility.readResourceFully;
-
 import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -31,16 +28,12 @@ public class GraphExecutorFactory {
   public void canGenerate(final DiagramOutputFormat diagramOutputFormat) {
     if (diagramOutputFormat == null) {
       throw new ConfigurationException("No diagram output format specified");
-    } else if (diagramOutputFormat == scdot) {
-      return;
-    } else if (isGraphvizAvailable()) {
-      return;
-    } else if (isGraphvizJavaAvailable(diagramOutputFormat)) {
-      return;
-    } else {
-      throw new ExecutionRuntimeException(
-          String.format("Cannot generate diagram in <%s> output format", diagramOutputFormat));
     }
+    if ((diagramOutputFormat == scdot) || isGraphvizAvailable() || isGraphvizJavaAvailable(diagramOutputFormat)) {
+      return;
+    }
+    throw new ExecutionRuntimeException(
+        "Cannot generate diagram in <%s> output format".formatted(diagramOutputFormat));
   }
 
   public GraphExecutor getGraphExecutor(
@@ -58,12 +51,6 @@ public class GraphExecutorFactory {
       graphExecutor =
           new GraphvizProcessExecutor(dotFile, outputFile, diagramOutputFormat, graphvizOpts);
       graphExecutorAvailable = graphExecutor.canGenerate();
-
-      // Try 2: Use Java library for Graphviz
-      if (!graphExecutorAvailable) {
-        graphExecutor = new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);
-        graphExecutorAvailable = graphExecutor.canGenerate();
-      }
 
       if (!graphExecutorAvailable) {
         final String message = readResourceFully("/dot.error.txt");

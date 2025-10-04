@@ -6,14 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.script;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.script.ScriptEngineManager;
-
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
@@ -56,7 +53,7 @@ public final class ScriptEngineExecutor extends AbstractScriptEngineExecutor {
 
     if (scriptEngine == null) {
       throw new InternalRuntimeException(
-          String.format("Script engine not found for language <%s>", scriptingLanguage));
+          "Script engine not found for language <%s>".formatted(scriptingLanguage));
     }
   }
 }

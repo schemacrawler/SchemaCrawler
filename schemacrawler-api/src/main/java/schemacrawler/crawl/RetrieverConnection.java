@@ -58,7 +58,7 @@ final class RetrieverConnection {
         Level.FINE,
         () -> {
           if (!isBlank(reason)) {
-            return String.format("Getting database connnection for %s", reason);
+            return "Getting database connnection for %s".formatted(reason);
           }
           return "Getting database connnection";
         });

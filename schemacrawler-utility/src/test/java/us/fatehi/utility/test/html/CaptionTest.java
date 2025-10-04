@@ -46,7 +46,7 @@ public class CaptionTest {
     final String renderedHtml = caption.render(TagOutputFormat.html);
     assertThat(renderedHtml, is(not(nullValue())));
 
-    final Document doc = Jsoup.parseBodyFragment(String.format("<table>%s</table>", renderedHtml));
+    final Document doc = Jsoup.parseBodyFragment("<table>%s</table>".formatted(renderedHtml));
     final Element captionElement = doc.select("caption").first();
 
     assertThat(captionElement.attr("sometag"), is("customvalue"));

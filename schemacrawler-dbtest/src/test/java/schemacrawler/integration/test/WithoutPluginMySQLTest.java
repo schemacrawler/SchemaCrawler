@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.util.Properties;
 import org.junit.jupiter.api.BeforeEach;
@@ -115,7 +114,7 @@ public class WithoutPluginMySQLTest extends BaseAdditionalDatabaseTest {
     executableDetails.setAdditionalConfiguration(
         SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = String.format("testMySQLWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testMySQLWithConnection.txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));

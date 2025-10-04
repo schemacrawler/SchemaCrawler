@@ -173,16 +173,16 @@ public final class SchemaCrawlerOptionsConfig {
 
   private static String getExcludePatternProperty(
       final DatabaseObjectRuleForInclusion ruleForInclusion) {
-    return String.format("schemacrawler.%s.pattern.exclude", ruleForInclusion.getKey());
+    return "schemacrawler.%s.pattern.exclude".formatted(ruleForInclusion.getKey());
   }
 
   private static String getIncludePatternProperty(
       final DatabaseObjectRuleForInclusion ruleForInclusion) {
-    return String.format("schemacrawler.%s.pattern.include", ruleForInclusion.getKey());
+    return "schemacrawler.%s.pattern.include".formatted(ruleForInclusion.getKey());
   }
 
   private static String getLimitTypesProperty(
       final DatabaseObjectInfoRetrieval databaseObjectType) {
-    return String.format("schemacrawler.%s.types", databaseObjectType.name());
+    return "schemacrawler.%s.types".formatted(databaseObjectType.name());
   }
 }

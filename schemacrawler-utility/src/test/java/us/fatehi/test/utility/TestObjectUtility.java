@@ -72,8 +72,7 @@ public class TestObjectUtility {
           return rowIndex < data.length;
         case "getColumnName":
         case "getColumnLabel":
-          if (args[0] instanceof Integer) {
-            final int index = (Integer) args[0];
+          if (args[0] instanceof Integer index) {
             return columnNames[index];
           }
           return "columnName";
@@ -89,11 +88,10 @@ public class TestObjectUtility {
         case "getShort":
           wasNull = false;
           int index = -1;
-          if (args[0] instanceof Integer) {
-            index = (Integer) args[0] - 1;
+          if (args[0] instanceof Integer integer) {
+            index = integer - 1;
           }
-          if (args[0] instanceof String) {
-            final String columnName = (String) args[0];
+          if (args[0] instanceof String columnName) {
             index = Arrays.asList(columnNames).indexOf(columnName);
           }
           Object columnData;
@@ -105,7 +103,7 @@ public class TestObjectUtility {
           if (columnData == null) {
             wasNull = true;
             if ("getInt".equals(methodName) || "getShort".equals(methodName)) {
-              throw new SQLException(String.format("Cannot convert <null> to an integer"));
+              throw new SQLException("Cannot convert <null> to an integer".formatted());
             }
             return null;
           }
@@ -130,7 +128,7 @@ public class TestObjectUtility {
         case "toString":
           return "ResultSet: " + resultSetDescription;
         default:
-          fail(String.format("%s(%s)", method, args));
+          fail("%s(%s)".formatted(method, args));
           return null;
       }
     }

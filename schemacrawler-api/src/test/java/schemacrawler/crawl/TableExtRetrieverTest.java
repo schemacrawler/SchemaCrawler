@@ -204,7 +204,7 @@ public class TableExtRetrieverTest {
           continue;
         }
         assertThat(
-            String.format("<%s> remarks do not match expected", constraint),
+            "<%s> remarks do not match expected".formatted(constraint),
             constraint.getRemarks(),
             is(remarks));
         // NOTE: Table constraint definition is not set

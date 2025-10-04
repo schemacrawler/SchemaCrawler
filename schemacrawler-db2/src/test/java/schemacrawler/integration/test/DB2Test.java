@@ -21,7 +21,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -112,7 +111,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     executableDetails.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executableDetails.setAdditionalConfiguration(config);
 
-    final String expectedResource = String.format("testDB2WithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testDB2WithConnection.txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));

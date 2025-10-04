@@ -189,7 +189,7 @@ final class TableExtRetriever extends AbstractRetriever {
 
         final Optional<MutableTable> tableOptional =
             lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent()) {
+        if (tableOptional.isEmpty()) {
           LOGGER.log(
               Level.FINE,
               new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
@@ -221,7 +221,7 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.FINER, "Retrieving additional column attributes: " + columnName);
 
     final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
-    if (!tableOptional.isPresent()) {
+    if (tableOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));
@@ -230,7 +230,7 @@ final class TableExtRetriever extends AbstractRetriever {
 
     final MutableTable table = tableOptional.get();
     final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-    if (!columnOptional.isPresent()) {
+    if (columnOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat(
@@ -251,7 +251,7 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.FINER, "Retrieving additional table attributes: " + tableName);
 
     final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, tableName);
-    if (!tableOptional.isPresent()) {
+    if (tableOptional.isEmpty()) {
       LOGGER.log(
           Level.FINE,
           new StringFormat("Cannot find table <%s.%s.%s>", catalogName, schemaName, tableName));

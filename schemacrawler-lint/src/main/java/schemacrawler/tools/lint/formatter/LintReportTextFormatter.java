@@ -6,16 +6,16 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint.formatter;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -108,12 +108,12 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
         continue;
       }
 
-      formattingHelper.writeNameRow("", String.format("[lint, %s]", severity));
+      formattingHelper.writeNameRow("", "[lint, %s]".formatted(severity));
       final List<Lint<?>> lintsById = new ArrayList<>(multiMap.get(severity));
       for (final Lint<?> lint : lintsById) {
         final Object lintValue = lint.getValue();
-        if (lintValue instanceof Boolean) {
-          if ((Boolean) lintValue) {
+        if (lintValue instanceof Boolean boolean1) {
+          if (boolean1) {
             formattingHelper.writeRow("", lint.getMessage(), "");
           }
         } else {

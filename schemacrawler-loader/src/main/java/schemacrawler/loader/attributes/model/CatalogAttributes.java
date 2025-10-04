@@ -10,13 +10,15 @@ package schemacrawler.loader.attributes.model;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
+
 import java.beans.ConstructorProperties;
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
 public final class CatalogAttributes extends ObjectAttributes {
 
-  private static final long serialVersionUID = 1436642683972751860L;
+  @Serial private static final long serialVersionUID = 1436642683972751860L;
 
   private final List<TableAttributes> tables;
   private final List<WeakAssociationAttributes> weakAssociations;

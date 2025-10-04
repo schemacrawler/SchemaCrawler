@@ -42,8 +42,8 @@ public class NamedObjectSortTest {
       if (o == null) {
         return -1;
       }
-      if (o instanceof NewNamedObject) {
-        return Integer.compare(value, ((NewNamedObject) o).value);
+      if (o instanceof NewNamedObject object) {
+        return Integer.compare(value, object.value);
       } else {
         return -1;
       }

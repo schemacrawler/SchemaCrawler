@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.Table;
@@ -15,7 +16,7 @@ import schemacrawler.schema.Table;
 /** Represents a column in a result set. */
 final class MutableResultsColumn extends AbstractColumn<Table> implements ResultsColumn {
 
-  private static final long serialVersionUID = -6983013302549352559L;
+  @Serial private static final long serialVersionUID = -6983013302549352559L;
 
   private transient NamedObjectKey key;
   private boolean autoIncrement;

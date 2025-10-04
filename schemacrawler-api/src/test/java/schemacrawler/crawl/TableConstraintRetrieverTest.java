@@ -182,12 +182,12 @@ public class TableConstraintRetrieverTest {
     // Create a list of tables to retrieve constraints for
     final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
     for (final Table table : catalog.getTables()) {
-      if (table instanceof MutableTable) {
+      if (table instanceof MutableTable mutableTable) {
         final Collection<TableConstraint> tableConstraints = table.getTableConstraints();
         for (final TableConstraint constraint : tableConstraints) {
           assertThat(constraint.getType(), is(in(EnumSet.of(primary_key, foreign_key))));
         }
-        allTables.add((MutableTable) table);
+        allTables.add(mutableTable);
       }
     }
 
@@ -243,8 +243,8 @@ public class TableConstraintRetrieverTest {
     final NamedObjectList<MutableTable> allTables = new NamedObjectList<>();
     for (final Schema schema : catalog.getSchemas()) {
       for (final Table table : catalog.getTables(schema)) {
-        if (table instanceof MutableTable) {
-          allTables.add((MutableTable) table);
+        if (table instanceof MutableTable mutableTable) {
+          allTables.add(mutableTable);
         }
       }
     }

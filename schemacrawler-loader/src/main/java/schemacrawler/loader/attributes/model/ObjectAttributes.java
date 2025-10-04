@@ -17,6 +17,7 @@ import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public abstract class ObjectAttributes implements Serializable, Comparable<ObjectAttributes> {
 
-  private static final long serialVersionUID = -6819484903391182146L;
+  @Serial private static final long serialVersionUID = -6819484903391182146L;
 
   private static Comparator<ObjectAttributes> comparator =
       nullsLast(comparing(ObjectAttributes::getName, String.CASE_INSENSITIVE_ORDER));
@@ -84,6 +85,6 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
 
   @Override
   public String toString() {
-    return String.format("<%s>", getName());
+    return "<%s>".formatted(getName());
   }
 }

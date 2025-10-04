@@ -104,15 +104,15 @@ public class TableTypesTest {
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas) {
-        out.println(String.format("%s", schema.getFullName()));
+        out.println("%s".formatted(schema.getFullName()));
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables) {
-          out.println(String.format("  %s [%s]", table.getName(), table.getTableType()));
+          out.println("  %s [%s]".formatted(table.getName(), table.getTableType()));
           final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column : columns) {
-            out.println(String.format("    %s [%s]", column.getName(), column.getColumnDataType()));
+            out.println("    %s [%s]".formatted(column.getName(), column.getColumnDataType()));
           }
         }
       }

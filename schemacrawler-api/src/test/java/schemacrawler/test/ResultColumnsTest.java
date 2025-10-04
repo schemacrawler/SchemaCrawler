@@ -73,7 +73,7 @@ public class ResultColumnsTest {
           out.println("column: " + column.getFullName());
           final Map<String, Object> properties = new TreeMap<>(describe(column));
           for (final Map.Entry<String, Object> property : properties.entrySet()) {
-            out.println(String.format("  %s: %s", property.getKey(), property.getValue()));
+            out.println("  %s: %s".formatted(property.getKey(), property.getValue()));
           }
           out.println(
               "  database type: " + column.getColumnDataType().getDatabaseSpecificTypeName());

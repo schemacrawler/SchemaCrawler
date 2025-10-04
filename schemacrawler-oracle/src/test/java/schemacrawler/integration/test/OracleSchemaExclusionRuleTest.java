@@ -12,7 +12,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.server.oracle.OracleSchemaExclusionRule;
 
 public class OracleSchemaExclusionRuleTest {
@@ -24,9 +23,8 @@ public class OracleSchemaExclusionRuleTest {
     final String[] closeEnoughs = new String[] {"ORDDAT", "SYSTEM", "APEX_12345", "FLOWS_1234567"};
     for (final String closeEnough : closeEnoughs) {
       assertThat(
-          String.format(
-              "<%s> - exclude close enough strings - inclusion rule should evaluate to true",
-              closeEnough),
+          "<%s> - exclude close enough strings - inclusion rule should evaluate to true"
+              .formatted(closeEnough),
           exclusionRule.test(closeEnough),
           is(true));
     }
@@ -39,7 +37,7 @@ public class OracleSchemaExclusionRuleTest {
     final String[] empties = new String[] {null, "", "\t", "  "};
     for (final String empty : empties) {
       assertThat(
-          String.format("<%s> - exclude empties - inclusion rule should evaluate to false", empty),
+          "<%s> - exclude empties - inclusion rule should evaluate to false".formatted(empty),
           exclusionRule.test(empty),
           is(false));
     }
@@ -52,8 +50,7 @@ public class OracleSchemaExclusionRuleTest {
     final String[] valids = new String[] {"ORDDATA", "\"SYSTEM\"", "APEX_123456", "FLOWS_12345"};
     for (final String valid : valids) {
       assertThat(
-          String.format(
-              "<%s> - include valid schemas - inclusion rule should evaluate to false", valid),
+          "<%s> - include valid schemas - inclusion rule should evaluate to false".formatted(valid),
           exclusionRule.test(valid),
           is(false));
     }

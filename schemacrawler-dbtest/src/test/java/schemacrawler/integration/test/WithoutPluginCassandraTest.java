@@ -15,7 +15,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.net.InetSocketAddress;
 import java.util.regex.Pattern;
@@ -58,8 +57,8 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
     final String keyspace = "books";
     final String localDatacenter = dbContainer.getLocalDatacenter();
     final String connectionUrl =
-        String.format(
-            "jdbc:cassandra://%s:%d/%s?localdatacenter=%s", host, port, keyspace, localDatacenter);
+        "jdbc:cassandra://%s:%d/%s?localdatacenter=%s"
+            .formatted(host, port, keyspace, localDatacenter);
     // System.out.printf("url=%s%n", connectionUrl);
     createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
   }
@@ -87,8 +86,7 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource =
-        String.format("testCassandraWithConnection.%s.txt", javaVersion());
+    final String expectedResource = "testCassandraWithConnection.txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

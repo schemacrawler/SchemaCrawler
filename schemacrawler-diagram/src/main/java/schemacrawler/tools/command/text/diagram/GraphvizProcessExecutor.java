@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
 import static java.nio.file.Files.copy;
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.ProcessExecutor;
 import us.fatehi.utility.string.FileContents;
@@ -116,9 +114,8 @@ final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
 
       LOGGER.log(
           Level.SEVERE,
-          String.format(
-              "Error generating diagram%nGenerate your diagram manually, using:%n%s",
-              String.join(" ", command)));
+          "Error generating diagram%nGenerate your diagram manually, using:%n%s"
+              .formatted(String.join(" ", command)));
     } catch (final IOException e) {
       LOGGER.log(Level.WARNING, "Could not retain generated DOT file", e);
     }

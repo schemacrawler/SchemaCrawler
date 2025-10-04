@@ -78,7 +78,7 @@ public final class RetrievalCounts {
 
   @Override
   public String toString() {
-    return String.format("%d/%d %s", includedCount, count, name);
+    return "%d/%d %s".formatted(includedCount, count, name);
   }
 
   public void count() {
@@ -143,9 +143,8 @@ public final class RetrievalCounts {
     if (LOGGER.isLoggable(level)) {
       LOGGER.log(
           level,
-          String.format(
-              "Processed %d/%d %s %s",
-              includedCount, count, name, key == null ? "" : " for " + key));
+          "Processed %d/%d %s %s"
+              .formatted(includedCount, count, name, key == null ? "" : " for " + key));
     }
   }
 }

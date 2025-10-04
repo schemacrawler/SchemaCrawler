@@ -10,9 +10,11 @@ package schemacrawler.schemacrawler.exceptions;
 
 import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
+import java.io.Serial;
+
 public class SchemaCrawlerException extends RuntimeException {
 
-  private static final long serialVersionUID = 3257848770627713076L;
+  @Serial private static final long serialVersionUID = 3257848770627713076L;
 
   public SchemaCrawlerException(final String message) {
     super(message);

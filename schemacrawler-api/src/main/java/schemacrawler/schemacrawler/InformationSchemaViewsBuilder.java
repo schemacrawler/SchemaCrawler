@@ -66,7 +66,7 @@ public final class InformationSchemaViewsBuilder
     }
 
     for (final InformationSchemaKey key : InformationSchemaKey.values()) {
-      final String resource = String.format("%s/%s.sql", classpath, key);
+      final String resource = "%s/%s.sql".formatted(classpath, key);
       final String sql = readResourceFully(resource);
       if (!isBlank(sql)) {
         informationSchemaQueries.put(key, sql);

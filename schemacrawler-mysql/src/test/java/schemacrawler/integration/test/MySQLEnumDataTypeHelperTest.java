@@ -14,6 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.enumerated_column;
 import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.not_enumerated;
+
 import java.sql.Connection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -71,7 +72,7 @@ public class MySQLEnumDataTypeHelperTest {
           helper.getEnumDataTypeInfo(column, columnDataType, connection);
 
       assertThat(
-          String.format("Failure COLUMN_TYPE=%s", badValue),
+          "Failure COLUMN_TYPE=%s".formatted(badValue),
           enumDataTypeInfo.getType(),
           is(not_enumerated));
 

@@ -61,7 +61,7 @@ public abstract class BaseCommand<C, R> implements Command<C, R> {
   public final void setConnection(final Connection connection) {
     if (!usesConnection()) {
       throw new ExecutionRuntimeException(
-          String.format("<%s> does not use a connection", command.getName()));
+          "<%s> does not use a connection".formatted(command.getName()));
     }
     this.connection = connection;
   }

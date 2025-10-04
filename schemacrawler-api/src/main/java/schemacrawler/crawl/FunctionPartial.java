@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Optional;
 import schemacrawler.schema.Function;
@@ -19,7 +20,7 @@ import schemacrawler.schema.RoutineType;
 
 final class FunctionPartial extends RoutinePartial implements Function {
 
-  private static final long serialVersionUID = -1529756351918040452L;
+  @Serial private static final long serialVersionUID = -1529756351918040452L;
 
   FunctionPartial(final Function function) {
     super(requireNonNull(function, "No function provided").getSchema(), function.getName());

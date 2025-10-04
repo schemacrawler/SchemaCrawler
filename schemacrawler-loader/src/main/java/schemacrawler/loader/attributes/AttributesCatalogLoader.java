@@ -9,11 +9,12 @@
 package schemacrawler.loader.attributes;
 
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
@@ -87,9 +88,8 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                     .orElseThrow(
                         () ->
                             new IORuntimeException(
-                                String.format(
-                                    "Cannot locate catalog attributes file <%s>",
-                                    catalogAttributesFile)));
+                                "Cannot locate catalog attributes file <%s>"
+                                    .formatted(catalogAttributesFile)));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
             loadRemarks(catalog, catalogAttributes);
             loadAlternateKeys(catalog, catalogAttributes);
@@ -119,7 +119,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
 
       final Optional<PrimaryKey> optionalAlternateKey =
           alternateKeyBuilder.addAlternateKey(alternateKeyDefinition);
-      if (!optionalAlternateKey.isPresent()) {
+      if (optionalAlternateKey.isEmpty()) {
         continue;
       }
       final PrimaryKey alternateKey = optionalAlternateKey.get();
@@ -137,7 +137,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       final Optional<Table> lookupTable =
           catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
       final Table table;
-      if (!lookupTable.isPresent()) {
+      if (lookupTable.isEmpty()) {
         LOGGER.log(Level.CONFIG, new StringFormat("Table %s not found", tableAttributes));
         continue;
       }

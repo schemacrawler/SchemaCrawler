@@ -29,7 +29,7 @@ abstract class BaseInputResource implements InputResource {
     final InputStream inputStream = openNewInputStream();
 
     final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
-    LOGGER.log(Level.FINE, String.format("Opened resource <%s> for reading", getDescription()));
+    LOGGER.log(Level.FINE, "Opened resource <%s> for reading".formatted(getDescription()));
 
     return reader;
   }

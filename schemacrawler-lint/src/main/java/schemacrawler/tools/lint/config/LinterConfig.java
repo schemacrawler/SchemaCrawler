@@ -6,17 +6,16 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint.config;
 
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.beans.ConstructorProperties;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.lint.LintSeverity;
@@ -25,7 +24,7 @@ import us.fatehi.utility.ObjectToString;
 
 public final class LinterConfig implements Serializable, Comparable<LinterConfig> {
 
-  private static final long serialVersionUID = 83079182550531365L;
+  @Serial private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
   private final Map<String, Object> config;

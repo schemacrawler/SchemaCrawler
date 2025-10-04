@@ -66,7 +66,7 @@ public final class WeakAssociationBuilder implements Builder<TableReference> {
 
     @Override
     public String toString() {
-      return String.format("weak-association <%s.%s.%s>", schema, tableName, columnName);
+      return "weak-association <%s.%s.%s>".formatted(schema, tableName, columnName);
     }
   }
 
@@ -192,11 +192,11 @@ public final class WeakAssociationBuilder implements Builder<TableReference> {
       return Optional.of(optionalMatchingWeakAssociation.get());
     }
     // Add weak association to tables if no matching foreign key is found
-    if (referencedTable instanceof MutableTable) {
-      ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
+    if (referencedTable instanceof MutableTable table) {
+      table.addWeakAssociation(weakAssociation);
     }
-    if (dependentTable instanceof MutableTable) {
-      ((MutableTable) dependentTable).addWeakAssociation(weakAssociation);
+    if (dependentTable instanceof MutableTable table) {
+      table.addWeakAssociation(weakAssociation);
     }
 
     return Optional.of(weakAssociation);

@@ -16,13 +16,14 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.io.BufferedReader;
 import java.net.URI;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,7 +40,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static us.fatehi.utility.Utility.isBlank;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public class DatabaseScriptsTest {
@@ -97,9 +97,9 @@ public class DatabaseScriptsTest {
     @Override
     public String toString() {
       if (section[1] == 0) {
-        return String.format("%02d_%s", section[0], name[0]);
+        return "%02d_%s".formatted(section[0], name[0]);
       }
-      return String.format("%02d_%s_%02d_%s", section[0], name[0], section[1], name[1]);
+      return "%02d_%s_%02d_%s".formatted(section[0], name[0], section[1], name[1]);
     }
   }
 
@@ -139,9 +139,9 @@ public class DatabaseScriptsTest {
             error = "duplicate";
           }
           final String message =
-              String.format(
-                  "%s: %s %s",
-                  scriptName, error, databaseScriptSectionIntegerEntry.getKey().toString());
+              "%s: %s %s"
+                  .formatted(
+                      scriptName, error, databaseScriptSectionIntegerEntry.getKey().toString());
           failedScripts.add(message);
         }
       }
@@ -175,7 +175,7 @@ public class DatabaseScriptsTest {
     final PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
 
     final URI uri = ClassLoader.getSystemResource("").toURI();
-    final Path resourcesPath = Paths.get(uri).resolve("../../src/main/resources");
+    final Path resourcesPath = Path.of(uri).resolve("../../src/main/resources");
     System.out.println(resourcesPath);
     try (final Stream<Path> paths = Files.walk(resourcesPath)) {
       final List<String> resources =

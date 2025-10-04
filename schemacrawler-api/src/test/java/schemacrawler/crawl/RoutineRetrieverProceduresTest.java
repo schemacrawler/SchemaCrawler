@@ -105,9 +105,11 @@ public class RoutineRetrieverProceduresTest {
       Arrays.sort(procedures, NamedObjectSort.alphabetical);
       for (final Routine procedure : procedures) {
         out.println(
-            String.format(
-                "%s (%s) [%s]",
-                procedure.getFullName(), procedure.getSpecificName(), procedure.getRoutineType()));
+            "%s (%s) [%s]"
+                .formatted(
+                    procedure.getFullName(),
+                    procedure.getSpecificName(),
+                    procedure.getRoutineType()));
       }
     }
     assertThat(

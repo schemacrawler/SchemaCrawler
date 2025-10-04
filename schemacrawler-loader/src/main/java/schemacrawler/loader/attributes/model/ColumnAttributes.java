@@ -9,12 +9,13 @@
 package schemacrawler.loader.attributes.model;
 
 import java.beans.ConstructorProperties;
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
 public class ColumnAttributes extends ObjectAttributes {
 
-  private static final long serialVersionUID = -7531479565539199840L;
+  @Serial private static final long serialVersionUID = -7531479565539199840L;
 
   @ConstructorProperties({"name", "remarks", "attributes"})
   public ColumnAttributes(

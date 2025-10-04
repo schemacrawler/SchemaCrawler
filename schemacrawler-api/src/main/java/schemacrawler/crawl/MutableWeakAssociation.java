@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import java.io.Serial;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.WeakAssociation;
@@ -15,7 +16,7 @@ import schemacrawler.schema.WeakAssociation;
 /** Represents a foreign-key mapping to a primary key in another table. */
 final class MutableWeakAssociation extends AbstractTableReference implements WeakAssociation {
 
-  private static final long serialVersionUID = -5164664131926303038L;
+  @Serial private static final long serialVersionUID = -5164664131926303038L;
 
   public MutableWeakAssociation(final String name, final ColumnReference columnReference) {
     super(name, columnReference);

@@ -6,8 +6,9 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.formatter.serialize;
+
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.string.StringFormat;
 
 final class CatalogModelInputStream extends ObjectInputStream {
@@ -53,6 +53,6 @@ final class CatalogModelInputStream extends ObjectInputStream {
         return;
       }
     }
-    throw new InvalidClassException(String.format("Not deserializing class <%s>", className));
+    throw new InvalidClassException("Not deserializing class <%s>".formatted(className));
   }
 }

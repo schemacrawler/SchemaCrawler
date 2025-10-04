@@ -212,7 +212,7 @@ public class ProcedureParameterRetrieverTest extends AbstractParameterRetrieverT
       }
     };
 
-    final String resultSetDescription = String.format("Procedure parameters for <%s>", routineName);
+    final String resultSetDescription = "Procedure parameters for <%s>".formatted(routineName);
     return TestObjectUtility.mockResultSet(resultSetDescription, columnNames, data);
   }
 }

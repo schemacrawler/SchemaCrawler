@@ -75,9 +75,8 @@ public final class PasswordOptions {
       passwordEnvironment = System.getenv(passwordEnvironmentVariable);
     } catch (final Exception e) {
       throw new IllegalArgumentException(
-          String.format(
-              "Password could not be read from environmental variable <%s>",
-              passwordEnvironmentVariable),
+          "Password could not be read from environmental variable <%s>"
+              .formatted(passwordEnvironmentVariable),
           e);
     }
 
@@ -97,7 +96,7 @@ public final class PasswordOptions {
       }
     } catch (final IOException e) {
       throw new IORuntimeException(
-          String.format("Password could not be read from file <%s>", passwordFile), e);
+          "Password could not be read from file <%s>".formatted(passwordFile), e);
     }
 
     return password;

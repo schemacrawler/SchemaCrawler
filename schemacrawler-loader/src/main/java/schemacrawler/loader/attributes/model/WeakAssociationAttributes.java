@@ -9,13 +9,15 @@
 package schemacrawler.loader.attributes.model;
 
 import static java.util.Objects.requireNonNull;
+
 import java.beans.ConstructorProperties;
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
 public class WeakAssociationAttributes extends ObjectAttributes {
 
-  private static final long serialVersionUID = 8305929253225133307L;
+  @Serial private static final long serialVersionUID = 8305929253225133307L;
 
   private final TableAttributes dependentTable;
   private final TableAttributes referencedTable;

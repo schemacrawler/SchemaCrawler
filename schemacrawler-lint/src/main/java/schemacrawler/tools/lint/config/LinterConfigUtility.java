@@ -6,23 +6,20 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint.config;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import us.fatehi.utility.UtilityMarker;
@@ -49,8 +46,8 @@ public final class LinterConfigUtility {
               .orElseThrow(
                   () ->
                       new ConfigurationException(
-                          String.format(
-                              "Could not load linter configs from file <%s>", linterConfigsFile)));
+                          "Could not load linter configs from file <%s>"
+                              .formatted(linterConfigsFile)));
       try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
         final List<LinterConfig> linterConfigsList = readLinterConfigs(reader);
         for (final LinterConfig linterConfig : linterConfigsList) {
@@ -58,7 +55,7 @@ public final class LinterConfigUtility {
         }
       } catch (final Exception e) {
         throw new ConfigurationException(
-            String.format("Could not load linter configs from file <%s>", linterConfigsFile), e);
+            "Could not load linter configs from file <%s>".formatted(linterConfigsFile), e);
       }
     }
     return linterConfigs;

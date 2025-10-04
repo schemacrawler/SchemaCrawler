@@ -146,7 +146,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
 
     final String routineTypeDetail =
-        String.format("%s, %s", routine.getRoutineType(), routine.getReturnType());
+        "%s, %s".formatted(routine.getRoutineType(), routine.getReturnType());
     final String routineName = quoteName(routine);
     final String routineType = "[" + routineTypeDetail + "]";
 
@@ -228,11 +228,11 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String referencedObjectName = quoteName(synonym.getReferencedObject());
       formattingHelper.writeDetailRow(
           "",
-          String.format(
-              "%s %s %s",
-              identifiers.quoteName(synonym),
-              formattingHelper.createRightArrow(),
-              referencedObjectName),
+          "%s %s %s"
+              .formatted(
+                  identifiers.quoteName(synonym),
+                  formattingHelper.createRightArrow(),
+                  referencedObjectName),
           "");
     }
 
@@ -366,8 +366,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           "is JDBC compliant", Boolean.toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
       formattingHelper.writeNameValueRow(
           "supported JDBC version",
-          String.format(
-              "%d.%d", driverInfo.getJdbcMajorVersion(), driverInfo.getJdbcMinorVersion()),
+          "%d.%d".formatted(driverInfo.getJdbcMajorVersion(), driverInfo.getJdbcMinorVersion()),
           Alignment.inherit);
     }
     formattingHelper.writeObjectEnd();
@@ -552,7 +551,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   private void printColumnDataType(final ColumnDataType columnDataType) {
 
     final boolean isUserDefined = columnDataType.getType() == user_defined;
-    final String dataType = String.format("[%sdata type]", isUserDefined ? "user defined " : "");
+    final String dataType = "[%sdata type]".formatted(isUserDefined ? "user defined " : "");
 
     final String typeName;
     if (options.isShowUnqualifiedNames()) {
@@ -635,7 +634,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       String keySequenceString = "";
       if (options.isShowOrdinalNumbers()) {
         final int keySequence = columnRef.getKeySequence();
-        keySequenceString = String.format("%2d", keySequence);
+        keySequenceString = "%2d".formatted(keySequence);
       }
 
       final String relationship;
@@ -651,7 +650,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
                 ? formattingHelper.createLeftArrow()
                 : formattingHelper.createWeakLeftArrow();
         relationship =
-            String.format("%s %s%s %s", pkColumnName, arrow, fkCardinality.toString(), fkHyperlink);
+            "%s %s%s %s".formatted(pkColumnName, arrow, fkCardinality.toString(), fkHyperlink);
       } else {
         final String pkHyperlink;
         if (isPkColumnFiltered) {
@@ -664,7 +663,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
                 ? formattingHelper.createRightArrow()
                 : formattingHelper.createWeakRightArrow();
         relationship =
-            String.format("%s %s%s %s", fkColumnName, fkCardinality.toString(), arrow, pkHyperlink);
+            "%s %s%s %s".formatted(fkColumnName, fkCardinality.toString(), arrow, pkHyperlink);
       }
       formattingHelper.writeDetailRow(keySequenceString, relationship, "", false, false, "");
     }
@@ -838,12 +837,12 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           final String grantor = isBlank(grant.getGrantor()) ? "" : grant.getGrantor();
           final String grantee = isBlank(grant.getGrantee()) ? "" : grant.getGrantee();
           final String grantedFrom =
-              String.format(
-                  "%s %s %s%s",
-                  grantor,
-                  formattingHelper.createRightArrow(),
-                  grantee,
-                  grant.isGrantable() ? " (grantable)" : "");
+              "%s %s %s%s"
+                  .formatted(
+                      grantor,
+                      formattingHelper.createRightArrow(),
+                      grantee,
+                      grant.isGrantable() ? " (grantable)" : "");
           formattingHelper.writeDetailRow("", grantedFrom, "");
         }
       }
@@ -941,7 +940,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       return;
     }
     final String enumValues =
-        String.format("'%s'", String.join("', ", column.getColumnDataType().getEnumValues()));
+        "'%s'".formatted(String.join("', ", column.getColumnDataType().getEnumValues()));
     formattingHelper.writeDetailRow("", "", enumValues);
   }
 
@@ -1000,8 +999,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String columnDetails;
 
       boolean emphasize = false;
-      if (column instanceof IndexColumn) {
-        columnDetails = ((IndexColumn) column).getSortSequence().name();
+      if (column instanceof IndexColumn indexColumn) {
+        columnDetails = indexColumn.getSortSequence().name();
       } else if (column instanceof TableConstraintColumn) {
         columnDetails = "";
       } else {
@@ -1032,8 +1031,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         printTableColumnHidden(column);
         printTableColumnRemarks(column);
 
-        if (column instanceof DefinedObject) {
-          printDependantObjectDefinition((DefinedObject) column);
+        if (column instanceof DefinedObject object) {
+          printDependantObjectDefinition(object);
         }
       }
     }

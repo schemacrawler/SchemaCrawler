@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.sitegen;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -15,12 +14,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.lint.LinterHelp;
@@ -42,7 +38,7 @@ public class SiteLinterHelpTest {
 
   @Test
   public void linterHelp() throws Exception {
-    final Path path = Paths.get(directory.toString(), "lint.md");
+    final Path path = Path.of(directory.toString(), "lint.md");
 
     final String linterHelpMarkdown = new LinterHelp(true).get()[0];
     Files.write(path, linterHelpMarkdown.getBytes(UTF_8));

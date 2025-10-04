@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.script;
 
 import static java.util.Objects.requireNonNull;
@@ -17,13 +16,11 @@ import java.io.Writer;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.script.Compilable;
 import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
-
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ObjectToString;
@@ -43,14 +40,14 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
 
     LOGGER.log(
         level,
-        String.format(
-            "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-            scriptEngineFactory.getEngineName(),
-            scriptEngineFactory.getEngineVersion(),
-            scriptEngineFactory.getLanguageName(),
-            scriptEngineFactory.getLanguageVersion(),
-            ObjectToString.toString(scriptEngineFactory.getNames()),
-            ObjectToString.toString(scriptEngineFactory.getExtensions())));
+        "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s"
+            .formatted(
+                scriptEngineFactory.getEngineName(),
+                scriptEngineFactory.getEngineVersion(),
+                scriptEngineFactory.getLanguageName(),
+                scriptEngineFactory.getLanguageVersion(),
+                ObjectToString.toString(scriptEngineFactory.getNames()),
+                ObjectToString.toString(scriptEngineFactory.getExtensions())));
   }
 
   protected ScriptEngine scriptEngine;
@@ -81,8 +78,8 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
       }
 
       // Evaluate the script
-      if (scriptEngine instanceof Compilable) {
-        final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
+      if (scriptEngine instanceof Compilable compilable) {
+        final CompiledScript script = compilable.compile(reader);
         final Object result = script.eval();
         LOGGER.log(Level.INFO, new StringFormat("Script execution result:%n%s", result));
       } else {

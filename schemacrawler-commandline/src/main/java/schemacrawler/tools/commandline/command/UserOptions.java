@@ -75,8 +75,8 @@ public final class UserOptions {
       userEnvironment = System.getenv(userEnvironmentVariable);
     } catch (final Exception e) {
       throw new IllegalArgumentException(
-          String.format(
-              "User could not be read from environmental variable <%s>", userEnvironmentVariable),
+          "User could not be read from environmental variable <%s>"
+              .formatted(userEnvironmentVariable),
           e);
     }
 
@@ -95,8 +95,7 @@ public final class UserOptions {
         user = lines.get(0);
       }
     } catch (final IOException e) {
-      throw new IORuntimeException(
-          String.format("User could not be read from file <%s>", userFile), e);
+      throw new IORuntimeException("User could not be read from file <%s>".formatted(userFile), e);
     }
 
     return user;

@@ -6,16 +6,15 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.script;
 
+import static java.util.Objects.requireNonNull;
+
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
@@ -76,7 +75,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     requireNonNull(outputFormat, "No output format provided");
     requireNonNull(outputFileName, "No output file name provided");
 
-    final Path outputFile = Paths.get(outputFileName);
+    final Path outputFile = Path.of(outputFileName);
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder(getOutputOptions())
             .withOutputFormatValue(outputFormat)
@@ -129,7 +128,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
       return scCommand;
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(
-          String.format("Cannot chain command, unknown command <%s>", command), e);
+          "Cannot chain command, unknown command <%s>".formatted(command), e);
     }
   }
 
@@ -143,8 +142,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
       try {
         scCommand.checkAvailability();
       } catch (final Exception e) {
-        throw new InternalRuntimeException(
-            String.format("Command <%s> is not available", scCommand));
+        throw new InternalRuntimeException("Command <%s> is not available".formatted(scCommand));
       }
     }
   }

@@ -69,12 +69,12 @@ public class IndexRetrieverTest {
           out.println(table.getFullName());
           final Collection<Index> indexes = table.getIndexes();
           for (final Index index : indexes) {
-            out.println(String.format("  index: %s", index.getName()));
-            out.println(String.format("    columns: %s", index.getColumns()));
-            out.println(String.format("    is unique: %b", index.isUnique()));
-            out.println(String.format("    cardinality: %d", index.getCardinality()));
-            out.println(String.format("    pages: %d", index.getPages()));
-            out.println(String.format("    index type: %s", index.getIndexType()));
+            out.println("  index: %s".formatted(index.getName()));
+            out.println("    columns: %s".formatted(index.getColumns()));
+            out.println("    is unique: %b".formatted(index.isUnique()));
+            out.println("    cardinality: %d".formatted(index.getCardinality()));
+            out.println("    pages: %d".formatted(index.getPages()));
+            out.println("    index type: %s".formatted(index.getIndexType()));
           }
         }
       }

@@ -10,9 +10,11 @@ package us.fatehi.utility.property;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
+
 public class BaseProductVersion extends AbstractProperty implements ProductVersion {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  @Serial private static final long serialVersionUID = 4051323422934251828L;
 
   public BaseProductVersion(final ProductVersion productVersion) {
     this(

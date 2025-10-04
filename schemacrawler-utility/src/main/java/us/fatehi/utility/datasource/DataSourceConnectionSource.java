@@ -31,8 +31,8 @@ final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource 
 
   @Override
   public void close() throws Exception {
-    if (dataSource instanceof AutoCloseable) {
-      ((AutoCloseable) dataSource).close();
+    if (dataSource instanceof AutoCloseable closeable) {
+      closeable.close();
     } else {
       final Method method = shutdownMethod();
       if (method != null) {

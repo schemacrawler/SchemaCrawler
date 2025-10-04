@@ -5,15 +5,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-    ignore: # Ignore Java 21 only dependency updates
-      - dependency-name: "org.graalvm.js:js-scriptengine"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "org.springframework:spring-context"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "org.jruby:jruby"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "nl.jqno.equalsverifier:equalsverifier"
-        update-types: ["version-update:semver-major"]
+    ignore:
       # 15.x Informix drivers are not well-behaved
       - dependency-name: "com.ibm.informix:jdbc"
         update-types: ["version-update:semver-major"]

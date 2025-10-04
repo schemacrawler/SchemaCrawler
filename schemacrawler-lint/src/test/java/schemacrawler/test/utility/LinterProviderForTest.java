@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.utility;
 
+import java.io.Serial;
 import java.sql.Connection;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
@@ -21,7 +21,7 @@ import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderForTest extends BaseLinterProvider {
 
-  private static final long serialVersionUID = 7775205295917734672L;
+  @Serial private static final long serialVersionUID = 7775205295917734672L;
 
   public LinterProviderForTest() {
     super(LinterForTest.class.getName());

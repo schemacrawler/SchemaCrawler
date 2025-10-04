@@ -13,7 +13,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.span;
 
 import java.io.PrintWriter;
-
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Tag;
@@ -36,7 +35,7 @@ public final class HtmlFormattingHelper extends BaseTextFormattingHelper {
         .append(System.lineSeparator());
 
     final String htmlHeaderTemplate = readResourceFully("/html.header.txt");
-    final String htmlHeader = String.format(htmlHeaderTemplate, styleSheet);
+    final String htmlHeader = htmlHeaderTemplate.formatted(styleSheet);
     return htmlHeader;
   }
 
@@ -80,9 +79,8 @@ public final class HtmlFormattingHelper extends BaseTextFormattingHelper {
   public void writeHeader(final DocumentHeaderType type, final String header) {
     if (!isBlank(header) && type != null) {
       out.println(
-          String.format(
-              "%s%n<%s>%s</%s>%n",
-              type.getPrefix(), type.getHeaderTag(), header, type.getHeaderTag()));
+          "%s%n<%s>%s</%s>%n"
+              .formatted(type.getPrefix(), type.getHeaderTag(), header, type.getHeaderTag()));
     }
   }
 
@@ -100,9 +98,7 @@ public final class HtmlFormattingHelper extends BaseTextFormattingHelper {
       final String id, final String name, final String description, final Color backgroundColor) {
 
     final Tag caption =
-        TagBuilder.caption()
-            .withStyle(String.format("background-color: %s;", backgroundColor))
-            .make();
+        TagBuilder.caption().withStyle("background-color: %s;".formatted(backgroundColor)).make();
 
     if (!isBlank(name)) {
       final Tag span = span().withEscapedText(name).withStyleClass("caption_name").make();

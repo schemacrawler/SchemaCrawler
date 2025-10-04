@@ -105,7 +105,7 @@ public class ListCommandOutputTest {
       final String title)
       throws Exception {
 
-    final String referenceFile = String.format("%s.%s", title, outputFormat.getFormat());
+    final String referenceFile = "%s.%s".formatted(title, outputFormat.getFormat());
 
     final LoadOptions loadOptions =
         LoadOptionsBuilder.builder().withInfoLevel(InfoLevel.maximum).toOptions();

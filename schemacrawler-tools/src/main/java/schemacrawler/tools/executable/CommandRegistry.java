@@ -126,7 +126,7 @@ public final class CommandRegistry extends BasePluginRegistry implements PluginC
       // Mainly catch NoClassDefFoundError, which is a Throwable, for
       // missing third-party jars
       LOGGER.log(Level.CONFIG, e.getMessage(), e);
-      throw new InternalRuntimeException(String.format("Cannot run command <%s>", command));
+      throw new InternalRuntimeException("Cannot run command <%s>".formatted(command));
     }
 
     return scCommand;
@@ -176,7 +176,7 @@ public final class CommandRegistry extends BasePluginRegistry implements PluginC
       }
     }
     if (executableCommandProviders.isEmpty()) {
-      throw new ExecutionRuntimeException(String.format("Unknown command <%s>", command));
+      throw new ExecutionRuntimeException("Unknown command <%s>".formatted(command));
     }
   }
 
@@ -198,9 +198,8 @@ public final class CommandRegistry extends BasePluginRegistry implements PluginC
     }
     if (executableCommandProviders.isEmpty()) {
       throw new ExecutionRuntimeException(
-          String.format(
-              "Output format <%s> not supported for command <%s>",
-              outputOptions.getOutputFormatValue(), command));
+          "Output format <%s> not supported for command <%s>"
+              .formatted(outputOptions.getOutputFormatValue(), command));
     }
   }
 

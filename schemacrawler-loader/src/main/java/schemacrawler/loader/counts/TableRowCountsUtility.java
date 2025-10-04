@@ -9,6 +9,7 @@
 package schemacrawler.loader.counts;
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Table;
 import us.fatehi.utility.UtilityMarker;
 
@@ -38,7 +39,7 @@ public final class TableRowCountsUtility {
     if (longValue <= 0) {
       return "empty";
     } else {
-      return String.format("%,d rows", longValue);
+      return "%,d rows".formatted(longValue);
     }
   }
 

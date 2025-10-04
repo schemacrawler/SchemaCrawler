@@ -63,9 +63,8 @@ class TimedTask implements Callable<TimedTaskResult> {
     if (ex != null) {
       LOGGER.log(
           Level.WARNING,
-          String.format(
-              "Exception running <%s> on thread <%s>: %s",
-              timedTaskResult, Thread.currentThread().getName(), ex.getMessage()),
+          "Exception running <%s> on thread <%s>: %s"
+              .formatted(timedTaskResult, Thread.currentThread().getName(), ex.getMessage()),
           ex);
     }
     return timedTaskResult;

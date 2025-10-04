@@ -48,8 +48,7 @@ public class PooledConnectionUtility {
         throws Exception {
       final String methodName = method.getName();
       if (!Arrays.asList("isClosed", "unwrap").contains(methodName) && isClosed) {
-        throw new SQLException(
-            String.format("Cannot call <%s> since connection is closed", method));
+        throw new SQLException("Cannot call <%s> since connection is closed".formatted(method));
       }
       switch (methodName) {
         case "close":
@@ -64,9 +63,8 @@ public class PooledConnectionUtility {
         case "unwrap":
           return connection;
         case "toString":
-          return String.format(
-              "Pooled connection <%s@%d> for <%s>",
-              proxy.getClass().getName(), proxy.hashCode(), connection);
+          return "Pooled connection <%s@%d> for <%s>"
+              .formatted(proxy.getClass().getName(), proxy.hashCode(), connection);
         default:
           try {
             return method.invoke(connection, args);
@@ -74,10 +72,10 @@ public class PooledConnectionUtility {
               | IllegalArgumentException
               | InvocationTargetException e) {
             final Throwable cause = e.getCause();
-            if (cause instanceof Exception) {
-              throw (Exception) cause;
+            if (cause instanceof Exception exception) {
+              throw exception;
             }
-            throw new SQLException(String.format("Could not delegate method <%s>", method), e);
+            throw new SQLException("Could not delegate method <%s>".formatted(method), e);
           }
       }
     }

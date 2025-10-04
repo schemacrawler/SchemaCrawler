@@ -96,7 +96,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         lookupTable(pkTableCatalogName, pkTableSchemaName, pkTableName);
     final Optional<MutableTable> fkTableOptional =
         lookupTable(fkTableCatalogName, fkTableSchemaName, fkTableName);
-    if (!pkTableOptional.isPresent() && !fkTableOptional.isPresent()) {
+    if (pkTableOptional.isEmpty() && fkTableOptional.isEmpty()) {
       return false;
     }
 
@@ -153,8 +153,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     foreignKey.setDeferrability(deferrability);
     foreignKey.addAttributes(results.getAttributes());
 
-    if (fkColumn instanceof MutableColumn) {
-      ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
+    if (fkColumn instanceof MutableColumn column) {
+      column.setReferencedColumn(pkColumn);
       ((MutableTable) fkTable).addForeignKey(foreignKey);
     } else if (isFkColumnPartial) {
       ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
@@ -209,7 +209,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       }
     } catch (final SQLException e) {
       throw new WrappedSQLException(
-          String.format("Could not retrieve foreign keys from SQL:%n%s", fkSql), e);
+          "Could not retrieve foreign keys from SQL:%n%s".formatted(fkSql), e);
     }
     retrievalCounts.log();
   }

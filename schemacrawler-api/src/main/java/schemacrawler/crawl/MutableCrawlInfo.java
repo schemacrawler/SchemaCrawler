@@ -19,6 +19,7 @@ import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +36,7 @@ import us.fatehi.utility.property.ProductVersion;
 /** SchemaCrawler crawl information. */
 final class MutableCrawlInfo implements CrawlInfo {
 
-  private static final long serialVersionUID = 5982990326485881993L;
+  @Serial private static final long serialVersionUID = 5982990326485881993L;
 
   public static final DateTimeFormatter DATE_TIME_FORMATTER;
 

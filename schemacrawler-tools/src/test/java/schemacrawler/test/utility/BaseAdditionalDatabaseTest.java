@@ -27,8 +27,8 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected void closeDataSource() {
     try {
-      if (dataSource instanceof Closeable) {
-        ((Closeable) dataSource).close();
+      if (dataSource instanceof Closeable closeable) {
+        closeable.close();
       }
     } catch (final Exception e) {
       failTestSetup("Could not close data source", e);

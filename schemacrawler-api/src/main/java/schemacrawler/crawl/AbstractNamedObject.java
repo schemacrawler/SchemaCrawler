@@ -12,6 +12,7 @@ import static java.util.Objects.compare;
 import static java.util.Objects.hash;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
 
+import java.io.Serial;
 import java.util.Objects;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
@@ -19,7 +20,7 @@ import schemacrawler.schema.NamedObjectKey;
 /** Represents a named object. */
 abstract class AbstractNamedObject implements NamedObject {
 
-  private static final long serialVersionUID = -1486322887991472729L;
+  @Serial private static final long serialVersionUID = -1486322887991472729L;
 
   private final String name;
   private transient NamedObjectKey key;

@@ -28,7 +28,7 @@ public class ClasspathInputResource extends BaseInputResource {
     url = locateResource(classpathResource);
     if (url == null) {
       final IOException e =
-          new IOException(String.format("Cannot read classpath resource, <%s>", classpathResource));
+          new IOException("Cannot read classpath resource, <%s>".formatted(classpathResource));
       throw e;
     }
   }

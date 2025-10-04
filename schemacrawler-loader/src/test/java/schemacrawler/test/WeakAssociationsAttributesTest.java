@@ -21,12 +21,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
@@ -127,7 +125,7 @@ public class WeakAssociationsAttributesTest {
         out.println("      attributes: ");
         final Set<Entry<String, Object>> entrySet = attributes.entrySet();
         for (final Entry<String, Object> entry : entrySet) {
-          out.println(String.format("        %s: %s", entry.getKey(), entry.getValue()));
+          out.println("        %s: %s".formatted(entry.getKey(), entry.getValue()));
         }
       }
     }

@@ -10,6 +10,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,7 @@ import schemacrawler.schema.WeakAssociation;
 
 final class TablePartial extends AbstractDatabaseObject implements Table, PartialDatabaseObject {
 
-  private static final long serialVersionUID = -5968964551235088703L;
+  @Serial private static final long serialVersionUID = -5968964551235088703L;
 
   private Column column;
   private ForeignKey foreignKey;

@@ -961,7 +961,7 @@ inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
 is catalog at start                       true                          
 is read only                              false                         
 JDBC major version                        4                             
-JDBC minor version                        2                             
+JDBC minor version                        3                             
 locators update copy                      true                          
 max binary literal length                 0                             
 max catalog name length                   128                           
@@ -1108,7 +1108,7 @@ driver name                               Microsoft JDBC Driver 13.2 for SQL Ser
 driver version                            13.2.0.0                      
 driver class name                         com.microsoft.sqlserver.jdbc.SQLServerDriver
 is JDBC compliant                         true                          
-supported JDBC version                    4.2                           
+supported JDBC version                    4.3                           
 
 
 JDBC Driver Properties

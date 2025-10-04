@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,16 +14,13 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSqliteTest;
@@ -75,8 +71,7 @@ public class SqliteDistributionTest extends BaseSqliteTest {
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    final String expectedResource =
-        String.format("sqlite.main.%s.%s", javaVersion(), outputFormat.getFormat());
+    final String expectedResource = "sqlite.main.%s".formatted(outputFormat.getFormat());
     assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 }

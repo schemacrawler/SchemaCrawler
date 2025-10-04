@@ -14,6 +14,7 @@ import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
 import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
 import static schemacrawler.utility.MetaDataUtility.isView;
 
+import java.io.Serial;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +29,7 @@ import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderForeignKeyWithNoIndexes extends BaseLinterProvider {
 
-  private static final long serialVersionUID = -7901644028908017034L;
+  @Serial private static final long serialVersionUID = -7901644028908017034L;
 
   public LinterProviderForeignKeyWithNoIndexes() {
     super(LinterForeignKeyWithNoIndexes.class.getName());

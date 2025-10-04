@@ -8,8 +8,8 @@ on:
         required: true
         type: choice
         options:
-          - 8
-          - 21
+          - 17
+          - 25
   push:
   pull_request:
     branches:
@@ -71,7 +71,7 @@ jobs:
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.6.1
       with:
-        java-version: ${{ github.event.inputs.java_version || '8' }}
+        java-version: ${{ github.event.inputs.java_version || '17' }}
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3

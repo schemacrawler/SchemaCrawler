@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
+import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -21,7 +21,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
+
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -71,8 +70,7 @@ public class HsqldbTest {
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource =
-        String.format("hsqldb.main.%s.%s", javaVersion(), outputFormat.getFormat());
+    final String expectedResource = "hsqldb.main.%s".formatted(outputFormat.getFormat());
     assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 

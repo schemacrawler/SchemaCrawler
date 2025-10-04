@@ -13,6 +13,7 @@ import static java.util.Comparator.nullsLast;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,7 +48,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     imported
   }
 
-  private static final long serialVersionUID = 3257290248802284852L;
+  @Serial private static final long serialVersionUID = 3257290248802284852L;
 
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
   private final NamedObjectList<TableConstraint> constraints = new NamedObjectList<>();
@@ -84,8 +85,8 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
     int comparison = 0;
 
-    if (comparison == 0 && obj instanceof MutableTable) {
-      comparison = sortIndex - ((MutableTable) obj).sortIndex;
+    if (comparison == 0 && obj instanceof MutableTable table) {
+      comparison = sortIndex - table.sortIndex;
     }
     if (comparison == 0) {
       comparison = super.compareTo(obj);
@@ -261,7 +262,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   @Override
   public Optional<MutableColumn> lookupColumn(final String name) {
     Optional<MutableColumn> optionalColumn = columns.lookup(this, name);
-    if (!optionalColumn.isPresent()) {
+    if (optionalColumn.isEmpty()) {
       optionalColumn = hiddenColumns.lookup(this, name);
     }
     return optionalColumn;

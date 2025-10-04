@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.script;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -19,9 +18,9 @@ import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExec
 import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 import static schemacrawler.test.utility.TestUtility.readFileFully;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -87,13 +86,13 @@ public class SchemaCrawlerExecutableChainTest {
   }
 
   private void validateDiagramOutput(String string) throws IOException {
-    final Path diagramFile = Paths.get(string);
+    final Path diagramFile = Path.of(string);
     assertThat("Diagram file not created", isFileReadable(diagramFile), is(true));
     deleteIfPossible(diagramFile);
   }
 
   private void validateTextOutput(final String expectedResource) {
-    final Path schemaFile = Paths.get(expectedResource);
+    final Path schemaFile = Path.of(expectedResource);
     assertThat(outputOf(schemaFile), hasSameContentAs(classpathResource(expectedResource)));
     deleteIfPossible(schemaFile);
   }

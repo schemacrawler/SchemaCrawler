@@ -6,15 +6,15 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readResourceFully;
+
 import java.io.IOException;
 import java.nio.file.Path;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
@@ -106,7 +106,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
     } catch (final Exception e) {
       final String errorMessage = extractErrorMessage(e);
       final String helpText = readResourceFully("/dot.error.txt");
-      throw new ExecutionRuntimeException(String.format("%s%n%n%s", errorMessage, helpText), e);
+      throw new ExecutionRuntimeException("%s%n%n%s".formatted(errorMessage, helpText), e);
     }
   }
 

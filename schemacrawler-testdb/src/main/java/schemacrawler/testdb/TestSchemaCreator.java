@@ -9,10 +9,11 @@
 package schemacrawler.testdb;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
-import static java.util.Objects.requireNonNull;
 import us.fatehi.utility.SQLRuntimeException;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
@@ -40,7 +41,7 @@ public class TestSchemaCreator implements Runnable {
       delimiter = split[0].trim();
       scriptResource = split[1].trim();
     } else {
-      throw new SQLRuntimeException(String.format("Too many fields in \"%s\"", scriptResourceLine));
+      throw new SQLRuntimeException("Too many fields in \"%s\"".formatted(scriptResourceLine));
     }
 
     final boolean skip = "#".equals(delimiter);
@@ -52,7 +53,7 @@ public class TestSchemaCreator implements Runnable {
         new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)) {
       new SqlScript(scriptReader, delimiter, connection).run();
     } catch (final IOException e) {
-      throw new SQLRuntimeException(String.format("Could not read \"%s\"", scriptResource), e);
+      throw new SQLRuntimeException("Could not read \"%s\"".formatted(scriptResource), e);
     }
   }
 

@@ -8,9 +8,11 @@
 
 package us.fatehi.utility.graph;
 
+import java.io.Serial;
+
 public class GraphException extends Exception {
 
-  private static final long serialVersionUID = 5978689857777212149L;
+  @Serial private static final long serialVersionUID = 5978689857777212149L;
 
   public GraphException(final String message) {
     super(message);

@@ -6,8 +6,9 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.script;
+
+import static java.util.Objects.requireNonNull;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
@@ -52,7 +52,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
         .orElseThrow(
             () ->
                 new ConfigurationException(
-                    String.format("Script not found <%s>", commandOptions.getScript())));
+                    "Script not found <%s>".formatted(commandOptions.getScript())));
 
     final String scriptingLanguage = commandOptions.getLanguage();
 

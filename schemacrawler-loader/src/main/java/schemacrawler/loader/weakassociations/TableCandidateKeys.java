@@ -13,7 +13,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
@@ -39,7 +38,7 @@ final class TableCandidateKeys implements Iterable<Column> {
 
   @Override
   public String toString() {
-    return String.format("%s: %s", table, tableKeys);
+    return "%s: %s".formatted(table, tableKeys);
   }
 
   private void addColumnFromIndex(final Table table, final Index index) {

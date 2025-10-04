@@ -115,7 +115,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     final Optional<MutableRoutine> optionalRoutine =
         allRoutines.lookup(
             new NamedObjectKey(columnCatalogName, schemaName, functionName, specificName));
-    if (!optionalRoutine.isPresent()) {
+    if (optionalRoutine.isEmpty()) {
       return false;
     }
 

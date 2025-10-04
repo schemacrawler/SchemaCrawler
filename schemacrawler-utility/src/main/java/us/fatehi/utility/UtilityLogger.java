@@ -66,7 +66,7 @@ public final class UtilityLogger {
       }
     }
 
-    logger.log(Level.INFO, String.format("Command line: %n%s", argsList.toString()));
+    logger.log(Level.INFO, "Command line: %n%s".formatted(argsList.toString()));
   }
 
   public void logSQLWarnings(final ResultSet resultSet) {
@@ -104,10 +104,10 @@ public final class UtilityLogger {
 
     logger.log(
         Level.CONFIG,
-        String.format("Classpath: %n%s", printPath(System.getProperty("java.class.path"))));
+        "Classpath: %n%s".formatted(printPath(System.getProperty("java.class.path"))));
     logger.log(
         Level.CONFIG,
-        String.format("LD_LIBRARY_PATH: %n%s", printPath(System.getenv("LD_LIBRARY_PATH"))));
+        "LD_LIBRARY_PATH: %n%s".formatted(printPath(System.getenv("LD_LIBRARY_PATH"))));
   }
 
   public void logSystemProperties() {
@@ -125,18 +125,18 @@ public final class UtilityLogger {
 
     logger.log(
         Level.CONFIG,
-        String.format("System properties: %n%s", join(systemProperties, System.lineSeparator())));
+        "System properties: %n%s".formatted(join(systemProperties, System.lineSeparator())));
   }
 
   private void logSQLWarnings(final SQLWarning sqlWarning) {
     SQLWarning currentSqlWarning = sqlWarning;
     while (currentSqlWarning != null) {
       final String message =
-          String.format(
-              "%s%nError code: %d, SQL state: %s",
-              currentSqlWarning.getMessage(),
-              currentSqlWarning.getErrorCode(),
-              currentSqlWarning.getSQLState());
+          "%s%nError code: %d, SQL state: %s"
+              .formatted(
+                  currentSqlWarning.getMessage(),
+                  currentSqlWarning.getErrorCode(),
+                  currentSqlWarning.getSQLState());
       logger.log(Level.INFO, message, currentSqlWarning);
       currentSqlWarning = currentSqlWarning.getNextWarning();
     }
