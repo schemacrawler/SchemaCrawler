@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.serialize;
 
 import static java.nio.file.Files.newInputStream;
@@ -21,6 +20,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.validateSchema;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;

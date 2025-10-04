@@ -19,7 +19,6 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
@@ -53,7 +52,6 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.velocity</groupId>
       <artifactId>velocity-engine-scripting</artifactId>
@@ -84,99 +82,12 @@
       <version>0.9.14</version>
       <scope>provided</scope>
     </dependency>
+    
     <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-jsr223</artifactId>
-      <version>3.0.25</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jruby</groupId>
-      <artifactId>jruby</artifactId>
-      <version>9.4.14.0</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.github.jnr</groupId>
-          <artifactId>jnr-posix</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.ow2.asm</groupId>
-          <artifactId>asm-analysis</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.python</groupId>
-      <artifactId>jython-slim</artifactId>
-      <version>2.7.4</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>jline</groupId>
-          <artifactId>jline</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.netty</groupId>
-          <artifactId>netty-handler</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.netty</groupId>
-          <artifactId>netty-resolver</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.netty</groupId>
-          <artifactId>netty-transport</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.jnr</groupId>
-          <artifactId>jffi</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.jnr</groupId>
-          <artifactId>jnr-constants</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.jnr</groupId>
-          <artifactId>jnr-ffi</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.jnr</groupId>
-          <artifactId>jnr-netdb</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.jnr</groupId>
-          <artifactId>jnr-posix</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.ow2.asm</groupId>
-          <artifactId>asm-analysis</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.github.jnr</groupId>
-      <artifactId>jnr-ffi</artifactId>
-      <version>2.2.17</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.github.jnr</groupId>
-      <artifactId>jnr-posix</artifactId>
-      <version>3.1.20</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.ow2.asm</groupId>
-      <artifactId>asm-analysis</artifactId>
-      <version>9.8</version>
-      <scope>provided</scope>
-    </dependency>
-
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>polyglot</artifactId>
+      <version>25.0.0</version>
+    </dependency>    
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
@@ -184,9 +95,16 @@
       <type>pom</type>
     </dependency>
     <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js-scriptengine</artifactId>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>python</artifactId>
       <version>25.0.0</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>ruby</artifactId>
+      <version>25.0.0</version>
+      <type>pom</type>
     </dependency>
 
   </dependencies>

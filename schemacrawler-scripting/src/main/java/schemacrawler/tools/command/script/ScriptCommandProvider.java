@@ -6,12 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.script;
 
 import static schemacrawler.tools.command.script.ScriptCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.tools.command.script.options.ScriptLanguageOptionsBuilder;
+import schemacrawler.tools.command.script.options.ScriptLanguageType;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -29,7 +30,7 @@ public class ScriptCommandProvider extends BaseCommandProvider {
     final PluginCommand pluginCommand = newPluginCommand(COMMAND);
     pluginCommand
         .addOption("script", String.class, "Path to the script file or to the CLASSPATH resource")
-        .addOption("script-language", String.class, "Scripting language");
+        .addOption("script-language", ScriptLanguageType.class, "Scripting language");
     return pluginCommand;
   }
 

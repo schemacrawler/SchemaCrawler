@@ -14,6 +14,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithSystemProperty;
@@ -23,13 +24,6 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @AssertNoSystemOutOutput
 @WithTestDatabase
 public class ExecutableScriptCommandTest {
-
-  @Test
-  public void executableGroovy(final DatabaseConnectionSource dataSource) throws Exception {
-    assertThat(
-        outputOf(scriptExecution(dataSource, "/plaintextschema.groovy")),
-        hasSameContentAs(classpathResource("script_output.txt")));
-  }
 
   @Test
   public void executableJavaScript(final DatabaseConnectionSource dataSource) throws Exception {
@@ -47,6 +41,7 @@ public class ExecutableScriptCommandTest {
   }
 
   @Test
+  @Disabled("Needs Ruby installed in GraalVM")
   public void executableRuby(final DatabaseConnectionSource dataSource) throws Exception {
     assertThat(
         outputOf(scriptExecution(dataSource, "/plaintextschema.rb")),

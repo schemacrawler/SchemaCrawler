@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.script;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,14 +24,37 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @AssertNoSystemOutOutput
 @ResolveTestContext
 @WithTestDatabase
-public class MarkdownScriptTest {
+public class BuiltInScriptsTest {
+
+  @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
+  public void dbml(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    assertThat(outputOf(scriptExecution(dataSource, "/scripts/dbml.py")),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+  }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void markdown(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
-    assertThat(
-        outputOf(scriptExecution(dataSource, "/scripts/markdown.py")),
+    assertThat(outputOf(scriptExecution(dataSource, "/scripts/markdown.py")),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+  }
+
+  @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
+  public void mermaid(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    assertThat(outputOf(scriptExecution(dataSource, "/scripts/mermaid.py")),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+  }
+
+  @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
+  public void plantuml(final TestContext testContext, final DatabaseConnectionSource dataSource)
+      throws Exception {
+    assertThat(outputOf(scriptExecution(dataSource, "/scripts/plantuml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }

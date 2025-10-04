@@ -6,10 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.template.options;
 
-public enum TemplateLanguageType {
+import schemacrawler.tools.options.LanguageType;
+
+public enum TemplateLanguageType implements LanguageType<TemplateLanguageType> {
   unknown(null, null),
   velocity("schemacrawler.tools.command.template.VelocityRenderer", "vm"),
   freemarker("schemacrawler.tools.command.template.FreeMarkerRenderer", "ftl"),
@@ -24,11 +25,12 @@ public enum TemplateLanguageType {
     this.fileExtension = fileExtension;
   }
 
-  public String getFileExtension() {
-    return fileExtension;
-  }
-
   public String getTemplateRendererClassName() {
     return templateRendererClassName;
+  }
+
+  @Override
+  public boolean matches(final String languageName) {
+    return name().equalsIgnoreCase(languageName) || fileExtension.equalsIgnoreCase(languageName);
   }
 }

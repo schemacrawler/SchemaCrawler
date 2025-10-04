@@ -6,27 +6,27 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.script;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import schemacrawler.tools.command.script.GraalJSScriptExecutor;
-import schemacrawler.tools.command.script.ScriptEngineExecutor;
+import schemacrawler.tools.command.script.GraalScriptExecutor;
 import schemacrawler.tools.command.script.ScriptExecutor;
+import schemacrawler.tools.command.script.options.ScriptLanguageType;
 
 public class ScriptExecutorTest {
 
   @Test
   public void graal() throws Exception {
     final StringWriter writer = new StringWriter();
-    final ScriptExecutor scriptExecutor = new GraalJSScriptExecutor("javascript");
+    final ScriptExecutor scriptExecutor = new GraalScriptExecutor(ScriptLanguageType.js);
 
     final Map<String, Object> context = new HashMap<>();
     context.put("javaObj", new Object());
@@ -44,29 +44,13 @@ public class ScriptExecutorTest {
   }
 
   @Test
-  public void graalEngineBadLanguage() throws Exception {
-    final ScriptExecutor scriptExecutor = new GraalJSScriptExecutor("foulmouth");
-
-    assertThat(scriptExecutor.canGenerate(), is(false));
+  public void graalEngineNullLanguage() throws Exception {
+    assertThrows(NullPointerException.class, () -> new GraalScriptExecutor(null));
   }
 
   @Test
-  public void scriptEngine() throws Exception {
-    final StringWriter writer = new StringWriter();
-    final ScriptExecutor scriptExecutor = new ScriptEngineExecutor("python");
-    scriptExecutor.initialize(
-        Collections.emptyMap(), new StringReader("print(\"Hello, World!\")"), writer);
-
-    assertThat(scriptExecutor.canGenerate(), is(true));
-
-    scriptExecutor.run();
-    assertThat(writer.toString().replaceAll("\\R", ""), is("Hello, World!"));
-  }
-
-  @Test
-  public void scriptEngineBadLanguage() throws Exception {
-    final ScriptExecutor scriptExecutor = new ScriptEngineExecutor("foulmouth");
-
-    assertThat(scriptExecutor.canGenerate(), is(false));
+  public void graalEngineUnknownLanguage() throws Exception {
+    assertThrows(
+        IllegalArgumentException.class, () -> new GraalScriptExecutor(ScriptLanguageType.unknown));
   }
 }

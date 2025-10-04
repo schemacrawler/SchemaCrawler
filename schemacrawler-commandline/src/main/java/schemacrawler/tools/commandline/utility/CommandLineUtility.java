@@ -32,7 +32,6 @@ import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
-import schemacrawler.tools.commandline.command.AvailableScriptEngines;
 import schemacrawler.tools.commandline.command.AvailableServers;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -185,7 +184,6 @@ public class CommandLineUtility {
     System.out.println(CommandLineUtility.getEnvironment(state));
     System.out.println();
 
-    new AvailableScriptEngines().printHelp(System.out);
     new AvailableJDBCDrivers().printHelp(System.out);
     new AvailableServers().printHelp(System.out);
     new AvailableCatalogLoaders().printHelp(System.out);

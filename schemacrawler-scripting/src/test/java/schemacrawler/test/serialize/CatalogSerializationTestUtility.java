@@ -45,7 +45,7 @@ public final class CatalogSerializationTestUtility {
 
     assertThat("No catalog provided", catalog, is(not(nullValue())));
 
-    //  Get number of objects in the catalog
+    // Get number of objects in the catalog
     final int numColumnDataTypes = catalog.getColumnDataTypes().size();
     final int numTables = catalog.getTables().size();
     final int numRoutines = catalog.getRoutines().size();

@@ -9,6 +9,7 @@
 package schemacrawler.tools.formatter.serialize;
 
 import static java.nio.file.Files.newInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;

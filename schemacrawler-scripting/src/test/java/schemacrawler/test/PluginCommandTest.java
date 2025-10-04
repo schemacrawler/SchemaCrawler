@@ -21,20 +21,14 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 public class PluginCommandTest {
 
   @Test
-  public void testScriptCommandProviderPluginCommand(final TestContext testContext) {
-    final PluginCommand pluginCommand = new ScriptCommandProvider().getCommandLineCommand();
-    PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
-  }
-
-  @Test
   public void testScriptCommandProviderHelpCommand(final TestContext testContext) {
     final PluginCommand pluginCommand = new ScriptCommandProvider().getHelpCommand();
     PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
   }
 
   @Test
-  public void testSerializationCommandProviderPluginCommand(final TestContext testContext) {
-    final PluginCommand pluginCommand = new SerializationCommandProvider().getCommandLineCommand();
+  public void testScriptCommandProviderPluginCommand(final TestContext testContext) {
+    final PluginCommand pluginCommand = new ScriptCommandProvider().getCommandLineCommand();
     PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
   }
 
@@ -45,14 +39,20 @@ public class PluginCommandTest {
   }
 
   @Test
-  public void testTemplateCommandProviderPluginCommand(final TestContext testContext) {
-    final PluginCommand pluginCommand = new TemplateCommandProvider().getCommandLineCommand();
+  public void testSerializationCommandProviderPluginCommand(final TestContext testContext) {
+    final PluginCommand pluginCommand = new SerializationCommandProvider().getCommandLineCommand();
     PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
   }
 
   @Test
   public void testTemplateCommandProviderHelpCommand(final TestContext testContext) {
     final PluginCommand pluginCommand = new TemplateCommandProvider().getHelpCommand();
+    PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
+  }
+
+  @Test
+  public void testTemplateCommandProviderPluginCommand(final TestContext testContext) {
+    final PluginCommand pluginCommand = new TemplateCommandProvider().getCommandLineCommand();
     PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
   }
 }

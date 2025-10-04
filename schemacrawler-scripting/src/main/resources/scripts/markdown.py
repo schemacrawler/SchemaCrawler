@@ -1,26 +1,20 @@
 # Copyright (c) Sualeh Fatehi
 # SPDX-License-Identifier: EPL-2.0
 
-from __future__ import print_function
 import re
-from schemacrawler.schema import \
-    TableRelationshipType  # pylint: disable=import-error
-from schemacrawler.schemacrawler import \
-    IdentifiersBuilder  # pylint: disable=import-error
-from schemacrawler.schemacrawler import \
-    IdentifierQuotingStrategy  # pylint: disable=import-error
-from schemacrawler.utility import \
-    MetaDataUtility  # pylint: disable=import-error
+import java
 
+TableRelationshipType = java.type("schemacrawler.schema.TableRelationshipType")
+IdentifiersBuilder = java.type("schemacrawler.schemacrawler.IdentifiersBuilder")
+IdentifierQuotingStrategy = java.type("schemacrawler.schemacrawler.IdentifierQuotingStrategy")
+MetaDataUtility = java.type("schemacrawler.utility.MetaDataUtility")
 
 if title:
     print('# ' + title)
 else:
     print('# Database Schema')
 
-identifiers = \
-    IdentifiersBuilder.builder() \
-        .toOptions()
+identifiers = IdentifiersBuilder.builder().toOptions()
 
 print('')
 for schema in catalog.getSchemas():
@@ -29,23 +23,23 @@ for schema in catalog.getSchemas():
     if not tables:
         continue
         
-    print('## ' + schema.fullName)
+    print('## ' + schema.getFullName())
     
     print('')
     for table in tables:
-        print('### ' + table.name, end="")
-        if not table.tableType.isView():
+        print('### ' + table.getName(), end="")
+        if not table.getTableType().isView():
             print(' (table)', end='')
         else:
             print(' (view)', end='')
         print('')
-        table_remarks = table.remarks
-        if table_remarks:
+        table_remarks = table.getRemarks()
+        if table_remarks is not None:
             print(table_remarks)
 
         print('')
         print('### Columns')
-        for column in table.columns:
+        for column in table.getColumns():
             print('- ', end='')
             part_of_primary_key = column.isPartOfPrimaryKey()
             part_of_foreign_key = column.isPartOfForeignKey()
@@ -53,13 +47,13 @@ for schema in catalog.getSchemas():
                 print('**', end='')
             elif part_of_foreign_key:
                 print('*', end='')
-            print(column.name, end='')
+            print(column.getName(), end='')
             if part_of_primary_key:
                 print('**', end='')
             elif part_of_foreign_key:
                 print('*', end='')
-            print(' (' + column.columnDataType.toString() + ')', end='')
-            column_remarks = column.remarks
+            print(' (' + column.getColumnDataType().toString() + ')', end='')
+            column_remarks = column.getRemarks()
             if column_remarks:
                 print('    ')
                 print('\n    '.join(column_remarks.splitlines()), end='')
@@ -68,40 +62,40 @@ for schema in catalog.getSchemas():
         if table.hasPrimaryKey():
             print('')
             print('### Primary Key')
-            primaryKey = table.primaryKey
-            print('- ' + primaryKey.name + ' ('
-                  + MetaDataUtility.getColumnsListAsString(primaryKey, identifiers) + ') ')
+            primaryKey = table.getPrimaryKey()
+            print('- ' + primaryKey.getName() + ' (' +
+                  MetaDataUtility.getColumnsListAsString(primaryKey, identifiers) + ') ')
 
-        indexes = table.indexes
+        indexes = table.getIndexes()
         if not indexes.isEmpty():
             print('')
             print('### Indexes')
             for index in indexes:
                 if table.hasPrimaryKey() and \
-                        MetaDataUtility.getColumnsListAsString(table.primaryKey, identifiers) == \
+                        MetaDataUtility.getColumnsListAsString(table.getPrimaryKey(), identifiers) == \
                         MetaDataUtility.getColumnsListAsString(index, identifiers):
                     continue
-                print('- ' + index.name + ' ('
-                      + MetaDataUtility.getColumnsListAsString(index, identifiers) + ')',
+                print('- ' + index.getName() + ' (' +
+                      MetaDataUtility.getColumnsListAsString(index, identifiers) + ')',
                       end='')
-                if index.unique:
+                if index.isUnique():
                     print(' (unique index)', end='')
                 print('')
 
-        foreign_keys = table.importedForeignKeys
+        foreign_keys = table.getImportedForeignKeys()
         if not foreign_keys.isEmpty():
             print('')
             print('### Foreign Keys')
             for fk in foreign_keys:
-                pkTable = fk.primaryKeyTable
-                fkTable = fk.foreignKeyTable
-                for columnReference in fk.columnReferences:
+                pkTable = fk.getPrimaryKeyTable()
+                fkTable = fk.getForeignKeyTable()
+                for columnReference in fk.getColumnReferences():
                     print('- ', end='')
-                    if fk.name and not fk.name.startswith('SCHCRWLR_'):
-                        print(fk.name, end='')
-                    pkColumn = columnReference.primaryKeyColumn
-                    fkColumn = columnReference.foreignKeyColumn
-                    print(' (*' + fkColumn.name + '* --> **' + pkColumn.shortName + "**)", end='')
+                    if fk.getName() and not fk.getName().startswith('SCHCRWLR_'):
+                        print(fk.getName(), end='')
+                    pkColumn = columnReference.getPrimaryKeyColumn()
+                    fkColumn = columnReference.getForeignKeyColumn()
+                    print(' (*' + fkColumn.getName() + '* --> **' + pkColumn.getShortName() + "**)", end='')
                     print('')
 
         print('')

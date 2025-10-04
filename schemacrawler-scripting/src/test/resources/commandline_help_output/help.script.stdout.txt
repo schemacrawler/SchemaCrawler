@@ -3,6 +3,7 @@
       --script=<script>   Path to the script file or to the CLASSPATH resource
       --script-language=<script-language>
                           Scripting language
+                          Use one of unknown, js, ruby, python
 Add command options to the `execute` command in the SchemaCrawler Shell
 
 

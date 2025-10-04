@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.script.options;
 
+import java.util.EnumSet;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.options.LanguageOptions;
 import schemacrawler.tools.options.LanguageOptionsBuilder;
 
-public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<ScriptOptions> {
+public final class ScriptLanguageOptionsBuilder
+    extends LanguageOptionsBuilder<ScriptLanguageType, ScriptOptions> {
 
   public static ScriptLanguageOptionsBuilder builder() {
     return new ScriptLanguageOptionsBuilder();
@@ -22,7 +22,7 @@ public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<S
   private Config config;
 
   private ScriptLanguageOptionsBuilder() {
-    super("script-language", "script", "javascript");
+    super("script-language", "script", ScriptLanguageType.unknown);
     config = new Config();
   }
 
@@ -34,10 +34,10 @@ public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<S
   }
 
   @Override
-  public ScriptLanguageOptionsBuilder fromOptions(final LanguageOptions options) {
+  public ScriptLanguageOptionsBuilder fromOptions(final ScriptOptions options) {
     super.fromOptions(options);
     if (options != null) {
-      config = ((ScriptOptions) options).getConfig();
+      config = options.getConfig();
     }
     return this;
   }
@@ -45,5 +45,16 @@ public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<S
   @Override
   public ScriptOptions toOptions() {
     return new ScriptOptions(getLanguage(), getScript(), config);
+  }
+
+  @Override
+  protected ScriptLanguageType languageFromString(final String languageName) {
+    for (final ScriptLanguageType scriptLanguageType :
+        EnumSet.complementOf(EnumSet.of(ScriptLanguageType.unknown))) {
+      if (scriptLanguageType.matches(languageName)) {
+        return scriptLanguageType;
+      }
+    }
+    return ScriptLanguageType.unknown;
   }
 }
