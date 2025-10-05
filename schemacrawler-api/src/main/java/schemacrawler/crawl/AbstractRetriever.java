@@ -93,10 +93,10 @@ abstract class AbstractRetriever {
     final Map<String, String> limitMap = new HashMap<>();
     limitMap.put(
         "schema-inclusion-rule",
-        inclusionRuleString(options.getLimitOptions().get(ruleForSchemaInclusion)));
+        inclusionRuleString(options.limitOptions().get(ruleForSchemaInclusion)));
     limitMap.put(
         "table-inclusion-rule",
-        inclusionRuleString(options.getLimitOptions().get(ruleForTableInclusion)));
+        inclusionRuleString(options.limitOptions().get(ruleForTableInclusion)));
     return limitMap;
   }
 

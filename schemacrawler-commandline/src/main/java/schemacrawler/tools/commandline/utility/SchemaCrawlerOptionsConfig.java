@@ -151,21 +151,21 @@ public final class SchemaCrawlerOptionsConfig {
 
     // Load only number of thread for load options
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
+        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.loadOptions());
     final LoadOptions loadOptions =
         SchemaCrawlerOptionsConfig.fromConfig(loadOptionsBuilder, config).toOptions();
     schemaCrawlerOptions = schemaCrawlerOptions.withLoadOptions(loadOptions);
 
     // Load only inclusion rules for limit options
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLimitOptions());
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.limitOptions());
     final LimitOptions limitOptions =
         SchemaCrawlerOptionsConfig.fromConfig(limitOptionsBuilder, config).toOptions();
     schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptions);
 
     // Load only inclusion rules for grep options
     final GrepOptionsBuilder grepOptionsBuilder =
-        GrepOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getGrepOptions());
+        GrepOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.grepOptions());
     final GrepOptions grepOptions =
         SchemaCrawlerOptionsConfig.fromConfig(grepOptionsBuilder, config).toOptions();
     return schemaCrawlerOptions.withGrepOptions(grepOptions);

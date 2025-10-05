@@ -45,7 +45,7 @@ public class GrepCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executeCommandInTest(new GrepCommand(state), args);
 
-    final GrepOptions grepOptions = state.getSchemaCrawlerOptions().getGrepOptions();
+    final GrepOptions grepOptions = state.getSchemaCrawlerOptions().grepOptions();
     assertThat(grepOptions.isGrepColumns(), is(true));
     assertThat(
         grepOptions.grepColumnInclusionRule(),
@@ -101,7 +101,7 @@ public class GrepCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executeCommandInTest(new GrepCommand(state), args);
 
-    final GrepOptions grepOptions = schemaCrawlerOptions.getGrepOptions();
+    final GrepOptions grepOptions = schemaCrawlerOptions.grepOptions();
     assertThat(grepOptions.isGrepColumns(), is(false));
     assertThat(grepOptions.isGrepRoutineParameters(), is(false));
     assertThat(grepOptions.isGrepDefinitions(), is(false));
@@ -118,7 +118,7 @@ public class GrepCommandTest {
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executeCommandInTest(new GrepCommand(state), args);
 
-    final GrepOptions grepOptions = schemaCrawlerOptions.getGrepOptions();
+    final GrepOptions grepOptions = schemaCrawlerOptions.grepOptions();
     assertThat(grepOptions.isGrepColumns(), is(false));
     assertThat(grepOptions.isGrepRoutineParameters(), is(false));
     assertThat(grepOptions.isGrepDefinitions(), is(false));

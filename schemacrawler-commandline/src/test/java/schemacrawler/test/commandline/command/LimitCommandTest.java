@@ -82,7 +82,7 @@ public class LimitCommandTest {
     final CommandLine commandLine = newCommandLine(LimitCommand.class, new StateFactory(state));
     commandLine.execute(args);
 
-    final LimitOptions limitOptions = state.getSchemaCrawlerOptions().getLimitOptions();
+    final LimitOptions limitOptions = state.getSchemaCrawlerOptions().limitOptions();
 
     assertThat(
         limitOptions.get(ruleForSchemaInclusion),
@@ -140,7 +140,7 @@ public class LimitCommandTest {
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     newCommandLine(LimitCommand.class, new StateFactory(state)).parseArgs(args);
-    final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
+    final LimitOptions limitOptions = schemaCrawlerOptions.limitOptions();
 
     assertThat(limitOptions.get(ruleForSchemaInclusion), is(new IncludeAll()));
     assertThat(limitOptions.get(ruleForSynonymInclusion), is(new ExcludeAll()));
@@ -166,7 +166,7 @@ public class LimitCommandTest {
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executeCommandInTest(new LimitCommand(state), args);
-    final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
+    final FilterOptions filterOptions = schemaCrawlerOptions.filterOptions();
 
     assertThat(filterOptions.parentTableFilterDepth(), is(0));
     assertThat(filterOptions.childTableFilterDepth(), is(0));

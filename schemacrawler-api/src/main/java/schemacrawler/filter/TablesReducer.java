@@ -58,7 +58,7 @@ final class TablesReducer implements Reducer<Table> {
     }
 
     // Add in referenced tables
-    final FilterOptions filterOptions = options.getFilterOptions();
+    final FilterOptions filterOptions = options.filterOptions();
     final int childTableFilterDepth = filterOptions.childTableFilterDepth();
     final Collection<Table> childTables =
         includeRelatedTables(TableRelationshipType.child, childTableFilterDepth, reducedTables);

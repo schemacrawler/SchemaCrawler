@@ -118,7 +118,7 @@ public class DiagramOutputTest {
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .fromOptions(schemaCrawlerOptions.getLimitOptions())
+            .fromOptions(schemaCrawlerOptions.limitOptions())
             .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
     schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
