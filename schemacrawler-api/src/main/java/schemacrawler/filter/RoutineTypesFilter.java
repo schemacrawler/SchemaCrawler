@@ -20,7 +20,7 @@ class RoutineTypesFilter implements Predicate<Routine> {
 
   public RoutineTypesFilter(final LimitOptions options) {
     if (options != null) {
-      routineTypes = options.getRoutineTypes();
+      routineTypes = options.routineTypes();
     } else {
       routineTypes = null;
     }

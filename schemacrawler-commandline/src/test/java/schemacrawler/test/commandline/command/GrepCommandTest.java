@@ -48,17 +48,17 @@ public class GrepCommandTest {
     final GrepOptions grepOptions = state.getSchemaCrawlerOptions().getGrepOptions();
     assertThat(grepOptions.isGrepColumns(), is(true));
     assertThat(
-        grepOptions.getGrepColumnInclusionRule().get(),
+        grepOptions.grepColumnInclusionRule(),
         is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[1-3]"))));
 
     assertThat(grepOptions.isGrepRoutineParameters(), is(true));
     assertThat(
-        grepOptions.getGrepRoutineParameterInclusionRule().get(),
+        grepOptions.grepRoutineParameterInclusionRule(),
         is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[4-6]"))));
 
     assertThat(grepOptions.isGrepDefinitions(), is(true));
     assertThat(
-        grepOptions.getGrepDefinitionInclusionRule().get(),
+        grepOptions.grepDefinitionInclusionRule(),
         is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[7-9]"))));
 
     assertThat(grepOptions.isGrepInvertMatch(), is(true));
@@ -93,7 +93,7 @@ public class GrepCommandTest {
 
   @Test
   public void noArgs() throws Throwable {
-    final String[] args = new String[0];
+    final String[] args = {};
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();

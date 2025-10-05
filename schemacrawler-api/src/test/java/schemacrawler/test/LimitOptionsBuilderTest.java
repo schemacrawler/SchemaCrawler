@@ -160,30 +160,30 @@ public class LimitOptionsBuilderTest {
 
     // 1. Test defaults
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function, procedure));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function, procedure));
 
     // 2. Test empty collection
     limitOptionsBuilder.routineTypes(new ArrayList<>());
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), is(empty()));
+    assertThat(limitOptions.routineTypes(), is(empty()));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), is(empty()));
+    assertThat(limitOptionsPlayback.routineTypes(), is(empty()));
 
     // 3. Test collection with non-defaults
     limitOptionsBuilder.routineTypes(asList(function));
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function));
 
     // 4. Test null collection (which resets to defaults)
     limitOptionsBuilder.routineTypes((Collection<RoutineType>) null);
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function, procedure));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function, procedure));
   }
 
   @Test
@@ -195,44 +195,44 @@ public class LimitOptionsBuilderTest {
 
     // 1. Test defaults
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function, procedure));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function, procedure));
 
     // 2. Test empty string
     limitOptionsBuilder.routineTypes("");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), is(empty()));
+    assertThat(limitOptions.routineTypes(), is(empty()));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), is(empty()));
+    assertThat(limitOptionsPlayback.routineTypes(), is(empty()));
 
     // 3. Test string with non-defaults
     limitOptionsBuilder.routineTypes("function");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function));
 
     // 4. Test string with list
     limitOptionsBuilder.routineTypes("function,PROCEDURE");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function, procedure));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function, procedure));
 
     // 5. Test string with list with bad values
     limitOptionsBuilder.routineTypes("function,bad_value");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function));
 
     // 6. Test null string (which resets to defaults)
     limitOptionsBuilder.routineTypes((String) null);
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptions.routineTypes(), containsInAnyOrder(function, procedure));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    assertThat(limitOptionsPlayback.routineTypes(), containsInAnyOrder(function, procedure));
   }
 
   @Test
@@ -243,27 +243,27 @@ public class LimitOptionsBuilderTest {
 
     // 1. Test defaults
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+    assertThat(limitOptions.tableNamePattern(), is(nullValue()));
 
     // 2. Test empty string
     limitOptionsBuilder.tableNamePattern("");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+    assertThat(limitOptions.tableNamePattern(), is(nullValue()));
 
     // 3. Test blank string
     limitOptionsBuilder.tableNamePattern("\t\t");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+    assertThat(limitOptions.tableNamePattern(), is(nullValue()));
 
     // 4. Test pattern
     limitOptionsBuilder.tableNamePattern("pattern");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableNamePattern(), is("pattern"));
+    assertThat(limitOptions.tableNamePattern(), is("pattern"));
 
     // 5. Test null
     limitOptionsBuilder.tableNamePattern(null);
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+    assertThat(limitOptions.tableNamePattern(), is(nullValue()));
   }
 
   @Test
@@ -276,47 +276,46 @@ public class LimitOptionsBuilderTest {
     // 1. Test defaults
     limitOptions = limitOptionsBuilder.toOptions();
     assertThat(
-        limitOptions.getTableTypes().toArray(), is(new String[] {"TABLE", "VIEW", "BASE TABLE"}));
+        limitOptions.tableTypes().toArray(), is(new String[] {"TABLE", "VIEW", "BASE TABLE"}));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
     assertThat(
-        limitOptionsPlayback.getTableTypes().toArray(),
+        limitOptionsPlayback.tableTypes().toArray(),
         is(new String[] {"TABLE", "VIEW", "BASE TABLE"}));
 
     // 2. Test empty collection
     limitOptionsBuilder.tableTypes(new ArrayList<>());
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableTypes().toArray(), is(new String[0]));
+    assertThat(limitOptions.tableTypes().toArray(), is(new String[0]));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getTableTypes().toArray(), is(new String[0]));
+    assertThat(limitOptionsPlayback.tableTypes().toArray(), is(new String[0]));
 
     // 3. Test collection with non-defaults
     limitOptionsBuilder.tableTypes("TABLE");
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableTypes().toArray(), is(new String[] {"TABLE"}));
+    assertThat(limitOptions.tableTypes().toArray(), is(new String[] {"TABLE"}));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getTableTypes().toArray(), is(new String[] {"TABLE"}));
+    assertThat(limitOptionsPlayback.tableTypes().toArray(), is(new String[] {"TABLE"}));
 
     // 4. Test null collection (which resets to defaults)
     limitOptionsBuilder.tableTypes((Collection<String>) null);
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableTypes().toArray(), is(nullValue()));
+    assertThat(limitOptions.tableTypes().toArray(), is(nullValue()));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getTableTypes().toArray(), is(nullValue()));
+    assertThat(limitOptionsPlayback.tableTypes().toArray(), is(nullValue()));
 
     // 5. Test null varargs (which resets to defaults)
     limitOptionsBuilder.tableTypes((String[]) null);
     limitOptions = limitOptionsBuilder.toOptions();
-    assertThat(limitOptions.getTableTypes().toArray(), is(nullValue()));
+    assertThat(limitOptions.tableTypes().toArray(), is(nullValue()));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
-    assertThat(limitOptionsPlayback.getTableTypes().toArray(), is(nullValue()));
+    assertThat(limitOptionsPlayback.tableTypes().toArray(), is(nullValue()));
   }
 
   private void assertDefaultLimitOptions(final LimitOptions limitOptions) {
     assertThat(
-        limitOptions.getRoutineTypes(),
-        is(EnumSet.of(RoutineType.function, RoutineType.procedure)));
+        limitOptions.routineTypes(), is(EnumSet.of(RoutineType.function, RoutineType.procedure)));
     assertThat(
-        asList(limitOptions.getTableTypes().toArray()),
+        asList(limitOptions.tableTypes().toArray()),
         containsInAnyOrder("TABLE", "VIEW", "BASE TABLE"));
 
     final IncludeAll includeAll = new IncludeAll();

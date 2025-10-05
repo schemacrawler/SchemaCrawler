@@ -36,9 +36,9 @@ class TableGrepFilter implements Predicate<Table> {
 
     invertMatch = options.isGrepInvertMatch();
 
-    grepTableInclusionRule = options.getGrepTableInclusionRule().orElse(null);
-    grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule().orElse(null);
+    grepTableInclusionRule = options.grepTableInclusionRule();
+    grepColumnInclusionRule = options.grepColumnInclusionRule();
+    grepDefinitionInclusionRule = options.grepDefinitionInclusionRule();
   }
 
   /**

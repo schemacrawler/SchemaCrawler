@@ -8,11 +8,10 @@
 
 package schemacrawler.test;
 
-import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
-import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresent;
-import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
@@ -36,9 +35,9 @@ public class GrepOptionsBuilderTest {
 
     // After
     final GrepOptions grepOptions = builder.toOptions();
-    assertThat(grepOptions.getGrepColumnInclusionRule(), isPresent());
-    assertThat(grepOptions.getGrepDefinitionInclusionRule(), isPresent());
-    assertThat(grepOptions.getGrepRoutineParameterInclusionRule(), isPresent());
+    assertThat(grepOptions.grepColumnInclusionRule(), is(not(nullValue())));
+    assertThat(grepOptions.grepDefinitionInclusionRule(), is(not(nullValue())));
+    assertThat(grepOptions.grepRoutineParameterInclusionRule(), is(not(nullValue())));
 
     final GrepOptionsBuilder builderNull = GrepOptionsBuilder.builder().fromOptions(null);
     checkAllDefaults(builderNull.toOptions());
@@ -51,7 +50,7 @@ public class GrepOptionsBuilderTest {
 
     builder.includeGreppedColumns(new ExcludeAll());
     // Check after setting the value
-    assertThat(builder.toOptions().getGrepColumnInclusionRule(), isPresentAndIs(new ExcludeAll()));
+    assertThat(builder.toOptions().grepColumnInclusionRule(), is(new ExcludeAll()));
     assertThat(builder.toOptions().isGrepColumns(), is(true));
   }
 
@@ -62,11 +61,11 @@ public class GrepOptionsBuilderTest {
 
     builder.includeGreppedColumns(Pattern.compile(".*"));
     // Check after setting the value
-    assertThat(builder.toOptions().getGrepColumnInclusionRule(), isPresent());
+    assertThat(builder.toOptions().grepColumnInclusionRule(), is(not(nullValue())));
 
     builder.includeGreppedColumns((Pattern) null);
     // Check after setting the value
-    assertThat(builder.toOptions().getGrepColumnInclusionRule(), isEmpty());
+    assertThat(builder.toOptions().grepColumnInclusionRule(), is(nullValue()));
     checkAllDefaults(builder.toOptions());
   }
 
@@ -77,8 +76,7 @@ public class GrepOptionsBuilderTest {
 
     builder.includeGreppedDefinitions(new ExcludeAll());
     // Check after setting the value
-    assertThat(
-        builder.toOptions().getGrepDefinitionInclusionRule(), isPresentAndIs(new ExcludeAll()));
+    assertThat(builder.toOptions().grepDefinitionInclusionRule(), is(new ExcludeAll()));
     assertThat(builder.toOptions().isGrepDefinitions(), is(true));
   }
 
@@ -89,11 +87,11 @@ public class GrepOptionsBuilderTest {
 
     builder.includeGreppedDefinitions(Pattern.compile(".*"));
     // Check after setting the value
-    assertThat(builder.toOptions().getGrepDefinitionInclusionRule(), isPresent());
+    assertThat(builder.toOptions().grepDefinitionInclusionRule(), is(not(nullValue())));
 
     builder.includeGreppedDefinitions((Pattern) null);
     // Check after setting the value
-    assertThat(builder.toOptions().getGrepDefinitionInclusionRule(), isEmpty());
+    assertThat(builder.toOptions().grepDefinitionInclusionRule(), is(nullValue()));
     checkAllDefaults(builder.toOptions());
   }
 
@@ -104,9 +102,7 @@ public class GrepOptionsBuilderTest {
 
     builder.includeGreppedRoutineParameters(new ExcludeAll());
     // Check after setting the value
-    assertThat(
-        builder.toOptions().getGrepRoutineParameterInclusionRule(),
-        isPresentAndIs(new ExcludeAll()));
+    assertThat(builder.toOptions().grepRoutineParameterInclusionRule(), is(new ExcludeAll()));
     assertThat(builder.toOptions().isGrepRoutineParameters(), is(true));
   }
 
@@ -117,11 +113,11 @@ public class GrepOptionsBuilderTest {
 
     builder.includeGreppedRoutineParameters(Pattern.compile(".*"));
     // Check after setting the value
-    assertThat(builder.toOptions().getGrepRoutineParameterInclusionRule(), isPresent());
+    assertThat(builder.toOptions().grepRoutineParameterInclusionRule(), is(not(nullValue())));
 
     builder.includeGreppedRoutineParameters((Pattern) null);
     // Check after setting the value
-    assertThat(builder.toOptions().getGrepRoutineParameterInclusionRule(), isEmpty());
+    assertThat(builder.toOptions().grepRoutineParameterInclusionRule(), is(nullValue()));
     checkAllDefaults(builder.toOptions());
   }
 
@@ -142,9 +138,9 @@ public class GrepOptionsBuilderTest {
   }
 
   private void checkAllDefaults(final GrepOptions grepOptionsNew) {
-    assertThat(grepOptionsNew.getGrepColumnInclusionRule(), isEmpty());
-    assertThat(grepOptionsNew.getGrepDefinitionInclusionRule(), isEmpty());
-    assertThat(grepOptionsNew.getGrepRoutineParameterInclusionRule(), isEmpty());
+    assertThat(grepOptionsNew.grepColumnInclusionRule(), is(nullValue()));
+    assertThat(grepOptionsNew.grepDefinitionInclusionRule(), is(nullValue()));
+    assertThat(grepOptionsNew.grepRoutineParameterInclusionRule(), is(nullValue()));
 
     // Additional tests for synthetic methods
     assertThat(grepOptionsNew.isGrepColumns(), is(false));

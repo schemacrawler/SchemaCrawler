@@ -28,8 +28,8 @@ class RoutineGrepFilter implements Predicate<Routine> {
   public RoutineGrepFilter(final GrepOptions options) {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options.getGrepRoutineParameterInclusionRule().orElse(null);
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule().orElse(null);
+    grepColumnInclusionRule = options.grepRoutineParameterInclusionRule();
+    grepDefinitionInclusionRule = options.grepDefinitionInclusionRule();
   }
 
   /**

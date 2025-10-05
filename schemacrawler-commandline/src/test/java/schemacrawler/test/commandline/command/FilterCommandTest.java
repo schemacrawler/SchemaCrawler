@@ -40,8 +40,8 @@ public class FilterCommandTest {
 
     final FilterOptions filterOptions = state.getSchemaCrawlerOptions().getFilterOptions();
 
-    assertThat(filterOptions.getParentTableFilterDepth(), is(2));
-    assertThat(filterOptions.getChildTableFilterDepth(), is(2));
+    assertThat(filterOptions.parentTableFilterDepth(), is(2));
+    assertThat(filterOptions.childTableFilterDepth(), is(2));
   }
 
   @Test
@@ -82,8 +82,8 @@ public class FilterCommandTest {
     commandLine.parseArgs(args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
-    assertThat(filterOptions.getParentTableFilterDepth(), is(0));
-    assertThat(filterOptions.getChildTableFilterDepth(), is(0));
+    assertThat(filterOptions.parentTableFilterDepth(), is(0));
+    assertThat(filterOptions.childTableFilterDepth(), is(0));
   }
 
   @Test
@@ -97,8 +97,8 @@ public class FilterCommandTest {
     executeCommandInTest(new FilterCommand(state), args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
-    assertThat(filterOptions.getParentTableFilterDepth(), is(0));
-    assertThat(filterOptions.getChildTableFilterDepth(), is(0));
+    assertThat(filterOptions.parentTableFilterDepth(), is(0));
+    assertThat(filterOptions.childTableFilterDepth(), is(0));
   }
 
   @Test

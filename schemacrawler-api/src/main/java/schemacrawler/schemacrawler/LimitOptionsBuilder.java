@@ -84,9 +84,9 @@ public final class LimitOptionsBuilder
       inclusionRules.put(ruleForInclusion, options.get(ruleForInclusion));
     }
 
-    tableTypes = options.getTableTypes();
-    tableNamePattern = options.getTableNamePattern();
-    routineTypes = EnumSet.copyOf(options.getRoutineTypes());
+    tableTypes = options.tableTypes();
+    tableNamePattern = options.tableNamePattern();
+    routineTypes = EnumSet.copyOf(options.routineTypes());
 
     return this;
   }

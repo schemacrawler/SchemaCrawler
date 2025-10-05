@@ -107,8 +107,8 @@ public final class SchemaCrawler {
       this.options = requireNonNull(options, "No SchemaCrawler options provided");
 
       final LoadOptions loadOptions = options.getLoadOptions();
-      infoLevel = loadOptions.getSchemaInfoLevel();
-      maxThreads = loadOptions.getMaxThreads();
+      infoLevel = loadOptions.schemaInfoLevel();
+      maxThreads = loadOptions.maxThreads();
 
     } catch (final SQLException e) {
       throw new DatabaseAccessException(e);
@@ -213,7 +213,7 @@ public final class SchemaCrawler {
     final FunctionParameterRetriever functionParameterRetriever =
         new FunctionParameterRetriever(retrieverConnection, catalog, options);
 
-    final Collection<RoutineType> routineTypes = limitOptions.getRoutineTypes();
+    final Collection<RoutineType> routineTypes = limitOptions.routineTypes();
 
     taskRunner
         .add(
@@ -369,8 +369,8 @@ public final class SchemaCrawler {
             () -> {
               LOGGER.log(Level.INFO, "Retrieving table names");
               retriever.retrieveTables(
-                  limitOptions.getTableNamePattern(),
-                  limitOptions.getTableTypes(),
+                  limitOptions.tableNamePattern(),
+                  limitOptions.tableTypes(),
                   limitOptions.get(ruleForTableInclusion));
             })
         .submit();

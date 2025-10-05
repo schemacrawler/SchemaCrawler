@@ -100,7 +100,7 @@ public class LimitCommandTest {
     assertThat(
         limitOptions.get(ruleForColumnInclusion),
         is(new RegularExpressionExclusionRule(".*regexp.*")));
-    assertThat(limitOptions.getTableTypes().lookupTableType("CHAIR"), isPresent());
+    assertThat(limitOptions.tableTypes().lookupTableType("CHAIR"), isPresent());
 
     assertThat(
         limitOptions.get(ruleForRoutineInclusion),
@@ -108,7 +108,7 @@ public class LimitCommandTest {
     assertThat(
         limitOptions.get(ruleForRoutineParameterInclusion),
         is(new RegularExpressionExclusionRule(".*regexp.*")));
-    assertThat(limitOptions.getRoutineTypes(), hasItems(RoutineType.function));
+    assertThat(limitOptions.routineTypes(), hasItems(RoutineType.function));
   }
 
   @Test
@@ -148,14 +148,13 @@ public class LimitCommandTest {
 
     assertThat(limitOptions.get(ruleForTableInclusion), is(new IncludeAll()));
     assertThat(limitOptions.get(ruleForColumnInclusion), is(new IncludeAll()));
-    assertThat(limitOptions.getTableTypes().lookupTableType("TABLE"), isPresent());
-    assertThat(limitOptions.getTableTypes().lookupTableType("BASE TABLE"), isPresent());
-    assertThat(limitOptions.getTableTypes().lookupTableType("VIEW"), isPresent());
+    assertThat(limitOptions.tableTypes().lookupTableType("TABLE"), isPresent());
+    assertThat(limitOptions.tableTypes().lookupTableType("BASE TABLE"), isPresent());
+    assertThat(limitOptions.tableTypes().lookupTableType("VIEW"), isPresent());
 
     assertThat(limitOptions.get(ruleForRoutineInclusion), is(new ExcludeAll()));
     assertThat(limitOptions.get(ruleForRoutineParameterInclusion), is(new IncludeAll()));
-    assertThat(
-        limitOptions.getRoutineTypes(), hasItems(RoutineType.function, RoutineType.procedure));
+    assertThat(limitOptions.routineTypes(), hasItems(RoutineType.function, RoutineType.procedure));
   }
 
   @Test
@@ -169,8 +168,8 @@ public class LimitCommandTest {
     executeCommandInTest(new LimitCommand(state), args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
-    assertThat(filterOptions.getParentTableFilterDepth(), is(0));
-    assertThat(filterOptions.getChildTableFilterDepth(), is(0));
+    assertThat(filterOptions.parentTableFilterDepth(), is(0));
+    assertThat(filterOptions.childTableFilterDepth(), is(0));
   }
 
   @Test

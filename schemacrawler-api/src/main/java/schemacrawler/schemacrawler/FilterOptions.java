@@ -8,39 +8,24 @@
 
 package schemacrawler.schemacrawler;
 
-import us.fatehi.utility.ObjectToString;
+/** Options to control filtering depth for related tables. */
+public record FilterOptions(int childTableFilterDepth, int parentTableFilterDepth)
+    implements Options {
 
-public final class FilterOptions implements Options {
-
-  private final int childTableFilterDepth;
-  private final int parentTableFilterDepth;
-
-  FilterOptions(final int childTableFilterDepth, final int parentTableFilterDepth) {
-
+  /**
+   * Canonical constructor with validation.
+   *
+   * @param childTableFilterDepth depth for child tables; must be >= 0
+   * @param parentTableFilterDepth depth for parent tables; must be >= 0
+   */
+  public FilterOptions {
     if (childTableFilterDepth < 0) {
       throw new IllegalArgumentException(
           "Invalid child table filter depth, " + childTableFilterDepth);
     }
-    this.childTableFilterDepth = childTableFilterDepth;
-
     if (parentTableFilterDepth < 0) {
       throw new IllegalArgumentException(
           "Invalid parent table filter depth, " + parentTableFilterDepth);
     }
-    this.parentTableFilterDepth = parentTableFilterDepth;
-  }
-
-  public int getChildTableFilterDepth() {
-    return childTableFilterDepth;
-  }
-
-  public int getParentTableFilterDepth() {
-    return parentTableFilterDepth;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    return ObjectToString.toString(this);
   }
 }

@@ -10,39 +10,13 @@ package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 
-import us.fatehi.utility.ObjectToString;
+import org.jspecify.annotations.NonNull;
 
-public final class LoadOptions implements Options {
+/** Options controlling how schema information is loaded. */
+public record LoadOptions(@NonNull SchemaInfoLevel schemaInfoLevel, int maxThreads)
+    implements Options {
 
-  private final SchemaInfoLevel schemaInfoLevel;
-  private final int maxThreads;
-
-  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final int maxThreads) {
-    this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
-    this.maxThreads = maxThreads;
-  }
-
-  /**
-   * Maximum number of threads.
-   *
-   * @return Maximum number of threads.
-   */
-  public int getMaxThreads() {
-    return maxThreads;
-  }
-
-  /**
-   * Gets the schema information level, identifying to what level the schema should be crawled.
-   *
-   * @return Schema information level.
-   */
-  public SchemaInfoLevel getSchemaInfoLevel() {
-    return schemaInfoLevel;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    return ObjectToString.toString(this);
+  public LoadOptions {
+    schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
   }
 }

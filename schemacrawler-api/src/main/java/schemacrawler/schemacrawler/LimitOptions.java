@@ -10,36 +10,42 @@ package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Collection;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.TableTypes;
-import us.fatehi.utility.ObjectToString;
 
-/** SchemaCrawler options. */
-public final class LimitOptions implements Options {
+/** SchemaCrawler options controlling inclusion/ limits. */
+public record LimitOptions(
+    @NonNull Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules,
+    @NonNull TableTypes tableTypes,
+    @Nullable String tableNamePattern,
+    @NonNull EnumSet<RoutineType> routineTypes)
+    implements Options {
 
-  private final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules;
-  private final EnumSet<RoutineType> routineTypes;
-  private final String tableNamePattern;
-  private final TableTypes tableTypes;
+  /**
+   * Canonical constructor with non-null checks and defensive copy for enum collections.
+   *
+   * @param inclusionRules
+   * @param tableTypes Table types requested for output.
+   * @param tableNamePattern Table name pattern. A null value indicates do not take table pattern
+   *     into account.
+   * @param routineTypes Routine types requested for output.
+   */
+  public LimitOptions {
+    requireNonNull(inclusionRules, "No inclusion rules provided");
+    inclusionRules = new EnumMap<>(inclusionRules);
 
-  LimitOptions(
-      final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules,
-      final TableTypes tableTypes,
-      final String tableNamePattern,
-      final EnumSet<RoutineType> routineTypes) {
-    this.inclusionRules = requireNonNull(inclusionRules, "No inclusion rules provided");
-
-    this.tableTypes = requireNonNull(tableTypes, "No table types provided");
-    this.tableNamePattern = tableNamePattern;
+    tableTypes = requireNonNull(tableTypes, "No table types provided");
 
     requireNonNull(routineTypes, "No routine types provided");
-    this.routineTypes = EnumSet.copyOf(routineTypes);
+    routineTypes = EnumSet.copyOf(routineTypes);
   }
 
   /**
@@ -57,7 +63,7 @@ public final class LimitOptions implements Options {
     return inclusionRules.getOrDefault(inclusionRuleKey, defaultInclusionRule);
   }
 
-  public Collection<RoutineType> getRoutineTypes() {
+  public EnumSet<RoutineType> routineTypes() {
     return EnumSet.copyOf(routineTypes);
   }
 
@@ -66,18 +72,8 @@ public final class LimitOptions implements Options {
    *
    * @return Table name pattern
    */
-  public String getTableNamePattern() {
+  public String tableNamePattern() {
     return tableNamePattern;
-  }
-
-  /**
-   * Returns the table types requested for output. This can be null, if all supported table types
-   * are required in the output.
-   *
-   * @return All table types requested for output
-   */
-  public TableTypes getTableTypes() {
-    return tableTypes;
   }
 
   public boolean isExcludeAll(final DatabaseObjectRuleForInclusion inclusionRuleKey) {
@@ -86,11 +82,5 @@ public final class LimitOptions implements Options {
 
   public boolean isIncludeAll(final DatabaseObjectRuleForInclusion inclusionRuleKey) {
     return get(inclusionRuleKey).equals(new IncludeAll());
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    return ObjectToString.toString(this);
   }
 }
