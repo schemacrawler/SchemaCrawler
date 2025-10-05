@@ -6,13 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.template;
-
-import java.io.File;
-import java.io.Writer;
-import java.util.Locale;
-import java.util.Map;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -20,6 +14,10 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import java.io.File;
+import java.io.Writer;
+import java.util.Locale;
+import java.util.Map;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.options.OutputOptions;
 

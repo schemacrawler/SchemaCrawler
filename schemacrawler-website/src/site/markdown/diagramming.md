@@ -248,10 +248,6 @@ in a programming language of your choice. You can start with some of the user-co
 To use your own script, use a command like the one above, but provide a full path to your script with the
 `--script` option, and of course set the `--script-language` to the right one.
 
-Here are some user-contributed diagram scripts:
-- [Petr Vraník's Groovy script to generate PlantUML diagrams](https://gist.github.com/konikvranik/15ff54cb2c3b255ce86a689b8e2ba6c6)
-
-
 
 ## SchemaCrawler Diagrams in Use
 

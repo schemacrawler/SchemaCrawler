@@ -6,15 +6,12 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.template;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.options.Config;
@@ -30,8 +27,8 @@ public class TemplateLanguageTest {
       config.put("template", "script.file");
       builder.fromConfig(config);
 
-      final String language = builder.toOptions().getLanguage();
-      assertThat(TemplateLanguageType.valueOf(language), is(templateLanguageType));
+      final TemplateLanguageType language = builder.toOptions().getLanguage();
+      assertThat(language, is(templateLanguageType));
     }
   }
 
@@ -43,8 +40,8 @@ public class TemplateLanguageTest {
     config.put("template", "script.file");
     builder.fromConfig(config);
 
-    final String language = builder.toOptions().getLanguage();
-    assertThrows(IllegalArgumentException.class, () -> TemplateLanguageType.valueOf(language));
+    final TemplateLanguageType language = builder.toOptions().getLanguage();
+    assertThat(language, is(TemplateLanguageType.unknown));
   }
 
   @Test
@@ -55,8 +52,8 @@ public class TemplateLanguageTest {
     config.put("template", "script.file");
     builder.fromConfig(config);
 
-    final String language = builder.toOptions().getLanguage();
-    assertThrows(IllegalArgumentException.class, () -> TemplateLanguageType.valueOf(language));
+    final TemplateLanguageType language = builder.toOptions().getLanguage();
+    assertThat(language, is(TemplateLanguageType.unknown));
   }
 
   @Test
@@ -67,7 +64,7 @@ public class TemplateLanguageTest {
     config.put("template", "script.file");
     builder.fromConfig(config);
 
-    final String language = builder.toOptions().getLanguage();
-    assertThrows(IllegalArgumentException.class, () -> TemplateLanguageType.valueOf(language));
+    final TemplateLanguageType language = builder.toOptions().getLanguage();
+    assertThat(language, is(TemplateLanguageType.unknown));
   }
 }

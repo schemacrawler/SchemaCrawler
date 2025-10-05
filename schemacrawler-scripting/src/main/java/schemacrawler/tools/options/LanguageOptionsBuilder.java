@@ -6,42 +6,43 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.options;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.IOUtility.getFileExtension;
 import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.schemacrawler.OptionsBuilder;
+import us.fatehi.utility.IOUtility;
 
-public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
-    implements OptionsBuilder<LanguageOptionsBuilder<O>, O>,
-        ConfigOptionsBuilder<LanguageOptionsBuilder<O>, O> {
+public abstract class LanguageOptionsBuilder<
+        L extends LanguageType<?>, O extends LanguageOptions<L>>
+    implements OptionsBuilder<LanguageOptionsBuilder<L, O>, O>,
+        ConfigOptionsBuilder<LanguageOptionsBuilder<L, O>, O> {
 
-  private final String defaultLanguage;
+  private final L defaultLanguage;
   private final String languageKey;
   private final String resourceKey;
-  private String language;
+  private L language;
   private String script;
 
   protected LanguageOptionsBuilder(
-      final String languageKey, final String resourceKey, final String defaultLanguage) {
+      final String languageKey, final String resourceKey, final L defaultLanguage) {
     this.languageKey = requireNonNull(languageKey, "No language key provided");
     this.resourceKey = requireNonNull(resourceKey, "No resource key provided");
     this.defaultLanguage = requireNonNull(defaultLanguage, "No default language provided");
   }
 
   @Override
-  public LanguageOptionsBuilder<O> fromConfig(final Config config) {
+  public LanguageOptionsBuilder<L, O> fromConfig(final Config config) {
     script = getScript(config);
     // Language may be inferred from script extension, so set it afterwards
-    language = getLanguage(config);
+    final String languageString = getLanguageFromConfig(config);
+    language = languageFromString(languageString);
     return this;
   }
 
   @Override
-  public LanguageOptionsBuilder<O> fromOptions(final LanguageOptions options) {
+  public LanguageOptionsBuilder<L, O> fromOptions(final O options) {
     if (options != null) {
       language = options.getLanguage();
       script = options.getScript();
@@ -49,7 +50,7 @@ public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
     return this;
   }
 
-  public String getLanguage() {
+  public L getLanguage() {
     return language;
   }
 
@@ -57,8 +58,8 @@ public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
     return script;
   }
 
-  public void setLanguage(final String language) {
-    this.language = language;
+  public void setLanguage(final L language) {
+    this.language = requireNonNull(language, "No language type provided");
   }
 
   public void setScript(final String script) {
@@ -70,7 +71,9 @@ public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
     throw new UnsupportedOperationException();
   }
 
-  private final String getLanguage(final Config config) {
+  protected abstract L languageFromString(String languageName);
+
+  private String getLanguageFromConfig(final Config config) {
     // Check if language is specified
     final String language = config.getStringValue(languageKey, null);
     if (!isBlank(language)) {
@@ -78,12 +81,12 @@ public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
     }
 
     // Use the script file extension if the language is not specified
-    final String fileExtension = getFileExtension(script);
+    final String fileExtension = IOUtility.getFileExtension(script);
     if (!isBlank(fileExtension)) {
       return fileExtension;
     }
 
-    return defaultLanguage;
+    return defaultLanguage.toString();
   }
 
   private String getScript(final Config config) {

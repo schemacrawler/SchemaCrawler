@@ -1,8 +1,7 @@
 # SchemaCrawler Database Scripting
 
 SchemaCrawler is a command-line tool that allows you to script against your
-database, using JavaScript, [Groovy](https://www.groovy-lang.org/),
-[Ruby](https://www.ruby-lang.org/en/) or [Python](https://www.python.org/).
+database, using JavaScript or [Python](https://www.python.org/).
 (SchemaCrawler supports any scripting language supported on the JDK.) Database
 meta-data is provided to your script, as the "database" object, and you can
 use any of the API methods to obtain details about your schema. A live
@@ -11,7 +10,7 @@ can use standard JDBC to script against the database.
 
 For more details, see scripting example in the 
 [SchemaCrawler examples](https://www.schemacrawler.com/downloads.html#running-examples-locally/)
-download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and
+download, in the `examples\javascript` and
 `examples\python` directories.
 
 An hypothetical example of SchemaCrawler JavaScript support is in the

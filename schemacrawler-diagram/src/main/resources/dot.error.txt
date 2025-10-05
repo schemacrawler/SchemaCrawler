@@ -1,5 +1,4 @@
 If this is a Graphviz error, please reinstall, and make 
 it available on the system PATH. If you are unable to 
-install Graphviz, make https://github.com/nidi3/graphviz-java 
-jar files available to SchemaCrawler, in the lib/ folder. 
-Otherwise, consider generating a DOT file in "scdot" format.
+install Graphviz, consider generating a DOT file in the
+"scdot" format.

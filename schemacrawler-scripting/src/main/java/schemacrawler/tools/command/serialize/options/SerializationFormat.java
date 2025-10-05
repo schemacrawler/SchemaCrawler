@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.serialize.options;
 
 import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,9 +46,8 @@ public enum SerializationFormat implements OutputFormat {
     if (outputFormat == null) {
       LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
       return ser;
-    } else {
-      return outputFormat;
     }
+    return outputFormat;
   }
 
   /**

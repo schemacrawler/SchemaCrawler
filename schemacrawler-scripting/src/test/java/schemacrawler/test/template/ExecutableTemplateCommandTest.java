@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.template;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +15,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;

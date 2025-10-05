@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test.serialize;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import org.hamcrest.Matcher;

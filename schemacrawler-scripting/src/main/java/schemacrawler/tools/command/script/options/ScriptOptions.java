@@ -6,17 +6,17 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.script.options;
 
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.LanguageOptions;
 
-public class ScriptOptions extends LanguageOptions {
+public class ScriptOptions extends LanguageOptions<ScriptLanguageType> {
 
   private final Config config;
 
-  public ScriptOptions(final String language, final String script, final Config config) {
+  public ScriptOptions(
+      final ScriptLanguageType language, final String script, final Config config) {
     super(language, script);
     if (config == null) {
       this.config = new Config();

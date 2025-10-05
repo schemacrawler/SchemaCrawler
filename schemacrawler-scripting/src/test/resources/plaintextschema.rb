@@ -1,15 +1,15 @@
 # encoding: utf-8
-puts catalog.crawlInfo
+puts catalog.getCrawlInfo().toString()
 
-for table in catalog.tables
-  # $stderr.puts table.schema
-  if table.schema.to_s == "PUBLIC.FOR_LINT"
+catalog.getTables().each do |table|
+  # $stderr.puts table.getSchema().toString()
+  if table.getSchema().toString() == "PUBLIC.FOR_LINT"
     next
   end
-  # $stderr.puts table.fullName
+  # $stderr.puts table.getFullName()
   puts ''
-  puts table.fullName
-  for column in table.columns
-    puts "  " + column.name
+  puts table.getFullName()
+  table.getColumns().each do |column|
+    puts "  " + column.getName()
   end
 end

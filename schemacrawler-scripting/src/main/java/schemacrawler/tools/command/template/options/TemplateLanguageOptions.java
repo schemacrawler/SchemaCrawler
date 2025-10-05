@@ -6,14 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.template.options;
 
 import schemacrawler.tools.options.LanguageOptions;
 
-public final class TemplateLanguageOptions extends LanguageOptions {
+public final class TemplateLanguageOptions extends LanguageOptions<TemplateLanguageType> {
 
-  public TemplateLanguageOptions(final String language, final String script) {
+  public TemplateLanguageOptions(final TemplateLanguageType language, final String script) {
     super(language, script);
   }
 }

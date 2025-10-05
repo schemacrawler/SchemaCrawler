@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.test.utility.CaptureSystemStreams;
 import schemacrawler.test.utility.CapturedSystemStreams;
-import schemacrawler.test.utility.OnlyRunWithGraphviz;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.IOUtility;
 
@@ -83,7 +82,6 @@ public class GraphProcessExecutorTest {
   }
 
   @Test
-  @OnlyRunWithGraphviz
   public void graphvizProcessExecutorError(final CapturedSystemStreams streams) throws IOException {
 
     final Path dotFile = Files.createTempFile("", "");

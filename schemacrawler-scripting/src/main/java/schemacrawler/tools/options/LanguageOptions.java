@@ -6,33 +6,32 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.options;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
-import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
 
 import java.util.Optional;
-
 import schemacrawler.tools.executable.CommandOptions;
 import us.fatehi.utility.ioresource.InputResource;
+import us.fatehi.utility.ioresource.InputResourceUtility;
 
-public abstract class LanguageOptions implements CommandOptions {
+public abstract class LanguageOptions<L extends LanguageType<?>> implements CommandOptions {
 
-  private final String language;
+  private final L language;
   private final String script;
 
-  public LanguageOptions(final String language, final String script) {
-    this.language = requireNotBlank(language, "No language provided");
+  public LanguageOptions(final L language, final String script) {
+    this.language = requireNonNull(language, "No language provided");
     this.script = requireNotBlank(script, "No script provided");
   }
 
-  public String getLanguage() {
-    return language;
+  public final Optional<InputResource> createInputResource() {
+    return InputResourceUtility.createInputResource(script);
   }
 
-  public final Optional<InputResource> getInputResource() {
-    return createInputResource(script);
+  public L getLanguage() {
+    return language;
   }
 
   public String getScript() {

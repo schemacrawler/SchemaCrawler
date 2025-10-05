@@ -6,12 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.formatter.serialize;
 
 import java.io.OutputStream;
 import java.io.Writer;
-
 import schemacrawler.schema.Catalog;
 
 public interface CatalogSerializer {

@@ -6,11 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.serialize;
 
 import static schemacrawler.tools.command.serialize.SerializationCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;

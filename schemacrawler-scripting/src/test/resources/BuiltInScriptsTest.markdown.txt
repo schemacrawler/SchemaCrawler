@@ -58,6 +58,7 @@ Current price for the book
 
 ### Celebrities (table)
 
+
 ### Columns
 - **Id** (INTEGER)
 - NAME (VARCHAR)
@@ -70,6 +71,7 @@ Current price for the book
 
 
 ### COUPONS (table)
+
 
 ### Columns
 - **ID** (INTEGER)
@@ -86,6 +88,7 @@ Current price for the book
 
 ### CUSTOMERDATA (table)
 
+
 ### Columns
 - **ID** (INTEGER)
 - DATA (PUBLIC.BOOKS.VALID_STRING)
@@ -98,6 +101,7 @@ Current price for the book
 
 
 ### CUSTOMERS (table)
+
 
 ### Columns
 - **ID** (INTEGER)
@@ -122,7 +126,7 @@ Unique (internal) id for book publisher
 Name of book publisher
 
 ### Primary Key
-- SYS_PK_10126 (ID) 
+- SYS_PK_10124 (ID) 
 
 ### Indexes
 
@@ -139,16 +143,17 @@ along with the latest updated information
 
 ### Indexes
 - Z_FK_AUTHOR (AUTHORID)
-- SYS_FK_10120 (BOOKID)
+- SYS_FK_10118 (BOOKID)
 - UIDX_BOOKAUTHORS (BOOKID, AUTHORID) (unique index)
 
 ### Foreign Keys
 - Z_FK_AUTHOR (*AUTHORID* --> **AUTHORS.ID**)
-- SYS_FK_10120 (*BOOKID* --> **BOOKS.ID**)
+- SYS_FK_10118 (*BOOKID* --> **BOOKS.ID**)
 
 
 
 ### Celebrity Updates (table)
+
 
 ### Columns
 - **Celebrity Id** (INTEGER)
@@ -160,11 +165,12 @@ along with the latest updated information
 ### Indexes
 
 ### Foreign Keys
-- SYS_FK_10130 (*Celebrity Id* --> **"Celebrities"."Id"**)
+- SYS_FK_10128 (*Celebrity Id* --> **"Celebrities"."Id"**)
 
 
 
 ### ΒΙΒΛΊΑ (table)
+
 
 ### Columns
 - **ΜΟΝΑΔΙΚΌΣ** (SMALLINT)
@@ -185,6 +191,7 @@ along with the latest updated information
 
 ### AUTHORSLIST (view)
 
+
 ### Columns
 - ID (INTEGER)
 - FIRSTNAME (VARCHAR)
@@ -195,6 +202,7 @@ along with the latest updated information
 ## PUBLIC."PUBLISHER SALES"
 
 ### REGIONS (table)
+
 
 ### Columns
 - CITY (VARCHAR)
@@ -211,6 +219,7 @@ along with the latest updated information
 
 ### SALESDATA (table)
 
+
 ### Columns
 - SALESDATAID (INTEGER)
 - YEARLYAMOUNT (DOUBLE)
@@ -221,6 +230,7 @@ along with the latest updated information
 
 
 ### SALES (table)
+
 
 ### Columns
 - *POSTALCODE* (VARCHAR)

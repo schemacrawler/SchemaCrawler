@@ -20,8 +20,7 @@ dependency on "schemacrawler-diagram".
 
 ## Scripting
 
-SchemaCrawler can execute scripts in Python, JavaScript, Groovy and or any other language 
-for which a Java Script Engine is available. SchemaCrawler cannot vouch for the security of
+SchemaCrawler can execute scripts in Python or JavaScript. SchemaCrawler cannot vouch for the security of
 the scripts that are executed. 
 
 This functionality is provided in the "schemacrawler-scripting"

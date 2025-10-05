@@ -1,9 +1,11 @@
 # Copyright (c) Sualeh Fatehi
 # SPDX-License-Identifier: EPL-2.0
 
-from __future__ import print_function
 import re
+import java
 
+# Import Java classes explicitly
+# Assuming catalog is passed in or previously defined Java object
 
 # Mermaid only allows alphanumeric identifiers
 def cleanname(name):
@@ -16,11 +18,13 @@ def cleanname(name):
 
 print('erDiagram')
 print('')
-for table in catalog.tables:
-    print('  ' + cleanname(table.fullName) + ' {')
-    for column in table.columns:
-        print('    ' + cleanname(column.columnDataType.name) + ' ' + cleanname(column.name),
-              end='')
+
+for table in catalog.getTables():
+    print('  ' + cleanname(table.getFullName()) + ' {')
+    for column in table.getColumns():
+        coltype = column.getColumnDataType().getName()
+        colname = column.getName()
+        print('    ' + cleanname(coltype) + ' ' + cleanname(colname), end='')
         if column.isPartOfPrimaryKey():
             print(' PK', end='')
         elif column.isPartOfForeignKey():
@@ -28,13 +32,13 @@ for table in catalog.tables:
         elif column.isPartOfUniqueIndex():
             print(' UK', end='')
         if column.hasRemarks():
-            print(' "' + ' '.join(column.remarks.splitlines()) + '"',
-                  end='')
+            remarks = ' '.join(column.getRemarks().splitlines())
+            print(' "' + remarks + '"', end='')
         print()
     print('  }')
     print('')
 
-for table in catalog.tables:
-    for childTable in table.dependentTables:
-        print('  ' + cleanname(table.fullName) + ' ||--o{ ' +
-              cleanname(childTable.fullName) + ' : "foreign key"')
+for table in catalog.getTables():
+    for childTable in table.getDependentTables():
+        print('  ' + cleanname(table.getFullName()) + ' ||--o{ ' +
+              cleanname(childTable.getFullName()) + ' : "foreign key"')

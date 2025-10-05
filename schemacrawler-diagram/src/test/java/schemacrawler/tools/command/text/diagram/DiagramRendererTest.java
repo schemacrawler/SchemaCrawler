@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
 import static java.nio.file.Files.createDirectories;
@@ -17,7 +16,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
+
 import java.nio.file.Path;
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,7 +30,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.OnlyRunWithGraphviz;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestUtility;
@@ -147,7 +145,6 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_GRAPHVIZ_PROC_DISABLE", value = "true")
   public void checkGraphvizAvailabilityDisabled() throws Exception {
 
@@ -155,14 +152,12 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @OnlyRunWithGraphviz
   public void checkGraphvizAvailabilityEnabled() throws Exception {
 
     assertThat(GraphvizUtility.isGraphvizAvailable(), is(true));
   }
 
   @Test
-  @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void diagramRenderer_graphviz(
       final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
@@ -183,7 +178,6 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @OnlyRunWithGraphviz
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz(
       final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {

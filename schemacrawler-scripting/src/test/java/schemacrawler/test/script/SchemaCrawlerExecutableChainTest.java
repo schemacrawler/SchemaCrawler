@@ -85,7 +85,7 @@ public class SchemaCrawlerExecutableChainTest {
     validateDiagramOutput("schema.png");
   }
 
-  private void validateDiagramOutput(String string) throws IOException {
+  private void validateDiagramOutput(final String string) throws IOException {
     final Path diagramFile = Path.of(string);
     assertThat("Diagram file not created", isFileReadable(diagramFile), is(true));
     deleteIfPossible(diagramFile);

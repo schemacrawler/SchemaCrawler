@@ -18,7 +18,8 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.LanguageOptions;
 import us.fatehi.utility.property.PropertyName;
 
-public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOptions> {
+public final class TemplateCommand
+    extends BaseSchemaCrawlerCommand<LanguageOptions<TemplateLanguageType>> {
 
   static final PropertyName COMMAND =
       new PropertyName(
@@ -41,8 +42,7 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOpti
     checkCatalog();
 
     // Find if the language type is valid, or throw an exception
-    final TemplateLanguageType languageType =
-        TemplateLanguageType.valueOf(commandOptions.getLanguage());
+    final TemplateLanguageType languageType = commandOptions.getLanguage();
 
     final TemplateRenderer templateRenderer = newTemplateRenderer(languageType);
 
