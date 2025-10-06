@@ -40,8 +40,7 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile("\\s+\"?product-version\"?\\s?: .*"),
     Pattern.compile("\\s+\"?value\"?\\s?: .*"),
     // Versions
-    Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
-    Pattern.compile(".*16\\.\\d{1,2}\\.\\d{1,2}.*"),
+    Pattern.compile(".*1[67]\\.\\d{1,2}\\.\\d{1,2}.*"),
     // Operating systems and environment
     Pattern.compile(".*(Windows|Linux|Mac OS).*"),
     Pattern.compile(".*(Java|OpenJDK).*"),
