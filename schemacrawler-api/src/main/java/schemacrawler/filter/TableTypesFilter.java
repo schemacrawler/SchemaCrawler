@@ -25,7 +25,7 @@ public class TableTypesFilter implements Predicate<Table> {
 
   public TableTypesFilter(final LimitOptions options) {
     requireNonNull(options, "No limit options provided");
-    tableTypes = options.getTableTypes();
+    tableTypes = options.tableTypes();
   }
 
   public TableTypesFilter(final String... tableTypesFiltered) {

@@ -44,12 +44,11 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
       return this;
     }
 
-    grepTableInclusionRule = options.getGrepTableInclusionRule();
-    grepColumnInclusionRule = options.getGrepColumnInclusionRule();
+    grepTableInclusionRule = Optional.ofNullable(options.grepTableInclusionRule());
+    grepColumnInclusionRule = Optional.ofNullable(options.grepColumnInclusionRule());
     grepRoutineParameterInclusionRule =
-        Optional.ofNullable(options.getGrepRoutineParameterInclusionRule()).orElse(null);
-    grepDefinitionInclusionRule =
-        Optional.ofNullable(options.getGrepDefinitionInclusionRule()).orElse(null);
+        Optional.ofNullable(options.grepRoutineParameterInclusionRule());
+    grepDefinitionInclusionRule = Optional.ofNullable(options.grepDefinitionInclusionRule());
     grepInvertMatch = options.isGrepInvertMatch();
 
     return this;

@@ -25,20 +25,10 @@ class TableGrepFilter implements Predicate<Table> {
 
   private static final Logger LOGGER = Logger.getLogger(TableGrepFilter.class.getName());
 
-  private final InclusionRule grepTableInclusionRule;
-  private final InclusionRule grepColumnInclusionRule;
-  private final InclusionRule grepDefinitionInclusionRule;
-  private final boolean invertMatch;
+  private final GrepOptions options;
 
   public TableGrepFilter(final GrepOptions options) {
-
-    requireNonNull(options, "No grep options provided");
-
-    invertMatch = options.isGrepInvertMatch();
-
-    grepTableInclusionRule = options.getGrepTableInclusionRule().orElse(null);
-    grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule().orElse(null);
+    this.options = requireNonNull(options, "No grep options provided");
   }
 
   /**
@@ -50,12 +40,12 @@ class TableGrepFilter implements Predicate<Table> {
    */
   @Override
   public boolean test(final Table table) {
-    final boolean checkIncludeForTables = grepTableInclusionRule != null;
-    final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+    final boolean checkIncludeForTables = options.isGrepTables();
+    final boolean checkIncludeForColumns = options.isGrepColumns();
+    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
 
     if (!checkIncludeForTables && !checkIncludeForColumns && !checkIncludeForDefinitions) {
-      if (invertMatch) {
+      if (options.grepInvertMatch()) {
         LOGGER.log(
             Level.FINE,
             new StringFormat(
@@ -74,7 +64,7 @@ class TableGrepFilter implements Predicate<Table> {
         checkIncludeForTables && includeForTables
             || checkIncludeForColumns && includeForColumns
             || checkIncludeForDefinitions && includeForDefinitions;
-    if (invertMatch) {
+    if (options.grepInvertMatch()) {
       include = !include;
     }
 
@@ -85,6 +75,9 @@ class TableGrepFilter implements Predicate<Table> {
   }
 
   private boolean checkIncludeForColumns(final Table table) {
+
+    final InclusionRule grepTableInclusionRule = options.grepTableInclusionRule();
+    final InclusionRule grepColumnInclusionRule = options.grepColumnInclusionRule();
 
     final List<Column> columns = table.getColumns();
     if (columns.isEmpty()) {
@@ -99,6 +92,9 @@ class TableGrepFilter implements Predicate<Table> {
   }
 
   private boolean checkIncludeForDefinitions(final Table table) {
+
+    final InclusionRule grepDefinitionInclusionRule = options.grepDefinitionInclusionRule();
+
     if (grepDefinitionInclusionRule != null) {
       if (grepDefinitionInclusionRule.test(table.getRemarks())
           || grepDefinitionInclusionRule.test(table.getDefinition())) {
@@ -114,6 +110,6 @@ class TableGrepFilter implements Predicate<Table> {
   }
 
   private boolean checkIncludeForTables(final Table table) {
-    return grepTableInclusionRule != null && grepTableInclusionRule.test(table.getFullName());
+    return options.isGrepTables() && options.grepTableInclusionRule().test(table.getFullName());
   }
 }

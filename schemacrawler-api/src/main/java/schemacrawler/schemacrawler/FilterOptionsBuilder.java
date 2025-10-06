@@ -37,8 +37,8 @@ public final class FilterOptionsBuilder
       return this;
     }
 
-    childTableFilterDepth = options.getChildTableFilterDepth();
-    parentTableFilterDepth = options.getParentTableFilterDepth();
+    childTableFilterDepth = options.childTableFilterDepth();
+    parentTableFilterDepth = options.parentTableFilterDepth();
 
     return this;
   }

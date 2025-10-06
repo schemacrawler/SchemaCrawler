@@ -62,10 +62,10 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
   @Option(
       names = "--grep-parameters",
       description = {
-        "<grepparameters> is a regular expression to match fully qualified routine parameter names, "
-            + "in the form \"CATALOGNAME.SCHEMANAME.ROUTINENAME.INOUTNAME\" "
-            + "- for example, --grep-parameters=.*\\.STREET|.*\\.PRICE "
-            + "matches routine parameters named STREET or PRICE in any routine",
+        "<grepparameters> is a regular expression to match fully qualified routine parameter names,"
+            + " in the form \"CATALOGNAME.SCHEMANAME.ROUTINENAME.INOUTNAME\" - for example,"
+            + " --grep-parameters=.*\\.STREET|.*\\.PRICE matches routine parameters named STREET or"
+            + " PRICE in any routine",
         "Optional, default is no grep"
       })
   private Pattern grepparameters;
@@ -88,7 +88,7 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
     final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final GrepOptionsBuilder grepOptionsBuilder =
-        GrepOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getGrepOptions());
+        GrepOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.grepOptions());
 
     if (greptables != null) {
       grepOptionsBuilder.includeGreppedTables(greptables);

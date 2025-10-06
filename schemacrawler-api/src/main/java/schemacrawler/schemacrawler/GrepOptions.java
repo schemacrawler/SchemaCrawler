@@ -8,67 +8,17 @@
 
 package schemacrawler.schemacrawler;
 
-import java.util.Optional;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.inclusionrule.InclusionRule;
-import us.fatehi.utility.ObjectToString;
 
-/** SchemaCrawler options. */
-public final class GrepOptions implements Options {
-
-  private final InclusionRule grepTableInclusionRule;
-  private final InclusionRule grepColumnInclusionRule;
-  private final InclusionRule grepDefinitionInclusionRule;
-  private final boolean grepInvertMatch;
-  private final InclusionRule grepRoutineParameterInclusionRule;
-
-  GrepOptions(
-      final InclusionRule grepTableInclusionRule,
-      final InclusionRule grepColumnInclusionRule,
-      final InclusionRule grepRoutineParameterInclusionRule,
-      final InclusionRule grepDefinitionInclusionRule,
-      final boolean grepInvertMatch) {
-    this.grepTableInclusionRule = grepTableInclusionRule;
-    this.grepColumnInclusionRule = grepColumnInclusionRule;
-    this.grepRoutineParameterInclusionRule = grepRoutineParameterInclusionRule;
-    this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
-    this.grepInvertMatch = grepInvertMatch;
-  }
-
-  /**
-   * Gets the column inclusion rule for grep.
-   *
-   * @return Column inclusion rule for grep.
-   */
-  public Optional<InclusionRule> getGrepColumnInclusionRule() {
-    return Optional.ofNullable(grepColumnInclusionRule);
-  }
-
-  /**
-   * Gets the definitions inclusion rule for grep.
-   *
-   * @return Definitions inclusion rule for grep.
-   */
-  public Optional<InclusionRule> getGrepDefinitionInclusionRule() {
-    return Optional.ofNullable(grepDefinitionInclusionRule);
-  }
-
-  /**
-   * Gets the routine column rule for grep.
-   *
-   * @return Routine column rule for grep.
-   */
-  public Optional<InclusionRule> getGrepRoutineParameterInclusionRule() {
-    return Optional.ofNullable(grepRoutineParameterInclusionRule);
-  }
-
-  /**
-   * Gets the table inclusion rule for grep.
-   *
-   * @return Table inclusion rule for grep.
-   */
-  public Optional<InclusionRule> getGrepTableInclusionRule() {
-    return Optional.ofNullable(grepTableInclusionRule);
-  }
+/** SchemaCrawler options for grep-like filtering. */
+public record GrepOptions(
+    @Nullable InclusionRule grepTableInclusionRule,
+    @Nullable InclusionRule grepColumnInclusionRule,
+    @Nullable InclusionRule grepRoutineParameterInclusionRule,
+    @Nullable InclusionRule grepDefinitionInclusionRule,
+    boolean grepInvertMatch)
+    implements Options {
 
   public boolean isGrepColumns() {
     return grepColumnInclusionRule != null;
@@ -93,11 +43,5 @@ public final class GrepOptions implements Options {
 
   public boolean isGrepTables() {
     return grepTableInclusionRule != null;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    return ObjectToString.toString(this);
   }
 }

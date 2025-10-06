@@ -60,7 +60,7 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
     final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final FilterOptionsBuilder optionsBuilder =
-        FilterOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getFilterOptions());
+        FilterOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.filterOptions());
 
     if (parents != null) {
       if (parents >= 0) {

@@ -36,8 +36,8 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
       return this;
     }
 
-    schemaInfoLevel = options.getSchemaInfoLevel();
-    maxThreads = options.getMaxThreads();
+    schemaInfoLevel = options.schemaInfoLevel();
+    maxThreads = options.maxThreads();
 
     return this;
   }

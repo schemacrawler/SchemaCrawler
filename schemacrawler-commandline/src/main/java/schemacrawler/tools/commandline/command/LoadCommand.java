@@ -115,7 +115,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
     final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
+        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.loadOptions());
 
     if (infolevel != null) {
       loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());

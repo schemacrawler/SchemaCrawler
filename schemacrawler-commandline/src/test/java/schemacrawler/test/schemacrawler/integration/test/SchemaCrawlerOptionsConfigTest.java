@@ -70,7 +70,7 @@ public class SchemaCrawlerOptionsConfigTest {
 
     final LimitOptions limitOptions = builder.toOptions();
 
-    assertThat(limitOptions.getRoutineTypes().toString(), is("[]"));
+    assertThat(limitOptions.routineTypes().toString(), is("[]"));
   }
 
   @Test
@@ -82,7 +82,7 @@ public class SchemaCrawlerOptionsConfigTest {
 
     final LimitOptions limitOptions = builder.toOptions();
 
-    assertThat(limitOptions.getTableTypes().toString(), is("[other table]"));
+    assertThat(limitOptions.tableTypes().toString(), is("[other table]"));
   }
 
   @Test

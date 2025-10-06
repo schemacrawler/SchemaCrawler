@@ -8,6 +8,8 @@
 
 package schemacrawler.filter;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,15 +23,10 @@ class RoutineGrepFilter implements Predicate<Routine> {
 
   private static final Logger LOGGER = Logger.getLogger(RoutineGrepFilter.class.getName());
 
-  private final InclusionRule grepColumnInclusionRule;
-  private final InclusionRule grepDefinitionInclusionRule;
-  private final boolean invertMatch;
+  private final GrepOptions options;
 
   public RoutineGrepFilter(final GrepOptions options) {
-    invertMatch = options.isGrepInvertMatch();
-
-    grepColumnInclusionRule = options.getGrepRoutineParameterInclusionRule().orElse(null);
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule().orElse(null);
+    this.options = requireNonNull(options, "No grep options provided");
   }
 
   /**
@@ -41,20 +38,24 @@ class RoutineGrepFilter implements Predicate<Routine> {
    */
   @Override
   public boolean test(final Routine routine) {
-    final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+    final boolean checkIncludeForParameters = options.isGrepRoutineParameters();
+    final boolean checkIncludeForDefinitions = options.isGrepDefinitions();
 
-    if (!checkIncludeForColumns && !checkIncludeForDefinitions) {
+    if (!checkIncludeForParameters && !checkIncludeForDefinitions) {
       return true;
     }
+
+    final InclusionRule grepDefinitionInclusionRule = options.grepDefinitionInclusionRule();
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
     for (final RoutineParameter<?> parameter : routine.getParameters()) {
-      if (checkIncludeForColumns && grepColumnInclusionRule.test(parameter.getFullName())) {
+      if (checkIncludeForParameters
+          && options.grepRoutineParameterInclusionRule().test(parameter.getFullName())) {
         includeForColumns = true;
         break;
       }
+
       if (checkIncludeForDefinitions && grepDefinitionInclusionRule.test(parameter.getRemarks())) {
         includeForDefinitions = true;
         break;
@@ -71,9 +72,9 @@ class RoutineGrepFilter implements Predicate<Routine> {
     }
 
     boolean include =
-        checkIncludeForColumns && includeForColumns
+        checkIncludeForParameters && includeForColumns
             || checkIncludeForDefinitions && includeForDefinitions;
-    if (invertMatch) {
+    if (options.grepInvertMatch()) {
       include = !include;
     }
 

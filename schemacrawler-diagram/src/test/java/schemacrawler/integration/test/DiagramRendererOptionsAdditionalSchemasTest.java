@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static java.lang.Boolean.TRUE;
@@ -19,6 +18,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -78,10 +78,10 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
       throws Exception {
 
     SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion)) {
+    if (options.limitOptions().isIncludeAll(ruleForSchemaInclusion)) {
       final LimitOptionsBuilder limitOptionsBuilder =
           LimitOptionsBuilder.builder()
-              .fromOptions(options.getLimitOptions())
+              .fromOptions(options.limitOptions())
               .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions = options.withLimitOptions(limitOptionsBuilder.toOptions());
     }

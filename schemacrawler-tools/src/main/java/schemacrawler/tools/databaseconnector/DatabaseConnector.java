@@ -156,7 +156,7 @@ public abstract class DatabaseConnector implements Options {
   public final SchemaCrawlerOptions setSchemaCrawlerOptionsDefaults(
       final SchemaCrawlerOptions schemaCrawlerOptions) {
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLimitOptions());
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.limitOptions());
     limitOptionsBuildProcess.accept(limitOptionsBuilder);
 
     return schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());

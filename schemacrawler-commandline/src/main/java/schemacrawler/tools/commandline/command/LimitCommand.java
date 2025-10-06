@@ -28,7 +28,8 @@ import schemacrawler.tools.commandline.state.ShellState;
     header = "** Limit database object metadata",
     description = {
       "",
-      "When you limit database object metadata, it reduces SchemaCrawler's visibility into other database objects.",
+      "When you limit database object metadata, it reduces SchemaCrawler's visibility into other"
+          + " database objects.",
       "From SchemaCrawler's perspective, the other database objects do not exist.",
       ""
     },
@@ -157,7 +158,7 @@ public final class LimitCommand extends BaseStateHolder implements Runnable {
     final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final LimitOptionsBuilder optionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLimitOptions());
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.limitOptions());
 
     if (schemas != null) {
       optionsBuilder.includeSchemas(schemas);

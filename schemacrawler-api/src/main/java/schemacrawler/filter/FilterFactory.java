@@ -26,33 +26,33 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public final class FilterFactory {
 
   public static Predicate<Routine> routineFilter(final SchemaCrawlerOptions options) {
-    final LimitOptions limitOptions = options.getLimitOptions();
+    final LimitOptions limitOptions = options.limitOptions();
     final Predicate<Routine> routineFilter =
         new RoutineTypesFilter(limitOptions)
             .and(new DatabaseObjectFilter<>(limitOptions, ruleForRoutineInclusion))
-            .and(new RoutineGrepFilter(options.getGrepOptions()));
+            .and(new RoutineGrepFilter(options.grepOptions()));
 
     return routineFilter;
   }
 
   public static Predicate<Schema> schemaFilter(final SchemaCrawlerOptions options) {
-    return new InclusionRuleFilter<>(options.getLimitOptions().get(ruleForSchemaInclusion), true);
+    return new InclusionRuleFilter<>(options.limitOptions().get(ruleForSchemaInclusion), true);
   }
 
   public static Predicate<Sequence> sequenceFilter(final SchemaCrawlerOptions options) {
-    return new DatabaseObjectFilter<>(options.getLimitOptions(), ruleForSequenceInclusion);
+    return new DatabaseObjectFilter<>(options.limitOptions(), ruleForSequenceInclusion);
   }
 
   public static Predicate<Synonym> synonymFilter(final SchemaCrawlerOptions options) {
-    return new DatabaseObjectFilter<>(options.getLimitOptions(), ruleForSynonymInclusion);
+    return new DatabaseObjectFilter<>(options.limitOptions(), ruleForSynonymInclusion);
   }
 
   public static Predicate<Table> tableFilter(final SchemaCrawlerOptions options) {
-    final LimitOptions limitOptions = options.getLimitOptions();
+    final LimitOptions limitOptions = options.limitOptions();
     final Predicate<Table> tableFilter =
         new TableTypesFilter(limitOptions)
             .and(new DatabaseObjectFilter<>(limitOptions, ruleForTableInclusion))
-            .and(new TableGrepFilter(options.getGrepOptions()));
+            .and(new TableGrepFilter(options.grepOptions()));
 
     return tableFilter;
   }
