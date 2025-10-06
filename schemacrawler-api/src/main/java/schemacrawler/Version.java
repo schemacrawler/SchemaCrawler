@@ -8,15 +8,7 @@
 
 package schemacrawler;
 
-import static java.lang.System.lineSeparator;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.stream.Collectors.toList;
-
-import java.io.BufferedReader;
 import java.io.Serial;
-import java.util.List;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.property.BaseProductVersion;
 
 /**
@@ -27,24 +19,22 @@ public final class Version extends BaseProductVersion {
 
   @Serial private static final long serialVersionUID = 1143606778430634288L;
 
-  private static final String ABOUT;
-  private static final Version VERSION;
+  private static final String ABOUT =
+      """
+      SchemaCrawler 17.1.1
+      Database schema discovery and comprehension tool
+      https://www.schemacrawler.com/
+      Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
 
-  static {
-    try (final BufferedReader reader =
-        new ClasspathInputResource("/help/SchemaCrawler.txt").openNewInputReader(UTF_8)) {
+      You can search for database schema objects using regular expressions,
+      and output the schema and data in a readable text format. You can find
+      potential schema design issues with lint. The output serves for
+      database documentation is designed to be diff-ed against other database
+      schemas. SchemaCrawler also generates schema diagrams.
+      """
+          .stripIndent();
 
-      final List<String> lines = reader.lines().collect(toList());
-      lines.add("");
-
-      final String productVersion = lines.get(0).split(" ")[1];
-      VERSION = new Version("SchemaCrawler", productVersion);
-      ABOUT = String.join(lineSeparator(), lines);
-
-    } catch (final Exception e) {
-      throw new InternalRuntimeException("Could not read internal information");
-    }
-  }
+  private static final Version VERSION = new Version("SchemaCrawler", "17.1.1");
 
   /**
    * Information about this product.

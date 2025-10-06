@@ -5,7 +5,7 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>16.29.1</version>
+    <version>17.1.1</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
