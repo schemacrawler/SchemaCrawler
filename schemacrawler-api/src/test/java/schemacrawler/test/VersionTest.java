@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.matchesRegex;
 import static schemacrawler.test.utility.FileHasContent.contentsOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 import schemacrawler.Version;
@@ -25,7 +26,7 @@ public class VersionTest {
 
   @Test
   public void version(final CapturedSystemStreams streams) throws Exception {
-    final Pattern VERSION = Pattern.compile("SchemaCrawler 16\\.2[89]\\.\\d{1,2}\\R.*", DOTALL);
+    final Pattern VERSION = Pattern.compile("SchemaCrawler 17\\.1\\.\\d{1,2}\\R.*", DOTALL);
 
     Version.main(new String[0]);
 
