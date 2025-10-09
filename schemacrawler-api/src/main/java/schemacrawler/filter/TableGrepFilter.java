@@ -76,7 +76,6 @@ class TableGrepFilter implements Predicate<Table> {
 
   private boolean checkIncludeForColumns(final Table table) {
 
-    final InclusionRule grepTableInclusionRule = options.grepTableInclusionRule();
     final InclusionRule grepColumnInclusionRule = options.grepColumnInclusionRule();
 
     final List<Column> columns = table.getColumns();
