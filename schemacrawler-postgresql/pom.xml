@@ -88,6 +88,29 @@
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            </manifest>
+            <manifestEntries>
+              <Implementation-Title>${project.name}</Implementation-Title>
+              <Implementation-Version>${project.version}</Implementation-Version>
+              <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+              <Product>${project.name}</Product>
+              <Version>${project.version}</Version>
+              <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
+              <Copyright>Copyright (c) 2000-2025, Sualeh Fatehi</Copyright>
+              <Website>https://www.SchemaCrawler.com</Website>
+              <Automatic-Module-Name>us.fatehi.schemacrawler.postgresql</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
             <index>true</index>
             <manifestEntries>
               <Project>${project.name}, ${project.version}</Project>
