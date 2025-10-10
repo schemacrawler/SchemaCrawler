@@ -16,12 +16,18 @@ import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExec
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.WithTestDatabase;
 
 @AssertNoSystemOutOutput
 @WithTestDatabase
+@EnabledOnOs(
+    value = {OS.WINDOWS},
+    architectures = {"x64", "x86_64", "amd64"},
+    disabledReason = "Does not run on Windows ARM")
 public class CommandlineScriptCommandTest {
 
   @Test

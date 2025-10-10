@@ -16,6 +16,8 @@ import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -23,6 +25,10 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemOutOutput
 @WithTestDatabase
+@EnabledOnOs(
+    value = {OS.WINDOWS},
+    architectures = {"x64", "x86_64", "amd64"},
+    disabledReason = "Does not run on Windows ARM")
 public class ExecutableScriptCommandTest {
 
   @Test

@@ -13,7 +13,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
@@ -24,13 +27,18 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @AssertNoSystemOutOutput
 @ResolveTestContext
 @WithTestDatabase
+@EnabledOnOs(
+    value = {OS.WINDOWS},
+    architectures = {"x64", "x86_64", "amd64"},
+    disabledReason = "Does not run on Windows ARM")
 public class BuiltInScriptsTest {
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void dbml(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
-    assertThat(outputOf(scriptExecution(dataSource, "/scripts/dbml.py")),
+    assertThat(
+        outputOf(scriptExecution(dataSource, "/scripts/dbml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
@@ -38,7 +46,8 @@ public class BuiltInScriptsTest {
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void markdown(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
-    assertThat(outputOf(scriptExecution(dataSource, "/scripts/markdown.py")),
+    assertThat(
+        outputOf(scriptExecution(dataSource, "/scripts/markdown.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
@@ -46,7 +55,8 @@ public class BuiltInScriptsTest {
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void mermaid(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
-    assertThat(outputOf(scriptExecution(dataSource, "/scripts/mermaid.py")),
+    assertThat(
+        outputOf(scriptExecution(dataSource, "/scripts/mermaid.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
@@ -54,7 +64,8 @@ public class BuiltInScriptsTest {
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void plantuml(final TestContext testContext, final DatabaseConnectionSource dataSource)
       throws Exception {
-    assertThat(outputOf(scriptExecution(dataSource, "/scripts/plantuml.py")),
+    assertThat(
+        outputOf(scriptExecution(dataSource, "/scripts/plantuml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }
