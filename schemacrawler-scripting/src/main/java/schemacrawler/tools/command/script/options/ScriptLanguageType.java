@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.command.script.options;
 
-import schemacrawler.tools.options.LanguageType;
+import schemacrawler.tools.scripting.options.LanguageType;
 
 public enum ScriptLanguageType implements LanguageType<ScriptLanguageType> {
   unknown(null),

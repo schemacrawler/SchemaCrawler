@@ -10,7 +10,7 @@ package schemacrawler.tools.command.script.options;
 
 import java.util.EnumSet;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.options.LanguageOptionsBuilder;
+import schemacrawler.tools.scripting.options.LanguageOptionsBuilder;
 
 public final class ScriptLanguageOptionsBuilder
     extends LanguageOptionsBuilder<ScriptLanguageType, ScriptOptions> {

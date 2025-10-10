@@ -9,7 +9,7 @@
 package schemacrawler.tools.command.script.options;
 
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.options.LanguageOptions;
+import schemacrawler.tools.scripting.options.LanguageOptions;
 
 public class ScriptOptions extends LanguageOptions<ScriptLanguageType> {
 
