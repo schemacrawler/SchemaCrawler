@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.command.template.options;
 
-import schemacrawler.tools.options.LanguageOptions;
+import schemacrawler.tools.scripting.options.LanguageOptions;
 
 public final class TemplateLanguageOptions extends LanguageOptions<TemplateLanguageType> {
 

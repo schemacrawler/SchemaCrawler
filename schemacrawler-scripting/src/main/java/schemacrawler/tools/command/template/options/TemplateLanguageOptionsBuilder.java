@@ -9,7 +9,7 @@
 package schemacrawler.tools.command.template.options;
 
 import java.util.EnumSet;
-import schemacrawler.tools.options.LanguageOptionsBuilder;
+import schemacrawler.tools.scripting.options.LanguageOptionsBuilder;
 
 public final class TemplateLanguageOptionsBuilder
     extends LanguageOptionsBuilder<TemplateLanguageType, TemplateLanguageOptions> {

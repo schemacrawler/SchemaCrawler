@@ -16,8 +16,8 @@ import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.options.LanguageOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.scripting.options.LanguageOptions;
 
 public class TemplateCommandProvider extends BaseCommandProvider {
 

@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.command.template.options;
 
-import schemacrawler.tools.options.LanguageType;
+import schemacrawler.tools.scripting.options.LanguageType;
 
 public enum TemplateLanguageType implements LanguageType<TemplateLanguageType> {
   unknown(null, null),

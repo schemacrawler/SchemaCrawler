@@ -6,12 +6,14 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.tools.options;
+package schemacrawler.tools.scripting.options;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.schemacrawler.OptionsBuilder;
+import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigOptionsBuilder;
 import us.fatehi.utility.IOUtility;
 
 public abstract class LanguageOptionsBuilder<

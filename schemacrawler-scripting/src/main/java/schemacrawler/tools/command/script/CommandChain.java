@@ -22,9 +22,9 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.options.LanguageOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.scripting.options.LanguageOptions;
 import us.fatehi.utility.property.PropertyName;
 
 /**
