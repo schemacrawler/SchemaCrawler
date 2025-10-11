@@ -76,7 +76,7 @@
 	  <artifactId>jspecify</artifactId>
 	  <version>1.0.0</version>
 	  <scope>provided</scope>
-	</dependency>  
+	</dependency>
 
     <!--
       NOTES: On Jackson
@@ -427,6 +427,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
+          <!-- Force classpath mode to avoid JPMS module-path issues during tests -->
+          <useModulePath>false</useModulePath>
           <systemPropertyVariables>
             <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
           </systemPropertyVariables>
