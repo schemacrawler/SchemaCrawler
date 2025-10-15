@@ -21,7 +21,6 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.text;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static us.fatehi.utility.datasource.DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -40,6 +39,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
@@ -97,7 +97,7 @@ public class LoadCommandTest {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setDataSource(newTestDatabaseConnectionSource(connection));
+    state.setDataSource(new ConnectionDatabaseConnectionSource(connection));
     assertThat(state.getCatalog(), is(nullValue()));
 
     final LoadCommand optionsParser = new LoadCommand(state);

@@ -15,19 +15,10 @@
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-utility</artifactId>
+      <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-loader</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-text</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
@@ -61,11 +52,6 @@
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>
             <manifestEntries>
-              <Implementation-Title>${project.name}</Implementation-Title>
-              <Implementation-Version>${project.version}</Implementation-Version>
-              <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
-              <Product>${project.name}</Product>
-              <Version>${project.version}</Version>
               <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
               <Copyright>Copyright (c) 2000-2025, Sualeh Fatehi</Copyright>
               <Website>https://www.SchemaCrawler.com</Website>

@@ -49,8 +49,8 @@ import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -125,8 +125,7 @@ public class HsqldbTest {
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     requireNonNull(schemaRetrievalOptions, "No database specific override options provided");
 
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
+    final DatabaseConnectionSource dataSource = new ConnectionDatabaseConnectionSource(connection);
     final SchemaCrawler schemaCrawler =
         new SchemaCrawler(dataSource, schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
