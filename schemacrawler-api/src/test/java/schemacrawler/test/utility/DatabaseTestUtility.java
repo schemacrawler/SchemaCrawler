@@ -28,8 +28,8 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.PropertiesUtility;
+import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 public final class DatabaseTestUtility {
 
@@ -48,8 +48,7 @@ public final class DatabaseTestUtility {
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final SchemaCrawlerOptions schemaCrawlerOptions) {
 
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
+    final DatabaseConnectionSource dataSource = new ConnectionDatabaseConnectionSource(connection);
 
     final SchemaCrawler schemaCrawler =
         new SchemaCrawler(dataSource, schemaRetrievalOptions, schemaCrawlerOptions);

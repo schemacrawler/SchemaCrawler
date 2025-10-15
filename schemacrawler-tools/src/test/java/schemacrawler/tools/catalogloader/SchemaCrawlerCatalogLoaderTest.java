@@ -20,8 +20,8 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import us.fatehi.test.utility.TestDatabaseDriver;
+import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSourceUtility;
 
 public class SchemaCrawlerCatalogLoaderTest {
 
@@ -32,8 +32,7 @@ public class SchemaCrawlerCatalogLoaderTest {
     assertThat(catalogLoader.getDataSource(), is(nullValue()));
 
     final Connection connection = new TestDatabaseDriver().connect("jdbc:test-db:test", null);
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSourceUtility.newTestDatabaseConnectionSource(connection);
+    final DatabaseConnectionSource dataSource = new ConnectionDatabaseConnectionSource(connection);
     catalogLoader.setDataSource(dataSource);
 
     assertThat(catalogLoader.getDataSource(), is(not(nullValue())));
