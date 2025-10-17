@@ -35,10 +35,20 @@ public final class TestOutputStream extends OutputStream implements TestOutputCa
   }
 
   @Override
+  public void close() throws IOException {
+    out.flush();
+    out.close();
+  }
+
+  @Override
+  public void flush() throws IOException {
+    out.flush();
+  }
+
+  @Override
   public String getContents() {
     try {
-      out.flush();
-      out.close();
+      close();
       return new String(readAllBytes(tempFile), StandardCharsets.UTF_8);
     } catch (final IOException e) {
       throw new RuntimeException(e);

@@ -50,7 +50,7 @@ public class AvailablePluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     final AvailableJDBCDrivers availableJDBCDrivers = new AvailableJDBCDrivers();
     final int size = availableJDBCDrivers.size();
-    assertThat(size, is(15));
+    assertThat(size, is(16));
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();
@@ -61,6 +61,7 @@ public class AvailablePluginsTest {
 
     assertThat(data.replace("\r", ""), containsString("Available JDBC Drivers:"));
     assertThat(data.replace("\r", ""), containsString("org.hsqldb.jdbc.JDBCDriver"));
+    assertThat(data.replace("\r", ""), containsString("us.fatehi.test.utility.TestDatabaseDriver"));
   }
 
   @Test
