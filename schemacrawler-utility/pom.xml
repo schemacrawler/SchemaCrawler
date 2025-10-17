@@ -18,6 +18,12 @@
   </properties>
   <dependencies>
     <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-test-utility</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>  
+    <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
       <version>1.21.2</version>
@@ -26,18 +32,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>create-test-jar</id>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>

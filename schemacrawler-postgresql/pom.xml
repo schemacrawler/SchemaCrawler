@@ -26,11 +26,11 @@
       <version>${project.version}</version>
     </dependency>
 
+
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-utility</artifactId>
+      <artifactId>schemacrawler-test-utility</artifactId>
       <version>${project.version}</version>
-      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>

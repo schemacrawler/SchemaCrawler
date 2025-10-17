@@ -9,7 +9,6 @@
 package us.fatehi.test.utility;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -71,7 +70,7 @@ public class TestDatabaseDriver implements Driver {
 
   @Override
   public boolean acceptsURL(final String url) {
-    return !isBlank(url) && url.startsWith(JDBC_URL_PREFIX);
+    return url != null && url.startsWith(JDBC_URL_PREFIX);
   }
 
   @Override

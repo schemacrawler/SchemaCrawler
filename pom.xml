@@ -16,6 +16,7 @@
     <module>schemacrawler-parent</module>
     <module>schemacrawler-jdbc-drivers</module>
     <module>schemacrawler-testdb</module>
+    <module>schemacrawler-test-utility</module>
     <!-- SchemaCrawler jar -->
     <module>schemacrawler-utility</module>
     <module>schemacrawler-api</module>

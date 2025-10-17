@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
-import static us.fatehi.utility.Utility.requireNotBlank;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.InvocationHandler;
@@ -46,7 +45,7 @@ public class TestObjectUtility {
         final String resultSetDescription, final Object[][] data, final String[] columnNames)
         throws SQLException {
       this.resultSetDescription =
-          requireNotBlank(resultSetDescription, "No result set description provided");
+          requireNonNull(resultSetDescription, "No result set description provided");
       this.data = data;
       this.columnNames = requireNonNull(columnNames, "No column names provided");
       rsmd = createResultSetMetaData();
