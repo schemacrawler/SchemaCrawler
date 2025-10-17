@@ -37,7 +37,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -364,7 +364,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
   @BeforeAll
   public void schemaRetrievalOptions() throws IOException {
-    schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+    schemaRetrievalOptions = DatabaseTestUtility.newSchemaRetrievalOptions();
   }
 
   protected abstract Stream<? extends OutputFormat> outputFormats();

@@ -18,7 +18,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -32,12 +32,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import org.opentest4j.TestAbortedException;
-import us.fatehi.utility.IOUtility;
-import us.fatehi.utility.UtilityMarker;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.InputResource;
 
-@UtilityMarker
 public final class TestUtility {
 
   public static void clean(final String dirname) throws Exception {
@@ -49,13 +44,26 @@ public final class TestUtility {
     }
   }
 
-  public static Path copyResourceToTempFile(final String resource) throws IOException {
-    final InputResource inputResource = new ClasspathInputResource(resource);
-    final Path tempFile =
-        IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
-    Files.copy(inputResource.openNewInputStream(), tempFile);
+  public static Path copyResourceToTempFile(final String resource) {
+    // Normalize resource name: remove leading slash if present
+    final String normalized = resource.startsWith("/") ? resource.substring(1) : resource;
 
-    return tempFile;
+    // Try to load resource from classpath
+    try (InputStream in =
+        Thread.currentThread().getContextClassLoader().getResourceAsStream(normalized)) {
+      if (in == null) {
+        return null; // Resource not found
+      }
+
+      // Create temp file with same extension if possible
+      final String suffix =
+          normalized.contains(".") ? normalized.substring(normalized.lastIndexOf('.')) : ".tmp";
+      final Path tempFile = Files.createTempFile("resource-", suffix);
+      Files.copy(in, tempFile, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+      return tempFile;
+    } catch (final IOException e) {
+      return null; // Any I/O error results in null
+    }
   }
 
   public static void deleteIfPossible(final Path testOutputTargetFilePath) {
@@ -102,13 +110,22 @@ public final class TestUtility {
    * @return Properties
    * @throws IOException
    */
-  public static Properties loadPropertiesFromClasspath(final String resource) throws IOException {
-    final InputResource inputResource = new ClasspathInputResource(resource);
-    try (final Reader reader = inputResource.openNewInputReader(UTF_8); ) {
-      final Properties properties = new Properties();
-      properties.load(reader);
-      return properties;
+  public static Properties loadPropertiesFromClasspath(final String resource) {
+    final Properties props = new Properties();
+
+    // Normalize resource name: remove leading slash if present
+    final String normalized = resource.startsWith("/") ? resource.substring(1) : resource;
+
+    try (InputStream in =
+        Thread.currentThread().getContextClassLoader().getResourceAsStream(normalized)) {
+      if (in != null) {
+        props.load(in);
+      }
+    } catch (final IOException e) {
+      // Ignore and return empty properties
     }
+
+    return props;
   }
 
   public static String readFileFully(final Path filePath) throws IOException {

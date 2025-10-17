@@ -33,7 +33,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -79,7 +79,7 @@ public class ListCommandOutputTest {
 
   @BeforeAll
   public void schemaRetrievalOptions() throws IOException {
-    schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+    schemaRetrievalOptions = DatabaseTestUtility.newSchemaRetrievalOptions();
   }
 
   protected Stream<OutputFormat> outputFormats() {

@@ -80,9 +80,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.MetaDataUtility;
@@ -344,7 +344,8 @@ public class SchemaCrawlerTest {
   @BeforeAll
   public void loadCatalog(final Connection connection) throws Exception {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseTestUtility.newSchemaRetrievalOptions();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()

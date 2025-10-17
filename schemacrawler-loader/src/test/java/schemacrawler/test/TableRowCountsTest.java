@@ -31,9 +31,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
@@ -51,7 +51,8 @@ public class TableRowCountsTest {
   @BeforeAll
   public void loadCatalog(final DatabaseConnectionSource dataSource) throws Exception {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseTestUtility.newSchemaRetrievalOptions();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -77,7 +78,8 @@ public class TableRowCountsTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          DatabaseTestUtility.newSchemaRetrievalOptions();
 
       final SchemaCrawlerOptions schemaCrawlerOptions =
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();

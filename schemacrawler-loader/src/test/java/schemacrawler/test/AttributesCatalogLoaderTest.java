@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.newSchemaRetrievalOptions;
 
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
@@ -25,6 +24,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestWriter;
@@ -67,7 +67,8 @@ public class AttributesCatalogLoaderTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = newSchemaRetrievalOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          DatabaseTestUtility.newSchemaRetrievalOptions();
 
       final SchemaCrawlerOptions schemaCrawlerOptions =
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();

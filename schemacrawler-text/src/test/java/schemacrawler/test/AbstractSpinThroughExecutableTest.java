@@ -28,6 +28,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.AssertNoSystemErrOutput;
 import schemacrawler.test.utility.AssertNoSystemOutOutput;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -73,7 +74,8 @@ public abstract class AbstractSpinThroughExecutableTest {
       final SchemaTextDetailType schemaTextDetailType, final DatabaseConnectionSource dataSource)
       throws Exception {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseTestUtility.newSchemaRetrievalOptions();
 
     assertAll(
         infoLevels()
