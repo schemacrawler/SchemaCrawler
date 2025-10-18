@@ -11,8 +11,11 @@ package schemacrawler.test.utility;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -31,11 +34,6 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 final class TestDatabaseConnectionParameterResolver
     implements ParameterResolver, BeforeAllCallback, AfterAllCallback, AfterEachCallback {
-  private enum AnnotationType {
-    classAnnotation,
-    methodAnnotation
-  }
-
   private static class AnnotationInfo {
 
     private final String script;
@@ -55,6 +53,11 @@ final class TestDatabaseConnectionParameterResolver
     }
   }
 
+  private enum AnnotationType {
+    classAnnotation,
+    methodAnnotation
+  }
+
   private static boolean isParameterConnection(final Parameter parameter) {
     return parameter.getType().isAssignableFrom(Connection.class);
   }
@@ -68,15 +71,11 @@ final class TestDatabaseConnectionParameterResolver
   }
 
   private TestDatabase testDatabase;
-  private DatabaseConnectionSource dataSource;
+  private DataSource dataSource;
 
   @Override
   public void afterAll(final ExtensionContext context) throws Exception {
-    if (dataSource != null) {
-      dataSource.close();
-      dataSource = null;
-    }
-
+    closeDataSource();
     testDatabase.stop();
   }
 
@@ -84,10 +83,7 @@ final class TestDatabaseConnectionParameterResolver
   public void afterEach(final ExtensionContext context) throws Exception {
     final AnnotationType annotationType = locateAnnotation(context).getAnnotationType();
     if (annotationType == AnnotationType.methodAnnotation) {
-      if (dataSource != null) {
-        dataSource.close();
-        dataSource = null;
-      }
+      closeDataSource();
     }
   }
 
@@ -105,35 +101,28 @@ final class TestDatabaseConnectionParameterResolver
       throws ParameterResolutionException {
 
     final String script = locateAnnotation(extensionContext).getScript();
-    final Parameter parameter = parameterContext.getParameter();
     if (!isBlank(script)) {
-      final DataSource ds = DataSourceTestUtility.newEmbeddedDatabase(script);
-      dataSource = DatabaseConnectionSources.fromDataSource(ds);
-
-      if (isParameterConnection(parameter)) {
-        return dataSource.get();
-      }
-      if (isParameterDatabaseConnectionSource(parameter)) {
-        return dataSource;
-      }
-      throw new ParameterResolutionException("Could not resolve " + parameter);
+      dataSource = DataSourceTestUtility.newEmbeddedDatabase(script);
+    } else {
+      dataSource = newDataSource();
     }
-    final DataSource ds = newDataSource();
-    dataSource = DatabaseConnectionSources.fromDataSource(ds);
 
+    final Parameter parameter = parameterContext.getParameter();
     if (isParameterConnection(parameter)) {
-      return dataSource.get();
+      return getConnection(parameter);
     }
-    if (isParameterDatabaseConnectionInfo(parameter)) {
+    if (isParameterDatabaseConnectionSource(parameter)) {
+      return DatabaseConnectionSources.fromDataSource(dataSource);
+    }
+
+    if (isBlank(script) && isParameterDatabaseConnectionInfo(parameter)) {
       return new DatabaseConnectionInfo(
           testDatabase.getHost(),
           testDatabase.getPort(),
           testDatabase.getDatabase(),
           testDatabase.getConnectionUrl());
     }
-    if (isParameterDatabaseConnectionSource(parameter)) {
-      return dataSource;
-    }
+
     throw new ParameterResolutionException("Could not resolve " + parameter);
   }
 
@@ -150,6 +139,27 @@ final class TestDatabaseConnectionParameterResolver
     return hasConnection || hasDatabaseConnectionInfo || hasDatabaseConnectionSource;
   }
 
+  private void closeDataSource() throws IOException {
+    if (dataSource != null) {
+      if (dataSource instanceof final Closeable closeable) {
+        closeable.close();
+      }
+      dataSource = null;
+    }
+  }
+
+  private Connection getConnection(final Parameter parameter) throws ParameterResolutionException {
+    if (dataSource == null) {
+      throw new ParameterResolutionException("Data source is closed");
+    }
+    try {
+      return dataSource.getConnection();
+    } catch (final SQLException e) {
+      throw new ParameterResolutionException(
+          "Could not get connection for parameter <%s>".formatted(parameter), e);
+    }
+  }
+
   private AnnotationInfo locateAnnotation(final ExtensionContext extensionContext) {
     final Optional<WithTestDatabase> optionalMethodAnnotation =
         findAnnotation(extensionContext.getTestMethod(), WithTestDatabase.class);
@@ -161,11 +171,12 @@ final class TestDatabaseConnectionParameterResolver
     if (optionalMethodAnnotation.isPresent()) {
       withTestDatabase = optionalMethodAnnotation.get();
       annotationType = AnnotationType.methodAnnotation;
-    } else if (optionalClassAnnotation.isPresent()) {
-      withTestDatabase = optionalClassAnnotation.get();
-      annotationType = AnnotationType.classAnnotation;
     } else {
-      withTestDatabase = null;
+      if (optionalClassAnnotation.isPresent()) {
+        withTestDatabase = optionalClassAnnotation.get();
+      } else {
+        withTestDatabase = null;
+      }
       annotationType = AnnotationType.classAnnotation;
     }
     final String script;
