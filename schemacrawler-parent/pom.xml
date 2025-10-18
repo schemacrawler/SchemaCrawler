@@ -241,7 +241,7 @@
     <java.version>17</java.version>
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <maven.javadoc.skip>true</maven.javadoc.skip>
-    <jacoco.version>0.8.13</jacoco.version>
+    <jacoco.version>0.8.14</jacoco.version>
   </properties>
   <build>
     <pluginManagement>
