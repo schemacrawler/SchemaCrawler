@@ -37,7 +37,8 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected void createDatabase(final String scriptsResource) {
     try (final Connection connection = getConnection()) {
-      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection, scriptsResource);
+      final TestSchemaCreator schemaCreator =
+          new TestSchemaCreator(connection, scriptsResource, false);
       schemaCreator.run();
     } catch (final SQLException e) {
       failTestSetup("Could not create database", e);

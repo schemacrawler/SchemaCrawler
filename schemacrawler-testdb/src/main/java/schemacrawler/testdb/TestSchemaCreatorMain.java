@@ -13,8 +13,6 @@ import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
-import us.fatehi.utility.SystemExitException;
-import us.fatehi.utility.database.SqlScript;
 
 @CommandLine.Command(
     description = "Creates a test database schema for testing SchemaCrawler",
@@ -31,8 +29,9 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
     System.out.printf("args=%s%n", Arrays.asList(args));
     final int exitCode = call(args);
     if (exitCode != 0) {
-      throw new SystemExitException(
-          exitCode, TestSchemaCreatorMain.class + " has exited with an error");
+      throw new RuntimeException(
+          "%s has exited with error %d"
+              .formatted(TestSchemaCreatorMain.class.getSimpleName(), exitCode));
     }
   }
 
@@ -73,9 +72,8 @@ public class TestSchemaCreatorMain implements Callable<Integer> {
     try (final Connection connection =
         DriverManager.getConnection(connectionUrl, user, passwordProvided)) {
       findScriptsResource();
-      System.setProperty(SqlScript.class.getCanonicalName() + ".debug", String.valueOf(debug));
       final TestSchemaCreator testSchemaCreator =
-          new TestSchemaCreator(connection, scriptsresource);
+          new TestSchemaCreator(connection, scriptsresource, debug);
       testSchemaCreator.run();
     } catch (final Exception e) {
       e.printStackTrace();

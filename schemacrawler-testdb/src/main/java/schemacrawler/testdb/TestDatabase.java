@@ -80,9 +80,8 @@ public class TestDatabase {
       final int port = socket.getLocalPort();
       if (port <= 0) {
         return defaultPort;
-      } else {
-        return port;
       }
+      return port;
     } catch (final IOException e) {
       return defaultPort;
     }
@@ -149,7 +148,7 @@ public class TestDatabase {
   private void createTestDatabase() throws SQLException {
     try (final Connection connection = getConnection(); ) {
       final TestSchemaCreator schemaCreator =
-          new TestSchemaCreator(connection, "/hsqldb.scripts.txt");
+          new TestSchemaCreator(connection, "/hsqldb.scripts.txt", false);
       schemaCreator.run();
     }
   }

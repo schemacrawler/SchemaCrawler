@@ -130,11 +130,11 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
     try (final Statement stmt = connection.createStatement()) {
       stmt.execute(
           """
-          CREATE OR REPLACE FUNCTION CustomAdd(One IN INTEGER)\s
-          RETURN INTEGER\s
-          AS\s
+          CREATE OR REPLACE FUNCTION CustomAdd(One IN INTEGER)
+          RETURN INTEGER
+          AS
           BEGIN
-            RETURN One + 1;\s
+            RETURN One + 1;
           END;\
           """);
       // Auto-commited
