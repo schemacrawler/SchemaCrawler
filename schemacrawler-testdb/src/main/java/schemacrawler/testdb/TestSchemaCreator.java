@@ -8,8 +8,6 @@
 
 package schemacrawler.testdb;
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +16,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import static java.util.Objects.requireNonNull;
 
 public class TestSchemaCreator implements Runnable {
 
@@ -68,7 +68,7 @@ public class TestSchemaCreator implements Runnable {
 
     final String fixedDelimiter;
     if ("@".equals(delimiter)) {
-      fixedDelimiter = "^\\s*@\\s*\\n$";
+      fixedDelimiter = "^@";
     } else {
       fixedDelimiter = delimiter;
     }
