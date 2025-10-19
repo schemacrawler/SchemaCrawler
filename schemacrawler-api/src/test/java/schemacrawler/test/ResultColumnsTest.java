@@ -8,7 +8,7 @@
 
 package schemacrawler.test;
 
-import static org.apache.commons.beanutils.PropertyUtils.describe;
+import static org.apache.commons.beanutils2.PropertyUtils.describe;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;

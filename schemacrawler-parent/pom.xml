@@ -224,10 +224,15 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.11.0</version>
-      <scope>test</scope>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-beanutils2</artifactId>
+      <version>2.0.0-M2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <properties>
