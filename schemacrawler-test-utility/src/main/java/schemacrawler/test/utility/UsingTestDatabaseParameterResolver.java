@@ -8,32 +8,37 @@
 
 package schemacrawler.test.utility;
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
-import static us.fatehi.utility.Utility.isBlank;
 
+import com.zaxxer.hikari.HikariDataSource;
 import java.io.Closeable;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 import javax.sql.DataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import schemacrawler.testdb.TestDatabase;
 import us.fatehi.test.utility.DataSourceTestUtility;
-import us.fatehi.utility.LoggingConfig;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
-final class TestDatabaseConnectionParameterResolver
-    implements ParameterResolver, BeforeAllCallback, AfterAllCallback, AfterEachCallback {
+public class UsingTestDatabaseParameterResolver
+    implements ParameterResolver,
+        BeforeAllCallback,
+        BeforeEachCallback,
+        AfterAllCallback,
+        AfterEachCallback {
+
   private static class AnnotationInfo {
 
     private final String script;
@@ -51,11 +56,24 @@ final class TestDatabaseConnectionParameterResolver
     public String getScript() {
       return script;
     }
+
+    public boolean hasScript() {
+      return script != null && !script.isBlank();
+    }
   }
 
   private enum AnnotationType {
     classAnnotation,
     methodAnnotation
+  }
+
+  private static String getScript(final Annotation annotation) {
+    try {
+      final Method method = annotation.annotationType().getMethod("script");
+      return String.valueOf(method.invoke(annotation));
+    } catch (final Exception e) {
+      return "";
+    }
   }
 
   private static boolean isParameterConnection(final Parameter parameter) {
@@ -66,17 +84,22 @@ final class TestDatabaseConnectionParameterResolver
     return parameter.getType().equals(DatabaseConnectionInfo.class);
   }
 
-  private static boolean isParameterDatabaseConnectionSource(final Parameter parameter) {
-    return parameter.getType().isAssignableFrom(DatabaseConnectionSource.class);
-  }
+  private final Class<? extends Annotation> annotationClass;
 
   private TestDatabase testDatabase;
   private DataSource dataSource;
 
+  public UsingTestDatabaseParameterResolver() {
+    this(UsingTestDatabase.class);
+  }
+
+  protected UsingTestDatabaseParameterResolver(final Class<? extends Annotation> annotationClass) {
+    this.annotationClass = requireNonNull(annotationClass, "No annotation class provided");
+  }
+
   @Override
   public void afterAll(final ExtensionContext context) throws Exception {
     closeDataSource();
-    testDatabase.stop();
   }
 
   @Override
@@ -89,33 +112,26 @@ final class TestDatabaseConnectionParameterResolver
 
   @Override
   public void beforeAll(final ExtensionContext context) throws Exception {
-    // Turn off logging
-    new LoggingConfig();
+    createDataSource(context);
+  }
 
-    testDatabase = TestDatabase.initialize();
+  @Override
+  public void beforeEach(final ExtensionContext context) throws Exception {
+    final AnnotationType annotationType = locateAnnotation(context).getAnnotationType();
+    if (annotationType == AnnotationType.methodAnnotation) {
+      createDataSource(context);
+    }
   }
 
   @Override
   public Object resolveParameter(
-      final ParameterContext parameterContext, final ExtensionContext extensionContext)
+      final ParameterContext parameterContext, final ExtensionContext context)
       throws ParameterResolutionException {
-
-    final String script = locateAnnotation(extensionContext).getScript();
-    if (!isBlank(script)) {
-      dataSource = DataSourceTestUtility.newEmbeddedDatabase(script);
-    } else {
-      dataSource = newDataSource();
-    }
-
     final Parameter parameter = parameterContext.getParameter();
     if (isParameterConnection(parameter)) {
       return getConnection(parameter);
     }
-    if (isParameterDatabaseConnectionSource(parameter)) {
-      return DatabaseConnectionSources.fromDataSource(dataSource);
-    }
-
-    if (isBlank(script) && isParameterDatabaseConnectionInfo(parameter)) {
+    if (isParameterDatabaseConnectionInfo(parameter)) {
       return new DatabaseConnectionInfo(
           testDatabase.getHost(),
           testDatabase.getPort(),
@@ -128,15 +144,18 @@ final class TestDatabaseConnectionParameterResolver
 
   @Override
   public boolean supportsParameter(
-      final ParameterContext parameterContext, final ExtensionContext extensionContext)
+      final ParameterContext parameterContext, final ExtensionContext context)
       throws ParameterResolutionException {
+
     final Parameter parameter = parameterContext.getParameter();
 
     final boolean hasConnection = isParameterConnection(parameter);
     final boolean hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
-    final boolean hasDatabaseConnectionSource = isParameterDatabaseConnectionSource(parameter);
+    return hasConnection || hasDatabaseConnectionInfo;
+  }
 
-    return hasConnection || hasDatabaseConnectionInfo || hasDatabaseConnectionSource;
+  protected DataSource getDataSource() {
+    return dataSource;
   }
 
   private void closeDataSource() throws IOException {
@@ -145,6 +164,27 @@ final class TestDatabaseConnectionParameterResolver
         closeable.close();
       }
       dataSource = null;
+    }
+
+    if (testDatabase != null) {
+      testDatabase.stop();
+      testDatabase = null;
+    }
+  }
+
+  private void createDataSource(final ExtensionContext context) {
+    if (testDatabase == null) {
+      testDatabase = TestDatabase.initialize();
+    }
+
+    if (dataSource != null && !((HikariDataSource) dataSource).isClosed()) {
+      return;
+    }
+    final AnnotationInfo annotationInfo = locateAnnotation(context);
+    if (annotationInfo.hasScript()) {
+      dataSource = DataSourceTestUtility.newEmbeddedDatabase(annotationInfo.getScript());
+    } else {
+      dataSource = newDataSource();
     }
   }
 
@@ -160,39 +200,41 @@ final class TestDatabaseConnectionParameterResolver
     }
   }
 
-  private AnnotationInfo locateAnnotation(final ExtensionContext extensionContext) {
-    final Optional<WithTestDatabase> optionalMethodAnnotation =
-        findAnnotation(extensionContext.getTestMethod(), WithTestDatabase.class);
-    final Optional<WithTestDatabase> optionalClassAnnotation =
-        findAnnotation(extensionContext.getTestClass(), WithTestDatabase.class);
+  private AnnotationInfo locateAnnotation(final ExtensionContext context) {
+    final Optional<? extends Annotation> optionalMethodAnnotation =
+        findAnnotation(context.getTestMethod(), annotationClass);
+    final Optional<? extends Annotation> optionalClassAnnotation =
+        findAnnotation(context.getTestClass(), annotationClass);
 
     final AnnotationType annotationType;
-    final WithTestDatabase withTestDatabase;
+    final Annotation testDatabaseAnnotation;
     if (optionalMethodAnnotation.isPresent()) {
-      withTestDatabase = optionalMethodAnnotation.get();
+      testDatabaseAnnotation = optionalMethodAnnotation.get();
       annotationType = AnnotationType.methodAnnotation;
     } else {
       if (optionalClassAnnotation.isPresent()) {
-        withTestDatabase = optionalClassAnnotation.get();
+        testDatabaseAnnotation = optionalClassAnnotation.get();
       } else {
-        withTestDatabase = null;
+        testDatabaseAnnotation = null;
       }
       annotationType = AnnotationType.classAnnotation;
     }
     final String script;
-    if (withTestDatabase != null) {
-      script = withTestDatabase.script();
+    if (testDatabaseAnnotation != null) {
+      script = getScript(testDatabaseAnnotation);
     } else {
-      script = null;
+      script = "";
     }
     return new AnnotationInfo(script, annotationType);
   }
 
-  private BasicDataSource newDataSource() {
-    final BasicDataSource ds = new BasicDataSource();
-    ds.setUrl(testDatabase.getConnectionUrl());
+  private DataSource newDataSource() {
+    final HikariDataSource ds = new HikariDataSource();
+    ds.setJdbcUrl(testDatabase.getConnectionUrl());
     ds.setUsername("sa");
     ds.setPassword("");
+    ds.setMaximumPoolSize(10);
+
     return ds;
   }
 }

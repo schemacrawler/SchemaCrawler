@@ -11,11 +11,11 @@ package schemacrawler.test.utility;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.failTestSetup;
 
+import com.zaxxer.hikari.HikariDataSource;
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
 import schemacrawler.testdb.TestSchemaCreator;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -27,7 +27,7 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected void closeDataSource() {
     try {
-      if (dataSource instanceof Closeable closeable) {
+      if (dataSource instanceof final Closeable closeable) {
         closeable.close();
       }
     } catch (final Exception e) {
@@ -65,12 +65,18 @@ public abstract class BaseAdditionalDatabaseTest {
       final String password,
       final String connectionProperties) {
 
-    final BasicDataSource ds = new BasicDataSource();
-    ds.setUrl(connectionUrl);
+    final HikariDataSource ds = new HikariDataSource();
+    ds.setJdbcUrl(connectionUrl);
     ds.setUsername(user);
     ds.setPassword(password);
-    if (connectionProperties != null) {
-      ds.setConnectionProperties(connectionProperties);
+
+    if (connectionProperties != null && !connectionProperties.isBlank()) {
+      for (final String entry : connectionProperties.split(";")) {
+        final String[] kv = entry.split("=", 2);
+        if (kv.length == 2) {
+          ds.addDataSourceProperty(kv[0].trim(), kv[1].trim());
+        }
+      }
     }
 
     return ds;
@@ -86,8 +92,7 @@ public abstract class BaseAdditionalDatabaseTest {
   }
 
   protected final DatabaseConnectionSource getDataSource() {
-    final BasicDataSource basicDataSource = (BasicDataSource) dataSource;
-    return DatabaseConnectionSources.fromDataSource(basicDataSource);
+    return DatabaseConnectionSources.fromDataSource(dataSource);
   }
 
   protected void runScript(final String databaseSqlResource) throws Exception {

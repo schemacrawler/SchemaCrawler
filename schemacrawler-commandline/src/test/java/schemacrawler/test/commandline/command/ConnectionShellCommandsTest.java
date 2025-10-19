@@ -31,11 +31,11 @@ import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
-@WithTestDatabase
 @CaptureSystemStreams
 public class ConnectionShellCommandsTest {
 
   @Test
+  @WithTestDatabase
   public void disconnect(final DatabaseConnectionSource dataSource) {
     final ShellState state = new ShellState();
     state.setDataSource(dataSource); // is-connected
@@ -67,6 +67,7 @@ public class ConnectionShellCommandsTest {
   }
 
   @Test
+  @WithTestDatabase
   public void isConnected(
       final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
@@ -83,6 +84,7 @@ public class ConnectionShellCommandsTest {
   }
 
   @Test
+  @WithTestDatabase
   public void isNotConnected(
       final DatabaseConnectionInfo connectionInfo, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
