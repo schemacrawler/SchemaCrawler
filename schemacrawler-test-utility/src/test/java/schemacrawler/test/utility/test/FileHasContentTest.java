@@ -10,11 +10,11 @@ package schemacrawler.test.utility.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.clean;
+import static us.fatehi.test.utility.TestUtility.clean;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 import org.hamcrest.Description;
@@ -24,11 +24,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import schemacrawler.test.utility.FileHasContent;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.ResultsResource;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestWriter;
+import us.fatehi.test.utility.TestWriter;
+import us.fatehi.test.utility.extensions.FileHasContent;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.ResultsResource;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @ResolveTestContext
 @TestInstance(Lifecycle.PER_CLASS)

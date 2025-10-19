@@ -11,11 +11,10 @@ package schemacrawler.loader.weakassociations;
 import static schemacrawler.test.utility.ProposedWeakAssociationsTestUtility.weakAssociations;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging

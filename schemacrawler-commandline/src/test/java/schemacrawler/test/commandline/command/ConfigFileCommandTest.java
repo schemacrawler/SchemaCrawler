@@ -11,12 +11,12 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.savePropertiesToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static us.fatehi.test.utility.TestUtility.savePropertiesToTempFile;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -27,13 +27,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import picocli.CommandLine;
-import schemacrawler.test.utility.CaptureSystemStreams;
-import schemacrawler.test.utility.CapturedSystemStreams;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
+import us.fatehi.test.utility.extensions.CaptureSystemStreams;
+import us.fatehi.test.utility.extensions.CapturedSystemStreams;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ResolveTestContext

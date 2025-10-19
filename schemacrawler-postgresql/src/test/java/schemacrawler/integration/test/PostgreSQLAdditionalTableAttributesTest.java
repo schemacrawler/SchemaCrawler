@@ -37,8 +37,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.HeavyDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
 @HeavyDatabaseTest("postgresql")

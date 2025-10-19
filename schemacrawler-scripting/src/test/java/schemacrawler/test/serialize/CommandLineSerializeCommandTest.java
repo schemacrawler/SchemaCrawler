@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.oneOf;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
+import static us.fatehi.test.utility.TestUtility.fileHeaderOf;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.io.IOException;
@@ -26,13 +26,13 @@ import org.hamcrest.Matcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.AssertNoSystemErrOutput;
-import schemacrawler.test.utility.AssertNoSystemOutOutput;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
+import us.fatehi.test.utility.DatabaseConnectionInfo;
+import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
+import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.IOUtility;
 
 @WithTestDatabase

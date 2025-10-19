@@ -13,20 +13,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
-import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static us.fatehi.test.utility.TestUtility.fileHeaderOf;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.test.utility.AssertNoSystemErrOutput;
-import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
+import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 

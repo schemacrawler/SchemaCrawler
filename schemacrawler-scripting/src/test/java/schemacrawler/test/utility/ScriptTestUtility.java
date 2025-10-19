@@ -23,6 +23,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.test.utility.DatabaseConnectionInfo;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public class ScriptTestUtility {

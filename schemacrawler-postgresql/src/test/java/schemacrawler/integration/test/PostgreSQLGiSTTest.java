@@ -17,6 +17,7 @@ import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
+
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Collection;
@@ -37,7 +38,7 @@ import schemacrawler.schemacrawler.IdentifiersBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.HeavyDatabaseTest;
+import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
 @HeavyDatabaseTest("postgresql")
@@ -65,8 +66,8 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
     try (final Connection connection = getConnection();
         final Statement stmt = connection.createStatement(); ) {
       stmt.execute(
-          "CREATE TABLE prices (start_date date NOT NULL, end_date date NOT NULL, "
-          + "CONSTRAINT exclude_dates EXCLUDE using gist (daterange(start_date,end_date,'[]') WITH &&))");
+          "CREATE TABLE prices (start_date date NOT NULL, end_date date NOT NULL, CONSTRAINT"
+              + " exclude_dates EXCLUDE using gist (daterange(start_date,end_date,'[]') WITH &&))");
       // Auto-commited
     }
   }

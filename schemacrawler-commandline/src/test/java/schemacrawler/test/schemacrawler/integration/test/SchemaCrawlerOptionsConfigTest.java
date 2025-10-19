@@ -27,9 +27,9 @@ import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.options.Config;
+import us.fatehi.test.utility.TestUtility;
 import us.fatehi.utility.PropertiesUtility;
 
 public class SchemaCrawlerOptionsConfigTest {
