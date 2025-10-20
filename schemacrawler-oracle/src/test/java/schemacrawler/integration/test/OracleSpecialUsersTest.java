@@ -28,6 +28,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.test.utility.DisableLogging;
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
@@ -53,13 +54,16 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     createDatabase("/oracle.scripts.txt");
 
     schemaOwnerUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKS", "BOOKS", urlx);
+        DataSourceTestUtility.createDataSource(dbContainer.getJdbcUrl(), "BOOKS", "BOOKS", urlx);
     selectUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "SELUSER", "SELUSER", urlx);
+        DataSourceTestUtility.createDataSource(
+            dbContainer.getJdbcUrl(), "SELUSER", "SELUSER", urlx);
     catalogUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "CATUSER", urlx);
+        DataSourceTestUtility.createDataSource(
+            dbContainer.getJdbcUrl(), "CATUSER", "CATUSER", urlx);
     noAccessUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "NOTUSER", "NOTUSER", urlx);
+        DataSourceTestUtility.createDataSource(
+            dbContainer.getJdbcUrl(), "NOTUSER", "NOTUSER", urlx);
   }
 
   @Test

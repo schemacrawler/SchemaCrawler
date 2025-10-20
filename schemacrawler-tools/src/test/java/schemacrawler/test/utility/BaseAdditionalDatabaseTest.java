@@ -11,12 +11,12 @@ package schemacrawler.test.utility;
 import static org.junit.jupiter.api.Assertions.fail;
 import static us.fatehi.test.utility.TestUtility.failTestSetup;
 
-import com.zaxxer.hikari.HikariDataSource;
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import schemacrawler.testdb.TestSchemaCreator;
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
@@ -56,30 +56,8 @@ public abstract class BaseAdditionalDatabaseTest {
       final String password,
       final String connectionProperties) {
 
-    dataSource = createDataSourceObject(connectionUrl, user, password, connectionProperties);
-  }
-
-  protected DataSource createDataSourceObject(
-      final String connectionUrl,
-      final String user,
-      final String password,
-      final String connectionProperties) {
-
-    final HikariDataSource ds = new HikariDataSource();
-    ds.setJdbcUrl(connectionUrl);
-    ds.setUsername(user);
-    ds.setPassword(password);
-
-    if (connectionProperties != null && !connectionProperties.isBlank()) {
-      for (final String entry : connectionProperties.split(";")) {
-        final String[] kv = entry.split("=", 2);
-        if (kv.length == 2) {
-          ds.addDataSourceProperty(kv[0].trim(), kv[1].trim());
-        }
-      }
-    }
-
-    return ds;
+    dataSource =
+        DataSourceTestUtility.createDataSource(connectionUrl, user, password, connectionProperties);
   }
 
   protected final Connection getConnection() {

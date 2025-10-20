@@ -185,7 +185,8 @@ public class UsingTestDatabaseParameterResolver
     if (annotationInfo.hasScript()) {
       dataSource = DataSourceTestUtility.newEmbeddedDatabase(annotationInfo.getScript());
     } else {
-      dataSource = newDataSource();
+      dataSource =
+          DataSourceTestUtility.createDataSource(testDatabase.getConnectionUrl(), "sa", "", null);
     }
   }
 
@@ -227,15 +228,5 @@ public class UsingTestDatabaseParameterResolver
       script = "";
     }
     return new AnnotationInfo(script, annotationType);
-  }
-
-  private DataSource newDataSource() {
-    final HikariDataSource ds = new HikariDataSource();
-    ds.setJdbcUrl(testDatabase.getConnectionUrl());
-    ds.setUsername("sa");
-    ds.setPassword("");
-    ds.setMaximumPoolSize(10);
-
-    return ds;
   }
 }
