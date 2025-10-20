@@ -23,6 +23,9 @@ final class WithSystemPropertyExtension implements BeforeEachCallback, AfterEach
 
   @Override
   public void afterEach(final ExtensionContext context) throws Exception {
+    if (systemProperty == null) {
+      throw new IllegalArgumentException("No system property to clear");
+    }
     System.clearProperty(systemProperty.getKey());
     systemProperty = null;
   }
