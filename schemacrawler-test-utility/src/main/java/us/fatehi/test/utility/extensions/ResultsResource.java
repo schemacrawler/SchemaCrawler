@@ -8,7 +8,7 @@
 
 package us.fatehi.test.utility.extensions;
 
-import static us.fatehi.test.utility.Utility.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import java.io.BufferedReader;
 import java.io.IOException;

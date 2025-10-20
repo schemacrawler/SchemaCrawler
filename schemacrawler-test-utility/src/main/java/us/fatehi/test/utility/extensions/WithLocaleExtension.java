@@ -8,8 +8,8 @@
 
 package us.fatehi.test.utility.extensions;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
-import static us.fatehi.test.utility.Utility.isBlank;
 
 import java.util.Locale;
 import java.util.Optional;

@@ -12,14 +12,10 @@ import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.move;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
-
-import us.fatehi.test.utility.SvgElementFilter;
-import us.fatehi.test.utility.TestOutputCapture;
-
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.junit.jupiter.api.Assertions.fail;
 import static us.fatehi.test.utility.TestUtility.buildDirectory;
 import static us.fatehi.test.utility.TestUtility.deleteIfPossible;
-import static us.fatehi.test.utility.Utility.isBlank;
 import static us.fatehi.test.utility.Utility.requireNotBlank;
 
 import java.io.BufferedReader;
@@ -42,6 +38,8 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import us.fatehi.test.utility.SvgElementFilter;
+import us.fatehi.test.utility.TestOutputCapture;
 
 public class FileHasContent extends BaseMatcher<ResultsResource> {
 

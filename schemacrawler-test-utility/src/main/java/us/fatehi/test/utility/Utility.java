@@ -13,16 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 public final class Utility {
 
   /**
-   * Checks if the text is null or empty.
-   *
-   * @param text Text to check.
-   * @return Whether the string is blank.
-   */
-  public static boolean isBlank(final String text) {
-    return StringUtils.isBlank(text);
-  }
-
-  /**
    * Checks if the text is null or empty, and throws an exception if it is.
    *
    * @param text Text to check.
@@ -30,7 +20,7 @@ public final class Utility {
    * @throws IllegalArgumentException If the provided string is blank
    */
   public static String requireNotBlank(final String text, final String message) {
-    if (isBlank(text)) {
+    if (StringUtils.isBlank(text)) {
       throw new IllegalArgumentException(message);
     }
     return text;

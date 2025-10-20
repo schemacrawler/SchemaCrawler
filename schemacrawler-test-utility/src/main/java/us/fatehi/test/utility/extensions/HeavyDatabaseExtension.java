@@ -8,10 +8,10 @@
 
 package us.fatehi.test.utility.extensions;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.disabled;
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.enabled;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
-import static us.fatehi.test.utility.Utility.isBlank;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
