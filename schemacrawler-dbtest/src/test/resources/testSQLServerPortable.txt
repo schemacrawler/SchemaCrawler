@@ -255,16 +255,23 @@ Routines
 
 
 
-GetBooksCount                                     [procedure, no result]
+"CustomAdd;0"                                  [function, returns table]
 ------------------------------------------------------------------------
+  "@RETURN_VALUE"                   INTEGER, result             
+  "@One"                            INTEGER, in                 
+  "@Two"                            INTEGER, in                 
 
 
 
-New_Publisher                                     [procedure, no result]
+"GetBooksCount;1"                              [function, returns table]
 ------------------------------------------------------------------------
+  "@RETURN_VALUE"                   INTEGER, result             
+  "@BooksCount"                     INTEGER, in/ out            
 
 
 
-CustomAdd                                      [function, returns table]
+"New_Publisher;1"                              [function, returns table]
 ------------------------------------------------------------------------
+  "@RETURN_VALUE"                   INTEGER, result             
+  "@Publisher"                      VARCHAR(50), in             
 
