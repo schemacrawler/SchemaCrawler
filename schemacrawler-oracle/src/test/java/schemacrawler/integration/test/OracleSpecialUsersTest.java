@@ -38,6 +38,8 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 @Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
+  private static final int NUM_DATABASE_USERS = 34;
+
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
   private DataSource schemaOwnerUserDataSource;
@@ -75,7 +77,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(catalogUserDataSource);
     final String expectedResource = "testOracleSelectCatalogRoleUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, true);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -108,7 +110,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
     final String expectedResource = "testOracleWithNoAccessUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, false);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -131,7 +133,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource);
     final String expectedResource = "testOracleWithSchemaOwnerUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, true);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
@@ -148,7 +150,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(selectUserDataSource);
 
     final String expectedResource = "testOracleWithSelectGrantUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, true);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
