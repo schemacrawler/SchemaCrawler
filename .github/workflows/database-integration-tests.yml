@@ -85,7 +85,7 @@ jobs:
         echo "Building code"
         echo "Downloading Docker image"
         if [ "${{ matrix.database }}" == "oracle" ]; then
-            docker pull gvenzl/oracle-free:23-slim-faststart
+            docker pull gvenzl/oracle-free:23.9-slim-faststart
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "sqlserver" ]; then
             docker pull mcr.microsoft.com/mssql/server:2022-CU9-ubuntu-20.04

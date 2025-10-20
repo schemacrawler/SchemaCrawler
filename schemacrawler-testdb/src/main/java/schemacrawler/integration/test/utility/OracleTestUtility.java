@@ -11,6 +11,7 @@ package schemacrawler.integration.test.utility;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
@@ -20,7 +21,7 @@ public final class OracleTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newOracleContainer() {
-    return newOracleContainer("23-slim-faststart");
+    return newOracleContainer("23.9-slim-faststart");
   }
 
   @SuppressWarnings("resource")
