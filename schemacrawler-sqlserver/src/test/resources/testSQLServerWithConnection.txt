@@ -604,7 +604,7 @@ AS
 
 
 
-BOOKS.dbo.CustomAdd                            [function, returns table]
+BOOKS.dbo.CustomAdd                  [function, does not return a table]
 ------------------------------------------------------------------------
   "@RETURN_VALUE"                   int, return                 
   "@One"                            int, in                     
