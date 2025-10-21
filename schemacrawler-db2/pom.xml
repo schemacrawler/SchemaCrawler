@@ -74,7 +74,7 @@
 
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>db2</artifactId>
+      <artifactId>testcontainers-db2</artifactId>
       <scope>test</scope>
     </dependency>
 

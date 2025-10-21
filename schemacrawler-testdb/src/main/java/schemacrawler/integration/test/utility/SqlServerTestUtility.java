@@ -10,7 +10,7 @@ package schemacrawler.integration.test.utility;
 
 import java.time.Duration;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
+import org.testcontainers.mssqlserver.MSSQLServerContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public final class SqlServerTestUtility {
@@ -22,7 +22,7 @@ public final class SqlServerTestUtility {
   @SuppressWarnings("resource")
   private static JdbcDatabaseContainer<?> newSqlServerContainer(final String version) {
     final DockerImageName imageName = DockerImageName.parse("mcr.microsoft.com/mssql/server");
-    return new MSSQLServerContainer<>(imageName.withTag(version))
+    return new MSSQLServerContainer(imageName.withTag(version))
         .withUrlParam("encrypt", "false")
         .withPassword("Schem#Crawl3r")
         .acceptLicense()

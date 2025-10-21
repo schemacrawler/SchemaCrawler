@@ -9,7 +9,7 @@
 package schemacrawler.integration.test.utility;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public final class PostgreSQLTestUtility {
@@ -25,7 +25,7 @@ public final class PostgreSQLTestUtility {
   @SuppressWarnings("resource")
   private static JdbcDatabaseContainer<?> newPostgreSQLContainer(final String version) {
     final DockerImageName imageName = DockerImageName.parse(PostgreSQLContainer.IMAGE);
-    return new PostgreSQLContainer<>(imageName.withTag(version));
+    return new PostgreSQLContainer(imageName.withTag(version));
   }
 
   private PostgreSQLTestUtility() {

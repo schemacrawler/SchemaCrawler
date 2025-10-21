@@ -9,7 +9,7 @@
 package schemacrawler.integration.test.utility;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.mysql.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public final class MySQLTestUtility {
@@ -21,7 +21,7 @@ public final class MySQLTestUtility {
   @SuppressWarnings("resource")
   private static JdbcDatabaseContainer<?> newMySQLContainer(final String version) {
     final DockerImageName imageName = DockerImageName.parse(MySQLContainer.NAME);
-    return new MySQLContainer<>(imageName.withTag(version))
+    return new MySQLContainer(imageName.withTag(version))
         .withCommand(
             "mysqld",
             // "--skip-ssl", (Needed for MySQL 8)

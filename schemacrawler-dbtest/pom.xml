@@ -76,48 +76,48 @@
 
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>mariadb</artifactId>
+      <artifactId>testcontainers-mariadb</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.firebirdsql</groupId>
       <artifactId>firebird-testcontainers-java</artifactId>
-      <version>1.5.1</version>
+      <version>1.6.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>mssqlserver</artifactId>
+      <artifactId>testcontainers-mssqlserver</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>mysql</artifactId>
+      <artifactId>testcontainers-mysql</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>postgresql</artifactId>
+      <artifactId>testcontainers-postgresql</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>oracle-xe</artifactId>
+      <artifactId>testcontainers-oracle-free</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>db2</artifactId>
+      <artifactId>testcontainers-db2</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>trino</artifactId>
+      <artifactId>testcontainers-trino</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>cassandra</artifactId>
+      <artifactId>testcontainers-cassandra</artifactId>
       <scope>test</scope>
     </dependency>
 

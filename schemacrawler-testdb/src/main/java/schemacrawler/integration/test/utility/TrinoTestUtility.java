@@ -8,7 +8,7 @@
 
 package schemacrawler.integration.test.utility;
 
-import org.testcontainers.containers.TrinoContainer;
+import org.testcontainers.trino.TrinoContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public final class TrinoTestUtility {
