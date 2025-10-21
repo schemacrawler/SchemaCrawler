@@ -44,6 +44,8 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @ResolveTestContext
 public class OracleTest extends BaseOracleWithConnectionTest {
 
+  private static final int NUM_DATABASE_USERS = 34;
+
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
   @BeforeEach
@@ -65,7 +67,7 @@ public class OracleTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource = getDataSource();
 
     final String expectedResource = "testOracleWithConnection.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, false);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
   }
