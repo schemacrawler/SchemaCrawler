@@ -163,6 +163,12 @@ final class RoutineRetriever extends AbstractRetriever {
         retrieveFunctionsFromDataDictionary(schemas, functionFilter);
         break;
 
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO, "Retrieving functions, using fast data dictionary retrieval over schemas");
+        retrieveFunctionsOverSchemas(schemas, functionFilter);
+        break;
+
       case metadata:
       case metadata_over_schemas:
         LOGGER.log(Level.INFO, "Retrieving functions");
@@ -237,6 +243,42 @@ final class RoutineRetriever extends AbstractRetriever {
     retrievalCounts.log();
   }
 
+  private void retrieveFunctionsOverSchemas(
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Function> functionFilter)
+      throws SQLException {
+
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(FUNCTIONS)) {
+      throw new ExecutionRuntimeException("No functions SQL provided");
+    }
+    final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
+
+    final String name = "functions from data dictionary over schemas";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(functionsSql, statement, getLimitMap(schema)); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = createFunction(results, schemas, functionFilter);
+          retrievalCounts.countIfIncluded(schema.key(), added);
+        }
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve functions for schema <%s>", schema));
+      }
+      retrievalCounts.log(schema.key());
+    }
+    retrievalCounts.log();
+  }
+
   private void retrieveProcedures(final InclusionRule routineInclusionRule) throws SQLException {
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
@@ -252,6 +294,12 @@ final class RoutineRetriever extends AbstractRetriever {
       case data_dictionary_all:
         LOGGER.log(Level.INFO, "Retrieving procedures, using fast data dictionary retrieval");
         retrieveProceduresFromDataDictionary(schemas, procedureFilter);
+        break;
+
+      case data_dictionary_over_schemas:
+        LOGGER.log(
+            Level.INFO, "Retrieving procedures, using fast data dictionary retrieval over schemas");
+        retrieveProceduresOverSchemas(schemas, procedureFilter);
         break;
 
       case metadata:
@@ -320,6 +368,42 @@ final class RoutineRetriever extends AbstractRetriever {
         logPossiblyUnsupportedSQLFeature(
             new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
       }
+    }
+    retrievalCounts.log();
+  }
+
+  private void retrieveProceduresOverSchemas(
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Procedure> procedureFilter)
+      throws SQLException {
+
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(PROCEDURES)) {
+      throw new ExecutionRuntimeException("No procedures SQL provided");
+    }
+    final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
+
+    final String name = "procedures from data dictionary over schemas";
+    final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
+    for (final Schema schema : schemas) {
+      try (final Connection connection = getRetrieverConnection().getConnection(name);
+          final SchemaSetter schemaSetter = new SchemaSetter(connection, schema);
+          final Statement statement = connection.createStatement();
+          final MetadataResultSet results =
+              new MetadataResultSet(proceduresSql, statement, getLimitMap(schema)); ) {
+        while (results.next()) {
+          retrievalCounts.count(schema.key());
+          final boolean added = createProcedure(results, schemas, procedureFilter);
+          retrievalCounts.countIfIncluded(schema.key(), added);
+        }
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            e,
+            new StringFormat("Could not retrieve procedures for schema <%s>", schema));
+      }
+      retrievalCounts.log(schema.key());
     }
     retrievalCounts.log();
   }
