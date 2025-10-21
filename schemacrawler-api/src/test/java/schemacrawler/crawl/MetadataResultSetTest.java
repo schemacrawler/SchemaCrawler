@@ -32,9 +32,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.BinaryData;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.utility.database.DatabaseUtility;
 
 @WithTestDatabase

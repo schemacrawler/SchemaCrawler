@@ -18,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.integration.test.utility.SqlServerTestUtility.newSqlServerContainer;
 import static schemacrawler.test.serialize.CatalogSerializationTestUtility.assertJavaSerializationRoundTrip;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -54,9 +54,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.sqlserver.SqlServerDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.HeavyDatabaseTest;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -64,6 +61,9 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.property.Property;
 
 @DisableLogging

@@ -28,6 +28,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.triggersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewTableUsageRetrievalStrategy;
+
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -59,9 +60,9 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
                     tableColumnAdditionalAttributesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(routinesRetrievalStrategy, data_dictionary_over_schemas)
                 .with(routineReferencesRetrievalStrategy, data_dictionary_over_schemas)
-                .with(proceduresRetrievalStrategy, metadata_over_schemas)
+                .with(proceduresRetrievalStrategy, data_dictionary_over_schemas)
                 .with(procedureParametersRetrievalStrategy, data_dictionary_over_schemas)
-                .with(functionsRetrievalStrategy, metadata_over_schemas)
+                .with(functionsRetrievalStrategy, data_dictionary_over_schemas)
                 .with(functionParametersRetrievalStrategy, data_dictionary_over_schemas),
         limitOptionsBuilder ->
             limitOptionsBuilder.includeSchemas(

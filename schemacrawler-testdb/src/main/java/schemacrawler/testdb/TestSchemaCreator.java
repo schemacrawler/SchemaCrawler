@@ -8,19 +8,20 @@
 
 package schemacrawler.testdb;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import us.fatehi.utility.SQLRuntimeException;
-import us.fatehi.utility.database.SqlScript;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class TestSchemaCreator implements Runnable {
 
-  public static void executeScriptLine(
+  private static void executeScriptLine(
       final String scriptResourceLine, final Connection connection) {
 
     requireNonNull(scriptResourceLine, "No script resource line provided");
@@ -41,7 +42,7 @@ public class TestSchemaCreator implements Runnable {
       delimiter = split[0].trim();
       scriptResource = split[1].trim();
     } else {
-      throw new SQLRuntimeException("Too many fields in \"%s\"".formatted(scriptResourceLine));
+      throw new RuntimeException("Too many fields in \"%s\"".formatted(scriptResourceLine));
     }
 
     final boolean skip = "#".equals(delimiter);
@@ -49,27 +50,71 @@ public class TestSchemaCreator implements Runnable {
       return;
     }
 
-    try (final BufferedReader scriptReader =
-        new ClasspathInputResource(scriptResource).openNewInputReader(UTF_8)) {
-      new SqlScript(scriptReader, delimiter, connection).run();
-    } catch (final IOException e) {
-      throw new SQLRuntimeException("Could not read \"%s\"".formatted(scriptResource), e);
+    try (final BufferedReader scriptReader = newClasspathReader(scriptResource)) {
+      executeSqlScript(connection, scriptReader, delimiter);
+    } catch (final IOException | SQLException e) {
+      throw new RuntimeException("Could not read \"%s\"".formatted(scriptResource), e);
     }
   }
 
-  private final Connection connection;
+  private static void executeSqlScript(
+      final Connection connection, final BufferedReader reader, final String delimiter)
+      throws IOException, SQLException {
+    final StringBuilder scriptBuilder = new StringBuilder();
+    String line;
+    while ((line = reader.readLine()) != null) {
+      scriptBuilder.append(line).append("\n");
+    }
 
+    final String fixedDelimiter;
+    if ("@".equals(delimiter)) {
+      fixedDelimiter = "\\R@";
+    } else {
+      fixedDelimiter = delimiter;
+    }
+
+    final String[] statements = scriptBuilder.toString().split(fixedDelimiter);
+    for (final String stmt : statements) {
+      final String sql = stmt.strip();
+      if (!sql.isBlank()) {
+        try (final Statement statement = connection.createStatement()) {
+          statement.execute(sql);
+        }
+      }
+    }
+  }
+
+  private static BufferedReader newClasspathReader(final String classpathResource) {
+    if (classpathResource == null || classpathResource.isBlank()) {
+      throw new IllegalArgumentException("Classpath resource not provided");
+    }
+
+    final String resource;
+    if (classpathResource.startsWith("/")) {
+      resource = classpathResource.substring(1);
+    } else {
+      resource = classpathResource;
+    }
+
+    final InputStream inputStream =
+        Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+    final BufferedReader reader =
+        new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+    return reader;
+  }
+
+  private final Connection connection;
   private final String scriptsResource;
 
-  public TestSchemaCreator(final Connection connection, final String scriptsResource) {
+  public TestSchemaCreator(
+      final Connection connection, final String scriptsResource, final boolean debug) {
     this.connection = requireNonNull(connection, "No database connection provided");
     this.scriptsResource = requireNonNull(scriptsResource, "No script resource provided");
   }
 
   @Override
   public void run() {
-    try (final BufferedReader reader =
-        new ClasspathInputResource(scriptsResource).openNewInputReader(UTF_8)) {
+    try (final BufferedReader reader = newClasspathReader(scriptsResource)) {
       reader.lines().forEach(line -> executeScriptLine(line, connection));
     } catch (final IOException e) {
       throw new RuntimeException(e.getMessage(), e);

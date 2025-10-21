@@ -15,9 +15,9 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -30,10 +30,10 @@ import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.test.utility.TestWriter;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext

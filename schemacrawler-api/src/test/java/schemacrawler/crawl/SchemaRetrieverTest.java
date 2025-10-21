@@ -33,8 +33,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.ResolveTestContext;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 

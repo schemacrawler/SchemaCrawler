@@ -13,9 +13,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -35,11 +35,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestUtility;
-import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.test.utility.TestWriter;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @WithTestDatabase
 @ResolveTestContext
@@ -50,7 +49,8 @@ public class WeakAssociationsAnalyzerTest {
 
   @BeforeAll
   public void loadCatalog(final Connection connection) throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseTestUtility.newSchemaRetrievalOptions();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()

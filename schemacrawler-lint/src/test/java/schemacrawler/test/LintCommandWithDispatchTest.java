@@ -6,26 +6,26 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import schemacrawler.test.utility.CaptureSystemStreams;
-import schemacrawler.test.utility.CapturedSystemStreams;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
+import us.fatehi.test.utility.DatabaseConnectionInfo;
+import us.fatehi.test.utility.extensions.CaptureSystemStreams;
+import us.fatehi.test.utility.extensions.CapturedSystemStreams;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
+import us.fatehi.test.utility.extensions.WithSystemProperty;
 
 @WithTestDatabase
 @CaptureSystemStreams

@@ -11,24 +11,21 @@ package schemacrawler.test;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-
-import java.nio.file.Path;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-
+import java.nio.file.Path;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.CatalogAttributesUtility;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
-import schemacrawler.test.utility.FileHasContent;
+import us.fatehi.test.utility.extensions.FileHasContent;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
 

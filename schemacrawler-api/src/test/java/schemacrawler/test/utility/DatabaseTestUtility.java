@@ -11,6 +11,8 @@ package schemacrawler.test.utility;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,6 +22,9 @@ import java.util.Properties;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -27,6 +32,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import us.fatehi.test.utility.TestUtility;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -100,5 +106,29 @@ public final class DatabaseTestUtility {
         "Unexpected number of synonyms in the schema", catalog.getSynonyms(schema), hasSize(0));
     assertThat(
         "Unexpected number of sequences in the schema", catalog.getSequences(schema), hasSize(0));
+  }
+
+  public static SchemaRetrievalOptions newSchemaRetrievalOptions() throws IOException {
+    final Map<String, String> config = loadHsqldbConfig();
+
+    final InformationSchemaViewsBuilder builder = InformationSchemaViewsBuilder.builder();
+
+    for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey.values()) {
+      final String lookupKey =
+          "select.%s.%s".formatted(informationSchemaKey.getType(), informationSchemaKey);
+      if (config.containsKey(lookupKey)) {
+        try {
+          builder.withSql(informationSchemaKey, config.get(lookupKey));
+        } catch (final IllegalArgumentException e) {
+          // Ignore
+        }
+      }
+    }
+    final InformationSchemaViews informationSchemaViews = builder.toOptions();
+
+    return SchemaRetrievalOptionsBuilder.builder()
+        .withInformationSchemaViews(informationSchemaViews)
+        .with(tableColumnPrivilegesRetrievalStrategy, data_dictionary_all)
+        .toOptions();
   }
 }

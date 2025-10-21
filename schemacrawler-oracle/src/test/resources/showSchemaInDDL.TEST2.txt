@@ -11,11 +11,11 @@ TEST2.CUSTOMADD                      [function, does not return a table]
 
 Definition
                                                             [definition]
-CREATE OR REPLACE EDITIONABLE FUNCTION "TEST2"."CUSTOMADD" (One IN INTEGER) 
-RETURN INTEGER 
-AS 
+CREATE OR REPLACE EDITIONABLE FUNCTION "TEST2"."CUSTOMADD" (One IN INTEGER)
+RETURN INTEGER
+AS
 BEGIN
-  RETURN One + 1; 
+  RETURN One + 1;
 END;
 /
 

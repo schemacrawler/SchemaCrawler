@@ -21,8 +21,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
-import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
-import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
+import static us.fatehi.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
+import static us.fatehi.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -55,10 +55,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestUtility;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.TestObjectUtility;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -178,7 +178,8 @@ public class SchemaCrawlerCoverageTest {
   @BeforeAll
   public void loadCatalog(final Connection connection) throws Exception {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseTestUtility.newSchemaRetrievalOptions();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()

@@ -11,9 +11,9 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -28,11 +28,11 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestWriter;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.test.utility.TestWriter;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @WithTestDatabase
 @ResolveTestContext

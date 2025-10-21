@@ -1,0 +1,23 @@
+-- SchemaCrawler
+-- http://www.schemacrawler.com
+-- Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+-- All rights reserved.
+-- SPDX-License-Identifier: EPL-2.0
+
+SELECT
+    R.ROUTINE_CATALOG AS FUNCTION_CAT,
+    R.ROUTINE_SCHEMA AS FUNCTION_SCHEM,
+    R.ROUTINE_NAME AS FUNCTION_NAME,
+    NULL AS SPECIFIC_NAME,
+    1 AS FUNCTION_TYPE,
+    NULL AS REMARKS,
+    R.IS_DETERMINISTIC,
+    R.SQL_DATA_ACCESS,
+    R.IS_NULL_CALL,
+    R.MAX_DYNAMIC_RESULT_SETS,
+    R.CREATED,
+    R.LAST_ALTERED
+FROM
+    INFORMATION_SCHEMA.ROUTINES R
+WHERE
+    R.ROUTINE_TYPE = 'FUNCTION'

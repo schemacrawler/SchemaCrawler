@@ -18,6 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -30,7 +31,7 @@ class DataSourceConnectionSourceTest {
   @Test
   void close() throws Exception {
     // Arrange
-    abstract class CloseableDataSource implements DataSource, AutoCloseable {}
+    abstract class CloseableDataSource implements DataSource, Closeable {}
     final CloseableDataSource dataSource = mock(CloseableDataSource.class);
 
     final DataSourceConnectionSource dataSourceConnectionSource =
@@ -56,24 +57,6 @@ class DataSourceConnectionSourceTest {
 
     // Assert
     verifyNoInteractions(dataSource);
-  }
-
-  @Test
-  void closeWithShutdown() throws Exception {
-    // Arrange
-    abstract class ShutdownableDataSource implements DataSource {
-      abstract void shutdown();
-    }
-    final ShutdownableDataSource dataSource = mock(ShutdownableDataSource.class);
-
-    final DataSourceConnectionSource dataSourceConnectionSource =
-        new DataSourceConnectionSource(dataSource);
-
-    // Act
-    dataSourceConnectionSource.close();
-
-    // Assert
-    verify(dataSource, times(1)).shutdown();
   }
 
   @Test

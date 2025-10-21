@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static java.nio.file.Files.newInputStream;
@@ -21,9 +20,10 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.DatabaseTestUtility.validateSchema;
-import static schemacrawler.test.utility.TestUtility.failTestSetup;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+import static us.fatehi.test.utility.TestUtility.failTestSetup;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

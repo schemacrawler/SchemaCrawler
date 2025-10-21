@@ -17,6 +17,9 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.test.utility.TestWriter;
+import us.fatehi.test.utility.extensions.FileHasContent;
+import us.fatehi.test.utility.extensions.ResultsResource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 public final class ExecutableTestUtility {

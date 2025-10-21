@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
@@ -21,7 +20,6 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
@@ -29,9 +27,9 @@ import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.options.Config;
+import us.fatehi.test.utility.TestUtility;
 import us.fatehi.utility.PropertiesUtility;
 
 public class SchemaCrawlerOptionsConfigTest {
@@ -100,12 +98,7 @@ public class SchemaCrawlerOptionsConfigTest {
   }
 
   private Map<String, String> loadConfig(final String configResource) {
-    try {
-      final Properties properties = TestUtility.loadPropertiesFromClasspath(configResource);
-      return PropertiesUtility.propertiesMap(properties);
-    } catch (final IOException e) {
-      fail("Could not load " + configResource, e);
-      return null;
-    }
+    final Properties properties = TestUtility.loadPropertiesFromClasspath(configResource);
+    return PropertiesUtility.propertiesMap(properties);
   }
 }

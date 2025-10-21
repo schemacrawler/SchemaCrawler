@@ -17,8 +17,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.DatabaseTestUtility.validateSchema;
-import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+import static us.fatehi.test.utility.TestUtility.fileHeaderOf;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.nio.file.Files;

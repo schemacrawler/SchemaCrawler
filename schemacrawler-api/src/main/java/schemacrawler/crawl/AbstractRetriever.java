@@ -121,6 +121,7 @@ abstract class AbstractRetriever {
     // functions)
     if ("HYC00".equalsIgnoreCase(e.getSQLState())
         || "HY000".equalsIgnoreCase(e.getSQLState())
+        || "0A000".equalsIgnoreCase(e.getSQLState())
         || e instanceof SQLFeatureNotSupportedException) {
       logSQLFeatureNotSupported(message, e);
     } else {

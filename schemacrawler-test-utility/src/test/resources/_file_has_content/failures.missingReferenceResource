@@ -1,0 +1,4 @@
+Expected: contents of <_file_has_content/missingReferenceResource>
+     but: reference file is not available
+>> Actual output in:
+schemacrawler-test-utility/target/unit_tests_results_output/_file_has_content/missingReferenceResource

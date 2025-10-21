@@ -9,14 +9,14 @@
 package schemacrawler.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.test.utility.TestUtility.failTestSetup;
+import static us.fatehi.test.utility.TestUtility.failTestSetup;
 
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
 import schemacrawler.testdb.TestSchemaCreator;
+import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
@@ -27,7 +27,7 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected void closeDataSource() {
     try {
-      if (dataSource instanceof Closeable closeable) {
+      if (dataSource instanceof final Closeable closeable) {
         closeable.close();
       }
     } catch (final Exception e) {
@@ -37,7 +37,8 @@ public abstract class BaseAdditionalDatabaseTest {
 
   protected void createDatabase(final String scriptsResource) {
     try (final Connection connection = getConnection()) {
-      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection, scriptsResource);
+      final TestSchemaCreator schemaCreator =
+          new TestSchemaCreator(connection, scriptsResource, false);
       schemaCreator.run();
     } catch (final SQLException e) {
       failTestSetup("Could not create database", e);
@@ -55,24 +56,8 @@ public abstract class BaseAdditionalDatabaseTest {
       final String password,
       final String connectionProperties) {
 
-    dataSource = createDataSourceObject(connectionUrl, user, password, connectionProperties);
-  }
-
-  protected DataSource createDataSourceObject(
-      final String connectionUrl,
-      final String user,
-      final String password,
-      final String connectionProperties) {
-
-    final BasicDataSource ds = new BasicDataSource();
-    ds.setUrl(connectionUrl);
-    ds.setUsername(user);
-    ds.setPassword(password);
-    if (connectionProperties != null) {
-      ds.setConnectionProperties(connectionProperties);
-    }
-
-    return ds;
+    dataSource =
+        DataSourceTestUtility.createDataSource(connectionUrl, user, password, connectionProperties);
   }
 
   protected final Connection getConnection() {
@@ -85,8 +70,7 @@ public abstract class BaseAdditionalDatabaseTest {
   }
 
   protected final DatabaseConnectionSource getDataSource() {
-    final BasicDataSource basicDataSource = (BasicDataSource) dataSource;
-    return DatabaseConnectionSources.fromDataSource(basicDataSource);
+    return DatabaseConnectionSources.fromDataSource(dataSource);
   }
 
   protected void runScript(final String databaseSqlResource) throws Exception {

@@ -9,7 +9,7 @@
 package schemacrawler.test.utility;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.test.utility.TestUtility.failTestSetup;
+import static us.fatehi.test.utility.TestUtility.failTestSetup;
 
 import java.io.IOException;
 import java.nio.file.Path;

@@ -12,17 +12,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder.builder;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
+
 import org.junit.jupiter.api.BeforeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -30,6 +28,9 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.test.utility.TestUtility;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase

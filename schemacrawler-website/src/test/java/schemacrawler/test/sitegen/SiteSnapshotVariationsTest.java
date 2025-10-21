@@ -9,7 +9,7 @@
 package schemacrawler.test.sitegen;
 
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
+import static us.fatehi.test.utility.TestUtility.deleteIfPossible;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,16 +19,16 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.test.utility.DatabaseConnectionInfo;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @WithTestDatabase
 @ResolveTestContext

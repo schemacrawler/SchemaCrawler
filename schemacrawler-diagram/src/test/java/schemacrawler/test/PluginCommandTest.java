@@ -10,11 +10,11 @@ package schemacrawler.test;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.PluginCommandTestUtility;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.text.diagram.DiagramCommandProvider;
 import schemacrawler.tools.command.text.embeddeddiagram.EmbeddedDiagramCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @ResolveTestContext
 public class PluginCommandTest {

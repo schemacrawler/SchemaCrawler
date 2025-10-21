@@ -24,7 +24,6 @@ import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,7 +164,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
         } catch (final IllegalAccessException | InvocationTargetException e) {
           LOGGER.log(
               Level.FINE, e.getCause(), new StringFormat("Could not execute method <%s>", method));
-        } catch (final AbstractMethodError | SQLFeatureNotSupportedException e) {
+        } catch (final AbstractMethodError e) {
           logSQLFeatureNotSupported(
               new StringFormat("Database metadata method <%s> not supported", method), e);
         } catch (final SQLException e) {

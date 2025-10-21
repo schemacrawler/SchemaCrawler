@@ -8,7 +8,6 @@
 
 package schemacrawler.integration.test;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Comparator.naturalOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -16,10 +15,12 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,7 +41,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public class DatabaseScriptsTest {
 
@@ -114,10 +114,15 @@ public class DatabaseScriptsTest {
     final List<String> failedScripts = new ArrayList<>();
     for (final String scriptName : scripts) {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
-      try (final BufferedReader reader =
-          new ClasspathInputResource(scriptName).openNewInputReader(UTF_8)) {
+      try (final InputStream inputStream =
+              Thread.currentThread().getContextClassLoader().getResourceAsStream(scriptName);
+          final BufferedReader reader =
+              new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
         final List<String> lines =
-            reader.lines().filter(line -> !isBlank(line)).collect(Collectors.toList());
+            reader
+                .lines()
+                .filter(line -> line != null && !line.isBlank())
+                .collect(Collectors.toList());
         assertThat(lines, is(not(empty())));
         for (final String line : lines) {
           for (final DatabaseScriptSection databaseScriptSection : scriptSectionsCounts.keySet()) {

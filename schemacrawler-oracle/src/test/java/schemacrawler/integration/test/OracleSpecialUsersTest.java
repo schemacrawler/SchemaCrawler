@@ -28,7 +28,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.HeavyDatabaseTest;
+import us.fatehi.test.utility.DataSourceTestUtility;
+import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
@@ -36,6 +37,8 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 @HeavyDatabaseTest("oracle")
 @Testcontainers
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
+
+  private static final int NUM_DATABASE_USERS = 34;
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
@@ -53,13 +56,16 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     createDatabase("/oracle.scripts.txt");
 
     schemaOwnerUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKS", "BOOKS", urlx);
+        DataSourceTestUtility.createDataSource(dbContainer.getJdbcUrl(), "BOOKS", "BOOKS", urlx);
     selectUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "SELUSER", "SELUSER", urlx);
+        DataSourceTestUtility.createDataSource(
+            dbContainer.getJdbcUrl(), "SELUSER", "SELUSER", urlx);
     catalogUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "CATUSER", urlx);
+        DataSourceTestUtility.createDataSource(
+            dbContainer.getJdbcUrl(), "CATUSER", "CATUSER", urlx);
     noAccessUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "NOTUSER", "NOTUSER", urlx);
+        DataSourceTestUtility.createDataSource(
+            dbContainer.getJdbcUrl(), "NOTUSER", "NOTUSER", urlx);
   }
 
   @Test
@@ -71,7 +77,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(catalogUserDataSource);
     final String expectedResource = "testOracleSelectCatalogRoleUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, true);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -104,7 +110,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
     final String expectedResource = "testOracleWithNoAccessUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, false);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
 
     final DatabaseAccessException sqlException =
         assertThrows(
@@ -127,7 +133,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource);
     final String expectedResource = "testOracleWithSchemaOwnerUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, true);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
@@ -144,7 +150,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.fromDataSource(selectUserDataSource);
 
     final String expectedResource = "testOracleWithSelectGrantUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, 33, true);
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
     testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 

@@ -6,25 +6,25 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
+
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.test.utility.AssertNoSystemErrOutput;
-import schemacrawler.test.utility.AssertNoSystemOutOutput;
-import schemacrawler.test.utility.CaptureSystemStreams;
-import schemacrawler.test.utility.CapturedSystemStreams;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.lint.LintDispatch;
+import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
+import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
+import us.fatehi.test.utility.extensions.CaptureSystemStreams;
+import us.fatehi.test.utility.extensions.CapturedSystemStreams;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @ResolveTestContext
 @DisableLogging

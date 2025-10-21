@@ -25,11 +25,6 @@
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-utility</artifactId>
-      <version>${project.version}</version>
-    </dependency>
           
     <dependency>
       <groupId>info.picocli</groupId>

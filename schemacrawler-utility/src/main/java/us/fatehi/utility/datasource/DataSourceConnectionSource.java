@@ -10,7 +10,7 @@ package us.fatehi.utility.datasource;
 
 import static java.util.Objects.requireNonNull;
 
-import java.lang.reflect.Method;
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -31,14 +31,8 @@ final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource 
 
   @Override
   public void close() throws Exception {
-    if (dataSource instanceof AutoCloseable closeable) {
+    if (dataSource instanceof Closeable closeable) {
       closeable.close();
-    } else {
-      final Method method = shutdownMethod();
-      if (method != null) {
-        method.setAccessible(true);
-        method.invoke(dataSource);
-      }
     }
   }
 
@@ -62,17 +56,5 @@ final class DataSourceConnectionSource extends AbstractDatabaseConnectionSource 
       return false;
     }
     return true;
-  }
-
-  private Method shutdownMethod() {
-    final Class<?> c = dataSource.getClass();
-    final Method[] methods = c.getDeclaredMethods();
-    for (final Method method : methods) {
-      final String methodName = method.getName();
-      if (methodName.equalsIgnoreCase("shutdown")) {
-        return method;
-      }
-    }
-    return null;
   }
 }

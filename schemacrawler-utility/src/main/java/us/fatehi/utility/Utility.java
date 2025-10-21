@@ -72,17 +72,8 @@ public final class Utility {
    * @param text Text to check.
    * @return Whether the string is blank.
    */
-  public static boolean isBlank(final CharSequence text) {
-    if (text == null || text.length() == 0) {
-      return true;
-    }
-
-    for (int i = 0; i < text.length(); i++) {
-      if (!isWhitespace(text.charAt(i))) {
-        return false;
-      }
-    }
-    return true;
+  public static boolean isBlank(final String text) {
+    return text == null || text.isBlank();
   }
 
   /**

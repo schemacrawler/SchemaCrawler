@@ -6,18 +6,17 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.test.AbstractAlternateKeysTest;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase

@@ -6,16 +6,14 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test;
 
 import static schemacrawler.test.utility.LintTestUtility.executableLint;
 
 import org.junit.jupiter.api.Test;
-
-import schemacrawler.test.utility.AssertNoSystemErrOutput;
-import schemacrawler.test.utility.AssertNoSystemOutOutput;
 import schemacrawler.test.utility.WithTestDatabase;
+import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
+import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase

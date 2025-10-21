@@ -6,21 +6,21 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.PluginCommandTestUtility;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.tools.command.lint.LintCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 
 @ResolveTestContext
 public class CommandProviderTest {

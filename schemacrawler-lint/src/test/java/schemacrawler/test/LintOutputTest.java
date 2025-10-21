@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -15,9 +14,10 @@ import static org.hamcrest.Matchers.contains;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,14 +30,14 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.AssertNoSystemErrOutput;
-import schemacrawler.test.utility.AssertNoSystemOutOutput;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
+import us.fatehi.test.utility.DatabaseConnectionInfo;
+import us.fatehi.test.utility.TestUtility;
+import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
+import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase

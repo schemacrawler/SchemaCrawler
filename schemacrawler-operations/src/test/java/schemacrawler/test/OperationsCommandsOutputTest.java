@@ -10,10 +10,11 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.clean;
+import static us.fatehi.test.utility.TestUtility.clean;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,12 +24,12 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase

@@ -19,10 +19,10 @@ import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_diction
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -47,14 +47,14 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.test.utility.HeavyDatabaseTest;
-import schemacrawler.test.utility.ResolveTestContext;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.test.utility.TestWriter;
+import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.database.SqlScript;
 
 @DisableLogging

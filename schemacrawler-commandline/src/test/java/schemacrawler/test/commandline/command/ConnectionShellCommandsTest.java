@@ -13,29 +13,29 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static schemacrawler.test.utility.FileHasContent.contentsOf;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static us.fatehi.test.utility.extensions.FileHasContent.contentsOf;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.test.utility.CaptureSystemStreams;
-import schemacrawler.test.utility.CapturedSystemStreams;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
+import us.fatehi.test.utility.DatabaseConnectionInfo;
+import us.fatehi.test.utility.extensions.CaptureSystemStreams;
+import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
-@WithTestDatabase
 @CaptureSystemStreams
 public class ConnectionShellCommandsTest {
 
   @Test
+  @WithTestDatabase
   public void disconnect(final DatabaseConnectionSource dataSource) {
     final ShellState state = new ShellState();
     state.setDataSource(dataSource); // is-connected
@@ -67,6 +67,7 @@ public class ConnectionShellCommandsTest {
   }
 
   @Test
+  @WithTestDatabase
   public void isConnected(
       final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
@@ -83,6 +84,7 @@ public class ConnectionShellCommandsTest {
   }
 
   @Test
+  @WithTestDatabase
   public void isNotConnected(
       final DatabaseConnectionInfo connectionInfo, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();

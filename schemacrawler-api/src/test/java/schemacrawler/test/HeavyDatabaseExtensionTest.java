@@ -14,8 +14,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
-import schemacrawler.test.utility.HeavyDatabaseExtension;
-import schemacrawler.test.utility.WithSystemProperty;
+import us.fatehi.test.utility.extensions.HeavyDatabaseExtension;
+import us.fatehi.test.utility.extensions.WithSystemProperty;
 
 @Disabled("Disable for now")
 public class HeavyDatabaseExtensionTest {

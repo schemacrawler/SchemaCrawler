@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,29 +13,26 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
-
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
-import schemacrawler.test.utility.FileHasContent;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import us.fatehi.test.utility.extensions.FileHasContent;
 
 public class LinterConfigsTest {
 
@@ -100,7 +96,8 @@ public class LinterConfigsTest {
     assertThat(
         exception.getCause().getCause().getMessage(),
         containsString(
-            "no String-argument constructor/factory method to deserialize from String value ('Apple')"));
+            "no String-argument constructor/factory method to deserialize from String value"
+                + " ('Apple')"));
   }
 
   @Test
