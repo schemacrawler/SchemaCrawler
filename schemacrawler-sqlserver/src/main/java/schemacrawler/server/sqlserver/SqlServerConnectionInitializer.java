@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.string.StringFormat;
 
@@ -27,8 +28,6 @@ public final class SqlServerConnectionInitializer implements Consumer<Connection
     SqlScript.executeScriptFromResource("/initialize-all-database-users.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-schemas.sql", "@", connection);
 
-    SqlScript.executeScriptFromResource("/initialize-all-procedures.sql", "@", connection);
-    SqlScript.executeScriptFromResource("/initialize-all-functions.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-sequences.sql", "@", connection);
     SqlScript.executeScriptFromResource("/initialize-all-synonyms.sql", "@", connection);
 
