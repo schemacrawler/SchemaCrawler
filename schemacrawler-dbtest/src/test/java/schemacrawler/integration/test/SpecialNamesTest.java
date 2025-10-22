@@ -52,8 +52,11 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @Testcontainers
 public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newMariaDBContainer().withCommand(
-          "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1");
+  @Container
+  private final JdbcDatabaseContainer<?> dbContainer =
+      newMariaDBContainer("10.7.3")
+          .withCommand(
+              "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1");
 
   @BeforeEach
   public void createDatabase() throws SQLException {

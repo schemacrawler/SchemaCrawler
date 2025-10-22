@@ -19,7 +19,7 @@ public final class MariaDBTestUtility {
   }
 
   @SuppressWarnings("resource")
-  private static JdbcDatabaseContainer<?> newMariaDBContainer(final String version) {
+  public static JdbcDatabaseContainer<?> newMariaDBContainer(final String version) {
     final DockerImageName imageName = DockerImageName.parse(MariaDBContainer.NAME);
     return new MariaDBContainer(imageName.withTag(version))
         .withEnv("MARIADB_DATABASE", "books")
