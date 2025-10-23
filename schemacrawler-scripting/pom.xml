@@ -97,7 +97,7 @@
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
-      <version>25.0.0</version>
+      <version>25.0.1</version>
       <type>pom</type>
     </dependency>
     <dependency>
