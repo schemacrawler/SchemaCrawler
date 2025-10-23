@@ -67,6 +67,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest</artifactId>
+        <version>3.0</version>
+      </dependency>      
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -119,23 +124,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest</artifactId>
-      <version>3.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-      <version>4.11.0</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>com.github.npathai</groupId>
       <artifactId>hamcrest-optional</artifactId>

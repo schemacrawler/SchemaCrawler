@@ -76,14 +76,23 @@ public final class DataSourceTestUtility {
       // Read script
       final String sqlScript = IOUtils.resourceToString(script, StandardCharsets.UTF_8);
       final String[] statements = sqlScript.split(";");
+      String sqlStatement = null;
       try (final Connection conn = hsqlDataSource.getConnection();
           final Statement stmt = conn.createStatement(); ) {
         for (final String sql : statements) {
-          stmt.executeUpdate(sql.strip());
+          if (sql == null) {
+            continue;
+          }
+          sqlStatement = sql.strip();
+          if (!sqlStatement.isBlank()) {
+            stmt.executeUpdate(sqlStatement);
+          }
         }
+      } catch (final SQLException e) {
+        throw new SQLException("Could not execute SQL%n%s".formatted(sqlStatement), e);
       }
       return hsqlDataSource;
-    } catch (IOException | SQLException e) {
+    } catch (final IOException | SQLException e) {
       return fail("Could not create a data source", e);
     }
   }
