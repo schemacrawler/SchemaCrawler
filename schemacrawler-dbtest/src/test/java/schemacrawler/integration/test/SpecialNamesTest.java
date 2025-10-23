@@ -10,6 +10,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.integration.test.utility.MariaDBTestUtility.newMariaDBContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
@@ -17,13 +18,13 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
+
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.IdentifiersBuilder;
@@ -51,15 +52,11 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @Testcontainers
 public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
 
-  private final DockerImageName imageName = DockerImageName.parse(MariaDBContainer.NAME);
-
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new MariaDBContainer<>(imageName.withTag("10.7.3"))
+      newMariaDBContainer("10.7.3")
           .withCommand(
-              "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
-          .withUsername("schemacrawler")
-          .withDatabaseName("books");
+              "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1");
 
   @BeforeEach
   public void createDatabase() throws SQLException {

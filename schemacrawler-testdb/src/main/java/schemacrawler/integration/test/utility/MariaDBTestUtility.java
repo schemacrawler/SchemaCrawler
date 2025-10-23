@@ -9,7 +9,7 @@
 package schemacrawler.integration.test.utility;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MariaDBContainer;
+import org.testcontainers.mariadb.MariaDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public final class MariaDBTestUtility {
@@ -19,9 +19,9 @@ public final class MariaDBTestUtility {
   }
 
   @SuppressWarnings("resource")
-  private static JdbcDatabaseContainer<?> newMariaDBContainer(final String version) {
+  public static JdbcDatabaseContainer<?> newMariaDBContainer(final String version) {
     final DockerImageName imageName = DockerImageName.parse(MariaDBContainer.NAME);
-    return new MariaDBContainer<>(imageName.withTag(version))
+    return new MariaDBContainer(imageName.withTag(version))
         .withEnv("MARIADB_DATABASE", "books")
         .withEnv("MARIADB_ROOT_USER", "root")
         .withEnv("MARIADB_ROOT_PASSWORD", "schemacrawler")

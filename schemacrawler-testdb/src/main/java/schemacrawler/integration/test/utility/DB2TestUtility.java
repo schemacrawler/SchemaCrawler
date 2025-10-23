@@ -10,9 +10,9 @@ package schemacrawler.integration.test.utility;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
+import org.testcontainers.db2.Db2Container;
 import org.testcontainers.utility.DockerImageName;
 
 public final class DB2TestUtility {

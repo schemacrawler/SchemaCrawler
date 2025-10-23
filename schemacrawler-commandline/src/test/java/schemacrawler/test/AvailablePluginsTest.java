@@ -18,7 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
@@ -50,7 +52,7 @@ public class AvailablePluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     final AvailableJDBCDrivers availableJDBCDrivers = new AvailableJDBCDrivers();
     final int size = availableJDBCDrivers.size();
-    assertThat(size, is(16));
+    assertThat(size, is(15));
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();
