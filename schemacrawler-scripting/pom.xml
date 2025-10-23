@@ -92,7 +92,7 @@
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
       <artifactId>polyglot</artifactId>
-      <version>25.0.0</version>
+      <version>25.0.1</version>
     </dependency>    
     <dependency>
       <groupId>org.graalvm.js</groupId>
