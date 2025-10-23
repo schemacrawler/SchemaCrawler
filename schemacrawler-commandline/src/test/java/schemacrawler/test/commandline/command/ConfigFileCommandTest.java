@@ -21,11 +21,13 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Properties;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -80,7 +82,7 @@ public class ConfigFileCommandTest {
 
   @BeforeAll
   public void createProperties() throws IOException {
-    key = "aaaa_" + RandomStringUtils.randomAlphanumeric(8);
+    key = "aaaa_" + RandomStringUtils.insecure().nextAlphanumeric(8);
     final Properties properties = new Properties();
     properties.setProperty(key, "value");
     propertiesTempFile = savePropertiesToTempFile(properties);
@@ -88,7 +90,7 @@ public class ConfigFileCommandTest {
 
   @Test
   public void noArgs() {
-    final String[] args = new String[0];
+    final String[] args = {};
 
     final ShellState state = new ShellState();
     final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state), null);
