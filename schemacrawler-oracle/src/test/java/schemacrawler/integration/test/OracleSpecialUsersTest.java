@@ -12,8 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.OracleTestUtility.newOracleContainer;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
+import static us.fatehi.test.integration.utility.OracleTestUtility.newOracleContainer;
 
 import java.sql.Connection;
 import java.sql.SQLException;

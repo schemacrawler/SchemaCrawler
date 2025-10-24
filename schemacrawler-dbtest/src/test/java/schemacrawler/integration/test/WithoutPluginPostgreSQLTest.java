@@ -10,8 +10,8 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static us.fatehi.test.integration.utility.PostgreSQLTestUtility.newPostgreSQLContainer;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
