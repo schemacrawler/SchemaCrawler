@@ -34,7 +34,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class AccessTest extends BaseAdditionalDatabaseTest {
+public class WithoutPluginAccessTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {

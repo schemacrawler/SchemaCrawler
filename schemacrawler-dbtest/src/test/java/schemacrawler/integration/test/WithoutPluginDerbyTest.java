@@ -30,7 +30,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class DerbyTest extends BaseAdditionalDatabaseTest {
+public class WithoutPluginDerbyTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
