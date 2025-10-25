@@ -13,12 +13,14 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.test.utility.TestUtility.flattenCommandlineArgs;
 
-import com.typesafe.config.ConfigFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import com.typesafe.config.ConfigFactory;
+
 import picocli.CommandLine;
 import picocli.CommandLine.PicocliException;
 import schemacrawler.Main;
@@ -86,7 +88,7 @@ public final class CommandlineTestUtility {
       throws Exception {
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--url", connectionInfo.getConnectionUrl());
+    argsMap.put("--url", connectionInfo.connectionUrl());
     argsMap.put("--user", "sa");
     argsMap.put("--password", "");
 

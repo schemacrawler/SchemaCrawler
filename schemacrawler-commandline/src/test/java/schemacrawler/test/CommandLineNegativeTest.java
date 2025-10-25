@@ -19,7 +19,9 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.Main;
 import schemacrawler.test.utility.TestCatalogLoader;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -94,7 +96,7 @@ public class CommandLineNegativeTest {
     final TestWriter outputFile = new TestWriter();
     try (final TestWriter outFile = outputFile) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("--url", connectionInfo.getConnectionUrl());
+      argsMap.put("--url", connectionInfo.connectionUrl());
       argsMap.put("--user", "sa");
       argsMap.put("--password", "");
       argsMap.put("--no-info", Boolean.TRUE.toString());
