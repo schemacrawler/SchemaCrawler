@@ -15,7 +15,7 @@ import java.util.Map;
 public class TestObject {
 
   public static final int finalVal = 2;
-  public transient int transientVal = 3;
+
   private String plainString;
   private int primitiveInt;
   private double primitiveDouble;
@@ -26,7 +26,7 @@ public class TestObject {
   private List<Integer> integerList;
   private Map<Integer, String> map;
   private Object subObject = Path.of(".");
-  private Object nullValue;
+  private final Object nullValue = null;
 
   public List<Integer> getIntegerList() {
     return integerList;
