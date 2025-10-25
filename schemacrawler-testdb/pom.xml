@@ -18,18 +18,16 @@
   </properties>
   
   <dependencies>
-
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-jdbc-drivers</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
           
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
       <version>4.7.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
       <scope>provided</scope>
     </dependency>
 
