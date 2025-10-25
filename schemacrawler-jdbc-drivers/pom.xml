@@ -157,7 +157,7 @@
             <configuration>
               <licensesOutputDirectory>${project.build.directory}/_licenses</licensesOutputDirectory>
               <licensesOutputFile>
-                ${project.build.directory}/_licenses/licenses..xml</licensesOutputFile>
+                ${project.build.directory}/_licenses/licenses.xml</licensesOutputFile>
               <excludedScopes>test,provided</excludedScopes>
               <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
             </configuration>
