@@ -126,12 +126,12 @@
     <ivy:configure file="${distribution.downloader}/ivysettings.xml"/>
 
     <copy todir="${schemacrawler.expanded-distribution}/lib">
-      <ivy:resources resolveId="mustache"
-        file="${distribution.downloader}/mustache_ivy.xml"/>
+      <ivy:resources resolveId="javascript"
+        file="${distribution.downloader}/scripting_ivy.xml"/>
     </copy>
     <copy todir="${schemacrawler.expanded-distribution}/lib">
-      <ivy:resources resolveId="javascript"
-        file="${distribution.downloader}/javascript_ivy.xml"/>
+      <ivy:resources resolveId="mustache"
+        file="${distribution.downloader}/mustache_ivy.xml"/>
     </copy>
     <copy todir="${schemacrawler.expanded-distribution}/lib">
       <ivy:resources resolveId="thymeleaf"
