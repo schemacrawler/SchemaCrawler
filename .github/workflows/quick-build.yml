@@ -38,4 +38,5 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
+          -Dreactor.printOrder \
           clean package
