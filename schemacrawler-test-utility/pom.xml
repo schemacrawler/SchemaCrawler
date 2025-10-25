@@ -68,7 +68,18 @@
       <artifactId>HikariCP</artifactId>
       <version>7.0.2</version>
     </dependency>
-    
+
+    <!-- Testcontainers -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers-oracle-free</artifactId>
@@ -111,10 +122,16 @@
     </dependency>
 
     <dependency>
+      <groupId>com.openpojo</groupId>
+      <artifactId>openpojo</artifactId>
+      <version>0.9.1</version>
+    </dependency>
+
+    <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
       <version>${project.version}</version>
-    </dependency>    
+    </dependency>
   </dependencies>
   <build>
     <plugins>

@@ -1,0 +1,2788 @@
+[INFO] Loading cache configuration from C:\Users\sualeh\Code\_SchemaCrawler\SchemaCrawler\.mvn\maven-build-cache-config.xml
+[INFO] Using XX hash algorithm for cache
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for us.fatehi:schemacrawler-operations:jar:17.1.1
+[WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.apache.maven.plugins:maven-jar-plugin @ line 69, column 15
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for us.fatehi:schemacrawler-commandline:jar:17.1.1
+[WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.apache.maven.plugins:maven-jar-plugin @ line 120, column 15
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for us.fatehi:schemacrawler-scripting:jar:17.1.1
+[WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.apache.maven.plugins:maven-jar-plugin @ line 131, column 15
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] Inspecting build with total of 26 modules
+[INFO] Installing Central Publishing features
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] SchemaCrawler [Parent]                                             [pom]
+[INFO] SchemaCrawler - JDBC Drivers Distribution                          [jar]
+[INFO] SchemaCrawler Test Database                                        [jar]
+[INFO] SchemaCrawler Test Utility                                         [jar]
+[INFO] SchemaCrawler Utility                                              [jar]
+[INFO] SchemaCrawler API                                                  [jar]
+[INFO] SchemaCrawler Tools                                                [jar]
+[INFO] SchemaCrawler Catalog Loaders                                      [jar]
+[INFO] SchemaCrawler Text                                                 [jar]
+[INFO] SchemaCrawler Diagram                                              [jar]
+[INFO] SchemaCrawler                                                      [jar]
+[INFO] SchemaCrawler Operations                                           [jar]
+[INFO] SchemaCrawler Commandline                                          [jar]
+[INFO] SchemaCrawler Scripting                                            [jar]
+[INFO] SchemaCrawler Lint                                                 [jar]
+[INFO] SchemaCrawler - Additional Database Tests                          [jar]
+[INFO] SchemaCrawler for IBM DB2                                          [jar]
+[INFO] SchemaCrawler for HyperSQL                                         [jar]
+[INFO] SchemaCrawler for MySQL                                            [jar]
+[INFO] SchemaCrawler for Oracle                                           [jar]
+[INFO] SchemaCrawler for PostgreSQL                                       [jar]
+[INFO] SchemaCrawler for SQLite                                           [jar]
+[INFO] SchemaCrawler for Microsoft SQL Server                             [jar]
+[INFO] SchemaCrawler for Offline Snapshots                                [jar]
+[INFO] SchemaCrawler Example Code                                         [jar]
+[INFO] SchemaCrawler [Aggregator]                                         [pom]
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-parent >-------------------
+[INFO] Building SchemaCrawler [Parent] 17.1.1                            [1/26]
+[INFO]   from schemacrawler-parent\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-parent ---
+[INFO] us.fatehi:schemacrawler-parent:pom:17.1.1
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] ----------------< us.fatehi:schemacrawler-jdbc-drivers >----------------
+[INFO] Building SchemaCrawler - JDBC Drivers Distribution 17.1.1         [2/26]
+[INFO]   from schemacrawler-jdbc-drivers\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-jdbc-drivers ---
+[INFO] us.fatehi:schemacrawler-jdbc-drivers:jar:17.1.1
+[INFO] +- org.postgresql:postgresql:jar:42.7.8:compile
+[INFO] |  \- org.checkerframework:checker-qual:jar:3.49.5:runtime
+[INFO] +- com.mysql:mysql-connector-j:jar:9.4.0:compile
+[INFO] +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:compile
+[INFO] +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:compile
+[INFO] +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:compile
+[INFO] +- com.ibm.db2:jcc:jar:12.1.0.0:compile
+[INFO] +- com.h2database:h2:jar:2.2.224:compile
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:compile
+[INFO] +- org.xerial:sqlite-jdbc:jar:3.50.3.0:compile
+[INFO] +- com.ibm.informix:jdbc:jar:4.50.12:compile
+[INFO] |  \- org.mongodb:bson:jar:3.8.0:compile
+[INFO] +- net.snowflake:snowflake-jdbc:jar:3.27.0:compile
+[INFO] +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:compile
+[INFO] +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:compile
+[INFO] +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:compile
+[INFO] +- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:compile
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-testdb >-------------------
+[INFO] Building SchemaCrawler Test Database 17.1.1                       [3/26]
+[INFO]   from schemacrawler-testdb\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-testdb ---
+[INFO] us.fatehi:schemacrawler-testdb:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:compile
+[INFO] |  +- org.postgresql:postgresql:jar:42.7.8:compile
+[INFO] |  |  \- org.checkerframework:checker-qual:jar:3.49.5:runtime
+[INFO] |  +- com.mysql:mysql-connector-j:jar:9.4.0:compile
+[INFO] |  +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:compile
+[INFO] |  +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:compile
+[INFO] |  +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:compile
+[INFO] |  +- com.ibm.db2:jcc:jar:12.1.0.0:compile
+[INFO] |  +- com.h2database:h2:jar:2.2.224:compile
+[INFO] |  +- org.xerial:sqlite-jdbc:jar:3.50.3.0:compile
+[INFO] |  +- com.ibm.informix:jdbc:jar:4.50.12:compile
+[INFO] |  |  \- org.mongodb:bson:jar:3.8.0:compile
+[INFO] |  +- net.snowflake:snowflake-jdbc:jar:3.27.0:compile
+[INFO] |  +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:compile
+[INFO] |  +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:compile
+[INFO] |  +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:compile
+[INFO] |  \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:compile
+[INFO] +- info.picocli:picocli:jar:4.7.7:provided
+[INFO] +- org.testcontainers:testcontainers-oracle-free:jar:2.0.1:provided
+[INFO] |  \- org.testcontainers:testcontainers-jdbc:jar:2.0.1:provided
+[INFO] +- org.testcontainers:testcontainers-mssqlserver:jar:2.0.1:provided
+[INFO] +- org.testcontainers:testcontainers-mysql:jar:2.0.1:provided
+[INFO] +- org.testcontainers:testcontainers-mariadb:jar:2.0.1:provided
+[INFO] +- org.testcontainers:testcontainers-db2:jar:2.0.1:provided
+[INFO] +- org.testcontainers:testcontainers-postgresql:jar:2.0.1:provided
+[INFO] +- org.testcontainers:testcontainers-cassandra:jar:2.0.1:provided
+[INFO] |  +- org.testcontainers:testcontainers-database-commons:jar:2.0.1:provided
+[INFO] |  \- com.datastax.cassandra:cassandra-driver-core:jar:3.10.0:provided
+[INFO] |     +- io.netty:netty-handler:jar:4.0.56.Final:provided
+[INFO] |     |  +- io.netty:netty-buffer:jar:4.0.56.Final:provided
+[INFO] |     |  |  \- io.netty:netty-common:jar:4.0.56.Final:provided
+[INFO] |     |  +- io.netty:netty-transport:jar:4.0.56.Final:provided
+[INFO] |     |  \- io.netty:netty-codec:jar:4.0.56.Final:provided
+[INFO] |     +- com.google.guava:guava:jar:19.0:provided
+[INFO] |     +- io.dropwizard.metrics:metrics-core:jar:3.2.2:provided
+[INFO] |     +- com.github.jnr:jnr-ffi:jar:2.1.7:provided
+[INFO] |     |  +- com.github.jnr:jffi:jar:1.2.16:provided
+[INFO] |     |  +- com.github.jnr:jffi:jar:native:1.2.16:provided
+[INFO] |     |  +- org.ow2.asm:asm:jar:5.0.3:provided
+[INFO] |     |  +- org.ow2.asm:asm-commons:jar:5.0.3:provided
+[INFO] |     |  +- org.ow2.asm:asm-analysis:jar:5.0.3:provided
+[INFO] |     |  +- org.ow2.asm:asm-tree:jar:5.0.3:provided
+[INFO] |     |  +- org.ow2.asm:asm-util:jar:5.0.3:provided
+[INFO] |     |  \- com.github.jnr:jnr-x86asm:jar:1.0.2:provided
+[INFO] |     \- com.github.jnr:jnr-posix:jar:3.0.44:provided
+[INFO] |        \- com.github.jnr:jnr-constants:jar:0.9.9:provided
+[INFO] +- org.testcontainers:testcontainers-trino:jar:2.0.1:provided
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:provided
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:provided
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:provided
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:provided
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:provided
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:provided
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:provided
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:provided
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:provided
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] ----------------< us.fatehi:schemacrawler-test-utility >----------------
+[INFO] Building SchemaCrawler Test Utility 17.1.1                        [4/26]
+[INFO]   from schemacrawler-test-utility\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-test-utility ---
+[INFO] us.fatehi:schemacrawler-test-utility:jar:17.1.1
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:compile
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:compile
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:compile
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:compile
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:compile
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:compile
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:runtime
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:runtime
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:compile
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:5.20.0:compile
+[INFO] |  \- org.mockito:mockito-core:jar:5.20.0:compile
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.17.7:compile
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:compile
+[INFO] +- commons-io:commons-io:jar:2.20.0:compile
+[INFO] +- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO] |  +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO] |  \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] +- com.zaxxer:HikariCP:jar:7.0.2:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:compile
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:compile
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:runtime
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:compile
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:compile
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:compile
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:compile
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:compile
+[INFO] |     +- com.h2database:h2:jar:2.2.224:compile
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:compile
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:compile
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:compile
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:compile
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:compile
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:compile
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:compile
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:compile
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:runtime
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:compile
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] \- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO]    \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO]       +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO]       |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO]       +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO]       |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO]       +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO]       \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO]          +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO]          \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] 
+[INFO] ------------------< us.fatehi:schemacrawler-utility >-------------------
+[INFO] Building SchemaCrawler Utility 17.1.1                             [5/26]
+[INFO]   from schemacrawler-utility\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-utility ---
+[INFO] us.fatehi:schemacrawler-utility:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  +- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] |  \- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |     \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |        +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |        |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |        +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |        +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |        +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |        +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |        +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |        +- com.h2database:h2:jar:2.2.224:test
+[INFO] |        +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |        +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |        |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |        +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |        +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |        +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |        +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |        \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- org.jsoup:jsoup:jar:1.21.2:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] --------------------< us.fatehi:schemacrawler-api >---------------------
+[INFO] Building SchemaCrawler API 17.1.1                                 [6/26]
+[INFO]   from schemacrawler-api\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-api ---
+[INFO] us.fatehi:schemacrawler-api:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-tools >--------------------
+[INFO] Building SchemaCrawler Tools 17.1.1                               [7/26]
+[INFO]   from schemacrawler-tools\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-tools ---
+[INFO] us.fatehi:schemacrawler-tools:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-loader >-------------------
+[INFO] Building SchemaCrawler Catalog Loaders 17.1.1                     [8/26]
+[INFO]   from schemacrawler-loader\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-loader ---
+[INFO] us.fatehi:schemacrawler-loader:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] --------------------< us.fatehi:schemacrawler-text >--------------------
+[INFO] Building SchemaCrawler Text 17.1.1                                [9/26]
+[INFO]   from schemacrawler-text\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-text ---
+[INFO] us.fatehi:schemacrawler-text:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] ------------------< us.fatehi:schemacrawler-diagram >-------------------
+[INFO] Building SchemaCrawler Diagram 17.1.1                            [10/26]
+[INFO]   from schemacrawler-diagram\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-diagram ---
+[INFO] us.fatehi:schemacrawler-diagram:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |     \- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-text:test-jar:tests:17.1.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] ----------------------< us.fatehi:schemacrawler >-----------------------
+[INFO] Building SchemaCrawler 17.1.1                                    [11/26]
+[INFO]   from schemacrawler\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler ---
+[INFO] us.fatehi:schemacrawler:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -----------------< us.fatehi:schemacrawler-operations >-----------------
+[INFO] Building SchemaCrawler Operations 17.1.1                         [12/26]
+[INFO]   from schemacrawler-operations\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-operations ---
+[INFO] us.fatehi:schemacrawler-operations:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] ----------------< us.fatehi:schemacrawler-commandline >-----------------
+[INFO] Building SchemaCrawler Commandline 17.1.1                        [13/26]
+[INFO]   from schemacrawler-commandline\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-commandline ---
+[INFO] us.fatehi:schemacrawler-commandline:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-text:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-diagram:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-operations:test-jar:tests:17.1.1:test
+[INFO] +- com.typesafe:config:jar:1.4.5:compile
+[INFO] +- info.picocli:picocli:jar:4.7.7:compile
+[INFO] +- info.picocli:picocli-shell-jline3:jar:4.7.7:compile
+[INFO] |  \- org.jline:jline:jar:3.29.0:compile
+[INFO] +- org.graalvm.js:js-scriptengine:jar:24.2.2:provided
+[INFO] |  \- org.graalvm.polyglot:polyglot:jar:24.2.2:provided
+[INFO] |     +- org.graalvm.sdk:collections:jar:24.2.2:provided
+[INFO] |     \- org.graalvm.sdk:nativeimage:jar:24.2.2:provided
+[INFO] |        \- org.graalvm.sdk:word:jar:24.2.2:provided
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -----------------< us.fatehi:schemacrawler-scripting >------------------
+[INFO] Building SchemaCrawler Scripting 17.1.1                          [14/26]
+[INFO]   from schemacrawler-scripting\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-scripting ---
+[INFO] us.fatehi:schemacrawler-scripting:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- us.fatehi:schemacrawler-operations:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- us.fatehi:schemacrawler-commandline:test-jar:tests:17.1.1:test
+[INFO] +- org.apache.velocity:velocity-engine-scripting:jar:2.4.1:provided
+[INFO] |  \- org.apache.velocity:velocity-engine-core:jar:2.4.1:provided
+[INFO] +- org.thymeleaf:thymeleaf:jar:3.1.3.RELEASE:provided
+[INFO] |  +- ognl:ognl:jar:3.3.4:provided
+[INFO] |  |  \- org.javassist:javassist:jar:3.29.0-GA:provided
+[INFO] |  +- org.attoparser:attoparser:jar:2.0.7.RELEASE:provided
+[INFO] |  \- org.unbescape:unbescape:jar:1.1.6.RELEASE:provided
+[INFO] +- org.freemarker:freemarker:jar:2.3.34:provided
+[INFO] +- com.github.spullara.mustache.java:compiler:jar:0.9.14:provided
+[INFO] +- org.graalvm.polyglot:polyglot:jar:25.0.0:compile
+[INFO] |  +- org.graalvm.sdk:collections:jar:25.0.0:compile
+[INFO] |  \- org.graalvm.sdk:nativeimage:jar:25.0.0:compile
+[INFO] |     \- org.graalvm.sdk:word:jar:25.0.0:compile
+[INFO] +- org.graalvm.js:js:pom:25.0.0:compile
+[INFO] |  +- org.graalvm.js:js-language:jar:25.0.0:runtime
+[INFO] |  |  +- org.graalvm.regex:regex:jar:25.0.0:runtime
+[INFO] |  |  +- org.graalvm.truffle:truffle-api:jar:25.0.0:runtime
+[INFO] |  |  \- org.graalvm.shadowed:icu4j:jar:25.0.0:runtime
+[INFO] |  |     \- org.graalvm.shadowed:xz:jar:25.0.0:runtime
+[INFO] |  \- org.graalvm.truffle:truffle-runtime:jar:25.0.0:runtime
+[INFO] |     +- org.graalvm.sdk:jniutils:jar:25.0.0:runtime
+[INFO] |     \- org.graalvm.truffle:truffle-compiler:jar:25.0.0:runtime
+[INFO] +- org.graalvm.polyglot:python:pom:25.0.0:compile
+[INFO] |  \- org.graalvm.python:python:pom:25.0.0:runtime
+[INFO] |     +- org.graalvm.python:python-language:jar:25.0.0:runtime
+[INFO] |     |  +- org.graalvm.tools:profiler-tool:jar:25.0.0:runtime
+[INFO] |     |  |  \- org.graalvm.shadowed:json:jar:25.0.0:runtime
+[INFO] |     |  +- org.graalvm.truffle:truffle-nfi:jar:25.0.0:runtime
+[INFO] |     |  +- org.graalvm.truffle:truffle-nfi-libffi:jar:25.0.0:runtime
+[INFO] |     |  +- org.graalvm.truffle:truffle-nfi-panama:jar:25.0.0:runtime
+[INFO] |     |  +- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:runtime
+[INFO] |     |  +- org.bouncycastle:bcpkix-jdk18on:jar:1.78.1:runtime
+[INFO] |     |  \- org.bouncycastle:bcutil-jdk18on:jar:1.78.1:runtime
+[INFO] |     \- org.graalvm.python:python-resources:jar:25.0.0:runtime
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] --------------------< us.fatehi:schemacrawler-lint >--------------------
+[INFO] Building SchemaCrawler Lint 17.1.1                               [15/26]
+[INFO]   from schemacrawler-lint\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-lint ---
+[INFO] us.fatehi:schemacrawler-lint:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- us.fatehi:schemacrawler-operations:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- us.fatehi:schemacrawler-commandline:test-jar:tests:17.1.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-dbtest >-------------------
+[INFO] Building SchemaCrawler - Additional Database Tests 17.1.1        [16/26]
+[INFO]   from schemacrawler-dbtest\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-dbtest ---
+[INFO] us.fatehi:schemacrawler-dbtest:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- us.fatehi:schemacrawler-operations:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- com.ing.data:cassandra-jdbc-wrapper:jar:4.16.0:test
+[INFO] |  +- org.apache.cassandra:java-driver-core:jar:4.19.0:test
+[INFO] |  |  +- com.datastax.oss:native-protocol:jar:1.5.1:test
+[INFO] |  |  +- io.netty:netty-handler:jar:4.1.94.Final:test
+[INFO] |  |  |  +- io.netty:netty-common:jar:4.1.94.Final:test
+[INFO] |  |  |  +- io.netty:netty-resolver:jar:4.1.94.Final:test
+[INFO] |  |  |  +- io.netty:netty-buffer:jar:4.1.94.Final:test
+[INFO] |  |  |  +- io.netty:netty-transport:jar:4.1.94.Final:test
+[INFO] |  |  |  +- io.netty:netty-transport-native-unix-common:jar:4.1.94.Final:test
+[INFO] |  |  |  \- io.netty:netty-codec:jar:4.1.94.Final:test
+[INFO] |  |  +- org.apache.cassandra:java-driver-guava-shaded:jar:4.19.0:test
+[INFO] |  |  +- com.github.jnr:jnr-posix:jar:3.1.15:test
+[INFO] |  |  |  \- com.github.jnr:jnr-constants:jar:0.10.3:test
+[INFO] |  |  +- io.dropwizard.metrics:metrics-core:jar:4.1.18:test
+[INFO] |  |  +- org.hdrhistogram:HdrHistogram:jar:2.1.12:test
+[INFO] |  |  \- org.reactivestreams:reactive-streams:jar:1.0.3:test
+[INFO] |  +- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] |  +- com.github.ben-manes.caffeine:caffeine:jar:2.9.3:test
+[INFO] |  |  \- com.google.errorprone:error_prone_annotations:jar:2.10.0:test
+[INFO] |  +- org.semver4j:semver4j:jar:5.6.0:test
+[INFO] |  +- com.instaclustr:cassandra-driver-kerberos:jar:3.0.0:test
+[INFO] |  +- com.google.code.findbugs:jsr305:jar:3.0.2:test
+[INFO] |  +- software.aws.mcs:aws-sigv4-auth-cassandra-java-driver-plugin:jar:4.0.9:test
+[INFO] |  |  +- commons-codec:commons-codec:jar:1.15:test
+[INFO] |  |  \- com.datastax.oss:java-driver-core:jar:4.13.0:test
+[INFO] |  |     +- com.datastax.oss:java-driver-shaded-guava:jar:25.1-jre-graal-sub-1:test
+[INFO] |  |     +- com.esri.geometry:esri-geometry-api:jar:1.2.1:test
+[INFO] |  |     |  +- org.json:json:jar:20090211:test
+[INFO] |  |     |  \- org.codehaus.jackson:jackson-core-asl:jar:1.9.12:test
+[INFO] |  |     +- com.github.stephenc.jcip:jcip-annotations:jar:1.0-1:test
+[INFO] |  |     \- com.github.spotbugs:spotbugs-annotations:jar:3.1.12:test
+[INFO] |  +- software.amazon.awssdk:secretsmanager:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:aws-json-protocol:jar:2.32.18:test
+[INFO] |  |  |  \- software.amazon.awssdk:third-party-jackson-core:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:protocol-core:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:http-auth-aws:jar:2.32.18:test
+[INFO] |  |  |  +- software.amazon.awssdk:checksums-spi:jar:2.32.18:test
+[INFO] |  |  |  \- software.amazon.awssdk:checksums:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:sdk-core:jar:2.32.18:test
+[INFO] |  |  |  +- software.amazon.awssdk:profiles:jar:2.32.18:test
+[INFO] |  |  |  \- software.amazon.awssdk:retries:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:auth:jar:2.32.18:test
+[INFO] |  |  |  +- software.amazon.awssdk:http-auth-aws-eventstream:jar:2.32.18:test
+[INFO] |  |  |  \- software.amazon.eventstream:eventstream:jar:1.0.1:test
+[INFO] |  |  +- software.amazon.awssdk:http-auth-spi:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:http-auth:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:identity-spi:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:http-client-spi:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:regions:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:annotations:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:utils:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:aws-core:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:metrics-spi:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:json-utils:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:endpoints-spi:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:retries-spi:jar:2.32.18:test
+[INFO] |  |  +- software.amazon.awssdk:apache-client:jar:2.32.18:test
+[INFO] |  |  |  +- org.apache.httpcomponents:httpclient:jar:4.5.13:test
+[INFO] |  |  |  \- org.apache.httpcomponents:httpcore:jar:4.4.16:test
+[INFO] |  |  \- software.amazon.awssdk:netty-nio-client:jar:2.32.18:test
+[INFO] |  |     +- io.netty:netty-codec-http:jar:4.1.123.Final:test
+[INFO] |  |     +- io.netty:netty-codec-http2:jar:4.1.123.Final:test
+[INFO] |  |     \- io.netty:netty-transport-classes-epoll:jar:4.1.123.Final:test
+[INFO] |  +- com.datastax.astra:astra-sdk-devops:jar:1.2.9:test
+[INFO] |  |  \- org.projectlombok:lombok:jar:1.18.30:test
+[INFO] |  \- com.opencsv:opencsv:jar:5.12.0:test
+[INFO] |     +- org.apache.commons:commons-text:jar:1.13.1:test
+[INFO] |     \- commons-beanutils:commons-beanutils:jar:1.11.0:test
+[INFO] |        \- commons-collections:commons-collections:jar:3.2.2:test
+[INFO] +- org.testcontainers:testcontainers-mariadb:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers-jdbc:jar:2.0.1:test
+[INFO] +- org.firebirdsql:firebird-testcontainers-java:jar:1.6.0:test
+[INFO] +- org.testcontainers:testcontainers-mssqlserver:jar:2.0.1:test
+[INFO] +- org.testcontainers:testcontainers-mysql:jar:2.0.1:test
+[INFO] +- org.testcontainers:testcontainers-postgresql:jar:2.0.1:test
+[INFO] +- org.testcontainers:testcontainers-oracle-free:jar:2.0.1:test
+[INFO] +- org.testcontainers:testcontainers-db2:jar:2.0.1:test
+[INFO] +- org.testcontainers:testcontainers-trino:jar:2.0.1:test
+[INFO] +- org.testcontainers:testcontainers-cassandra:jar:2.0.1:test
+[INFO] |  +- org.testcontainers:testcontainers-database-commons:jar:2.0.1:test
+[INFO] |  \- com.datastax.cassandra:cassandra-driver-core:jar:3.10.0:test
+[INFO] |     \- com.github.jnr:jnr-ffi:jar:2.1.7:test
+[INFO] |        +- com.github.jnr:jffi:jar:1.2.16:test
+[INFO] |        +- com.github.jnr:jffi:jar:native:1.2.16:test
+[INFO] |        +- org.ow2.asm:asm:jar:5.0.3:test
+[INFO] |        +- org.ow2.asm:asm-commons:jar:5.0.3:test
+[INFO] |        +- org.ow2.asm:asm-analysis:jar:5.0.3:test
+[INFO] |        +- org.ow2.asm:asm-tree:jar:5.0.3:test
+[INFO] |        +- org.ow2.asm:asm-util:jar:5.0.3:test
+[INFO] |        \- com.github.jnr:jnr-x86asm:jar:1.0.2:test
+[INFO] +- org.teiid:teiid-runtime:jar:16.0.0:test
+[INFO] |  +- org.teiid:teiid-common-core:jar:16.0.0:test
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.1:test
+[INFO] |  +- org.teiid:teiid-api:jar:16.0.0:test
+[INFO] |  +- org.teiid:teiid-client:jar:16.0.0:test
+[INFO] |  +- org.teiid:teiid-engine:jar:16.0.0:test
+[INFO] |  |  +- org.locationtech.jts:jts-core:jar:1.16.0:test
+[INFO] |  |  \- io.opentracing.contrib:opentracing-concurrent:jar:0.1.0:test
+[INFO] |  +- org.teiid:teiid-optional-geo:jar:16.0.0:test
+[INFO] |  |  +- org.wololo:jts2geojson:jar:0.13.0:test
+[INFO] |  |  \- org.osgeo:proj4j:jar:0.1.0:test
+[INFO] |  +- org.teiid:teiid-optional-xml:jar:16.0.0:test
+[INFO] |  |  +- net.sf.saxon:Saxon-HE:jar:9.8.0-14:test
+[INFO] |  |  +- org.teiid:saxon-xom:jar:16.0.0:test
+[INFO] |  |  \- com.io7m.xom:xom:jar:1.2.10:test
+[INFO] |  +- org.teiid:teiid-optional-json:jar:16.0.0:test
+[INFO] |  |  +- com.jayway.jsonpath:json-path:jar:2.4.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.3:test
+[INFO] |  |     \- net.minidev:accessors-smart:jar:1.2:test
+[INFO] |  +- io.netty:netty-all:jar:4.1.42.Final:test
+[INFO] |  +- jakarta.transaction:jakarta.transaction-api:jar:1.3.3:test
+[INFO] |  +- org.jboss.logging:jboss-logging:jar:3.4.1.Final:test
+[INFO] |  +- io.opentracing:opentracing-api:jar:0.31.0:test
+[INFO] |  \- io.opentracing:opentracing-util:jar:0.31.0:test
+[INFO] |     \- io.opentracing:opentracing-noop:jar:0.31.0:test
+[INFO] +- org.teiid.connectors:translator-file:jar:16.0.0:test
+[INFO] |  \- org.teiid.connectors:file-api:jar:16.0.0:test
+[INFO] |     +- org.jboss:jboss-vfs:jar:3.2.14.Final:test
+[INFO] |     \- commons-net:commons-net:jar:3.6:test
+[INFO] +- org.teiid.wildfly.connectors:connector-file:jar:16.0.0:test
+[INFO] |  +- org.teiid.wildfly:teiid-resource-spi:jar:16.0.0:test
+[INFO] |  |  \- org.jboss.spec.javax.transaction:jboss-transaction-api_1.3_spec:jar:2.0.0.Final:test
+[INFO] |  \- org.jboss.spec.javax.resource:jboss-connector-api_1.7_spec:jar:2.0.0.Final:test
+[INFO] +- org.apache.calcite.avatica:avatica-core:jar:1.27.0:test
+[INFO] |  +- org.apache.calcite.avatica:avatica-metrics:jar:1.27.0:test
+[INFO] |  +- com.google.protobuf:protobuf-java:jar:3.25.8:test
+[INFO] |  +- org.jooq:joou-java-6:jar:0.9.4:test
+[INFO] |  +- org.apache.httpcomponents.client5:httpclient5:jar:5.5:test
+[INFO] |  |  \- org.apache.httpcomponents.core5:httpcore5-h2:jar:5.3.4:test
+[INFO] |  \- org.apache.httpcomponents.core5:httpcore5:jar:5.3.5:test
+[INFO] +- org.apache.calcite:calcite-csv:jar:1.40.0:test
+[INFO] |  +- org.apache.calcite:calcite-core:jar:1.40.0:test
+[INFO] |  |  +- org.locationtech.jts.io:jts-io-common:jar:1.19.0:test
+[INFO] |  |  |  \- com.googlecode.json-simple:json-simple:jar:1.1.1:test
+[INFO] |  |  +- org.locationtech.proj4j:proj4j:jar:1.2.2:test
+[INFO] |  |  +- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  |  +- com.google.uzaygezen:uzaygezen-core:jar:0.2:test
+[INFO] |  |  +- com.yahoo.datasketches:sketches-core:jar:0.9.0:test
+[INFO] |  |  |  \- com.yahoo.datasketches:memory:jar:0.9.0:test
+[INFO] |  |  +- net.hydromatic:aggdesigner-algorithm:jar:6.0:test
+[INFO] |  |  |  \- commons-lang:commons-lang:jar:2.4:test
+[INFO] |  |  +- org.apache.commons:commons-dbcp2:jar:2.11.0:test
+[INFO] |  |  |  \- org.apache.commons:commons-pool2:jar:2.12.0:test
+[INFO] |  |  +- org.apache.commons:commons-math3:jar:3.6.1:test
+[INFO] |  |  +- org.codehaus.janino:commons-compiler:jar:3.1.12:test
+[INFO] |  |  \- org.codehaus.janino:janino:jar:3.1.12:test
+[INFO] |  +- org.apache.calcite:calcite-file:jar:1.40.0:test
+[INFO] |  |  +- com.joestelmach:natty:jar:0.13:test
+[INFO] |  |  |  +- org.antlr:antlr-runtime:jar:3.5.2:test
+[INFO] |  |  |  \- org.mnode.ical4j:ical4j:jar:1.0.2:test
+[INFO] |  |  |     \- backport-util-concurrent:backport-util-concurrent:jar:3.1:test
+[INFO] |  |  +- net.sf.opencsv:opencsv:jar:2.3:test
+[INFO] |  |  \- org.jsoup:jsoup:jar:1.11.3:test
+[INFO] |  +- org.apache.calcite:calcite-linq4j:jar:1.40.0:test
+[INFO] |  +- org.checkerframework:checker-qual:jar:3.43.0:test
+[INFO] |  \- com.google.guava:guava:jar:33.3.0-jre:test
+[INFO] |     +- com.google.guava:failureaccess:jar:1.0.2:test
+[INFO] |     +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:test
+[INFO] |     \- com.google.j2objc:j2objc-annotations:jar:3.0.0:test
+[INFO] +- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  \- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    \- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO] 
+[INFO] --------------------< us.fatehi:schemacrawler-db2 >---------------------
+[INFO] Building SchemaCrawler for IBM DB2 17.1.1                        [17/26]
+[INFO]   from schemacrawler-db2\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-db2 ---
+[INFO] us.fatehi:schemacrawler-db2:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:jar:17.1.1:test
+[INFO] |  +- org.graalvm.polyglot:polyglot:jar:25.0.0:test
+[INFO] |  |  +- org.graalvm.sdk:collections:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.sdk:nativeimage:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.sdk:word:jar:25.0.0:test
+[INFO] |  +- org.graalvm.js:js:pom:25.0.0:test
+[INFO] |  |  +- org.graalvm.js:js-language:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.regex:regex:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.truffle:truffle-api:jar:25.0.0:test
+[INFO] |  |  |  \- org.graalvm.shadowed:icu4j:jar:25.0.0:test
+[INFO] |  |  |     \- org.graalvm.shadowed:xz:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.truffle:truffle-runtime:jar:25.0.0:test
+[INFO] |  |     +- org.graalvm.sdk:jniutils:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.truffle:truffle-compiler:jar:25.0.0:test
+[INFO] |  \- org.graalvm.polyglot:python:pom:25.0.0:test
+[INFO] |     \- org.graalvm.python:python:pom:25.0.0:test
+[INFO] |        +- org.graalvm.python:python-language:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.tools:profiler-tool:jar:25.0.0:test
+[INFO] |        |  |  \- org.graalvm.shadowed:json:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-libffi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-panama:jar:25.0.0:test
+[INFO] |        |  +- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:test
+[INFO] |        |  +- org.bouncycastle:bcpkix-jdk18on:jar:1.78.1:test
+[INFO] |        |  \- org.bouncycastle:bcutil-jdk18on:jar:1.78.1:test
+[INFO] |        \- org.graalvm.python:python-resources:jar:25.0.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:test-jar:tests:17.1.1:test
+[INFO] +- org.testcontainers:testcontainers-db2:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers-jdbc:jar:2.0.1:test
+[INFO] |     \- org.testcontainers:testcontainers-database-commons:jar:2.0.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-hsqldb >-------------------
+[INFO] Building SchemaCrawler for HyperSQL 17.1.1                       [18/26]
+[INFO]   from schemacrawler-hsqldb\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-hsqldb ---
+[INFO] us.fatehi:schemacrawler-hsqldb:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:compile
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-mysql >--------------------
+[INFO] Building SchemaCrawler for MySQL 17.1.1                          [19/26]
+[INFO]   from schemacrawler-mysql\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-mysql ---
+[INFO] us.fatehi:schemacrawler-mysql:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-scripting:test-jar:tests:17.1.1:test
+[INFO] |  +- org.graalvm.polyglot:polyglot:jar:25.0.0:test
+[INFO] |  |  +- org.graalvm.sdk:collections:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.sdk:nativeimage:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.sdk:word:jar:25.0.0:test
+[INFO] |  +- org.graalvm.js:js:pom:25.0.0:test
+[INFO] |  |  +- org.graalvm.js:js-language:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.regex:regex:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.truffle:truffle-api:jar:25.0.0:test
+[INFO] |  |  |  \- org.graalvm.shadowed:icu4j:jar:25.0.0:test
+[INFO] |  |  |     \- org.graalvm.shadowed:xz:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.truffle:truffle-runtime:jar:25.0.0:test
+[INFO] |  |     +- org.graalvm.sdk:jniutils:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.truffle:truffle-compiler:jar:25.0.0:test
+[INFO] |  \- org.graalvm.polyglot:python:pom:25.0.0:test
+[INFO] |     \- org.graalvm.python:python:pom:25.0.0:test
+[INFO] |        +- org.graalvm.python:python-language:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.tools:profiler-tool:jar:25.0.0:test
+[INFO] |        |  |  \- org.graalvm.shadowed:json:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-libffi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-panama:jar:25.0.0:test
+[INFO] |        |  +- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:test
+[INFO] |        |  +- org.bouncycastle:bcpkix-jdk18on:jar:1.78.1:test
+[INFO] |        |  \- org.bouncycastle:bcutil-jdk18on:jar:1.78.1:test
+[INFO] |        \- org.graalvm.python:python-resources:jar:25.0.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:jar:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- org.testcontainers:testcontainers-mysql:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers-jdbc:jar:2.0.1:test
+[INFO] |     \- org.testcontainers:testcontainers-database-commons:jar:2.0.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-oracle >-------------------
+[INFO] Building SchemaCrawler for Oracle 17.1.1                         [20/26]
+[INFO]   from schemacrawler-oracle\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-oracle ---
+[INFO] us.fatehi:schemacrawler-oracle:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:jar:17.1.1:test
+[INFO] |  +- org.graalvm.polyglot:polyglot:jar:25.0.0:test
+[INFO] |  |  +- org.graalvm.sdk:collections:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.sdk:nativeimage:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.sdk:word:jar:25.0.0:test
+[INFO] |  +- org.graalvm.js:js:pom:25.0.0:test
+[INFO] |  |  +- org.graalvm.js:js-language:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.regex:regex:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.truffle:truffle-api:jar:25.0.0:test
+[INFO] |  |  |  \- org.graalvm.shadowed:icu4j:jar:25.0.0:test
+[INFO] |  |  |     \- org.graalvm.shadowed:xz:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.truffle:truffle-runtime:jar:25.0.0:test
+[INFO] |  |     +- org.graalvm.sdk:jniutils:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.truffle:truffle-compiler:jar:25.0.0:test
+[INFO] |  \- org.graalvm.polyglot:python:pom:25.0.0:test
+[INFO] |     \- org.graalvm.python:python:pom:25.0.0:test
+[INFO] |        +- org.graalvm.python:python-language:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.tools:profiler-tool:jar:25.0.0:test
+[INFO] |        |  |  \- org.graalvm.shadowed:json:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-libffi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-panama:jar:25.0.0:test
+[INFO] |        |  +- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:test
+[INFO] |        |  +- org.bouncycastle:bcpkix-jdk18on:jar:1.78.1:test
+[INFO] |        |  \- org.bouncycastle:bcutil-jdk18on:jar:1.78.1:test
+[INFO] |        \- org.graalvm.python:python-resources:jar:25.0.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:test-jar:tests:17.1.1:test
+[INFO] +- org.testcontainers:testcontainers-oracle-free:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers-jdbc:jar:2.0.1:test
+[INFO] |     \- org.testcontainers:testcontainers-database-commons:jar:2.0.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -----------------< us.fatehi:schemacrawler-postgresql >-----------------
+[INFO] Building SchemaCrawler for PostgreSQL 17.1.1                     [21/26]
+[INFO]   from schemacrawler-postgresql\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-postgresql ---
+[INFO] us.fatehi:schemacrawler-postgresql:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:jar:17.1.1:test
+[INFO] |  +- org.graalvm.polyglot:polyglot:jar:25.0.0:test
+[INFO] |  |  +- org.graalvm.sdk:collections:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.sdk:nativeimage:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.sdk:word:jar:25.0.0:test
+[INFO] |  +- org.graalvm.js:js:pom:25.0.0:test
+[INFO] |  |  +- org.graalvm.js:js-language:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.regex:regex:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.truffle:truffle-api:jar:25.0.0:test
+[INFO] |  |  |  \- org.graalvm.shadowed:icu4j:jar:25.0.0:test
+[INFO] |  |  |     \- org.graalvm.shadowed:xz:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.truffle:truffle-runtime:jar:25.0.0:test
+[INFO] |  |     +- org.graalvm.sdk:jniutils:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.truffle:truffle-compiler:jar:25.0.0:test
+[INFO] |  \- org.graalvm.polyglot:python:pom:25.0.0:test
+[INFO] |     \- org.graalvm.python:python:pom:25.0.0:test
+[INFO] |        +- org.graalvm.python:python-language:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.tools:profiler-tool:jar:25.0.0:test
+[INFO] |        |  |  \- org.graalvm.shadowed:json:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-libffi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-panama:jar:25.0.0:test
+[INFO] |        |  +- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:test
+[INFO] |        |  +- org.bouncycastle:bcpkix-jdk18on:jar:1.78.1:test
+[INFO] |        |  \- org.bouncycastle:bcutil-jdk18on:jar:1.78.1:test
+[INFO] |        \- org.graalvm.python:python-resources:jar:25.0.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:test-jar:tests:17.1.1:test
+[INFO] +- org.testcontainers:testcontainers-postgresql:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers-jdbc:jar:2.0.1:test
+[INFO] |     \- org.testcontainers:testcontainers-database-commons:jar:2.0.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -------------------< us.fatehi:schemacrawler-sqlite >-------------------
+[INFO] Building SchemaCrawler for SQLite 17.1.1                         [22/26]
+[INFO]   from schemacrawler-sqlite\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-sqlite ---
+[INFO] us.fatehi:schemacrawler-sqlite:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -----------------< us.fatehi:schemacrawler-sqlserver >------------------
+[INFO] Building SchemaCrawler for Microsoft SQL Server 17.1.1           [23/26]
+[INFO]   from schemacrawler-sqlserver\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-sqlserver ---
+[INFO] us.fatehi:schemacrawler-sqlserver:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:jar:17.1.1:test
+[INFO] |  +- org.graalvm.polyglot:polyglot:jar:25.0.0:test
+[INFO] |  |  +- org.graalvm.sdk:collections:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.sdk:nativeimage:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.sdk:word:jar:25.0.0:test
+[INFO] |  +- org.graalvm.js:js:pom:25.0.0:test
+[INFO] |  |  +- org.graalvm.js:js-language:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.regex:regex:jar:25.0.0:test
+[INFO] |  |  |  +- org.graalvm.truffle:truffle-api:jar:25.0.0:test
+[INFO] |  |  |  \- org.graalvm.shadowed:icu4j:jar:25.0.0:test
+[INFO] |  |  |     \- org.graalvm.shadowed:xz:jar:25.0.0:test
+[INFO] |  |  \- org.graalvm.truffle:truffle-runtime:jar:25.0.0:test
+[INFO] |  |     +- org.graalvm.sdk:jniutils:jar:25.0.0:test
+[INFO] |  |     \- org.graalvm.truffle:truffle-compiler:jar:25.0.0:test
+[INFO] |  \- org.graalvm.polyglot:python:pom:25.0.0:test
+[INFO] |     \- org.graalvm.python:python:pom:25.0.0:test
+[INFO] |        +- org.graalvm.python:python-language:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.tools:profiler-tool:jar:25.0.0:test
+[INFO] |        |  |  \- org.graalvm.shadowed:json:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-libffi:jar:25.0.0:test
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-panama:jar:25.0.0:test
+[INFO] |        |  +- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:test
+[INFO] |        |  +- org.bouncycastle:bcpkix-jdk18on:jar:1.78.1:test
+[INFO] |        |  \- org.bouncycastle:bcutil-jdk18on:jar:1.78.1:test
+[INFO] |        \- org.graalvm.python:python-resources:jar:25.0.0:test
+[INFO] +- us.fatehi:schemacrawler-scripting:test-jar:tests:17.1.1:test
+[INFO] +- org.testcontainers:testcontainers-mssqlserver:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers-jdbc:jar:2.0.1:test
+[INFO] |     \- org.testcontainers:testcontainers-database-commons:jar:2.0.1:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] ------------------< us.fatehi:schemacrawler-offline >-------------------
+[INFO] Building SchemaCrawler for Offline Snapshots 17.1.1              [24/26]
+[INFO]   from schemacrawler-offline\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-offline ---
+[INFO] us.fatehi:schemacrawler-offline:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-scripting:jar:17.1.1:compile
+[INFO] |  +- org.graalvm.polyglot:polyglot:jar:25.0.0:compile
+[INFO] |  |  +- org.graalvm.sdk:collections:jar:25.0.0:compile
+[INFO] |  |  \- org.graalvm.sdk:nativeimage:jar:25.0.0:compile
+[INFO] |  |     \- org.graalvm.sdk:word:jar:25.0.0:compile
+[INFO] |  +- org.graalvm.js:js:pom:25.0.0:compile
+[INFO] |  |  +- org.graalvm.js:js-language:jar:25.0.0:runtime
+[INFO] |  |  |  +- org.graalvm.regex:regex:jar:25.0.0:runtime
+[INFO] |  |  |  +- org.graalvm.truffle:truffle-api:jar:25.0.0:runtime
+[INFO] |  |  |  \- org.graalvm.shadowed:icu4j:jar:25.0.0:runtime
+[INFO] |  |  |     \- org.graalvm.shadowed:xz:jar:25.0.0:runtime
+[INFO] |  |  \- org.graalvm.truffle:truffle-runtime:jar:25.0.0:runtime
+[INFO] |  |     +- org.graalvm.sdk:jniutils:jar:25.0.0:runtime
+[INFO] |  |     \- org.graalvm.truffle:truffle-compiler:jar:25.0.0:runtime
+[INFO] |  \- org.graalvm.polyglot:python:pom:25.0.0:compile
+[INFO] |     \- org.graalvm.python:python:pom:25.0.0:runtime
+[INFO] |        +- org.graalvm.python:python-language:jar:25.0.0:runtime
+[INFO] |        |  +- org.graalvm.tools:profiler-tool:jar:25.0.0:runtime
+[INFO] |        |  |  \- org.graalvm.shadowed:json:jar:25.0.0:runtime
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi:jar:25.0.0:runtime
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-libffi:jar:25.0.0:runtime
+[INFO] |        |  +- org.graalvm.truffle:truffle-nfi-panama:jar:25.0.0:runtime
+[INFO] |        |  +- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:runtime
+[INFO] |        |  +- org.bouncycastle:bcpkix-jdk18on:jar:1.78.1:runtime
+[INFO] |        |  \- org.bouncycastle:bcutil-jdk18on:jar:1.78.1:runtime
+[INFO] |        \- org.graalvm.python:python-resources:jar:25.0.0:runtime
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- us.fatehi:schemacrawler-operations:jar:17.1.1:test
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] ----------------< us.fatehi:schemacrawler-examplecode >-----------------
+[INFO] Building SchemaCrawler Example Code 17.1.1                       [25/26]
+[INFO]   from schemacrawler-examplecode\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-examplecode ---
+[INFO] us.fatehi:schemacrawler-examplecode:jar:17.1.1
+[INFO] +- us.fatehi:schemacrawler:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-utility:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-api:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-tools:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-loader:jar:17.1.1:compile
+[INFO] |  +- us.fatehi:schemacrawler-text:jar:17.1.1:compile
+[INFO] |  \- us.fatehi:schemacrawler-diagram:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-testdb:jar:17.1.1:test
+[INFO] |  \- us.fatehi:schemacrawler-jdbc-drivers:pom:17.1.1:test
+[INFO] |     +- org.postgresql:postgresql:jar:42.7.8:test
+[INFO] |     |  \- org.checkerframework:checker-qual:jar:3.49.5:test
+[INFO] |     +- com.mysql:mysql-connector-j:jar:9.4.0:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc:jar:13.2.1.jre11:test
+[INFO] |     +- com.microsoft.sqlserver:mssql-jdbc_auth:dll:13.2.1.x86:test
+[INFO] |     +- com.oracle.database.jdbc.debug:ojdbc8_g:jar:21.19.0.0:test
+[INFO] |     +- com.ibm.db2:jcc:jar:12.1.0.0:test
+[INFO] |     +- com.h2database:h2:jar:2.2.224:test
+[INFO] |     +- org.xerial:sqlite-jdbc:jar:3.50.3.0:test
+[INFO] |     +- com.ibm.informix:jdbc:jar:4.50.12:test
+[INFO] |     |  \- org.mongodb:bson:jar:3.8.0:test
+[INFO] |     +- net.snowflake:snowflake-jdbc:jar:3.27.0:test
+[INFO] |     +- com.amazon.redshift:redshift-jdbc42:jar:2.2.0:test
+[INFO] |     +- org.firebirdsql.jdbc:jaybird:jar:5.0.10.java8:test
+[INFO] |     +- org.duckdb:duckdb_jdbc:jar:1.4.1.0:test
+[INFO] |     \- org.mariadb.jdbc:mariadb-java-client:jar:3.5.6:test
+[INFO] +- us.fatehi:schemacrawler-test-utility:jar:17.1.1:test
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:test
+[INFO] +- us.fatehi:schemacrawler-api:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-tools:test-jar:tests:17.1.1:test
+[INFO] +- us.fatehi:schemacrawler-commandline:jar:17.1.1:test
+[INFO] |  +- us.fatehi:schemacrawler-operations:jar:17.1.1:compile
+[INFO] |  +- com.typesafe:config:jar:1.4.5:test
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:test
+[INFO] |  \- info.picocli:picocli-shell-jline3:jar:4.7.7:test
+[INFO] |     \- org.jline:jline:jar:3.29.0:test
+[INFO] +- us.fatehi:schemacrawler-sqlserver:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-oracle:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-db2:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-mysql:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-postgresql:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-sqlite:jar:17.1.1:compile
+[INFO] +- us.fatehi:schemacrawler-hsqldb:jar:17.1.1:compile
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] 
+[INFO] -----------------< us.fatehi:schemacrawler-aggregator >-----------------
+[INFO] Building SchemaCrawler [Aggregator] 17.1.1                       [26/26]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ schemacrawler-aggregator ---
+[INFO] us.fatehi:schemacrawler-aggregator:pom:17.1.1
+[INFO] +- org.jspecify:jspecify:jar:1.0.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.20.0:provided
+[INFO] |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.20:provided
+[INFO] +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.20.0:provided
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:provided
+[INFO] +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.20.0:provided
+[INFO] +- com.fasterxml.jackson.module:jackson-module-jsonSchema:jar:2.20.0:provided
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:provided
+[INFO] +- org.hsqldb:hsqldb:jar:2.7.4:provided
+[INFO] +- org.junit.jupiter:junit-jupiter:jar:6.0.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.0:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.0:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.0:test
+[INFO] |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.0:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:6.0.0:test
+[INFO] +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] +- org.mockito:mockito-junit-jupiter:jar:4.11.0:test
+[INFO] |  \- org.mockito:mockito-core:jar:4.11.0:test
+[INFO] |     \- net.bytebuddy:byte-buddy-agent:jar:1.12.19:test
+[INFO] +- com.github.npathai:hamcrest-optional:jar:2.0.0:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- nl.jqno.equalsverifier:equalsverifier:jar:4.2:test
+[INFO] |  +- org.objenesis:objenesis:jar:3.4:test
+[INFO] |  \- net.bytebuddy:byte-buddy:jar:1.17.7:test
+[INFO] +- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.github.stefanbirkner:system-lambda:jar:1.2.1:test
+[INFO] +- com.openpojo:openpojo:jar:0.9.1:test
+[INFO] +- org.slf4j:slf4j-jdk14:jar:2.0.17:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- com.tngtech.archunit:archunit-junit5:jar:1.4.1:test
+[INFO] |  +- com.tngtech.archunit:archunit-junit5-api:jar:1.4.1:test
+[INFO] |  |  \- com.tngtech.archunit:archunit:jar:1.4.1:test
+[INFO] |  \- com.tngtech.archunit:archunit-junit5-engine:jar:1.4.1:test
+[INFO] |     \- com.tngtech.archunit:archunit-junit5-engine-api:jar:1.4.1:test
+[INFO] +- commons-io:commons-io:jar:2.20.0:test
+[INFO] +- commons-dbutils:commons-dbutils:jar:1.8.1:test
+[INFO] +- org.testcontainers:testcontainers-junit-jupiter:jar:2.0.1:test
+[INFO] |  \- org.testcontainers:testcontainers:jar:2.0.1:test
+[INFO] |     +- org.apache.commons:commons-compress:jar:1.28.0:test
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.19.0:test
+[INFO] |     +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |     |  \- org.jetbrains:annotations:jar:17.0.0:test
+[INFO] |     +- com.github.docker-java:docker-java-api:jar:3.6.0:test
+[INFO] |     \- com.github.docker-java:docker-java-transport-zerodep:jar:3.6.0:test
+[INFO] |        +- com.github.docker-java:docker-java-transport:jar:3.6.0:test
+[INFO] |        \- net.java.dev.jna:jna:jar:5.17.0:test
+[INFO] +- org.apache.commons:commons-lang3:jar:3.19.0:test
+[INFO] \- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+[INFO]    +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO]    \- org.apache.commons:commons-collections4:jar:4.5.0:compile
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for SchemaCrawler [Aggregator] 17.1.1:
+[INFO] 
+[INFO] SchemaCrawler [Parent] ............................. SUCCESS [  0.947 s]
+[INFO] SchemaCrawler - JDBC Drivers Distribution .......... SUCCESS [  0.090 s]
+[INFO] SchemaCrawler Test Database ........................ SUCCESS [  0.122 s]
+[INFO] SchemaCrawler Test Utility ......................... SUCCESS [  0.030 s]
+[INFO] SchemaCrawler Utility .............................. SUCCESS [  0.017 s]
+[INFO] SchemaCrawler API .................................. SUCCESS [  0.014 s]
+[INFO] SchemaCrawler Tools ................................ SUCCESS [  0.012 s]
+[INFO] SchemaCrawler Catalog Loaders ...................... SUCCESS [  0.010 s]
+[INFO] SchemaCrawler Text ................................. SUCCESS [  0.011 s]
+[INFO] SchemaCrawler Diagram .............................. SUCCESS [  0.012 s]
+[INFO] SchemaCrawler ...................................... SUCCESS [  0.018 s]
+[INFO] SchemaCrawler Operations ........................... SUCCESS [  0.009 s]
+[INFO] SchemaCrawler Commandline .......................... SUCCESS [  0.040 s]
+[INFO] SchemaCrawler Scripting ............................ SUCCESS [  0.121 s]
+[INFO] SchemaCrawler Lint ................................. SUCCESS [  0.011 s]
+[INFO] SchemaCrawler - Additional Database Tests .......... SUCCESS [  0.729 s]
+[INFO] SchemaCrawler for IBM DB2 .......................... SUCCESS [  0.014 s]
+[INFO] SchemaCrawler for HyperSQL ......................... SUCCESS [  0.011 s]
+[INFO] SchemaCrawler for MySQL ............................ SUCCESS [  0.012 s]
+[INFO] SchemaCrawler for Oracle ........................... SUCCESS [  0.013 s]
+[INFO] SchemaCrawler for PostgreSQL ....................... SUCCESS [  0.013 s]
+[INFO] SchemaCrawler for SQLite ........................... SUCCESS [  0.011 s]
+[INFO] SchemaCrawler for Microsoft SQL Server ............. SUCCESS [  0.012 s]
+[INFO] SchemaCrawler for Offline Snapshots ................ SUCCESS [  0.022 s]
+[INFO] SchemaCrawler Example Code ......................... SUCCESS [  0.014 s]
+[INFO] SchemaCrawler [Aggregator] ......................... SUCCESS [  0.006 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.916 s
+[INFO] Finished at: 2025-10-23T08:16:18-04:00
+[INFO] ------------------------------------------------------------------------
