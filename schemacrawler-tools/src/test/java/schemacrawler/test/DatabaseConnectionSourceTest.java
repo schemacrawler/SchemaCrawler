@@ -17,7 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.DatabaseConnectionInfo;
@@ -48,7 +50,7 @@ public class DatabaseConnectionSourceTest {
 
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
-            databaseConnectionInfo.getConnectionUrl(), new MultiUseUserCredentials("sa", ""));
+            databaseConnectionInfo.connectionUrl(), new MultiUseUserCredentials("sa", ""));
 
     final Connection connection = connectionSource.get();
 
