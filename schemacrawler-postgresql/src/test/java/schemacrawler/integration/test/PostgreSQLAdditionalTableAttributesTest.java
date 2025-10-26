@@ -13,8 +13,8 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQL11Container;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+import static us.fatehi.test.integration.utility.PostgreSQLTestUtility.newPostgreSQL11Container;
 import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;

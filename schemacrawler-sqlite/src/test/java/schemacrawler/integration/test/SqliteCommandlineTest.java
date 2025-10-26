@@ -27,9 +27,11 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSqliteTest;
@@ -117,7 +119,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
     final Path sqliteDbFile =
         Path.of(
             System.getProperty("java.io.tmpdir"),
-            RandomStringUtils.randomAlphanumeric(12).toLowerCase() + ".db");
+            RandomStringUtils.insecure().nextAlphanumeric(12).toLowerCase() + ".db");
     assertThat(
         "SQLite database should exist before the test",
         sqliteDbFile.toFile(),

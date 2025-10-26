@@ -13,39 +13,17 @@ import static us.fatehi.test.utility.Utility.requireNotBlank;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class DatabaseConnectionInfo implements Serializable {
+public record DatabaseConnectionInfo(String host, int port, String database, String connectionUrl)
+    implements Serializable {
 
   @Serial private static final long serialVersionUID = 3513025340881301828L;
 
-  private final String host;
-  private final int port;
-  private final String database;
-  private final String url;
-
-  public DatabaseConnectionInfo(
-      final String host, final int port, final String database, final String url) {
-    this.host = requireNotBlank(host, "No host provided");
+  public DatabaseConnectionInfo {
+    host = requireNotBlank(host, "No host provided");
     if (port <= 0 || port > 65535) {
       throw new IllegalArgumentException("Bad port number provided, " + port);
     }
-    this.port = port;
-    this.database = requireNotBlank(database, "No database provided");
-    this.url = requireNotBlank(url, "No url provided");
-  }
-
-  public String getConnectionUrl() {
-    return url;
-  }
-
-  public String getDatabase() {
-    return database;
-  }
-
-  public String getHost() {
-    return host;
-  }
-
-  public int getPort() {
-    return port;
+    database = requireNotBlank(database, "No database provided");
+    connectionUrl = requireNotBlank(connectionUrl, "No database connection url provided");
   }
 }

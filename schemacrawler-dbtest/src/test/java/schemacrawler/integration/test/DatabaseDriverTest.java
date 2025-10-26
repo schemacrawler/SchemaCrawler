@@ -8,8 +8,9 @@
 
 package schemacrawler.integration.test;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
 import java.sql.Driver;
 import java.util.Collection;
@@ -21,10 +22,9 @@ public class DatabaseDriverTest {
   @Test
   public void availableJDBCDrivers() throws Exception {
     final Collection<Driver> availableJDBCDrivers = DatabaseUtility.getAvailableJdbcDrivers();
-    final int numJDBCDrivers = availableJDBCDrivers.size();
     assertThat(
-        "Number of of avilable JDBC drivers is not correct - found " + numJDBCDrivers,
-        numJDBCDrivers,
-        is(20));
+        "Number of of avilable JDBC drivers is not correct",
+        availableJDBCDrivers,
+        hasSize(JDBC_DRIVER_COUNT + 6));
   }
 }

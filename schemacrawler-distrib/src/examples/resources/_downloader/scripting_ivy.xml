@@ -7,14 +7,18 @@
 <ivy-module version="2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="us.fatehi.schemacrawler" module="python"/>
+  <info organisation="us.fatehi.schemacrawler" module="scripting"/>
   <configurations>
     <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
-    <dependency org="org.graalvm.js" name="js"
+    <dependency org="org.graalvm.polyglot" name="polyglot"
                 rev="25.0.0" conf="binaries->default" />
-    <dependency org="org.graalvm.js" name="js-scriptengine"
+    <dependency org="org.graalvm.polyglot" name="python"
                 rev="25.0.0" conf="binaries->default" />
+    <dependency org="org.graalvm.polyglot" name="js"
+                rev="25.0.0" conf="binaries->default" />
+    <dependency org="org.graalvm.polyglot" name="ruby"
+                rev="25.0.0" conf="binaries->default" />                                
   </dependencies>
 </ivy-module>

@@ -14,15 +14,18 @@ import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.SQLExceptionOverride;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Statement;
 import javax.sql.DataSource;
-import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hsqldb.jdbc.JDBCDataSource;
 
 public final class DataSourceTestUtility {
+
+  public static final int JDBC_DRIVER_COUNT = 15;
 
   public static DataSource createDataSource(
       final String connectionUrl,
@@ -73,18 +76,25 @@ public final class DataSourceTestUtility {
       final JDBCDataSource hsqlDataSource = new JDBCDataSource();
       hsqlDataSource.setDatabase("jdbc:hsqldb:mem:" + randomDatabaseName);
       // Read script
-      final String sql = IOUtils.resourceToString(script, StandardCharsets.UTF_8);
-      final String[] statements = sql.split(";");
-      // Create a QueryRunner to execute the SQL statements
-      final QueryRunner runner = new QueryRunner(hsqlDataSource);
-      for (String statement : statements) {
-        statement = statement.trim();
-        if (!statement.isEmpty()) {
-          runner.update(statement);
+      final String sqlScript = IOUtils.resourceToString(script, StandardCharsets.UTF_8);
+      final String[] statements = sqlScript.split(";");
+      String sqlStatement = null;
+      try (final Connection conn = hsqlDataSource.getConnection();
+          final Statement stmt = conn.createStatement(); ) {
+        for (final String sql : statements) {
+          if (sql == null) {
+            continue;
+          }
+          sqlStatement = sql.strip();
+          if (!sqlStatement.isBlank()) {
+            stmt.executeUpdate(sqlStatement);
+          }
         }
+      } catch (final SQLException e) {
+        throw new SQLException("Could not execute SQL%n%s".formatted(sqlStatement), e);
       }
       return hsqlDataSource;
-    } catch (IOException | SQLException e) {
+    } catch (final IOException | SQLException e) {
       return fail("Could not create a data source", e);
     }
   }

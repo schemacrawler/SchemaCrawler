@@ -16,6 +16,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyCollectionOf;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -39,9 +41,7 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -50,7 +50,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.test.utility.TestDatabaseDriver;
 import us.fatehi.test.utility.TestObjectUtility;
@@ -111,7 +110,7 @@ public class DatabaseUtilityTest {
   @Test
   public void getAvailableJdbcDrivers() throws SQLException {
     final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
-    assertThat(drivers.size(), is(15));
+    assertThat(drivers, hasSize(JDBC_DRIVER_COUNT));
     assertThat(
         drivers,
         everyItem(is(anyOf(instanceOf(Driver.class), instanceOf(TestDatabaseDriver.class)))));

@@ -123,6 +123,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -D${{ matrix.database }} \
+          -Dreactor.printOrder \
           --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \
           clean package

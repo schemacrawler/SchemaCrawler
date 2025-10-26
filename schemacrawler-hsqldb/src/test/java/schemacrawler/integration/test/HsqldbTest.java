@@ -9,7 +9,6 @@
 package schemacrawler.integration.test;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
-import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -28,7 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Test;
+
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -166,8 +169,8 @@ public class HsqldbTest {
   private Map<String, String> createArgsMaps(final DatabaseConnectionInfo connectionInfo) {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("--server", "hsqldb");
-    argsMap.put("--port", String.valueOf(connectionInfo.getPort()));
-    argsMap.put("--database", connectionInfo.getDatabase());
+    argsMap.put("--port", String.valueOf(connectionInfo.port()));
+    argsMap.put("--database", connectionInfo.database());
     argsMap.put("--user", "sa");
     argsMap.put("--password", "");
     argsMap.put("--info-level", "maximum");

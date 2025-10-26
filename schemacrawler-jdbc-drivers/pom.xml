@@ -60,7 +60,6 @@
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.7.4</version>
     </dependency>
     <dependency>
       <groupId>org.xerial</groupId>
@@ -103,17 +102,9 @@
       <artifactId>mariadb-java-client</artifactId>
       <version>3.5.6</version>
     </dependency>
+
   </dependencies>
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <version>2.7.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -151,7 +142,7 @@
             <configuration>
               <licensesOutputDirectory>${project.build.directory}/_licenses</licensesOutputDirectory>
               <licensesOutputFile>
-                ${project.build.directory}/_licenses/licenses..xml</licensesOutputFile>
+                ${project.build.directory}/_licenses/licenses.xml</licensesOutputFile>
               <excludedScopes>test,provided</excludedScopes>
               <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
             </configuration>

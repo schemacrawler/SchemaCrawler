@@ -52,7 +52,7 @@ public class TestDatabase {
       final String host = SC_DEFAULT_ADDRESS;
       final int port = SC_DEFAULT_HSQL_SERVER_PORT;
       final String database = "schemacrawler";
-      final boolean trace = false;
+      final boolean trace = true;
       final TestDatabase testDatabase = new TestDatabase(trace, host, port, database);
       testDatabase.start();
       return testDatabase;
@@ -68,9 +68,7 @@ public class TestDatabase {
    * @throws Exception
    */
   public static void main(final String[] args) throws Exception {
-    final TestDatabase testDatabase =
-        new TestDatabase(true, SC_DEFAULT_ADDRESS, SC_DEFAULT_HSQL_SERVER_PORT, "schemacrawler");
-    testDatabase.start();
+    TestDatabase.initializeStandard();
   }
 
   private static int getFreePort() {

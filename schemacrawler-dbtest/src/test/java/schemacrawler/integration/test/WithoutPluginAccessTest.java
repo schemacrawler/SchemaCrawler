@@ -9,21 +9,20 @@
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static us.fatehi.test.integration.utility.CassandraTestUtility.newCassandraContainer;
+import static us.fatehi.test.utility.TestUtility.copyResourceToTempFile;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.net.InetSocketAddress;
+import java.nio.file.Path;
 import java.util.regex.Pattern;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.cassandra.CassandraContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import schemacrawler.inclusionrule.IncludeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -31,45 +30,25 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
-@DisableLogging
-@HeavyDatabaseTest("cassandra")
-@Testcontainers
-public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
-
-  @Container private final CassandraContainer dbContainer = newCassandraContainer();
+@TestInstance(Lifecycle.PER_CLASS)
+public class WithoutPluginAccessTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
-  public void createDatabase() {
-
-    if (!dbContainer.isRunning()) {
-      fail("Testcontainer for database is not available");
-    }
-
-    final InetSocketAddress contactPoint = dbContainer.getContactPoint();
-    final String host = contactPoint.getHostName();
-    final int port = contactPoint.getPort();
-    final String keyspace = "books";
-    final String localDatacenter = dbContainer.getLocalDatacenter();
-    final String connectionUrl =
-        "jdbc:cassandra://%s:%d/%s?localdatacenter=%s"
-            .formatted(host, port, keyspace, localDatacenter);
-    // System.out.printf("url=%s%n", connectionUrl);
-    createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
+  public void createDatabase() throws Exception {
+      Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+      final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
+      createDataSource(
+          "jdbc:ucanaccess://" + databaseFile + ";showSchema=true;sysSchema=true", null, null);
   }
 
   @Test
-  public void testCassandraWithConnection() throws Exception {
+  public void testAccessWithConnection() throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(Pattern.compile("books"))
-            .includeRoutines(new IncludeAll());
+        LimitOptionsBuilder.builder().includeSchemas(Pattern.compile(".*"));
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
         SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.maximum);
     final LoadOptionsBuilder loadOptionsBuilder =
@@ -80,13 +59,12 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+    executable.setAdditionalConfiguration(textOptionsBuilder.toConfig());
 
-    final String expectedResource = "testCassandraWithConnection.txt";
+    final String expectedResource = "testAccessWithConnection.txt";
     assertThat(
         outputOf(executableExecution(getDataSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

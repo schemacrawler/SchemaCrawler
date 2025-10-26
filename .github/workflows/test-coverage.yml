@@ -39,6 +39,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Dtestcoverage \
+          -Dreactor.printOrder \
           -Ddistrib \
           clean verify \
           jacoco:report-aggregate

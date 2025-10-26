@@ -19,7 +19,9 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.Main;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.DatabaseConnectionInfo;
@@ -66,7 +68,7 @@ public class CommandLineSpecialCasesTest {
     final TestWriter outputFile = new TestWriter();
     try (final TestWriter outFile = outputFile) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("--url", connectionInfo.getConnectionUrl());
+      argsMap.put("--url", connectionInfo.connectionUrl());
       argsMap.put("--user", "sa");
       argsMap.put("--password", "");
 
