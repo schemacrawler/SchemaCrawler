@@ -102,17 +102,6 @@
       <artifactId>mariadb-java-client</artifactId>
       <version>3.5.6</version>
     </dependency>
-    <dependency>
-      <groupId>io.github.spannm</groupId>
-      <artifactId>ucanaccess</artifactId>
-      <version>5.1.4</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
 
   </dependencies>
   <build>

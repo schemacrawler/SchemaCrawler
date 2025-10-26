@@ -25,6 +25,6 @@ public class DatabaseDriverTest {
     assertThat(
         "Number of of avilable JDBC drivers is not correct",
         availableJDBCDrivers,
-        hasSize(JDBC_DRIVER_COUNT + 5));
+        hasSize(JDBC_DRIVER_COUNT + 6));
   }
 }
