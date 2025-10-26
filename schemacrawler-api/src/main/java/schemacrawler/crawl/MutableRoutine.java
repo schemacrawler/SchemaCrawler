@@ -83,7 +83,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   /** {@inheritDoc} */
   @Override
   public final String getDefinition() {
-    return definition.toString();
+    return definition;
   }
 
   @Override

@@ -113,7 +113,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   /** {@inheritDoc} */
   @Override
   public String getDefinition() {
-    return definition.toString();
+    return definition;
   }
 
   /** {@inheritDoc} */
