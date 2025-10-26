@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.property.PropertyName;
 
 public class PropertyNameTest {
@@ -24,6 +25,18 @@ public class PropertyNameTest {
     assertThat(propertyName1.compareTo(propertyName2), is(equalTo(1)));
 
     assertThat(propertyName1.compareTo(null), is(equalTo(-1)));
+  }
+
+  @Test
+  public void hash() {
+    // Only name is taken into account when comparing property names
+    // Description is ignored
+
+    final PropertyName propertyName1 = new PropertyName("hello", "world");
+    final PropertyName propertyName2 = new PropertyName("hello", "everybodyf");
+
+    assertThat(propertyName1.hashCode(), is(propertyName2.hashCode()));
+    assertThat(propertyName1, is(propertyName2));
   }
 
   @Test
