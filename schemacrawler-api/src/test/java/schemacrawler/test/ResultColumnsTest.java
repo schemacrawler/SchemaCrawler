@@ -43,17 +43,18 @@ public class ResultColumnsTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final String sql =
-          ""
-              + "SELECT                                                                    "
-              + " PUBLIC.BOOKS.BOOKS.TITLE AS BOOK,                                        "
-              + " PUBLIC.BOOKS.AUTHORS.FIRSTNAME + ' ' + PUBLIC.BOOKS.AUTHORS.LASTNAME,    "
-              + " PUBLIC.BOOKS.BOOKS.PRICE                                                 "
-              + "FROM                                                                      "
-              + " PUBLIC.BOOKS.BOOKS                                                       "
-              + " INNER JOIN PUBLIC.BOOKS.BOOKAUTHORS                                      "
-              + "   ON PUBLIC.BOOKS.BOOKS.ID = PUBLIC.BOOKS.BOOKAUTHORS.BOOKID             "
-              + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
-              + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
+          """
+          SELECT
+            PUBLIC.BOOKS.BOOKS.TITLE AS BOOK,
+            PUBLIC.BOOKS.AUTHORS.FIRSTNAME + ' ' + PUBLIC.BOOKS.AUTHORS.LASTNAME,
+            PUBLIC.BOOKS.BOOKS.PRICE
+          FROM
+            PUBLIC.BOOKS.BOOKS
+            INNER JOIN PUBLIC.BOOKS.BOOKAUTHORS
+              ON PUBLIC.BOOKS.BOOKS.ID = PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+            INNER JOIN PUBLIC.BOOKS.AUTHORS
+              ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+          """;
 
       try (final Connection connection = cxn;
           final Statement statement = connection.createStatement();

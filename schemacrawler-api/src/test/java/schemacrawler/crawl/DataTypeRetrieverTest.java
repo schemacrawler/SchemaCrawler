@@ -190,10 +190,14 @@ public class DataTypeRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 InformationSchemaKey.TYPE_INFO,
-                String.format(
-                    "SELECT %d AS INJECTED_TEST_ATTRIBUTE, TYPE_INFO.* "
-                        + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO TYPE_INFO",
-                    magicNumber))
+                """
+                SELECT
+                  %d AS INJECTED_TEST_ATTRIBUTE,
+                  TYPE_INFO.*
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_TYPEINFO TYPE_INFO
+                """
+                    .formatted(magicNumber))
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder()
