@@ -14,7 +14,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -216,7 +216,7 @@ public final class SchemaCrawlerUtility {
     final String urlDBServerType;
     if (matcher.groupCount() == 1) {
       final String matchedDBServerType = matcher.group(1);
-      if (Arrays.asList(
+      if (List.of(
               "db2", "hsqldb", "mariadb", "mysql", "oracle", "postgresql", "sqlite", "sqlserver")
           .contains(matchedDBServerType)) {
         urlDBServerType = matchedDBServerType;

@@ -9,10 +9,11 @@
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serial;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
@@ -30,6 +31,7 @@ final class MutableSynonym extends AbstractDatabaseObject implements Synonym {
 
   MutableSynonym(final Schema schema, final String name) {
     super(schema, name);
+    requireNotBlank(name, "No synonym name provided");
   }
 
   @Override
@@ -39,7 +41,7 @@ final class MutableSynonym extends AbstractDatabaseObject implements Synonym {
 
   @Override
   public Collection<? extends DatabaseObject> getReferencedObjects() {
-    return Arrays.asList(referencedObject);
+    return Collections.singletonList(referencedObject);
   }
 
   void setReferencedObject(final DatabaseObject referencedObject) {

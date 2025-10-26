@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -129,7 +130,7 @@ public class PrimaryKeyRetrieverTest {
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(20));
     for (final Table table : tables) {
-      if (!Arrays.asList(
+      if (!List.of(
               "AUTHORSLIST",
               "BOOKAUTHORS",
               "Global Counts",

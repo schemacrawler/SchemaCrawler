@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
@@ -24,7 +25,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.DayOfWeek;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
 import org.junit.jupiter.api.DisplayName;
@@ -95,7 +95,7 @@ public class MetadataResultSetTest {
     final String column1Name = "COLUMN1";
 
     try (final Statement statement = connection.createStatement(); ) {
-      for (final String value : Arrays.asList("1", "TRUE", "True", "true", "YES", "Yes", "yes")) {
+      for (final String value : List.of("1", "TRUE", "True", "true", "YES", "Yes", "yes")) {
         final String sql =
             String.format("SELECT '%s' AS " + column1Name + " FROM (VALUES(0))", value);
         try (final MetadataResultSet results =
@@ -109,7 +109,7 @@ public class MetadataResultSetTest {
       }
 
       for (final String value :
-          Arrays.asList("0", "FALSE", "False", "false", "NO", "No", "no", "", "unknown")) {
+          List.of("0", "FALSE", "False", "false", "NO", "No", "no", "", "unknown")) {
         final String sql =
             String.format("SELECT '%s' AS " + column1Name + " FROM (VALUES(0))", value);
         try (final MetadataResultSet results =
@@ -137,7 +137,7 @@ public class MetadataResultSetTest {
             final MetadataResultSet results = new MetadataResultSet(resultSet, "largeObjectValues");
 
             final String stringValue = results.getString(columnName);
-            if (dataType.equals("BLOB")) {
+            if ("BLOB".equals(dataType)) {
               // BLOBs are not read
               assertThat(stringValue, is(nullValue()));
             } else if (dataType.contains("BINARY")) {
@@ -149,7 +149,7 @@ public class MetadataResultSetTest {
             final List<Object> row = results.row();
             assertThat(row, hasSize(1));
             final Object objectValue = row.get(0);
-            if (dataType.equals("BLOB")) {
+            if ("BLOB".equals(dataType)) {
               // BLOBs are not read
               assertThat(String.valueOf(objectValue), is(new BinaryData().toString()));
             } else if (dataType.contains("BINARY")) {
@@ -174,16 +174,15 @@ public class MetadataResultSetTest {
 
     try (final Statement statement = connection.createStatement(); ) {
       for (final String dataType :
-          Arrays.asList(
-              "CHARACTER(1) ", "VARCHAR(1)", "CLOB", "BINARY(1)", "VARBINARY(1)", "BLOB")) {
+          List.of("CHARACTER(1) ", "VARCHAR(1)", "CLOB", "BINARY(1)", "VARBINARY(1)", "BLOB")) {
 
         statement.execute("DROP TABLE IF EXISTS TABLE1");
         statement.execute("CREATE TABLE TABLE1(COLUMN1 %s)".formatted(dataType));
 
-        if (dataType.contains("BINARY") || dataType.equals("BLOB")) {
+        if (dataType.contains("BINARY") || "BLOB".equals(dataType)) {
           final PreparedStatement preparedStatement =
               connection.prepareStatement("INSERT INTO TABLE1(COLUMN1) VALUES(?)");
-          preparedStatement.setBinaryStream(1, new ByteArrayInputStream("A".getBytes("UTF-8")));
+          preparedStatement.setBinaryStream(1, new ByteArrayInputStream("A".getBytes(UTF_8)));
           preparedStatement.execute();
         } else {
           statement.execute("INSERT INTO TABLE1(COLUMN1) VALUES('A')");
@@ -255,7 +254,7 @@ public class MetadataResultSetTest {
 
     try (final Statement statement = connection.createStatement(); ) {
       for (final String dataType :
-          Arrays.asList(
+          List.of(
               "BIT(1)",
               "DECIMAL",
               "INTEGER",

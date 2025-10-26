@@ -11,7 +11,7 @@ package schemacrawler.tools.command.text.operation.options;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 
-public interface Operation {
+public sealed interface Operation permits QueryOperation, OperationType {
 
   /**
    * Operation description.

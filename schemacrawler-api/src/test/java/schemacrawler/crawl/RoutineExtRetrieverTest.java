@@ -20,6 +20,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,19 +83,23 @@ public class RoutineExtRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 InformationSchemaKey.ROUTINE_REFERENCES,
-                "SELECT "
-                    + "  'PUBLIC' AS ROUTINE_CATALOG,"
-                    + " 'BOOKS' AS ROUTINE_SCHEMA,"
-                    + "  'NEW_PUBLISHER' AS ROUTINE_NAME,"
-                    + "  'NEW_PUBLISHER_FORCE_VALUE' AS SPECIFIC_NAME,"
-                    + "  'PUBLIC' AS REFERENCED_OBJECT_CATALOG,"
-                    + "  'BOOKS' AS REFERENCED_OBJECT_SCHEMA,"
-                    + "  'AUTHORSLIST' AS REFERENCED_OBJECT_NAME,"
-                    + "  NULL AS REFERENCED_OBJECT_SPECIFIC_NAME,"
-                    + "  'VIEW' AS REFERENCED_OBJECT_TYPE"
-                    + " FROM INFORMATION_SCHEMA.SYSTEM_TABLES"
-                    + " WHERE 1=1"
-                    + " LIMIT 1")
+                """
+                SELECT
+                  'PUBLIC' AS ROUTINE_CATALOG,
+                  'BOOKS' AS ROUTINE_SCHEMA,
+                  'NEW_PUBLISHER' AS ROUTINE_NAME,
+                  'NEW_PUBLISHER_FORCE_VALUE' AS SPECIFIC_NAME,
+                  'PUBLIC' AS REFERENCED_OBJECT_CATALOG,
+                  'BOOKS' AS REFERENCED_OBJECT_SCHEMA,
+                  'AUTHORSLIST' AS REFERENCED_OBJECT_NAME,
+                  NULL AS REFERENCED_OBJECT_SPECIFIC_NAME,
+                  'VIEW' AS REFERENCED_OBJECT_TYPE
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_TABLES
+                WHERE
+                  1=1
+                LIMIT 1
+                """)
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
@@ -111,7 +116,7 @@ public class RoutineExtRetrieverTest {
     final RoutineRetriever routineRetriever =
         new RoutineRetriever(retrieverConnection, catalog, options);
     routineRetriever.retrieveRoutines(
-        Arrays.asList(RoutineType.procedure, RoutineType.function), new IncludeAll());
+        List.of(RoutineType.procedure, RoutineType.function), new IncludeAll());
 
     final RoutineExtRetriever procedureExtRetriever =
         new RoutineExtRetriever(retrieverConnection, catalog, options);

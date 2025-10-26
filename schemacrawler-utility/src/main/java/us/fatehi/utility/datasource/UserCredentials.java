@@ -12,9 +12,9 @@ public interface UserCredentials {
 
   void clearPassword();
 
-  String getPassword();
+  String password();
 
-  String getUser();
+  String user();
 
   boolean hasPassword();
 

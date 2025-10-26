@@ -10,46 +10,19 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Map;
 
-public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOptions {
+public record DatabaseServerHostConnectionOptions(
+    String databaseSystemIdentifier,
+    String host,
+    Integer port,
+    String database,
+    Map<String, String> urlx)
+    implements DatabaseConnectionOptions {
 
-  private final String databaseSystemIdentifier;
-  private final String host;
-  private final Integer port;
-  private final Map<String, String> urlx;
-  private final String database;
-
-  public DatabaseServerHostConnectionOptions(
-      final String databaseSystemIdentifier,
-      final String host,
-      final Integer port,
-      final String database,
-      final Map<String, String> urlx) {
-    this.databaseSystemIdentifier = requireNonNull(databaseSystemIdentifier, "No server provided");
-    this.host = host;
-    this.port = port;
-    this.database = database;
-    this.urlx = urlx;
-  }
-
-  public String getDatabase() {
-    return database;
-  }
-
-  public String getDatabaseSystemIdentifier() {
-    return databaseSystemIdentifier;
-  }
-
-  public String getHost() {
-    return host;
-  }
-
-  public Integer getPort() {
-    return port;
-  }
-
-  public Map<String, String> getUrlx() {
-    return urlx;
+  public DatabaseServerHostConnectionOptions {
+    databaseSystemIdentifier = requireNonNull(databaseSystemIdentifier, "No server provided");
+    urlx = urlx == null ? Collections.emptyMap() : Collections.unmodifiableMap(urlx);
   }
 }

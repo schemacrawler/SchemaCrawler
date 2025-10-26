@@ -21,10 +21,10 @@ import java.io.Writer;
 import java.nio.file.AccessMode;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -41,23 +41,23 @@ public class ObjectToStringFunctionsTest {
     assertThat(ObjectToString.arrayToList(AccessMode.READ), is(nullValue()));
 
     assertThat(ObjectToString.arrayToList(new int[] {}), is(new ArrayList<>()));
-    assertThat(ObjectToString.arrayToList(new int[] {1, 2}), is(Arrays.asList(1, 2)));
-    assertThat(ObjectToString.arrayToList(new HashSet<>(Arrays.asList(1, 2))), is(nullValue()));
+    assertThat(ObjectToString.arrayToList(new int[] {1, 2}), is(List.of(1, 2)));
+    assertThat(ObjectToString.arrayToList(new HashSet<>(List.of(1, 2))), is(nullValue()));
 
     assertThat(ObjectToString.arrayToList(new String[] {}), is(new ArrayList<>()));
-    assertThat(ObjectToString.arrayToList(new String[] {"1", "2"}), is(Arrays.asList("1", "2")));
-    assertThat(ObjectToString.arrayToList(new HashSet<>(Arrays.asList("1", "2"))), is(nullValue()));
+    assertThat(ObjectToString.arrayToList(new String[] {"1", "2"}), is(List.of("1", "2")));
+    assertThat(ObjectToString.arrayToList(new HashSet<>(List.of("1", "2"))), is(nullValue()));
   }
 
   @Test
   public void classHierarchy() throws IOException {
     assertThat(ObjectToString.classHierarchy(null), is(Collections.EMPTY_LIST));
 
-    assertThat(ObjectToString.classHierarchy(new Object()), is(Arrays.asList(Object.class)));
-    assertThat(ObjectToString.classHierarchy("hello, world"), is(Arrays.asList(String.class)));
+    assertThat(ObjectToString.classHierarchy(new Object()), is(List.of(Object.class)));
+    assertThat(ObjectToString.classHierarchy("hello, world"), is(List.of(String.class)));
     assertThat(
         ObjectToString.classHierarchy(new FileWriter(Files.createTempFile("", "").toFile())),
-        is(Arrays.asList(FileWriter.class, OutputStreamWriter.class, Writer.class)));
+        is(List.of(FileWriter.class, OutputStreamWriter.class, Writer.class)));
   }
 
   @Test
@@ -68,18 +68,16 @@ public class ObjectToStringFunctionsTest {
     assertThat(ObjectToString.collectionOrArrayToList(AccessMode.READ), is(new ArrayList<>()));
 
     assertThat(ObjectToString.collectionOrArrayToList(new int[] {}), is(new ArrayList<>()));
-    assertThat(ObjectToString.collectionOrArrayToList(new int[] {1, 2}), is(Arrays.asList(1, 2)));
+    assertThat(ObjectToString.collectionOrArrayToList(new int[] {1, 2}), is(List.of(1, 2)));
     assertThat(
-        ObjectToString.collectionOrArrayToList(new HashSet<>(Arrays.asList(1, 2))),
-        is(Arrays.asList(1, 2)));
+        ObjectToString.collectionOrArrayToList(new HashSet<>(List.of(1, 2))), is(List.of(1, 2)));
 
     assertThat(ObjectToString.collectionOrArrayToList(new String[] {}), is(new ArrayList<>()));
     assertThat(
-        ObjectToString.collectionOrArrayToList(new String[] {"1", "2"}),
-        is(Arrays.asList("1", "2")));
+        ObjectToString.collectionOrArrayToList(new String[] {"1", "2"}), is(List.of("1", "2")));
     assertThat(
-        ObjectToString.collectionOrArrayToList(new HashSet<>(Arrays.asList("1", "2"))),
-        is(Arrays.asList("1", "2")));
+        ObjectToString.collectionOrArrayToList(new HashSet<>(List.of("1", "2"))),
+        is(List.of("1", "2")));
   }
 
   @Test
@@ -106,9 +104,8 @@ public class ObjectToStringFunctionsTest {
 
     assertThat(ObjectToString.isCollectionOrArray(new int[] {1, 2}), is(true));
     assertThat(ObjectToString.isCollectionOrArray(new String[] {"1", "2"}), is(true));
-    assertThat(ObjectToString.isCollectionOrArray(Arrays.asList("1", "2")), is(true));
-    assertThat(
-        ObjectToString.isCollectionOrArray(new HashSet<>(Arrays.asList("1", "2"))), is(true));
+    assertThat(ObjectToString.isCollectionOrArray(List.of("1", "2")), is(true));
+    assertThat(ObjectToString.isCollectionOrArray(new HashSet<>(List.of("1", "2"))), is(true));
   }
 
   @Test
@@ -179,14 +176,13 @@ public class ObjectToStringFunctionsTest {
       final Object actual = actualMap.get(key);
       if (actual == null) {
         continue;
-      } else {
-        final Class<? extends Object> actualClass = actual.getClass();
-        if (actualClass.isEnum() || Map.class.isAssignableFrom(actualClass)) {
-          assertThat("key does not match - " + key, actual.toString(), is(expected.toString()));
-        } else if (ObjectToString.isSimpleObject(actual)
-            || ObjectToString.isCollectionOrArray(actual)) {
-          assertThat("key does not match - " + key, actual, is(expected));
-        }
+      }
+      final Class<? extends Object> actualClass = actual.getClass();
+      if (actualClass.isEnum() || Map.class.isAssignableFrom(actualClass)) {
+        assertThat("key does not match - " + key, actual.toString(), is(expected.toString()));
+      } else if (ObjectToString.isSimpleObject(actual)
+          || ObjectToString.isCollectionOrArray(actual)) {
+        assertThat("key does not match - " + key, actual, is(expected));
       }
     }
   }

@@ -9,6 +9,7 @@
 package schemacrawler.tools.command.text.operation.options;
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.text.options.BaseTextOptions;
@@ -17,7 +18,7 @@ public final class OperationOptions extends BaseTextOptions {
 
   private final Operation operation;
   private final boolean isShowLobs;
-  protected final int maxRows;
+  private final int maxRows;
 
   protected OperationOptions(final OperationOptionsBuilder builder) {
     super(builder);

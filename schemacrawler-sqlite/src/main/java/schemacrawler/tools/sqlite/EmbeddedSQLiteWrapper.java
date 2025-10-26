@@ -14,7 +14,7 @@ import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.nio.file.Path;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.ListExclusionRule;
@@ -43,7 +43,7 @@ public class EmbeddedSQLiteWrapper {
 
         private final Predicate<String> exclusionRule =
             new ListExclusionRule(
-                    Arrays.asList(
+                    List.of(
                         // Django tables
                         "auth_group",
                         "auth_group_permissions",
@@ -100,9 +100,8 @@ public class EmbeddedSQLiteWrapper {
   public Path getDatabasePath() {
     if (databaseFile == null) {
       return null;
-    } else {
-      return databaseFile;
     }
+    return databaseFile;
   }
 
   public void setDatabasePath(final Path dbFile) {

@@ -66,7 +66,7 @@ public final class MetadataResultSet implements AutoCloseable {
   public MetadataResultSet(
       final Query query, final Statement statement, final Map<String, String> limitMap)
       throws SQLException {
-    this(executeAgainstSchema(query, statement, limitMap), query.getName());
+    this(executeAgainstSchema(query, statement, limitMap), query.name());
   }
 
   public MetadataResultSet(final ResultSet resultSet, final String description)

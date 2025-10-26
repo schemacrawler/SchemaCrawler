@@ -203,8 +203,8 @@ public class QueryUtilityTest {
   public void getQueryFromResource() throws Exception {
     final Query query =
         QueryUtility.getQueryFromResource("Query title", "/EXT_HIDDEN_TABLE_COLUMNS.sql");
-    assertThat(query.getName(), is("Query title"));
-    assertThat(query.getQuery(), containsString("INFORMATION_SCHEMA.COLUMNS"));
+    assertThat(query.name(), is("Query title"));
+    assertThat(query.query(), containsString("INFORMATION_SCHEMA.COLUMNS"));
   }
 
   private void executeAgainstSchemaTest(

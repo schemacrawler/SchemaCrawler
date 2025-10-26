@@ -78,8 +78,7 @@ public class ConnectionOptionsTest {
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
 
-    assertThat(
-        ((DatabaseUrlConnectionOptions) databaseConnectorOptions).getConnectionUrl(), is(" "));
+    assertThat(((DatabaseUrlConnectionOptions) databaseConnectorOptions).connectionUrl(), is(" "));
   }
 
   @Test
@@ -107,11 +106,10 @@ public class ConnectionOptionsTest {
         optionsParser.getDatabaseConnectionOptions();
 
     assertThat(
-        ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).getHost(), is("somehost"));
+        ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).host(), is("somehost"));
+    assertThat(((DatabaseServerHostConnectionOptions) databaseConnectorOptions).port(), is(1234));
     assertThat(
-        ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).getPort(), is(1234));
-    assertThat(
-        ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).getDatabase(),
+        ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).database(),
         is("adatabase"));
   }
 
@@ -173,7 +171,7 @@ public class ConnectionOptionsTest {
         optionsParser.getDatabaseConnectionOptions();
 
     assertThat(
-        ((DatabaseUrlConnectionOptions) databaseConnectorOptions).getConnectionUrl(),
+        ((DatabaseUrlConnectionOptions) databaseConnectorOptions).connectionUrl(),
         is("jdbc:database_url"));
   }
 

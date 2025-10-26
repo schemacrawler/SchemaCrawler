@@ -21,7 +21,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.serverPluginHelpCommands;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import picocli.CommandLine;
@@ -82,7 +82,7 @@ public final class CommandLineHelpCommand implements Runnable {
     }
 
     commandLine.setHelpSectionKeys(
-        Arrays.asList( // SECTION_KEY_HEADER_HEADING,
+        List.of( // SECTION_KEY_HEADER_HEADING,
             SECTION_KEY_HEADER,
             // SECTION_KEY_SYNOPSIS_HEADING,
             // SECTION_KEY_SYNOPSIS,
@@ -124,7 +124,7 @@ public final class CommandLineHelpCommand implements Runnable {
     }
 
     final boolean isAvailabilityCommand =
-        Arrays.asList("servers", "loaders", "commands").contains(command);
+        List.of("servers", "loaders", "commands").contains(command);
 
     final Optional<CommandLine> lookupCommand = lookupCommand(parent, command);
     if (lookupCommand.isPresent()) {

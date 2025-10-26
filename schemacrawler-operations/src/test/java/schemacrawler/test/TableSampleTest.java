@@ -24,6 +24,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.operation.options.OperationsOutputFormat;
@@ -39,6 +40,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @AssertNoSystemErrOutput
 @AssertNoSystemOutOutput
 @WithTestDatabase
+@DisableLogging
 public class TableSampleTest {
 
   @Test

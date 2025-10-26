@@ -12,11 +12,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Column;
 import schemacrawler.test.utility.crawl.LightColumn;
 import schemacrawler.test.utility.crawl.LightTable;
@@ -38,13 +36,13 @@ public class ColumnMatchKeysMapTest {
     table5.addColumn("NonEntity");
 
     final ColumnMatchKeysMap columnMatchKeysMap =
-        new ColumnMatchKeysMap(Arrays.asList(table1, table2, table3, table4, table5));
+        new ColumnMatchKeysMap(List.of(table1, table2, table3, table4, table5));
 
     assertThat(
         columnMatchKeysMap.toString(),
         is(
-            "{nonentity=[Table5.NonEntity], "
-                + "entity=[Table1.EntityId, Table2.Entity_Id, Table3.Entity_ID, Table4.EntityID]}"));
+            "{nonentity=[Table5.NonEntity], entity=[Table1.EntityId, Table2.Entity_Id,"
+                + " Table3.Entity_ID, Table4.EntityID]}"));
 
     assertThat(columnMatchKeysMap.containsKey("entity"), is(true));
     assertThat(
@@ -74,7 +72,7 @@ public class ColumnMatchKeysMapTest {
     table4.addColumn("_ID");
 
     final ColumnMatchKeysMap columnMatchKeysMap =
-        new ColumnMatchKeysMap(Arrays.asList(table1, table2, table3, table4));
+        new ColumnMatchKeysMap(List.of(table1, table2, table3, table4));
 
     assertThat(columnMatchKeysMap.toString(), is("{}"));
 

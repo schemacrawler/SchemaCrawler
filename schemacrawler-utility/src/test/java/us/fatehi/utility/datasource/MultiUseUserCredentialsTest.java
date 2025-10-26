@@ -19,8 +19,8 @@ class MultiUseUserCredentialsTest {
   @Test
   void testUserAndPassword() {
     MultiUseUserCredentials credentials = new MultiUseUserCredentials("user", "password");
-    assertThat(credentials.getUser(), is("user"));
-    assertThat(credentials.getPassword(), is("password"));
+    assertThat(credentials.user(), is("user"));
+    assertThat(credentials.password(), is("password"));
     assertThat(credentials.hasUser(), is(true));
     assertThat(credentials.hasPassword(), is(true));
   }
@@ -28,8 +28,8 @@ class MultiUseUserCredentialsTest {
   @Test
   void testNoUserAndPassword() {
     MultiUseUserCredentials credentials = new MultiUseUserCredentials();
-    assertThat(credentials.getUser(), is(nullValue()));
-    assertThat(credentials.getPassword(), is(nullValue()));
+    assertThat(credentials.user(), is(nullValue()));
+    assertThat(credentials.password(), is(nullValue()));
     assertThat(credentials.hasUser(), is(false));
     assertThat(credentials.hasPassword(), is(false));
   }
@@ -37,8 +37,8 @@ class MultiUseUserCredentialsTest {
   @Test
   void testUserOnly() {
     MultiUseUserCredentials credentials = new MultiUseUserCredentials("user", null);
-    assertThat(credentials.getUser(), is("user"));
-    assertThat(credentials.getPassword(), is(nullValue()));
+    assertThat(credentials.user(), is("user"));
+    assertThat(credentials.password(), is(nullValue()));
     assertThat(credentials.hasUser(), is(true));
     assertThat(credentials.hasPassword(), is(false));
   }
@@ -46,8 +46,8 @@ class MultiUseUserCredentialsTest {
   @Test
   void testPasswordOnly() {
     MultiUseUserCredentials credentials = new MultiUseUserCredentials(null, "password");
-    assertThat(credentials.getUser(), is(nullValue()));
-    assertThat(credentials.getPassword(), is("password"));
+    assertThat(credentials.user(), is(nullValue()));
+    assertThat(credentials.password(), is("password"));
     assertThat(credentials.hasUser(), is(false));
     assertThat(credentials.hasPassword(), is(true));
   }
@@ -56,8 +56,8 @@ class MultiUseUserCredentialsTest {
   void testClearPassword() {
     MultiUseUserCredentials credentials = new MultiUseUserCredentials("user", "password");
     credentials.clearPassword();
-    assertThat(credentials.getUser(), is("user"));
+    assertThat(credentials.user(), is("user"));
     // The password should still be the as clearPassword does nothing
-    assertThat(credentials.getPassword(), is("password"));
+    assertThat(credentials.password(), is("password"));
   }
 }

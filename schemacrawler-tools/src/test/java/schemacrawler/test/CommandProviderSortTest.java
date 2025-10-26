@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.testcommand.TestCommandProvider;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -29,8 +29,7 @@ public class CommandProviderSortTest {
 
   private final class OperationCommandProvider extends BaseCommandProvider {
     private OperationCommandProvider() {
-      super(
-          Arrays.asList(new PropertyName("OperationCommandProvider", "OperationCommandProvider")));
+      super(List.of(new PropertyName("OperationCommandProvider", "OperationCommandProvider")));
     }
 
     @Override
@@ -49,7 +48,7 @@ public class CommandProviderSortTest {
   private final CommandProvider fallbackCommandProvider = new OperationCommandProvider();
   private final CommandProvider otherCommandProvider =
       new BaseCommandProvider(
-          Arrays.asList(new PropertyName("OtherCommandProvider", "OtherCommandProvider"))) {
+          List.of(new PropertyName("OtherCommandProvider", "OtherCommandProvider"))) {
 
         @Override
         public SchemaCrawlerCommand<?> newSchemaCrawlerCommand(

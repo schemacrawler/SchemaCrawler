@@ -8,13 +8,13 @@
 
 package us.fatehi.utility;
 
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 @UtilityMarker
 public final class TemplatingUtility {
@@ -60,11 +60,10 @@ public final class TemplatingUtility {
         if (currentPosition == 0) {
           // No substitutions required at all
           return template;
-        } else {
-          // No more substitutions
-          buffer.append(template.substring(currentPosition));
-          return buffer.toString();
         }
+        // No more substitutions
+        buffer.append(template.substring(currentPosition));
+        return buffer.toString();
       }
       buffer.append(template, currentPosition, delimiterStartPosition);
       delimiterEndPosition = template.indexOf(DELIMITER_END, delimiterStartPosition);
@@ -79,7 +78,7 @@ public final class TemplatingUtility {
           // Do not substitute
           buffer
               .append(DELIMITER_START)
-              .append(template.substring(delimiterStartPosition, delimiterEndPosition))
+              .append(template, delimiterStartPosition, delimiterEndPosition)
               .append(DELIMITER_END);
         }
         // Advance current position

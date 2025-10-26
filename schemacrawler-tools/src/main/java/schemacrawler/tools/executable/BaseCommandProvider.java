@@ -12,8 +12,8 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Predicate;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -29,7 +29,7 @@ public abstract class BaseCommandProvider implements CommandProvider {
   }
 
   public BaseCommandProvider(final PropertyName command) {
-    this(Arrays.asList(requireNonNull(command, "No command provided")));
+    this(List.of(requireNonNull(command, "No command provided")));
   }
 
   @Override

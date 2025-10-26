@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -159,7 +160,7 @@ public class TestObjectUtility {
     testObject1.setPrimitiveArray(new int[] {1, 1, 2, 3, 5, 8});
     testObject1.setPrimitiveEnum(AccessMode.READ);
     testObject1.setObjectArray(new String[] {"a", "b", "c"});
-    testObject1.setIntegerList(Arrays.asList(1, 1, 2, 3, 5, 8));
+    testObject1.setIntegerList(List.of(1, 1, 2, 3, 5, 8));
     final HashMap<Integer, String> map = new HashMap<>();
     map.put(1, "a");
     map.put(2, "b");

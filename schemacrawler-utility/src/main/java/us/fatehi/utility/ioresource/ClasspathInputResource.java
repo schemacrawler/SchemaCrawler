@@ -21,7 +21,7 @@ import java.net.URL;
  */
 public class ClasspathInputResource extends BaseInputResource {
 
-  private URL url;
+  private final URL url;
 
   public ClasspathInputResource(final String classpathResource) throws IOException {
     requireNonNull(classpathResource, "No classpath resource provided");

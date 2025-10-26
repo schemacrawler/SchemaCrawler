@@ -26,7 +26,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +44,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
   private static final Logger LOGGER = Logger.getLogger(DatabaseInfoRetriever.class.getName());
 
   private static final List<String> ignoreMethods =
-      Arrays.asList(
+      List.of(
           "getDatabaseProductName",
           "getDatabaseProductVersion",
           "getURL",

@@ -106,7 +106,7 @@ public final class DataJsonFormatter implements DataTraversalHandler {
 
     final String title;
     if (query != null) {
-      title = query.getName();
+      title = query.name();
       if (!isBlank(title)) {
         try {
           generator.writeStringField("query", title);

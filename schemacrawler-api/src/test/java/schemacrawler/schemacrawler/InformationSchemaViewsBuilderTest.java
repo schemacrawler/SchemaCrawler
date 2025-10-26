@@ -33,9 +33,7 @@ public class InformationSchemaViewsBuilderTest {
         InformationSchemaViewsBuilder.builder(informationSchemaViews).toOptions();
 
     assertThat(
-        informationSchemaViews2
-            .getQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES)
-            .getQuery(),
+        informationSchemaViews2.getQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES).query(),
         is("SOME SQL SELECT"));
   }
 

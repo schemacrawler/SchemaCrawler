@@ -44,7 +44,7 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
   /** {@inheritDoc} */
   @Override
   public String getDefinition() {
-    return definition.toString();
+    return definition;
   }
 
   @Override

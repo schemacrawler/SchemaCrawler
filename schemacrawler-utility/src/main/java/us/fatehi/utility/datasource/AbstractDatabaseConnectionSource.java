@@ -15,7 +15,6 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,7 @@ abstract class AbstractDatabaseConnectionSource implements DatabaseConnectionSou
       final String user,
       final String password) {
     final List<String> skipProperties =
-        Arrays.asList("server", "host", "port", "database", "urlx", "user", "password", "url");
+        List.of("server", "host", "port", "database", "urlx", "user", "password", "url");
     final Properties jdbcConnectionProperties;
     try {
       final Driver jdbcDriver = getJdbcDriver(connectionUrl);

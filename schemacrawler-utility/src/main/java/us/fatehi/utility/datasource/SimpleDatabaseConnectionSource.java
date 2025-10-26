@@ -47,8 +47,8 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
     this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
     requireNonNull(userCredentials, "No user credentials provided");
 
-    final String user = userCredentials.getUser();
-    final String password = userCredentials.getPassword();
+    final String user = userCredentials.user();
+    final String password = userCredentials.password();
     if (isBlank(user)) {
       LOGGER.log(Level.WARNING, "Database user is not provided");
     }

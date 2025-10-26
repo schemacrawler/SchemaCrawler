@@ -86,12 +86,15 @@ public class TableConstraintRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 CHECK_CONSTRAINTS,
-                "SELECT "
-                    + "NULL AS CONSTRAINT_CATALOG, "
-                    + "'PUBLIC' AS CONSTRAINT_SCHEMA, "
-                    + "'TEST_CHECK' AS CONSTRAINT_NAME, "
-                    + "'ID > 0' AS CHECK_CLAUSE "
-                    + "FROM (VALUES(0))")
+                """
+                SELECT
+                  NULL AS CONSTRAINT_CATALOG,
+                  'PUBLIC' AS CONSTRAINT_SCHEMA,
+                  'TEST_CHECK' AS CONSTRAINT_NAME,
+                  'ID > 0' AS CHECK_CLAUSE
+                FROM
+                  (VALUES(0))
+                """)
             .toOptions();
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
@@ -124,28 +127,34 @@ public class TableConstraintRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 TABLE_CONSTRAINTS,
-                "SELECT "
-                    + "NULL AS CONSTRAINT_CATALOG, "
-                    + "'PUBLIC' AS CONSTRAINT_SCHEMA, "
-                    + "'TEST_CONSTRAINT' AS CONSTRAINT_NAME, "
-                    + "NULL AS TABLE_CATALOG, "
-                    + "'PUBLIC' AS TABLE_SCHEMA, "
-                    + "'BOOKS' AS TABLE_NAME, "
-                    + "'PRIMARY KEY' AS CONSTRAINT_TYPE, "
-                    + "'YES' AS IS_DEFERRABLE, "
-                    + "'NO' AS INITIALLY_DEFERRED "
-                    + "FROM (VALUES(0))")
+                """
+                SELECT
+                  NULL AS CONSTRAINT_CATALOG,
+                  'PUBLIC' AS CONSTRAINT_SCHEMA,
+                  'TEST_CONSTRAINT' AS CONSTRAINT_NAME,
+                  NULL AS TABLE_CATALOG,
+                  'PUBLIC' AS TABLE_SCHEMA,
+                  'BOOKS' AS TABLE_NAME,
+                  'PRIMARY KEY' AS CONSTRAINT_TYPE,
+                  'YES' AS IS_DEFERRABLE,
+                  'NO' AS INITIALLY_DEFERRED
+                FROM
+                  (VALUES(0))
+                """)
             .withSql(
                 CONSTRAINT_COLUMN_USAGE,
-                "SELECT "
-                    + "NULL AS TABLE_CATALOG, "
-                    + "'PUBLIC' AS TABLE_SCHEMA, "
-                    + "'BOOKS' AS TABLE_NAME, "
-                    + "'ID' AS COLUMN_NAME, "
-                    + "NULL AS CONSTRAINT_CATALOG, "
-                    + "'PUBLIC' AS CONSTRAINT_SCHEMA, "
-                    + "'TEST_CONSTRAINT' AS CONSTRAINT_NAME "
-                    + "FROM (VALUES(0))")
+                """
+                SELECT
+                  NULL AS TABLE_CATALOG,
+                  'PUBLIC' AS TABLE_SCHEMA,
+                  'BOOKS' AS TABLE_NAME,
+                  'ID' AS COLUMN_NAME,
+                  NULL AS CONSTRAINT_CATALOG,
+                  'PUBLIC' AS CONSTRAINT_SCHEMA,
+                  'TEST_CONSTRAINT' AS CONSTRAINT_NAME
+                FROM
+                  (VALUES(0))
+                """)
             .toOptions();
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =

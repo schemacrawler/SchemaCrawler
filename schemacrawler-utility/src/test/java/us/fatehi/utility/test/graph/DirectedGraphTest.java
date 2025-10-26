@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Arrays;
+import java.util.List;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.graph.DirectedEdge;
@@ -64,9 +64,7 @@ public class DirectedGraphTest extends GraphTestBase {
       final DirectedGraph<String> graph = makeGraph();
 
       assertThat(
-          "Test run #" + (i + 1),
-          topologicalSort(graph),
-          is(Arrays.asList("A", "E", "B", "D", "C")));
+          "Test run #" + (i + 1), topologicalSort(graph), is(List.of("A", "E", "B", "D", "C")));
     }
   }
 
@@ -78,17 +76,28 @@ public class DirectedGraphTest extends GraphTestBase {
     assertThrows(
         GraphException.class,
         () -> topologicalSort(graph),
-        () -> Arrays.asList("E", "A", "D", "B", "C").toString());
+        () -> List.of("E", "A", "D", "B", "C").toString());
   }
 
   @Test
   public void toStringTest() throws Exception {
     final DirectedGraph<String> graph = makeGraph();
-
     assertThat(
         graph.toString(),
         is(
-            "digraph {\n  [label=\"graph_name\"]\n  A;\n  B;\n  C;\n  D;\n  E;\n  A -> B;\n  B -> C;\n  A -> D;\n}\n"));
+            """
+            digraph {
+              [label="graph_name"]
+              A;
+              B;
+              C;
+              D;
+              E;
+              A -> B;
+              B -> C;
+              A -> D;
+            }
+            """));
     assertThat(graph.getName(), is("graph_name"));
   }
 
@@ -100,7 +109,7 @@ public class DirectedGraphTest extends GraphTestBase {
   private DirectedGraph<String> makeGraph() {
 
     final DirectedGraph<String> graph =
-        new DirectedGraph<String>("graph_name") {
+        new DirectedGraph<>("graph_name") {
           {
             addEdge("A", "B");
             addEdge("B", "C");

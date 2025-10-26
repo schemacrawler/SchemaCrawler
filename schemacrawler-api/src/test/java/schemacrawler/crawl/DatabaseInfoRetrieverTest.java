@@ -152,9 +152,16 @@ public class DatabaseInfoRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 InformationSchemaKey.DATABASE_USERS,
-                "SELECT USER_NAME AS USERNAME, "
-                    + "ADMIN, INITIAL_SCHEMA, AUTHENTICATION, PASSWORD_DIGEST "
-                    + "FROM INFORMATION_SCHEMA.SYSTEM_USERS")
+                """
+                SELECT
+                  USER_NAME AS USERNAME,
+                  ADMIN,
+                  INITIAL_SCHEMA,
+                  AUTHENTICATION,
+                  PASSWORD_DIGEST
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_USERS
+                """)
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder().withInformationSchemaViews(informationSchemaViews);
@@ -286,10 +293,15 @@ public class DatabaseInfoRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 InformationSchemaKey.SERVER_INFORMATION,
-                String.format(
-                    "SELECT '%s' AS NAME, '%s' AS DESCRIPTION, '%s' AS VALUE "
-                        + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO",
-                    name, description, value))
+                """
+                SELECT
+                  '%s' AS NAME,
+                  '%s' AS DESCRIPTION,
+                  '%s' AS VALUE
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_TYPEINFO
+                """
+                    .formatted(name, description, value))
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder().withInformationSchemaViews(informationSchemaViews);

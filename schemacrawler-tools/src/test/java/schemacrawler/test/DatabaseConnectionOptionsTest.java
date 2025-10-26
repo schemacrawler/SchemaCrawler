@@ -24,7 +24,7 @@ public class DatabaseConnectionOptionsTest {
     final DatabaseUrlConnectionOptions connectionOptions =
         new DatabaseUrlConnectionOptions("jdbc:test-db:test");
 
-    assertThat(connectionOptions.getConnectionUrl(), is("jdbc:test-db:test"));
+    assertThat(connectionOptions.connectionUrl(), is("jdbc:test-db:test"));
   }
 
   @Test
@@ -36,9 +36,9 @@ public class DatabaseConnectionOptionsTest {
     final DatabaseServerHostConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("test-db", "host", 2222, "database", map);
 
-    assertThat(connectionOptions.getHost(), is("host"));
-    assertThat(connectionOptions.getPort(), is(2222));
-    assertThat(connectionOptions.getDatabase(), is("database"));
-    assertThat(connectionOptions.getUrlx(), is(map));
+    assertThat(connectionOptions.host(), is("host"));
+    assertThat(connectionOptions.port(), is(2222));
+    assertThat(connectionOptions.database(), is("database"));
+    assertThat(connectionOptions.urlx(), is(map));
   }
 }

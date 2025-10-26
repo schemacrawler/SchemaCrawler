@@ -36,14 +36,14 @@ public class UserParserTest {
 
     assertThat(options.hasUser(), is(false));
     assertThat(options.hasPassword(), is(false));
-    assertThat(options.getUser(), is(nullValue()));
-    assertThat(options.getPassword(), is(nullValue()));
+    assertThat(options.user(), is(nullValue()));
+    assertThat(options.password(), is(nullValue()));
 
     // Clear password should have no effect
     options.clearPassword();
 
     assertThat(options.hasUser(), is(false));
-    assertThat(options.getUser(), is(nullValue()));
+    assertThat(options.user(), is(nullValue()));
   }
 
   @Test
@@ -72,8 +72,8 @@ public class UserParserTest {
 
     assertThat(options.hasPassword(), is(false));
     assertThat(options.hasUser(), is(true));
-    assertThat(options.getPassword(), is(nullValue()));
-    assertThat(options.getUser(), is("usr123"));
+    assertThat(options.password(), is(nullValue()));
+    assertThat(options.user(), is("usr123"));
   }
 
   @Test
@@ -87,8 +87,8 @@ public class UserParserTest {
 
     assertThat(options.hasPassword(), is(false));
     assertThat(options.hasUser(), is(false));
-    assertThat(options.getPassword(), is(nullValue()));
-    assertThat(options.getUser(), is(nullValue()));
+    assertThat(options.password(), is(nullValue()));
+    assertThat(options.user(), is(nullValue()));
   }
 
   @Test
@@ -106,8 +106,8 @@ public class UserParserTest {
 
     assertThat(options.hasPassword(), is(false));
     assertThat(options.hasUser(), is(false));
-    assertThat(options.getPassword(), is(nullValue()));
-    assertThat(options.getUser(), is(nullValue()));
+    assertThat(options.password(), is(nullValue()));
+    assertThat(options.user(), is(nullValue()));
   }
 
   @Test
@@ -126,14 +126,14 @@ public class UserParserTest {
 
     assertThat(options.hasPassword(), is(false));
     assertThat(options.hasUser(), is(true));
-    assertThat(options.getPassword(), is(nullValue()));
-    assertThat(options.getUser(), is("usr123"));
+    assertThat(options.password(), is(nullValue()));
+    assertThat(options.user(), is("usr123"));
 
     // Clear password should have no effect
     options.clearPassword();
 
     assertThat(options.hasUser(), is(true));
-    assertThat(options.getUser(), is("usr123"));
+    assertThat(options.user(), is("usr123"));
   }
 
   @Test

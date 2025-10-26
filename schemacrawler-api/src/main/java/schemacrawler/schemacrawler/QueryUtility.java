@@ -44,7 +44,7 @@ public final class QueryUtility {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap = makeVariablesMap(columnDataType);
     final String sql = expandQuery(query, variablesMap);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.name(), sql));
     return executeSql(statement, sql);
   }
 
@@ -53,7 +53,7 @@ public final class QueryUtility {
       throws SQLException {
     requireNonNull(query, "No query provided");
     final String sql = expandQuery(query, limitMap);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.name(), sql));
     return executeSql(statement, sql);
   }
 
@@ -68,7 +68,7 @@ public final class QueryUtility {
     final Map<String, String> variablesMap =
         makeVariablesMap(table, isAlphabeticalSortForTableColumns, identifiers);
     final String sql = expandQuery(query, variablesMap);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.name(), sql));
     return executeSql(statement, sql);
   }
 
@@ -81,7 +81,7 @@ public final class QueryUtility {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap = makeVariablesMap(table, true, identifiers);
     final String sql = expandQuery(query, variablesMap);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.name(), sql));
     return executeSqlForLong(connection, sql);
   }
 
@@ -89,7 +89,7 @@ public final class QueryUtility {
       throws SQLException {
     requireNonNull(query, "No query provided");
     final String sql = expandQuery(query);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.name(), sql));
     return executeSqlForScalar(connection, sql);
   }
 
@@ -102,7 +102,7 @@ public final class QueryUtility {
     requireNonNull(query, "No query provided");
     final Map<String, String> variablesMap = makeVariablesMap(table, true, identifiers);
     final String sql = expandQuery(query, variablesMap);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.name(), sql));
     return executeSqlForScalar(connection, sql);
   }
 
@@ -116,7 +116,7 @@ public final class QueryUtility {
   }
 
   private static String expandQuery(final Query query, final Map<String, String> variablesMap) {
-    String sql = query.getQuery();
+    String sql = query.query();
     if (variablesMap != null && !variablesMap.isEmpty()) {
       sql = expandTemplate(sql, variablesMap);
     }

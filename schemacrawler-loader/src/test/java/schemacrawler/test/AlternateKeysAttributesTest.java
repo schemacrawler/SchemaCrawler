@@ -17,7 +17,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -66,9 +65,9 @@ public class AlternateKeysAttributesTest {
                     "catalog",
                     "  ",
                     "alternate_key",
-                    Arrays.asList("remarks", "other remarks"),
+                    List.of("remarks", "other remarks"),
                     Collections.emptyMap(),
-                    Arrays.asList("column1", "column2")));
+                    List.of("column1", "column2")));
     assertThat(exception.getMessage(), is("No table name provided"));
 
     exception =
@@ -80,7 +79,7 @@ public class AlternateKeysAttributesTest {
                     "catalog",
                     "table",
                     "alternate_key",
-                    Arrays.asList("remarks", "other remarks"),
+                    List.of("remarks", "other remarks"),
                     Collections.emptyMap(),
                     Collections.emptyList()));
     assertThat(exception.getMessage(), is("No columns provided"));
@@ -94,7 +93,7 @@ public class AlternateKeysAttributesTest {
                     "catalog",
                     "table",
                     "alternate_key",
-                    Arrays.asList("remarks", "other remarks"),
+                    List.of("remarks", "other remarks"),
                     Collections.emptyMap(),
                     null));
     assertThat(exception.getMessage(), is("No columns provided"));
@@ -105,9 +104,9 @@ public class AlternateKeysAttributesTest {
             "catalog",
             "table",
             "alternate_key",
-            Arrays.asList("remarks", "other remarks"),
+            List.of("remarks", "other remarks"),
             Collections.emptyMap(),
-            Arrays.asList("column1", "column2"));
+            List.of("column1", "column2"));
     assertThat(
         alternateKeyAttributes.toString(),
         is("Alternate key attributes <schema.catalog.table.alternate_key[[column1, column2]]>"));

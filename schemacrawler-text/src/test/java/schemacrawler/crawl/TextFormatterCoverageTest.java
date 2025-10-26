@@ -15,7 +15,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.CrawlInfo;
@@ -53,7 +53,7 @@ public class TextFormatterCoverageTest {
     final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
     final MutableColumnDataType columnDataType =
         new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined);
-    columnDataType.setEnumValues(Arrays.asList("VALUE1", "VALUE2"));
+    columnDataType.setEnumValues(List.of("VALUE1", "VALUE2"));
     final MutableColumn column = new MutableColumn(table, "ENUM_VALUES_COLUMN");
     column.setColumnDataType(columnDataType);
     table.addColumn(column);

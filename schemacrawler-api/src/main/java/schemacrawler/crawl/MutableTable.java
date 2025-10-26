@@ -12,6 +12,7 @@ import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsLast;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serial;
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   MutableTable(final Schema schema, final String name) {
     super(schema, name);
+    requireNotBlank(name, "No table name provided");
+
     definition = "";
   }
 
@@ -110,7 +113,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   /** {@inheritDoc} */
   @Override
   public String getDefinition() {
-    return definition.toString();
+    return definition;
   }
 
   /** {@inheritDoc} */
