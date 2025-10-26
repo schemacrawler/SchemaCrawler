@@ -88,7 +88,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
   public void handleData(final Query query, final ResultSet rows) {
     final String title;
     if (query != null) {
-      title = query.getName();
+      title = query.name();
     } else {
       title = "";
     }

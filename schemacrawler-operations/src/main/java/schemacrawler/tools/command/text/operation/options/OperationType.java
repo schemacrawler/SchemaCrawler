@@ -66,7 +66,7 @@ public enum OperationType implements Operation {
     if (viewKey == null || views == null || !views.hasQuery(viewKey)) {
       return new Query(name(), queryString);
     }
-    final String overriddenQueryString = views.getQuery(viewKey).getQuery();
+    final String overriddenQueryString = views.getQuery(viewKey).query();
     return new Query(name(), overriddenQueryString);
   }
 

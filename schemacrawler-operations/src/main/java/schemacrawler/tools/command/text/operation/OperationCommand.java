@@ -101,7 +101,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
         throw new DatabaseAccessException("Could not run query %n%s%n".formatted(query), e);
       }
     } else {
-      final String sql = query.getQuery();
+      final String sql = query.query();
       try (final Statement statement = createStatement(connection);
           final ResultSet results = executeSql(statement, sql)) {
         handler.handleData(query, results);

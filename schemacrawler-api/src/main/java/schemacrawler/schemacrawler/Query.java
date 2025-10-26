@@ -16,40 +16,13 @@ import java.io.Serializable;
 import java.util.Set;
 
 /** A SQL query. May be parameterized with ant-like variable references. */
-public final class Query implements Serializable {
+public record Query(String name, String query) implements Serializable {
 
   @Serial private static final long serialVersionUID = 2820769346069413473L;
 
-  private final String name;
-  private final String query;
-
-  /**
-   * Definition of a query, including a name, and parameterized or regular SQL.
-   *
-   * @param name Query name.
-   * @param query Query SQL.
-   */
-  public Query(final String name, final String query) {
-    this.name = requireNotBlank(name, "No query name provided");
-    this.query = requireNotBlank(query, "No query SQL provided");
-  }
-
-  /**
-   * Gets the query name.
-   *
-   * @return Query name
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
-   * Gets the query SQL.
-   *
-   * @return Query SQL
-   */
-  public String getQuery() {
-    return query;
+  public Query {
+    name = requireNotBlank(name, "No query name provided");
+    query = requireNotBlank(query, "No query SQL provided");
   }
 
   /**
@@ -63,7 +36,6 @@ public final class Query implements Serializable {
     return keys.contains("table");
   }
 
-  /** {@inheritDoc} */
   @Override
   public String toString() {
     return "-- \"%s\"%n%s".formatted(name, query);
