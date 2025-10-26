@@ -65,10 +65,15 @@ public class ObjectToStringFormatTest {
         is("{\n  \"one\": 1,\n  \"three\": 3,\n  \"two\": 2\n}"));
 
     assertThat(
-        new ObjectToStringFormat(new SomeClass("hello, world", 42)).get().replaceAll("\\R", ""),
+        new ObjectToStringFormat(new SomeClass("hello, world", 42)).get().replaceAll("\\R", "\n"),
         is(
-            "{  \"@object\": \"us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass\", "
-                + " \"integer\": 42,  \"string\": \"hello, world\"}"));
+            """
+            {
+              "@object": "us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass",
+              "integer": 42,
+              "string": "hello, world"
+            }\
+            """));
   }
 
   @Test

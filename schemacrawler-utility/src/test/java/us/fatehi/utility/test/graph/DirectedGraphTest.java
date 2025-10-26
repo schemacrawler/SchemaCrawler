@@ -82,21 +82,22 @@ public class DirectedGraphTest extends GraphTestBase {
   @Test
   public void toStringTest() throws Exception {
     final DirectedGraph<String> graph = makeGraph();
-
     assertThat(
         graph.toString(),
         is(
-            "digraph {\n"
-                + "  [label=\"graph_name\"]\n"
-                + "  A;\n"
-                + "  B;\n"
-                + "  C;\n"
-                + "  D;\n"
-                + "  E;\n"
-                + "  A -> B;\n"
-                + "  B -> C;\n"
-                + "  A -> D;\n"
-                + "}\n"));
+            """
+            digraph {
+              [label="graph_name"]
+              A;
+              B;
+              C;
+              D;
+              E;
+              A -> B;
+              B -> C;
+              A -> D;
+            }
+            """));
     assertThat(graph.getName(), is("graph_name"));
   }
 
