@@ -177,11 +177,18 @@ public class TableExtRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 InformationSchemaKey.EXT_TABLE_CONSTRAINTS,
-                String.format(
-                    "SELECT DISTINCT CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, TABLE_NAME,"
-                        + " CONSTRAINT_NAME, '%s' AS REMARKS, '%s' AS CONSTRAINT_DEFINITION FROM"
-                        + " INFORMATION_SCHEMA.TABLE_CONSTRAINTS",
-                    remarks, definition))
+                """
+                SELECT DISTINCT
+                	CONSTRAINT_CATALOG,
+                	CONSTRAINT_SCHEMA,
+                	TABLE_NAME,
+                    CONSTRAINT_NAME,
+                    '%s' AS REMARKS,
+                    '%s' AS CONSTRAINT_DEFINITION
+                FROM
+                	INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+                """
+                    .formatted(remarks, definition))
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
@@ -223,11 +230,16 @@ public class TableExtRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 EXT_TABLES,
-                String.format(
-                    "SELECT DISTINCT TABLE_CAT AS TABLE_CATALOG, TABLE_SCHEM AS TABLE_SCHEMA, "
-                        + "TABLE_NAME, '%s' AS TABLE_DEFINITION "
-                        + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
-                    definition))
+                """
+                SELECT DISTINCT
+                   	TABLE_CAT AS TABLE_CATALOG,
+                   	TABLE_SCHEM AS TABLE_SCHEMA,
+                    TABLE_NAME,
+                    '%s' AS TABLE_DEFINITION
+                FROM
+                   	INFORMATION_SCHEMA.SYSTEM_TABLES
+                """
+                    .formatted(definition))
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
@@ -271,10 +283,17 @@ public class TableExtRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 VIEW_TABLE_USAGE,
-                "SELECT "
-                    + "VIEW_CATALOG, VIEW_SCHEMA, VIEW_NAME, "
-                    + "TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME "
-                    + "FROM INFORMATION_SCHEMA.VIEW_TABLE_USAGE")
+                """
+                SELECT
+                  VIEW_CATALOG,
+                  VIEW_SCHEMA,
+                  VIEW_NAME,
+                  TABLE_CATALOG,
+                  TABLE_SCHEMA,
+                  TABLE_NAME
+                FROM
+                  INFORMATION_SCHEMA.VIEW_TABLE_USAGE
+                """)
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();

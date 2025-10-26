@@ -83,13 +83,21 @@ public class TableRetrieverTest extends AbstractRetrieverTest {
   @DisplayName("Test with malformed data in result sets")
   public void malformedDataInResultSets(final DatabaseConnectionSource dataSource)
       throws Exception {
-    final String sql =
-        "SELECT 'INVALID_CAT' AS TABLE_CAT, 'INVALID_SCHEMA' AS TABLE_SCHEM, '' AS TABLE_NAME,"
-            + " 'INVALID_TYPE' AS TABLE_TYPE, 'Test remarks' AS REMARKS FROM (VALUES(0))";
-
     final RetrieverConnection retrieverConnection =
         createRetrieverConnection(
-            dataSource, InformationSchemaKey.TABLES, sql, data_dictionary_all);
+            dataSource,
+            InformationSchemaKey.TABLES,
+            """
+            SELECT
+              'INVALID_CAT' AS TABLE_CAT,
+              'INVALID_SCHEMA' AS TABLE_SCHEM,
+              '' AS TABLE_NAME,
+              'INVALID_TYPE' AS TABLE_TYPE,
+              'Test remarks' AS REMARKS
+            FROM
+              (VALUES(0))
+            """,
+            data_dictionary_all);
 
     final TableRetriever tableRetriever =
         new TableRetriever(retrieverConnection, catalog, createOptions());

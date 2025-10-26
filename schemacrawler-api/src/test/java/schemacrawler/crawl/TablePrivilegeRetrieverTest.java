@@ -190,10 +190,18 @@ public class TablePrivilegeRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 TABLE_PRIVILEGES,
-                "SELECT "
-                    + "TABLE_CATALOG AS TABLE_CAT, TABLE_SCHEMA AS TABLE_SCHEM, TABLE_NAME, "
-                    + "GRANTOR, GRANTEE, PRIVILEGE_TYPE AS PRIVILEGE, IS_GRANTABLE "
-                    + "FROM INFORMATION_SCHEMA.TABLE_PRIVILEGES")
+                """
+                SELECT
+                  TABLE_CATALOG AS TABLE_CAT,
+                  TABLE_SCHEMA AS TABLE_SCHEM,
+                  TABLE_NAME,
+                  GRANTOR,
+                  GRANTEE,
+                  PRIVILEGE_TYPE AS PRIVILEGE,
+                  IS_GRANTABLE
+                FROM
+                  INFORMATION_SCHEMA.TABLE_PRIVILEGES
+                """)
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
