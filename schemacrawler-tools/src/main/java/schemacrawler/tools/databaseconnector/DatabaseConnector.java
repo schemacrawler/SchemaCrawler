@@ -127,16 +127,16 @@ public abstract class DatabaseConnector implements Options {
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
     if (connectionOptions instanceof DatabaseUrlConnectionOptions databaseUrlConnectionOptions) {
 
-      final String connectionUrl = databaseUrlConnectionOptions.getConnectionUrl();
+      final String connectionUrl = databaseUrlConnectionOptions.connectionUrl();
 
       dbConnectionSourceBuilder = DatabaseConnectionSourceBuilder.builder(connectionUrl);
     } else if (connectionOptions
         instanceof DatabaseServerHostConnectionOptions serverHostConnectionOptions) {
 
-      final String host = serverHostConnectionOptions.getHost();
-      final Integer port = serverHostConnectionOptions.getPort();
-      final String database = serverHostConnectionOptions.getDatabase();
-      final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
+      final String host = serverHostConnectionOptions.host();
+      final Integer port = serverHostConnectionOptions.port();
+      final String database = serverHostConnectionOptions.database();
+      final Map<String, String> urlx = serverHostConnectionOptions.urlx();
 
       dbConnectionSourceBuilder = databaseConnectionSourceBuilder();
       dbConnectionSourceBuilder.withHost(host);

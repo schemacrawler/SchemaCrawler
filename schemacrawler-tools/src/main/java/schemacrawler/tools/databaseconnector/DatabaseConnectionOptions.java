@@ -10,4 +10,5 @@ package schemacrawler.tools.databaseconnector;
 
 import schemacrawler.schemacrawler.Options;
 
-public interface DatabaseConnectionOptions extends Options {}
+public sealed interface DatabaseConnectionOptions extends Options
+    permits DatabaseUrlConnectionOptions, DatabaseServerHostConnectionOptions {}

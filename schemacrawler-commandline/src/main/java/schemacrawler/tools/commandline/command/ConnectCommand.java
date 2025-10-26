@@ -101,10 +101,10 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       final DatabaseConnector databaseConnector;
 
       if (connectionOptions instanceof DatabaseUrlConnectionOptions options1) {
-        final String connectionUrl = options1.getConnectionUrl();
+        final String connectionUrl = options1.connectionUrl();
         databaseConnector = databaseConnectorRegistry.findDatabaseConnectorFromUrl(connectionUrl);
       } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions options) {
-        final String databaseSystemIdentifier = options.getDatabaseSystemIdentifier();
+        final String databaseSystemIdentifier = options.databaseSystemIdentifier();
         if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
           throw new ConfigurationException(
               "Unknown server <%s>".formatted(databaseSystemIdentifier));

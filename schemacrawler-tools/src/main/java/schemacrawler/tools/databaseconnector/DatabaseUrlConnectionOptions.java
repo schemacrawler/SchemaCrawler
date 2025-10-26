@@ -8,15 +8,5 @@
 
 package schemacrawler.tools.databaseconnector;
 
-public class DatabaseUrlConnectionOptions implements DatabaseConnectionOptions {
-
-  private final String connectionUrl;
-
-  public DatabaseUrlConnectionOptions(final String connectionUrl) {
-    this.connectionUrl = connectionUrl;
-  }
-
-  public String getConnectionUrl() {
-    return connectionUrl;
-  }
-}
+public record DatabaseUrlConnectionOptions(String connectionUrl)
+    implements DatabaseConnectionOptions {}
