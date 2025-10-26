@@ -16,24 +16,16 @@ import java.util.List;
 
 public class TreeNode<T> {
 
-  private static class NodeLevel {
-    private final TreeNode<?> node;
-    private final int level;
-
-    NodeLevel(final TreeNode<?> node, final int level) {
-      this.node = node;
-      this.level = level;
-    }
-  }
+  private static record NodeLevel(TreeNode<?> node, int level) {}
 
   private final String name;
   private final T value;
-
-  private final List<TreeNode<?>> children = new ArrayList<>();
+  private final List<TreeNode<?>> children;
 
   public TreeNode(final String name, final T value) {
     this.name = name;
     this.value = value;
+    children = new ArrayList<>();
   }
 
   public TreeNode<?> addChild(final TreeNode<?> child) {
