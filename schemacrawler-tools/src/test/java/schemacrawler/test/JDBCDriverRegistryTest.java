@@ -16,9 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
 
 import java.util.Collection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
 import us.fatehi.test.utility.TestDatabaseDriver;
@@ -30,13 +28,14 @@ public class JDBCDriverRegistryTest {
   public void registeredPlugins() {
     final JDBCDriverRegistry driverRegistry = JDBCDriverRegistry.getJDBCDriverRegistry();
     final Collection<PropertyName> commandLineCommands = driverRegistry.getRegisteredPlugins();
-    assertThat(commandLineCommands, hasSize(2));
+    assertThat(commandLineCommands, hasSize(16));
   }
 
   @Test
   public void name() {
     final JDBCDriverRegistry driverRegistry = JDBCDriverRegistry.getJDBCDriverRegistry();
     assertThat(driverRegistry.getName(), is("JDBC Drivers"));
+    assertThat(driverRegistry.getRegisteredPlugins(), hasSize(16));
   }
 
   @Test

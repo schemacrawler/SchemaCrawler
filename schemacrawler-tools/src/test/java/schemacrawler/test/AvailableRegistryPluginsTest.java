@@ -8,6 +8,7 @@
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.hasItemInArray;
@@ -43,9 +44,10 @@ public class AvailableRegistryPluginsTest {
 
   @Test
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
-    assertThat(
-        getRegisteredPlugins(JDBCDriverRegistry.getJDBCDriverRegistry()),
-        hasItemInArray(TestDatabaseDriver.class.getName()));
+    final String[] availableJDBCDrivers =
+        getRegisteredPlugins(JDBCDriverRegistry.getJDBCDriverRegistry());
+    assertThat(availableJDBCDrivers.length, is(16));
+    assertThat(availableJDBCDrivers, hasItemInArray(TestDatabaseDriver.class.getName()));
   }
 
   @Test
