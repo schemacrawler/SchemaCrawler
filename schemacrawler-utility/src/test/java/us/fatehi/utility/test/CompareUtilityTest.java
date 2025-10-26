@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.CompareUtility;
 
@@ -27,7 +27,7 @@ public class CompareUtilityTest {
         CompareUtility.compareLists(new ArrayList<String>(), new ArrayList<String>()), is(0));
 
     // Same length and values
-    assertThat(CompareUtility.compareLists(Arrays.asList("hello"), Arrays.asList("hello")), is(0));
+    assertThat(CompareUtility.compareLists(List.of("hello"), List.of("hello")), is(0));
   }
 
   @Test
@@ -41,18 +41,12 @@ public class CompareUtilityTest {
   public void unequal() {
     // Different lengths
     assertThat(
-        CompareUtility.compareLists(Arrays.asList("hello"), new ArrayList<String>()),
-        is(greaterThan(0)));
+        CompareUtility.compareLists(List.of("hello"), new ArrayList<String>()), is(greaterThan(0)));
     assertThat(
-        CompareUtility.compareLists(new ArrayList<String>(), Arrays.asList("hello")),
-        is(lessThan(0)));
+        CompareUtility.compareLists(new ArrayList<String>(), List.of("hello")), is(lessThan(0)));
 
     // Same length different values
-    assertThat(
-        CompareUtility.compareLists(Arrays.asList("zorro"), Arrays.asList("hello")),
-        is(greaterThan(0)));
-    assertThat(
-        CompareUtility.compareLists(Arrays.asList("hello"), Arrays.asList("zorro")),
-        is(lessThan(0)));
+    assertThat(CompareUtility.compareLists(List.of("zorro"), List.of("hello")), is(greaterThan(0)));
+    assertThat(CompareUtility.compareLists(List.of("hello"), List.of("zorro")), is(lessThan(0)));
   }
 }

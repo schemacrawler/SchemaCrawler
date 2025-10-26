@@ -20,6 +20,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -86,7 +87,7 @@ public class RoutineRetrieverFunctionsTest {
 
     final RoutineRetriever functionRetriever =
         new RoutineRetriever(retrieverConnection, catalog, options);
-    functionRetriever.retrieveRoutines(Arrays.asList(RoutineType.function), new IncludeAll());
+    functionRetriever.retrieveRoutines(List.of(RoutineType.function), new IncludeAll());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

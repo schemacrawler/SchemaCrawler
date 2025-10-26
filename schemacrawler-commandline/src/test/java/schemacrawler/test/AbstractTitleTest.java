@@ -15,8 +15,8 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -69,7 +69,7 @@ public abstract class AbstractTitleTest {
   }
 
   protected Stream<String> commands() {
-    return Arrays.asList("schema", "list").stream();
+    return List.of("schema", "list").stream();
   }
 
   protected abstract Stream<? extends OutputFormat> outputFormats();

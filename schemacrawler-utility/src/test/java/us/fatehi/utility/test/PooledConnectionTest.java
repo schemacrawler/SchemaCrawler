@@ -20,8 +20,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeAll;
@@ -80,7 +80,7 @@ public class PooledConnectionTest {
 
     for (final Method method : methodsMap.values()) {
       if (method.getParameterCount() == 0) {
-        if (Arrays.asList("close", "setSavepoint", "isClosed").contains(method.getName())) {
+        if (List.of("close", "setSavepoint", "isClosed").contains(method.getName())) {
           continue;
         }
         assertThrows(
@@ -98,7 +98,7 @@ public class PooledConnectionTest {
 
     for (final Method method : methodsMap.values()) {
       if (method.getParameterCount() == 0) {
-        if (Arrays.asList("close", "setSavepoint").contains(method.getName())) {
+        if (List.of("close", "setSavepoint").contains(method.getName())) {
           continue;
         }
         // Assert nothing is thrown from method call

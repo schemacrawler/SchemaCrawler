@@ -16,7 +16,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,23 +41,22 @@ public class GrepCommandLineTest {
 
   public static Stream<Arguments> _grepTestArguments() {
     final List<List<Map.Entry<String, String>>> grepArgs =
-        Arrays.asList(
-            Arrays.asList(
-                new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\.STREET|.*\\.PRICE")),
-            Arrays.asList(new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\..*NAME")),
-            Arrays.asList(new AbstractMap.SimpleEntry<>("--grep-def", ".*book authors.*")),
-            Arrays.asList(
+        List.of(
+            List.of(new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\.STREET|.*\\.PRICE")),
+            List.of(new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\..*NAME")),
+            List.of(new AbstractMap.SimpleEntry<>("--grep-def", ".*book authors.*")),
+            List.of(
                 new AbstractMap.SimpleEntry<>("--tables", ""),
                 new AbstractMap.SimpleEntry<>("--routines", ".*"),
                 new AbstractMap.SimpleEntry<>("--grep-parameters", ".*\\.B_COUNT")),
-            Arrays.asList(
+            List.of(
                 new AbstractMap.SimpleEntry<>("--tables", ""),
                 new AbstractMap.SimpleEntry<>("--routines", ".*"),
                 new AbstractMap.SimpleEntry<>("--grep-parameters", ".*\\.B_OFFSET")),
-            Arrays.asList(
+            List.of(
                 new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\.STREET|.*\\.PRICE"),
                 new AbstractMap.SimpleEntry<>("--grep-def", ".*book authors.*")),
-            Arrays.asList(new AbstractMap.SimpleEntry<>("--grep-tables", ".*\\.BOOKS")));
+            List.of(new AbstractMap.SimpleEntry<>("--grep-tables", ".*\\.BOOKS")));
 
     return IntStream.range(0, grepArgs.size()).mapToObj(i -> Arguments.of(i, grepArgs.get(i)));
   }

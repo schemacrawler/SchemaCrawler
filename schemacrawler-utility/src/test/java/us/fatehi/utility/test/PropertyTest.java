@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.List;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,7 @@ public class PropertyTest {
         new PropertyEx(new PropertyName("name", "description"), new String[] {"v1", "v2"});
     assertThat(arrayValueProperty.getName(), is("name"));
     assertThat(arrayValueProperty.getDescription(), is("description"));
-    assertThat(arrayValueProperty.getValue(), is(Arrays.asList("v1", "v2")));
+    assertThat(arrayValueProperty.getValue(), is(List.of("v1", "v2")));
     assertThat(arrayValueProperty.toString(), is("name = [v1, v2]"));
   }
 

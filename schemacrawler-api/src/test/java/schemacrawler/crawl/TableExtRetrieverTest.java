@@ -19,7 +19,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -69,8 +68,7 @@ public class TableExtRetrieverTest {
             case "NAME_TYPE":
               final EnumDataTypeInfo enumDataTypeType =
                   new EnumDataTypeInfo(
-                      EnumDataTypeTypes.enumerated_data_type,
-                      Arrays.asList("Moe", "Larry", "Curly"));
+                      EnumDataTypeTypes.enumerated_data_type, List.of("Moe", "Larry", "Curly"));
               assertThat(
                   enumDataTypeType.toString(),
                   is("EnumDataTypeInfo [enumerated_data_type, [Moe, Larry, Curly]]"));
@@ -78,7 +76,7 @@ public class TableExtRetrieverTest {
             case "AGE_TYPE":
               final EnumDataTypeInfo enumColumnType =
                   new EnumDataTypeInfo(
-                      EnumDataTypeTypes.enumerated_column, Arrays.asList("1", "16", "29"));
+                      EnumDataTypeTypes.enumerated_column, List.of("1", "16", "29"));
               assertThat(
                   enumColumnType.toString(),
                   is("EnumDataTypeInfo [enumerated_column, [1, 16, 29]]"));
@@ -131,7 +129,7 @@ public class TableExtRetrieverTest {
     assertThat(
         firstNameDataType == firstNameDataTypeMain, is(true)); // assert same object reference
     assertThat(firstNameDataType.isEnumerated(), is(true));
-    assertThat(firstNameDataType.getEnumValues(), is(Arrays.asList("Moe", "Larry", "Curly")));
+    assertThat(firstNameDataType.getEnumValues(), is(List.of("Moe", "Larry", "Curly")));
 
     // Enumerated column data type
     final Column age = table.lookupColumn("AGE").orElseThrow(IllegalAccessException::new);
@@ -142,7 +140,7 @@ public class TableExtRetrieverTest {
             .orElseThrow(IllegalAccessException::new);
     assertThat(ageDataType == ageDataTypeMain, is(false)); // assert different object references
     assertThat(ageDataType.isEnumerated(), is(true));
-    assertThat(ageDataType.getEnumValues(), is(Arrays.asList("1", "16", "29")));
+    assertThat(ageDataType.getEnumValues(), is(List.of("1", "16", "29")));
     assertThat(ageDataTypeMain.isEnumerated(), is(false));
     assertThat(ageDataTypeMain.getEnumValues(), is(Collections.EMPTY_LIST));
   }

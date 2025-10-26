@@ -26,7 +26,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -77,8 +76,7 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
     }
 
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(schema -> Arrays.asList("test").contains(schema));
+        LimitOptionsBuilder.builder().includeSchemas(schema -> List.of("test").contains(schema));
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel.withLimitOptions(
             limitOptionsBuilder.toOptions());
@@ -172,7 +170,7 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(schema -> Arrays.asList("duplicate_names").contains(schema));
+            .includeSchemas(schema -> List.of("duplicate_names").contains(schema));
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel.withLimitOptions(
             limitOptionsBuilder.toOptions());

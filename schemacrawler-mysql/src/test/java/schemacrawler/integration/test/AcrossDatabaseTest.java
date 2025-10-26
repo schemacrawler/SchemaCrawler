@@ -18,7 +18,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -53,7 +53,7 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(schema -> Arrays.asList("schema_a_a", "schema_a_b").contains(schema));
+            .includeSchemas(schema -> List.of("schema_a_a", "schema_a_b").contains(schema));
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
         SchemaInfoLevelBuilder.builder()
             .withTag("maximum-without-grants")

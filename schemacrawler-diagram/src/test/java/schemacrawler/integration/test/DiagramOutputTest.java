@@ -23,7 +23,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -191,12 +191,10 @@ public class DiagramOutputTest {
         getCatalog(
             dataSource,
             (column, columnDataType, conn) -> {
-              if (column.getName().equals("FIRSTNAME")) {
-                return new EnumDataTypeInfo(
-                    enumerated_column, Arrays.asList("Tom", "Dick", "Harry"));
-              } else {
-                return EMPTY_ENUM_DATA_TYPE_INFO;
+              if ("FIRSTNAME".equals(column.getName())) {
+                return new EnumDataTypeInfo(enumerated_column, List.of("Tom", "Dick", "Harry"));
               }
+              return EMPTY_ENUM_DATA_TYPE_INFO;
             });
 
     executableDiagram(

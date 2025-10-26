@@ -182,15 +182,15 @@ public class SchemaCrawlerTest {
     // 1. Happy path - good alternate key
     builder.addAlternateKey(
         new AlternateKeyDefinition(
-            alternateKeySchema, "AUTHORS", "1_alternate_key", Arrays.asList("ID")));
+            alternateKeySchema, "AUTHORS", "1_alternate_key", List.of("ID")));
     // 2. External table - not built
     builder.addAlternateKey(
         new AlternateKeyDefinition(
-            alternateKeySchema, "OTHERTABLE", "2_alternate_key", Arrays.asList("ID")));
+            alternateKeySchema, "OTHERTABLE", "2_alternate_key", List.of("ID")));
     // 3. External column - not built
     builder.addAlternateKey(
         new AlternateKeyDefinition(
-            alternateKeySchema, "AUTHORS", "3_alternate_key", Arrays.asList("OTHERCOLUMN")));
+            alternateKeySchema, "AUTHORS", "3_alternate_key", List.of("OTHERCOLUMN")));
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

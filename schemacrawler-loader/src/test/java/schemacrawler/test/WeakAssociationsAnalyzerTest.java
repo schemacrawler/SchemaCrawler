@@ -19,8 +19,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -102,11 +102,10 @@ public class WeakAssociationsAnalyzerTest {
         catalog.lookupTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKAUTHORS").get();
 
     assertThat(
-        new WeakAssociationsAnalyzer(Arrays.asList(booksTable), w -> true).analyzeTables(),
-        hasSize(0));
+        new WeakAssociationsAnalyzer(List.of(booksTable), w -> true).analyzeTables(), hasSize(0));
 
     assertThat(
-        new WeakAssociationsAnalyzer(Arrays.asList(booksTable, bookAuthorsTable), w -> true)
+        new WeakAssociationsAnalyzer(List.of(booksTable, bookAuthorsTable), w -> true)
             .analyzeTables(),
         hasSize(1));
   }

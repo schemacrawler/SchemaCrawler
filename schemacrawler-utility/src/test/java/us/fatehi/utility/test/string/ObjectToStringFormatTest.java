@@ -11,7 +11,6 @@ package us.fatehi.utility.test.string;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class ObjectToStringFormatTest {
         new ObjectToStringFormat("hello, world").get(),
         is(new ObjectToStringFormat("hello, world").toString()));
 
-    final List<String> list = Arrays.asList("one", "two", "three");
+    final List<String> list = List.of("one", "two", "three");
     assertThat(new ObjectToStringFormat(list).get(), is("[\"one\", \"two\", \"three\"]"));
 
     final Map<String, Integer> map = new HashMap<>();
@@ -68,8 +67,8 @@ public class ObjectToStringFormatTest {
     assertThat(
         new ObjectToStringFormat(new SomeClass("hello, world", 42)).get().replaceAll("\\R", ""),
         is(
-            "{  \"@object\": \"us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass\",  "
-                + "\"integer\": 42,  \"string\": \"hello, world\"}"));
+            "{  \"@object\": \"us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass\", "
+                + " \"integer\": 42,  \"string\": \"hello, world\"}"));
   }
 
   @Test

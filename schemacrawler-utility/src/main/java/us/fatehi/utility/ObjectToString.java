@@ -128,7 +128,7 @@ public class ObjectToString {
     }
 
     final Class<?> objectClass = object.getClass();
-    return Arrays.asList(
+    return List.of(
             Integer.class,
             Long.class,
             Double.class,

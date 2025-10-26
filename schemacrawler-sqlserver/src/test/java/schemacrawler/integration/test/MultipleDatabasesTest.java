@@ -18,7 +18,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
@@ -80,8 +80,7 @@ public class MultipleDatabasesTest extends BaseAdditionalDatabaseTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(
-                schema -> Arrays.asList("DATABASE_A.dbo", "DATABASE_B.dbo").contains(schema));
+            .includeSchemas(schema -> List.of("DATABASE_A.dbo", "DATABASE_B.dbo").contains(schema));
     final SchemaInfoLevel schemaInfoLevel = SchemaInfoLevelBuilder.maximum();
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(schemaInfoLevel);
