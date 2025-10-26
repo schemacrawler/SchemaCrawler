@@ -154,7 +154,7 @@ public class SqlScript implements Runnable {
       final String trimmedLine = line.trim();
       final boolean isComment = trimmedLine.startsWith("--") || trimmedLine.startsWith("//");
       if (!isComment && trimmedLine.endsWith(delimiter)) {
-        sql.append(line.substring(0, line.lastIndexOf(delimiter)));
+        sql.append(line, 0, line.lastIndexOf(delimiter));
         list.add(sql.toString());
         sql = new StringBuilder();
       } else {
