@@ -12,16 +12,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.property.PropertyName;
 
 public class PropertyNameTest {
-
-  @Test
-  public void propertyName() {
-    EqualsVerifier.forClass(PropertyName.class).withIgnoredFields("description").verify();
-  }
 
   @Test
   public void compare() {

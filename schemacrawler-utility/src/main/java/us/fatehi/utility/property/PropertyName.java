@@ -8,81 +8,59 @@
 
 package us.fatehi.utility.property;
 
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.nullsLast;
-import static java.util.Objects.compare;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.Objects;
 
-public final class PropertyName implements Serializable, Comparable<PropertyName> {
+public record PropertyName(String name, String description)
+    implements Serializable, Comparable<PropertyName> {
 
   @Serial private static final long serialVersionUID = 2444083929278551904L;
 
-  private static Comparator<PropertyName> comparator =
-      nullsLast(comparing(PropertyName::getName, String.CASE_INSENSITIVE_ORDER));
+  private static final Comparator<PropertyName> comparator =
+      Comparator.nullsLast(Comparator.comparing(PropertyName::name, String.CASE_INSENSITIVE_ORDER));
 
-  private final String name;
-  private final String description;
+  public PropertyName {
+    name = requireNotBlank(name, "Property name not provided").trim();
+    description = isBlank(description) ? "" : description.trim();
+  }
 
   public PropertyName(final String name) {
     this(name, null);
   }
 
-  public PropertyName(final String name, final String description) {
-    this.name = requireNotBlank(name, "Property name not provided").trim();
-
-    if (isBlank(description)) {
-      this.description = null;
-    } else {
-      this.description = description.trim();
-    }
-  }
-
   @Override
-  public int compareTo(final PropertyName otherProperty) {
-    return compare(this, otherProperty, comparator);
-  }
-
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if ((obj == null) || !(obj instanceof PropertyName)) {
-      return false;
-    }
-    final PropertyName other = (PropertyName) obj;
-    if (!Objects.equals(name, other.name)) {
-      return false;
-    }
-    return true;
-  }
-
-  public String getDescription() {
-    return description == null ? "" : description;
+  public int compareTo(final PropertyName other) {
+    return compare(this, other, comparator);
   }
 
   public String getName() {
-    return name;
+    return name();
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name);
+  public String getDescription() {
+    return description();
   }
 
   @Override
   public String toString() {
-    final StringBuilder builder = new StringBuilder();
-    builder.append(name);
-    if (description != null) {
-      builder.append(" - ").append(description);
+    return description.isBlank() ? name : name + " - " + description;
+  }
+
+  // Utility methods assumed to exist
+  private static String requireNotBlank(final String value, final String message) {
+    if (value == null || value.isBlank()) {
+      throw new IllegalArgumentException(message);
     }
-    return builder.toString();
+    return value;
+  }
+
+  private static boolean isBlank(final String value) {
+    return value == null || value.isBlank();
+  }
+
+  private static int compare(
+      final PropertyName a, final PropertyName b, final Comparator<PropertyName> comparator) {
+    return comparator.compare(a, b);
   }
 }
