@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable MD041 -->
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
-[![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
+[![Database Integration Tests](https://github.com/schemacrawler/SchemaCrawler/actions/workflows/database-integration-tests.yml/badge.svg?branch=main)](https://github.com/schemacrawler/SchemaCrawler/actions/workflows/database-integration-tests.yml)
 [![Codacy Grade](https://app.codacy.com/project/badge/Grade/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard)
 [![Codacy Coverage](https://img.shields.io/codacy/coverage/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard)
 
