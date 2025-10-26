@@ -146,7 +146,8 @@ final class RoutineExtRetriever extends AbstractRetriever {
     final String referencedObjectCatalogName = results.getString("REFERENCED_OBJECT_CATALOG");
     final String referencedObjectSchemaName = results.getString("REFERENCED_OBJECT_SCHEMA");
     final String referencedObjectName = results.getString("REFERENCED_OBJECT_NAME");
-    // final String referencedObjectType = results.getString("REFERENCED_OBJECT_TYPE");
+    // final String referencedObjectType =
+    // results.getString("REFERENCED_OBJECT_TYPE");
 
     final Optional<MutableRoutine> routineOptional =
         lookupRoutine(catalogName, schemaName, routineName, specificName);
@@ -176,11 +177,11 @@ final class RoutineExtRetriever extends AbstractRetriever {
       final String specificName) {
     final Optional<MutableTable> tableOptional = lookupTable(catalogName, schemaName, objectName);
     if (tableOptional.isPresent()) {
-      return Optional.of((DatabaseObject) tableOptional.get());
+      return Optional.of(tableOptional.get());
     }
     lookupRoutine(catalogName, schemaName, objectName, specificName);
     if (tableOptional.isPresent()) {
-      return Optional.of((DatabaseObject) tableOptional.get());
+      return Optional.of(tableOptional.get());
     }
     return Optional.empty();
   }
@@ -195,7 +196,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
             new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        boolean addedRoutineInformation = addRoutineInformation(results);
+        final boolean addedRoutineInformation = addRoutineInformation(results);
         retrievalCounts.countIfIncluded(addedRoutineInformation);
       }
     } catch (final Exception e) {
@@ -219,7 +220,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
               new MetadataResultSet(routineDefinitionsSql, statement, getLimitMap(schema)); ) {
         while (results.next()) {
           retrievalCounts.count(schema.key());
-          boolean addedRoutineInformation = addRoutineInformation(results);
+          final boolean addedRoutineInformation = addRoutineInformation(results);
           retrievalCounts.countIfIncluded(schema.key(), addedRoutineInformation);
         }
       } catch (final Exception e) {
@@ -243,7 +244,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
             new MetadataResultSet(routineReferencesSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        boolean addedRoutineReferences = addRoutineReferences(results);
+        final boolean addedRoutineReferences = addRoutineReferences(results);
         retrievalCounts.countIfIncluded(addedRoutineReferences);
       }
     } catch (final Exception e) {
@@ -267,7 +268,7 @@ final class RoutineExtRetriever extends AbstractRetriever {
               new MetadataResultSet(routineReferencesSql, statement, getLimitMap(schema)); ) {
         while (results.next()) {
           retrievalCounts.count(schema.key());
-          boolean addedRoutineReferences = addRoutineReferences(results);
+          final boolean addedRoutineReferences = addRoutineReferences(results);
           retrievalCounts.countIfIncluded(schema.key(), addedRoutineReferences);
         }
       } catch (final Exception e) {
