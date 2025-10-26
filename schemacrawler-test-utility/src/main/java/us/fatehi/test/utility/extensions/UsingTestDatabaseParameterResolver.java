@@ -40,24 +40,7 @@ public class UsingTestDatabaseParameterResolver
         AfterAllCallback,
         AfterEachCallback {
 
-  private static class AnnotationInfo {
-
-    private final String script;
-    private final AnnotationType annotationType;
-
-    public AnnotationInfo(final String script, final AnnotationType annotationType) {
-      this.script = script;
-      this.annotationType = annotationType;
-    }
-
-    public AnnotationType getAnnotationType() {
-      return annotationType;
-    }
-
-    public String getScript() {
-      return script;
-    }
-
+  private record AnnotationInfo(String script, AnnotationType annotationType) {
     public boolean hasScript() {
       return script != null && !script.isBlank();
     }
@@ -105,7 +88,7 @@ public class UsingTestDatabaseParameterResolver
 
   @Override
   public void afterEach(final ExtensionContext context) throws Exception {
-    final AnnotationType annotationType = locateAnnotation(context).getAnnotationType();
+    final AnnotationType annotationType = locateAnnotation(context).annotationType();
     if (annotationType == AnnotationType.methodAnnotation) {
       closeDataSource();
     }
@@ -118,7 +101,7 @@ public class UsingTestDatabaseParameterResolver
 
   @Override
   public void beforeEach(final ExtensionContext context) throws Exception {
-    final AnnotationType annotationType = locateAnnotation(context).getAnnotationType();
+    final AnnotationType annotationType = locateAnnotation(context).annotationType();
     if (annotationType == AnnotationType.methodAnnotation) {
       createDataSource(context);
     }
@@ -183,7 +166,7 @@ public class UsingTestDatabaseParameterResolver
     }
     final AnnotationInfo annotationInfo = locateAnnotation(context);
     if (annotationInfo.hasScript()) {
-      dataSource = DataSourceTestUtility.newEmbeddedDatabase(annotationInfo.getScript());
+      dataSource = DataSourceTestUtility.newEmbeddedDatabase(annotationInfo.script());
     } else {
       dataSource =
           DataSourceTestUtility.createDataSource(testDatabase.getConnectionUrl(), "sa", "", null);
