@@ -48,28 +48,18 @@ public class LinterProviderTableWithIncrementingColumns extends BaseLinterProvid
 
 class LinterTableWithIncrementingColumns extends BaseLinter {
 
-  private static class IncrementingColumn {
-    private final int columnIncrement;
-    private final Column column;
+  private record IncrementingColumn(int columnIncrement, Column column) {
 
-    IncrementingColumn(final String columnIncrement, final Column column) {
-      int columnInc = -1;
+    public IncrementingColumn(String columnIncrement, Column column) {
+      this(parse(columnIncrement), column);
+    }
+
+    private static int parse(String value) {
       try {
-        columnInc = Integer.parseInt(columnIncrement);
-      } catch (final NumberFormatException e) {
-        columnInc = -1;
+        return Integer.parseInt(value);
+      } catch (NumberFormatException e) {
+        return -1;
       }
-      this.columnIncrement = columnInc;
-
-      this.column = column;
-    }
-
-    public Column getColumn() {
-      return column;
-    }
-
-    public int getColumnIncrement() {
-      return columnIncrement;
     }
   }
 
@@ -102,10 +92,10 @@ class LinterTableWithIncrementingColumns extends BaseLinter {
     final ArrayList<Column> incrementingColumns = new ArrayList<>(incrementingColumnsList.size());
     for (int i = 0; i < incrementingColumnsList.size(); i++) {
       final IncrementingColumn incrementingColumn = incrementingColumnsList.get(i);
-      incrementingColumns.add(i, incrementingColumn.getColumn());
+      incrementingColumns.add(i, incrementingColumn.column());
 
-      minIncrement = Math.min(minIncrement, incrementingColumn.getColumnIncrement());
-      maxIncrement = Math.max(maxIncrement, incrementingColumn.getColumnIncrement());
+      minIncrement = Math.min(minIncrement, incrementingColumn.columnIncrement());
+      maxIncrement = Math.max(maxIncrement, incrementingColumn.columnIncrement());
     }
     incrementingColumns.sort(naturalOrder());
     addTableLint(table, getSummary(), incrementingColumns);
