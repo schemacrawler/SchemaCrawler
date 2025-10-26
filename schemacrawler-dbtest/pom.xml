@@ -59,7 +59,7 @@
     </dependency>
 
     <!-- NOTE: Cassandra driver is repeated here to
-         override dependencies from Testcontainters Cassandra container -->
+         override dependencies from Testcontainers Cassandra container -->
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>

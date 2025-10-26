@@ -14,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.PluginRegistryTestUtility.reload;
+import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class JDBCDriverRegistryTest {
   public void name() {
     final JDBCDriverRegistry driverRegistry = JDBCDriverRegistry.getJDBCDriverRegistry();
     assertThat(driverRegistry.getName(), is("JDBC Drivers"));
-    assertThat(driverRegistry.getRegisteredPlugins(), hasSize(16));
+    assertThat(driverRegistry.getRegisteredPlugins(), hasSize(JDBC_DRIVER_COUNT));
   }
 
   @Test

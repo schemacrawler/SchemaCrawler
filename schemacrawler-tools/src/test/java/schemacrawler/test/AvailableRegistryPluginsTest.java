@@ -12,6 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.hasItemInArray;
+import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class AvailableRegistryPluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     final String[] availableJDBCDrivers =
         getRegisteredPlugins(JDBCDriverRegistry.getJDBCDriverRegistry());
-    assertThat(availableJDBCDrivers.length, is(16));
+    assertThat(availableJDBCDrivers.length, is(JDBC_DRIVER_COUNT));
     assertThat(availableJDBCDrivers, hasItemInArray(TestDatabaseDriver.class.getName()));
   }
 

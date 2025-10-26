@@ -25,6 +25,8 @@ import org.hsqldb.jdbc.JDBCDataSource;
 
 public final class DataSourceTestUtility {
 
+  public static final int JDBC_DRIVER_COUNT = 16;
+
   public static DataSource createDataSource(
       final String connectionUrl,
       final String user,

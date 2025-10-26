@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -50,7 +51,7 @@ public class AvailablePluginsTest {
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     final AvailableJDBCDrivers availableJDBCDrivers = new AvailableJDBCDrivers();
     final int size = availableJDBCDrivers.size();
-    assertThat(size, is(16));
+    assertThat(size, is(JDBC_DRIVER_COUNT));
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String utf8 = StandardCharsets.UTF_8.name();

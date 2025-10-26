@@ -29,6 +29,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -109,7 +110,7 @@ public class DatabaseUtilityTest {
   @Test
   public void getAvailableJdbcDrivers() throws SQLException {
     final Collection<Driver> drivers = DatabaseUtility.getAvailableJdbcDrivers();
-    assertThat(drivers, hasSize(16));
+    assertThat(drivers, hasSize(JDBC_DRIVER_COUNT));
     assertThat(
         drivers,
         everyItem(is(anyOf(instanceOf(Driver.class), instanceOf(TestDatabaseDriver.class)))));
