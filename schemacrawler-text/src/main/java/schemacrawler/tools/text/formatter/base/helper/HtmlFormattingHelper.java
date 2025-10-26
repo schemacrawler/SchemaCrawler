@@ -113,10 +113,7 @@ public final class HtmlFormattingHelper extends BaseTextFormattingHelper {
       caption.addInnerTag(span);
     }
 
-    final StringBuilder buffer = new StringBuilder(1024);
-    buffer.append(caption.render(TagOutputFormat.html)).append(System.lineSeparator());
-
-    out.println(buffer.toString());
+    out.println(caption.render(TagOutputFormat.html) + System.lineSeparator());
   }
 
   /** {@inheritDoc} */

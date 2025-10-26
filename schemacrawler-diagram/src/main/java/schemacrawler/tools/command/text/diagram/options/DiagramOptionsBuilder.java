@@ -27,7 +27,7 @@ import us.fatehi.utility.string.StringFormat;
 public final class DiagramOptionsBuilder
     extends BaseSchemaTextOptionsBuilder<DiagramOptionsBuilder, DiagramOptions> {
 
-  protected static final String SCHEMACRAWLER_GRAPH_PREFIX = "schemacrawler.graph.";
+  private static final String SCHEMACRAWLER_GRAPH_PREFIX = "schemacrawler.graph.";
 
   private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY =
       SCHEMACRAWLER_GRAPH_PREFIX + "show.primarykey.cardinality";
