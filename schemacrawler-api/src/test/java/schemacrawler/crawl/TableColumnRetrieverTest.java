@@ -270,42 +270,43 @@ public class TableColumnRetrieverTest {
 
     // Create a SQL query that returns malformed data
     final String sqlWithMalformedData =
-        "SELECT "
-            + "'PUBLIC' AS TABLE_CAT, "
-            + "'BOOKS' AS TABLE_SCHEM, "
-            + "'AUTHORS' AS TABLE_NAME, "
-            + // Using a known table name
-            "'TEST_COLUMN' AS COLUMN_NAME, "
-            + "999999 AS DATA_TYPE, "
-            + // Invalid data type
-            "'INVALID_TYPE' AS TYPE_NAME, "
-            + "-1 AS COLUMN_SIZE, "
-            + // Negative size
-            "999 AS DECIMAL_DIGITS, "
-            + // Too many decimal digits
-            "0 AS NUM_PREC_RADIX, "
-            + // Invalid radix
-            "999 AS NULLABLE, "
-            + // Invalid nullable value
-            "'Test remarks' AS REMARKS, "
-            + "'default' AS COLUMN_DEF, "
-            + "0 AS SQL_DATA_TYPE, "
-            + "0 AS SQL_DATETIME_SUB, "
-            + "0 AS CHAR_OCTET_LENGTH, "
-            + "1 AS ORDINAL_POSITION, "
-            + "'INVALID' AS IS_NULLABLE, "
-            + // Invalid is_nullable value
-            "NULL AS SCOPE_CATALOG, "
-            + "NULL AS SCOPE_SCHEMA, "
-            + "NULL AS SCOPE_TABLE, "
-            + "NULL AS SOURCE_DATA_TYPE, "
-            + "'INVALID' AS IS_AUTOINCREMENT, "
-            + // Invalid
-            // is_autoincrement
-            // value
-            "'INVALID' AS IS_GENERATEDCOLUMN "
-            + // Invalid is_generatedcolumn value
-            "FROM (VALUES(0))";
+        """
+        SELECT
+          'PUBLIC' AS TABLE_CAT,
+          'BOOKS' AS TABLE_SCHEM,
+          'AUTHORS' AS TABLE_NAME,
+          -- Using a known table name
+          'TEST_COLUMN' AS COLUMN_NAME,
+          999999 AS DATA_TYPE,
+          -- Invalid data type
+          'INVALID_TYPE' AS TYPE_NAME,
+          -1 AS COLUMN_SIZE,
+          -- Negative size
+          999 AS DECIMAL_DIGITS,
+          -- Too many decimal digits
+          0 AS NUM_PREC_RADIX,
+          -- Invalid radix
+          999 AS NULLABLE,
+          -- Invalid nullable value
+          'Test remarks' AS REMARKS,
+          'default' AS COLUMN_DEF,
+          0 AS SQL_DATA_TYPE,
+          0 AS SQL_DATETIME_SUB,
+          0 AS CHAR_OCTET_LENGTH,
+          1 AS ORDINAL_POSITION,
+          'INVALID' AS IS_NULLABLE,
+          -- Invalid is_nullable value
+          NULL AS SCOPE_CATALOG,
+          NULL AS SCOPE_SCHEMA,
+          NULL AS SCOPE_TABLE,
+          NULL AS SOURCE_DATA_TYPE,
+          'INVALID' AS IS_AUTOINCREMENT,
+          -- Invalid is_autoincrement value
+          'INVALID' AS IS_GENERATEDCOLUMN
+          -- Invalid is_generatedcolumn value
+        FROM
+          (VALUES(0))
+        """;
 
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
@@ -346,36 +347,39 @@ public class TableColumnRetrieverTest {
 
     // Create a SQL query that returns a row with NULL values in critical fields
     final String sqlWithNullColumnName =
-        "SELECT "
-            + "'PUBLIC' AS TABLE_CAT, "
-            + "'BOOKS' AS TABLE_SCHEM, "
-            + "'AUTHORS' AS TABLE_NAME, "
-            + // Using a known table name
-            "NULL AS COLUMN_NAME, "
-            + // Use a null column name
-            "NULL AS DATA_TYPE, "
-            + // NULL data type
-            "NULL AS TYPE_NAME, "
-            + // NULL type name
-            "NULL AS COLUMN_SIZE, "
-            + "NULL AS DECIMAL_DIGITS, "
-            + "NULL AS NUM_PREC_RADIX, "
-            + "NULL AS NULLABLE, "
-            + "NULL AS REMARKS, "
-            + "NULL AS COLUMN_DEF, "
-            + "NULL AS SQL_DATA_TYPE, "
-            + "NULL AS SQL_DATETIME_SUB, "
-            + "NULL AS CHAR_OCTET_LENGTH, "
-            + "1 AS ORDINAL_POSITION, "
-            + // Need a valid ordinal position
-            "NULL AS IS_NULLABLE, "
-            + "NULL AS SCOPE_CATALOG, "
-            + "NULL AS SCOPE_SCHEMA, "
-            + "NULL AS SCOPE_TABLE, "
-            + "NULL AS SOURCE_DATA_TYPE, "
-            + "NULL AS IS_AUTOINCREMENT, "
-            + "NULL AS IS_GENERATEDCOLUMN "
-            + "FROM (VALUES(0))";
+        """
+        SELECT
+          'PUBLIC' AS TABLE_CAT,
+          'BOOKS' AS TABLE_SCHEM,
+          'AUTHORS' AS TABLE_NAME,
+          -- Using a known table name
+          NULL AS COLUMN_NAME,
+          -- Use a null column name
+          NULL AS DATA_TYPE,
+          -- NULL data type
+          NULL AS TYPE_NAME,
+          -- NULL type name
+          NULL AS COLUMN_SIZE,
+          NULL AS DECIMAL_DIGITS,
+          NULL AS NUM_PREC_RADIX,
+          NULL AS NULLABLE,
+          NULL AS REMARKS,
+          NULL AS COLUMN_DEF,
+          NULL AS SQL_DATA_TYPE,
+          NULL AS SQL_DATETIME_SUB,
+          NULL AS CHAR_OCTET_LENGTH,
+          1 AS ORDINAL_POSITION,
+          -- Need a valid ordinal position
+          NULL AS IS_NULLABLE,
+          NULL AS SCOPE_CATALOG,
+          NULL AS SCOPE_SCHEMA,
+          NULL AS SCOPE_TABLE,
+          NULL AS SOURCE_DATA_TYPE,
+          NULL AS IS_AUTOINCREMENT,
+          NULL AS IS_GENERATEDCOLUMN
+        FROM
+          (VALUES(0))
+        """;
 
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
@@ -416,36 +420,39 @@ public class TableColumnRetrieverTest {
 
     // Create a SQL query that returns a row with NULL values in critical fields
     final String sqlWithNulls =
-        "SELECT "
-            + "'PUBLIC' AS TABLE_CAT, "
-            + "'BOOKS' AS TABLE_SCHEM, "
-            + "'AUTHORS' AS TABLE_NAME, "
-            + // Using a known table name
-            "'NULL_TEST_COLUMN' AS COLUMN_NAME, "
-            + // Use a unique column name
-            "NULL AS DATA_TYPE, "
-            + // NULL data type
-            "NULL AS TYPE_NAME, "
-            + // NULL type name
-            "NULL AS COLUMN_SIZE, "
-            + "NULL AS DECIMAL_DIGITS, "
-            + "NULL AS NUM_PREC_RADIX, "
-            + "NULL AS NULLABLE, "
-            + "NULL AS REMARKS, "
-            + "NULL AS COLUMN_DEF, "
-            + "NULL AS SQL_DATA_TYPE, "
-            + "NULL AS SQL_DATETIME_SUB, "
-            + "NULL AS CHAR_OCTET_LENGTH, "
-            + "1 AS ORDINAL_POSITION, "
-            + // Need a valid ordinal position
-            "NULL AS IS_NULLABLE, "
-            + "NULL AS SCOPE_CATALOG, "
-            + "NULL AS SCOPE_SCHEMA, "
-            + "NULL AS SCOPE_TABLE, "
-            + "NULL AS SOURCE_DATA_TYPE, "
-            + "NULL AS IS_AUTOINCREMENT, "
-            + "NULL AS IS_GENERATEDCOLUMN "
-            + "FROM (VALUES(0))";
+        """
+        SELECT
+          'PUBLIC' AS TABLE_CAT,
+          'BOOKS' AS TABLE_SCHEM,
+          'AUTHORS' AS TABLE_NAME,
+          -- Using a known table name
+          'NULL_TEST_COLUMN' AS COLUMN_NAME,
+          -- Use a unique column name
+          NULL AS DATA_TYPE,
+          -- NULL data type
+          NULL AS TYPE_NAME,
+          -- NULL type name
+          NULL AS COLUMN_SIZE,
+          NULL AS DECIMAL_DIGITS,
+          NULL AS NUM_PREC_RADIX,
+          NULL AS NULLABLE,
+          NULL AS REMARKS,
+          NULL AS COLUMN_DEF,
+          NULL AS SQL_DATA_TYPE,
+          NULL AS SQL_DATETIME_SUB,
+          NULL AS CHAR_OCTET_LENGTH,
+          1 AS ORDINAL_POSITION,
+          -- Need a valid ordinal position
+          NULL AS IS_NULLABLE,
+          NULL AS SCOPE_CATALOG,
+          NULL AS SCOPE_SCHEMA,
+          NULL AS SCOPE_TABLE,
+          NULL AS SOURCE_DATA_TYPE,
+          NULL AS IS_AUTOINCREMENT,
+          NULL AS IS_GENERATEDCOLUMN
+        FROM
+          (VALUES(0))
+        """;
 
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()

@@ -82,19 +82,23 @@ public class RoutineExtRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 InformationSchemaKey.ROUTINE_REFERENCES,
-                "SELECT "
-                    + "  'PUBLIC' AS ROUTINE_CATALOG,"
-                    + " 'BOOKS' AS ROUTINE_SCHEMA,"
-                    + "  'NEW_PUBLISHER' AS ROUTINE_NAME,"
-                    + "  'NEW_PUBLISHER_FORCE_VALUE' AS SPECIFIC_NAME,"
-                    + "  'PUBLIC' AS REFERENCED_OBJECT_CATALOG,"
-                    + "  'BOOKS' AS REFERENCED_OBJECT_SCHEMA,"
-                    + "  'AUTHORSLIST' AS REFERENCED_OBJECT_NAME,"
-                    + "  NULL AS REFERENCED_OBJECT_SPECIFIC_NAME,"
-                    + "  'VIEW' AS REFERENCED_OBJECT_TYPE"
-                    + " FROM INFORMATION_SCHEMA.SYSTEM_TABLES"
-                    + " WHERE 1=1"
-                    + " LIMIT 1")
+                """
+                SELECT
+                  'PUBLIC' AS ROUTINE_CATALOG,
+                  'BOOKS' AS ROUTINE_SCHEMA,
+                  'NEW_PUBLISHER' AS ROUTINE_NAME,
+                  'NEW_PUBLISHER_FORCE_VALUE' AS SPECIFIC_NAME,
+                  'PUBLIC' AS REFERENCED_OBJECT_CATALOG,
+                  'BOOKS' AS REFERENCED_OBJECT_SCHEMA,
+                  'AUTHORSLIST' AS REFERENCED_OBJECT_NAME,
+                  NULL AS REFERENCED_OBJECT_SPECIFIC_NAME,
+                  'VIEW' AS REFERENCED_OBJECT_TYPE
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_TABLES
+                WHERE
+                  1=1
+                LIMIT 1
+                """)
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();

@@ -110,10 +110,19 @@ public class IndexRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 EXT_INDEXES,
-                "SELECT 'NON_EXISTENT_CATALOG' AS INDEX_CATALOG, 'NON_EXISTENT_SCHEMA' AS"
-                    + " INDEX_SCHEMA, 'NON_EXISTENT_TABLE' AS TABLE_NAME, 'NON_EXISTENT_INDEX' AS"
-                    + " INDEX_NAME, 'Test remarks' AS REMARKS, 'Test definition' AS"
-                    + " INDEX_DEFINITION FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE 1=1")
+                """
+                SELECT
+                  'NON_EXISTENT_CATALOG' AS INDEX_CATALOG,
+                  'NON_EXISTENT_SCHEMA' AS INDEX_SCHEMA,
+                  'NON_EXISTENT_TABLE' AS TABLE_NAME,
+                  'NON_EXISTENT_INDEX' AS INDEX_NAME,
+                  'Test remarks' AS REMARKS,
+                  'Test definition' AS INDEX_DEFINITION
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_TABLES
+                WHERE
+                  1=1
+                """)
             .toOptions();
     final SchemaRetrievalOptionsBuilder edgeCaseOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
@@ -233,11 +242,18 @@ public class IndexRetrieverTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 EXT_INDEXES,
-                String.format(
-                    "SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
-                        + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
-                        + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO",
-                    remarks, definition))
+                """
+                SELECT DISTINCT
+                  TABLE_CAT AS INDEX_CATALOG,
+                  TABLE_SCHEM AS INDEX_SCHEMA,
+                  TABLE_NAME,
+                  INDEX_NAME,
+                  '%s' AS REMARKS,
+                  '%s' AS INDEX_DEFINITION
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_INDEXINFO
+                """
+                    .formatted(remarks, definition))
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();

@@ -61,11 +61,17 @@ public class RoutineRetrieverFunctionsTest {
         InformationSchemaViewsBuilder.builder()
             .withSql(
                 InformationSchemaKey.FUNCTIONS,
-                "SELECT "
-                    + "PROCEDURE_CAT AS FUNCTION_CAT, PROCEDURE_SCHEM AS FUNCTION_SCHEM, "
-                    + "PROCEDURE_NAME AS FUNCTION_NAME, PROCEDURE_TYPE AS FUNCTION_TYPE, "
-                    + "REMARKS, SPECIFIC_NAME "
-                    + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES")
+                """
+                SELECT
+                  PROCEDURE_CAT AS FUNCTION_CAT,
+                  PROCEDURE_SCHEM AS FUNCTION_SCHEM,
+                  PROCEDURE_NAME AS FUNCTION_NAME,
+                  PROCEDURE_TYPE AS FUNCTION_TYPE,
+                  REMARKS,
+                  SPECIFIC_NAME
+                FROM
+                  INFORMATION_SCHEMA.SYSTEM_PROCEDURES
+                """)
             .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
