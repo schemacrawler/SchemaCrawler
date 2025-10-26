@@ -41,6 +41,7 @@ jobs:
           -Dtestcoverage \
           -Dreactor.printOrder \
           -Ddistrib \
+          -Dmaven.javadoc.skip=false \
           clean verify \
           jacoco:report-aggregate
 
