@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serial;
 import java.util.Collection;
@@ -44,6 +45,8 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
    */
   MutableRoutine(final Schema schema, final String name, final String specificName) {
     super(schema, name);
+    requireNotBlank(name, "No routine name provided");
+
     this.specificName = specificName;
     routineBodyType = RoutineBodyType.unknown;
     referencedObjects = new HashSet<>();

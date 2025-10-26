@@ -8,6 +8,8 @@
 
 package schemacrawler.crawl;
 
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.io.Serial;
 import java.math.BigInteger;
 import schemacrawler.schema.Schema;
@@ -26,6 +28,7 @@ final class MutableSequence extends AbstractDatabaseObject implements Sequence {
 
   MutableSequence(final Schema schema, final String name) {
     super(schema, name);
+    requireNotBlank(name, "No sequence name provided");
   }
 
   /** {@inheritDoc} */
