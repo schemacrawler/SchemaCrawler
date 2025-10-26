@@ -18,13 +18,16 @@ import static us.fatehi.test.integration.utility.OracleTestUtility.newOracleCont
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
+
 import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.test.utility.DisableLogging;
@@ -180,14 +183,14 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     try {
       final Object scalar = executeForScalar(query, connection);
       if (scalar == null) {
-        fail(query.getName() + " is allowed, but not expected to be allowed");
+        fail(query.name() + " is allowed, but not expected to be allowed");
       }
       if (!accessAllowed) {
-        fail(query.getName() + " is allowed, but not expected to be allowed");
+        fail(query.name() + " is allowed, but not expected to be allowed");
       }
     } catch (final SQLException e) {
       if (accessAllowed) {
-        fail(query.getName() + "  is not allowed, but is expected to be allowed");
+        fail(query.name() + "  is not allowed, but is expected to be allowed");
       }
     }
   }
