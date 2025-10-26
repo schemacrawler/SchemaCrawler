@@ -67,10 +67,10 @@ jobs:
           SchemaCrawler ${{ github.event.release.tag_name }} early access release at last commit ${{ github.sha }}
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-17.1.1-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.1.1-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-17.1.1-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.1.1-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.1.2-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.1.2-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.1.2-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.1.2-bin.zip.SHA-512
 
 # BUILD AND PUBLISH DOCKER IMAGE
     - id: setup-qemu
