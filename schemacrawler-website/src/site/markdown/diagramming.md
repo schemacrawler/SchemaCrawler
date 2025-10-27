@@ -14,13 +14,7 @@ schema.
 
 SchemaCrawler relies on [Graphviz](https://www.graphviz.org/) to generate diagrams.
 Install [Graphviz](https://www.graphviz.org/) first, and ensure that it is on the system
-PATH. If installing [Graphviz](https://www.graphviz.org/) is not an option for you, use
-the pure Java Graphviz library. Instructions are provided with
-[the SchemaCrawler download](https://www.schemacrawler.com/downloads.html#running-examples-locally),
-in the `diagram` example.
-Currently, the the pure Java Graphviz library is only able to generate PNG and SVG diagrams.
-
-Then you can run SchemaCrawler with the correct command-line options - for
+PATH. Then you can run SchemaCrawler with the correct command-line options - for
 example,
 `--command=schema --output-format=png --output-file=graph.png`
 

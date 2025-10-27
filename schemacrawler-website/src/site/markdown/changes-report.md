@@ -9,7 +9,7 @@ SchemaCrawler release notes.
 
 <a name="v17.1.1"></a>
 ## Release 17.1.1 - 2025-10-10
-- Build on Java 17
+- Build on Java SE 17
 - Remove support for Ruby and Groovy scripting
 - Remove support for Graphviz Java library
 
