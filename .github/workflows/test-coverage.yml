@@ -48,7 +48,7 @@ jobs:
 # GET TEST RESULTS
     - id: upload-coverage-test-results
       name: Upload coverage test results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: coverage-test-results
         path: ./schemacrawler-distrib/target/site/jacoco-aggregate
