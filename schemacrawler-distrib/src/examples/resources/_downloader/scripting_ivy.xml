@@ -17,8 +17,6 @@
     <dependency org="org.graalvm.polyglot" name="python"
                 rev="25.0.0" conf="binaries->default" />
     <dependency org="org.graalvm.polyglot" name="js"
-                rev="25.0.0" conf="binaries->default" />
-    <dependency org="org.graalvm.polyglot" name="ruby"
-                rev="25.0.0" conf="binaries->default" />                                
+                rev="25.0.0" conf="binaries->default" />                               
   </dependencies>
 </ivy-module>
