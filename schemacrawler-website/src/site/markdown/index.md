@@ -14,7 +14,7 @@ your database. You can find potential schema design issues with
 SchemaCrawler supports almost any database that has a JDBC driver, but for
 convenience is [bundled with drivers](database-support.html) for some commonly used
 RDBMS systems. SchemaCrawler works with any operating system that supports
-Java SE 8 or better.
+Java SE 17 or better.
 
 <div class="alert alert-info" role="alert">
   Use the <a href="https://github.com/schemacrawler/SchemaCrawler-MCP-Server-Usage" target="_blank" rel="noopener noreferrer">SchemaCrawler MCP Server</a> to get deep insights into your database.

@@ -98,13 +98,13 @@ SchemaCrawler supports any database for which there is a JDBC database driver av
 
 ### <a name="supported-java">What Java version does SchemaCrawler work with?</a>
 
-SchemaCrawler works with Java SE 8 or better.
+SchemaCrawler works with Java SE 17 or better.
 
 ---------
 
 ### <a name="supported-os">What operating systems does SchemaCrawler work with?</a>
 
-SchemaCrawler works with any operating system that supports Java SE 8 or better.
+SchemaCrawler works with any operating system that supports Java SE 17 or better.
 
 ---------
 
