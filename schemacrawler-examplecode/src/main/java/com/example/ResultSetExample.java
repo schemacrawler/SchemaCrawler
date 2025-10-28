@@ -28,17 +28,25 @@ public final class ResultSetExample {
     new LoggingConfig(Level.OFF);
 
     final String query =
-        "SELECT T1.*, T2.* FROM TABLE1_PK T1 JOIN TABLE2_PK T2 ON T1.ENTITY_ID = T2.ENTITY_ID";
+        """
+        SELECT
+          T1.*,
+          T2.*
+        FROM
+          TABLE1_PK T1
+          JOIN TABLE2_PK T2
+            ON T1.ENTITY_ID = T2.ENTITY_ID
+        """;
     try (final Connection connection = getDatabaseConnectionSource().get();
         final Statement statement = connection.createStatement();
         final ResultSet results = statement.executeQuery(query)) {
       // Get result set metadata
       final ResultsColumns resultColumns = SchemaCrawlerUtility.getResultsColumns(results);
       for (final ResultsColumn column : resultColumns) {
-        System.out.println("o--> " + column);
-        System.out.println("     - label:     " + column.getLabel());
-        System.out.println("     - data-type: " + column.getColumnDataType());
-        System.out.println("     - table:     " + column.getParent());
+        System.out.printf("o--> %s%n", column);
+        System.out.printf("     - label:     %s%n", column.getLabel());
+        System.out.printf("     - data-type: %s%n", column.getColumnDataType());
+        System.out.printf("     - table:     %s%n", column.getParent());
       }
     }
   }
