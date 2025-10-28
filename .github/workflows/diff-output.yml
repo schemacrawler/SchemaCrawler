@@ -106,7 +106,7 @@ jobs:
 
     - id: upload-diff-output
       name: Upload diff-output
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: diff-output
         path: ./diff-output/
