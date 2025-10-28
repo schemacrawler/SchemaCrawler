@@ -17,10 +17,12 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.script.GraalScriptExecutor;
 import schemacrawler.tools.command.script.ScriptExecutor;
 import schemacrawler.tools.command.script.options.ScriptLanguageType;
 
+@DisableLogging
 public class ScriptExecutorTest {
 
   @Test

@@ -34,7 +34,7 @@ entity "<b>$name</b>" as $slug << (V, Aquamarine) view >>
 !endprocedure
 
 !procedure $column($name)
-{field} <color:#White><&media-record></color> $name
+{field} <color:#Transparent><&media-record></color> $name
 !endprocedure
 
 """)
