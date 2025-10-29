@@ -10,7 +10,7 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.triggersRetrievalStrategy;
-import static schemacrawler.utility.EnumUtility.enumValues;
+import static us.fatehi.utility.EnumUtility.enumValues;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;

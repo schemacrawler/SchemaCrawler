@@ -9,7 +9,7 @@
 package schemacrawler.tools.options;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.EnumUtility.enumValue;
+import static us.fatehi.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;

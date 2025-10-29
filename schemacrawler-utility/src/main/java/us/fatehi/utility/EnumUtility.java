@@ -6,15 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.utility;
+package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumSet;
 import java.util.Set;
-import schemacrawler.schema.IdentifiedEnum;
-import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public class EnumUtility {

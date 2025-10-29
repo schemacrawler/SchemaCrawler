@@ -8,4 +8,6 @@
 
 package schemacrawler.schema;
 
+import us.fatehi.utility.IdentifiedEnum;
+
 public interface RoutineReturnType extends IdentifiedEnum {}

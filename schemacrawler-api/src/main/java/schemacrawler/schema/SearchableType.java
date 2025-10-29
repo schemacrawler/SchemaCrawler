@@ -13,6 +13,8 @@ import static java.sql.DatabaseMetaData.typePredChar;
 import static java.sql.DatabaseMetaData.typePredNone;
 import static java.sql.DatabaseMetaData.typeSearchable;
 
+import us.fatehi.utility.IdentifiedEnum;
+
 /** An enumeration wrapper around JDBC search predicates. */
 public enum SearchableType implements IdentifiedEnum {
   unknown(-1, "unknown"),

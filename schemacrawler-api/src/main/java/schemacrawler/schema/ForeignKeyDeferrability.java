@@ -12,6 +12,8 @@ import static java.sql.DatabaseMetaData.importedKeyInitiallyDeferred;
 import static java.sql.DatabaseMetaData.importedKeyInitiallyImmediate;
 import static java.sql.DatabaseMetaData.importedKeyNotDeferrable;
 
+import us.fatehi.utility.IdentifiedEnum;
+
 /** An enumeration wrapper around the JDBC deferrability value for foreign keys. */
 public enum ForeignKeyDeferrability implements IdentifiedEnum {
   unknown(-1, "unknown"),

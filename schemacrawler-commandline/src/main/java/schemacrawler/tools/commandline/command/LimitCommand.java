@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.commandline.command;
 
-import static schemacrawler.utility.EnumUtility.enumValue;
+import static us.fatehi.utility.EnumUtility.enumValue;
 
 import java.util.Collection;
 import java.util.HashSet;

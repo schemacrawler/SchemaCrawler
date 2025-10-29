@@ -13,6 +13,8 @@ import static java.sql.DatabaseMetaData.tableIndexHashed;
 import static java.sql.DatabaseMetaData.tableIndexOther;
 import static java.sql.DatabaseMetaData.tableIndexStatistic;
 
+import us.fatehi.utility.IdentifiedEnum;
+
 /** An enumeration wrapper around index types. */
 public enum IndexType implements IdentifiedEnum {
   unknown(-1),

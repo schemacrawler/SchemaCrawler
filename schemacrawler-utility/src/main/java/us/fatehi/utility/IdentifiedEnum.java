@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.schema;
+package us.fatehi.utility;
 
 public interface IdentifiedEnum {
 

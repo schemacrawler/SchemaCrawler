@@ -14,6 +14,8 @@ import static java.sql.DatabaseMetaData.importedKeyRestrict;
 import static java.sql.DatabaseMetaData.importedKeySetDefault;
 import static java.sql.DatabaseMetaData.importedKeySetNull;
 
+import us.fatehi.utility.IdentifiedEnum;
+
 /** An enumeration wrapper around foreign key update and delete rules. */
 public enum ForeignKeyUpdateRule implements IdentifiedEnum {
   unknown(-1, "unknown"),

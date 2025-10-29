@@ -18,7 +18,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
-import static schemacrawler.utility.EnumUtility.enumValue;
+import static us.fatehi.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Collection;
