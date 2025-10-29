@@ -11,7 +11,6 @@ package us.fatehi.utility.datasource;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.util.function.Consumer;
 
 public final class ConnectionDatabaseConnectionSource implements DatabaseConnectionSource {
 
@@ -30,10 +29,5 @@ public final class ConnectionDatabaseConnectionSource implements DatabaseConnect
   public Connection get() {
     // Do not close this connection
     return PooledConnectionUtility.newPooledConnection(connection, this);
-  }
-
-  @Override
-  public void setFirstConnectionInitializer(final Consumer<Connection> connectionInitializer) {
-    // No-op
   }
 }

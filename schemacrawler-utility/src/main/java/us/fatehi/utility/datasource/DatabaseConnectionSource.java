@@ -19,5 +19,7 @@ public interface DatabaseConnectionSource extends AutoCloseable, Supplier<Connec
     return true;
   }
 
-  void setFirstConnectionInitializer(Consumer<Connection> connectionInitializer);
+  default void setFirstConnectionInitializer(Consumer<Connection> connectionInitializer) {
+    // No-op
+  }
 }
