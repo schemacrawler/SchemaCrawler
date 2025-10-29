@@ -12,7 +12,6 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.List;
 import java.util.logging.Logger;
 import us.fatehi.utility.UtilityMarker;
 
@@ -83,17 +82,6 @@ public final class LintUtility {
 
         return comparison;
       };
-
-  public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
-    if (main == null || sub == null || main.size() < sub.size()) {
-      return false;
-    }
-    if (main.isEmpty()) {
-      return true;
-    }
-
-    return main.subList(0, sub.size()).equals(sub);
-  }
 
   /**
    * Gets a lengthy description of the linter. By default, reads a resource file called

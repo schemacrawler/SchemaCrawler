@@ -9,7 +9,6 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
 import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
 import static schemacrawler.utility.MetaDataUtility.isView;
@@ -25,6 +24,7 @@ import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
+import us.fatehi.utility.ListUtility;
 import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderForeignKeyWithNoIndexes extends BaseLinterProvider {
@@ -72,7 +72,7 @@ class LinterForeignKeyWithNoIndexes extends BaseLinter {
         final List<String> foreignKeyColumns = foreignKeyColumnNames(foreignKey);
         boolean hasIndex = false;
         for (final List<String> indexColumns : allIndexCoumns) {
-          if (listStartsWith(indexColumns, foreignKeyColumns)) {
+          if (ListUtility.listStartsWith(indexColumns, foreignKeyColumns)) {
             hasIndex = true;
             break;
           }

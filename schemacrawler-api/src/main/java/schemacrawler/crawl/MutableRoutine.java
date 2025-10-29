@@ -23,7 +23,7 @@ import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
-import us.fatehi.utility.CompareUtility;
+import us.fatehi.utility.ListUtility;
 
 /** Represents a database routine. Created from metadata returned by a JDBC call. */
 abstract class MutableRoutine extends AbstractDatabaseObject implements Routine {
@@ -69,7 +69,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
         final List<RoutineParameter<? extends Routine>> thisParameters = getParameters();
         final List<RoutineParameter<? extends Routine>> otherParameters = other.getParameters();
 
-        comparison = CompareUtility.compareLists(thisParameters, otherParameters);
+        comparison = ListUtility.compareLists(thisParameters, otherParameters);
       }
 
       if (comparison == 0) {

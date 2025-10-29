@@ -9,7 +9,6 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
 import java.io.Serial;
 import java.sql.Connection;
@@ -29,6 +28,7 @@ import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
 import schemacrawler.utility.MetaDataUtility;
+import us.fatehi.utility.ListUtility;
 import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderRedundantIndexes extends BaseLinterProvider {
@@ -83,7 +83,8 @@ class LinterRedundantIndexes extends BaseLinter {
     for (final Entry<Index, List<String>> indexColumnEntry1 : indexColumns.entrySet()) {
       for (final Entry<Index, List<String>> indexColumnEntry2 : indexColumns.entrySet()) {
         if (!indexColumnEntry1.equals(indexColumnEntry2)
-            && listStartsWith(indexColumnEntry1.getValue(), indexColumnEntry2.getValue())) {
+            && ListUtility.listStartsWith(
+                indexColumnEntry1.getValue(), indexColumnEntry2.getValue())) {
           redundantIndexes.add(indexColumnEntry2.getKey());
         }
       }

@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @UtilityMarker
-public class CompareUtility {
+public class ListUtility {
 
   public static <T extends Comparable<? super T>> int compareLists(
       final List<? extends T> list1, final List<? extends T> list2) {
@@ -44,5 +44,16 @@ public class CompareUtility {
     return comparison;
   }
 
-  private CompareUtility() {}
+  private ListUtility() {}
+
+  public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
+    if (main == null || sub == null || main.size() < sub.size()) {
+      return false;
+    }
+    if (main.isEmpty()) {
+      return true;
+    }
+  
+    return main.subList(0, sub.size()).equals(sub);
+  }
 }
