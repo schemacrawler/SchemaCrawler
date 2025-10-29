@@ -61,7 +61,7 @@ public final class DataSourceTestUtility {
       for (final String entry : connectionProperties.split(";")) {
         final String[] kv = entry.split("=", 2);
         if (kv.length == 2) {
-          ds.addDataSourceProperty(kv[0].trim(), kv[1].trim());
+          ds.addDataSourceProperty(kv[0].strip(), kv[1].strip());
         }
       }
     }

@@ -65,7 +65,7 @@ class LinterNullIntendedColumns extends BaseLinter {
     final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
     for (final Column column : columns) {
       final String columnDefaultValue = column.getDefaultValue();
-      if (!isBlank(columnDefaultValue) && "NULL".equalsIgnoreCase(columnDefaultValue.trim())) {
+      if (!isBlank(columnDefaultValue) && "NULL".equalsIgnoreCase(columnDefaultValue.strip())) {
         nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }

@@ -32,15 +32,15 @@ public class TestSchemaCreator implements Runnable {
 
     final String[] split = scriptResourceLine.split(",");
     if (split.length == 1) {
-      scriptResource = scriptResourceLine.trim();
+      scriptResource = scriptResourceLine.strip();
       if (scriptResource.isEmpty()) {
         delimiter = "#";
       } else {
         delimiter = ";";
       }
     } else if (split.length == 2) {
-      delimiter = split[0].trim();
-      scriptResource = split[1].trim();
+      delimiter = split[0].strip();
+      scriptResource = split[1].strip();
     } else {
       throw new RuntimeException("Too many fields in \"%s\"".formatted(scriptResourceLine));
     }

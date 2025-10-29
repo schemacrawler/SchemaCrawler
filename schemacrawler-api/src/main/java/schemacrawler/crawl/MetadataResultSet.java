@@ -155,7 +155,7 @@ public final class MetadataResultSet implements AutoCloseable {
               new StringFormat("NULL value for column <%s>, so evaluating to 'false'", columnName));
           return false;
         }
-        stringBooleanValue = String.valueOf(booleanValue).trim();
+        stringBooleanValue = String.valueOf(booleanValue).strip();
 
         if (isIntegral(stringBooleanValue)) {
           return !"0".equals(stringBooleanValue);
@@ -331,7 +331,7 @@ public final class MetadataResultSet implements AutoCloseable {
         }
 
         if (value != null) {
-          value = value.trim();
+          value = value.strip();
         }
       } catch (final SQLException e) {
         LOGGER.log(

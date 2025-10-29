@@ -34,12 +34,12 @@ public final class PropertyName implements Serializable, Comparable<PropertyName
   }
 
   public PropertyName(final String name, final String description) {
-    this.name = requireNotBlank(name, "Property name not provided").trim();
+    this.name = requireNotBlank(name, "Property name not provided").strip();
 
     if (isBlank(description)) {
       this.description = null;
     } else {
-      this.description = description.trim();
+      this.description = description.strip();
     }
   }
 

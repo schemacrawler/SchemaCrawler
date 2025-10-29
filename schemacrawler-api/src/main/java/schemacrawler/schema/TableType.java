@@ -28,7 +28,7 @@ public final class TableType implements Serializable, Comparable<TableType> {
   /** Constructor for table type. Table type is case-sensitive. */
   public TableType(final String tableTypeString) {
     requireNotBlank(tableTypeString, "No table type provided");
-    tableType = tableTypeString.trim();
+    tableType = tableTypeString.strip();
   }
 
   /** {@inheritDoc} */
@@ -50,7 +50,8 @@ public final class TableType implements Serializable, Comparable<TableType> {
     final boolean isOtherTable = "TABLE".equalsIgnoreCase(otherToString);
     if (isThisTable && !isOtherTable) {
       return -1;
-    } else if (!isThisTable && isOtherTable) {
+    }
+    if (!isThisTable && isOtherTable) {
       return 1;
     }
 
@@ -59,7 +60,8 @@ public final class TableType implements Serializable, Comparable<TableType> {
     final boolean isOtherView = "VIEW".equalsIgnoreCase(otherToString);
     if (isThisView && !isOtherView) {
       return -1;
-    } else if (!isThisView && isOtherView) {
+    }
+    if (!isThisView && isOtherView) {
       return 1;
     }
 
@@ -78,9 +80,8 @@ public final class TableType implements Serializable, Comparable<TableType> {
     final TableType other = (TableType) obj;
     if (tableType == null) {
       return other.tableType == null;
-    } else {
-      return tableType.equalsIgnoreCase(other.tableType);
     }
+    return tableType.equalsIgnoreCase(other.tableType);
   }
 
   /**
@@ -109,7 +110,7 @@ public final class TableType implements Serializable, Comparable<TableType> {
     if (isBlank(testTableType)) {
       return false;
     }
-    return tableType.equalsIgnoreCase(testTableType.trim());
+    return tableType.equalsIgnoreCase(testTableType.strip());
   }
 
   /** Checks if the table type is a view of any kind. */

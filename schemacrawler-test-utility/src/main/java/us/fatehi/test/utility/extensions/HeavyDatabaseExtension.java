@@ -78,7 +78,7 @@ public final class HeavyDatabaseExtension implements ExecutionCondition {
       final String output = reader.readLine(); // Read first line of output
       final int exitCode = process.waitFor();
 
-      return exitCode == 0 && output != null && !output.trim().isEmpty();
+      return exitCode == 0 && output != null && !output.strip().isEmpty();
     } catch (final Exception e) {
       return false;
     }
