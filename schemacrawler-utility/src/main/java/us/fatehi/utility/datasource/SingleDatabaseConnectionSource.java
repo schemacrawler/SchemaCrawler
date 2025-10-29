@@ -17,7 +17,6 @@ import java.util.Properties;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import us.fatehi.utility.SQLRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSource {
@@ -57,20 +56,5 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
             "Initialized database connection <%s> with <%s>", connection, connectionInitializer));
 
     return PooledConnectionUtility.newPooledConnection(connection, this);
-  }
-
-  @Override
-  public boolean releaseConnection(final Connection connection) {
-    // No-op
-    return true;
-  }
-
-  @Override
-  protected void finalize() throws Throwable {
-    // Assert that all connections are closed
-    if (!connection.isClosed()) {
-      throw new SQLRuntimeException("Connection pool is not closed");
-    }
-    super.finalize();
   }
 }

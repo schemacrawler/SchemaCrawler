@@ -23,7 +23,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import us.fatehi.utility.SQLRuntimeException;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
@@ -126,14 +125,5 @@ final class SimpleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
     connectionPool.add(connection);
 
     return removed;
-  }
-
-  @Override
-  protected void finalize() throws Throwable {
-    // Assert that all connections are closed
-    if (!connectionPool.isEmpty() || !usedConnections.isEmpty()) {
-      throw new SQLRuntimeException("Connection pool is not closed");
-    }
-    super.finalize();
   }
 }

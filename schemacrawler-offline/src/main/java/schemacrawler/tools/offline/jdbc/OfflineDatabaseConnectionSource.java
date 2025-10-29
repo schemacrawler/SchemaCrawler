@@ -6,12 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.offline.jdbc;
 
 import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
-import java.util.function.Consumer;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 final class OfflineDatabaseConnectionSource implements DatabaseConnectionSource {
@@ -30,16 +29,5 @@ final class OfflineDatabaseConnectionSource implements DatabaseConnectionSource 
   @Override
   public Connection get() {
     return connection;
-  }
-
-  @Override
-  public boolean releaseConnection(final Connection connection) {
-    // No-op
-    return true;
-  }
-
-  @Override
-  public void setFirstConnectionInitializer(final Consumer<Connection> connectionInitializer) {
-    // No-op
   }
 }
