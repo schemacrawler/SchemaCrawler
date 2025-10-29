@@ -16,9 +16,7 @@ import static us.fatehi.utility.Utility.commonPrefix;
 import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
 import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.isClassAvailable;
 import static us.fatehi.utility.Utility.isIntegral;
-import static us.fatehi.utility.Utility.isRegularExpression;
 import static us.fatehi.utility.Utility.join;
 import static us.fatehi.utility.Utility.toSnakeCase;
 
@@ -89,12 +87,6 @@ public class UtilityTest {
   }
 
   @Test
-  public void isClassAvailableTest() {
-    assertThat(isClassAvailable("java.lang.String"), is(true));
-    assertThat(isClassAvailable("com.example.Unknown"), is(false));
-  }
-
-  @Test
   public void isIntegralTest() {
     assertThat(isIntegral(null), is(false));
     assertThat(isIntegral(""), is(false));
@@ -143,14 +135,5 @@ public class UtilityTest {
     assertThat(toSnakeCase("Ab"), equalTo("_ab"));
     assertThat(toSnakeCase("abIj"), equalTo("ab_ij"));
     assertThat(toSnakeCase("ABC"), equalTo("_a_b_c"));
-  }
-
-  @Test
-  void testValidRegexPatterns() {
-    assertThat(isRegularExpression("[a-z]+"), is(true));
-    assertThat(isRegularExpression("^hello$"), is(true));
-
-    assertThat(isRegularExpression("hello"), is(false));
-    assertThat(isRegularExpression("*invalid"), is(false));
   }
 }

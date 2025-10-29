@@ -8,13 +8,11 @@
 
 package us.fatehi.utility;
 
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 @UtilityMarker
 public final class Utility {
@@ -76,21 +74,6 @@ public final class Utility {
   }
 
   /**
-   * Checks if a class is available on the classpath.
-   *
-   * @param className Class to check
-   * @return True if the class is available, false otherwise
-   */
-  public static boolean isClassAvailable(final String className) {
-    try {
-      Class.forName(className, false, Utility.class.getClassLoader());
-      return true;
-    } catch (final Exception e) {
-      return false;
-    }
-  }
-
-  /**
    * Checks if the text contains an integer only.
    *
    * @param text Text to check.
@@ -108,28 +91,6 @@ public final class Utility {
       }
     }
     return true;
-  }
-
-  /**
-   * Check if the string contains typical regex characters.
-   *
-   * @param input Input expression
-   * @return Whether the string has regular expression characters
-   */
-  public static boolean isRegularExpression(final String input) {
-    final String regexMetaChars = ".*[.*+?^$|{}()\\[\\]].*";
-    if (!input.matches(regexMetaChars)) {
-      return false;
-    }
-
-    // Attempt to compile the string as a regex,
-    // and if successful, it's a valid regex
-    try {
-      Pattern.compile(input);
-      return true;
-    } catch (final PatternSyntaxException e) {
-      return false;
-    }
   }
 
   public static String join(final Collection<String> collection, final String separator) {
