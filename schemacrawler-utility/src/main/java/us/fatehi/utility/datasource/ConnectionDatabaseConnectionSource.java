@@ -8,9 +8,10 @@
 
 package us.fatehi.utility.datasource;
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.function.Consumer;
-import static java.util.Objects.requireNonNull;
 
 public final class ConnectionDatabaseConnectionSource implements DatabaseConnectionSource {
 
@@ -29,12 +30,6 @@ public final class ConnectionDatabaseConnectionSource implements DatabaseConnect
   public Connection get() {
     // Do not close this connection
     return PooledConnectionUtility.newPooledConnection(connection, this);
-  }
-
-  @Override
-  public boolean releaseConnection(final Connection connection) {
-    // No-op
-    return true;
   }
 
   @Override

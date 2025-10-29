@@ -57,10 +57,4 @@ final class SingleDatabaseConnectionSource extends AbstractDatabaseConnectionSou
 
     return PooledConnectionUtility.newPooledConnection(connection, this);
   }
-
-  @Override
-  public boolean releaseConnection(final Connection connection) {
-    // No-op
-    return true;
-  }
 }
