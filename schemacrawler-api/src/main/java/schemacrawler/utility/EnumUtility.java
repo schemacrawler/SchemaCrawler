@@ -30,7 +30,7 @@ public class EnumUtility {
         if (enumClass.getEnclosingClass() != null) {
           enumClass = enumClass.getEnclosingClass();
         }
-        enumValue = Enum.valueOf((Class<E>) enumClass, value.trim());
+        enumValue = Enum.valueOf((Class<E>) enumClass, value.strip());
       } catch (final Exception e) {
         enumValue = defaultValue;
       }

@@ -93,7 +93,7 @@ class ImmutableDatabaseProperty extends AbstractProperty {
       description = acronym.getKey().matcher(description).replaceAll(acronym.getValue());
     }
 
-    description = description.trim();
+    description = description.strip();
 
     return description;
   }

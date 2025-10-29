@@ -46,9 +46,8 @@ public final class Identifiers implements Options, Serializable {
   private static boolean isIdentifier(final String name) {
     if (isBlank(name)) {
       return false;
-    } else {
-      return isIdentifier.matcher(name).matches() && !isAllNumeric.matcher(name).matches();
     }
+    return isIdentifier.matcher(name).matches() && !isAllNumeric.matcher(name).matches();
   }
 
   private final String identifierQuoteString;
@@ -121,7 +120,7 @@ public final class Identifiers implements Options, Serializable {
    * @return Whether the given word is reserved
    */
   public boolean isReservedWord(final String word) {
-    return !isBlank(word) && reservedWords.contains(word.trim().toUpperCase());
+    return !isBlank(word) && reservedWords.contains(word.strip().toUpperCase());
   }
 
   /**
@@ -229,17 +228,13 @@ public final class Identifiers implements Options, Serializable {
     if (isQuotedName(name)) {
       final int quoteLength = identifierQuoteString.length();
       return name.substring(quoteLength, name.length() - quoteLength);
-    } else {
-      return name;
     }
+    return name;
   }
 
   private boolean isMixedCase(final String name) {
 
-    if (!quoteMixedCaseIdentifiers) {
-      return false;
-    }
-    if (isBlank(name)) {
+    if (!quoteMixedCaseIdentifiers || isBlank(name)) {
       return false;
     }
 

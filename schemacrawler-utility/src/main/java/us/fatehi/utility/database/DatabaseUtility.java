@@ -206,7 +206,7 @@ public final class DatabaseUtility {
       while (results.next()) {
         final String value = results.getString(columnNumber);
         if (!results.wasNull() && !isBlank(value)) {
-          values.add(value.trim());
+          values.add(value.strip());
         }
       }
     } finally {
