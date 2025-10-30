@@ -8,7 +8,7 @@
 
 package us.fatehi.utility;
 
-import static us.fatehi.utility.Utility.trimToEmpty;
+import static java.util.function.Predicate.not;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 @UtilityMarker
 public class CollectionsUtility {
@@ -67,7 +69,7 @@ public class CollectionsUtility {
         Arrays.stream(trimToEmpty(input).split(","))
             .filter(Objects::nonNull)
             .map(String::strip)
-            .filter(s -> !s.isEmpty())
+            .filter(not(String::isEmpty))
             .collect(Collectors.toSet());
 
     return setOfStrings;
