@@ -64,7 +64,12 @@ public class EnumUtility {
     }
 
     // Split into multiple event manipulation types
-    final String[] valueStrings = splitList(values, splitBy);
+    final String[] valueStrings;
+    if (isBlank(splitBy)) {
+      valueStrings = new String[] {values};
+    } else {
+      valueStrings = splitList(values, splitBy);
+    }
     for (String valueString : valueStrings) {
       final E enumValue = enumValue(valueString, defaultValue);
       enumValues.add(enumValue);
