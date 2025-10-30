@@ -75,18 +75,18 @@ public class CollectionsUtilityTest {
   @DisplayName("Split should return empty set for edge conditions")
   void shouldReturnEmptySetWhenExcludeToolsUnsetOrEmpty() {
     // Arrange and act
-    final Collection<String> excluded1 = CollectionsUtility.setOfStrings(null);
+    final Collection<String> excluded1 = CollectionsUtility.splitList(null);
     // Assert
     assertThat(excluded1.size(), is(0));
 
     // Arrange and act
-    final Collection<String> excluded2 = CollectionsUtility.setOfStrings("");
+    final Collection<String> excluded2 = CollectionsUtility.splitList("");
     // Assert
     assertThat(excluded2.size(), is(0));
 
     // Arrange and act
     // Only commas and spaces
-    final Collection<String> excluded3 = CollectionsUtility.setOfStrings(", , ,  ,");
+    final Collection<String> excluded3 = CollectionsUtility.splitList(", , ,  ,");
     // Assert
     assertThat(excluded3.size(), is(0));
   }
@@ -96,7 +96,7 @@ public class CollectionsUtilityTest {
   void splitShouldHandleBlanksSpacesAndDuplicatesInExcludeTools() {
     // Arrange and act
     final Collection<String> excluded =
-        CollectionsUtility.setOfStrings("  toolA , , toolB,toolA ,  ,ToolA  ");
+        CollectionsUtility.splitList("  toolA , , toolB,toolA ,  ,ToolA  ");
 
     // Assert
     // "toolA" appears twice but should be included once due to Set semantics
@@ -112,7 +112,7 @@ public class CollectionsUtilityTest {
   @DisplayName("Split should parse comma-separated list")
   void splitShouldParseExcludeToolsList() {
     // Arrange and act
-    final Collection<String> excluded = CollectionsUtility.setOfStrings("tool1,tool2,tool3");
+    final Collection<String> excluded = CollectionsUtility.splitList("tool1,tool2,tool3");
 
     // Assert
     assertThat(excluded.contains("tool1"), is(true));

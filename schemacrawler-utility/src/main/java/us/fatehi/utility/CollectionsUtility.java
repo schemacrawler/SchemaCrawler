@@ -8,17 +8,18 @@
 
 package us.fatehi.utility;
 
+import static java.util.Collections.unmodifiableList;
 import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.toCollection;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import static us.fatehi.utility.Utility.trimToEmpty;
 
 @UtilityMarker
 public class CollectionsUtility {
@@ -64,15 +65,22 @@ public class CollectionsUtility {
     return main.subList(0, sub.size()).equals(sub);
   }
 
-  public static Collection<String> setOfStrings(final String input) {
+  /**
+   * Splits a comma-separated string into a list of unique, trimmed, non-empty values, while
+   * preserving insertion order.
+   *
+   * @param input A comma-separated input string; may be {@code null}, empty, or contain whitespace
+   * @return An unmodifiable list of unique, trimmed, non-empty strings in insertion order
+   */
+  public static List<String> splitList(final String input) {
     final Set<String> setOfStrings =
         Arrays.stream(trimToEmpty(input).split(","))
             .filter(Objects::nonNull)
             .map(String::strip)
             .filter(not(String::isEmpty))
-            .collect(Collectors.toSet());
+            .collect(toCollection(LinkedHashSet::new));
 
-    return setOfStrings;
+    return unmodifiableList(new ArrayList<>(setOfStrings));
   }
 
   private CollectionsUtility() {
