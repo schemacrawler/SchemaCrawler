@@ -10,7 +10,6 @@ package us.fatehi.utility;
 
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toCollection;
-import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.Arrays;
@@ -76,11 +75,13 @@ public class CollectionsUtility {
    * preserving insertion order.
    *
    * @param input A comma-separated input string; may be {@code null}, empty, or contain whitespace
-   * @param delimiter Substring delimiter
+   * @param delimiter Substring delimiter as a regex
    * @return An unmodifiable list of unique, trimmed, non-empty strings in insertion order
    */
   public static String[] splitList(final String input, final String delimiter) {
-    requireNotBlank(delimiter, "No delimiter provided");
+    if (delimiter == null) {
+      return new String[] {input};
+    }
     final Set<String> setOfStrings =
         Arrays.stream(trimToEmpty(input).split(delimiter))
             .filter(Objects::nonNull)

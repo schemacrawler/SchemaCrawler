@@ -10,6 +10,7 @@ package schemacrawler.schema;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 
@@ -87,7 +88,7 @@ public final class TableTypes implements Iterable<TableType> {
     if (tableTypesString == null) {
       return new TableTypes(null);
     }
-    final String[] tableTypeStrings = tableTypesString.split(",");
+    final String[] tableTypeStrings = splitList(tableTypesString);
     return TableTypes.from(tableTypeStrings);
   }
 
@@ -164,10 +165,10 @@ public final class TableTypes implements Iterable<TableType> {
 
     final List<TableType> filteredTableTypes = new ArrayList<>();
     for (final TableType tableType : tableTypesKeepList) {
-      if (this.tableTypes.contains(tableType)) {
+      if (tableTypes.contains(tableType)) {
         // Add value in the same case as known to the database system
-        final int index = this.tableTypes.indexOf(tableType);
-        filteredTableTypes.add(this.tableTypes.get(index));
+        final int index = tableTypes.indexOf(tableType);
+        filteredTableTypes.add(tableTypes.get(index));
       }
     }
     filteredTableTypes.sort(naturalOrder());

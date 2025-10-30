@@ -9,6 +9,7 @@
 package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.commonPrefix;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -42,9 +43,8 @@ public final class PrefixMatches {
   public List<String> get(final String key) {
     if (keyPrefixes.containsKey(key)) {
       return keyPrefixes.get(key);
-    } else {
-      return Arrays.asList(key);
     }
+    return Arrays.asList(key);
   }
 
   @Override
@@ -83,7 +83,7 @@ public final class PrefixMatches {
         }
 
         final List<String> splitCommonPrefixes = new ArrayList<>();
-        final String[] splitPrefix = commonPrefix.split(keySeparator);
+        final String[] splitPrefix = splitList(commonPrefix, keySeparator);
         if (splitPrefix != null && splitPrefix.length > 0) {
           for (int k = 0; k < splitPrefix.length; k++) {
             final StringBuilder buffer = new StringBuilder(1024);

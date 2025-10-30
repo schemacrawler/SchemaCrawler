@@ -18,6 +18,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -207,14 +208,12 @@ public final class LimitOptionsBuilder
     final Collection<RoutineType> routineTypesCollection;
     if (routineTypesString != null) {
       routineTypesCollection = new HashSet<>();
-      final String[] routineTypeStrings = routineTypesString.split(",");
-      if (routineTypeStrings != null && routineTypeStrings.length > 0) {
-        for (final String routineTypeString : routineTypeStrings) {
-          final RoutineType routineType =
-              enumValue(routineTypeString.toLowerCase(Locale.ENGLISH), unknown);
-          if (routineType != unknown) {
-            routineTypesCollection.add(routineType);
-          }
+      final String[] routineTypeStrings = splitList(routineTypesString);
+      for (final String routineTypeString : routineTypeStrings) {
+        final RoutineType routineType =
+            enumValue(routineTypeString.toLowerCase(Locale.ENGLISH), unknown);
+        if (routineType != unknown) {
+          routineTypesCollection.add(routineType);
         }
       }
     } else {

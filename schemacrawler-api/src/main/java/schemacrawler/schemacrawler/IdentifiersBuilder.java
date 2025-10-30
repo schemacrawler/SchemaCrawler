@@ -9,8 +9,10 @@
 package schemacrawler.schemacrawler;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -19,7 +21,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class IdentifiersBuilder implements OptionsBuilder<IdentifiersBuilder, Id
       return emptyList();
     }
 
-    return toUpperCase(Arrays.asList(sqlKeywords.split(",")));
+    return toUpperCase(asList(splitList(sqlKeywords)));
   }
 
   /**

@@ -9,6 +9,7 @@
 package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumSet;
@@ -63,13 +64,7 @@ public class EnumUtility {
     }
 
     // Split into multiple event manipulation types
-    final String[] valueStrings;
-    if (isBlank(splitBy)) {
-      valueStrings = new String[] {values};
-    } else {
-      valueStrings = values.split(splitBy);
-    }
-
+    final String[] valueStrings = splitList(values, splitBy);
     for (String valueString : valueStrings) {
       final E enumValue = enumValue(valueString, defaultValue);
       enumValues.add(enumValue);
