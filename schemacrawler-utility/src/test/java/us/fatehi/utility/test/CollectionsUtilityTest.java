@@ -75,18 +75,18 @@ public class CollectionsUtilityTest {
   @DisplayName("Split should return empty set for edge conditions")
   void shouldReturnEmptySetWhenExcludeToolsUnsetOrEmpty() {
     // Arrange and act
-    final Collection<String> excluded1 = CollectionsUtility.splitList(null);
+    final Collection<String> excluded1 = List.of(CollectionsUtility.splitList(null));
     // Assert
     assertThat(excluded1.size(), is(0));
 
     // Arrange and act
-    final Collection<String> excluded2 = CollectionsUtility.splitList("");
+    final Collection<String> excluded2 = List.of(CollectionsUtility.splitList(""));
     // Assert
     assertThat(excluded2.size(), is(0));
 
     // Arrange and act
     // Only commas and spaces
-    final Collection<String> excluded3 = CollectionsUtility.splitList(", , ,  ,");
+    final Collection<String> excluded3 = List.of(CollectionsUtility.splitList(", , ,  ,"));
     // Assert
     assertThat(excluded3.size(), is(0));
   }
@@ -96,7 +96,7 @@ public class CollectionsUtilityTest {
   void splitShouldHandleBlanksSpacesAndDuplicatesInExcludeTools() {
     // Arrange and act
     final Collection<String> excluded =
-        CollectionsUtility.splitList("  toolA , , toolB,toolA ,  ,ToolA  ");
+        List.of(CollectionsUtility.splitList("  toolA , , toolB,toolA ,  ,ToolA  "));
 
     // Assert
     // "toolA" appears twice but should be included once due to Set semantics
@@ -112,7 +112,35 @@ public class CollectionsUtilityTest {
   @DisplayName("Split should parse comma-separated list")
   void splitShouldParseExcludeToolsList() {
     // Arrange and act
-    final Collection<String> excluded = CollectionsUtility.splitList("tool1,tool2,tool3");
+    final Collection<String> excluded = List.of(CollectionsUtility.splitList("tool1,tool2,tool3"));
+
+    // Assert
+    assertThat(excluded.contains("tool1"), is(true));
+    assertThat(excluded.contains("tool2"), is(true));
+    assertThat(excluded.contains("tool3"), is(true));
+    assertThat(excluded.size(), is(3));
+  }
+
+  @Test
+  @DisplayName("Split should use delimiter")
+  void splitShouldUseDelimiter() {
+    // Arrange and act
+    final Collection<String> excluded =
+        List.of(CollectionsUtility.splitList("tool1;tool2; tool3", ";"));
+
+    // Assert
+    assertThat(excluded.contains("tool1"), is(true));
+    assertThat(excluded.contains("tool2"), is(true));
+    assertThat(excluded.contains("tool3"), is(true));
+    assertThat(excluded.size(), is(3));
+  }
+
+  @Test
+  @DisplayName("Split should use long delimiter")
+  void splitShouldUseLongDelimiter() {
+    // Arrange and act
+    final Collection<String> excluded =
+        List.of(CollectionsUtility.splitList("tool1=;=tool2=;= tool3", "=;="));
 
     // Assert
     assertThat(excluded.contains("tool1"), is(true));
