@@ -23,7 +23,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
-import us.fatehi.utility.ListUtility;
+import us.fatehi.utility.CollectionsUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
@@ -68,7 +68,7 @@ abstract class AbstractTableReference extends MutableTableConstraint implements 
       final List<ColumnReference> thisColumnReferences = getColumnReferences();
       final List<ColumnReference> otherColumnReferences = other.getColumnReferences();
 
-      return ListUtility.compareLists(thisColumnReferences, otherColumnReferences);
+      return CollectionsUtility.compareLists(thisColumnReferences, otherColumnReferences);
     }
 
     if (obj instanceof NamedObject) {

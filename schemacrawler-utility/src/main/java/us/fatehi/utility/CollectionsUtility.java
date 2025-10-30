@@ -8,11 +8,18 @@
 
 package us.fatehi.utility;
 
+import static us.fatehi.utility.Utility.trimToEmpty;
+
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @UtilityMarker
-public class ListUtility {
+public class CollectionsUtility {
 
   public static <T extends Comparable<? super T>> int compareLists(
       final List<? extends T> list1, final List<? extends T> list2) {
@@ -44,8 +51,6 @@ public class ListUtility {
     return comparison;
   }
 
-  private ListUtility() {}
-
   public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
     if (main == null || sub == null || main.size() < sub.size()) {
       return false;
@@ -53,7 +58,22 @@ public class ListUtility {
     if (main.isEmpty()) {
       return true;
     }
-  
+
     return main.subList(0, sub.size()).equals(sub);
+  }
+
+  public static Collection<String> setOfStrings(final String input) {
+    final Set<String> setOfStrings =
+        Arrays.stream(trimToEmpty(input).split(","))
+            .filter(Objects::nonNull)
+            .map(String::strip)
+            .filter(s -> !s.isEmpty())
+            .collect(Collectors.toSet());
+
+    return setOfStrings;
+  }
+
+  private CollectionsUtility() {
+    // Prevent instantiation
   }
 }
