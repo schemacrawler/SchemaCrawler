@@ -8,12 +8,13 @@
 
 package schemacrawler.test.script;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.readString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
 import static us.fatehi.test.utility.TestUtility.deleteIfPossible;
-import static us.fatehi.test.utility.TestUtility.readFileFully;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
@@ -78,8 +79,12 @@ public class SchemaCrawlerExecutableChainTest {
     executable.execute();
 
     assertThat(
-        readFileFully(testOutputFile).replaceAll("\\R", ""),
-        is("Created files \"schema.txt\" and \"schema.png\""));
+        readString(testOutputFile, UTF_8).strip(),
+        is(
+            """
+            Created files "schema.txt" and "schema.png"
+            """
+                .strip()));
 
     validateTextOutput("schema.txt");
     validateDiagramOutput("schema.png");
