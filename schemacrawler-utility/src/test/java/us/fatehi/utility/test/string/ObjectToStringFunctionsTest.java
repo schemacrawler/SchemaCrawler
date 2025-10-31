@@ -13,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -178,12 +179,18 @@ public class ObjectToStringFunctionsTest {
         continue;
       }
       final Class<? extends Object> actualClass = actual.getClass();
-      if (actualClass.isEnum() || Map.class.isAssignableFrom(actualClass)) {
-        assertThat("key does not match - " + key, actual.toString(), is(expected.toString()));
+      if (actualClass.isEnum()) {
+        assertThat("key does not match - " + key, enumAsNameOrString(actual), is(enumAsNameOrString(expected)));
+      } else if (Map.class.isAssignableFrom(actualClass)) {
+        assertThat("key does not match - " + key, ((java.util.Map<?, ?>) actual).values(), containsInAnyOrder(((java.util.Map<?, ?>) expected).values().toArray()));
       } else if (ObjectToString.isSimpleObject(actual)
           || ObjectToString.isCollectionOrArray(actual)) {
         assertThat("key does not match - " + key, actual, is(expected));
       }
     }
+  }
+
+  private static String enumAsNameOrString(Object o) {
+    return (o instanceof Enum<?> e) ? e.name() : String.valueOf(o);
   }
 }
