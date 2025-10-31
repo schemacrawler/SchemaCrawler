@@ -716,7 +716,7 @@ stores mixed case identifiers             false
 stores mixed case quoted identifiers      false                         
 stores upper case identifiers             false                         
 stores upper case quoted identifiers      false                         
-string functions                          ASCII, BIN, BIT_LENGTH, CHAR, CHARACTER_LENGTH, CHAR_LENGTH, CONCAT, CONCAT_WS, CONV, ELT, EXPORT_SET, FIELD, FIND_IN_SET, HEX, INSERT, INSTR, LCASE, LEFT, LENGTH, LOAD_FILE, LOCATE, LOCATE, LOWER, LPAD, LTRIM, MAKE_SET, MATCH, MID, OCT, OCTET_LENGTH, ORD, POSITION, QUOTE, REPEAT, REPLACE, REVERSE, RIGHT, RPAD, RTRIM, SOUNDEX, SPACE, STRCMP, SUBSTRING, SUBSTRING, SUBSTRING, SUBSTRING, SUBSTRING_INDEX, TRIM, UCASE, UPPER
+string functions                          ASCII, BIN, BIT_LENGTH, CHAR, CHARACTER_LENGTH, CHAR_LENGTH, CONCAT, CONCAT_WS, CONV, ELT, EXPORT_SET, FIELD, FIND_IN_SET, HEX, INSERT, INSTR, LCASE, LEFT, LENGTH, LOAD_FILE, LOCATE, LOCATE, LOWER, LPAD, LTRIM, MAKE_SET, MATCH, MID, OCT, OCTET_LENGTH, ORD, POSITION, QUOTE, REPEAT, REPLACE, REVERSE, RIGHT, RPAD, RTRIM, SOUNDEX, SPACE, STRCMP, SUBSTRING, SUBSTRING_INDEX, TRIM, UCASE, UPPER
 supports alter table with add column      true                          
 supports alter table with drop column     true                          
 supports ANSI92 entry level SQL           true                          
