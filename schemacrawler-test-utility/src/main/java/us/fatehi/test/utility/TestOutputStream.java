@@ -9,7 +9,7 @@
 package us.fatehi.test.utility;
 
 import static java.nio.file.Files.newOutputStream;
-import static java.nio.file.Files.readAllBytes;
+import static java.nio.file.Files.readString;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
@@ -49,8 +49,8 @@ public final class TestOutputStream extends OutputStream implements TestOutputCa
   public String getContents() {
     try {
       close();
-      return new String(readAllBytes(tempFile), StandardCharsets.UTF_8);
-    } catch (final IOException e) {
+      return readString(tempFile, StandardCharsets.UTF_8);
+    } catch (final Exception e) {
       throw new RuntimeException(e);
     }
   }
