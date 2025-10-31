@@ -21,7 +21,7 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
-import us.fatehi.utility.ListUtility;
+import us.fatehi.utility.CollectionsUtility;
 
 /** Represents an index on a database table. */
 class MutableIndex extends AbstractDependantObject<Table> implements Index {
@@ -68,7 +68,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
       final List<IndexColumn> thisColumns = getColumns();
       final List<IndexColumn> thatColumns = that.getColumns();
 
-      compareTo = ListUtility.compareLists(thisColumns, thatColumns);
+      compareTo = CollectionsUtility.compareLists(thisColumns, thatColumns);
     }
 
     if (compareTo == 0 && isUnique != that.isUnique()) {

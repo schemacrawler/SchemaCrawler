@@ -8,11 +8,11 @@
 
 package schemacrawler.tools.command.text.diagram.options;
 
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.join;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,7 +201,7 @@ public final class DiagramOptionsBuilder
       return new ArrayList<>();
     }
 
-    final List<String> graphVizOptionsList = Arrays.asList(graphVizOptions.split("\\s+"));
+    final List<String> graphVizOptionsList = List.of(splitList(graphVizOptions, "\\s+"));
     return graphVizOptionsList;
   }
 

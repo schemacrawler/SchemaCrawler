@@ -15,6 +15,7 @@ import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -175,7 +176,7 @@ final class TableColumnRetriever extends AbstractRetriever {
   private String getColumnTypeName(final String typeName) {
     String columnDataTypeName = null;
     if (!isBlank(typeName)) {
-      final String[] split = typeName.split("\\.");
+      final String[] split = splitList(typeName, "\\.");
       if (split.length > 0) {
         columnDataTypeName = split[split.length - 1];
       }

@@ -24,7 +24,7 @@ import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
-import us.fatehi.utility.ListUtility;
+import us.fatehi.utility.CollectionsUtility;
 import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderForeignKeyWithNoIndexes extends BaseLinterProvider {
@@ -72,7 +72,7 @@ class LinterForeignKeyWithNoIndexes extends BaseLinter {
         final List<String> foreignKeyColumns = foreignKeyColumnNames(foreignKey);
         boolean hasIndex = false;
         for (final List<String> indexColumns : allIndexCoumns) {
-          if (ListUtility.listStartsWith(indexColumns, foreignKeyColumns)) {
+          if (CollectionsUtility.listStartsWith(indexColumns, foreignKeyColumns)) {
             hasIndex = true;
             break;
           }

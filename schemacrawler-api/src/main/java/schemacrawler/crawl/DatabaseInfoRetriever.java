@@ -12,8 +12,8 @@ import static java.util.Collections.sort;
 import static java.util.Collections.unmodifiableList;
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -139,14 +140,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
           final Object methodReturnValue = method.invoke(dbMetaData);
           if (isDatabasePropertyListMethod(method)) {
             final String value = (String) methodReturnValue;
-            final String[] valuesArray = value == null ? new String[0] : value.split(",");
-            final List<String> valuesList = new ArrayList<>();
-            for (final String valueSplit : valuesArray) {
-              final String trimmedValue = trimToEmpty(valueSplit);
-              if (!trimmedValue.isEmpty()) {
-                valuesList.add(trimmedValue);
-              }
-            }
+            final List<String> valuesList = Arrays.asList(splitList(value));
             sort(valuesList);
             dbProperties.add(
                 new ImmutableDatabaseProperty(methodName, unmodifiableList(valuesList)));

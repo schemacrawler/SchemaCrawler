@@ -8,6 +8,7 @@
 
 package schemacrawler.tools.text.formatter.diagram;
 
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
@@ -146,7 +147,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
       final Map<String, String> graphvizAttributes, final String prefix) {
     final StringBuilder buffer = new StringBuilder();
     for (final Entry<String, String> entry : graphvizAttributes.entrySet()) {
-      final String[] key = entry.getKey().split("\\.");
+      final String[] key = splitList(entry.getKey(), "\\.");
       if (key.length == 2 && key[0].equals(prefix)) {
         buffer
             .append("    ")
