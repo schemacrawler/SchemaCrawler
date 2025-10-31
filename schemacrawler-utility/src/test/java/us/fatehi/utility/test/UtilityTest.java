@@ -122,8 +122,12 @@ public class UtilityTest {
       {"BLUE", "#0000FF"}
     };
 
-    assertThat(
-        join(MapUtils.putAll(new HashMap<>(), map), ","), is("RED=null,null=#00FF00,BLUE=#0000FF"));
+    final Map<String, String> finalMap = new HashMap<>();
+    MapUtils.putAll(finalMap, map);
+    final String joined = join(finalMap, ",");
+
+    assertThat(Arrays.asList(joined.split(",")),
+        containsInAnyOrder("RED=null", "null=#00FF00", "BLUE=#0000FF"));
   }
 
   @Test
