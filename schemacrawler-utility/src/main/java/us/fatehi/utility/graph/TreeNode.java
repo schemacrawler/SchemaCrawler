@@ -10,7 +10,6 @@ package us.fatehi.utility.graph;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class TreeNode<T> {
       final TreeNode<?> node = current.node;
       final int indentLevel = current.level;
 
-      final String indent = String.join("", Collections.nCopies(indentLevel, "  "));
+      final String indent = "  ".repeat(indentLevel);
 
       sb.append(indent)
           .append("- ")
