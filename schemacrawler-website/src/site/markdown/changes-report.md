@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.1.4"></a>
+## Release 17.1.4 - 2025-11-01
+- Clean up code base
+
+
 <a name="v17.1.3"></a>
 ## Release 17.1.3 - 2025-10-27
 - Create automatic modules for jar files
