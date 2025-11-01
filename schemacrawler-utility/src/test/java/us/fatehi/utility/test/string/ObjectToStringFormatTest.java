@@ -60,26 +60,30 @@ public class ObjectToStringFormatTest {
     map.put("one", 1);
     map.put("two", 2);
     map.put("three", 3);
-    assertThat(
-        new ObjectToStringFormat(map).get().replaceAll("\\R", "\n").trim(),
-        is("{\n   \n\"one\": 1,\n   \n\"three\": 3,\n   \n\"two\": 2\n  \n}"));
+    final String mapJson =
+        """
+        {
+          "one": 1,
+          "three": 3,
+          "two": 2
+        }\
+        """;
+    assertThat(new ObjectToStringFormat(map).get().replaceAll("\\R", "\n").trim(), is(mapJson));
 
+    final String helloWorldObjectJson =
+        """
+        {
+          "@object": "us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass",
+          "integer": 42,
+          "string": "hello, world"
+        }\
+        """;
     assertThat(
         new ObjectToStringFormat(new SomeClass("hello, world", 42))
             .get()
             .replaceAll("\\R", "\n")
-            .trim(),
-        is(
-            "{\n"
-                + "   \n"
-                + "\"@object\":"
-                + " \"us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass\",\n"
-                + "   \n"
-                + "\"integer\": 42,\n"
-                + "   \n"
-                + "\"string\": \"hello, world\"\n"
-                + "  \n"
-                + "}"));
+            .strip(),
+        is(helloWorldObjectJson));
   }
 
   @Test

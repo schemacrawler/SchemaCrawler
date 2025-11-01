@@ -237,7 +237,7 @@ public class ObjectToString {
 
     final StringBuilder buffer = new StringBuilder();
 
-    buffer.append("  ".indent(indent)).append('{').append(lineSeparator());
+    buffer.append("  ".repeat(indent)).append('{').append(lineSeparator());
     final Set<Entry<String, Object>> entrySet = map.entrySet();
     for (final Iterator<Entry<String, Object>> iterator = entrySet.iterator();
         iterator.hasNext(); ) {
@@ -254,7 +254,7 @@ public class ObjectToString {
         }
       }
       buffer
-          .append("  ".indent(indent + 1))
+          .append("  ".repeat(indent + 1))
           .append("\"")
           .append(entry.getKey())
           .append("\": ")
@@ -264,7 +264,7 @@ public class ObjectToString {
       }
       buffer.append(lineSeparator());
     }
-    buffer.append("  ".indent(indent)).append('}');
+    buffer.append("  ".repeat(indent)).append('}');
 
     return buffer.toString();
   }
