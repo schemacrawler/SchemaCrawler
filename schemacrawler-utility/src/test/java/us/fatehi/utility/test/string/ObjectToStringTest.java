@@ -52,9 +52,15 @@ public class ObjectToStringTest {
   public void toStringTest() {
     assertThat(ObjectToString.toString(null), is("null"));
 
-    assertThat(
-        ObjectToString.toString(new Object()).replaceAll("\\R", ""),
-        is("{  \"@object\": \"java.lang.Object\"}"));
+    final String json =
+        """
+        {
+          "@object": "java.lang.Object"
+        }\
+        """
+            .replaceAll("\\R", "\n")
+            .stripIndent();
+    assertThat(ObjectToString.toString(new Object()).replaceAll("\\R", "\n").strip(), is(json));
     assertThat(ObjectToString.toString(new int[] {1, 2}), is("[1, 2]"));
     assertThat(ObjectToString.toString(new String[] {"1", "2"}), is("[\"1\", \"2\"]"));
 
@@ -70,13 +76,31 @@ public class ObjectToStringTest {
     assertThat(ObjectToString.toString(true), is("true"));
     assertThat(ObjectToString.toString(Boolean.TRUE), is("true"));
 
+    final String testObjectJson =
+        """
+        {
+          "@object": "us.fatehi.test.utility.TestObject",
+          "integerList": [1, 1, 2, 3, 5, 8],
+          "map":   {
+            "1": "a",
+            "2": "b",
+            "3": "c"
+          },
+          "nullValue": null,
+          "objectArray": ["a", "b", "c"],
+          "plainString": "hello world",
+          "primitiveArray": [1, 1, 2, 3, 5, 8],
+          "primitiveBoolean": true,
+          "primitiveDouble": 99.99,
+          "primitiveEnum": "READ",
+          "primitiveInt": 99,
+          "subObject": "."
+        }\
+        """
+            .replaceAll("\\R", "\n")
+            .stripIndent();
     assertThat(
-        ObjectToString.toString(TestObjectUtility.makeTestObject()).replaceAll("\\R", ""),
-        is(
-            "{  \"@object\": \"us.fatehi.test.utility.TestObject\",  \"integerList\": [1, 1, 2, 3, 5, 8],  "
-                + "\"map\":   {    \"1\": \"a\",    \"2\": \"b\",    \"3\": \"c\"  },  \"nullValue\": null,  "
-                + "\"objectArray\": [\"a\", \"b\", \"c\"],  \"plainString\": \"hello world\",  "
-                + "\"primitiveArray\": [1, 1, 2, 3, 5, 8],  \"primitiveBoolean\": true,  \"primitiveDouble\": 99.99,  "
-                + "\"primitiveEnum\": \"READ\",  \"primitiveInt\": 99,  \"subObject\": \".\"}"));
+        ObjectToString.toString(TestObjectUtility.makeTestObject()).replaceAll("\\R", "\n").strip(),
+        is(testObjectJson));
   }
 }

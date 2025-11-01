@@ -10,6 +10,7 @@ package us.fatehi.utility.test.string;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
@@ -180,6 +181,15 @@ public class ObjectToStringFunctionsTest {
       final Class<? extends Object> actualClass = actual.getClass();
       if (actualClass.isEnum() || Map.class.isAssignableFrom(actualClass)) {
         assertThat("key does not match - " + key, actual.toString(), is(expected.toString()));
+      } else if (Map.class.isAssignableFrom(actualClass)) {
+        assertThat(
+            "map keys do not match",
+            ((Map<?, ?>) actual).keySet(),
+            containsInAnyOrder(((Map<?, ?>) expected).keySet()));
+        assertThat(
+            "map values do not match",
+            ((Map<?, ?>) actual).values(),
+            containsInAnyOrder(((Map<?, ?>) expected).values()));
       } else if (ObjectToString.isSimpleObject(actual)
           || ObjectToString.isCollectionOrArray(actual)) {
         assertThat("key does not match - " + key, actual, is(expected));

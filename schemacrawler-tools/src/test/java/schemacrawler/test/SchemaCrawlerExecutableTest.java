@@ -9,6 +9,8 @@
 package schemacrawler.test;
 
 import static java.lang.System.lineSeparator;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.readString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -19,7 +21,6 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
-import static us.fatehi.test.utility.TestUtility.readFileFully;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 
 import java.nio.file.Path;
@@ -66,7 +67,7 @@ public class SchemaCrawlerExecutableTest {
             + lineSeparator()
             + "TestOptions [testCommandParameter=]"
             + lineSeparator(),
-        equalTo(readFileFully(testOutputFile)));
+        equalTo(readString(testOutputFile, UTF_8)));
     assertThat(executable.toString(), is("test-command"));
 
     assertThat(executable.getOutputOptions(), is(outputOptions));
@@ -179,7 +180,7 @@ public class SchemaCrawlerExecutableTest {
             + lineSeparator()
             + "TestOptions [testCommandParameter=]"
             + lineSeparator(),
-        equalTo(readFileFully(testOutputFile)));
+        equalTo(readString(testOutputFile, UTF_8)));
     assertThat(executable.toString(), is("test-command"));
 
     assertThat(executable.getCatalog(), is(sameInstance(mockCatalog)));

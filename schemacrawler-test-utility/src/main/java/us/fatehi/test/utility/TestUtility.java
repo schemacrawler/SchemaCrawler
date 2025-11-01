@@ -14,6 +14,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,11 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
-
 import org.apache.commons.io.FileUtils;
 import org.opentest4j.TestAbortedException;
-
-import static java.util.Objects.requireNonNull;
 
 public final class TestUtility {
 
@@ -128,11 +126,6 @@ public final class TestUtility {
     }
 
     return props;
-  }
-
-  public static String readFileFully(final Path filePath) throws IOException {
-    final byte[] bytes = Files.readAllBytes(filePath);
-    return new String(bytes, UTF_8);
   }
 
   public static Path savePropertiesToTempFile(final Properties properties) throws IOException {
