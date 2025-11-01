@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import org.apache.commons.collections4.MapUtils;
 import org.junit.jupiter.api.Test;
 
 public class UtilityTest {
@@ -113,17 +113,15 @@ public class UtilityTest {
 
   @Test
   public void joinMapTest() {
-    assertThat(join((Map) null, ","), nullValue());
+    assertThat(join((Map<String, String>) null, ","), nullValue());
     assertThat(join(new HashMap<>(), ","), nullValue());
 
-    final String[][] map = {
-      {"RED", null},
-      {null, "#00FF00"},
-      {"BLUE", "#0000FF"}
-    };
+    final Map<String, String> map = new LinkedHashMap<>();
+    map.put("RED", null);
+    map.put(null, "#00FF00");
+    map.put("BLUE", "#0000FF");
 
-    assertThat(
-        join(MapUtils.putAll(new HashMap<>(), map), ","), is("RED=null,null=#00FF00,BLUE=#0000FF"));
+    assertThat(join(map, ","), is("RED=null,null=#00FF00,BLUE=#0000FF"));
   }
 
   @Test
