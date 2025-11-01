@@ -61,19 +61,25 @@ public class ObjectToStringFormatTest {
     map.put("two", 2);
     map.put("three", 3);
     assertThat(
-        new ObjectToStringFormat(map).get().replace(System.lineSeparator(), "\n"),
-        is("{\n  \"one\": 1,\n  \"three\": 3,\n  \"two\": 2\n}"));
+        new ObjectToStringFormat(map).get().replaceAll("\\R", "\n").trim(),
+        is("{\n   \n\"one\": 1,\n   \n\"three\": 3,\n   \n\"two\": 2\n  \n}"));
 
     assertThat(
-        new ObjectToStringFormat(new SomeClass("hello, world", 42)).get().replaceAll("\\R", "\n"),
+        new ObjectToStringFormat(new SomeClass("hello, world", 42))
+            .get()
+            .replaceAll("\\R", "\n")
+            .trim(),
         is(
-            """
-            {
-              "@object": "us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass",
-              "integer": 42,
-              "string": "hello, world"
-            }\
-            """));
+            "{\n"
+                + "   \n"
+                + "\"@object\":"
+                + " \"us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass\",\n"
+                + "   \n"
+                + "\"integer\": 42,\n"
+                + "   \n"
+                + "\"string\": \"hello, world\"\n"
+                + "  \n"
+                + "}"));
   }
 
   @Test

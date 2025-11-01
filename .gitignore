@@ -29,11 +29,11 @@
 /schemacrawler-docker-compose/*.html
 
 **/target*
-tree.txt
+tree*.txt
 **/gpl*.*
 **/DeserializeJavaSerFile.java
 **/*.ser
-
+**/.nondex/
 .idea/
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij+all,visualstudiocode,maven,gradle
