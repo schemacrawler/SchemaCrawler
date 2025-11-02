@@ -182,7 +182,8 @@ public class ObjectToStringFunctionsTest {
       if (actualClass.isEnum() || Map.class.isAssignableFrom(actualClass)) {
         assertThat("key does not match - " + key, actual.toString(), is(expected.toString()));
       } else if (Map.class.isAssignableFrom(actualClass)) {
-        assertThat("map does not match", ((Map<?, ?>) actual), equalTo(((Map<?, ?>) expected)));
+        assertThat(
+            "map does not match - " + key, ((Map<?, ?>) actual), equalTo(((Map<?, ?>) expected)));
       } else if (ObjectToString.isSimpleObject(actual)
           || ObjectToString.isCollectionOrArray(actual)) {
         assertThat("key does not match - " + key, actual, is(expected));
