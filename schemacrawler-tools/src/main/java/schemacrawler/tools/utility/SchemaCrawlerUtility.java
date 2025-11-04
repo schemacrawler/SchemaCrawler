@@ -122,6 +122,8 @@ public final class SchemaCrawlerUtility {
       final DatabaseConnectionSource dataSource) {
 
     try (final Connection connection = dataSource.get()) {
+      DatabaseUtility.checkConnection(connection);
+
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
           buildSchemaRetrievalOptions(connection);
 
@@ -166,8 +168,6 @@ public final class SchemaCrawlerUtility {
   private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(
       final Connection connection) {
 
-    checkConnection(connection);
-
     final DatabaseConnectorRegistry registry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     DatabaseConnector dbConnector = registry.findDatabaseConnector(connection);
@@ -189,14 +189,6 @@ public final class SchemaCrawlerUtility {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         dbConnector.getSchemaRetrievalOptionsBuilder(connection);
     return schemaRetrievalOptionsBuilder;
-  }
-
-  private static void checkConnection(final Connection connection) {
-    try {
-      DatabaseUtility.checkConnection(connection);
-    } catch (final SQLException e) {
-      throw new InternalRuntimeException("Bad database connection", e);
-    }
   }
 
   private static String extractDatabaseServerTypeFromUrl(final String url) {
