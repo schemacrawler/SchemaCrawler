@@ -354,6 +354,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
+          <compilerArgs>
+            <arg>-parameters</arg>
+			<arg>-deprecation</arg>
+			<arg>-g:vars</arg>
+          </compilerArgs>
           <encoding>UTF-8</encoding>
           <release>${java.version}</release>
         </configuration>
