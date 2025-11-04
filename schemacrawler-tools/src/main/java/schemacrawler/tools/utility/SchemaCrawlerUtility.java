@@ -9,16 +9,12 @@
 package schemacrawler.tools.utility;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
@@ -30,14 +26,10 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.databaseconnector.UnknownDatabaseConnector;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.DatabaseServerType;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -104,7 +96,7 @@ public final class SchemaCrawlerUtility {
     try {
       // NOTE: Some JDBC drivers like SQLite may not work with closed
       // result-sets
-      checkResultSet(resultSet);
+      DatabaseUtility.checkResultSet(resultSet);
       final ResultsCrawler resultSetCrawler = new ResultsCrawler(resultSet);
       final ResultsColumns resultsColumns = resultSetCrawler.crawl();
       return resultsColumns;
@@ -120,14 +112,13 @@ public final class SchemaCrawlerUtility {
    */
   public static SchemaRetrievalOptions matchSchemaRetrievalOptions(
       final DatabaseConnectionSource dataSource) {
-
     try (final Connection connection = dataSource.get()) {
+      DatabaseUtility.checkConnection(connection);
+      final DatabaseConnector dbConnector =
+          DatabaseConnectorUtility.findDatabaseConnector(connection);
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-          buildSchemaRetrievalOptions(connection);
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-          schemaRetrievalOptionsBuilder.toOptions();
-
+          dbConnector.getSchemaRetrievalOptionsBuilder(connection);
+      final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.build();
       return schemaRetrievalOptions;
     } catch (final SQLException e) {
       throw new InternalRuntimeException("Could not obtain schema retrieval options", e);
@@ -155,136 +146,6 @@ public final class SchemaCrawlerUtility {
     }
 
     dataSource.setFirstConnectionInitializer(schemaRetrievalOptions.getConnectionInitializer());
-  }
-
-  /**
-   * Allows building of database specific options programatically, using an existing SchemaCrawler
-   * database plugin as a starting point.
-   *
-   * @return SchemaRetrievalOptionsBuilder
-   */
-  private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(
-      final Connection connection) {
-
-    checkConnection(connection);
-
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    DatabaseConnector dbConnector = registry.findDatabaseConnector(connection);
-    final DatabaseServerType databaseServerType = dbConnector.getDatabaseServerType();
-
-    // Log SchemaCrawler database plugin being used
-    if (databaseServerType.isUnknownDatabaseSystem()) {
-      LOGGER.log(Level.INFO, "Not using any SchemaCrawler database plugin");
-    } else {
-      LOGGER.log(Level.INFO, "Using SchemaCrawler database plugin for " + databaseServerType);
-    }
-
-    final boolean useMatchedDatabasePlugin =
-        useMatchedDatabasePlugin(connection, databaseServerType);
-    if (!useMatchedDatabasePlugin) {
-      dbConnector = UnknownDatabaseConnector.UNKNOWN;
-    }
-
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        dbConnector.getSchemaRetrievalOptionsBuilder(connection);
-    return schemaRetrievalOptionsBuilder;
-  }
-
-  private static void checkConnection(final Connection connection) {
-    try {
-      DatabaseUtility.checkConnection(connection);
-    } catch (final SQLException e) {
-      throw new InternalRuntimeException("Bad database connection", e);
-    }
-  }
-
-  private static void checkResultSet(final ResultSet resultSet) {
-    try {
-      DatabaseUtility.checkResultSet(resultSet);
-    } catch (final SQLException e) {
-      throw new DatabaseAccessException("Bad result-set", e);
-    }
-  }
-
-  private static String extractDatabaseServerTypeFromUrl(final String url) {
-    final Pattern urlPattern = Pattern.compile("jdbc:(.*?):.*");
-    final Matcher matcher = urlPattern.matcher(url);
-    if (!matcher.matches()) {
-      return "";
-    }
-    final String urlDBServerType;
-    if (matcher.groupCount() == 1) {
-      final String matchedDBServerType = matcher.group(1);
-      if (List.of(
-              "db2", "hsqldb", "mariadb", "mysql", "oracle", "postgresql", "sqlite", "sqlserver")
-          .contains(matchedDBServerType)) {
-        urlDBServerType = matchedDBServerType;
-      } else {
-        urlDBServerType = null;
-      }
-    } else {
-      urlDBServerType = null;
-    }
-    if (isBlank(urlDBServerType)) {
-      return "";
-    }
-    if ("mariadb".equals(urlDBServerType)) {
-      // Special case: MariaDB is handled by the MySQL plugin
-      return "mysql";
-    }
-    return urlDBServerType;
-  }
-
-  private static String getConnectionUrl(final Connection connection) {
-    requireNonNull(connection, "No connection provided");
-    final String url;
-    try {
-      url = connection.getMetaData().getURL();
-    } catch (final SQLException e) {
-      LOGGER.log(Level.CONFIG, "Cannot get connection URL");
-      return "";
-    }
-    return url;
-  }
-
-  private static boolean useMatchedDatabasePlugin(
-      final Connection connection, final DatabaseServerType dbServerType) {
-
-    // Get database connection URL
-    final String url = getConnectionUrl(connection);
-    if (isBlank(url)) {
-      return true;
-    }
-
-    // Extract database server type
-    final String urlDBServerType = extractDatabaseServerTypeFromUrl(url);
-    if (isBlank(urlDBServerType)) {
-      return true;
-    }
-
-    // Find out what is matched
-    final boolean dbConnectorPresent =
-        urlDBServerType.equalsIgnoreCase(dbServerType.getDatabaseSystemIdentifier());
-
-    final String withoutDatabasePlugin =
-        PropertiesUtility.getSystemConfigurationProperty("SC_WITHOUT_DATABASE_PLUGIN", "");
-    final boolean useWithoutDatabasePlugin =
-        urlDBServerType.equalsIgnoreCase(withoutDatabasePlugin);
-
-    // Throw exception if plugin is needed, but not found
-    if (!dbConnectorPresent && !useWithoutDatabasePlugin) {
-      throw new InternalRuntimeException(
-          String.format(
-              "Add the SchemaCrawler database plugin for <%s> to the CLASSPATH for %n<%s>%n"
-                  + "or set \"SC_WITHOUT_DATABASE_PLUGIN=%s\"%n"
-                  + "either as an environmental variable or as a Java system property",
-              urlDBServerType, url, urlDBServerType));
-    }
-
-    final boolean useMatchedDatabasePlugin = dbConnectorPresent && !useWithoutDatabasePlugin;
-
-    return useMatchedDatabasePlugin;
   }
 
   private SchemaCrawlerUtility() {
