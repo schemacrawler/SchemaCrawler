@@ -104,7 +104,7 @@ public final class SchemaCrawlerUtility {
     try {
       // NOTE: Some JDBC drivers like SQLite may not work with closed
       // result-sets
-      checkResultSet(resultSet);
+      DatabaseUtility.checkResultSet(resultSet);
       final ResultsCrawler resultSetCrawler = new ResultsCrawler(resultSet);
       final ResultsColumns resultsColumns = resultSetCrawler.crawl();
       return resultsColumns;
@@ -196,14 +196,6 @@ public final class SchemaCrawlerUtility {
       DatabaseUtility.checkConnection(connection);
     } catch (final SQLException e) {
       throw new InternalRuntimeException("Bad database connection", e);
-    }
-  }
-
-  private static void checkResultSet(final ResultSet resultSet) {
-    try {
-      DatabaseUtility.checkResultSet(resultSet);
-    } catch (final SQLException e) {
-      throw new DatabaseAccessException("Bad result-set", e);
     }
   }
 
