@@ -126,7 +126,8 @@ public final class DatabaseConnectorUtility {
           """
           Add the SchemaCrawler database plugin for <%s> to the CLASSPATH for
           %s
-          or set "SC_WITHOUT_DATABASE_PLUGIN=%s"
+          or set
+          SC_WITHOUT_DATABASE_PLUGIN=%s
           either as an environmental variable or as a Java system property
           """
               .formatted(urlDBServerType, url, urlDBServerType));
