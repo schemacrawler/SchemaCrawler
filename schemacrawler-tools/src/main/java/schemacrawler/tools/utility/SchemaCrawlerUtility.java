@@ -120,16 +120,12 @@ public final class SchemaCrawlerUtility {
    */
   public static SchemaRetrievalOptions matchSchemaRetrievalOptions(
       final DatabaseConnectionSource dataSource) {
-
     try (final Connection connection = dataSource.get()) {
       DatabaseUtility.checkConnection(connection);
-
+      final DatabaseConnector dbConnector = findDatabaseConnector(connection);
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-          buildSchemaRetrievalOptions(connection);
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-          schemaRetrievalOptionsBuilder.toOptions();
-
+          dbConnector.getSchemaRetrievalOptionsBuilder(connection);
+      final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.build();
       return schemaRetrievalOptions;
     } catch (final SQLException e) {
       throw new InternalRuntimeException("Could not obtain schema retrieval options", e);
@@ -159,38 +155,6 @@ public final class SchemaCrawlerUtility {
     dataSource.setFirstConnectionInitializer(schemaRetrievalOptions.getConnectionInitializer());
   }
 
-  /**
-   * Allows building of database specific options programatically, using an existing SchemaCrawler
-   * database plugin as a starting point.
-   *
-   * @return SchemaRetrievalOptionsBuilder
-   */
-  private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(
-      final Connection connection) {
-
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    DatabaseConnector dbConnector = registry.findDatabaseConnector(connection);
-    final DatabaseServerType databaseServerType = dbConnector.getDatabaseServerType();
-
-    // Log SchemaCrawler database plugin being used
-    if (databaseServerType.isUnknownDatabaseSystem()) {
-      LOGGER.log(Level.INFO, "Not using any SchemaCrawler database plugin");
-    } else {
-      LOGGER.log(Level.INFO, "Using SchemaCrawler database plugin for " + databaseServerType);
-    }
-
-    final boolean useMatchedDatabasePlugin =
-        useMatchedDatabasePlugin(connection, databaseServerType);
-    if (!useMatchedDatabasePlugin) {
-      dbConnector = UnknownDatabaseConnector.UNKNOWN;
-    }
-
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        dbConnector.getSchemaRetrievalOptionsBuilder(connection);
-    return schemaRetrievalOptionsBuilder;
-  }
-
   private static String extractDatabaseServerTypeFromUrl(final String url) {
     final Pattern urlPattern = Pattern.compile("jdbc:(.*?):.*");
     final Matcher matcher = urlPattern.matcher(url);
@@ -218,6 +182,27 @@ public final class SchemaCrawlerUtility {
       return "mysql";
     }
     return urlDBServerType;
+  }
+
+  private static DatabaseConnector findDatabaseConnector(final Connection connection) {
+    final DatabaseConnectorRegistry registry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    DatabaseConnector dbConnector = registry.findDatabaseConnector(connection);
+    final DatabaseServerType databaseServerType = dbConnector.getDatabaseServerType();
+
+    // Log SchemaCrawler database plugin being used
+    if (databaseServerType.isUnknownDatabaseSystem()) {
+      LOGGER.log(Level.INFO, "Not using any SchemaCrawler database plugin");
+    } else {
+      LOGGER.log(Level.INFO, "Using SchemaCrawler database plugin for " + databaseServerType);
+    }
+
+    final boolean useMatchedDatabasePlugin =
+        useMatchedDatabasePlugin(connection, databaseServerType);
+    if (!useMatchedDatabasePlugin) {
+      dbConnector = UnknownDatabaseConnector.UNKNOWN;
+    }
+    return dbConnector;
   }
 
   private static String getConnectionUrl(final Connection connection) {
@@ -259,11 +244,13 @@ public final class SchemaCrawlerUtility {
     // Throw exception if plugin is needed, but not found
     if (!dbConnectorPresent && !useWithoutDatabasePlugin) {
       throw new InternalRuntimeException(
-          String.format(
-              "Add the SchemaCrawler database plugin for <%s> to the CLASSPATH for %n<%s>%n"
-                  + "or set \"SC_WITHOUT_DATABASE_PLUGIN=%s\"%n"
-                  + "either as an environmental variable or as a Java system property",
-              urlDBServerType, url, urlDBServerType));
+          """
+          Add the SchemaCrawler database plugin for <%s> to the CLASSPATH for
+          %s
+          or set "SC_WITHOUT_DATABASE_PLUGIN=%s"
+          either as an environmental variable or as a Java system property
+          """
+              .formatted(urlDBServerType, url, urlDBServerType));
     }
 
     final boolean useMatchedDatabasePlugin = dbConnectorPresent && !useWithoutDatabasePlugin;
