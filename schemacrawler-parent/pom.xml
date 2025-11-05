@@ -356,7 +356,7 @@
         <configuration>
           <compilerArgs>
             <arg>-parameters</arg>
-			<arg>-g:vars</arg>
+            <arg>-g:vars</arg>
           </compilerArgs>
           <encoding>UTF-8</encoding>
           <release>${java.version}</release>
