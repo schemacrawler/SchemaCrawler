@@ -24,7 +24,7 @@ public final class OracleTestUtility {
   private static OracleContainer newOracleContainer(final String version) {
     final DockerImageName imageName = DockerImageName.parse("gvenzl/oracle-free");
     return new OracleContainer(imageName.withTag(version))
-        .withStartupTimeout(Duration.ofMinutes(5));
+        .withStartupTimeout(Duration.ofMinutes(10));
   }
 
   private OracleTestUtility() {
