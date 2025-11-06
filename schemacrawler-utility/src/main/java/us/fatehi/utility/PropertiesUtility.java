@@ -36,11 +36,11 @@ public class PropertiesUtility {
 
     String value = null;
 
-    if (systemProperties.contains(key)) {
+    if (systemProperties.containsKey(key)) {
       value = systemProperties.get(key);
       LOGGER.log(
           Level.CONFIG, new StringFormat("Using value from system property <%s=%s>", key, value));
-    } else if (envProperties.contains(key)) {
+    } else if (envProperties.containsKey(key)) {
       value = envProperties.get(key);
       LOGGER.log(
           Level.CONFIG,

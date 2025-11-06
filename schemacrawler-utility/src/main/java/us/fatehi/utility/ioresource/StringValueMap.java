@@ -24,7 +24,7 @@ public interface StringValueMap {
    */
   String get(String name);
 
-  default boolean contains(String name) {
+  default boolean containsKey(String name) {
     final String value = get(name);
     return value != null && !value.isBlank();
   }
