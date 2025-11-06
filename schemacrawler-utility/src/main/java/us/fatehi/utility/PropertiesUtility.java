@@ -24,6 +24,14 @@ public class PropertiesUtility {
 
   private static final Logger LOGGER = Logger.getLogger(PropertiesUtility.class.getName());
 
+  public static boolean getBooleanSystemConfigurationProperty(final String key) {
+    return Boolean.parseBoolean(getSystemConfigurationProperty(key, Boolean.FALSE.toString()));
+  }
+
+  public static String getSystemConfigurationProperty(final String key) {
+    return getSystemConfigurationProperty(key, "");
+  }
+
   public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
     final String systemPropertyValue = System.getProperty(key);
     if (!isBlank(systemPropertyValue)) {

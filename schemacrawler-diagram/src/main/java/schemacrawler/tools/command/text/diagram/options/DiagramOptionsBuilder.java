@@ -9,6 +9,7 @@
 package schemacrawler.tools.command.text.diagram.options;
 
 import static us.fatehi.utility.CollectionsUtility.splitList;
+import static us.fatehi.utility.PropertiesUtility.getSystemConfigurationProperty;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.join;
 
@@ -21,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.command.text.schema.options.BaseSchemaTextOptionsBuilder;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DiagramOptionsBuilder
@@ -237,6 +237,6 @@ public final class DiagramOptionsBuilder
       return scGraphvizOptsCfg;
     }
 
-    return PropertiesUtility.getSystemConfigurationProperty(SC_GRAPHVIZ_OPTS, "");
+    return getSystemConfigurationProperty(SC_GRAPHVIZ_OPTS);
   }
 }
