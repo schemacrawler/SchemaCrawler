@@ -13,12 +13,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
 
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Properties;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.PropertiesUtility;
 
 public class PropertiesUtilityTest {
+
+  @AfterEach
+  public void clearSystemProperties() {
+    System.setProperties(new Properties());
+  }
 
   @Test
   public void emptyPropertiesMap() {
@@ -43,8 +50,13 @@ public class PropertiesUtilityTest {
     System.setProperty("PATH", "value");
     final String value = PropertiesUtility.getSystemConfigurationProperty("PATH", "defaultValue");
     assertThat(value, is("value"));
+  }
 
-    System.clearProperty("PATH");
+  @Test
+  public void withNonStringSystemConfigurationProperty() {
+    System.getProperties().put("key", Path.of("."));
+    final String value = PropertiesUtility.getSystemConfigurationProperty("key", "defaultValue");
+    assertThat(value, is("value"));
   }
 
   @Test
@@ -67,7 +79,5 @@ public class PropertiesUtilityTest {
     System.setProperty("key", "value");
     final String value = PropertiesUtility.getSystemConfigurationProperty("key", "defaultValue");
     assertThat(value, is("value"));
-
-    System.clearProperty("key");
   }
 }
