@@ -8,13 +8,14 @@
 
 package us.fatehi.utility;
 
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
+import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 
 @UtilityMarker
 public final class TemplatingUtility {
@@ -32,7 +33,7 @@ public final class TemplatingUtility {
    * @return Expanded template
    */
   public static String expandTemplate(final String template) {
-    return expandTemplate(template, PropertiesUtility.propertiesMap(System.getProperties()));
+    return expandTemplate(template, systemProperties().toMap());
   }
 
   /**

@@ -8,18 +8,26 @@
 
 package us.fatehi.utility.ioresource;
 
+import java.util.Map;
+
 /**
  * Interface for accessing environment variables. This allows for mocking environment variables
  * during testing.
  */
-@FunctionalInterface
-public interface EnvironmentVariableAccessor {
+public interface StringValueMap {
 
   /**
-   * Gets the value of the specified environment variable.
+   * Gets the value of the specified variable.
    *
-   * @param name the name of the environment variable
+   * @param name the name of the variable
    * @return the string value of the variable, or null if the variable is not defined
    */
-  String getenv(String name);
+  String get(String name);
+
+  default boolean contains(String name) {
+    final String value = get(name);
+    return value != null && !value.isBlank();
+  }
+
+  Map<String, String> toMap();
 }

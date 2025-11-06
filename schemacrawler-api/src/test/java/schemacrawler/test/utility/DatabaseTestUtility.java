@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
+import static us.fatehi.utility.ioresource.PropertiesMap.fromProperties;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,7 +34,6 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.test.utility.TestUtility;
-import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -65,7 +65,7 @@ public final class DatabaseTestUtility {
   public static Map<String, String> loadHsqldbConfig() throws IOException {
     final Properties properties =
         TestUtility.loadPropertiesFromClasspath("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    return PropertiesUtility.propertiesMap(properties);
+    return fromProperties(properties).toMap();
   }
 
   public static Path tempHsqldbConfig() throws IOException {

@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
 
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Properties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -28,21 +27,9 @@ public class PropertiesUtilityTest {
   }
 
   @Test
-  public void emptyPropertiesMap() {
-    final Map<String, String> propertiesMap1 = PropertiesUtility.propertiesMap(new Properties());
-    assertThat(propertiesMap1.isEmpty(), is(true));
-  }
-
-  @Test
   public void noSystemConfigurationProperty() {
     final String value = PropertiesUtility.getSystemConfigurationProperty("key", "defaultValue");
     assertThat(value, is("defaultValue"));
-  }
-
-  @Test
-  public void nullPropertiesMap() {
-    final Map<String, String> propertiesMap1 = PropertiesUtility.propertiesMap(null);
-    assertThat(propertiesMap1.isEmpty(), is(true));
   }
 
   @Test
@@ -63,15 +50,6 @@ public class PropertiesUtilityTest {
   public void withEnvConfigurationProperty() {
     final String value = PropertiesUtility.getSystemConfigurationProperty("PATH", "defaultValue");
     assertThat(value, is(not(emptyString())));
-  }
-
-  @Test
-  public void withPropertiesMap() {
-    final Properties properties = new Properties();
-    properties.setProperty("key", "value");
-    final Map<String, String> propertiesMap1 = PropertiesUtility.propertiesMap(properties);
-    assertThat(propertiesMap1.size(), is(1));
-    assertThat(propertiesMap1.get("key"), is("value"));
   }
 
   @Test

@@ -10,8 +10,6 @@ package us.fatehi.utility;
 
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,28 +63,6 @@ public class PropertiesUtility {
     }
 
     return defaultValue;
-  }
-
-  /**
-   * Copies properties into a map. Keys are expected to be strings. Null values are converted to
-   * empty strings.
-   *
-   * @param properties Properties to copy
-   * @return Map of property names to values
-   */
-  public static Map<String, String> propertiesMap(final Properties properties) {
-    final Map<String, String> propertiesMap = new HashMap<>();
-    if (properties != null) {
-      for (final Object keyObject : properties.keySet()) {
-        // Filter keys that are not strings
-        // See a similar issue
-        // https://github.com/spring-projects/spring-framework/issues/32742
-        if (keyObject instanceof final String key) {
-          propertiesMap.put(key, get(properties, key));
-        }
-      }
-    }
-    return propertiesMap;
   }
 
   private PropertiesUtility() {
