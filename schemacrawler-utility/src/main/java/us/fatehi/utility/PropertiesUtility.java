@@ -12,7 +12,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +22,22 @@ public class PropertiesUtility {
 
   private static final Logger LOGGER = Logger.getLogger(PropertiesUtility.class.getName());
 
+  /**
+   * Returns the system property value as a string, even if the underlying value is not a String.
+   * Returns null if the key is not set.
+   */
+  public static String get(final Properties properties, final String key) {
+    if (properties == null || key == null) {
+      return null;
+    }
+    try {
+      final Object value = properties.get(key);
+      return value != null ? value.toString() : null;
+    } catch (final Exception e) {
+      return "Error reading key: " + key + " = value class: " + e.getClass().getSimpleName();
+    }
+  }
+
   public static boolean getBooleanSystemConfigurationProperty(final String key) {
     return Boolean.parseBoolean(getSystemConfigurationProperty(key, Boolean.FALSE.toString()));
   }
@@ -32,7 +47,7 @@ public class PropertiesUtility {
   }
 
   public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
-    final String systemPropertyValue = System.getProperty(key);
+    final String systemPropertyValue = get(System.getProperties(), key);
     if (!isBlank(systemPropertyValue)) {
       LOGGER.log(
           Level.CONFIG,
@@ -62,15 +77,12 @@ public class PropertiesUtility {
   public static Map<String, String> propertiesMap(final Properties properties) {
     final Map<String, String> propertiesMap = new HashMap<>();
     if (properties != null) {
-      for (final Entry<Object, Object> entry : properties.entrySet()) {
+      for (final Object keyObject : properties.keySet()) {
         // Filter keys that are not strings
-        // See a similar issue https://github.com/spring-projects/spring-framework/issues/32742
-        if (entry.getKey() instanceof final String key) {
-          Object value = entry.getValue();
-          if (value == null) {
-            value = "";
-          }
-          propertiesMap.put(key, value.toString());
+        // See a similar issue
+        // https://github.com/spring-projects/spring-framework/issues/32742
+        if (keyObject instanceof final String key) {
+          propertiesMap.put(key, get(properties, key));
         }
       }
     }
