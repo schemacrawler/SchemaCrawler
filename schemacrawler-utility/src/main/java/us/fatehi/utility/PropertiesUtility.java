@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
@@ -54,17 +53,25 @@ public class PropertiesUtility {
   }
 
   /**
-   * Copies properties into a map.
+   * Copies properties into a map. Keys are expected to be strings. Null values are converted to
+   * empty strings.
    *
    * @param properties Properties to copy
-   * @return Map of properties and values
+   * @return Map of property names to values
    */
   public static Map<String, String> propertiesMap(final Properties properties) {
     final Map<String, String> propertiesMap = new HashMap<>();
     if (properties != null) {
-      final Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (final Entry<Object, Object> entry : entries) {
-        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
+      for (final Entry<Object, Object> entry : properties.entrySet()) {
+        // Filter keys that are not strings
+        // See a similar issue https://github.com/spring-projects/spring-framework/issues/32742
+        if (entry.getKey() instanceof final String key) {
+          Object value = entry.getValue();
+          if (value == null) {
+            value = "";
+          }
+          propertiesMap.put(key, value.toString());
+        }
       }
     }
     return propertiesMap;
