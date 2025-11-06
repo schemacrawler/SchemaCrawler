@@ -10,10 +10,7 @@ package us.fatehi.utility.ioresource;
 
 import java.util.Map;
 
-/**
- * Interface for accessing environment variables. This allows for mocking environment variables
- * during testing.
- */
+/** Intended to be implemented functionally with System::getenv. */
 @FunctionalInterface
 public interface EnvironmentVariableMap extends StringValueMap {
 
@@ -32,11 +29,6 @@ public interface EnvironmentVariableMap extends StringValueMap {
     return null;
   }
 
-  /**
-   * Intended to be implemented functionally with System::getenv.
-   *
-   * @return Environmental variables map
-   */
   Map<String, String> getenv();
 
   @Override
