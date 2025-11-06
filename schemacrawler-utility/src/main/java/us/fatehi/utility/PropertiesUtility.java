@@ -8,33 +8,18 @@
 
 package us.fatehi.utility;
 
-import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
 
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import us.fatehi.utility.ioresource.EnvironmentVariableMap;
+import us.fatehi.utility.ioresource.StringValueMap;
 import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
 public class PropertiesUtility {
 
   private static final Logger LOGGER = Logger.getLogger(PropertiesUtility.class.getName());
-
-  /**
-   * Returns the system property value as a string, even if the underlying value is not a String.
-   * Returns null if the key is not set.
-   */
-  public static String get(final Properties properties, final String key) {
-    if (properties == null || key == null) {
-      return null;
-    }
-    try {
-      final Object value = properties.get(key);
-      return value != null ? value.toString() : null;
-    } catch (final Exception e) {
-      return "Error reading key: " + key + " = value class: " + e.getClass().getSimpleName();
-    }
-  }
 
   public static boolean getBooleanSystemConfigurationProperty(final String key) {
     return Boolean.parseBoolean(getSystemConfigurationProperty(key, Boolean.FALSE.toString()));
@@ -45,24 +30,30 @@ public class PropertiesUtility {
   }
 
   public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
-    final String systemPropertyValue = get(System.getProperties(), key);
-    if (!isBlank(systemPropertyValue)) {
+
+    final StringValueMap systemProperties = systemProperties();
+    final StringValueMap envProperties = (EnvironmentVariableMap) System::getenv;
+
+    String value = null;
+
+    if (systemProperties.contains(key)) {
+      value = systemProperties.get(key);
+      LOGGER.log(
+          Level.CONFIG, new StringFormat("Using value from system property <%s=%s>", key, value));
+    } else if (envProperties.contains(key)) {
+      value = envProperties.get(key);
       LOGGER.log(
           Level.CONFIG,
-          new StringFormat("Using value from system property <%s=%s>", key, systemPropertyValue));
-      return systemPropertyValue;
+          new StringFormat("Using value from enivronmental variable <%s=%s>", key, value));
+    } else {
+      value = defaultValue;
     }
 
-    final String envVariableValue = System.getenv(key);
-    if (!isBlank(envVariableValue)) {
-      LOGGER.log(
-          Level.CONFIG,
-          new StringFormat(
-              "Using value from enivronmental variable <%s=%s>", key, envVariableValue));
-      return envVariableValue;
+    if (value == null || value.isBlank()) {
+      value = "";
     }
 
-    return defaultValue;
+    return value;
   }
 
   private PropertiesUtility() {
