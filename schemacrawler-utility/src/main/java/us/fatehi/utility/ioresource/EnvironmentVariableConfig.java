@@ -23,10 +23,10 @@ public interface EnvironmentVariableConfig extends StringValueConfig {
   @Override
   default String getStringValue(final String propertyName, final String defaultValue) {
     final Map<String, String> env = getenv();
-    if (env != null) {
-      return env.getOrDefault(propertyName, defaultValue);
+    if (env == null) {
+      return defaultValue;
     }
-    return defaultValue;
+    return env.getOrDefault(propertyName, defaultValue);
   }
 
   Map<String, String> getenv();
