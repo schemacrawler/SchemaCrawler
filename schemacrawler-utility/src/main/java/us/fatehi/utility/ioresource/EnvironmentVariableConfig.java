@@ -21,7 +21,7 @@ public interface EnvironmentVariableConfig extends StringValueConfig {
    * @return the string value of the variable, or null if the variable is not defined
    */
   @Override
-  default public String getStringValue(String key, String defaultValue) {
+  public default String getStringValue(String key, String defaultValue) {
     final Map<String, String> env = getenv();
     if (env != null) {
       return env.get(key);

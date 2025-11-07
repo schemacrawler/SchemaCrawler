@@ -22,10 +22,10 @@ public interface StringValueConfig {
    * @param name the name of the key
    * @return String value of the key, or null if the key is not defined
    */
-String getStringValue(String propertyName, String defaultValue);
+  String getStringValue(String propertyName, String defaultValue);
 
   default boolean containsKey(String key) {
-    final String value = getStringValue(key,null);
+    final String value = getStringValue(key, null);
     return value != null;
   }
 

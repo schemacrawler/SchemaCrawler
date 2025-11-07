@@ -8,13 +8,13 @@
 
 package us.fatehi.utility.ioresource;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 public final class PropertiesConfig implements StringValueConfig {
 
