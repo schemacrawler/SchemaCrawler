@@ -37,23 +37,22 @@ public class PropertiesUtility {
     String value = null;
 
     if (systemProperties.containsKey(key)) {
-      value = systemProperties.getStringValue(key, "");
-      LOGGER.log(
-          Level.CONFIG, new StringFormat("Using value from system property <%s=%s>", key, value));
+      value = systemProperties.getStringValue(key, defaultValue);
+      LOGGER.log(Level.CONFIG, new StringFormat("Using system property for <%s>", key));
     } else if (envProperties.containsKey(key)) {
-      value = envProperties.getStringValue(key, "");
-      LOGGER.log(
-          Level.CONFIG,
-          new StringFormat("Using value from enivronmental variable <%s=%s>", key, value));
+      value = envProperties.getStringValue(key, defaultValue);
+      LOGGER.log(Level.CONFIG, new StringFormat("Using environmental variable for <%s>", key));
     } else {
       value = defaultValue;
     }
 
-    if (value == null || value.isBlank()) {
+    if (value == null) {
       value = "";
     }
+    value = value.strip();
+    LOGGER.log(Level.CONFIG, new StringFormat("Configuration value <%s>=<%s>", key, value));
 
-    return value.strip();
+    return value;
   }
 
   private PropertiesUtility() {
