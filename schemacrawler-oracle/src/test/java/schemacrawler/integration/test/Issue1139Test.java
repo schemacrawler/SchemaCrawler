@@ -44,6 +44,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.database.SqlScript;
@@ -95,8 +96,8 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
 
   @Test
   @DisplayName("Issue #1139 - multiple connection source - override connection initializer")
+  @WithSystemProperty(key = "SC_SINGLE_THREADED", value = "false")
   public void showSchemaInDDLWithMultipleConnection() throws Exception {
-    System.setProperty("SC_SINGLE_THREADED", Boolean.FALSE.toString());
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
             dbContainer.getJdbcUrl(),
@@ -108,8 +109,8 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
 
   @Test
   @DisplayName("Issue #1139 - single connection source - override connection initializer")
+  @WithSystemProperty(key = "SC_SINGLE_THREADED", value = "true")
   public void showSchemaInDDLWithSingleConnection() throws Exception {
-    System.setProperty("SC_SINGLE_THREADED", Boolean.TRUE.toString());
     final DatabaseConnectionSource dataSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
             dbContainer.getJdbcUrl(),
