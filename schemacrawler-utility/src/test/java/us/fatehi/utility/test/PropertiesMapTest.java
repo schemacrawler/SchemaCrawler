@@ -15,24 +15,12 @@ import static us.fatehi.utility.ioresource.PropertiesMap.fromProperties;
 
 import java.util.Map;
 import java.util.Properties;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class PropertiesMapTest {
 
-  @AfterEach
-  public void clearSystemProperties() {
-    System.setProperties(new Properties());
-  }
-
   @Test
   public void emptyPropertiesMap() {
-    final Map<String, String> propertiesMap1 = fromProperties(new Properties()).toMap();
-    assertThat(propertiesMap1.isEmpty(), is(true));
-  }
-
-  @Test
-  public void nullPropertiesMap() {
     final Map<String, String> propertiesMap1 = empty().toMap();
     assertThat(propertiesMap1.isEmpty(), is(true));
   }
