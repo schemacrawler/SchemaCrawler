@@ -43,17 +43,17 @@ public final class PropertiesConfig implements StringValueConfig {
    * null if the key is not set.
    */
   @Override
-  public String getStringValue(String key, String defaultValue) {
-    if (key == null) {
+  public String getStringValue(final String propertyName, final String defaultValue) {
+    if (propertyName == null) {
       return defaultValue;
     }
     try {
-      final Object value = properties.get(key);
+      final Object value = properties.get(propertyName);
       return value != null ? value.toString() : defaultValue;
     } catch (final Exception e) {
       LOGGER.log(
           Level.FINE,
-          "Error reading key: " + key + " = value class: " + e.getClass().getSimpleName());
+          "Error reading key: " + propertyName + " = value class: " + e.getClass().getSimpleName());
       return defaultValue;
     }
   }
