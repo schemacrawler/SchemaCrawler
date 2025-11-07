@@ -10,7 +10,10 @@ package us.fatehi.utility.ioresource;
 
 import java.util.Map;
 
-/** Intended to be implemented functionally with System::getenv. */
+/**
+ * Intended to be implemented functionally like this: <br>
+ * {@code StringValueConfig env = (EnvironmentVariableConfig) System::getenv;}
+ */
 @FunctionalInterface
 public interface EnvironmentVariableConfig extends StringValueConfig {
 
