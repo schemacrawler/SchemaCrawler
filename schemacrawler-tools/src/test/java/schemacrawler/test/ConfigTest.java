@@ -17,7 +17,9 @@ import static org.hamcrest.Matchers.nullValue;
 import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.options.Config;
 
@@ -144,10 +146,7 @@ public class ConfigTest {
 
   @Test
   public void notEmptyConfig1() {
-    final Map<String, Object> map = new HashMap<>();
-    map.put("key", "value");
-
-    final Config config = new Config(map);
+    final Config config = new Config(Map.of("key", "value"));
     assertNotEmptyConfig(config);
   }
 
