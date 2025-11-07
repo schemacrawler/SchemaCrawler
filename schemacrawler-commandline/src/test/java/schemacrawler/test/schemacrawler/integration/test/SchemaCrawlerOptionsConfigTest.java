@@ -19,7 +19,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
-import static us.fatehi.utility.ioresource.PropertiesMap.fromProperties;
+import static us.fatehi.utility.ioresource.PropertiesConfig.fromProperties;
 
 import java.util.Map;
 import java.util.Properties;
@@ -99,6 +99,6 @@ public class SchemaCrawlerOptionsConfigTest {
 
   private Map<String, String> loadConfig(final String configResource) {
     final Properties properties = TestUtility.loadPropertiesFromClasspath(configResource);
-    return fromProperties(properties).toMap();
+    return fromProperties(properties).toStringValueMap();
   }
 }

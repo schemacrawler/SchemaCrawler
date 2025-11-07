@@ -12,7 +12,7 @@ import java.util.Map;
 
 /** Intended to be implemented functionally with System::getenv. */
 @FunctionalInterface
-public interface EnvironmentVariableMap extends StringValueMap {
+public interface EnvironmentVariableConfig extends StringValueConfig {
 
   /**
    * Gets the value of the specified environment variable.
@@ -21,18 +21,18 @@ public interface EnvironmentVariableMap extends StringValueMap {
    * @return the string value of the variable, or null if the variable is not defined
    */
   @Override
-  default String get(final String name) {
+  default public String getStringValue(String key, String defaultValue) {
     final Map<String, String> env = getenv();
     if (env != null) {
-      return env.get(name);
+      return env.get(key);
     }
-    return null;
+    return defaultValue;
   }
 
   Map<String, String> getenv();
 
   @Override
-  default Map<String, String> toMap() {
+  default Map<String, String> toStringValueMap() {
     return getenv();
   }
 }

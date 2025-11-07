@@ -8,12 +8,12 @@
 
 package us.fatehi.utility;
 
-import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
+import static us.fatehi.utility.ioresource.PropertiesConfig.systemProperties;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import us.fatehi.utility.ioresource.EnvironmentVariableMap;
-import us.fatehi.utility.ioresource.StringValueMap;
+import us.fatehi.utility.ioresource.EnvironmentVariableConfig;
+import us.fatehi.utility.ioresource.StringValueConfig;
 import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
@@ -31,17 +31,17 @@ public class PropertiesUtility {
 
   public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
 
-    final StringValueMap systemProperties = systemProperties();
-    final StringValueMap envProperties = (EnvironmentVariableMap) System::getenv;
+    final StringValueConfig systemProperties = systemProperties();
+    final StringValueConfig envProperties = (EnvironmentVariableConfig) System::getenv;
 
     String value = null;
 
     if (systemProperties.containsKey(key)) {
-      value = systemProperties.get(key);
+      value = systemProperties.getStringValue(key, "");
       LOGGER.log(
           Level.CONFIG, new StringFormat("Using value from system property <%s=%s>", key, value));
     } else if (envProperties.containsKey(key)) {
-      value = envProperties.get(key);
+      value = envProperties.getStringValue(key, "");
       LOGGER.log(
           Level.CONFIG,
           new StringFormat("Using value from enivronmental variable <%s=%s>", key, value));
@@ -53,7 +53,7 @@ public class PropertiesUtility {
       value = "";
     }
 
-    return value;
+    return value.strip();
   }
 
   private PropertiesUtility() {

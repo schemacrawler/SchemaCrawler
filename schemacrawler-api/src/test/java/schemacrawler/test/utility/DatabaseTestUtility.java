@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
-import static us.fatehi.utility.ioresource.PropertiesMap.fromProperties;
+import static us.fatehi.utility.ioresource.PropertiesConfig.fromProperties;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -65,7 +65,7 @@ public final class DatabaseTestUtility {
   public static Map<String, String> loadHsqldbConfig() throws IOException {
     final Properties properties =
         TestUtility.loadPropertiesFromClasspath("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    return fromProperties(properties).toMap();
+    return fromProperties(properties).toStringValueMap();
   }
 
   public static Path tempHsqldbConfig() throws IOException {

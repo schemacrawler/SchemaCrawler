@@ -10,7 +10,7 @@ package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.join;
-import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
+import static us.fatehi.utility.ioresource.PropertiesConfig.systemProperties;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -117,7 +117,8 @@ public final class UtilityLogger {
     }
 
     final SortedMap<String, String> systemProperties = new TreeMap<>();
-    for (final Entry<String, String> propertyValue : systemProperties().toMap().entrySet()) {
+    for (final Entry<String, String> propertyValue :
+        systemProperties().toStringValueMap().entrySet()) {
       final String name = propertyValue.getKey();
       if ((name.startsWith("java.") || name.startsWith("os.")) && !name.endsWith(".path")) {
         systemProperties.put(name, propertyValue.getValue());

@@ -10,8 +10,8 @@ package us.fatehi.utility.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static us.fatehi.utility.ioresource.PropertiesMap.empty;
-import static us.fatehi.utility.ioresource.PropertiesMap.fromProperties;
+import static us.fatehi.utility.ioresource.PropertiesConfig.empty;
+import static us.fatehi.utility.ioresource.PropertiesConfig.fromProperties;
 
 import java.util.Map;
 import java.util.Properties;
@@ -21,7 +21,7 @@ public class PropertiesMapTest {
 
   @Test
   public void emptyPropertiesMap() {
-    final Map<String, String> propertiesMap1 = empty().toMap();
+    final Map<String, String> propertiesMap1 = empty().toStringValueMap();
     assertThat(propertiesMap1.isEmpty(), is(true));
   }
 
@@ -29,7 +29,7 @@ public class PropertiesMapTest {
   public void withPropertiesMap() {
     final Properties properties = new Properties();
     properties.setProperty("key", "value");
-    final Map<String, String> propertiesMap1 = fromProperties(properties).toMap();
+    final Map<String, String> propertiesMap1 = fromProperties(properties).toStringValueMap();
     assertThat(propertiesMap1.size(), is(1));
     assertThat(propertiesMap1.get("key"), is("value"));
   }

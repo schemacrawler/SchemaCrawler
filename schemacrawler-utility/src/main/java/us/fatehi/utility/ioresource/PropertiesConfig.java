@@ -8,33 +8,33 @@
 
 package us.fatehi.utility.ioresource;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class PropertiesMap implements StringValueMap {
+import static java.util.Objects.requireNonNull;
 
-  private static final Logger LOGGER = Logger.getLogger(PropertiesMap.class.getName());
+public final class PropertiesConfig implements StringValueConfig {
 
-  public static PropertiesMap empty() {
-    return new PropertiesMap(new Properties());
+  private static final Logger LOGGER = Logger.getLogger(PropertiesConfig.class.getName());
+
+  public static PropertiesConfig empty() {
+    return new PropertiesConfig(new Properties());
   }
 
-  public static PropertiesMap fromProperties(final Properties properties) {
-    return new PropertiesMap(properties);
+  public static PropertiesConfig fromProperties(final Properties properties) {
+    return new PropertiesConfig(properties);
   }
 
-  public static PropertiesMap systemProperties() {
-    return new PropertiesMap(System.getProperties());
+  public static PropertiesConfig systemProperties() {
+    return new PropertiesConfig(System.getProperties());
   }
 
   private final Properties properties;
 
-  private PropertiesMap(final Properties properties) {
+  private PropertiesConfig(final Properties properties) {
     this.properties = requireNonNull(properties, "No properties provided");
   }
 
@@ -43,18 +43,18 @@ public final class PropertiesMap implements StringValueMap {
    * null if the key is not set.
    */
   @Override
-  public String get(final String key) {
+  public String getStringValue(String key, String defaultValue) {
     if (key == null) {
-      return null;
+      return defaultValue;
     }
     try {
       final Object value = properties.get(key);
-      return value != null ? value.toString() : null;
+      return value != null ? value.toString() : defaultValue;
     } catch (final Exception e) {
       LOGGER.log(
           Level.FINE,
           "Error reading key: " + key + " = value class: " + e.getClass().getSimpleName());
-      return null;
+      return defaultValue;
     }
   }
 
@@ -66,14 +66,14 @@ public final class PropertiesMap implements StringValueMap {
    * @return Map of property names to values
    */
   @Override
-  public Map<String, String> toMap() {
+  public Map<String, String> toStringValueMap() {
     final Map<String, String> propertiesMap = new HashMap<>();
     for (final Object keyObject : properties.keySet()) {
       // Filter keys that are not strings
       // See a similar issue
       // https://github.com/spring-projects/spring-framework/issues/32742
       if (keyObject instanceof final String key) {
-        propertiesMap.put(key, get(key));
+        propertiesMap.put(key, getStringValue(key, ""));
       }
     }
     return propertiesMap;

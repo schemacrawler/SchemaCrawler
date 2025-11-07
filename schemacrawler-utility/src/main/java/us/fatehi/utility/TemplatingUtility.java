@@ -10,7 +10,7 @@ package us.fatehi.utility;
 
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
-import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
+import static us.fatehi.utility.ioresource.PropertiesConfig.systemProperties;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -33,7 +33,7 @@ public final class TemplatingUtility {
    * @return Expanded template
    */
   public static String expandTemplate(final String template) {
-    return expandTemplate(template, systemProperties().toMap());
+    return expandTemplate(template, systemProperties().toStringValueMap());
   }
 
   /**
