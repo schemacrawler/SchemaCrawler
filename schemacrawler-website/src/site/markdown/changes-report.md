@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.1.5"></a>
+## Release 17.1.5 - 2025-11-08
+- Fix issue #2139 - PropertiesUtility.propertiesMap error
+
+
 <a name="v17.1.4"></a>
 ## Release 17.1.4 - 2025-11-01
 - Clean up code base
