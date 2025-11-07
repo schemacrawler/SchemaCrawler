@@ -24,7 +24,7 @@ public interface StringValueConfig {
    */
   String getStringValue(String propertyName, String defaultValue);
 
-  default boolean containsKey(String key) {
+  default boolean containsKey(final String key) {
     final String value = getStringValue(key, null);
     return value != null;
   }
