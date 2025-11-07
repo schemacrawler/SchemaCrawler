@@ -24,7 +24,7 @@ public interface EnvironmentVariableConfig extends StringValueConfig {
   default String getStringValue(final String propertyName, final String defaultValue) {
     final Map<String, String> env = getenv();
     if (env != null) {
-      return env.get(propertyName);
+      return env.getOrDefault(propertyName, defaultValue);
     }
     return defaultValue;
   }
