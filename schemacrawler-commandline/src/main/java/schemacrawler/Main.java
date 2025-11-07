@@ -10,6 +10,7 @@ package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
+import static us.fatehi.utility.PropertiesUtility.getBooleanSystemConfigurationProperty;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,6 @@ import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.registry.JDBCDriverRegistry;
-import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.SystemExitException;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.property.JvmArchitectureInfo;
@@ -88,9 +88,7 @@ public final class Main {
    * @param exitCode Exit code to exit with.
    */
   private static void exit(int exitCode) {
-    final String exitWithExceptionValue =
-        PropertiesUtility.getSystemConfigurationProperty(SC_EXIT_WITH_EXCEPTION, "false");
-    final boolean exitWithException = Boolean.parseBoolean(exitWithExceptionValue);
+    final boolean exitWithException = getBooleanSystemConfigurationProperty(SC_EXIT_WITH_EXCEPTION);
     if (exitWithException) {
       throw new SystemExitException(exitCode, "SchemaCrawler has exited with an error");
     }

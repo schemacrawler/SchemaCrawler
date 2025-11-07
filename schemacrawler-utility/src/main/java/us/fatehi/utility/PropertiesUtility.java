@@ -8,15 +8,12 @@
 
 package us.fatehi.utility;
 
-import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import us.fatehi.utility.ioresource.EnvironmentVariableMap;
+import us.fatehi.utility.ioresource.StringValueMap;
 import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
@@ -24,42 +21,39 @@ public class PropertiesUtility {
 
   private static final Logger LOGGER = Logger.getLogger(PropertiesUtility.class.getName());
 
-  public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
-    final String systemPropertyValue = System.getProperty(key);
-    if (!isBlank(systemPropertyValue)) {
-      LOGGER.log(
-          Level.CONFIG,
-          new StringFormat("Using value from system property <%s=%s>", key, systemPropertyValue));
-      return systemPropertyValue;
-    }
-
-    final String envVariableValue = System.getenv(key);
-    if (!isBlank(envVariableValue)) {
-      LOGGER.log(
-          Level.CONFIG,
-          new StringFormat(
-              "Using value from enivronmental variable <%s=%s>", key, envVariableValue));
-      return envVariableValue;
-    }
-
-    return defaultValue;
+  public static boolean getBooleanSystemConfigurationProperty(final String key) {
+    return Boolean.parseBoolean(getSystemConfigurationProperty(key, Boolean.FALSE.toString()));
   }
 
-  /**
-   * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   * @return Map of properties and values
-   */
-  public static Map<String, String> propertiesMap(final Properties properties) {
-    final Map<String, String> propertiesMap = new HashMap<>();
-    if (properties != null) {
-      final Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (final Entry<Object, Object> entry : entries) {
-        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
-      }
+  public static String getSystemConfigurationProperty(final String key) {
+    return getSystemConfigurationProperty(key, "");
+  }
+
+  public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
+
+    final StringValueMap systemProperties = systemProperties();
+    final StringValueMap envProperties = (EnvironmentVariableMap) System::getenv;
+
+    String value = null;
+
+    if (systemProperties.containsKey(key)) {
+      value = systemProperties.get(key);
+      LOGGER.log(
+          Level.CONFIG, new StringFormat("Using value from system property <%s=%s>", key, value));
+    } else if (envProperties.containsKey(key)) {
+      value = envProperties.get(key);
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat("Using value from enivronmental variable <%s=%s>", key, value));
+    } else {
+      value = defaultValue;
     }
-    return propertiesMap;
+
+    if (value == null || value.isBlank()) {
+      value = "";
+    }
+
+    return value;
   }
 
   private PropertiesUtility() {

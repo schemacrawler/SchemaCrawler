@@ -13,17 +13,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
 
-import java.util.Map;
+import java.nio.file.Path;
 import java.util.Properties;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.PropertiesUtility;
 
 public class PropertiesUtilityTest {
 
-  @Test
-  public void emptyPropertiesMap() {
-    final Map<String, String> propertiesMap1 = PropertiesUtility.propertiesMap(new Properties());
-    assertThat(propertiesMap1.isEmpty(), is(true));
+  @AfterEach
+  public void clearSystemProperties() {
+    System.setProperties(new Properties());
   }
 
   @Test
@@ -33,18 +33,17 @@ public class PropertiesUtilityTest {
   }
 
   @Test
-  public void nullPropertiesMap() {
-    final Map<String, String> propertiesMap1 = PropertiesUtility.propertiesMap(null);
-    assertThat(propertiesMap1.isEmpty(), is(true));
-  }
-
-  @Test
   public void withBothConfigurationProperty() {
     System.setProperty("PATH", "value");
     final String value = PropertiesUtility.getSystemConfigurationProperty("PATH", "defaultValue");
     assertThat(value, is("value"));
+  }
 
-    System.clearProperty("PATH");
+  @Test
+  public void withNonStringSystemConfigurationProperty() {
+    System.getProperties().put("key", Path.of("."));
+    final String value = PropertiesUtility.getSystemConfigurationProperty("key", "defaultValue");
+    assertThat(value, is("."));
   }
 
   @Test
@@ -54,20 +53,9 @@ public class PropertiesUtilityTest {
   }
 
   @Test
-  public void withPropertiesMap() {
-    final Properties properties = new Properties();
-    properties.setProperty("key", "value");
-    final Map<String, String> propertiesMap1 = PropertiesUtility.propertiesMap(properties);
-    assertThat(propertiesMap1.size(), is(1));
-    assertThat(propertiesMap1.get("key"), is("value"));
-  }
-
-  @Test
   public void withSystemConfigurationProperty() {
     System.setProperty("key", "value");
     final String value = PropertiesUtility.getSystemConfigurationProperty("key", "defaultValue");
     assertThat(value, is("value"));
-
-    System.clearProperty("key");
   }
 }
