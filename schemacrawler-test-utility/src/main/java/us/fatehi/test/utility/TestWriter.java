@@ -17,8 +17,6 @@ import java.util.Objects;
 
 public final class TestWriter extends Writer implements TestOutputCapture {
 
-  private static final String lineSeparator = System.getProperty("line.separator");
-
   private final TestOutputStream out;
 
   public TestWriter() {
@@ -50,7 +48,7 @@ public final class TestWriter extends Writer implements TestOutputCapture {
   }
 
   public void println() {
-    writeout(lineSeparator);
+    writeout(System.lineSeparator());
   }
 
   public void println(final Object x) {

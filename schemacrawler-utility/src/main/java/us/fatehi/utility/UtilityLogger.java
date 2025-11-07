@@ -10,6 +10,7 @@ package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.join;
+import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -116,10 +117,10 @@ public final class UtilityLogger {
     }
 
     final SortedMap<String, String> systemProperties = new TreeMap<>();
-    for (final Entry<Object, Object> propertyValue : System.getProperties().entrySet()) {
-      final String name = (String) propertyValue.getKey();
+    for (final Entry<String, String> propertyValue : systemProperties().toMap().entrySet()) {
+      final String name = propertyValue.getKey();
       if ((name.startsWith("java.") || name.startsWith("os.")) && !name.endsWith(".path")) {
-        systemProperties.put(name, (String) propertyValue.getValue());
+        systemProperties.put(name, propertyValue.getValue());
       }
     }
 
