@@ -40,7 +40,7 @@ import us.fatehi.utility.database.SqlScript;
 
 @DisableLogging
 @HeavyDatabaseTest("oracle")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @TestInstance(Lifecycle.PER_CLASS)
 public class IssuesTest extends BaseOracleWithConnectionTest {
 

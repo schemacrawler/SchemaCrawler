@@ -51,7 +51,7 @@ import us.fatehi.test.utility.extensions.TestContext;
 
 @DisableLogging
 @HeavyDatabaseTest("mysql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 public class MySQLTest extends BaseAdditionalDatabaseTest {
 

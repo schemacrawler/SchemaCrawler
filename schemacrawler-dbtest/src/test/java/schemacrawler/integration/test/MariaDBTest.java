@@ -37,7 +37,7 @@ import us.fatehi.test.utility.extensions.WithSystemProperty;
 
 @DisableLogging
 @HeavyDatabaseTest("mariadb")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newMariaDBContainer();

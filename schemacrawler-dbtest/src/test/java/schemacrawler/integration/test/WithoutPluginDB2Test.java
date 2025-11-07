@@ -42,7 +42,7 @@ import us.fatehi.test.utility.extensions.WithSystemProperty;
 
 @DisableLogging
 @HeavyDatabaseTest("db2")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 @EnabledOnOs(
     architectures = {"x64", "x86_64", "amd64"},

@@ -49,7 +49,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @DisableLogging
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("mysql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 @DisplayName("Test for operations including tablesample")
 public class MySQLOperationsTest extends BaseAdditionalDatabaseTest {

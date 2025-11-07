@@ -55,7 +55,7 @@ import us.fatehi.utility.datasource.MultiUseUserCredentials;
 @DisableLogging
 @TestInstance(PER_CLASS)
 @HeavyDatabaseTest("oracle")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 public class Issue1139Test extends BaseOracleWithConnectionTest {
 

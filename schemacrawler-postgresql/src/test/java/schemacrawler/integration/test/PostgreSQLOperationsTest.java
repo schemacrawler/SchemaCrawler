@@ -48,7 +48,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @DisableLogging
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("postgresql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 @DisplayName("Test for operations including tablesample")
 public class PostgreSQLOperationsTest extends BaseAdditionalDatabaseTest {

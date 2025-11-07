@@ -49,7 +49,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
 @HeavyDatabaseTest("oracle")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
 

@@ -47,7 +47,7 @@ import us.fatehi.utility.database.SqlScript;
 @TestInstance(Lifecycle.PER_CLASS)
 @ResolveTestContext
 @HeavyDatabaseTest
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @EnabledOnOs(
     architectures = {"x64", "x86_64", "amd64"},
     disabledReason = "SQL Server Docker container does not run on ARM")

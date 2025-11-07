@@ -50,7 +50,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @DisableLogging
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("db2")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 @DisplayName("Test for operations including tablesample")
 public class DB2OperationsTest extends BaseAdditionalDatabaseTest {

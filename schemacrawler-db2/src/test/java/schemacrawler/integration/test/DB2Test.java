@@ -59,7 +59,7 @@ import us.fatehi.utility.property.Property;
 @DisableLogging
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("db2")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 public class DB2Test extends BaseAdditionalDatabaseTest {
 

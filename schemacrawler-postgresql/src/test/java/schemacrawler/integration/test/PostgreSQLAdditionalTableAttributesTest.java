@@ -42,7 +42,7 @@ import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
 @HeavyDatabaseTest("postgresql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @DisplayName("Test for issue #258 on GitHub")
 @Disabled("Only for PostgreSQL 11")
 public class PostgreSQLAdditionalTableAttributesTest extends BaseAdditionalDatabaseTest {
