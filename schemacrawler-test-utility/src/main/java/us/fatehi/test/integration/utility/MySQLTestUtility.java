@@ -33,18 +33,18 @@ public final class MySQLTestUtility {
 
   public static Map<String, String> urlx() {
     // Use default connection properties from MySQLDatabaseConnector
-    final Map<String, String> connectionProperties = new HashMap<>();
-    connectionProperties.put("nullNamePatternMatchesAll", "true");
-    connectionProperties.put("getProceduresReturnsFunctions", "false");
-    connectionProperties.put("noAccessToProcedureBodies", "true");
-    connectionProperties.put("logger", "Jdk14Logger");
-    connectionProperties.put("dumpQueriesOnException", "true");
-    connectionProperties.put("dumpMetadataOnColumnNotFound", "true");
-    connectionProperties.put("maxQuerySizeToLog", "4096");
-    connectionProperties.put("disableMariaDbDriver", "true");
-    connectionProperties.put("useInformationSchema", "true");
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("nullNamePatternMatchesAll", "true");
+    urlx.put("getProceduresReturnsFunctions", "false");
+    urlx.put("noAccessToProcedureBodies", "true");
+    urlx.put("logger", "Jdk14Logger");
+    urlx.put("dumpQueriesOnException", "true");
+    urlx.put("dumpMetadataOnColumnNotFound", "true");
+    urlx.put("maxQuerySizeToLog", "4096");
+    urlx.put("disableMariaDbDriver", "true");
+    urlx.put("useInformationSchema", "true");
 
-    return connectionProperties;
+    return urlx;
   }
 
   private MySQLTestUtility() {

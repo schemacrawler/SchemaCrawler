@@ -27,6 +27,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.test.integration.utility.MySQLTestUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
@@ -120,11 +122,12 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
     // IMPORTANT: Use root user, since permissions are not granted to the new databases created by
     // the script. Also do not verify the server, and allow public key retrieval
-    final String connectionUrl =
-        dbContainer.getJdbcUrl()
-            + "?verifyServerCertificate=false"
-            + "&allowPublicKeyRetrieval=true";
-    createDataSource(connectionUrl, "root", dbContainer.getPassword());
+    final Map<String, String> urlx = MySQLTestUtility.urlx();
+    urlx.put("verifyServerCertificate", "false");
+    urlx.put("allowPublicKeyRetrieval", "true");
+
+    final String connectionUrl = dbContainer.getJdbcUrl();
+    createDataSource(connectionUrl, "root", dbContainer.getPassword(), urlx);
   }
 
   @Test

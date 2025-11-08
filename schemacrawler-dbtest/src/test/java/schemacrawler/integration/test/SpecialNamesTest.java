@@ -18,6 +18,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -65,11 +67,11 @@ public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
 
     // IMPORTANT: Use root user, since permissions are not granted to the new databases created by
     // the script. Also do not verify the server, and allow public key retrieval
-    final String connectionUrl =
-        dbContainer.getJdbcUrl()
-            + "?verifyServerCertificate=false"
-            + "&allowPublicKeyRetrieval=true";
-    createDataSource(connectionUrl, "root", dbContainer.getPassword());
+    final String connectionUrl = dbContainer.getJdbcUrl();
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("verifyServerCertificate", "false");
+    urlx.put("allowPublicKeyRetrieval", "true");
+    createDataSource(connectionUrl, "root", dbContainer.getPassword(), urlx);
 
     // Note: The database connection needs to be closed for the new schemas to be recognized
     try (Connection connection = getConnection()) {
