@@ -47,7 +47,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @DisableLogging
 @ResolveTestContext
 @HeavyDatabaseTest("mariadb")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
 
   @Container

@@ -37,7 +37,7 @@ import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
 @HeavyDatabaseTest("firebird")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class FirebirdTest extends BaseAdditionalDatabaseTest {
 
   private static final DockerImageName imageName =

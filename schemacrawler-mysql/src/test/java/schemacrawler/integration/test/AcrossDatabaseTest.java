@@ -43,7 +43,7 @@ import us.fatehi.utility.database.SqlScript;
 @DisableLogging
 @ResolveTestContext
 @HeavyDatabaseTest("mysql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newMySQLContainer();

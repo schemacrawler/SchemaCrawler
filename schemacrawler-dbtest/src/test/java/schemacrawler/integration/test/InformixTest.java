@@ -36,7 +36,7 @@ import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
 @HeavyDatabaseTest("informix")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class InformixTest extends BaseAdditionalDatabaseTest {
 
   @Container

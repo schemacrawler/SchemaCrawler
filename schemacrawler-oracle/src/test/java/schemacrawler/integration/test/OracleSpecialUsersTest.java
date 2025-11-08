@@ -18,16 +18,13 @@ import static us.fatehi.test.integration.utility.OracleTestUtility.newOracleCont
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.test.utility.DisableLogging;
@@ -38,7 +35,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @DisableLogging
 @HeavyDatabaseTest("oracle")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
   private static final int NUM_DATABASE_USERS = 34;

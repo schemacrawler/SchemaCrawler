@@ -69,7 +69,7 @@ import us.fatehi.utility.property.Property;
 @DisableLogging
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("sqlserver")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 @EnabledOnOs(
     architectures = {"x64", "x86_64", "amd64"},

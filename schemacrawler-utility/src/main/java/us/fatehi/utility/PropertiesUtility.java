@@ -8,12 +8,12 @@
 
 package us.fatehi.utility;
 
-import static us.fatehi.utility.ioresource.PropertiesMap.systemProperties;
+import static us.fatehi.utility.ioresource.PropertiesConfig.systemProperties;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import us.fatehi.utility.ioresource.EnvironmentVariableMap;
-import us.fatehi.utility.ioresource.StringValueMap;
+import us.fatehi.utility.ioresource.EnvironmentVariableConfig;
+import us.fatehi.utility.ioresource.StringValueConfig;
 import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
@@ -31,27 +31,26 @@ public class PropertiesUtility {
 
   public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
 
-    final StringValueMap systemProperties = systemProperties();
-    final StringValueMap envProperties = (EnvironmentVariableMap) System::getenv;
+    final StringValueConfig systemProperties = systemProperties();
+    final StringValueConfig envProperties = (EnvironmentVariableConfig) System::getenv;
 
     String value = null;
 
     if (systemProperties.containsKey(key)) {
-      value = systemProperties.get(key);
-      LOGGER.log(
-          Level.CONFIG, new StringFormat("Using value from system property <%s=%s>", key, value));
+      value = systemProperties.getStringValue(key, defaultValue);
+      LOGGER.log(Level.CONFIG, new StringFormat("Using system property for <%s>", key));
     } else if (envProperties.containsKey(key)) {
-      value = envProperties.get(key);
-      LOGGER.log(
-          Level.CONFIG,
-          new StringFormat("Using value from enivronmental variable <%s=%s>", key, value));
+      value = envProperties.getStringValue(key, defaultValue);
+      LOGGER.log(Level.CONFIG, new StringFormat("Using environmental variable for <%s>", key));
     } else {
       value = defaultValue;
     }
 
-    if (value == null || value.isBlank()) {
+    if (value == null) {
       value = "";
     }
+    value = value.strip();
+    LOGGER.log(Level.CONFIG, new StringFormat("Configuration value <%s>=<%s>", key, value));
 
     return value;
   }

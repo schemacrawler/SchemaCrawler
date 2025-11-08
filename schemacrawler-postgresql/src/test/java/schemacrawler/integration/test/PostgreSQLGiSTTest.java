@@ -42,7 +42,7 @@ import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
 @HeavyDatabaseTest("postgresql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @DisplayName("Test for issue #458 - daterange index in Postgres results in NotLoadedException")
 public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
 

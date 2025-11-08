@@ -61,7 +61,7 @@ import us.fatehi.utility.property.Property;
 
 @DisableLogging
 @HeavyDatabaseTest("postgresql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 

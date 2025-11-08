@@ -39,7 +39,7 @@ import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
 @HeavyDatabaseTest("cassandra")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
 
   @Container private final CassandraContainer dbContainer = newCassandraContainer();

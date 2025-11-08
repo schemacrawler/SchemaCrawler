@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
 
 import java.nio.file.Path;
-import java.util.Properties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.PropertiesUtility;
@@ -23,7 +22,8 @@ public class PropertiesUtilityTest {
 
   @AfterEach
   public void clearSystemProperties() {
-    System.setProperties(new Properties());
+    // Setting to null restores System properties
+    System.setProperties(null);
   }
 
   @Test

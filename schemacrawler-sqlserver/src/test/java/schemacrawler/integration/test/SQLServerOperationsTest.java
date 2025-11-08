@@ -51,7 +51,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @DisableLogging
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("sqlserver")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
 @DisplayName("Test for operations including tablesample")
 @EnabledOnOs(

@@ -10,9 +10,12 @@ package us.fatehi.utility.ioresource;
 
 import java.util.Map;
 
-/** Intended to be implemented functionally with System::getenv. */
+/**
+ * Intended to be implemented functionally like this: <br>
+ * {@code StringValueConfig env = (EnvironmentVariableConfig) System::getenv;}
+ */
 @FunctionalInterface
-public interface EnvironmentVariableMap extends StringValueMap {
+public interface EnvironmentVariableConfig extends StringValueConfig {
 
   /**
    * Gets the value of the specified environment variable.
@@ -21,18 +24,18 @@ public interface EnvironmentVariableMap extends StringValueMap {
    * @return the string value of the variable, or null if the variable is not defined
    */
   @Override
-  default String get(final String name) {
+  default String getStringValue(final String propertyName, final String defaultValue) {
     final Map<String, String> env = getenv();
-    if (env != null) {
-      return env.get(name);
+    if (env == null) {
+      return defaultValue;
     }
-    return null;
+    return env.getOrDefault(propertyName, defaultValue);
   }
 
   Map<String, String> getenv();
 
   @Override
-  default Map<String, String> toMap() {
+  default Map<String, String> toStringValueMap() {
     return getenv();
   }
 }

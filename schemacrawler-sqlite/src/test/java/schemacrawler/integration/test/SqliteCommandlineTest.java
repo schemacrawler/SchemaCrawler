@@ -22,16 +22,14 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSqliteTest;
@@ -116,12 +114,10 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
   @Test
   public void testSqliteMainMissingDatabase(final CapturedSystemStreams streams) throws Exception {
 
-    final Path sqliteDbFile =
-        Path.of(
-            System.getProperty("java.io.tmpdir"),
-            RandomStringUtils.insecure().nextAlphanumeric(12).toLowerCase() + ".db");
+    final Path sqliteDbFile = Files.createTempFile("testSqliteMainMissingDatabase", ".db");
+    Files.delete(sqliteDbFile);
     assertThat(
-        "SQLite database should exist before the test",
+        "SQLite database should not exist before the test",
         sqliteDbFile.toFile(),
         not(anExistingFile()));
 

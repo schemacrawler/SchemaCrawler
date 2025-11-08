@@ -59,7 +59,7 @@ import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 @DisableLogging
 @TestInstance(Lifecycle.PER_CLASS)
 @HeavyDatabaseTest("postgresql")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @DisplayName("Test for issue #284 - support enum values")
 public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 

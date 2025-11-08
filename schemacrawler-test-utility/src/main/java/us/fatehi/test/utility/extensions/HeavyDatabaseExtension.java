@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.extension.ConditionEvaluationResult.disabled
 import static org.junit.jupiter.api.extension.ConditionEvaluationResult.enabled;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Optional;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
@@ -35,12 +33,6 @@ public final class HeavyDatabaseExtension implements ExecutionCondition {
   }
 
   public ConditionEvaluationResult evaluateExecutionCondition(final String databaseVariableName) {
-
-    if (!isDockerAvailable()) {
-      return disabled(
-          "Do NOT run heavy Testcontainers test for databases: Docker is not available on this"
-              + " system");
-    }
 
     if (isSetOverrideForDev()) {
       return enabled("Run heavy Testcontainers test for databases: overridden for development");
@@ -64,24 +56,6 @@ public final class HeavyDatabaseExtension implements ExecutionCondition {
     final Optional<HeavyDatabaseTest> heavyDbAnnotation =
         findAnnotation(context.getTestClass(), HeavyDatabaseTest.class);
     return heavyDbAnnotation.map(HeavyDatabaseTest::value).orElse(null);
-  }
-
-  private boolean isDockerAvailable() {
-    try {
-      final Process process =
-          new ProcessBuilder("docker", "version", "--format", "{{.Server.Version}}")
-              .redirectErrorStream(true)
-              .start();
-
-      final BufferedReader reader =
-          new BufferedReader(new InputStreamReader(process.getInputStream()));
-      final String output = reader.readLine(); // Read first line of output
-      final int exitCode = process.waitFor();
-
-      return exitCode == 0 && output != null && !output.strip().isEmpty();
-    } catch (final Exception e) {
-      return false;
-    }
   }
 
   private boolean isSetOverrideForDev() {

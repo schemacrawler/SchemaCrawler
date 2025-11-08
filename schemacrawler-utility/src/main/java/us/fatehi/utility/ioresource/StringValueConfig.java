@@ -14,7 +14,7 @@ import java.util.Map;
  * Interface for accessing System properties or environment variables. This allows for mocking
  * environment variables during testing.
  */
-public interface StringValueMap {
+public interface StringValueConfig {
 
   /**
    * Gets the value of the specified key.
@@ -22,12 +22,12 @@ public interface StringValueMap {
    * @param name the name of the key
    * @return String value of the key, or null if the key is not defined
    */
-  String get(String key);
+  String getStringValue(String propertyName, String defaultValue);
 
-  default boolean containsKey(String key) {
-    final String value = get(key);
-    return value != null && !value.isBlank();
+  default boolean containsKey(final String key) {
+    final String value = getStringValue(key, null);
+    return value != null;
   }
 
-  Map<String, String> toMap();
+  Map<String, String> toStringValueMap();
 }
