@@ -19,6 +19,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
@@ -109,6 +111,9 @@ public class AcrossDatabaseTest extends BaseAdditionalDatabaseTest {
 
     // Create a new set of database connections for crawling the schema,
     // with the master database as the default
-    createDataSource(jdbcUrl, user, password, "database=master");
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("database", "master");
+
+    createDataSource(jdbcUrl, user, password, urlx);
   }
 }

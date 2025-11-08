@@ -40,6 +40,7 @@ import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.test.integration.utility.OracleTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -55,6 +56,15 @@ public class OracleOperationsTest extends BaseAdditionalDatabaseTest {
 
   @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
+  @Test
+  public void count(final TestContext testContext) throws Exception {
+    runWithContentComparison(
+        testContext.testMethodFullName(),
+        getDataSource(),
+        InfoLevel.minimum,
+        OperationType.count.name());
+  }
+
   @BeforeAll
   public void createDatabase() {
 
@@ -63,19 +73,9 @@ public class OracleOperationsTest extends BaseAdditionalDatabaseTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
-    createDataSource(jdbcUrl, "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
+    createDataSource(jdbcUrl, "SYS AS SYSDBA", dbContainer.getPassword(), OracleTestUtility.urlx());
 
     createDatabase("/oracle.scripts.txt");
-  }
-
-  @Test
-  public void count(final TestContext testContext) throws Exception {
-    runWithContentComparison(
-        testContext.testMethodFullName(),
-        getDataSource(),
-        InfoLevel.minimum,
-        OperationType.count.name());
   }
 
   @Test

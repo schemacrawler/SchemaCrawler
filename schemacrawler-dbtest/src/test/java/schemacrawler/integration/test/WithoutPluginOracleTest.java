@@ -22,6 +22,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,7 +64,10 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("restrictGetTables", "true");
+    urlx.put("useFetchSizeWithLongColumn", "true");
+
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
     createDatabase("/oracle.scripts.txt");

@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
+import java.util.Map;
 import javax.sql.DataSource;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -31,7 +32,7 @@ public final class DataSourceTestUtility {
       final String connectionUrl,
       final String user,
       final String password,
-      final String connectionProperties) {
+      final Map<String, String> connectionProperties) {
 
     final class SQLExceptionHandler implements SQLExceptionOverride {
 
@@ -57,13 +58,9 @@ public final class DataSourceTestUtility {
     ds.setPassword(password);
     ds.setExceptionOverride(new SQLExceptionHandler());
 
-    if (connectionProperties != null && !connectionProperties.isBlank()) {
-      for (final String entry : connectionProperties.split(";")) {
-        final String[] kv = entry.split("=", 2);
-        if (kv.length == 2) {
-          ds.addDataSourceProperty(kv[0].strip(), kv[1].strip());
-        }
-      }
+    if (connectionProperties != null) {
+      connectionProperties.entrySet().stream()
+          .forEach(entry -> ds.addDataSourceProperty(entry.getKey(), entry.getValue()));
     }
 
     return ds;

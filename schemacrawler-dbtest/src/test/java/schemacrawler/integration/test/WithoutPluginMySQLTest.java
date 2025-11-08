@@ -16,7 +16,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.util.Properties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -35,6 +34,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.test.integration.utility.MySQLTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -57,33 +57,11 @@ public class WithoutPluginMySQLTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    // Use default connection properties from MySQLDatabaseConnector
-    final Properties connectionProperties = new Properties();
-    connectionProperties.put("nullNamePatternMatchesAll", "true");
-    connectionProperties.put("getProceduresReturnsFunctions", "false");
-    connectionProperties.put("noAccessToProcedureBodies", "true");
-    connectionProperties.put("logger", "Jdk14Logger");
-    connectionProperties.put("dumpQueriesOnException", "true");
-    connectionProperties.put("dumpMetadataOnColumnNotFound", "true");
-    connectionProperties.put("maxQuerySizeToLog", "4096");
-    connectionProperties.put("disableMariaDbDriver", "true");
-    connectionProperties.put("useInformationSchema", "true");
-
-    final StringBuilder connectionPropertiesString = new StringBuilder();
-    connectionProperties.entrySet().stream()
-        .forEach(
-            entry ->
-                connectionPropertiesString
-                    .append(entry.getKey())
-                    .append("=")
-                    .append(entry.getValue())
-                    .append(";"));
-
     createDataSource(
         dbContainer.getJdbcUrl(),
         dbContainer.getUsername(),
         dbContainer.getPassword(),
-        connectionPropertiesString.toString());
+        MySQLTestUtility.urlx());
 
     createDatabase("/mysql.scripts.txt");
   }

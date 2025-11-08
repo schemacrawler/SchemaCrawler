@@ -8,6 +8,8 @@
 
 package us.fatehi.test.integration.utility;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.mysql.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -27,6 +29,22 @@ public final class MySQLTestUtility {
             // "--skip-ssl", (Needed for MySQL 8)
             "--lower_case_table_names=1",
             "--log_bin_trust_function_creators=1");
+  }
+
+  public static Map<String, String> urlx() {
+    // Use default connection properties from MySQLDatabaseConnector
+    final Map<String, String> connectionProperties = new HashMap<>();
+    connectionProperties.put("nullNamePatternMatchesAll", "true");
+    connectionProperties.put("getProceduresReturnsFunctions", "false");
+    connectionProperties.put("noAccessToProcedureBodies", "true");
+    connectionProperties.put("logger", "Jdk14Logger");
+    connectionProperties.put("dumpQueriesOnException", "true");
+    connectionProperties.put("dumpMetadataOnColumnNotFound", "true");
+    connectionProperties.put("maxQuerySizeToLog", "4096");
+    connectionProperties.put("disableMariaDbDriver", "true");
+    connectionProperties.put("useInformationSchema", "true");
+
+    return connectionProperties;
   }
 
   private MySQLTestUtility() {

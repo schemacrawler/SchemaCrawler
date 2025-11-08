@@ -26,7 +26,9 @@ import static us.fatehi.utility.database.DatabaseUtility.checkConnection;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.BeforeAll;
@@ -93,7 +95,10 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
     createDatabase("/sqlserver.scripts.txt");
 
-    createDataSource(jdbcUrl, user, password, "database=BOOKS");
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("database", "BOOKS");
+
+    createDataSource(jdbcUrl, user, password, urlx);
   }
 
   @Test
