@@ -69,9 +69,7 @@ public final class DatabaseTestUtility {
   }
 
   public static Path tempHsqldbConfig() throws IOException {
-    final Properties properties =
-        TestUtility.loadPropertiesFromClasspath("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    return TestUtility.savePropertiesToTempFile(properties);
+    return TestUtility.copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
   private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {
