@@ -12,7 +12,6 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.DatabaseServerType;
-import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 /**
  * SchemaCrawler database support plug-in.
@@ -47,8 +46,7 @@ public final class TestDatabaseConnector extends DatabaseConnector {
 
   private void forceInstantiationFailureIfConfigured() {
     final String propertyValue =
-        new SystemPropertiesConfig()
-            .getStringValue(this.getClass().getName() + ".force-instantiation-failure");
+        System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
     if (propertyValue != null) {
       throw new RuntimeException("Forced instantiation error");
     }
