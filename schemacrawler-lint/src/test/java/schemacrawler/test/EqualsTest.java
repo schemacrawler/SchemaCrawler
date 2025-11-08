@@ -6,11 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test;
 
-import org.junit.jupiter.api.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.jupiter.api.Test;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.config.LinterConfig;
 
@@ -27,7 +26,7 @@ public class EqualsTest {
   public void linterConfig() {
     EqualsVerifier.forClass(LinterConfig.class)
         .withIgnoredFields(
-            "config",
+            "configMap",
             "runLinter",
             "threshold",
             "tableInclusionPattern",

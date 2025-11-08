@@ -20,6 +20,7 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.ObjectToString;
 
 public final class LinterConfig implements Serializable, Comparable<LinterConfig> {
@@ -27,7 +28,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
   @Serial private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
-  private final Map<String, Object> config;
+  private final Map<String, Object> configMap;
   private final boolean runLinter;
   private final LintSeverity severity;
   private final int threshold;
@@ -57,7 +58,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
       final String tableExclusionPattern,
       final String columnInclusionPattern,
       final String columnExclusionPattern,
-      final Map<String, Object> config) {
+      final Map<String, Object> configMap) {
     this.linterId = requireNotBlank(linterId, "No linter id provided");
     this.runLinter = runLinter == null ? true : runLinter;
     this.severity = severity;
@@ -66,7 +67,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
     this.tableExclusionPattern = tableExclusionPattern;
     this.columnInclusionPattern = columnInclusionPattern;
     this.columnExclusionPattern = columnExclusionPattern;
-    this.config = config == null ? new HashMap<>() : new HashMap<>(config);
+    this.configMap = configMap == null ? new HashMap<>() : new HashMap<>(configMap);
   }
 
   @Override
@@ -96,10 +97,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof LinterConfig)) {
+    if ((obj == null) || !(obj instanceof LinterConfig)) {
       return false;
     }
     final LinterConfig other = (LinterConfig) obj;
@@ -117,7 +115,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
   }
 
   public Config getConfig() {
-    return new Config(config);
+    return ConfigUtility.fromMap(configMap);
   }
 
   public String getLinterId() {
@@ -138,11 +136,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (linterId == null ? 0 : linterId.hashCode());
-    result = prime * result + (severity == null ? 0 : severity.hashCode());
-    return result;
+    return Objects.hash(linterId, severity);
   }
 
   public boolean isRunLinter() {
@@ -157,12 +151,11 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
   void setContext(final Map<String, Object> config) {
     if (config != null) {
       // Shade with the linter config
-      final Map<String, Object> linterConfig = new HashMap<>();
-      linterConfig.putAll(config);
-      linterConfig.putAll(this.config);
+      final Map<String, Object> linterConfig = new HashMap<>(config);
+      linterConfig.putAll(this.configMap);
       //
-      this.config.clear();
-      this.config.putAll(linterConfig);
+      this.configMap.clear();
+      this.configMap.putAll(linterConfig);
     }
   }
 }

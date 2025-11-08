@@ -19,6 +19,7 @@ import schemacrawler.schemacrawler.LoadOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
@@ -109,7 +110,7 @@ public class ShellState implements AutoCloseable {
 
   public void setCatalogLoaderOptions(final Map<String, Object> catalogLoaderOptions) {
     if (catalogLoaderOptions != null) {
-      this.catalogLoaderOptions = new Config(catalogLoaderOptions);
+      this.catalogLoaderOptions = ConfigUtility.fromMap(catalogLoaderOptions);
     } else {
       this.catalogLoaderOptions = null;
     }
@@ -117,7 +118,7 @@ public class ShellState implements AutoCloseable {
 
   public void setCommandOptions(final Map<String, Object> commandOptions) {
     if (commandOptions != null) {
-      this.commandOptions = new Config(commandOptions);
+      this.commandOptions = ConfigUtility.fromMap(commandOptions);
     } else {
       this.commandOptions = null;
     }

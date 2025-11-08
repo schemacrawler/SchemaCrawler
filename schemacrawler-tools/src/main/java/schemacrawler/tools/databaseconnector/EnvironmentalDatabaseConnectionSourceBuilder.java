@@ -5,6 +5,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
@@ -19,7 +20,7 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
    * @return Builder
    */
   public static DatabaseConnectionSourceBuilder builder() {
-    return builder(new Config(System.getenv()));
+    return builder(ConfigUtility.systemEnv());
   }
 
   /**

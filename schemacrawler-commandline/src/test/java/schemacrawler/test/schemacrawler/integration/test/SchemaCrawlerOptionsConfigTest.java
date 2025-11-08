@@ -19,9 +19,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
-import static us.fatehi.utility.ioresource.PropertiesConfig.fromProperties;
 
-import java.util.Map;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
@@ -30,6 +28,7 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.TestUtility;
 
 public class SchemaCrawlerOptionsConfigTest {
@@ -37,7 +36,7 @@ public class SchemaCrawlerOptionsConfigTest {
   @Test
   public void limitOptionsInclusionRules() {
     final LimitOptionsBuilder builder = LimitOptionsBuilder.builder();
-    final Config config = new Config(loadConfig("/limit.config.properties"));
+    final Config config = loadConfig("/limit.config.properties");
 
     SchemaCrawlerOptionsConfig.fromConfig(builder, config);
 
@@ -62,7 +61,7 @@ public class SchemaCrawlerOptionsConfigTest {
   @Test
   public void limitOptionsRoutineTypes() {
     final LimitOptionsBuilder builder = LimitOptionsBuilder.builder();
-    final Config config = new Config(loadConfig("/limit.config.properties"));
+    final Config config = loadConfig("/limit.config.properties");
 
     SchemaCrawlerOptionsConfig.fromConfig(builder, config);
 
@@ -74,7 +73,7 @@ public class SchemaCrawlerOptionsConfigTest {
   @Test
   public void limitOptionsTableTypes() {
     final LimitOptionsBuilder builder = LimitOptionsBuilder.builder();
-    final Config config = new Config(loadConfig("/limit.config.properties"));
+    final Config config = loadConfig("/limit.config.properties");
 
     SchemaCrawlerOptionsConfig.fromConfig(builder, config);
 
@@ -97,8 +96,8 @@ public class SchemaCrawlerOptionsConfigTest {
     assertThat(grepOptionsBuilder, is(not(nullValue())));
   }
 
-  private Map<String, String> loadConfig(final String configResource) {
+  private Config loadConfig(final String configResource) {
     final Properties properties = TestUtility.loadPropertiesFromClasspath(configResource);
-    return fromProperties(properties).toStringValueMap();
+    return ConfigUtility.fromProperties(properties);
   }
 }
