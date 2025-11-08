@@ -10,8 +10,11 @@ package us.fatehi.utility;
 
 import static us.fatehi.utility.ioresource.PropertiesConfig.systemProperties;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import us.fatehi.utility.ioresource.EnvironmentVariableConfig;
 import us.fatehi.utility.ioresource.StringValueConfig;
 import us.fatehi.utility.string.StringFormat;
@@ -57,5 +60,17 @@ public class PropertiesUtility {
 
   private PropertiesUtility() {
     // Prevent instantiation
+  }
+
+  public static Map<String, ? extends Object> filterMap(final Map<?, ?> original) {
+    if (original == null) {
+      return new HashMap<>();
+    }
+    final Map<String, ? extends Object> filtered =
+        original.entrySet().stream()
+            .filter(entry -> entry.getKey() instanceof String)
+            .filter(entry -> entry.getValue() != null)
+            .collect(Collectors.toMap(entry -> (String) entry.getKey(), Map.Entry::getValue));
+    return new HashMap<>(filtered);
   }
 }

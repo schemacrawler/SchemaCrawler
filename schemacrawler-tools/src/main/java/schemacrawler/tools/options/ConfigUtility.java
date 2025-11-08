@@ -9,10 +9,9 @@
 package schemacrawler.tools.options;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
+import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
@@ -42,7 +41,7 @@ public final class ConfigUtility {
    * @param map Provided map for config
    */
   public static Config fromMap(final Map<String, ? extends Object> map) {
-    final Map<String, ? extends Object> filteredMap = filterMap(map);
+    final Map<String, ? extends Object> filteredMap = PropertiesUtility.filterMap(map);
     return new Config(filteredMap);
   }
 
@@ -52,20 +51,8 @@ public final class ConfigUtility {
    * @param properties Provided properties for config
    */
   public static Config fromProperties(final Properties properties) {
-    final Map<String, ? extends Object> filteredMap = filterMap(properties);
+    final Map<String, ? extends Object> filteredMap = PropertiesUtility.filterMap(properties);
     return new Config(filteredMap);
-  }
-
-  private static Map<String, ? extends Object> filterMap(final Map<?, ?> original) {
-    if (original == null) {
-      return new HashMap<>();
-    }
-    final Map<String, ? extends Object> filtered =
-        original.entrySet().stream()
-            .filter(entry -> entry.getKey() instanceof String)
-            .filter(entry -> entry.getValue() != null)
-            .collect(Collectors.toMap(entry -> (String) entry.getKey(), Map.Entry::getValue));
-    return new HashMap<>(filtered);
   }
 
   private ConfigUtility() {
