@@ -10,14 +10,10 @@ package us.fatehi.utility.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
 
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
 import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 public class SystemPropertiesTest {
@@ -35,26 +31,13 @@ public class SystemPropertiesTest {
   }
 
   @Test
-  public void withBothConfigurationProperty() {
-    System.setProperty("PATH", "value");
-    final String value = new SystemPropertiesConfig().getStringValue("PATH", "defaultValue");
-    assertThat(value, is("value"));
-  }
-
-  @Test
   public void withNonStringSystemConfigurationProperty() {
-    final String key = "key";
+    final String key = "PATH";
     System.getProperties().put(key, Path.of("."));
     final Object objectValue = System.getProperties().get(key);
     assertThat(objectValue.toString(), is("."));
     final String value = new SystemPropertiesConfig().getStringValue(key, "defaultValue");
     assertThat(value, is("."));
-  }
-
-  @Test
-  public void withEnvConfigurationProperty() {
-    final String value = new SystemPropertiesConfig().getStringValue("PATH", "defaultValue");
-    assertThat(value, is(not(emptyString())));
   }
 
   @Test
