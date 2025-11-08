@@ -10,7 +10,6 @@ package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.join;
-import static us.fatehi.utility.ioresource.PropertiesConfig.systemProperties;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -19,12 +18,12 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.SortedMap;
+import java.util.Map;
 import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public final class UtilityLogger {
 
@@ -71,7 +70,7 @@ public final class UtilityLogger {
   }
 
   public void logSQLWarnings(final ResultSet resultSet) {
-    if ((resultSet == null) || !logger.isLoggable(Level.INFO)) {
+    if (resultSet == null || !logger.isLoggable(Level.INFO)) {
       return;
     }
 
@@ -85,7 +84,7 @@ public final class UtilityLogger {
   }
 
   public void logSQLWarnings(final Statement statement) {
-    if ((statement == null) || !logger.isLoggable(Level.INFO)) {
+    if (statement == null || !logger.isLoggable(Level.INFO)) {
       return;
     }
 
@@ -116,14 +115,23 @@ public final class UtilityLogger {
       return;
     }
 
-    final SortedMap<String, String> systemProperties = new TreeMap<>();
-    for (final Entry<String, String> propertyValue :
-        systemProperties().toStringValueMap().entrySet()) {
-      final String name = propertyValue.getKey();
-      if ((name.startsWith("java.") || name.startsWith("os.")) && !name.endsWith(".path")) {
-        systemProperties.put(name, propertyValue.getValue());
-      }
-    }
+    final Map<String, String> systemProperties =
+        System.getProperties().entrySet().stream()
+            .filter(
+                entry -> {
+                  if (entry.getKey() instanceof final String key) {
+                    return (key.startsWith("java.") || key.startsWith("os."))
+                        && !key.endsWith(".path");
+                  }
+                  return false;
+                })
+            .filter(entry -> entry.getValue() instanceof String)
+            .collect(
+                Collectors.toMap(
+                    entry -> (String) entry.getKey(),
+                    entry -> (String) entry.getValue(),
+                    (v1, v2) -> v1,
+                    TreeMap::new));
 
     logger.log(
         Level.CONFIG,
