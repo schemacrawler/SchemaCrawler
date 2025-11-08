@@ -9,6 +9,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 import us.fatehi.utility.datasource.UserCredentials;
 import us.fatehi.utility.ioresource.EnvironmentVariableConfig;
+import us.fatehi.utility.ioresource.StringValueConfig;
 
 @UtilityMarker
 public final class EnvironmentalDatabaseConnectionSourceBuilder {
@@ -19,43 +20,41 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
    * @return Builder
    */
   public static DatabaseConnectionSourceBuilder builder() {
-    return builder(System::getenv);
+    return builder((EnvironmentVariableConfig) System::getenv);
   }
 
   /**
-   * Builds a database connection reading standard environmental variables.
+   * Builds a database connection reading from a config.
    *
-   * @param envAccessor Environment accessor.
+   * @param config Config for string properties.
    * @return Builder
    */
-  public static DatabaseConnectionSourceBuilder builder(
-      final EnvironmentVariableConfig envAccessor) {
+  public static DatabaseConnectionSourceBuilder builder(final StringValueConfig config) {
 
-    requireNonNull(envAccessor, "No environmental accessor provided");
+    requireNonNull(config, "No environmental accessor provided");
 
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
-    final String connectionUrl = trimToEmpty(envAccessor.getStringValue("SCHCRWLR_JDBC_URL", ""));
+    final String connectionUrl = trimToEmpty(config.getStringValue("SCHCRWLR_JDBC_URL", ""));
 
     if (!isBlank(connectionUrl)) {
       dbConnectionSourceBuilder = builderFromUrl(connectionUrl);
     } else {
-      dbConnectionSourceBuilder = builderForServer(envAccessor);
+      dbConnectionSourceBuilder = builderForServer(config);
     }
 
     final UserCredentials userCredentials =
         new MultiUseUserCredentials(
-            trimToEmpty(envAccessor.getStringValue("SCHCRWLR_DATABASE_USER", "")),
-            trimToEmpty(envAccessor.getStringValue("SCHCRWLR_DATABASE_PASSWORD", "")));
+            trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE_USER", "")),
+            trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE_PASSWORD", "")));
     dbConnectionSourceBuilder.withUserCredentials(userCredentials);
 
     return dbConnectionSourceBuilder;
   }
 
-  private static DatabaseConnectionSourceBuilder builderForServer(
-      final EnvironmentVariableConfig envAccessor) {
+  private static DatabaseConnectionSourceBuilder builderForServer(final StringValueConfig config) {
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
     final String databaseSystemIdentifier =
-        trimToEmpty(envAccessor.getStringValue("SCHCRWLR_SERVER", ""));
+        trimToEmpty(config.getStringValue("SCHCRWLR_SERVER", ""));
 
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
@@ -65,15 +64,15 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
 
     dbConnectionSourceBuilder = databaseConnector.databaseConnectionSourceBuilder();
 
-    final String host = trimToEmpty(envAccessor.getStringValue("SCHCRWLR_HOST", ""));
+    final String host = trimToEmpty(config.getStringValue("SCHCRWLR_HOST", ""));
     dbConnectionSourceBuilder.withHost(host);
 
-    final String port = trimToEmpty(envAccessor.getStringValue("SCHCRWLR_PORT", ""));
+    final String port = trimToEmpty(config.getStringValue("SCHCRWLR_PORT", ""));
     if (isValidPort(port)) {
       dbConnectionSourceBuilder.withPort(Integer.valueOf(port));
     }
 
-    final String database = trimToEmpty(envAccessor.getStringValue("SCHCRWLR_DATABASE", ""));
+    final String database = trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE", ""));
     dbConnectionSourceBuilder.withDatabase(database);
 
     return dbConnectionSourceBuilder;
