@@ -4,12 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 import us.fatehi.utility.datasource.UserCredentials;
-import us.fatehi.utility.ioresource.EnvironmentVariableConfig;
-import us.fatehi.utility.ioresource.StringValueConfig;
 
 @UtilityMarker
 public final class EnvironmentalDatabaseConnectionSourceBuilder {
@@ -20,7 +19,7 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
    * @return Builder
    */
   public static DatabaseConnectionSourceBuilder builder() {
-    return builder((EnvironmentVariableConfig) System::getenv);
+    return builder(new Config(System.getenv()));
   }
 
   /**
@@ -29,7 +28,7 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
    * @param config Config for string properties.
    * @return Builder
    */
-  public static DatabaseConnectionSourceBuilder builder(final StringValueConfig config) {
+  public static DatabaseConnectionSourceBuilder builder(final Config config) {
 
     requireNonNull(config, "No environmental accessor provided");
 
@@ -51,7 +50,7 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
     return dbConnectionSourceBuilder;
   }
 
-  private static DatabaseConnectionSourceBuilder builderForServer(final StringValueConfig config) {
+  private static DatabaseConnectionSourceBuilder builderForServer(final Config config) {
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
     final String databaseSystemIdentifier =
         trimToEmpty(config.getStringValue("SCHCRWLR_SERVER", ""));
