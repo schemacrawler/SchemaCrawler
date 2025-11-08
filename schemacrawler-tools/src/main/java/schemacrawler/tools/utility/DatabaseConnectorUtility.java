@@ -9,7 +9,6 @@
 package schemacrawler.tools.utility;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.PropertiesUtility.getSystemConfigurationProperty;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -25,6 +24,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.UnknownDatabaseConnector;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.datasource.DatabaseServerType;
+import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 /** SchemaCrawler utility methods. */
 @UtilityMarker
@@ -116,7 +116,7 @@ public final class DatabaseConnectorUtility {
         urlDBServerType.equalsIgnoreCase(dbServerType.getDatabaseSystemIdentifier());
 
     final String withoutDatabasePlugin =
-        getSystemConfigurationProperty("SC_WITHOUT_DATABASE_PLUGIN");
+        new SystemPropertiesConfig().getStringValue("SC_WITHOUT_DATABASE_PLUGIN");
     final boolean useWithoutDatabasePlugin =
         urlDBServerType.equalsIgnoreCase(withoutDatabasePlugin);
 

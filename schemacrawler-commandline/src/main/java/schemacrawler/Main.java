@@ -10,7 +10,6 @@ package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
-import static us.fatehi.utility.PropertiesUtility.getBooleanSystemConfigurationProperty;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +29,7 @@ import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.property.JvmArchitectureInfo;
 import us.fatehi.utility.property.JvmSystemInfo;
 import us.fatehi.utility.property.OperatingSystemInfo;
+import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {
@@ -88,7 +88,8 @@ public final class Main {
    * @param exitCode Exit code to exit with.
    */
   private static void exit(int exitCode) {
-    final boolean exitWithException = getBooleanSystemConfigurationProperty(SC_EXIT_WITH_EXCEPTION);
+    final boolean exitWithException =
+        new SystemPropertiesConfig().getBooleanValue(SC_EXIT_WITH_EXCEPTION);
     if (exitWithException) {
       throw new SystemExitException(exitCode, "SchemaCrawler has exited with an error");
     }

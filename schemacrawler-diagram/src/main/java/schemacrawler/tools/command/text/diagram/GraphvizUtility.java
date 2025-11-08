@@ -8,13 +8,12 @@
 
 package schemacrawler.tools.command.text.diagram;
 
-import static us.fatehi.utility.PropertiesUtility.getBooleanSystemConfigurationProperty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import us.fatehi.utility.ProcessExecutor;
+import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 import us.fatehi.utility.string.FileContents;
 import us.fatehi.utility.string.StringFormat;
 
@@ -26,7 +25,8 @@ public final class GraphvizUtility {
 
   public static boolean isGraphvizAvailable() {
 
-    final boolean disableGraphviz = getBooleanSystemConfigurationProperty(SC_GRAPHVIZ_PROC_DISABLE);
+    final boolean disableGraphviz =
+        new SystemPropertiesConfig().getBooleanValue(SC_GRAPHVIZ_PROC_DISABLE);
     if (disableGraphviz) {
       LOGGER.log(Level.CONFIG, "Not creating a native process for Grahviz, since this is disabled");
       return false;

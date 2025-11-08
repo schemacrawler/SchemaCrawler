@@ -22,10 +22,11 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.Options;
 import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.readconfig.ReadConfig;
 import us.fatehi.utility.string.StringFormat;
 
 /** Configuration properties. */
-public final class Config implements Options {
+public final class Config implements Options, ReadConfig {
 
   public static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 

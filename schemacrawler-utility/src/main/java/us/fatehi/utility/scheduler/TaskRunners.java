@@ -8,17 +8,17 @@
 
 package us.fatehi.utility.scheduler;
 
-import static us.fatehi.utility.PropertiesUtility.getBooleanSystemConfigurationProperty;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 public class TaskRunners {
 
   private static final Logger LOGGER = Logger.getLogger(TaskRunners.class.getName());
 
   public static TaskRunner getTaskRunner(final String id, final int maxThreadsSuggested) {
-    final boolean isSingleThreaded = getBooleanSystemConfigurationProperty("SC_SINGLE_THREADED");
+    final boolean isSingleThreaded =
+        new SystemPropertiesConfig().getBooleanValue("SC_SINGLE_THREADED");
     if (isSingleThreaded) {
       LOGGER.log(Level.CONFIG, "Loading database schema in the main thread");
       return new MainThreadTaskRunner(id);

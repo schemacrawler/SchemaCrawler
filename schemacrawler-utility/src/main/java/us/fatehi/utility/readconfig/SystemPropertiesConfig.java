@@ -6,18 +6,18 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package us.fatehi.utility.ioresource;
+package us.fatehi.utility.readconfig;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class PropertiesConfig implements StringValueConfig {
+public final class SystemPropertiesConfig implements ReadConfig {
 
-  private static final Logger LOGGER = Logger.getLogger(PropertiesConfig.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SystemPropertiesConfig.class.getName());
 
   @Override
   public boolean containsKey(final String propertyName) {
-    final boolean containsKey = System.getProperties().get(propertyName) != null;
+    final boolean containsKey = getSystemProperty(propertyName) != null;
     return containsKey;
   }
 
@@ -31,7 +31,7 @@ public final class PropertiesConfig implements StringValueConfig {
       return defaultValue;
     }
     try {
-      final Object value = System.getProperties().get(propertyName);
+      final Object value = getSystemProperty(propertyName);
       return value != null ? value.toString() : defaultValue;
     } catch (final Exception e) {
       LOGGER.log(
@@ -39,5 +39,9 @@ public final class PropertiesConfig implements StringValueConfig {
           "Error reading key: " + propertyName + " = value class: " + e.getClass().getSimpleName());
       return defaultValue;
     }
+  }
+
+  private Object getSystemProperty(final String propertyName) {
+    return System.getProperties().get(propertyName);
   }
 }

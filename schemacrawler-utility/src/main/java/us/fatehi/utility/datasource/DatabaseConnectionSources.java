@@ -8,14 +8,13 @@
 
 package us.fatehi.utility.datasource;
 
-import static us.fatehi.utility.PropertiesUtility.getBooleanSystemConfigurationProperty;
-
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
+import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 public class DatabaseConnectionSources {
 
@@ -35,7 +34,8 @@ public class DatabaseConnectionSources {
       final UserCredentials userCredentials,
       final Consumer<Connection> connectionInitializer) {
 
-    final boolean isSingleThreaded = getBooleanSystemConfigurationProperty("SC_SINGLE_THREADED");
+    final boolean isSingleThreaded =
+        new SystemPropertiesConfig().getBooleanValue("SC_SINGLE_THREADED");
     if (isSingleThreaded) {
       LOGGER.log(Level.CONFIG, "Loading database schema in the main thread");
       return new SingleDatabaseConnectionSource(
