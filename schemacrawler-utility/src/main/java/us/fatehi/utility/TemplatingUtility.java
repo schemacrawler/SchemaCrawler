@@ -10,7 +10,6 @@ package us.fatehi.utility;
 
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
-import static us.fatehi.utility.ioresource.PropertiesConfig.systemProperties;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -33,7 +32,7 @@ public final class TemplatingUtility {
    * @return Expanded template
    */
   public static String expandTemplate(final String template) {
-    return expandTemplate(template, systemProperties().toStringValueMap());
+    return expandTemplate(template, PropertiesUtility.systemProperties());
   }
 
   /**
@@ -45,7 +44,7 @@ public final class TemplatingUtility {
    * @return Expanded template
    */
   public static String expandTemplate(
-      final String template, final Map<String, String> variablesMap) {
+      final String template, final Map<String, ? extends Object> variablesMap) {
     if (isBlank(template) || variablesMap == null) {
       return template;
     }
@@ -72,7 +71,7 @@ public final class TemplatingUtility {
         delimiterStartPosition = delimiterStartPosition + DELIMITER_START_LENGTH;
         final String key =
             trimToEmpty(template.substring(delimiterStartPosition, delimiterEndPosition));
-        final String value = variablesMap.get(key);
+        final Object value = variablesMap.get(key);
         if (value != null) {
           buffer.append(value);
         } else {

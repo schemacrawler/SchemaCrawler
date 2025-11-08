@@ -8,8 +8,6 @@
 
 package us.fatehi.utility.ioresource;
 
-import java.util.Map;
-
 /**
  * Interface for accessing System properties or environment variables. This allows for mocking
  * environment variables during testing.
@@ -28,6 +26,4 @@ public interface StringValueConfig {
     final String value = getStringValue(key, null);
     return value != null;
   }
-
-  Map<String, String> toStringValueMap();
 }

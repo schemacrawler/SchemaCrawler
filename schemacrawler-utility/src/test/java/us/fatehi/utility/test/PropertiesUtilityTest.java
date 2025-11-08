@@ -41,8 +41,11 @@ public class PropertiesUtilityTest {
 
   @Test
   public void withNonStringSystemConfigurationProperty() {
-    System.getProperties().put("key", Path.of("."));
-    final String value = PropertiesUtility.getSystemConfigurationProperty("key", "defaultValue");
+    final String key = "key";
+    System.getProperties().put(key, Path.of("."));
+    final Object objectValue = System.getProperties().get(key);
+    assertThat(objectValue.toString(), is("."));
+    final String value = PropertiesUtility.getSystemConfigurationProperty(key, "defaultValue");
     assertThat(value, is("."));
   }
 

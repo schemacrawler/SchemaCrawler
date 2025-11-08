@@ -33,9 +33,4 @@ public interface EnvironmentVariableConfig extends StringValueConfig {
   }
 
   Map<String, String> getenv();
-
-  @Override
-  default Map<String, String> toStringValueMap() {
-    return getenv();
-  }
 }

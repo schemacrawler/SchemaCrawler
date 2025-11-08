@@ -115,23 +115,17 @@ public final class UtilityLogger {
       return;
     }
 
-    final Map<String, String> systemProperties =
-        System.getProperties().entrySet().stream()
+    final Map<String, Object> systemProperties =
+        PropertiesUtility.systemProperties().entrySet().stream()
             .filter(
                 entry -> {
-                  if (entry.getKey() instanceof final String key) {
-                    return (key.startsWith("java.") || key.startsWith("os."))
-                        && !key.endsWith(".path");
-                  }
-                  return false;
+                  final String key = entry.getKey();
+                  return (key.startsWith("java.") || key.startsWith("os."))
+                      && !key.endsWith(".path");
                 })
-            .filter(entry -> entry.getValue() instanceof String)
             .collect(
                 Collectors.toMap(
-                    entry -> (String) entry.getKey(),
-                    entry -> (String) entry.getValue(),
-                    (v1, v2) -> v1,
-                    TreeMap::new));
+                    entry -> entry.getKey(), Map.Entry::getValue, (v1, v2) -> v1, TreeMap::new));
 
     logger.log(
         Level.CONFIG,
