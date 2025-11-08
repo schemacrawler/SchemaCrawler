@@ -15,6 +15,7 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 public class TestCommandProvider extends BaseCommandProvider {
 
@@ -62,7 +63,8 @@ public class TestCommandProvider extends BaseCommandProvider {
 
   private void forceInstantiationFailureIfConfigured() {
     final String propertyValue =
-        System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
+        new SystemPropertiesConfig()
+            .getStringValue(this.getClass().getName() + ".force-instantiation-failure");
     if (propertyValue != null) {
       throw new RuntimeException("Forced instantiation error");
     }

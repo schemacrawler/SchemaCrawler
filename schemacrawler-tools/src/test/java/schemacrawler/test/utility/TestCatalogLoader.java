@@ -12,12 +12,17 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.SystemExitException;
 import us.fatehi.utility.property.PropertyName;
+import us.fatehi.utility.readconfig.ReadConfig;
+import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 public class TestCatalogLoader extends BaseCatalogLoader {
+
+  private final ReadConfig config;
 
   public TestCatalogLoader() {
     super(new PropertyName("testloader", "Loader for testing"), 3);
     forceInstantiationFailureIfConfigured();
+    config = new SystemPropertiesConfig();
   }
 
   @Override
@@ -38,7 +43,7 @@ public class TestCatalogLoader extends BaseCatalogLoader {
 
   private void forceInstantiationFailureIfConfigured() {
     final String propertyValue =
-        System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
+        config.getStringValue(this.getClass().getName() + ".force-instantiation-failure");
     if (propertyValue != null) {
       throw new RuntimeException("Forced instantiation error");
     }
@@ -46,7 +51,7 @@ public class TestCatalogLoader extends BaseCatalogLoader {
 
   private void forceLoadFailureIfConfigured() {
     final String key = this.getClass().getName() + ".force-load-failure";
-    final String propertyValue = System.getProperty(key);
+    final String propertyValue = config.getStringValue(key);
     if (propertyValue != null) {
       throw new SystemExitException(2, key);
     }
