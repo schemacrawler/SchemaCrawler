@@ -178,6 +178,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -291,7 +292,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>3.8.4</version>
+                  <version>3.9.11</version>
                 </requireMavenVersion>
               </rules>
               <fail>true</fail>
@@ -474,29 +475,6 @@
                 </goals>
               </execution>
             </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>java21</id>
-      <activation>
-        <property>
-          <name>java.version</name>
-          <value>21</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <argLine>-XX:+EnableDynamicAgentLoading</argLine>
-              <systemPropertyVariables>
-                <java.util.logging.config.class>us.fatehi.utility.LoggingConfig</java.util.logging.config.class>
-              </systemPropertyVariables>
-            </configuration>
           </plugin>
         </plugins>
       </build>
