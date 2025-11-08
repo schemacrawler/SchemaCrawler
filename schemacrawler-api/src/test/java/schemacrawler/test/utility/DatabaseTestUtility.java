@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
-import static us.fatehi.utility.ioresource.PropertiesConfig.fromProperties;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -65,29 +64,35 @@ public final class DatabaseTestUtility {
   public static Map<String, String> loadHsqldbConfig() throws IOException {
     final Properties properties =
         TestUtility.loadPropertiesFromClasspath("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    return fromProperties(properties).toStringValueMap();
+    return (Map<String, String>) (Map<? extends Object, ? extends Object>) properties;
+  }
+
+  public static SchemaRetrievalOptions newSchemaRetrievalOptions() throws IOException {
+    final Map<String, ? extends Object> config = loadHsqldbConfig();
+
+    final InformationSchemaViewsBuilder builder = InformationSchemaViewsBuilder.builder();
+
+    for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey.values()) {
+      final String lookupKey =
+          "select.%s.%s".formatted(informationSchemaKey.getType(), informationSchemaKey);
+      if (config.containsKey(lookupKey)) {
+        try {
+          builder.withSql(informationSchemaKey, config.get(lookupKey).toString());
+        } catch (final IllegalArgumentException e) {
+          // Ignore
+        }
+      }
+    }
+    final InformationSchemaViews informationSchemaViews = builder.toOptions();
+
+    return SchemaRetrievalOptionsBuilder.builder()
+        .withInformationSchemaViews(informationSchemaViews)
+        .with(tableColumnPrivilegesRetrievalStrategy, data_dictionary_all)
+        .toOptions();
   }
 
   public static Path tempHsqldbConfig() throws IOException {
     return TestUtility.copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
-  }
-
-  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeAllTables()
-            .includeAllRoutines()
-            .includeAllSequences()
-            .includeAllSynonyms();
-    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-        .withLoadOptions(loadOptionsBuilder.toOptions())
-        .withLimitOptions(limitOptionsBuilder.toOptions());
-  }
-
-  private DatabaseTestUtility() {
-    // Prevent instantiation
   }
 
   public static void validateSchema(final Catalog catalog) {
@@ -106,27 +111,21 @@ public final class DatabaseTestUtility {
         "Unexpected number of sequences in the schema", catalog.getSequences(schema), hasSize(0));
   }
 
-  public static SchemaRetrievalOptions newSchemaRetrievalOptions() throws IOException {
-    final Map<String, String> config = loadHsqldbConfig();
+  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeAllTables()
+            .includeAllRoutines()
+            .includeAllSequences()
+            .includeAllSynonyms();
+    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+        .withLoadOptions(loadOptionsBuilder.toOptions())
+        .withLimitOptions(limitOptionsBuilder.toOptions());
+  }
 
-    final InformationSchemaViewsBuilder builder = InformationSchemaViewsBuilder.builder();
-
-    for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey.values()) {
-      final String lookupKey =
-          "select.%s.%s".formatted(informationSchemaKey.getType(), informationSchemaKey);
-      if (config.containsKey(lookupKey)) {
-        try {
-          builder.withSql(informationSchemaKey, config.get(lookupKey));
-        } catch (final IllegalArgumentException e) {
-          // Ignore
-        }
-      }
-    }
-    final InformationSchemaViews informationSchemaViews = builder.toOptions();
-
-    return SchemaRetrievalOptionsBuilder.builder()
-        .withInformationSchemaViews(informationSchemaViews)
-        .with(tableColumnPrivilegesRetrievalStrategy, data_dictionary_all)
-        .toOptions();
+  private DatabaseTestUtility() {
+    // Prevent instantiation
   }
 }
