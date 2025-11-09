@@ -53,7 +53,7 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.IOUtility;
@@ -189,7 +189,7 @@ public class OfflineSnapshotTest {
               dataSource,
               SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
               schemaCrawlerOptions,
-              new Config());
+              ConfigUtility.newConfig());
       assertThat("Could not obtain catalog", catalog, notNullValue());
       assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 

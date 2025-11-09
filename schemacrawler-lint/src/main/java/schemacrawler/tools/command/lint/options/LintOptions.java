@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.lint.options;
 
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.text.options.BaseTextOptions;
 
 public class LintOptions extends BaseTextOptions {
@@ -28,7 +28,7 @@ public class LintOptions extends BaseTextOptions {
     lintDispatch = requireNonNull(builder.lintDispatch, "No dispatch provided");
     runAllLinters = builder.runAllLinters;
     requireNonNull(builder.config, "No properties provided");
-    this.config = new Config(builder.config);
+    config = ConfigUtility.fromConfig(builder.config);
   }
 
   /**
@@ -37,7 +37,7 @@ public class LintOptions extends BaseTextOptions {
    * @return Properties
    */
   public Config getConfig() {
-    return new Config(config);
+    return ConfigUtility.fromConfig(config);
   }
 
   /**

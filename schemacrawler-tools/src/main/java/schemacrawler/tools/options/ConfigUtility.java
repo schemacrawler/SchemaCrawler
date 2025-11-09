@@ -18,6 +18,19 @@ import us.fatehi.utility.UtilityMarker;
 public final class ConfigUtility {
 
   /**
+   * Create config from another config.
+   *
+   * @param map Provided map for config
+   */
+  public static Config fromConfig(final Config config) {
+    final Config newConfig = newConfig();
+    if (config != null) {
+      newConfig.merge(config);
+    }
+    return newConfig;
+  }
+
+  /**
    * Create config from map.
    *
    * @param map Provided map for config

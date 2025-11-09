@@ -36,6 +36,7 @@ import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
@@ -92,7 +93,7 @@ public class SchemaCrawlerExecutableTest {
     final String command2 = "test-command";
     final SchemaCrawlerExecutable executable2 = new SchemaCrawlerExecutable(command2);
     executable2.setDataSource(dataSource);
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("return-null", "true");
     executable2.setAdditionalConfiguration(config);
     final InternalRuntimeException ex2 =
@@ -160,7 +161,7 @@ public class SchemaCrawlerExecutableTest {
     final Catalog mockCatalog = mock(Catalog.class);
     final SchemaRetrievalOptions mockSchemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("uses-connection", "false");
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");

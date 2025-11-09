@@ -12,6 +12,7 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -32,13 +33,19 @@ public final class Config implements Options, ReadConfig {
 
   private final Map<String, Object> configMap;
 
-  /** Creates an empty config. */
+  /**
+   * Creates an empty config.
+   *
+   * @see {@link #ConfigUtility.newConfig()}
+   */
+  @Deprecated(forRemoval = true)
   public Config() {
-    configMap = new HashMap<>();
+    this(Collections.emptyMap());
   }
 
+  @Deprecated(forRemoval = true)
   public Config(final Config config) {
-    this();
+    this(Collections.emptyMap());
     merge(config);
   }
 
@@ -48,12 +55,11 @@ public final class Config implements Options, ReadConfig {
    * @param map Config to copy
    */
   Config(final Map<String, ? extends Object> map) {
-    this();
-    if (map != null) {
-      configMap.putAll(map);
-    }
+    requireNonNull(map, "No map provided");
+    configMap = new HashMap<>(map);
   }
 
+  @Override
   public boolean containsKey(final String key) {
     return configMap.containsKey(key);
   }
@@ -64,6 +70,7 @@ public final class Config implements Options, ReadConfig {
    * @param propertyName Property name
    * @return Boolean value
    */
+  @Override
   public boolean getBooleanValue(final String propertyName) {
     return getBooleanValue(propertyName, false);
   }
@@ -134,6 +141,7 @@ public final class Config implements Options, ReadConfig {
    * @param defaultValue Default value
    * @return String value
    */
+  @Override
   public String getStringValue(final String propertyName, final String defaultValue) {
     final Object value = configMap.get(propertyName);
     if (value == null) {

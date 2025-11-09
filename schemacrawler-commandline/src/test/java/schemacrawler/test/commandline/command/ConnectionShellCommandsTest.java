@@ -26,6 +26,7 @@ import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.DatabaseConnectionInfo;
 import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 import us.fatehi.test.utility.extensions.CapturedSystemStreams;
@@ -102,7 +103,7 @@ public class ConnectionShellCommandsTest {
   @Test
   public void sweep() {
 
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("key", 1);
 
     final ShellState state = new ShellState();

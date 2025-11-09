@@ -22,6 +22,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.tools.lint.LintUtility.LINTER_COMPARATOR;
 import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import schemacrawler.test.utility.LinterProviderForTest;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.linter.LinterProviderCatalogSql;
 import schemacrawler.tools.linter.LinterProviderTableEmpty;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.ProductVersion;
 
@@ -53,7 +54,11 @@ public class LinterTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     catalog =
-        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(
+            dataSource,
+            schemaRetrievalOptionsDefault,
+            schemaCrawlerOptions,
+            ConfigUtility.newConfig());
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
   }

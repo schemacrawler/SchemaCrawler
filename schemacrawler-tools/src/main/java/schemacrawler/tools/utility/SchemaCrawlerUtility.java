@@ -27,6 +27,7 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -49,7 +50,8 @@ public final class SchemaCrawlerUtility {
   public static Catalog getCatalog(
       final DatabaseConnectionSource dataSource, final SchemaCrawlerOptions schemaCrawlerOptions) {
     final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
-    return getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+    return getCatalog(
+        dataSource, schemaRetrievalOptions, schemaCrawlerOptions, ConfigUtility.newConfig());
   }
 
   /**

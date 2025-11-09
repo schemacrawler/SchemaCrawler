@@ -46,6 +46,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -692,7 +693,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
         SchemaTextOptionsBuilder.builder(textOptions);
     schemaTextOptionsBuilder.sortTables(true);
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("load-row-counts", true);
     additionalConfig.merge(schemaTextOptionsBuilder.toConfig());
 

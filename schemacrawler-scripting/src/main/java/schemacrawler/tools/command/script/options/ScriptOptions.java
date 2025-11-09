@@ -9,6 +9,7 @@
 package schemacrawler.tools.command.script.options;
 
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.scripting.options.LanguageOptions;
 
 public class ScriptOptions extends LanguageOptions<ScriptLanguageType> {
@@ -18,14 +19,10 @@ public class ScriptOptions extends LanguageOptions<ScriptLanguageType> {
   public ScriptOptions(
       final ScriptLanguageType language, final String script, final Config config) {
     super(language, script);
-    if (config == null) {
-      this.config = new Config();
-    } else {
-      this.config = new Config(config);
-    }
+    this.config = ConfigUtility.fromConfig(config);
   }
 
   public Config getConfig() {
-    return new Config(config);
+    return ConfigUtility.fromConfig(config);
   }
 }

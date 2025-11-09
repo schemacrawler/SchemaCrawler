@@ -27,6 +27,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -46,7 +47,7 @@ public class TextCommandsOutputTest {
   public void schemaTextOutput(
       final SchemaTextDetailType schemaTextDetailType, final DatabaseConnectionSource dataSource)
       throws Exception {
-    textOutputTest(schemaTextDetailType.name(), dataSource, new Config());
+    textOutputTest(schemaTextDetailType.name(), dataSource, ConfigUtility.newConfig());
   }
 
   private void textOutputTest(

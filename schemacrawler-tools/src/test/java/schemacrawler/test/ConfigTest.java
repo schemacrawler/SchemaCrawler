@@ -31,13 +31,13 @@ public class ConfigTest {
 
   @Test
   public void emptyConfig1a() {
-    final Config config = new Config((Config) null);
+    final Config config = ConfigUtility.fromConfig((Config) null);
     assertEmptyConfig(config);
   }
 
   @Test
   public void emptyConfig2() {
-    final Config config = new Config(new Config());
+    final Config config = ConfigUtility.fromConfig(ConfigUtility.newConfig());
     assertEmptyConfig(config);
   }
 
@@ -144,16 +144,16 @@ public class ConfigTest {
 
   @Test
   public void notEmptyConfig2() {
-    final Config map = new Config();
+    final Config map = ConfigUtility.newConfig();
     map.put("key", "value");
 
-    final Config config = new Config(map);
+    final Config config = ConfigUtility.fromConfig(map);
     assertNotEmptyConfig(config);
   }
 
   @Test
   public void putEnumValue() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.containsKey("key"), is(false));
 
@@ -168,7 +168,7 @@ public class ConfigTest {
 
   @Test
   public void putStringValue() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.containsKey("key"), is(false));
 

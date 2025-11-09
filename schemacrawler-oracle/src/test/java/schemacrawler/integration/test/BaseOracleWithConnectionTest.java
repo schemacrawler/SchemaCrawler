@@ -43,6 +43,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.Property;
 
@@ -123,7 +124,7 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
   protected void testSelectQuery(
       final DatabaseConnectionSource dataSource, final String expectedResource) throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("authors");
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("authors", "SELECT * FROM BOOKS.AUTHORS");
     executable.setAdditionalConfiguration(additionalConfig);
     assertThat(

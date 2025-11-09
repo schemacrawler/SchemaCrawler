@@ -27,6 +27,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.test.utility.TestUtility;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
@@ -53,7 +54,7 @@ public abstract class AbstractAlternateKeysTest {
     final String command = SchemaTextDetailType.schema.name();
     final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder.builder().toOptions();
 
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("attributes-file", "/attributes-alternatekeys.yaml");
 
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -67,7 +68,7 @@ public abstract class AbstractAlternateKeysTest {
     schemaTextOptionsBuilder.sortTables(true);
     schemaTextOptionsBuilder.noInfo(schemaTextOptions.isNoInfo());
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.merge(config);
     additionalConfig.merge(schemaTextOptionsBuilder.toConfig());
 

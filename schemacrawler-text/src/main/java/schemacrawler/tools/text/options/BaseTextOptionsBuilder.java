@@ -11,11 +11,11 @@ package schemacrawler.tools.text.options;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigOptionsBuilder;
+import schemacrawler.tools.options.ConfigUtility;
 
 public abstract class BaseTextOptionsBuilder<
         B extends BaseTextOptionsBuilder<B, O>, O extends BaseTextOptions>
@@ -64,9 +64,9 @@ public abstract class BaseTextOptionsBuilder<
 
   protected BaseTextOptionsBuilder() {
     // All fields are set to the defaults
-    this.identifierQuotingStrategy =
+    identifierQuotingStrategy =
         IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
-    this.colorMap = new DatabaseObjectColorMap(new HashMap<>());
+    colorMap = new DatabaseObjectColorMap(new HashMap<>());
   }
 
   @Override
@@ -75,7 +75,7 @@ public abstract class BaseTextOptionsBuilder<
       return (B) this;
     }
 
-    final Config config = new Config(map);
+    final Config config = ConfigUtility.fromConfig(map);
 
     isShowDatabaseInfo = config.getBooleanValue(SHOW_DATABASE_INFO);
     isShowJdbcDriverInfo = config.getBooleanValue(SHOW_JDBC_DRIVER_INFO);
@@ -252,7 +252,7 @@ public abstract class BaseTextOptionsBuilder<
 
   @Override
   public Config toConfig() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     config.put(NO_SCHEMACRAWLER_INFO, isNoSchemaCrawlerInfo);
     config.put(SHOW_DATABASE_INFO, isShowDatabaseInfo);

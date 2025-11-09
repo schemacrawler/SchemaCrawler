@@ -60,7 +60,7 @@ public class ShellState implements AutoCloseable {
   }
 
   public Config getConfig() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.merge(baseConfig);
     config.merge(commandOptions);
     config.merge(catalogLoaderOptions);
@@ -100,7 +100,7 @@ public class ShellState implements AutoCloseable {
     if (baseConfig != null) {
       this.baseConfig = baseConfig;
     } else {
-      this.baseConfig = new Config();
+      this.baseConfig = ConfigUtility.newConfig();
     }
   }
 

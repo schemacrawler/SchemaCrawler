@@ -14,6 +14,7 @@ import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 
 public final class SchemaRetrievalOptionsConfig {
 
@@ -61,13 +62,7 @@ public final class SchemaRetrievalOptionsConfig {
       builder = providedBuilder;
     }
 
-    final Config configProperties;
-    if (config == null) {
-      configProperties = new Config();
-    } else {
-      configProperties = new Config(config);
-    }
-
+    final Config configProperties = ConfigUtility.fromConfig(config);
     final InformationSchemaViewsBuilder informationSchemaViewsBuilder =
         InformationSchemaViewsBuilder.builder(builder.getInformationSchemaViews());
     SchemaRetrievalOptionsConfig.fromConfig(informationSchemaViewsBuilder, configProperties);

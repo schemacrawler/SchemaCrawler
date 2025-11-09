@@ -10,6 +10,7 @@ package schemacrawler.tools.command.script.options;
 
 import java.util.EnumSet;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.scripting.options.LanguageOptionsBuilder;
 
 public final class ScriptLanguageOptionsBuilder
@@ -23,13 +24,13 @@ public final class ScriptLanguageOptionsBuilder
 
   private ScriptLanguageOptionsBuilder() {
     super("script-language", "script", ScriptLanguageType.unknown);
-    config = new Config();
+    config = ConfigUtility.newConfig();
   }
 
   @Override
   public ScriptLanguageOptionsBuilder fromConfig(final Config config) {
     super.fromConfig(config);
-    this.config = new Config(config);
+    this.config = ConfigUtility.fromConfig(config);
     return this;
   }
 

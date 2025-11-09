@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.test;
 
 import static java.util.stream.Collectors.toList;
@@ -18,6 +17,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+
 import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
@@ -34,12 +34,13 @@ import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 public class Issue496LintTest {
 
-  private static final Config config = new Config();
+  private static final Config config = ConfigUtility.newConfig();
 
   @Test
   public void issue496(final DatabaseConnectionSource dataSource) throws Exception {
@@ -107,7 +108,8 @@ public class Issue496LintTest {
       assertThat(
           lintReport.stream().map(Lint::toString).collect(toList()),
           containsInAnyOrder(
-              "[catalog] cycles in table relationships: [PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS]"));
+              "[catalog] cycles in table relationships: [PUBLIC.FOR_LINT.PUBLICATIONS,"
+                  + " PUBLIC.FOR_LINT.WRITERS]"));
     }
   }
 }
