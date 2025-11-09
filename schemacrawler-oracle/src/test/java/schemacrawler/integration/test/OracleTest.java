@@ -10,14 +10,16 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static us.fatehi.test.integration.utility.OracleTestUtility.newOracleContainer;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -40,6 +42,7 @@ import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @DisableLogging
+@TestInstance(PER_CLASS)
 @HeavyDatabaseTest("oracle")
 @Testcontainers(disabledWithoutDocker = true)
 @ResolveTestContext
@@ -47,9 +50,9 @@ public class OracleTest extends BaseOracleWithConnectionTest {
 
   private static final int NUM_DATABASE_USERS = 34;
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     if (!dbContainer.isRunning()) {
