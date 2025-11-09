@@ -73,7 +73,7 @@ public class WeakAssociationsAttributesTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("weak-associations", Boolean.TRUE);
+    additionalConfig.put("weak-associations", true);
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
     catalog =

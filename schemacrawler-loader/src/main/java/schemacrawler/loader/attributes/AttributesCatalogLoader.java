@@ -79,7 +79,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       final Config config = getAdditionalConfiguration();
       final TaskDefinition.TaskRunnable taskRunnable =
           () -> {
-            final String catalogAttributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
+            final String catalogAttributesFile = config.getStringValue(OPTION_ATTRIBUTES_FILE);
             if (isBlank(catalogAttributesFile)) {
               return;
             }

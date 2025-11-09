@@ -70,7 +70,7 @@ public class WeakAssociationsTest {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("weak-associations", Boolean.TRUE);
+    additionalConfig.put("weak-associations", true);
 
     catalog =
         getCatalog(dataSource, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);

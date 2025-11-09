@@ -18,9 +18,9 @@ import us.fatehi.utility.UtilityMarker;
 public final class ConfigUtility {
 
   /**
-   * Create config from another config.
+   * Create config copied from another config.
    *
-   * @param map Provided map for config
+   * @param map Provided config
    */
   public static Config fromConfig(final Config config) {
     final Config newConfig = newConfig();
@@ -57,15 +57,6 @@ public final class ConfigUtility {
    */
   public static Config newConfig() {
     return fromMap(Collections.emptyMap());
-  }
-
-  /**
-   * Creates a config from the system environment.
-   *
-   * @return System environment config
-   */
-  public static Config systemEnv() {
-    return fromMap(System.getenv());
   }
 
   private ConfigUtility() {

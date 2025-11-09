@@ -53,16 +53,19 @@ public class ConfigTest {
 
     assertThat(config.getBooleanValue("key"), is(false));
 
-    config.put("key", false);
-
+    config.put("key", "false");
     assertThat(config.getBooleanValue("key"), is(false));
 
-    config.put("key", true);
+    config.put("key", false);
+    assertThat(config.getBooleanValue("key"), is(false));
 
+    config.put("key", "true");
+    assertThat(config.getBooleanValue("key"), is(true));
+
+    config.put("key", true);
     assertThat(config.getBooleanValue("key"), is(true));
 
     config.put("key", "blah");
-
     assertThat(config.getBooleanValue("key"), is(false));
   }
 
@@ -72,12 +75,13 @@ public class ConfigTest {
 
     assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.MONDAY));
 
-    config.put("key", DayOfWeek.FRIDAY.name());
+    config.put("key", DayOfWeek.FRIDAY);
+    assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.FRIDAY));
 
+    config.put("key", DayOfWeek.FRIDAY.name());
     assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.FRIDAY));
 
     config.put("key", "blah");
-
     assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.MONDAY));
   }
 
@@ -87,16 +91,16 @@ public class ConfigTest {
 
     assertThat(config.getIntegerValue("key", -1), is(-1));
 
-    config.put("key", "1");
+    config.put("key", 1);
+    assertThat(config.getIntegerValue("key", -1), is(1));
 
+    config.put("key", "1");
     assertThat(config.getIntegerValue("key", -1), is(1));
 
     config.put("key", "1.1");
-
     assertThat(config.getIntegerValue("key", -1), is(-1));
 
     config.put("key", "blah");
-
     assertThat(config.getIntegerValue("key", -1), is(-1));
   }
 

@@ -8,7 +8,6 @@
 
 package schemacrawler.integration.test;
 
-import static java.lang.Boolean.TRUE;
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -95,9 +94,9 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.merge(config);
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
-    additionalConfig.put("schemacrawler.format.hide_foreignkey_names", TRUE.toString());
-    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", TRUE.toString());
-    additionalConfig.put("schemacrawler.format.hide_remarks", TRUE.toString());
+    additionalConfig.put("schemacrawler.format.hide_foreignkey_names", true);
+    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", true);
+    additionalConfig.put("schemacrawler.format.hide_remarks", true);
 
     final String command = schemaTextDetailType.name();
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);

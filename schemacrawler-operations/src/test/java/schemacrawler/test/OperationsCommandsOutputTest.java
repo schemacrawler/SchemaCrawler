@@ -48,7 +48,7 @@ public class OperationsCommandsOutputTest {
   public void sortedColumnsOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "dump_tables_sorted_columns";
     final Config config = ConfigUtility.newConfig();
-    config.put("schemacrawler.format.sort_alphabetically.table_columns", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_columns", true);
     config.put(queryCommand, "SELECT ${columns} FROM ${table} ORDER BY ${basiccolumns}");
 
     textOutputTest(queryCommand, dataSource, config);

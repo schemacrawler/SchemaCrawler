@@ -95,7 +95,7 @@ public class DiagramRendererOptionsTest {
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.merge(config);
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
-    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", "true");
+    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -496,7 +496,7 @@ public class DiagramRendererOptionsTest {
 
   private Config configWithWeakAssociations() {
     final Config config = ConfigUtility.newConfig();
-    config.put("weak-associations", Boolean.TRUE);
+    config.put("weak-associations", true);
     return config;
   }
 }

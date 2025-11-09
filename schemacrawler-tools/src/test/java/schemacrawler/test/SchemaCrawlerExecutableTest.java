@@ -94,7 +94,7 @@ public class SchemaCrawlerExecutableTest {
     final SchemaCrawlerExecutable executable2 = new SchemaCrawlerExecutable(command2);
     executable2.setDataSource(dataSource);
     final Config config = ConfigUtility.newConfig();
-    config.put("return-null", "true");
+    config.put("return-null", true);
     executable2.setAdditionalConfiguration(config);
     final InternalRuntimeException ex2 =
         assertThrows(InternalRuntimeException.class, () -> executable2.execute());
@@ -162,7 +162,7 @@ public class SchemaCrawlerExecutableTest {
     final SchemaRetrievalOptions mockSchemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
     final Config config = ConfigUtility.newConfig();
-    config.put("uses-connection", "false");
+    config.put("uses-connection", false);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
 
