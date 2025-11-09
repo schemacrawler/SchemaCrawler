@@ -18,6 +18,8 @@ import static us.fatehi.test.utility.TestUtility.buildDirectory;
 import static us.fatehi.test.utility.TestUtility.deleteIfPossible;
 import static us.fatehi.test.utility.Utility.requireNotBlank;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -155,27 +157,30 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
         return actualResults.isAvailable();
       }
 
-      if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
-        validateXML();
-      }
-
+      validateResults();
       compareOutput();
+      cleanup();
 
       final boolean matches = failures.isEmpty();
-
-      // -- Clean up
-      // Delete output file if possible
-      final Path testOutputTempFile = Path.of(actualResults.getResourceString());
-      deleteIfPossible(testOutputTempFile);
-      // Flush System streams to prepare for further runs
-      System.out.flush();
-      System.err.flush();
-
+      // Print failures for easy reading of build log
+      if (!matches) {
+        System.err.println(String.join(System.lineSeparator(), failures));
+      }
       return matches;
 
     } catch (final Exception e) {
       return fail(e);
     }
+  }
+
+  private void cleanup() {
+    // -- Clean up
+    // Delete output file if possible
+    final Path testOutputTempFile = Path.of(actualResults.getResourceString());
+    deleteIfPossible(testOutputTempFile);
+    // Flush System streams to prepare for further runs
+    System.out.flush();
+    System.err.flush();
   }
 
   private void compareOutput() throws Exception {
@@ -200,30 +205,25 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     if (!expectedResults.isAvailable()) {
       failures.add("reference file is not available");
       contentEquals = false;
+    } else if ("json".equalsIgnoreCase(outputFormatValue)) {
+      contentEquals = jsonEquals();
     } else {
       contentEquals = contentEquals();
-    }
-
-    // Print failures for easy reading of build log
-    if (!failures.isEmpty()) {
-      System.err.println(String.join(System.lineSeparator(), failures));
     }
 
     if (!contentEquals) {
       moveActualToExpected();
     }
-
-    return;
   }
 
   private boolean contentEquals() throws Exception {
 
-    final BufferedReader expectedResultsReader = expectedResults.openNewReader();
-    final BufferedReader actualResultsReader = actualResults.openNewReader();
     final Predicate<String> keepLines = new SvgElementFilter().and(new NeuteredLinesFilter());
     final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
 
-    try (final Stream<String> expectedLinesStream = expectedResultsReader.lines();
+    try (final BufferedReader expectedResultsReader = expectedResults.openNewReader();
+        final BufferedReader actualResultsReader = actualResults.openNewReader();
+        final Stream<String> expectedLinesStream = expectedResultsReader.lines();
         final Stream<String> actualLinesStream = actualResultsReader.lines()) {
 
       final Iterator<String> expectedLinesIterator =
@@ -253,6 +253,22 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
     }
   }
 
+  private boolean jsonEquals() throws Exception {
+    try (final BufferedReader expectedResultsReader = expectedResults.openNewReader();
+        final BufferedReader actualResultsReader = actualResults.openNewReader(); ) {
+
+      final ObjectMapper mapper = new ObjectMapper();
+      final JsonNode expectedJson = mapper.readTree(expectedResultsReader);
+      final JsonNode actualJson = mapper.readTree(actualResultsReader);
+
+      final boolean jsonEquals = expectedJson.equals(actualJson);
+      if (!jsonEquals) {
+        failures.add("Actual JSON data is not what is expected");
+      }
+      return jsonEquals;
+    }
+  }
+
   private void moveActualToExpected() throws Exception {
 
     final Path testOutputTempFile = Path.of(actualResults.getResourceString());
@@ -273,6 +289,12 @@ public class FileHasContent extends BaseMatcher<ResultsResource> {
             .toString()
             .replace('\\', '/');
     failures.add(">> Actual output in:%n%s".formatted(relativePathToTestResultsOutput));
+  }
+
+  private void validateResults() throws Exception {
+    if ("html".equals(outputFormatValue) || "htmlx".equals(outputFormatValue)) {
+      validateXML();
+    }
   }
 
   private void validateXML() throws Exception {

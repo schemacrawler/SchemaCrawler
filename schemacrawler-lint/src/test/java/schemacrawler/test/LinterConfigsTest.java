@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
-import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAndTypeAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -117,7 +117,7 @@ public class LinterConfigsTest {
 
     assertThat(
         outputOf(serialized(linterConfigsList)),
-        hasSameContentAs(classpathResource("schemacrawler-linter-configs-1.json")));
+        hasSameContentAndTypeAs(classpathResource("schemacrawler-linter-configs-1.json"), "json"));
   }
 
   private Path serialized(final List<LinterConfig> linterConfigsList) throws Exception {
