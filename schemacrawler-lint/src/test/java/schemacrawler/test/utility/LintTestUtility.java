@@ -12,7 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static us.fatehi.test.utility.TestUtility.copyResourceToTempFile;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
@@ -78,6 +77,6 @@ public final class LintTestUtility {
 
     assertThat(
         outputOf(commandlineExecution(connectionInfo, "lint", argsMap, null, outputFormat)),
-        hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));
+        hasSameContentAs(classpathResource(referenceFileName)));
   }
 }

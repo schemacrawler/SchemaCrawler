@@ -34,6 +34,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.test.utility.TestWriter;
@@ -64,7 +65,7 @@ public class TableRowCountsTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("load-row-counts", true);
 
     catalog =
@@ -84,7 +85,7 @@ public class TableRowCountsTest {
       final SchemaCrawlerOptions schemaCrawlerOptions =
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-      final Config additionalConfig = new Config();
+      final Config additionalConfig = ConfigUtility.newConfig();
       additionalConfig.put("load-row-counts", true);
       additionalConfig.put("no-empty-tables", true);
 

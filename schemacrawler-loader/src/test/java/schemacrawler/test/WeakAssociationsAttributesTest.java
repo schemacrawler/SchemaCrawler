@@ -42,6 +42,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -71,8 +72,8 @@ public class WeakAssociationsAttributesTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Config additionalConfig = new Config();
-    additionalConfig.put("weak-associations", Boolean.TRUE);
+    final Config additionalConfig = ConfigUtility.newConfig();
+    additionalConfig.put("weak-associations", true);
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
     catalog =

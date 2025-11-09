@@ -31,6 +31,7 @@ import schemacrawler.tools.command.text.operation.options.OperationsOutputFormat
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
@@ -51,7 +52,7 @@ public class TableSampleTest {
     final OutputFormat outputFormat = OperationsOutputFormat.json;
 
     final String command = operation.name();
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));

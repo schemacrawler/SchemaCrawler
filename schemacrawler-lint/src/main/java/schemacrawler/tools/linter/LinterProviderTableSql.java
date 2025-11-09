@@ -68,7 +68,7 @@ class LinterTableSql extends BaseLinter {
   protected void configure(final Config config) {
     requireNonNull(config, "No configuration provided");
 
-    message = config.getStringValue("message", "");
+    message = config.getStringValue("message");
     requireNotBlank(message, "No message provided");
 
     sql = config.getStringValue("sql", "");

@@ -31,13 +31,13 @@ public class ConfigTest {
 
   @Test
   public void emptyConfig1a() {
-    final Config config = new Config((Config) null);
+    final Config config = ConfigUtility.fromConfig((Config) null);
     assertEmptyConfig(config);
   }
 
   @Test
   public void emptyConfig2() {
-    final Config config = new Config(new Config());
+    final Config config = ConfigUtility.fromConfig(ConfigUtility.newConfig());
     assertEmptyConfig(config);
   }
 
@@ -53,16 +53,19 @@ public class ConfigTest {
 
     assertThat(config.getBooleanValue("key"), is(false));
 
-    config.put("key", false);
-
+    config.put("key", "false");
     assertThat(config.getBooleanValue("key"), is(false));
 
-    config.put("key", true);
+    config.put("key", false);
+    assertThat(config.getBooleanValue("key"), is(false));
 
+    config.put("key", "true");
+    assertThat(config.getBooleanValue("key"), is(true));
+
+    config.put("key", true);
     assertThat(config.getBooleanValue("key"), is(true));
 
     config.put("key", "blah");
-
     assertThat(config.getBooleanValue("key"), is(false));
   }
 
@@ -72,12 +75,13 @@ public class ConfigTest {
 
     assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.MONDAY));
 
-    config.put("key", DayOfWeek.FRIDAY.name());
+    config.put("key", DayOfWeek.FRIDAY);
+    assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.FRIDAY));
 
+    config.put("key", DayOfWeek.FRIDAY.name());
     assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.FRIDAY));
 
     config.put("key", "blah");
-
     assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.MONDAY));
   }
 
@@ -87,16 +91,16 @@ public class ConfigTest {
 
     assertThat(config.getIntegerValue("key", -1), is(-1));
 
-    config.put("key", "1");
+    config.put("key", 1);
+    assertThat(config.getIntegerValue("key", -1), is(1));
 
+    config.put("key", "1");
     assertThat(config.getIntegerValue("key", -1), is(1));
 
     config.put("key", "1.1");
-
     assertThat(config.getIntegerValue("key", -1), is(-1));
 
     config.put("key", "blah");
-
     assertThat(config.getIntegerValue("key", -1), is(-1));
   }
 
@@ -144,16 +148,16 @@ public class ConfigTest {
 
   @Test
   public void notEmptyConfig2() {
-    final Config map = new Config();
+    final Config map = ConfigUtility.newConfig();
     map.put("key", "value");
 
-    final Config config = new Config(map);
+    final Config config = ConfigUtility.fromConfig(map);
     assertNotEmptyConfig(config);
   }
 
   @Test
   public void putEnumValue() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.containsKey("key"), is(false));
 
@@ -168,7 +172,7 @@ public class ConfigTest {
 
   @Test
   public void putStringValue() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.containsKey("key"), is(false));
 

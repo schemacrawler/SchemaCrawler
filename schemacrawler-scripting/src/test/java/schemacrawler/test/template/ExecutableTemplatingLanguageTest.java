@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -35,7 +36,7 @@ public class ExecutableTemplatingLanguageTest {
       final DatabaseConnectionSource dataSource, final String language, final Path scriptFile)
       throws Exception {
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("template", scriptFile.toString());
     additionalConfig.put("templating-language", language);
 

@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,9 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 import java.nio.file.Path;
 import java.sql.Connection;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -28,7 +25,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -59,7 +56,7 @@ public class TempTablesTest extends BaseSqliteTest {
             dataSource,
             SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource),
             schemaCrawlerOptions,
-            new Config());
+            ConfigUtility.newConfig());
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, is(arrayWithSize(1)));
     final Table[] tables = catalog.getTables(schemas[0]).toArray(new Table[0]);

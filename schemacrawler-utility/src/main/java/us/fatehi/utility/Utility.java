@@ -145,7 +145,7 @@ public final class Utility {
   }
 
   public static String trimToEmpty(final String text) {
-    if (isBlank(text)) {
+    if (text == null) {
       return "";
     }
     return text.strip();

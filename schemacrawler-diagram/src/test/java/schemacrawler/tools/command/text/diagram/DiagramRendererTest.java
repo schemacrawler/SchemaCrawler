@@ -37,7 +37,7 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.embeddeddiagram.EmbeddedDiagramRenderer;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.test.utility.TestUtility;
@@ -140,7 +140,7 @@ public class DiagramRendererTest {
 
     final Catalog catalog =
         SchemaCrawlerUtility.getCatalog(
-            dataSource, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+            dataSource, schemaRetrievalOptions, schemaCrawlerOptions, ConfigUtility.newConfig());
     return catalog;
   }
 

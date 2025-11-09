@@ -8,7 +8,7 @@
 
 package us.fatehi.utility;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -26,8 +26,8 @@ public class PropertiesUtility {
    * @return Filtered map
    */
   public static Map<String, ? extends Object> filterMap(final Map<?, ?> original) {
-    if (original == null) {
-      return new HashMap<>();
+    if (original == null || original.isEmpty()) {
+      return Collections.emptyMap();
     }
     final Map<String, ? extends Object> filtered =
         original.entrySet().stream()

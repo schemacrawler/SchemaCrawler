@@ -33,6 +33,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
@@ -92,7 +93,7 @@ public class RoutineReferencesTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     final SchemaTextOptionsBuilder commonTextOptions = SchemaTextOptionsBuilder.builder();
     commonTextOptions.fromConfig(config);
     commonTextOptions.noInfo();

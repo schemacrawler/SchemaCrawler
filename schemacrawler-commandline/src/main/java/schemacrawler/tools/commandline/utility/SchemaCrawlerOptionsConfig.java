@@ -24,8 +24,10 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.UtilityMarker;
 
 /** SchemaCrawler options builder, to build the immutable options to crawl a schema. */
+@UtilityMarker
 public final class SchemaCrawlerOptionsConfig {
 
   public static GrepOptionsBuilder fromConfig(
@@ -184,5 +186,9 @@ public final class SchemaCrawlerOptionsConfig {
   private static String getLimitTypesProperty(
       final DatabaseObjectInfoRetrieval databaseObjectType) {
     return "schemacrawler.%s.types".formatted(databaseObjectType.name());
+  }
+
+  private SchemaCrawlerOptionsConfig() {
+    // Prevent instantiation
   }
 }

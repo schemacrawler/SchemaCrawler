@@ -19,7 +19,7 @@
   "@object": "schemacrawler.tools.lint.config.LinterConfig",
   "columnExclusionPattern": null,
   "columnInclusionPattern": null,
-  "configMap":   {
+  "config":   {
     "schemacrawler.format.identifier_quoting_strategy": "quote_if_special_characters_and_reserved_words",
     "schemacrawler.format.no_schema_colors": false,
     "schemacrawler.format.no_schemacrawler_info": false,

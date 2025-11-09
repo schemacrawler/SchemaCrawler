@@ -29,6 +29,7 @@ import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -46,8 +47,8 @@ public class OperationsCommandsOutputTest {
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void sortedColumnsOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "dump_tables_sorted_columns";
-    final Config config = new Config();
-    config.put("schemacrawler.format.sort_alphabetically.table_columns", Boolean.TRUE.toString());
+    final Config config = ConfigUtility.newConfig();
+    config.put("schemacrawler.format.sort_alphabetically.table_columns", true);
     config.put(queryCommand, "SELECT ${columns} FROM ${table} ORDER BY ${basiccolumns}");
 
     textOutputTest(queryCommand, dataSource, config);
@@ -57,7 +58,7 @@ public class OperationsCommandsOutputTest {
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void queryOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "all_tables";
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put(
         queryCommand,
         "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
@@ -69,7 +70,7 @@ public class OperationsCommandsOutputTest {
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void queryOverOutput(final DatabaseConnectionSource dataSource) throws Exception {
     final String queryCommand = "dump_tables";
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put(queryCommand, "SELECT ${basiccolumns} FROM ${table} ORDER BY ${basiccolumns}");
 
     textOutputTest(queryCommand, dataSource, config);
@@ -83,7 +84,7 @@ public class OperationsCommandsOutputTest {
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void operationOutput(
       final OperationType operation, final DatabaseConnectionSource dataSource) throws Exception {
-    textOutputTest(operation.name(), dataSource, new Config());
+    textOutputTest(operation.name(), dataSource, ConfigUtility.newConfig());
   }
 
   private void textOutputTest(

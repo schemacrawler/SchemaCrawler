@@ -34,7 +34,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -61,7 +61,11 @@ public class LoadSnapshotTest {
           DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
       final Catalog catalog =
-          getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+          getCatalog(
+              dataSource,
+              schemaRetrievalOptionsDefault,
+              schemaCrawlerOptions,
+              ConfigUtility.newConfig());
       assertThat("Could not obtain catalog", catalog, notNullValue());
       assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 

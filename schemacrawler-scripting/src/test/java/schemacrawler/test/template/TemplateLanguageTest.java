@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 
 public class TemplateLanguageTest {
 
@@ -22,7 +23,7 @@ public class TemplateLanguageTest {
   public void templateLanguageByName() throws Exception {
     final TemplateLanguageOptionsBuilder builder = TemplateLanguageOptionsBuilder.builder();
     for (final TemplateLanguageType templateLanguageType : TemplateLanguageType.values()) {
-      final Config config = new Config();
+      final Config config = ConfigUtility.newConfig();
       config.put("templating-language", templateLanguageType.name());
       config.put("template", "script.file");
       builder.fromConfig(config);
@@ -35,7 +36,7 @@ public class TemplateLanguageTest {
   @Test
   public void templateLanguageForBadValue() {
     final TemplateLanguageOptionsBuilder builder = TemplateLanguageOptionsBuilder.builder();
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("templating-language", "bad-value");
     config.put("template", "script.file");
     builder.fromConfig(config);
@@ -47,7 +48,7 @@ public class TemplateLanguageTest {
   @Test
   public void templateLanguageForBlank() {
     final TemplateLanguageOptionsBuilder builder = TemplateLanguageOptionsBuilder.builder();
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("templating-language", "");
     config.put("template", "script.file");
     builder.fromConfig(config);
@@ -59,7 +60,7 @@ public class TemplateLanguageTest {
   @Test
   public void templateLanguageForNull() {
     final TemplateLanguageOptionsBuilder builder = TemplateLanguageOptionsBuilder.builder();
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("templating-language", null);
     config.put("template", "script.file");
     builder.fromConfig(config);

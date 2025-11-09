@@ -13,21 +13,19 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.test.utility.TestUtility.flattenCommandlineArgs;
 
+import com.typesafe.config.ConfigFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import com.typesafe.config.ConfigFactory;
-
 import picocli.CommandLine;
 import picocli.CommandLine.PicocliException;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.test.utility.DatabaseConnectionInfo;
 import us.fatehi.test.utility.TestUtility;
@@ -135,7 +133,11 @@ public final class CommandlineTestUtility {
       final DatabaseConnectionSource dataSource) {
 
     final Catalog catalog =
-        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(
+            dataSource,
+            schemaRetrievalOptionsDefault,
+            schemaCrawlerOptions,
+            ConfigUtility.newConfig());
 
     final ShellState state = createConnectedSchemaCrawlerShellState(dataSource);
     state.setCatalog(catalog); // is-loaded

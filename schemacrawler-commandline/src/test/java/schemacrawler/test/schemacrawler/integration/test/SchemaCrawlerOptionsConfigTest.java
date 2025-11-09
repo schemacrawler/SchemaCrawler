@@ -85,14 +85,15 @@ public class SchemaCrawlerOptionsConfigTest {
   @Test
   public void nullBuilders() {
     final LimitOptionsBuilder limitOptionsBuilder =
-        SchemaCrawlerOptionsConfig.fromConfig((LimitOptionsBuilder) null, new Config());
+        SchemaCrawlerOptionsConfig.fromConfig(
+            (LimitOptionsBuilder) null, ConfigUtility.newConfig());
     assertThat(limitOptionsBuilder, is(not(nullValue())));
 
     final GrepOptionsBuilder grepOptionsBuilder =
-        SchemaCrawlerOptionsConfig.fromConfig((GrepOptionsBuilder) null, new Config());
+        SchemaCrawlerOptionsConfig.fromConfig((GrepOptionsBuilder) null, ConfigUtility.newConfig());
     assertThat(grepOptionsBuilder, is(not(nullValue())));
 
-    SchemaCrawlerOptionsConfig.fromConfig((LoadOptionsBuilder) null, new Config());
+    SchemaCrawlerOptionsConfig.fromConfig((LoadOptionsBuilder) null, ConfigUtility.newConfig());
     assertThat(grepOptionsBuilder, is(not(nullValue())));
   }
 

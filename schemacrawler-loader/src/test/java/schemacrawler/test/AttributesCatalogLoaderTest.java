@@ -27,6 +27,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
@@ -73,7 +74,7 @@ public class AttributesCatalogLoaderTest {
       final SchemaCrawlerOptions schemaCrawlerOptions =
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-      final Config additionalConfig = new Config();
+      final Config additionalConfig = ConfigUtility.newConfig();
       additionalConfig.put("attributes-file", attributesFile);
 
       final Catalog catalog =

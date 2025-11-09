@@ -12,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static us.fatehi.test.integration.utility.OracleTestUtility.newOracleContainer;
 
@@ -20,9 +21,10 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.regex.Pattern;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -32,24 +34,27 @@ import schemacrawler.test.utility.DisableLogging;
 import us.fatehi.test.integration.utility.OracleTestUtility;
 import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
+import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @DisableLogging
+@TestInstance(PER_CLASS)
 @HeavyDatabaseTest("oracle")
 @Testcontainers(disabledWithoutDocker = true)
+@ResolveTestContext
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
   private static final int NUM_DATABASE_USERS = 34;
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
+  @Container private static final JdbcDatabaseContainer<?> dbContainer = newOracleContainer();
 
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;
   private DataSource catalogUserDataSource;
   private DataSource noAccessUserDataSource;
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() {
 
     final Map<String, String> urlx = OracleTestUtility.urlx();
@@ -75,23 +80,22 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @DisplayName("Oracle test for user CATUSER with just SELECT_CATALOG_ROLE")
   /** CATUSER can get metadata, but cannot run data queries. */
   public void testOracleSelectCatalogRoleUser() throws Exception {
+    try (final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.fromDataSource(catalogUserDataSource)) {
+      final String expectedResource = "testOracleSelectCatalogRoleUser.txt";
+      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
-    final Connection connection = catalogUserDataSource.getConnection();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.fromDataSource(catalogUserDataSource);
-    final String expectedResource = "testOracleSelectCatalogRoleUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
+      final DatabaseAccessException sqlException =
+          assertThrows(
+              DatabaseAccessException.class,
+              () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
+      assertThat(
+          sqlException.getMessage(),
+          matchesPattern(
+              Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
 
-    final DatabaseAccessException sqlException =
-        assertThrows(
-            DatabaseAccessException.class,
-            () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
-    assertThat(
-        sqlException.getMessage(),
-        matchesPattern(
-            Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
-
-    assertCatalogScope(connection, true, true);
+      assertCatalogScope(dataSource, true, true);
+    }
   }
 
   @Test
@@ -99,83 +103,81 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   /** CATUSER can get metadata, but cannot run data queries. */
   public void testOracleSystemUser() throws Exception {
 
-    final Connection connection = getConnection();
-
-    assertCatalogScope(connection, true, true);
+    assertCatalogScope(getDataSource(), true, true);
   }
 
   @Test
   @DisplayName("Oracle test for user NOTUSER with no access")
   /** NOTUSER cannot get metadata, nor run data queries. */
   public void testOracleWithNoAccessUser() throws Exception {
+    try (final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.fromDataSource(noAccessUserDataSource)) {
+      final String expectedResource = "testOracleWithNoAccessUser.txt";
+      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
 
-    final Connection connection = noAccessUserDataSource.getConnection();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.fromDataSource(noAccessUserDataSource);
-    final String expectedResource = "testOracleWithNoAccessUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
+      final DatabaseAccessException sqlException =
+          assertThrows(
+              DatabaseAccessException.class,
+              () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
+      assertThat(
+          sqlException.getMessage(),
+          matchesPattern(
+              Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
 
-    final DatabaseAccessException sqlException =
-        assertThrows(
-            DatabaseAccessException.class,
-            () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
-    assertThat(
-        sqlException.getMessage(),
-        matchesPattern(
-            Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
-
-    assertCatalogScope(connection, false, true);
+      assertCatalogScope(dataSource, false, true);
+    }
   }
 
   @Test
   @DisplayName("Oracle test for user BOOKS who is the schema owner")
   /** BOOKS user can get metadata, and can run data queries. */
   public void testOracleWithSchemaOwnerUser() throws Exception {
+    try (final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource)) {
+      final String expectedResource = "testOracleWithSchemaOwnerUser.txt";
+      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
-    final Connection connection = schemaOwnerUserDataSource.getConnection();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource);
-    final String expectedResource = "testOracleWithSchemaOwnerUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
+      testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
-    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
-
-    assertCatalogScope(connection, false, true);
+      assertCatalogScope(dataSource, false, true);
+    }
   }
 
   @Test
   @DisplayName("Oracle test for user SELUSER with just GRANT SELECT")
   /** SELUSER cannot get metadata, but can run data queries. */
   public void testOracleWithSelectGrantUser() throws Exception {
+    try (final DatabaseConnectionSource dataSource =
+        DatabaseConnectionSources.fromDataSource(selectUserDataSource)) {
 
-    final Connection connection = selectUserDataSource.getConnection();
-    final DatabaseConnectionSource dataSource =
-        DatabaseConnectionSources.fromDataSource(selectUserDataSource);
+      final String expectedResource = "testOracleWithSelectGrantUser.txt";
+      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
 
-    final String expectedResource = "testOracleWithSelectGrantUser.txt";
-    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
+      testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
 
-    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
-
-    assertCatalogScope(connection, false, true);
+      assertCatalogScope(dataSource, false, true);
+    }
   }
 
   private void assertCatalogScope(
-      final Connection connection, final boolean dbaAccess, final boolean allAccess) {
+      final DatabaseConnectionSource dataSource, final boolean dbaAccess, final boolean allAccess)
+      throws SQLException {
 
-    assertDataDictionaryAccess(
-        new Query(
-            "Select from DBA data dictionary tables",
-            "SELECT TABLE_NAME FROM DBA_TABLES WHERE ROWNUM = 1"),
-        connection,
-        dbaAccess);
+    try (final Connection connection = dataSource.get(); ) {
+      assertDataDictionaryAccess(
+          new Query(
+              "Select from DBA data dictionary tables",
+              "SELECT TABLE_NAME FROM DBA_TABLES WHERE ROWNUM = 1"),
+          connection,
+          dbaAccess);
 
-    assertDataDictionaryAccess(
-        new Query(
-            "Select from ALL data dictionary tables",
-            "SELECT TABLE_NAME FROM ALL_TABLES WHERE ROWNUM = 1"),
-        connection,
-        allAccess);
+      assertDataDictionaryAccess(
+          new Query(
+              "Select from ALL data dictionary tables",
+              "SELECT TABLE_NAME FROM ALL_TABLES WHERE ROWNUM = 1"),
+          connection,
+          allAccess);
+    }
   }
 
   private void assertDataDictionaryAccess(

@@ -29,7 +29,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -43,7 +43,11 @@ public class CatalogJavaSerializationTest {
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog =
-        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(
+            dataSource,
+            schemaRetrievalOptionsDefault,
+            schemaCrawlerOptions,
+            ConfigUtility.newConfig());
     validateSchema(catalog);
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_java_serialization", "ser");

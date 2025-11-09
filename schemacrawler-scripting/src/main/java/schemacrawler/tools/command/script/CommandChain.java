@@ -22,6 +22,7 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.scripting.options.LanguageOptions;
@@ -57,7 +58,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     scCommands = new ArrayList<>();
 
     // Copy all configuration
-    additionalConfig = new Config(scCommand.getCommandOptions().getConfig());
+    additionalConfig = ConfigUtility.fromConfig(scCommand.getCommandOptions().getConfig());
     setSchemaCrawlerOptions(scCommand.getSchemaCrawlerOptions());
     setOutputOptions(scCommand.getOutputOptions());
 

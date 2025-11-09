@@ -41,7 +41,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.formatter.serialize.JsonSerializedCatalog;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -71,7 +71,11 @@ public class CatalogJsonSerializationTest {
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog =
-        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(
+            dataSource,
+            schemaRetrievalOptionsDefault,
+            schemaCrawlerOptions,
+            ConfigUtility.newConfig());
     validateSchema(catalog);
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");

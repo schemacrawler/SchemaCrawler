@@ -21,6 +21,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.test.utility.DatabaseConnectionInfo;
@@ -56,7 +57,7 @@ public class ScriptTestUtility {
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder().title("FROM TEST: Database Schema Diagram").toOptions();
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("script", script);
 
     final SchemaCrawlerExecutable executable = executableOf("script");
@@ -73,7 +74,7 @@ public class ScriptTestUtility {
       final String templateResource)
       throws Exception {
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("template", templateResource);
     additionalConfig.put("templating-language", templateLanguage.name());
 

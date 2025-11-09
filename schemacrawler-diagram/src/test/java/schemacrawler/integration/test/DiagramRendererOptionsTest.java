@@ -41,6 +41,7 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.test.utility.TestUtility;
@@ -91,10 +92,10 @@ public class DiagramRendererOptionsTest {
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.merge(config);
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
-    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", "true");
+    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -411,7 +412,7 @@ public class DiagramRendererOptionsTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("load-row-counts", true);
 
     executableDiagram(
@@ -494,8 +495,8 @@ public class DiagramRendererOptionsTest {
   }
 
   private Config configWithWeakAssociations() {
-    final Config config = new Config();
-    config.put("weak-associations", Boolean.TRUE);
+    final Config config = ConfigUtility.newConfig();
+    config.put("weak-associations", true);
     return config;
   }
 }

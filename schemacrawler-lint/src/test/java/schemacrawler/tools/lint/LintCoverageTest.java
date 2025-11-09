@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
+
 import java.io.Serializable;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.linter.LinterProviderCatalogSql;
 import schemacrawler.tools.linter.LinterProviderTableEmpty;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -42,7 +43,11 @@ public class LintCoverageTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     catalog =
-        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, new Config());
+        getCatalog(
+            dataSource,
+            schemaRetrievalOptionsDefault,
+            schemaCrawlerOptions,
+            ConfigUtility.newConfig());
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
   }

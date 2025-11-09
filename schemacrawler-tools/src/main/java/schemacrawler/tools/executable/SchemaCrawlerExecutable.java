@@ -25,6 +25,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
@@ -55,7 +56,7 @@ public final class SchemaCrawlerExecutable {
 
     schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
-    additionalConfig = new Config();
+    additionalConfig = ConfigUtility.newConfig();
   }
 
   public void execute() {
@@ -148,7 +149,7 @@ public final class SchemaCrawlerExecutable {
 
   public void setAdditionalConfiguration(final Config additionalConfig) {
     // Make a defensive copy
-    this.additionalConfig = new Config(additionalConfig);
+    this.additionalConfig = ConfigUtility.fromConfig(additionalConfig);
   }
 
   public void setCatalog(final Catalog catalog) {

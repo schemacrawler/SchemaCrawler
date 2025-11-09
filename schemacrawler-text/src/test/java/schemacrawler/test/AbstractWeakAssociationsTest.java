@@ -25,6 +25,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.test.utility.TestUtility;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
@@ -48,8 +49,8 @@ public abstract class AbstractWeakAssociationsTest {
       final DatabaseConnectionSource dataSource)
       throws Exception {
 
-    final Config additionalConfig = new Config();
-    additionalConfig.put("weak-associations", Boolean.TRUE);
+    final Config additionalConfig = ConfigUtility.newConfig();
+    additionalConfig.put("weak-associations", true);
 
     assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
   }
@@ -60,7 +61,7 @@ public abstract class AbstractWeakAssociationsTest {
       final DatabaseConnectionSource dataSource)
       throws Exception {
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
     assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
@@ -72,7 +73,7 @@ public abstract class AbstractWeakAssociationsTest {
       final DatabaseConnectionSource dataSource)
       throws Exception {
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
     assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
@@ -84,7 +85,7 @@ public abstract class AbstractWeakAssociationsTest {
       final DatabaseConnectionSource dataSource)
       throws Exception {
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
     assertWeakAssociations(testContext, dataSource, additionalConfig, true, outputFormat);
@@ -110,7 +111,7 @@ public abstract class AbstractWeakAssociationsTest {
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
     schemaTextOptionsBuilder.sortTables(true).noInfo().noRemarks(noRemarks);
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.merge(config);
     additionalConfig.merge(schemaTextOptionsBuilder.toConfig());
 

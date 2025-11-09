@@ -26,7 +26,7 @@ public class EqualsTest {
   public void linterConfig() {
     EqualsVerifier.forClass(LinterConfig.class)
         .withIgnoredFields(
-            "configMap",
+            "config",
             "runLinter",
             "threshold",
             "tableInclusionPattern",

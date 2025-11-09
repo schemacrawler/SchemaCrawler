@@ -21,6 +21,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 
 public class ConnectionOptionsTest {
 
@@ -55,7 +56,7 @@ public class ConnectionOptionsTest {
   public void badlyFormed_urlx() throws NoSuchFieldException, IllegalAccessException {
     final String[] args = {"--server", "test-db", "--urlx", "key1", "additional", "--extra"};
 
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("url", "jdbc:test-db://some-url");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
@@ -96,7 +97,7 @@ public class ConnectionOptionsTest {
       "--extra"
     };
 
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("url", "jdbc:test-db://${host}:${port}/${database}");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
@@ -117,7 +118,7 @@ public class ConnectionOptionsTest {
   public void no_urlx() throws NoSuchFieldException, IllegalAccessException {
     final String[] args = {"--server", "test-db", "--urlx"};
 
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("url", "jdbc:test-db://some-url");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
@@ -181,7 +182,7 @@ public class ConnectionOptionsTest {
       "--server", "test-db", "--urlx", "key1=value1;key2=value2", "additional", "--extra"
     };
 
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
     config.put("url", "jdbc:test-db://some-url");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());

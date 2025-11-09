@@ -43,6 +43,7 @@ import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -51,7 +52,7 @@ public class LintTest {
 
   private static final String LINTS_OUTPUT = "lints_output/";
 
-  private static final Config config = new Config();
+  private static final Config config = ConfigUtility.newConfig();
 
   @Test
   public void lints(final DatabaseConnectionSource dataSource) throws Exception {
@@ -71,7 +72,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(7));
 
-    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+    final LinterConfigs linterConfigs = new LinterConfigs(ConfigUtility.newConfig());
 
     final Map<String, Object> config = new HashMap<>();
     config.put("bad-column-names", ".*\\.COUNTRY");
@@ -138,7 +139,7 @@ public class LintTest {
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(7));
 
     try (final Connection connection = dataSource.get(); ) {
-      final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+      final LinterConfigs linterConfigs = new LinterConfigs(ConfigUtility.newConfig());
       final Linters linters = new Linters(linterConfigs, true);
       final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
       linters.initialize(linterRegistry);
@@ -177,7 +178,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(6));
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     final String message = UUID.randomUUID().toString();
     additionalConfig.put("message", message);
     additionalConfig.put("sql", "SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES");
@@ -221,7 +222,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(6));
 
-    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+    final LinterConfigs linterConfigs = new LinterConfigs(ConfigUtility.newConfig());
     final Linters linters = new Linters(linterConfigs, false);
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);

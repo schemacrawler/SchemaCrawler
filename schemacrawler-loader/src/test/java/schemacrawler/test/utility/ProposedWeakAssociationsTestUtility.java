@@ -26,6 +26,7 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.test.utility.TestWriter;
@@ -55,8 +56,8 @@ public class ProposedWeakAssociationsTestUtility {
       final SchemaRetrievalOptions schemaRetrievalOptions =
           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
 
-      final Config config = new Config();
-      config.put("weak-associations", Boolean.TRUE);
+      final Config config = ConfigUtility.newConfig();
+      config.put("weak-associations", true);
       config.put("infer-extension-tables", Boolean.valueOf(inferExtensionTables));
 
       final Catalog catalog =

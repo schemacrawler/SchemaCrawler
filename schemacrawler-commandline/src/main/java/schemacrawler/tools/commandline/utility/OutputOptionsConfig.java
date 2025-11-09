@@ -11,6 +11,7 @@ package schemacrawler.tools.commandline.utility;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public final class OutputOptionsConfig {
@@ -29,7 +30,7 @@ public final class OutputOptionsConfig {
 
     final Config configProperties;
     if (config == null) {
-      configProperties = new Config();
+      configProperties = ConfigUtility.newConfig();
     } else {
       configProperties = config;
     }

@@ -8,7 +8,6 @@
 
 package schemacrawler.integration.test;
 
-import static java.lang.Boolean.TRUE;
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,6 +37,7 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.test.utility.TestUtility;
@@ -91,12 +91,12 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.merge(config);
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
-    additionalConfig.put("schemacrawler.format.hide_foreignkey_names", TRUE.toString());
-    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", TRUE.toString());
-    additionalConfig.put("schemacrawler.format.hide_remarks", TRUE.toString());
+    additionalConfig.put("schemacrawler.format.hide_foreignkey_names", true);
+    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", true);
+    additionalConfig.put("schemacrawler.format.hide_remarks", true);
 
     final String command = schemaTextDetailType.name();
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
@@ -145,7 +145,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     final SchemaCrawlerOptions options = greppedForTable3();
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
 
     executableDiagram(
         SchemaTextDetailType.schema,
@@ -166,7 +166,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     final SchemaCrawlerOptions options = greppedForTable3();
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
 
     executableDiagram(
@@ -188,7 +188,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     final SchemaCrawlerOptions options = greppedForTable3();
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
 
     executableDiagram(
@@ -210,7 +210,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     final SchemaCrawlerOptions options = greppedForTable3();
 
-    final Config additionalConfig = new Config();
+    final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
 
     executableDiagram(

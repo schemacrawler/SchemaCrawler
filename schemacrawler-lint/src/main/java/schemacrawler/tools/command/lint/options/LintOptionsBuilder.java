@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.lint.options;
 
 import static us.fatehi.utility.Utility.trimToEmpty;
+
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
@@ -56,7 +56,7 @@ public final class LintOptionsBuilder
       // Otherwise, take option from SchemaCrawler configuration file
       linterConfigsKey = LINTER_CONFIGS;
     }
-    linterConfigs = config.getStringValue(linterConfigsKey, "");
+    linterConfigs = config.getStringValue(linterConfigsKey);
 
     final String lintDispatchKey;
     if (config.containsKey(CLI_LINT_DISPATCH)) {
