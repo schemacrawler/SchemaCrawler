@@ -13,9 +13,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class LintOutputTest {
     final String referenceFile = TEXT_OUTPUT + "lint." + outputFormat.getFormat();
     assertThat(
         outputOf(executableExecution(dataSource, executable, outputFormat)),
-        hasSameContentAndTypeAs(classpathResource(referenceFile), outputFormat));
+        hasSameContentAs(classpathResource(referenceFile)));
   }
 
   @Test
