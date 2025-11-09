@@ -42,6 +42,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.test.integration.utility.OracleTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
@@ -81,8 +82,11 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
       fail("Testcontainer for database is not available");
     }
 
-    final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
-    createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
+    createDataSource(
+        dbContainer.getJdbcUrl(),
+        "SYS AS SYSDBA",
+        dbContainer.getPassword(),
+        OracleTestUtility.urlx());
   }
 
   @Test

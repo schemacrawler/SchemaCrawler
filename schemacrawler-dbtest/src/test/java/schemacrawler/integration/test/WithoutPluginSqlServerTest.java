@@ -16,6 +16,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -66,11 +68,11 @@ public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
 
     createDatabase("/sqlserver.scripts.txt");
 
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("database", "BOOKS");
+
     createDataSource(
-        dbContainer.getJdbcUrl(),
-        dbContainer.getUsername(),
-        dbContainer.getPassword(),
-        "database=BOOKS");
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword(), urlx);
   }
 
   @Test

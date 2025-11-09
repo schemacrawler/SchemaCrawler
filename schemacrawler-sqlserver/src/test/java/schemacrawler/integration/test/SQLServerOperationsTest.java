@@ -21,6 +21,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -76,7 +78,10 @@ public class SQLServerOperationsTest extends BaseAdditionalDatabaseTest {
 
     createDatabase("/sqlserver.scripts.txt");
 
-    createDataSource(jdbcUrl, user, password, "database=BOOKS");
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("database", "BOOKS");
+
+    createDataSource(jdbcUrl, user, password, urlx);
   }
 
   @Test

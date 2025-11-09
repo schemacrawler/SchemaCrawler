@@ -15,25 +15,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 
 import java.time.DayOfWeek;
-import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 
 public class ConfigTest {
 
   @Test
   public void emptyConfig() {
-    final Config config = new Config();
-    assertEmptyConfig(config);
-  }
-
-  @Test
-  public void emptyConfig1() {
-    final Config config = new Config(new HashMap<>());
+    final Config config = ConfigUtility.newConfig();
     assertEmptyConfig(config);
   }
 
@@ -51,13 +43,13 @@ public class ConfigTest {
 
   @Test
   public void emptyConfig2b() {
-    final Config config = new Config((Map<String, Object>) null);
+    final Config config = ConfigUtility.fromMap((Map<String, Object>) null);
     assertEmptyConfig(config);
   }
 
   @Test
   public void getBooleanValue() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.getBooleanValue("key"), is(false));
 
@@ -76,7 +68,7 @@ public class ConfigTest {
 
   @Test
   public void getEnumValue() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.MONDAY));
 
@@ -91,7 +83,7 @@ public class ConfigTest {
 
   @Test
   public void getIntegerValue() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.getIntegerValue("key", -1), is(-1));
 
@@ -110,7 +102,7 @@ public class ConfigTest {
 
   @Test
   public void getOptionalInclusionRule() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     assertThat(config.getOptionalInclusionRule("in", "ex"), is(isEmpty()));
 
@@ -138,7 +130,7 @@ public class ConfigTest {
 
   @Test
   public void notEmptyConfig() {
-    final Config config = new Config();
+    final Config config = ConfigUtility.newConfig();
 
     config.put("key", "value");
     assertNotEmptyConfig(config);
@@ -146,7 +138,7 @@ public class ConfigTest {
 
   @Test
   public void notEmptyConfig1() {
-    final Config config = new Config(Map.of("key", "value"));
+    final Config config = ConfigUtility.fromMap(Map.of("key", "value"));
     assertNotEmptyConfig(config);
   }
 

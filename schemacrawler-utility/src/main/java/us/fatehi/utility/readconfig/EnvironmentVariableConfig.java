@@ -6,16 +6,27 @@
  * SPDX-License-Identifier: CC-BY-NC-4.0
  */
 
-package us.fatehi.utility.ioresource;
+package us.fatehi.utility.readconfig;
 
 import java.util.Map;
 
 /**
  * Intended to be implemented functionally like this: <br>
- * {@code StringValueConfig env = (EnvironmentVariableConfig) System::getenv;}
+ * {@code ReadConfig env = (EnvironmentVariableConfig) System::getenv;}
  */
 @FunctionalInterface
-public interface EnvironmentVariableConfig extends StringValueConfig {
+public interface EnvironmentVariableConfig extends ReadConfig {
+
+  @Override
+  default boolean containsKey(final String key) {
+    final Map<String, String> env = getenv();
+    if (env == null) {
+      return false;
+    }
+    return env.containsKey(key);
+  }
+
+  Map<String, String> getenv();
 
   /**
    * Gets the value of the specified environment variable.
@@ -30,12 +41,5 @@ public interface EnvironmentVariableConfig extends StringValueConfig {
       return defaultValue;
     }
     return env.getOrDefault(propertyName, defaultValue);
-  }
-
-  Map<String, String> getenv();
-
-  @Override
-  default Map<String, String> toStringValueMap() {
-    return getenv();
   }
 }

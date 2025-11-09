@@ -17,7 +17,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 
 @Command(
     name = "config-file",
@@ -48,6 +48,6 @@ public class ConfigFileCommand extends BaseStateHolder implements Runnable {
     }
 
     final Map<String, Object> appConfig = loadConfig();
-    state.setBaseConfig(new Config(appConfig));
+    state.setBaseConfig(ConfigUtility.fromMap(appConfig));
   }
 }

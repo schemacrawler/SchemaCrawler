@@ -33,6 +33,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import us.fatehi.test.integration.utility.OracleTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -56,20 +57,9 @@ public class OracleTest extends BaseOracleWithConnectionTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
-    createDataSource(jdbcUrl, "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
+    createDataSource(jdbcUrl, "SYS AS SYSDBA", dbContainer.getPassword(), OracleTestUtility.urlx());
 
     createDatabase("/oracle.scripts.txt");
-  }
-
-  @Test
-  public void testOracleWithConnection() throws Exception {
-    final DatabaseConnectionSource dataSource = getDataSource();
-
-    final String expectedResource = "testOracleWithConnection.txt";
-    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
-
-    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
   }
 
   @Test
@@ -104,5 +94,15 @@ public class OracleTest extends BaseOracleWithConnectionTest {
     assertThat(
         outputOf(executableExecution(dataSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  public void testOracleWithConnection() throws Exception {
+    final DatabaseConnectionSource dataSource = getDataSource();
+
+    final String expectedResource = "testOracleWithConnection.txt";
+    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
+
+    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
   }
 }

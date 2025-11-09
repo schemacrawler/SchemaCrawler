@@ -3,7 +3,9 @@
   "runLinter" : true,
   "severity" : "high",
   "threshold" : 1,
-  "config" : {
+  "columnExclusionPattern" : null,
+  "columnInclusionPattern" : null,
+  "configMap" : {
     "schemacrawler.format.no_schema_colors" : false,
     "schemacrawler.lint.lint-dispatch" : "none",
     "schemacrawler.format.identifier_quoting_strategy" : "quote_if_special_characters_and_reserved_words",
@@ -18,8 +20,6 @@
     "schemacrawler.format.sort_alphabetically.routine_columns" : false,
     "schemacrawler.lint.linter-configs" : ""
   },
-  "columnExclusionPattern" : null,
-  "columnInclusionPattern" : null,
   "tableExclusionPattern" : null,
   "tableInclusionPattern" : null
 }, {
@@ -27,7 +27,9 @@
   "runLinter" : true,
   "severity" : "medium",
   "threshold" : -1,
-  "config" : {
+  "columnExclusionPattern" : null,
+  "columnInclusionPattern" : "SOME.*",
+  "configMap" : {
     "schemacrawler.format.no_schema_colors" : false,
     "schemacrawler.lint.lint-dispatch" : "none",
     "schemacrawler.format.identifier_quoting_strategy" : "quote_if_special_characters_and_reserved_words",
@@ -44,8 +46,6 @@
     "schemacrawler.format.sort_alphabetically.routine_columns" : false,
     "schemacrawler.lint.linter-configs" : ""
   },
-  "columnExclusionPattern" : null,
-  "columnInclusionPattern" : "SOME.*",
   "tableExclusionPattern" : "SOME.*",
   "tableInclusionPattern" : null
 }, {
@@ -53,7 +53,9 @@
   "runLinter" : false,
   "severity" : null,
   "threshold" : 2147483647,
-  "config" : {
+  "columnExclusionPattern" : "SOME.*",
+  "columnInclusionPattern" : null,
+  "configMap" : {
     "schemacrawler.format.no_schema_colors" : false,
     "schemacrawler.lint.lint-dispatch" : "none",
     "schemacrawler.format.identifier_quoting_strategy" : "quote_if_special_characters_and_reserved_words",
@@ -69,8 +71,6 @@
     "schemacrawler.format.sort_alphabetically.routine_columns" : false,
     "schemacrawler.lint.linter-configs" : ""
   },
-  "columnExclusionPattern" : "SOME.*",
-  "columnInclusionPattern" : null,
   "tableExclusionPattern" : null,
   "tableInclusionPattern" : "SOME.*"
 } ]

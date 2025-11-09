@@ -17,6 +17,7 @@ import static us.fatehi.test.integration.utility.OracleTestUtility.newOracleCont
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.regex.Pattern;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.test.utility.DisableLogging;
+import us.fatehi.test.integration.utility.OracleTestUtility;
 import us.fatehi.test.utility.DataSourceTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -50,7 +52,8 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @BeforeEach
   public void createDatabase() {
 
-    final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
+    final Map<String, String> urlx = OracleTestUtility.urlx();
+
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
     createDatabase("/oracle.scripts.txt");

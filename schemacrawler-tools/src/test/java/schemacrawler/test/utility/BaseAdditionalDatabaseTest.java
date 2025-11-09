@@ -14,6 +14,7 @@ import static us.fatehi.test.utility.TestUtility.failTestSetup;
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import javax.sql.DataSource;
 import schemacrawler.testdb.TestSchemaCreator;
 import us.fatehi.test.utility.DataSourceTestUtility;
@@ -54,7 +55,7 @@ public abstract class BaseAdditionalDatabaseTest {
       final String connectionUrl,
       final String user,
       final String password,
-      final String connectionProperties) {
+      final Map<String, String> connectionProperties) {
 
     dataSource =
         DataSourceTestUtility.createDataSource(connectionUrl, user, password, connectionProperties);
