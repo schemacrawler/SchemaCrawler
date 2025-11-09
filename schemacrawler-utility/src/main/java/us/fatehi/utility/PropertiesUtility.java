@@ -26,7 +26,7 @@ public class PropertiesUtility {
    * @return Filtered map
    */
   public static Map<String, ? extends Object> filterMap(final Map<?, ?> original) {
-    if (original == null) {
+    if (original == null || original.isEmpty()) {
       return Collections.emptyMap();
     }
     final Map<String, ? extends Object> filtered =

@@ -126,7 +126,7 @@ jobs:
           -Dreactor.printOrder \
           --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \
-          clean package
+          clean verify
     - id: gather-expected-results
       name: Gather expected results for failed tests
       if: always()
