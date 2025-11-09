@@ -28,7 +28,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
   @Serial private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
-  private final Map<String, Object> configMap;
+  private final Map<String, Object> config;
   private final boolean runLinter;
   private final LintSeverity severity;
   private final int threshold;
@@ -67,7 +67,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
     this.tableExclusionPattern = tableExclusionPattern;
     this.columnInclusionPattern = columnInclusionPattern;
     this.columnExclusionPattern = columnExclusionPattern;
-    this.configMap = configMap == null ? new HashMap<>() : new HashMap<>(configMap);
+    this.config = configMap == null ? new HashMap<>() : new HashMap<>(configMap);
   }
 
   @Override
@@ -115,7 +115,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
   }
 
   public Config getConfig() {
-    return ConfigUtility.fromMap(configMap);
+    return ConfigUtility.fromMap(config);
   }
 
   public String getLinterId() {
@@ -152,10 +152,10 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
     if (config != null) {
       // Shade with the linter config
       final Map<String, Object> linterConfig = new HashMap<>(config);
-      linterConfig.putAll(this.configMap);
+      linterConfig.putAll(this.config);
       //
-      this.configMap.clear();
-      this.configMap.putAll(linterConfig);
+      this.config.clear();
+      this.config.putAll(linterConfig);
     }
   }
 }
