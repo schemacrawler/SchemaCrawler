@@ -34,7 +34,7 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
     requireNonNull(config, "No environmental accessor provided");
 
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
-    final String connectionUrl = trimToEmpty(config.getStringValue("SCHCRWLR_JDBC_URL", ""));
+    final String connectionUrl = trimToEmpty(config.getStringValue("SCHCRWLR_JDBC_URL"));
 
     if (!isBlank(connectionUrl)) {
       dbConnectionSourceBuilder = builderFromUrl(connectionUrl);
@@ -44,8 +44,8 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
 
     final UserCredentials userCredentials =
         new MultiUseUserCredentials(
-            trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE_USER", "")),
-            trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE_PASSWORD", "")));
+            trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE_USER")),
+            config.getStringValue("SCHCRWLR_DATABASE_PASSWORD", null));
     dbConnectionSourceBuilder.withUserCredentials(userCredentials);
 
     return dbConnectionSourceBuilder;
@@ -53,8 +53,7 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
 
   private static DatabaseConnectionSourceBuilder builderForServer(final ReadConfig config) {
     final DatabaseConnectionSourceBuilder dbConnectionSourceBuilder;
-    final String databaseSystemIdentifier =
-        trimToEmpty(config.getStringValue("SCHCRWLR_SERVER", ""));
+    final String databaseSystemIdentifier = trimToEmpty(config.getStringValue("SCHCRWLR_SERVER"));
 
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
@@ -64,15 +63,15 @@ public final class EnvironmentalDatabaseConnectionSourceBuilder {
 
     dbConnectionSourceBuilder = databaseConnector.databaseConnectionSourceBuilder();
 
-    final String host = trimToEmpty(config.getStringValue("SCHCRWLR_HOST", ""));
+    final String host = trimToEmpty(config.getStringValue("SCHCRWLR_HOST"));
     dbConnectionSourceBuilder.withHost(host);
 
-    final String port = trimToEmpty(config.getStringValue("SCHCRWLR_PORT", ""));
+    final String port = trimToEmpty(config.getStringValue("SCHCRWLR_PORT"));
     if (isValidPort(port)) {
       dbConnectionSourceBuilder.withPort(Integer.valueOf(port));
     }
 
-    final String database = trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE", ""));
+    final String database = trimToEmpty(config.getStringValue("SCHCRWLR_DATABASE"));
     dbConnectionSourceBuilder.withDatabase(database);
 
     return dbConnectionSourceBuilder;
