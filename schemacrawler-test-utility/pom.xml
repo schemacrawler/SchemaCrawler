@@ -13,10 +13,6 @@
   <artifactId>schemacrawler-test-utility</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Test Utility</name>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <skip.signing.artifacts>true</skip.signing.artifacts>
-  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
