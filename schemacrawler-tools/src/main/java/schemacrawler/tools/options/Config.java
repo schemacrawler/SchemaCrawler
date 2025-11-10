@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -64,7 +63,7 @@ public final class Config implements Options, ReadConfig {
    */
   Config(final Map<String, ? extends Object> map) {
     requireNonNull(map, "No map provided");
-    configMap = new ConcurrentHashMap<>(map);
+    configMap = new HashMap<>(map);
   }
 
   @Override
