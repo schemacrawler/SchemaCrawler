@@ -79,6 +79,7 @@ jobs:
     - id: publish-coverage-codecov
       name: Upload coverage report to Codecov
       if: contains(github.ref, 'main')
+      continue-on-error: true
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
@@ -87,6 +88,7 @@ jobs:
       name: Upload coverage report to Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
       if: contains(github.ref, 'main')
+      continue-on-error: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CODACY_ORGANIZATION_PROVIDER: gh
@@ -99,5 +101,6 @@ jobs:
       name: Qodana Scan
       uses: JetBrains/qodana-action@main
       if: contains(github.ref, 'main')
+      continue-on-error: true
       env:
         QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
