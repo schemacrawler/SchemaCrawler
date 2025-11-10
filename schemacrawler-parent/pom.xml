@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
-  <packaging>pom</packaging>
   <version>17.1.4</version>
+  <packaging>pom</packaging>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
   <url>https://www.schemacrawler.com</url>
   <inceptionYear>2003</inceptionYear>
+  <organization>
+    <name>Sualeh Fatehi</name>
+  </organization>
   <licenses>
     <license>
       <name>Eclipse Public License - v 1.0</name>
@@ -37,13 +40,17 @@
       <timezone>-5</timezone>
     </developer>
   </developers>
-  <organization>
-    <name>Sualeh Fatehi</name>
-  </organization>
   <scm>
     <url>https://github.com/schemacrawler/SchemaCrawler</url>
     <connection>scm:git:git://github.com/schemacrawler/SchemaCrawler.git</connection>
   </scm>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>17</java.version>
+    <skip.signing.artifacts>true</skip.signing.artifacts>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+    <jacoco.version>0.8.14</jacoco.version>
+  </properties>
   <dependencyManagement>
     <dependencies>
 
@@ -180,13 +187,6 @@
     </dependency>
 
   </dependencies>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>17</java.version>
-    <skip.signing.artifacts>true</skip.signing.artifacts>
-    <maven.javadoc.skip>true</maven.javadoc.skip>
-    <jacoco.version>0.8.14</jacoco.version>
-  </properties>
   <build>
     <pluginManagement>
       <plugins>
@@ -475,6 +475,7 @@
                 </goals>
               </execution>
             </executions>
+            <version>0.8.14</version>
           </plugin>
         </plugins>
       </build>

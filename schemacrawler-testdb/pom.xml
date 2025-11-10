@@ -12,10 +12,6 @@
   <artifactId>schemacrawler-testdb</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Test Database</name>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <skip.signing.artifacts>true</skip.signing.artifacts>
-  </properties>
   
   <dependencies>
 

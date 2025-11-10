@@ -11,9 +11,6 @@
   <artifactId>schemacrawler-jdbc-drivers</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler - JDBC Drivers Distribution</name>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.postgresql</groupId>
