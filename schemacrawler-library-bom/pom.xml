@@ -11,54 +11,84 @@
   </parent>
   <artifactId>schemacrawler-library-bom</artifactId>
   <packaging>pom</packaging>
-  
+
   <name>SchemaCrawler - Software Library Bill of Materials</name>
-  
-  <modules>
-    <module>schemacrawler-parent</module>
-    <module>schemacrawler-jdbc-drivers</module>
-    <module>schemacrawler-testdb</module>
-    <module>schemacrawler-test-utility</module>
-    <!-- SchemaCrawler jar -->
-    <module>schemacrawler-utility</module>
-    <module>schemacrawler-api</module>
-    <module>schemacrawler-tools</module>
-    <module>schemacrawler-loader</module>
-    <module>schemacrawler-text</module>
-    <module>schemacrawler-diagram</module>
-    <module>schemacrawler-operations</module>
-    <module>schemacrawler</module>
-    <!-- Additional functionality -->
-    <module>schemacrawler-commandline</module>
-    <module>schemacrawler-scripting</module>
-    <module>schemacrawler-lint</module>
-    <!-- Database plugins -->
-    <module>schemacrawler-dbtest</module>
-    <module>schemacrawler-db2</module>
-    <module>schemacrawler-hsqldb</module>
-    <module>schemacrawler-mysql</module>
-    <module>schemacrawler-oracle</module>
-    <module>schemacrawler-postgresql</module>
-    <module>schemacrawler-sqlite</module>
-    <module>schemacrawler-sqlserver</module>
-    <module>schemacrawler-offline</module>
-    <module>schemacrawler-examplecode</module>
-  </modules>
-  <profiles>
-    <profile>
-      <id>complete-deployment-build</id>
-      <activation>
-        <property>
-          <name>distrib</name>
-        </property>
-      </activation>
-      <modules>
-        <module>schemacrawler-docs</module>
-        <module>schemacrawler-distrib</module>
-        <module>schemacrawler-docker</module>
-        <module>schemacrawler-docker-compose</module>
-        <module>schemacrawler-website</module>
-      </modules>
-    </profile>
-  </profiles>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- SchemaCrawler jar -->
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- Additional functionality -->
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-commandline</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-scripting</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-lint</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- Database plugins -->
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-jdbc-drivers</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-dbtest</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-db2</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-hsqldb</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-mysql</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-oracle</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-postgresql</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-sqlite</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-sqlserver</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-offline</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
