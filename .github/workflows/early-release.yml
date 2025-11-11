@@ -40,23 +40,32 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
+          -Dskiptests
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
-    - id: setup-gitsign
-      name: Setup gitsign for commit signing
+    - id: install-gitsign
+      name: Install gitsign for commit signing
       uses: chainguard-dev/actions/setup-gitsign@87966c10ea9ee2c3a45da2dc41040ee57ab8376d
-    - id: move-tag
-      name: Move early-access-release tag
+    - id: configure-signing
+      name: Configure commit signing
+      env:
+        GITSIGN_OIDC_DISABLE_BROWSER: "true"
       shell: bash
       run: |
-        # Configure git user
-        git config user.name "Sualeh Fatehi"
-        git config user.email "sualeh@hotmail.com"
+        # Configure commit signing
+        gitsign --version
         git config --global commit.gpgsign true
         git config --global tag.gpgsign true
         git config --global gpg.x509.program gitsign
         git config --global gpg.format x509
+        # Set up user
+        git config user.name "Sualeh Fatehi"
+        git config user.email "sualeh@hotmail.com"
+    - id: move-tag
+      name: Move early-access-release tag
+      shell: bash
+      run: |
         # Move early-access-release tag
         git tag -d early-access-release || true
         git push --delete origin early-access-release || true
