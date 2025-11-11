@@ -40,7 +40,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
-          -Dskiptests
+          -Dskiptests \
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
