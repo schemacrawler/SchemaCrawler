@@ -53,12 +53,16 @@ jobs:
         # Configure git user
         git config user.name "Sualeh Fatehi"
         git config user.email "sualeh@hotmail.com"
-        git config commit.gpgsign true
+        git config--global commit.gpgsign true
+        git config --global tag.gpgsign true
+        git config --global gpg.x509.program gitsign
+        git config --global gpg.format x509
         # Move early-access-release tag
         git tag -d early-access-release || true
         git push --delete origin early-access-release || true
-        gitsign tag -a early-access-release -m "SchemaCrawler Early Access Release"
+        git tag -a early-access-release -m "SchemaCrawler Early Access Release"
         git push --follow-tags origin early-access-release
+        git verify-tag early-access-release
     - id: create-release
       name: Create GitHub early access release
       uses: softprops/action-gh-release@v2
