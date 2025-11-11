@@ -81,6 +81,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         target_commitish: ${{ github.sha }}
+        tag_name: early-access-release
         token: ${{ secrets.GITHUB_TOKEN }}
         name: early-access-release
         draft: false
