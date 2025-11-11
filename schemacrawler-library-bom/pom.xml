@@ -3,6 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+
+  <!--
+    NOTE: Library BOM - see https://andresalmiray.com/a-pom-by-any-other-name/
+  -->
+
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
@@ -11,9 +17,7 @@
   </parent>
   <artifactId>schemacrawler-library-bom</artifactId>
   <packaging>pom</packaging>
-
   <name>SchemaCrawler - Software Library Bill of Materials</name>
-
   <dependencyManagement>
     <dependencies>
       <!-- SchemaCrawler jar -->
@@ -89,9 +93,77 @@
         <artifactId>schemacrawler-offline</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <!-- Test dependencies -->
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-testdb</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-test-utility</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-api</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-tools</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-loader</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-commandline</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-operations</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-scripting</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-text</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-diagram</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
-
   <build>
     <plugins>
       <plugin>
@@ -103,5 +175,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>

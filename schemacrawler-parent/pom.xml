@@ -3,12 +3,20 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+
+  <!--
+    NOTE: Parent POM - see https://andresalmiray.com/a-pom-by-any-other-name/
+  -->
+
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <version>17.1.5</version>
   <packaging>pom</packaging>
+
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
+
   <url>https://www.schemacrawler.com</url>
   <inceptionYear>2003</inceptionYear>
   <organization>

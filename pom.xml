@@ -3,6 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <!--
+    NOTE: Aggregating POM - see https://andresalmiray.com/a-pom-by-any-other-name/
+  -->
+
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
@@ -11,7 +16,9 @@
   </parent>
   <artifactId>schemacrawler-aggregator</artifactId>
   <packaging>pom</packaging>
+
   <name>SchemaCrawler [Aggregator]</name>
+
   <modules>
     <!-- SchemaCrawler common -->
     <module>schemacrawler-parent</module>
@@ -45,6 +52,7 @@
     <module>schemacrawler-examplecode</module>
     <module>schemacrawler-library-bom</module>
   </modules>
+
   <profiles>
     <profile>
       <id>complete-deployment-build</id>
@@ -62,4 +70,5 @@
       </modules>
     </profile>
   </profiles>
+
 </project>
