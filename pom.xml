@@ -42,7 +42,6 @@
     <module>schemacrawler-offline</module>
 	<!-- Additional modules -->
     <module>schemacrawler-examplecode</module>
-    <module>schemacrawler-library-bom</module>
   </modules>
   <profiles>
     <profile>
