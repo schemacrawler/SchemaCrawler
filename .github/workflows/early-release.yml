@@ -75,7 +75,6 @@ jobs:
         git push --delete origin early-access-release || true
         git tag -a early-access-release -m "SchemaCrawler Early Access Release"
         git push --follow-tags origin early-access-release
-        gitsign verify --tag early-access-release
         git show early-access-release
     - id: create-release
       name: Create GitHub early access release
