@@ -80,7 +80,7 @@ jobs:
     - id: create-release
       name: Create GitHub early access release
       uses: softprops/action-gh-release@v2
-      with:with:
+      with:
         target_commitish: ${{ github.sha }}
         token: ${{ secrets.GITHUB_TOKEN }}
         name: early-access-release
