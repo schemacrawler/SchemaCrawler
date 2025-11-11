@@ -6,12 +6,16 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.4</version>
+    <version>17.1.5</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
+
   <artifactId>schemacrawler-sqlite</artifactId>
   <packaging>jar</packaging>
+
   <name>SchemaCrawler for SQLite</name>
+  <description>SchemaCrawler database plugin for SQLite</description>
+
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
@@ -58,6 +62,7 @@
     </dependency>
 
   </dependencies>
+
   <build>
     <plugins>
       <plugin>

@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
-  <version>17.1.4</version>
+  <version>17.1.5</version>
   <packaging>pom</packaging>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
