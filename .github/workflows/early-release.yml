@@ -63,7 +63,7 @@ jobs:
         draft: false
         prerelease: true
         body: |
-        SchemaCrawler early access release at last commit ${{ github.sha }}
+          SchemaCrawler early access release at last commit ${{ github.sha }}
         generate_release_notes: true
         files: |
           ./schemacrawler-distrib/target/schemacrawler-17.1.5-distribution.zip
