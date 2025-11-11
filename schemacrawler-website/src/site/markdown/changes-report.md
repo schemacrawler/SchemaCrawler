@@ -3,8 +3,9 @@
 SchemaCrawler release notes.
 
 <a name="v17.1.5"></a>
-## Release 17.1.5 - 2025-11-08
+## Release 17.1.5 - 2025-11-12
 - Fix issue #2139 - PropertiesUtility.propertiesMap error
+- Create library BOM
 
 
 <a name="v17.1.4"></a>
