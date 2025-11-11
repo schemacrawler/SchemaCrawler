@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build:
-    name: Create Release
+    name: Create Early Access Release
     if: |
       (github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref == 'main') ||
@@ -47,26 +47,10 @@ jobs:
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
-    - id: configure-signing
-      name: Configure commit signing
-      shell: bash
-      run: |
-        # Configure commit signing
-        # Install gitsign
-        go install github.com/sigstore/gitsign@latest
-        gitsign --version
-        # Configure git for signing with gitsign
-        git config --global gpg.x509.program gitsign  # Use gitsign for signing
-        git config --global gpg.format x509  # gitsign expects x509 args
-        git config --global commit.gpgsign true  # Sign all commits
-        git config --global tag.gpgsign true  # Sign all tags
-    - id: git-user
-      name: Set up git user
-      shell: bash
-      run: |
-        # Set up user
-        git config user.name "Sualeh Fatehi"
-        git config user.email "sualeh@hotmail.com"
+    - id: install-gitsign
+      name: Install gitsign for commit signing
+      # See https://github.com/chainguard-dev/actions/blob/main/setup-gitsign/action.yml
+      uses: chainguard-dev/actions/setup-gitsign@87966c10ea9ee2c3a45da2dc41040ee57ab8376d
     - id: move-tag
       name: Move early-access-release tag
       env:
@@ -75,6 +59,12 @@ jobs:
       shell: bash
       run: |
         # Move early-access-release tag
+        # Set up user
+        git config user.name "Sualeh Fatehi"
+        git config user.email "sualeh@hotmail.com"
+        # Confirm gitsign is installed
+        gitsign --version
+        # Move tag
         git tag -d early-access-release || true
         git push --delete origin early-access-release || true
         git tag -a early-access-release -m "SchemaCrawler Early Access Release"
