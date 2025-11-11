@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write  # Required for OIDC authentication
-      contents: read
+      contents: write # Required to create a new tag
     steps:
 
 # SETUP BUILD ENVIRONMENT
