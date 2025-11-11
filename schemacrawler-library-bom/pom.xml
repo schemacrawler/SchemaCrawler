@@ -106,62 +106,6 @@
         <version>${project.version}</version>
         <scope>test</scope>
       </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-api</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-tools</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-loader</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-commandline</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-operations</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-scripting</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-text</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-diagram</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
     </dependencies>
   </dependencyManagement>
   <build>
