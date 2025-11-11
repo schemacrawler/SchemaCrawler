@@ -43,12 +43,18 @@ jobs:
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
+    - id: setup-gitsign
+      name: Setup gitsign for commit signing
+      uses: chainguard-dev/actions/setup-gitsign@v0.2.3
     - id: move-tag
       name: Move early-access-release tag
       shell: bash
       run: |
+        # Configure git user
+        git config user.name "Sualeh Fatehi"
+        git config user.email "sualeh@hotmail.com"
+        git config commit.gpgsign true
         # Move early-access-release tag
-        git fetch --tags
         git tag -d early-access-release || true
         git push --delete origin early-access-release || true
         git tag -a early-access-release -m "SchemaCrawler Early Access Release"
