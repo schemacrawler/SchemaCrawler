@@ -18,6 +18,9 @@ jobs:
       github.event.pull_request.base.ref == 'main') ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC authentication
+      contents: read
     steps:
 
 # SETUP BUILD ENVIRONMENT
