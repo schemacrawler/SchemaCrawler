@@ -49,8 +49,6 @@ jobs:
       uses: chainguard-dev/actions/setup-gitsign@87966c10ea9ee2c3a45da2dc41040ee57ab8376d
     - id: configure-signing
       name: Configure commit signing
-      env:
-        GITSIGN_OIDC_DISABLE_BROWSER: "true"
       shell: bash
       run: |
         # Configure commit signing
@@ -64,6 +62,8 @@ jobs:
         git config user.email "sualeh@hotmail.com"
     - id: move-tag
       name: Move early-access-release tag
+      env:
+        GITSIGN_OIDC_DISABLE_BROWSER: "true"
       shell: bash
       run: |
         # Move early-access-release tag
