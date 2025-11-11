@@ -45,7 +45,7 @@ jobs:
 # CREATE GITHUB RELEASE AND ADD ASSETS
     - id: setup-gitsign
       name: Setup gitsign for commit signing
-      uses: chainguard-dev/actions/setup-gitsign@v0.2.3
+      uses: chainguard-dev/actions/setup-gitsign@87966c10ea9ee2c3a45da2dc41040ee57ab8376d
     - id: move-tag
       name: Move early-access-release tag
       shell: bash
@@ -57,7 +57,7 @@ jobs:
         # Move early-access-release tag
         git tag -d early-access-release || true
         git push --delete origin early-access-release || true
-        git tag -a early-access-release -m "SchemaCrawler Early Access Release"
+        gitsign tag -a early-access-release -m "SchemaCrawler Early Access Release"
         git push --follow-tags origin early-access-release
     - id: create-release
       name: Create GitHub early access release
