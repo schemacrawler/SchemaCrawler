@@ -53,17 +53,18 @@ jobs:
       run: |
         # Configure commit signing
         gitsign --version
-        git config --global commit.gpgsign true
-        git config --global tag.gpgsign true
-        git config --global gpg.x509.program gitsign
-        git config --global gpg.format x509
+        git config --global gpg.x509.program gitsign  # Use gitsign for signing
+        git config --global gpg.format x509  # gitsign expects x509 args
+        git config --global commit.gpgsign true  # Sign all commits
+        git config --global tag.gpgsign true  # Sign all tags
         # Set up user
         git config user.name "Sualeh Fatehi"
         git config user.email "sualeh@hotmail.com"
     - id: move-tag
       name: Move early-access-release tag
       env:
-        GITSIGN_OIDC_DISABLE_BROWSER: "true"
+        GITSIGN_CONNECTOR_ID: "https://github.com/login/oauth"
+        GITSIGN_TOKEN_PROVIDER: "github-actions"
       shell: bash
       run: |
         # Move early-access-release tag

@@ -9,9 +9,11 @@
     <version>17.1.5</version>
     <relativePath>./schemacrawler-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>schemacrawler-aggregator</artifactId>
+  <artifactId>schemacrawler-library-bom</artifactId>
   <packaging>pom</packaging>
-  <name>SchemaCrawler [Aggregator]</name>
+  
+  <name>SchemaCrawler - Software Library Bill of Materials</name>
+  
   <modules>
     <module>schemacrawler-parent</module>
     <module>schemacrawler-jdbc-drivers</module>
@@ -40,9 +42,7 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-offline</module>
-	<!-- Additional modules -->
     <module>schemacrawler-examplecode</module>
-    <module>schemacrawler-library-bom</module>
   </modules>
   <profiles>
     <profile>
