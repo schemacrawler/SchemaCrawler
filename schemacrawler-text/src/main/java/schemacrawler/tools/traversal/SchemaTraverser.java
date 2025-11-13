@@ -32,7 +32,7 @@ public class SchemaTraverser {
   private Comparator<NamedObject> routinesComparator;
 
   public SchemaTraverser() {
-    tablesComparator = NamedObjectSort.natural;
+    tablesComparator = Comparator.comparing((NamedObject n) -> ((Table) n).getSchema().getFullName()).thenComparing(NamedObject::getName);
     routinesComparator = NamedObjectSort.natural;
   }
 
@@ -109,7 +109,9 @@ public class SchemaTraverser {
 
     if (!sequences.isEmpty()) {
       handler.handleSequencesStart();
-      for (final Sequence sequence : sequences) {
+      final List<? extends Sequence> sequencesList = new ArrayList<>(sequences);
+      sequencesList.sort(NamedObjectSort.alphabetical);
+      for (final Sequence sequence : sequencesList) {
         handler.handle(sequence);
       }
       handler.handleSequencesEnd();
@@ -117,7 +119,9 @@ public class SchemaTraverser {
 
     if (!synonyms.isEmpty()) {
       handler.handleSynonymsStart();
-      for (final Synonym synonym : synonyms) {
+      final List<? extends Synonym> synonymsList = new ArrayList<>(synonyms);
+      synonymsList.sort(NamedObjectSort.alphabetical);
+      for (final Synonym synonym : synonymsList) {
         handler.handle(synonym);
       }
       handler.handleSynonymsEnd();
