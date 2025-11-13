@@ -32,7 +32,7 @@ public class SchemaTraverser {
   private Comparator<NamedObject> routinesComparator;
 
   public SchemaTraverser() {
-    tablesComparator = NamedObjectSort.natural;
+    tablesComparator = Comparator.comparing((NamedObject n) -> ((Table) n).getSchema().getFullName()).thenComparing(NamedObject::getName);
     routinesComparator = NamedObjectSort.natural;
   }
 
