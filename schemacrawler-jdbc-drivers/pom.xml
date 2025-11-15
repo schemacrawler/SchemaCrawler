@@ -36,7 +36,7 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc_auth</artifactId>
-      <version>13.2.1.x86</version>
+      <version>13.3.0.x86-preview</version>
       <type>dll</type>
     </dependency>
     <dependency>
