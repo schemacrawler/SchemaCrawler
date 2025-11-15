@@ -92,7 +92,7 @@
     <dependency>
       <groupId>org.duckdb</groupId>
       <artifactId>duckdb_jdbc</artifactId>
-      <version>1.4.1.0</version>
+      <version>1.4.2.0</version>
     </dependency>
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
