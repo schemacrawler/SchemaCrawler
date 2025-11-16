@@ -8,18 +8,17 @@
 
 package schemacrawler.tools.lint.formatter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import schemacrawler.tools.options.OutputOptions;
+import tools.jackson.databind.json.JsonMapper;
 
-public class LintReportJsonGenerator extends BaseLintReportJacksonGenerator {
+public final class LintReportJsonGenerator extends BaseLintReportJacksonGenerator {
 
   public LintReportJsonGenerator(final OutputOptions outputOptions) {
     super(outputOptions);
   }
 
   @Override
-  protected ObjectMapper newObjectMapper() {
-    return new ObjectMapper();
+  protected final JsonMapper.Builder newMapperBuilder() {
+    return JsonMapper.builder();
   }
 }

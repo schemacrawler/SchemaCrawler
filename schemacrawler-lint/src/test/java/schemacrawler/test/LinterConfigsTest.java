@@ -20,8 +20,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +30,8 @@ import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 import us.fatehi.test.utility.extensions.FileHasContent;
 
 public class LinterConfigsTest {
@@ -125,19 +125,18 @@ public class LinterConfigsTest {
     @JsonPropertyOrder(
         value = {"linterId", "runLinter", "severity", "threshold", "config"},
         alphabetic = true)
+    @JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE)
     class JacksonMixin {}
 
-    final JsonMapper jsonMapper = new JsonMapper();
-    jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
-    jsonMapper.addMixIn(Object.class, JacksonMixin.class);
-    jsonMapper.setVisibility(
-        jsonMapper
-            .getSerializationConfig()
-            .getDefaultVisibilityChecker()
-            .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
-            .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
-            .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
-            .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-    return FileHasContent.text(jsonMapper.writeValueAsString(linterConfigsList));
+    final JsonMapper mapper =
+        JsonMapper.builder()
+            .enable(SerializationFeature.INDENT_OUTPUT)
+            .addMixIn(Object.class, JacksonMixin.class)
+            .build();
+    return FileHasContent.text(mapper.writeValueAsString(linterConfigsList));
   }
 }

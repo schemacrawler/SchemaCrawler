@@ -8,13 +8,14 @@
 
 package schemacrawler.tools.formatter.serialize;
 
-import static com.fasterxml.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
-import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
-import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
-import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
-import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
+import static tools.jackson.core.StreamReadFeature.IGNORE_UNDEFINED;
+import static tools.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
+import static tools.jackson.core.StreamWriteFeature.IGNORE_UNKNOWN;
+import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static tools.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -22,22 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
-import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.PropertyFilter;
-import com.fasterxml.jackson.databind.ser.PropertyWriter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -53,7 +38,23 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.annotation.JsonNaming;
+import tools.jackson.databind.cfg.MapperBuilder;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import tools.jackson.databind.jsontype.PolymorphicTypeValidator;
+import tools.jackson.databind.ser.BeanPropertyWriter;
+import tools.jackson.databind.ser.FilterProvider;
+import tools.jackson.databind.ser.PropertyFilter;
+import tools.jackson.databind.ser.PropertyWriter;
+import tools.jackson.databind.ser.std.SimpleBeanPropertyFilter;
+import tools.jackson.databind.ser.std.SimpleFilterProvider;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer {
@@ -65,11 +66,8 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
             "name", "short-name", "full-name", "attributes", "parent-partial", "remarks", "schema");
 
     @Override
-    public void serializeAsField(
-        final Object pojo,
-        final JsonGenerator jgen,
-        final SerializerProvider provider,
-        final PropertyWriter writer)
+    public void serializeAsProperty(
+        Object pojo, JsonGenerator g, SerializationContext provider, PropertyWriter writer)
         throws Exception {
       if (include(writer)) {
         try {
@@ -77,13 +75,13 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
               && !PARTIAL_PROPERTIES.contains(writer.getName())) {
             return;
           }
-          writer.serializeAsField(pojo, jgen, provider);
+          writer.serializeAsProperty(pojo, g, provider);
         } catch (final Exception e) {
           LOGGER.log(Level.FINE, e.getMessage(), e);
           return;
         }
-      } else if (!jgen.canOmitFields()) {
-        writer.serializeAsOmittedField(pojo, jgen, provider);
+      } else if (!g.canOmitProperties()) {
+        writer.serializeAsOmittedProperty(pojo, g, provider);
       }
     }
 
@@ -104,18 +102,21 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   protected static Catalog readCatalog(final InputStream in) {
     requireNonNull(in, "No input stream provided");
     try {
-      final ObjectMapper jsonMapper =
-          JsonMapper.builder().enable(INCLUDE_SOURCE_IN_LOCATION).build();
-      final ObjectMapper mapper = newConfiguredObjectMapper(jsonMapper);
+      final ObjectMapper mapper = newConfiguredObjectMapper(JsonMapper.builder());
       final Catalog catalog = mapper.readValue(in, Catalog.class);
       return catalog;
-    } catch (final IOException e) {
-      throw new IORuntimeException("Could not deserialize catalog", e);
+    } catch (final JacksonException e) {
+      throw new ExecutionRuntimeException("Could not deserialize catalog", e);
     }
   }
 
-  private static ObjectMapper newConfiguredObjectMapper(final ObjectMapper mapper) {
-    requireNonNull(mapper, "No object mapper provided");
+  private static ObjectMapper newConfiguredObjectMapper(
+      final MapperBuilder<? extends ObjectMapper, ?> mapperBuilder) {
+
+    requireNonNull(mapperBuilder, "No mapper builder provided");
+    mapperBuilder.enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID);
+    mapperBuilder.enable(INCLUDE_SOURCE_IN_LOCATION, IGNORE_UNDEFINED);
+    mapperBuilder.enable(IGNORE_UNKNOWN);
 
     @JsonIgnoreProperties({
       "parent",
@@ -160,16 +161,12 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
     final PolymorphicTypeValidator typeValidator =
         BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build();
 
-    mapper.enable(
-        ORDER_MAP_ENTRIES_BY_KEYS,
-        INDENT_OUTPUT,
-        USE_EQUALITY_FOR_OBJECT_ID,
-        WRITE_ENUMS_USING_TO_STRING);
-    mapper.registerModule(new JavaTimeModule());
-    mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
-    mapper.setFilterProvider(filters);
-    mapper.activateDefaultTyping(typeValidator);
-    return mapper;
+    mapperBuilder.addMixIn(Object.class, JacksonAnnotationMixIn.class);
+    mapperBuilder.filterProvider(filters);
+    mapperBuilder.activateDefaultTyping(typeValidator);
+
+    final ObjectMapper objectMapper = mapperBuilder.build();
+    return objectMapper;
   }
 
   private final Catalog catalog;
@@ -203,15 +200,15 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   public void save(final Writer out) {
     requireNonNull(out, "No writer provided");
     try {
-      final ObjectMapper mapper = newConfiguredObjectMapper(newObjectMapper());
+      final ObjectMapper mapper = newConfiguredObjectMapper(newMapperBuilder());
       mapper.writeValue(out, this);
       // Jackson will flush and close the stream
-    } catch (final IOException e) {
-      throw new IORuntimeException("Could not serialize catalog", e);
+    } catch (final JacksonException e) {
+      throw new ExecutionRuntimeException("Could not serialize catalog", e);
     }
   }
 
-  protected abstract ObjectMapper newObjectMapper();
+  protected abstract MapperBuilder<? extends ObjectMapper, ?> newMapperBuilder();
 
   private void loadAllTableColumns() {
     for (final Table table : catalog.getTables()) {

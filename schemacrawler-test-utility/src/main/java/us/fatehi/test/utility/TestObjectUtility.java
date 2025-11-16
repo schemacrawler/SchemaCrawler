@@ -15,7 +15,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.AccessMode;
@@ -30,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import tools.jackson.databind.ObjectMapper;
 
 public class TestObjectUtility {
 
@@ -174,10 +174,10 @@ public class TestObjectUtility {
 
     final TestObject testObject = makeTestObject();
 
-    final ObjectMapper objectMapper = new ObjectMapper();
+    final ObjectMapper mapper = new ObjectMapper();
 
     final Map<String, Object> testObjectMap =
-        new TreeMap<>(objectMapper.convertValue(testObject, Map.class));
+        new TreeMap<>(mapper.convertValue(testObject, Map.class));
     testObjectMap.put("@object", testObject.getClass().getName());
 
     return testObjectMap;

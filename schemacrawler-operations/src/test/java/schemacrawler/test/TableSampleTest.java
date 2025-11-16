@@ -14,8 +14,6 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
@@ -33,6 +31,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputFormat;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
