@@ -6,13 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.formatter.serialize;
 
-import static com.fasterxml.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import schemacrawler.schema.Catalog;
+import tools.jackson.databind.json.JsonMapper;
 
 /** Decorates a database to allow for serialization to JSON serialization. */
 public final class JsonSerializedCatalog extends BaseJacksonSerializedCatalog {
@@ -22,7 +19,7 @@ public final class JsonSerializedCatalog extends BaseJacksonSerializedCatalog {
   }
 
   @Override
-  protected ObjectMapper newObjectMapper() {
-    return JsonMapper.builder().enable(INCLUDE_SOURCE_IN_LOCATION).build();
+  protected final JsonMapper.Builder newMapperBuilder() {
+    return JsonMapper.builder();
   }
 }

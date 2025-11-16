@@ -6,12 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.formatter.serialize;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import schemacrawler.schema.Catalog;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 
 /** Decorates a database to allow for serialization to YAML serialization. */
 public final class YamlSerializedCatalog extends BaseJacksonSerializedCatalog {
@@ -21,7 +19,7 @@ public final class YamlSerializedCatalog extends BaseJacksonSerializedCatalog {
   }
 
   @Override
-  protected ObjectMapper newObjectMapper() {
-    return new ObjectMapper(new YAMLFactory());
+  protected final YAMLMapper.Builder newMapperBuilder() {
+    return YAMLMapper.builder();
   }
 }

@@ -24,10 +24,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.MissingNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
@@ -42,6 +38,9 @@ import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.formatter.serialize.JsonSerializedCatalog;
 import schemacrawler.tools.options.ConfigUtility;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.MissingNode;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -92,7 +91,6 @@ public class CatalogJsonSerializationTest {
 
     // Read generated JSON file, and assert values
     final ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(new JavaTimeModule());
     final JsonNode catalogNode = mapper.readTree(testOutputFile.toFile());
     assertThat(
         "Catalog schemas were not serialized",
@@ -109,15 +107,15 @@ public class CatalogJsonSerializationTest {
     try (final TestWriter out = testout) {
       allTableColumnsNode
           .get(1)
-          .elements()
-          .forEachRemaining(
+          .values()
+          .forEach(
               columnNode -> {
                 final JsonNode columnFullnameNode = columnNode.get("full-name");
                 if (columnFullnameNode != null) {
-                  out.println("- column @uuid: " + columnNode.get("@uuid").asText());
-                  out.println("  " + columnFullnameNode.asText());
+                  out.println("- column @uuid: " + columnNode.get("@uuid").asString());
+                  out.println("  " + columnFullnameNode.asString());
                 } else {
-                  fail("Table column object not found - " + columnNode.asText());
+                  fail("Table column object not found - " + columnNode.asString());
                 }
               });
     }

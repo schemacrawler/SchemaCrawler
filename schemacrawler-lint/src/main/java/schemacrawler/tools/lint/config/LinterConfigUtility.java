@@ -12,9 +12,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.command.lint.options.LintOptions;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.type.CollectionType;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
@@ -31,6 +31,8 @@ import us.fatehi.utility.string.StringFormat;
 public final class LinterConfigUtility {
 
   public static final Logger LOGGER = Logger.getLogger(LinterConfigUtility.class.getName());
+
+  private static final ObjectMapper mapper = new YAMLMapper();
 
   /**
    * Obtain linter configuration from a system property
@@ -65,7 +67,6 @@ public final class LinterConfigUtility {
     requireNonNull(reader, "No input provided");
 
     try {
-      final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
       final CollectionType listType =
           mapper.getTypeFactory().constructCollectionType(List.class, LinterConfig.class);
 

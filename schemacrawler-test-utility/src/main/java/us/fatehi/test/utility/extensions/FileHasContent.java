@@ -18,8 +18,6 @@ import static us.fatehi.test.utility.TestUtility.buildDirectory;
 import static us.fatehi.test.utility.TestUtility.deleteIfPossible;
 import static us.fatehi.test.utility.Utility.requireNotBlank;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -40,6 +38,8 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 import us.fatehi.test.utility.SvgElementFilter;
 import us.fatehi.test.utility.TestOutputCapture;
 
