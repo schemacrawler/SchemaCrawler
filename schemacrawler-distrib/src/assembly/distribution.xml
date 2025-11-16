@@ -66,19 +66,6 @@
       eol="lf"
       eof="remove"/>
 
-    <copy todir="${schemacrawler.base-distribution}/lib">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/target/_jdbc-drivers/lib">
-        <include name="*.jar" />
-        <include name="*.dll" />
-      </fileset>
-    </copy>
-
-    <copy todir="${schemacrawler.base-distribution}/licenses">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/target/_licenses">
-        <include name="*.*" />
-      </fileset>
-    </copy>
-
     <copy todir="${schemacrawler.base-distribution}/logos">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-website/src/site/resources/images">
         <include name="schemacrawler_logo.*" />

@@ -55,6 +55,11 @@
 
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-jdbc-drivers</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
     </dependency>
