@@ -73,6 +73,22 @@
       </fileset>
     </copy>
 
+    <copy todir="${schemacrawler.base-distribution}"
+      flatten="true"
+      overwrite="true">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
+        <include name="**/mermaid.py" />
+        <include name="**/dbml.py" />
+        <include name="**/plantuml.py" />
+        <include name="**/markdown.py" />
+      </fileset>
+    </copy>
+    <fixcrlf
+      srcdir="${schemacrawler.base-distribution}"
+      includes="*.py"
+      eol="lf"
+      eof="remove"/>
+
     <!-- Create SQLite test database -->
     <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
       failonerror="true">
@@ -128,22 +144,6 @@
       <ivy:resources resolveId="velocity"
         file="${distribution.downloader}/velocity_ivy.xml"/>
     </copy>
-
-    <copy todir="${schemacrawler.expanded-distribution}"
-      flatten="true"
-      overwrite="true">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
-        <include name="**/mermaid.py" />
-        <include name="**/dbml.py" />
-        <include name="**/plantuml.py" />
-        <include name="**/markdown.py" />
-      </fileset>
-    </copy>
-    <fixcrlf
-      srcdir="${schemacrawler.expanded-distribution}"
-      includes="*.py"
-      eol="lf"
-      eof="remove"/>
 
   </target>
 
