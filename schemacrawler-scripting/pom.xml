@@ -88,12 +88,12 @@
       <version>0.9.14</version>
       <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
       <artifactId>polyglot</artifactId>
       <version>25.0.1</version>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
       <artifactId>js</artifactId>

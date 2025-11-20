@@ -12,16 +12,12 @@
   <property name="distribution.target"
     location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
   <property
-    name="schemacrawler.base-distribution"
-    value="${distribution.target}/_base-distribution" />
-  <property
     name="schemacrawler.expanded-distribution"
-    location="${distribution.target}/_expanded-distribution" />
+    value="${distribution.target}/_expanded-distribution" />
 
 
   <target name="make"
     depends="
-            make-base-distribution,
             make-expanded-distribution,
             make-binary-distribution-zip
           "
@@ -29,23 +25,23 @@
 
 
 
-  <target name="make-base-distribution">
+  <target name="make-expanded-distribution">
 
-    <echo message="Running ant target: make-base-distribution" />
+    <echo message="Running ant target: make-expanded-distribution" />
 
     <property
         name="distribution.assembly"
       location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
 
-    <mkdir dir="${schemacrawler.base-distribution}/bin" />
-    <copy todir="${schemacrawler.base-distribution}/bin">
+    <mkdir dir="${schemacrawler.expanded-distribution}/bin" />
+    <copy todir="${schemacrawler.expanded-distribution}/bin">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
         <include name="schemacrawler.sh" />
       </fileset>
     </copy>
-    <copy todir="${schemacrawler.base-distribution}/bin">
-      <fileset dir="${schemacrawler.base-distribution}/bin">
+    <copy todir="${schemacrawler.expanded-distribution}/bin">
+      <fileset dir="${schemacrawler.expanded-distribution}/bin">
         <include name="schemacrawler.cmd"/>
       </fileset>
       <globmapper from="schemacrawler.cmd" to="schemacrawler.bat"/>
@@ -53,27 +49,27 @@
 
     <copy
         file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
-        todir="${schemacrawler.base-distribution}/lib" />
+        todir="${schemacrawler.expanded-distribution}/lib" />
     <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.config.properties"
-      todir="${schemacrawler.base-distribution}/config" />
+      todir="${schemacrawler.expanded-distribution}/config" />
     <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.colormap.properties"
-      todir="${schemacrawler.base-distribution}/config" />
+      todir="${schemacrawler.expanded-distribution}/config" />
     <fixcrlf
-      srcdir="${schemacrawler.base-distribution}/config"
+      srcdir="${schemacrawler.expanded-distribution}/config"
       includes="*.properties"
       eol="lf"
       eof="remove"/>
 
-    <copy todir="${schemacrawler.base-distribution}/logos">
+    <copy todir="${schemacrawler.expanded-distribution}/logos">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-website/src/site/resources/images">
         <include name="schemacrawler_logo.*" />
         <include name="schemacrawler_banner.*" />
       </fileset>
     </copy>
 
-    <copy todir="${schemacrawler.base-distribution}"
+    <copy todir="${schemacrawler.expanded-distribution}"
       flatten="true"
       overwrite="true">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
@@ -84,7 +80,7 @@
       </fileset>
     </copy>
     <fixcrlf
-      srcdir="${schemacrawler.base-distribution}"
+      srcdir="${schemacrawler.expanded-distribution}"
       includes="*.py"
       eol="lf"
       eof="remove"/>
@@ -93,7 +89,7 @@
     <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
       failonerror="true">
       <arg value="--url" />
-      <arg value="jdbc:sqlite:${schemacrawler.base-distribution}/sc.db" />
+      <arg value="jdbc:sqlite:${schemacrawler.expanded-distribution}/sc.db" />
       <classpath>
         <fileset dir="${SchemaCrawler.home}/schemacrawler-testdb/target">
           <include name="schemacrawler-testdb-${SchemaCrawler.version}.jar" />
@@ -101,49 +97,11 @@
         <fileset dir="${SchemaCrawler.home}/schemacrawler-utility/target">
           <include name="schemacrawler-utility-${SchemaCrawler.version}.jar" />
         </fileset>
-        <fileset dir="${schemacrawler.base-distribution}/lib">
+        <fileset dir="${schemacrawler.expanded-distribution}/lib">
           <include name="**/*.jar" />
         </fileset>
       </classpath>
     </java>
-
-  </target>
-
-
-  <target name="make-expanded-distribution">
-
-    <echo message="Running ant target: make-expanded-distribution" />
-
-    <property
-        name="distribution.downloader"
-        location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources/_downloader" />
-
-    <echo>Create expanded distribution, with downloaded directories</echo>
-
-    <copy todir="${schemacrawler.expanded-distribution}">
-      <fileset dir="${schemacrawler.base-distribution}">
-        <include name="**/*.*" />
-      </fileset>
-    </copy>
-
-    <ivy:configure file="${distribution.downloader}/ivysettings.xml"/>
-
-    <copy todir="${schemacrawler.expanded-distribution}/lib">
-      <ivy:resources resolveId="javascript"
-        file="${distribution.downloader}/scripting_ivy.xml"/>
-    </copy>
-    <copy todir="${schemacrawler.expanded-distribution}/lib">
-      <ivy:resources resolveId="mustache"
-        file="${distribution.downloader}/mustache_ivy.xml"/>
-    </copy>
-    <copy todir="${schemacrawler.expanded-distribution}/lib">
-      <ivy:resources resolveId="thymeleaf"
-        file="${distribution.downloader}/thymeleaf_ivy.xml"/>
-    </copy>
-    <copy todir="${schemacrawler.expanded-distribution}/lib">
-      <ivy:resources resolveId="velocity"
-        file="${distribution.downloader}/velocity_ivy.xml"/>
-    </copy>
 
   </target>
 

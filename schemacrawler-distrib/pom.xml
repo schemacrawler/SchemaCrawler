@@ -316,7 +316,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
+              <outputDirectory>${project.build.directory}/_expanded-distribution/lib</outputDirectory>
               <includeScope>runtime</includeScope>
               <excludeGroupIds>org.checkerframework,com.google.protobuf</excludeGroupIds>
               <overWriteReleases>false</overWriteReleases>
