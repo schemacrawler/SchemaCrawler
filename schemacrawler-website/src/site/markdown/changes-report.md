@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+
+<a name="v17.1.6"></a>
+## Release 17.1.6 - 2025-11-20
+- Upgrade to Jackson 3
+- Rework how distribution is assembled
+
+
 <a name="v17.1.5"></a>
 ## Release 17.1.5 - 2025-11-12
 - Fix issue #2139 - PropertiesUtility.propertiesMap error
