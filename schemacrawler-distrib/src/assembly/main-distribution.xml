@@ -48,9 +48,6 @@
       tryGzipEncoding="true"
       ignoreerrors="true" />
 
-    <!-- Copy Apache Ant Ivy -->
-    <copy file="${user.home}/.ant/lib/ivy-2.5.3.jar" todir="${main-distribution.staging.dir}/_downloader" />
-
     <!-- Stage examples -->
     <copy todir="${main-distribution.staging.dir}">
       <fileset dir="${distribution.examples.resources}">

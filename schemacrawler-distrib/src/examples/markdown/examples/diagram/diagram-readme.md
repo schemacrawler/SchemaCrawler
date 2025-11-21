@@ -3,12 +3,10 @@
 ## Description
 The diagram example demonstrates the integration of SchemaCrawler with Graphviz.
 
-## How to Run
-1. Make sure that java is on your PATH
-2. Start a command shell in the `_downloader` directory 
-3. Run `download.cmd javascript` (or `download.sh javascript` on Unix) to
-   install the JavaScript support package required for `graphviz-java`
-4. Install [Graphviz](https://www.graphviz.org/).
+## How to Setup
+1. Make sure that SchemaCrawler is [installed on your system](https://www.schemacrawler.com/downloads.html)
+2. Make sure that `schemacrawler` is on your PATH
+3. Install [Graphviz](https://www.graphviz.org/).
 
 ### Run With SQLite Database
 

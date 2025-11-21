@@ -3,7 +3,7 @@
  SPDX-License-Identifier: EPL-2.0
 -->
 
-<project xmlns:ivy="antlib:org.apache.ivy.ant"
+<project 
     name="schemacrawler"
     default="make"
   basedir=".">

@@ -5,10 +5,8 @@ SchemaCrawler allows you to provide table and column remarks from a YAML file
 with the `--attributes-file` command-line switch.
 
 ## How to Setup
-1. Make sure that java is on your PATH
-2. Start a command shell in the `_downloader` directory 
-3. Run `download.cmd jackson` (or `download.sh jackson` on Unix) to
-   install serialization support using Jackson
+1. Make sure that SchemaCrawler is [installed on your system](https://www.schemacrawler.com/downloads.html)
+2. Make sure that `schemacrawler` is on your PATH
 
 ## How to Run
 1. Make sure that java is on your PATH

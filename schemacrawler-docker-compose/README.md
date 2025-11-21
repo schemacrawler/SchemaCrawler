@@ -5,7 +5,8 @@
 
 - Run a full SchemaCrawler build with `mvn -Ddistrib clean package`
 - Or, for an incremental build, run `mvn -Ddistrib clean package` for the "schemacrawler-distrib", "schemacrawler-docker" and "schemacrawler-docker compose" submodules in order
-
+- Download early release Docker image
+  `docker pull schemacrawler/schemacrawler:early-access-release`
 
 
 ## SQLite
