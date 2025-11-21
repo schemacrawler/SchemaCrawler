@@ -9,7 +9,7 @@
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-jdbc-drivers</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <name>SchemaCrawler - JDBC Drivers Distribution</name>
   <dependencies>
     <dependency>
@@ -103,30 +103,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/main/assembly/assembly.xml</descriptor>
-          </descriptors>
-          <formats>
-            <format>dir</format>
-          </formats>
-          <appendAssemblyId>false</appendAssemblyId>
-          <finalName>lib</finalName>
-          <outputDirectory>${project.build.directory}/_jdbc-drivers</outputDirectory>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>

@@ -10,8 +10,8 @@
 
   <property name="distribution.target"
     location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
-  <property name="schemacrawler.base-distribution"
-    value="${distribution.target}/_base-distribution" />
+  <property name="schemacrawler.expanded-distribution"
+    value="${distribution.target}/_expanded-distribution" />
   <property name="schemacrawler.distribution.sources.jar"
     value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
   <property name="schemacrawler.distribution.javadoc.jar"
@@ -86,7 +86,7 @@
     </copy>
 
     <copy todir="${main-distribution.staging.dir}/_schemacrawler">
-      <fileset dir="${schemacrawler.base-distribution}" />
+      <fileset dir="${schemacrawler.expanded-distribution}" />
     </copy>
 
     <fixcrlf srcdir="${main-distribution.staging.dir}" includes="**/*.sh"
@@ -107,7 +107,7 @@
       </fileset>
     </copy>
     <copy
-      file="${schemacrawler.base-distribution}/sc.db"
+      file="${schemacrawler.expanded-distribution}/sc.db"
       todir="${main-distribution.staging.dir}/_testdb" />
     <copy
       file="${SchemaCrawler.home}/schemacrawler-testdb/src/main/resources/cassandra.create-database.cql"
