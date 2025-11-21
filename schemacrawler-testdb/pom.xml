@@ -6,19 +6,20 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.5</version>
+    <version>17.1.6</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-testdb</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Test Database</name>
-  
+
   <dependencies>
 
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-jdbc-drivers</artifactId>
       <version>${project.version}</version>
+      <type>pom</type>
       <scope>runtime</scope>
     </dependency>
 

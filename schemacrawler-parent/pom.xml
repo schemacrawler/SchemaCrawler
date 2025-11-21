@@ -11,7 +11,7 @@
 
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
-  <version>17.1.5</version>
+  <version>17.1.6</version>
   <packaging>pom</packaging>
 
   <name>SchemaCrawler [Parent]</name>
