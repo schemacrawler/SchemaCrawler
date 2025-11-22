@@ -1165,7 +1165,7 @@ deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
 deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false                         
 does max row size include blobs           false                         
 driver major version                      4                             
-driver minor version                      34                            
+driver minor version                      36                            
 extra name characters                     @#                            
 generated key always returned             true                          
 identifier quote string                   "                             
@@ -1319,7 +1319,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 connection url                            jdbc:db2://127.0.0.1:32772/schcrwlr
 driver name                               IBM Data Server Driver for JDBC and SQLJ
-driver version                            4.34.30                       
+driver version                            4.36.6                       
 driver class name                         com.ibm.db2.jcc.DB2Driver     
 is JDBC compliant                         true                          
 supported JDBC version                    4.2                           
