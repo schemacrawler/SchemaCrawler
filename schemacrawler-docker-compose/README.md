@@ -21,8 +21,36 @@
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler bash`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --server sqlite --database sc.db --info-level minimum -c list`
+    ```sh
+    schemacrawler \
+      --server sqlite \
+      --database sc.db \
+      --info-level minimum \
+      --command list
+    ```  
 - Output can be created with `--output-file share/out.txt`
+- Check that scripts can be run
+    ```sh
+    schemacrawler \
+      --server=sqlite \
+      --database=sc.db \
+      --info-level=standard \
+      --command script \
+      --title "Database Schema" \
+      --script-language python \
+      --script plantuml.py \
+      --output-file share/schema.puml
+    ```
+- Check that YAML serialization works
+    ```sh
+    schemacrawler \
+      --server=sqlite \
+      --database=sc.db \
+      --info-level=standard \
+      --command serialize \
+      --language YAML \
+      --output-file share/schema.yaml
+    ```
 
 ### Tear Down
 
