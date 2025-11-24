@@ -1,5 +1,8 @@
 name: Create Release
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
   push:
@@ -11,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  release:
     name: Create Release
     runs-on: ubuntu-latest
     permissions:
