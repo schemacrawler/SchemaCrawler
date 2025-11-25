@@ -168,7 +168,9 @@ abstract class AbstractRetriever {
       final String databaseSpecificTypeName,
       final String mappedClassName) {
     MutableColumnDataType columnDataType =
-        catalog.lookupColumnDataType(schema, databaseSpecificTypeName).orElse(null);
+        catalog
+            .lookupColumnDataType(schema, databaseSpecificTypeName)
+            .orElse(catalog.lookupSystemColumnDataType(databaseSpecificTypeName).orElse(null));
     // Create new data type, if needed
     if (columnDataType == null) {
       columnDataType = new MutableColumnDataType(schema, databaseSpecificTypeName, type);
