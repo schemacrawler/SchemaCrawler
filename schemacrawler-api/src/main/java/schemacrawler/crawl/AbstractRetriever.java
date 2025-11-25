@@ -12,6 +12,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
+import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -23,11 +24,13 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -167,13 +170,14 @@ abstract class AbstractRetriever {
       final DataTypeType type,
       final int javaSqlTypeInt,
       final String mappedClassName) {
-    MutableColumnDataType columnDataType =
+    final MutableColumnDataType columnDataType =
+        lookupColumnDataType(schema, databaseSpecificTypeName, type);
+    // If new data type, fill the fields
+    final boolean isNewColumnDataType =
         catalog
-            .lookupColumnDataType(schema, databaseSpecificTypeName)
-            .orElse(catalog.lookupSystemColumnDataType(databaseSpecificTypeName).orElse(null));
-    // Create new data type, if needed
-    if (columnDataType == null) {
-      columnDataType = new MutableColumnDataType(schema, databaseSpecificTypeName, type);
+            .lookupColumnDataType(columnDataType.getSchema(), columnDataType.getName())
+            .isEmpty();
+    if (isNewColumnDataType) {
       final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes().valueOf(javaSqlTypeInt);
       columnDataType.setJavaSqlType(javaSqlType);
       if (isBlank(mappedClassName)) {
@@ -221,5 +225,52 @@ abstract class AbstractRetriever {
       return name;
     }
     return null;
+  }
+
+  private MutableColumnDataType lookupColumnDataType(
+      final Schema schema, final String databaseSpecificTypeName, final DataTypeType type) {
+    if (isBlank(databaseSpecificTypeName)) {
+      return new MutableColumnDataType(schema, "", type);
+    }
+
+    // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
+    final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
+    final String[] splitName = splitList(identifiers.unquoteName(databaseSpecificTypeName), "\\.");
+    if (splitName.length == 0) {
+      return new MutableColumnDataType(schema, "", type);
+    }
+    for (int i = 0; i < splitName.length; i++) {
+      splitName[i] = identifiers.unquoteName(splitName[i]);
+    }
+    final Schema lookupSchema =
+        switch (splitName.length) {
+          case 1 -> new SchemaReference();
+          default -> new SchemaReference();
+          case 2 -> {
+            yield catalog.getSchemas().stream()
+                .filter(dbSchema -> dbSchema.getFullName().endsWith(splitName[0]))
+                .findFirst()
+                .orElse(new SchemaReference());
+          }
+          case 3 -> {
+            final String schemaName = new SchemaReference(splitName[0], splitName[1]).getFullName();
+            yield catalog.lookupSchema(schemaName).orElse(new SchemaReference());
+          }
+        };
+    final String lookupTypeName = splitName[splitName.length - 1];
+
+    MutableColumnDataType columnDataType =
+        Stream.of(
+                catalog.lookupColumnDataType(lookupSchema, lookupTypeName),
+                catalog.lookupColumnDataType(schema, lookupTypeName),
+                catalog.lookupSystemColumnDataType(lookupTypeName))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .findFirst()
+            .orElse(null);
+    if (columnDataType == null) {
+      columnDataType = new MutableColumnDataType(schema, lookupTypeName, type);
+    }
+    return columnDataType;
   }
 }

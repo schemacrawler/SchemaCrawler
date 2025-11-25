@@ -15,7 +15,6 @@ import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -32,7 +31,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -145,8 +143,7 @@ final class TableColumnRetriever extends AbstractRetriever {
 
       column.setOrdinalPosition(ordinalPosition);
       column.setColumnDataType(
-          lookupOrCreateColumnDataType(
-              table.getSchema(), getColumnTypeName(typeName), user_defined, dataType));
+          lookupOrCreateColumnDataType(table.getSchema(), typeName, user_defined, dataType));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
@@ -171,23 +168,6 @@ final class TableColumnRetriever extends AbstractRetriever {
       return true;
     }
     return false;
-  }
-
-  private String getColumnTypeName(final String typeName) {
-    String columnDataTypeName = null;
-    if (!isBlank(typeName)) {
-      final String[] split = splitList(typeName, "\\.");
-      if (split.length > 0) {
-        columnDataTypeName = split[split.length - 1];
-      }
-    }
-    // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
-    final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
-    columnDataTypeName = identifiers.unquoteName(columnDataTypeName);
-    if (isBlank(columnDataTypeName)) {
-      columnDataTypeName = typeName;
-    }
-    return columnDataTypeName;
   }
 
   private MutableColumn lookupOrCreateTableColumn(
