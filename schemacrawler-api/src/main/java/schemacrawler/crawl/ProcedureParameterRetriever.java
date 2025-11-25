@@ -143,7 +143,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
       parameter.setColumnDataType(
-          lookupOrCreateColumnDataType(user_defined, procedure.getSchema(), dataType, typeName));
+          lookupOrCreateColumnDataType(procedure.getSchema(), typeName, user_defined, dataType));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);

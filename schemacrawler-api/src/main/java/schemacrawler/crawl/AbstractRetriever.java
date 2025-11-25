@@ -139,17 +139,17 @@ abstract class AbstractRetriever {
    * not exist.
    *
    * @param schema Schema
-   * @param javaSqlTypeInt JDBC data type
    * @param databaseSpecificTypeName Database specific type name
+   * @param javaSqlTypeInt JDBC data type
    * @return Column data type
    */
   final MutableColumnDataType lookupOrCreateColumnDataType(
-      final DataTypeType type,
       final Schema schema,
-      final int javaSqlTypeInt,
-      final String databaseSpecificTypeName) {
+      final String databaseSpecificTypeName,
+      final DataTypeType type,
+      final int javaSqlTypeInt) {
     return lookupOrCreateColumnDataType(
-        type, schema, javaSqlTypeInt, databaseSpecificTypeName, null);
+        schema, databaseSpecificTypeName, type, javaSqlTypeInt, null);
   }
 
   /**
@@ -157,15 +157,15 @@ abstract class AbstractRetriever {
    * not exist.
    *
    * @param schema Schema
-   * @param javaSqlTypeInt JDBC data type
    * @param databaseSpecificTypeName Database specific type name
+   * @param javaSqlTypeInt JDBC data type
    * @return Column data type
    */
   final MutableColumnDataType lookupOrCreateColumnDataType(
-      final DataTypeType type,
       final Schema schema,
-      final int javaSqlTypeInt,
       final String databaseSpecificTypeName,
+      final DataTypeType type,
+      final int javaSqlTypeInt,
       final String mappedClassName) {
     MutableColumnDataType columnDataType =
         catalog

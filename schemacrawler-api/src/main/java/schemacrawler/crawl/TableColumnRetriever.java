@@ -146,7 +146,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       column.setOrdinalPosition(ordinalPosition);
       column.setColumnDataType(
           lookupOrCreateColumnDataType(
-              user_defined, table.getSchema(), dataType, getColumnTypeName(typeName)));
+              table.getSchema(), getColumnTypeName(typeName), user_defined, dataType));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);

@@ -141,7 +141,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
       parameter.setColumnDataType(
-          lookupOrCreateColumnDataType(user_defined, function.getSchema(), dataType, typeName));
+          lookupOrCreateColumnDataType(function.getSchema(), typeName, user_defined, dataType));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);
