@@ -96,7 +96,7 @@ public class AcrossDatabaseDataTypeTest extends BaseAdditionalDatabaseTest {
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
         SchemaInfoLevelBuilder.builder()
             .withTag("maximum-without-grants")
-            .withInfoLevel(InfoLevel.standard)
+            .withInfoLevel(InfoLevel.maximum)
             .setRetrieveTablePrivileges(false)
             .setRetrieveTableColumnPrivileges(false);
     final LoadOptionsBuilder loadOptionsBuilder =
@@ -114,9 +114,6 @@ public class AcrossDatabaseDataTypeTest extends BaseAdditionalDatabaseTest {
           (List<ColumnDataType>) catalog.getColumnDataTypes();
       Collections.sort(columnDataTypes, NamedObjectSort.alphabetical);
       for (final ColumnDataType columnDataType : columnDataTypes) {
-        if (columnDataType.getName().startsWith("_")) {
-          continue;
-        }
         out.println(printColumnDataType(columnDataType));
       }
     }

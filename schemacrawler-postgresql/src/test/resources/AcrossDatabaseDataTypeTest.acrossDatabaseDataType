@@ -1,3 +1,1488 @@
+{"key": "null/null/__pg_foreign_data_wrappers"}
+__pg_foreign_data_wrappers
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/__pg_foreign_servers"}
+__pg_foreign_servers
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/__pg_foreign_table_columns"}
+__pg_foreign_table_columns
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/__pg_foreign_tables"}
+__pg_foreign_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/__pg_user_mappings"}
+__pg_user_mappings
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_aclitem"}
+_aclitem
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_administrable_role_authorizations"}
+_administrable_role_authorizations
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_agetable"}
+_agetable
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_applicable_roles"}
+_applicable_roles
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_attributes"}
+_attributes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_bit"}
+_bit
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_bool"}
+_bool
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_box"}
+_box
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_bpchar"}
+_bpchar
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_bytea"}
+_bytea
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_cardinal_number"}
+_cardinal_number
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_char"}
+_char
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_character_data"}
+_character_data
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_character_sets"}
+_character_sets
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_check_constraint_routine_usage"}
+_check_constraint_routine_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_check_constraints"}
+_check_constraints
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_cid"}
+_cid
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_cidr"}
+_cidr
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_circle"}
+_circle
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_collation_character_set_applicability"}
+_collation_character_set_applicability
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_collations"}
+_collations
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_column_column_usage"}
+_column_column_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_column_domain_usage"}
+_column_domain_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_column_options"}
+_column_options
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_column_privileges"}
+_column_privileges
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_column_udt_usage"}
+_column_udt_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_columns"}
+_columns
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_constraint_column_usage"}
+_constraint_column_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_constraint_table_usage"}
+_constraint_table_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_cstring"}
+_cstring
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_data_type_privileges"}
+_data_type_privileges
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_date"}
+_date
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_datemultirange"}
+_datemultirange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_daterange"}
+_daterange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_domain_constraints"}
+_domain_constraints
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_domain_udt_usage"}
+_domain_udt_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_domains"}
+_domains
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_element_types"}
+_element_types
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_enabled_roles"}
+_enabled_roles
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_float4"}
+_float4
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_float8"}
+_float8
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_foreign_data_wrapper_options"}
+_foreign_data_wrapper_options
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_foreign_data_wrappers"}
+_foreign_data_wrappers
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_foreign_server_options"}
+_foreign_server_options
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_foreign_servers"}
+_foreign_servers
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_foreign_table_options"}
+_foreign_table_options
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_foreign_tables"}
+_foreign_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_gtsvector"}
+_gtsvector
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_inet"}
+_inet
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_information_schema_catalog_name"}
+_information_schema_catalog_name
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int2"}
+_int2
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int2vector"}
+_int2vector
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int4"}
+_int4
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int4multirange"}
+_int4multirange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int4range"}
+_int4range
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int8"}
+_int8
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int8multirange"}
+_int8multirange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_int8range"}
+_int8range
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_interval"}
+_interval
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_json"}
+_json
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_jsonb"}
+_jsonb
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_jsonpath"}
+_jsonpath
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_key_column_usage"}
+_key_column_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_line"}
+_line
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_lseg"}
+_lseg
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_macaddr"}
+_macaddr
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_macaddr8"}
+_macaddr8
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_money"}
+_money
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_name"}
+_name
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_name_type"}
+_name_type
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_nametable"}
+_nametable
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_numeric"}
+_numeric
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_nummultirange"}
+_nummultirange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_numrange"}
+_numrange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_oid"}
+_oid
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_oidvector"}
+_oidvector
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_parameters"}
+_parameters
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_path"}
+_path
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_aggregate"}
+_pg_aggregate
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_am"}
+_pg_am
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_amop"}
+_pg_amop
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_amproc"}
+_pg_amproc
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_attrdef"}
+_pg_attrdef
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_attribute"}
+_pg_attribute
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_auth_members"}
+_pg_auth_members
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_authid"}
+_pg_authid
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_available_extension_versions"}
+_pg_available_extension_versions
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_available_extensions"}
+_pg_available_extensions
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_backend_memory_contexts"}
+_pg_backend_memory_contexts
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_cast"}
+_pg_cast
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_class"}
+_pg_class
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_collation"}
+_pg_collation
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_config"}
+_pg_config
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_constraint"}
+_pg_constraint
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_conversion"}
+_pg_conversion
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_cursors"}
+_pg_cursors
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_database"}
+_pg_database
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_db_role_setting"}
+_pg_db_role_setting
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_default_acl"}
+_pg_default_acl
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_depend"}
+_pg_depend
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_description"}
+_pg_description
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_enum"}
+_pg_enum
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_event_trigger"}
+_pg_event_trigger
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_extension"}
+_pg_extension
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_file_settings"}
+_pg_file_settings
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_foreign_data_wrapper"}
+_pg_foreign_data_wrapper
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_foreign_server"}
+_pg_foreign_server
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_foreign_table"}
+_pg_foreign_table
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_group"}
+_pg_group
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_hba_file_rules"}
+_pg_hba_file_rules
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_ident_file_mappings"}
+_pg_ident_file_mappings
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_index"}
+_pg_index
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_indexes"}
+_pg_indexes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_inherits"}
+_pg_inherits
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_init_privs"}
+_pg_init_privs
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_language"}
+_pg_language
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_largeobject"}
+_pg_largeobject
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_largeobject_metadata"}
+_pg_largeobject_metadata
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_locks"}
+_pg_locks
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_lsn"}
+_pg_lsn
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_matviews"}
+_pg_matviews
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_namespace"}
+_pg_namespace
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_opclass"}
+_pg_opclass
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_operator"}
+_pg_operator
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_opfamily"}
+_pg_opfamily
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_parameter_acl"}
+_pg_parameter_acl
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_partitioned_table"}
+_pg_partitioned_table
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_policies"}
+_pg_policies
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_policy"}
+_pg_policy
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_prepared_statements"}
+_pg_prepared_statements
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_prepared_xacts"}
+_pg_prepared_xacts
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_proc"}
+_pg_proc
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_publication"}
+_pg_publication
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_publication_namespace"}
+_pg_publication_namespace
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_publication_rel"}
+_pg_publication_rel
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_publication_tables"}
+_pg_publication_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_range"}
+_pg_range
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_replication_origin"}
+_pg_replication_origin
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_replication_origin_status"}
+_pg_replication_origin_status
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_replication_slots"}
+_pg_replication_slots
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_rewrite"}
+_pg_rewrite
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_roles"}
+_pg_roles
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_rules"}
+_pg_rules
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_seclabel"}
+_pg_seclabel
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_seclabels"}
+_pg_seclabels
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_sequence"}
+_pg_sequence
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_sequences"}
+_pg_sequences
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_settings"}
+_pg_settings
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_shadow"}
+_pg_shadow
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_shdepend"}
+_pg_shdepend
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_shdescription"}
+_pg_shdescription
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_shmem_allocations"}
+_pg_shmem_allocations
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_shseclabel"}
+_pg_shseclabel
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_snapshot"}
+_pg_snapshot
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_activity"}
+_pg_stat_activity
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_all_indexes"}
+_pg_stat_all_indexes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_all_tables"}
+_pg_stat_all_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_archiver"}
+_pg_stat_archiver
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_bgwriter"}
+_pg_stat_bgwriter
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_database"}
+_pg_stat_database
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_database_conflicts"}
+_pg_stat_database_conflicts
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_gssapi"}
+_pg_stat_gssapi
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_io"}
+_pg_stat_io
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_progress_analyze"}
+_pg_stat_progress_analyze
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_progress_basebackup"}
+_pg_stat_progress_basebackup
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_progress_cluster"}
+_pg_stat_progress_cluster
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_progress_copy"}
+_pg_stat_progress_copy
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_progress_create_index"}
+_pg_stat_progress_create_index
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_progress_vacuum"}
+_pg_stat_progress_vacuum
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_recovery_prefetch"}
+_pg_stat_recovery_prefetch
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_replication"}
+_pg_stat_replication
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_replication_slots"}
+_pg_stat_replication_slots
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_slru"}
+_pg_stat_slru
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_ssl"}
+_pg_stat_ssl
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_subscription"}
+_pg_stat_subscription
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_subscription_stats"}
+_pg_stat_subscription_stats
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_sys_indexes"}
+_pg_stat_sys_indexes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_sys_tables"}
+_pg_stat_sys_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_user_functions"}
+_pg_stat_user_functions
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_user_indexes"}
+_pg_stat_user_indexes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_user_tables"}
+_pg_stat_user_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_wal"}
+_pg_stat_wal
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_wal_receiver"}
+_pg_stat_wal_receiver
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_xact_all_tables"}
+_pg_stat_xact_all_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_xact_sys_tables"}
+_pg_stat_xact_sys_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_xact_user_functions"}
+_pg_stat_xact_user_functions
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stat_xact_user_tables"}
+_pg_stat_xact_user_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_all_indexes"}
+_pg_statio_all_indexes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_all_sequences"}
+_pg_statio_all_sequences
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_all_tables"}
+_pg_statio_all_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_sys_indexes"}
+_pg_statio_sys_indexes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_sys_sequences"}
+_pg_statio_sys_sequences
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_sys_tables"}
+_pg_statio_sys_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_user_indexes"}
+_pg_statio_user_indexes
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_user_sequences"}
+_pg_statio_user_sequences
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statio_user_tables"}
+_pg_statio_user_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statistic"}
+_pg_statistic
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statistic_ext"}
+_pg_statistic_ext
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_statistic_ext_data"}
+_pg_statistic_ext_data
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stats"}
+_pg_stats
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stats_ext"}
+_pg_stats_ext
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_stats_ext_exprs"}
+_pg_stats_ext_exprs
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_subscription"}
+_pg_subscription
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_subscription_rel"}
+_pg_subscription_rel
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_tables"}
+_pg_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_tablespace"}
+_pg_tablespace
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_timezone_abbrevs"}
+_pg_timezone_abbrevs
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_timezone_names"}
+_pg_timezone_names
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_transform"}
+_pg_transform
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_trigger"}
+_pg_trigger
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_ts_config"}
+_pg_ts_config
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_ts_config_map"}
+_pg_ts_config_map
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_ts_dict"}
+_pg_ts_dict
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_ts_parser"}
+_pg_ts_parser
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_ts_template"}
+_pg_ts_template
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_type"}
+_pg_type
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_user"}
+_pg_user
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_user_mapping"}
+_pg_user_mapping
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_user_mappings"}
+_pg_user_mappings
+  system
+  java.sql.Types: STRUCT
+
+{"key": "null/null/_pg_views"}
+_pg_views
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_point"}
+_point
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_polygon"}
+_polygon
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_record"}
+_record
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_refcursor"}
+_refcursor
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_referential_constraints"}
+_referential_constraints
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regclass"}
+_regclass
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regcollation"}
+_regcollation
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regconfig"}
+_regconfig
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regdictionary"}
+_regdictionary
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regnamespace"}
+_regnamespace
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regoper"}
+_regoper
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regoperator"}
+_regoperator
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regproc"}
+_regproc
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regprocedure"}
+_regprocedure
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regrole"}
+_regrole
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_regtype"}
+_regtype
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_role_column_grants"}
+_role_column_grants
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_role_routine_grants"}
+_role_routine_grants
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_role_table_grants"}
+_role_table_grants
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_role_udt_grants"}
+_role_udt_grants
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_role_usage_grants"}
+_role_usage_grants
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_routine_column_usage"}
+_routine_column_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_routine_privileges"}
+_routine_privileges
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_routine_routine_usage"}
+_routine_routine_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_routine_sequence_usage"}
+_routine_sequence_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_routine_table_usage"}
+_routine_table_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_routines"}
+_routines
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_schemata"}
+_schemata
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_sequences"}
+_sequences
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_sex_type"}
+_sex_type
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_sql_features"}
+_sql_features
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_sql_identifier"}
+_sql_identifier
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_sql_implementation_info"}
+_sql_implementation_info
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_sql_parts"}
+_sql_parts
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_sql_sizing"}
+_sql_sizing
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_table_constraints"}
+_table_constraints
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_table_privileges"}
+_table_privileges
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tables"}
+_tables
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_test_udt_type"}
+_test_udt_type
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_text"}
+_text
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tid"}
+_tid
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_time"}
+_time
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_time_stamp"}
+_time_stamp
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_timestamp"}
+_timestamp
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_timestamptz"}
+_timestamptz
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_timetz"}
+_timetz
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_transforms"}
+_transforms
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_triggered_update_columns"}
+_triggered_update_columns
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_triggers"}
+_triggers
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tsmultirange"}
+_tsmultirange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tsquery"}
+_tsquery
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tsrange"}
+_tsrange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tstzmultirange"}
+_tstzmultirange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tstzrange"}
+_tstzrange
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_tsvector"}
+_tsvector
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_txid_snapshot"}
+_txid_snapshot
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_udt_privileges"}
+_udt_privileges
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_usage_privileges"}
+_usage_privileges
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_user_defined_types"}
+_user_defined_types
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_user_mapping_options"}
+_user_mapping_options
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_user_mappings"}
+_user_mappings
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_uuid"}
+_uuid
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_varbit"}
+_varbit
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_varchar"}
+_varchar
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_view_column_usage"}
+_view_column_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_view_routine_usage"}
+_view_routine_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_view_table_usage"}
+_view_table_usage
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_views"}
+_views
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_xid"}
+_xid
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_xid8"}
+_xid8
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_xml"}
+_xml
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_yes_or_no"}
+_yes_or_no
+  system
+  java.sql.Types: ARRAY
+
 {"key": "null/null/aclitem"}
 aclitem
   system
@@ -432,6 +1917,48 @@ regrole
 regtype
   system
   java.sql.Types: OTHER
+
+{"key": "null/schema1/date"}
+schema1."date"
+  user_defined
+  java.sql.Types: DISTINCT
+  based on date
+
+{"key": "null/schema1/int2"}
+schema1.int2
+  user_defined
+  java.sql.Types: STRUCT
+  based on 
+
+{"key": "null/schema1/name_type"}
+schema1.name_type
+  user_defined
+  java.sql.Types: DISTINCT
+  based on 
+
+{"key": "null/schema1/nametable"}
+schema1.nametable
+  user_defined
+  java.sql.Types: STRUCT
+  based on 
+
+{"key": "null/schema1/test_udt_type"}
+schema1.test_udt_type
+  user_defined
+  java.sql.Types: STRUCT
+  based on 
+
+{"key": "null/schema2/agetable"}
+schema2.agetable
+  user_defined
+  java.sql.Types: STRUCT
+  based on 
+
+{"key": "null/schema2/test_udt_type"}
+schema2.test_udt_type
+  user_defined
+  java.sql.Types: STRUCT
+  based on 
 
 {"key": "null/null/serial"}
 serial
