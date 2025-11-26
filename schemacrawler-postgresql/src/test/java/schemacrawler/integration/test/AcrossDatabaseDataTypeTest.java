@@ -96,7 +96,7 @@ public class AcrossDatabaseDataTypeTest extends BaseAdditionalDatabaseTest {
     final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
         SchemaInfoLevelBuilder.builder()
             .withTag("maximum-without-grants")
-            .withInfoLevel(InfoLevel.maximum)
+            .withInfoLevel(InfoLevel.standard)
             .setRetrieveTablePrivileges(false)
             .setRetrieveTableColumnPrivileges(false);
     final LoadOptionsBuilder loadOptionsBuilder =

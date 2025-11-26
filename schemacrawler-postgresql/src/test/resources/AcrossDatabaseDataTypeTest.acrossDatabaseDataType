@@ -1,0 +1,590 @@
+{"key": "null/null/aclitem"}
+aclitem
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/any"}
+any
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anyarray"}
+anyarray
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anycompatible"}
+anycompatible
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anycompatiblearray"}
+anycompatiblearray
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anycompatiblemultirange"}
+anycompatiblemultirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anycompatiblenonarray"}
+anycompatiblenonarray
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anycompatiblerange"}
+anycompatiblerange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anyelement"}
+anyelement
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anyenum"}
+anyenum
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anymultirange"}
+anymultirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anynonarray"}
+anynonarray
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/anyrange"}
+anyrange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/bigserial"}
+bigserial
+  system
+  java.sql.Types: BIGINT
+
+{"key": "null/null/bit"}
+bit
+  system
+  java.sql.Types: BIT
+
+{"key": "null/null/bool"}
+bool
+  system
+  java.sql.Types: BIT
+
+{"key": "null/null/box"}
+box
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/bpchar"}
+bpchar
+  system
+  java.sql.Types: CHAR
+
+{"key": "null/null/bytea"}
+bytea
+  system
+  java.sql.Types: BINARY
+
+{"key": "null/null/cardinal_number"}
+cardinal_number
+  system
+  java.sql.Types: DISTINCT
+
+{"key": "null/null/char"}
+char
+  system
+  java.sql.Types: CHAR
+
+{"key": "null/null/character_data"}
+character_data
+  system
+  java.sql.Types: DISTINCT
+
+{"key": "null/null/cid"}
+cid
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/cidr"}
+cidr
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/circle"}
+circle
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/cstring"}
+cstring
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/date"}
+date
+  system
+  java.sql.Types: DATE
+
+{"key": "null/null/datemultirange"}
+datemultirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/daterange"}
+daterange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/event_trigger"}
+event_trigger
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/fdw_handler"}
+fdw_handler
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/float4"}
+float4
+  system
+  java.sql.Types: REAL
+
+{"key": "null/null/float8"}
+float8
+  system
+  java.sql.Types: DOUBLE
+
+{"key": "null/null/gtsvector"}
+gtsvector
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/index_am_handler"}
+index_am_handler
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/inet"}
+inet
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/int2"}
+int2
+  system
+  java.sql.Types: SMALLINT
+
+{"key": "null/null/int2vector"}
+int2vector
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/int4"}
+int4
+  system
+  java.sql.Types: INTEGER
+
+{"key": "null/null/int4multirange"}
+int4multirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/int4range"}
+int4range
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/int8"}
+int8
+  system
+  java.sql.Types: BIGINT
+
+{"key": "null/null/int8multirange"}
+int8multirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/int8range"}
+int8range
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/internal"}
+internal
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/interval"}
+interval
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/json"}
+json
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/jsonb"}
+jsonb
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/jsonpath"}
+jsonpath
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/language_handler"}
+language_handler
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/line"}
+line
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/lseg"}
+lseg
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/macaddr"}
+macaddr
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/macaddr8"}
+macaddr8
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/money"}
+money
+  system
+  java.sql.Types: DOUBLE
+
+{"key": "null/null/name"}
+name
+  system
+  java.sql.Types: VARCHAR
+
+{"key": "null/null/name_type"}
+name_type
+  system
+  java.sql.Types: DISTINCT
+
+{"key": "null/null/numeric"}
+numeric
+  system
+  java.sql.Types: NUMERIC
+
+{"key": "null/null/nummultirange"}
+nummultirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/numrange"}
+numrange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/oid"}
+oid
+  system
+  java.sql.Types: BIGINT
+
+{"key": "null/null/oidvector"}
+oidvector
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/path"}
+path
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_brin_bloom_summary"}
+pg_brin_bloom_summary
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_brin_minmax_multi_summary"}
+pg_brin_minmax_multi_summary
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_ddl_command"}
+pg_ddl_command
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_dependencies"}
+pg_dependencies
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_lsn"}
+pg_lsn
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_mcv_list"}
+pg_mcv_list
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_ndistinct"}
+pg_ndistinct
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_node_tree"}
+pg_node_tree
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/pg_snapshot"}
+pg_snapshot
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/point"}
+point
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/polygon"}
+polygon
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/record"}
+record
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/refcursor"}
+refcursor
+  system
+  java.sql.Types: REF_CURSOR
+
+{"key": "null/null/regclass"}
+regclass
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regcollation"}
+regcollation
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regconfig"}
+regconfig
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regdictionary"}
+regdictionary
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regnamespace"}
+regnamespace
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regoper"}
+regoper
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regoperator"}
+regoperator
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regproc"}
+regproc
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regprocedure"}
+regprocedure
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regrole"}
+regrole
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/regtype"}
+regtype
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/serial"}
+serial
+  system
+  java.sql.Types: INTEGER
+
+{"key": "null/null/sex_type"}
+sex_type
+  system
+  java.sql.Types: VARCHAR
+
+{"key": "null/null/smallserial"}
+smallserial
+  system
+  java.sql.Types: SMALLINT
+
+{"key": "null/null/sql_identifier"}
+sql_identifier
+  system
+  java.sql.Types: DISTINCT
+
+{"key": "null/null/table_am_handler"}
+table_am_handler
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/test_udt_type"}
+test_udt_type
+  system
+  java.sql.Types: STRUCT
+
+{"key": "null/null/text"}
+text
+  system
+  java.sql.Types: VARCHAR
+
+{"key": "null/null/tid"}
+tid
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/time"}
+time
+  system
+  java.sql.Types: TIME
+
+{"key": "null/null/time_stamp"}
+time_stamp
+  system
+  java.sql.Types: DISTINCT
+
+{"key": "null/null/timestamp"}
+timestamp
+  system
+  java.sql.Types: TIMESTAMP
+
+{"key": "null/null/timestamptz"}
+timestamptz
+  system
+  java.sql.Types: TIMESTAMP
+
+{"key": "null/null/timetz"}
+timetz
+  system
+  java.sql.Types: TIME
+
+{"key": "null/null/trigger"}
+trigger
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/tsm_handler"}
+tsm_handler
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/tsmultirange"}
+tsmultirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/tsquery"}
+tsquery
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/tsrange"}
+tsrange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/tstzmultirange"}
+tstzmultirange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/tstzrange"}
+tstzrange
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/tsvector"}
+tsvector
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/txid_snapshot"}
+txid_snapshot
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/unknown"}
+unknown
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/uuid"}
+uuid
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/varbit"}
+varbit
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/varchar"}
+varchar
+  system
+  java.sql.Types: VARCHAR
+
+{"key": "null/null/void"}
+void
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/xid"}
+xid
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/xid8"}
+xid8
+  system
+  java.sql.Types: OTHER
+
+{"key": "null/null/xml"}
+xml
+  system
+  java.sql.Types: SQLXML
+
+{"key": "null/null/yes_or_no"}
+yes_or_no
+  system
+  java.sql.Types: DISTINCT
+

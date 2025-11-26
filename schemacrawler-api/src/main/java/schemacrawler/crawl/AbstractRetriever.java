@@ -24,7 +24,6 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
@@ -194,7 +193,7 @@ abstract class AbstractRetriever {
       }
       columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
-      catalog.addColumnDataType(columnDataType);
+      // NOTE: Do not add the data type to the catalog
     }
     return columnDataType;
   }
@@ -227,6 +226,16 @@ abstract class AbstractRetriever {
     return null;
   }
 
+  /**
+   * Looks up the column data type in the catalog. If it is in the catalog, that type is returned.
+   * If it is not in the catalog, a column data type is returned nevertheless based on the input
+   * schema and name.
+   *
+   * @param schema Schema to search in, which may be overridden if the type name includes the schema
+   * @param databaseSpecificTypeName Name to look up, after parsing out the schema
+   * @param type System or user defined
+   * @return Column data type
+   */
   private MutableColumnDataType lookupColumnDataType(
       final Schema schema, final String databaseSpecificTypeName, final DataTypeType type) {
     if (isBlank(databaseSpecificTypeName)) {
@@ -235,42 +244,36 @@ abstract class AbstractRetriever {
 
     // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
     final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
-    final String[] splitName = splitList(identifiers.unquoteName(databaseSpecificTypeName), "\\.");
+    final String[] splitName = splitList(databaseSpecificTypeName, "\\.");
     if (splitName.length == 0) {
       return new MutableColumnDataType(schema, "", type);
     }
     for (int i = 0; i < splitName.length; i++) {
       splitName[i] = identifiers.unquoteName(splitName[i]);
     }
+
+    // Create lookup schema and lookup name
     final Schema lookupSchema =
         switch (splitName.length) {
-          case 1 -> new SchemaReference();
-          default -> new SchemaReference();
-          case 2 -> {
-            yield catalog.getSchemas().stream()
-                .filter(dbSchema -> dbSchema.getFullName().endsWith(splitName[0]))
-                .findFirst()
-                .orElse(new SchemaReference());
-          }
+          default -> schema;
+          case 2 ->
+              catalog.getSchemas().stream()
+                  .filter(dbSchema -> dbSchema.getFullName().endsWith(splitName[0]))
+                  .findFirst()
+                  .orElse(schema);
           case 3 -> {
             final String schemaName = new SchemaReference(splitName[0], splitName[1]).getFullName();
-            yield catalog.lookupSchema(schemaName).orElse(new SchemaReference());
+            yield catalog.lookupSchema(schemaName).orElse((SchemaReference) schema);
           }
         };
     final String lookupTypeName = splitName[splitName.length - 1];
 
-    MutableColumnDataType columnDataType =
-        Stream.of(
-                catalog.lookupColumnDataType(lookupSchema, lookupTypeName),
-                catalog.lookupColumnDataType(schema, lookupTypeName),
-                catalog.lookupSystemColumnDataType(lookupTypeName))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .findFirst()
-            .orElse(null);
-    if (columnDataType == null) {
-      columnDataType = new MutableColumnDataType(schema, lookupTypeName, type);
-    }
+    // Construct a "match" for the column data type, even if it is
+    // not available in the catalog
+    final MutableColumnDataType columnDataType =
+        catalog
+            .lookupColumnDataType(lookupSchema, lookupTypeName)
+            .orElse(new MutableColumnDataType(schema, lookupTypeName, type));
     return columnDataType;
   }
 }
