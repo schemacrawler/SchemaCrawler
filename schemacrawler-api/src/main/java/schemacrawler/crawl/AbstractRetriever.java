@@ -170,7 +170,7 @@ abstract class AbstractRetriever {
       final int javaSqlTypeInt,
       final String mappedClassName) {
     final MutableColumnDataType columnDataType =
-        lookupColumnDataType(schema, databaseSpecificTypeName, type);
+        lookupColumnDataTypeForCreate(schema, databaseSpecificTypeName, type);
     // If new data type, fill the fields
     final boolean isNewColumnDataType =
         catalog
@@ -236,7 +236,7 @@ abstract class AbstractRetriever {
    * @param type System or user defined
    * @return Column data type
    */
-  private MutableColumnDataType lookupColumnDataType(
+  private MutableColumnDataType lookupColumnDataTypeForCreate(
       final Schema schema, final String databaseSpecificTypeName, final DataTypeType type) {
     if (isBlank(databaseSpecificTypeName)) {
       return new MutableColumnDataType(schema, "", type);
