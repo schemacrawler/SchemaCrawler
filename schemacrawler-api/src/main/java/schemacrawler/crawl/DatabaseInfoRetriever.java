@@ -36,6 +36,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.string.StringFormat;
@@ -158,11 +159,13 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
           LOGGER.log(
               Level.FINE, e.getCause(), new StringFormat("Could not execute method <%s>", method));
         } catch (final AbstractMethodError e) {
-          logSQLFeatureNotSupported(
-              new StringFormat("Database metadata method <%s> not supported", method), e);
+          new UtilityLogger(LOGGER)
+              .logSQLFeatureNotSupported(
+                  new StringFormat("Database metadata method <%s> not supported", method), e);
         } catch (final SQLException e) {
-          logPossiblyUnsupportedSQLFeature(
-              new StringFormat("SQL exception invoking method <%s>", method), e);
+          new UtilityLogger(LOGGER)
+              .logPossiblyUnsupportedSQLFeature(
+                  new StringFormat("SQL exception invoking method <%s>", method), e);
         }
       }
 

@@ -30,6 +30,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
 final class DataTypeRetriever extends AbstractRetriever {
@@ -107,8 +108,9 @@ final class DataTypeRetriever extends AbstractRetriever {
           retrievalCounts.countIncluded(schema.key());
         }
       } catch (final SQLException e) {
-        logPossiblyUnsupportedSQLFeature(
-            new StringFormat("Could not retrieve user-defined column data types"), e);
+        new UtilityLogger(LOGGER)
+            .logPossiblyUnsupportedSQLFeature(
+                new StringFormat("Could not retrieve user-defined column data types"), e);
       }
       retrievalCounts.log(schema.key());
     }
@@ -228,8 +230,9 @@ final class DataTypeRetriever extends AbstractRetriever {
         retrievalCounts.countIncluded();
       }
     } catch (final SQLException e) {
-      logPossiblyUnsupportedSQLFeature(
-          new StringFormat("Could not retrieve system column data types"), e);
+      new UtilityLogger(LOGGER)
+          .logPossiblyUnsupportedSQLFeature(
+              new StringFormat("Could not retrieve system column data types"), e);
     }
     retrievalCounts.log();
   }

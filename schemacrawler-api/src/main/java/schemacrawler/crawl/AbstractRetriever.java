@@ -17,13 +17,9 @@ import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
@@ -119,27 +115,6 @@ abstract class AbstractRetriever {
 
   final RetrieverConnection getRetrieverConnection() {
     return retrieverConnection;
-  }
-
-  final void logPossiblyUnsupportedSQLFeature(
-      final Supplier<String> message, final SQLException e) {
-    // HYC00 = Optional feature not implemented
-    // HY000 = General error
-    // (HY000 is thrown by the Teradata JDBC driver for unsupported
-    // functions)
-    if ("HYC00".equalsIgnoreCase(e.getSQLState())
-        || "HY000".equalsIgnoreCase(e.getSQLState())
-        || "0A000".equalsIgnoreCase(e.getSQLState())
-        || e instanceof SQLFeatureNotSupportedException) {
-      logSQLFeatureNotSupported(message, e);
-    } else {
-      LOGGER.log(Level.WARNING, e, message);
-    }
-  }
-
-  final void logSQLFeatureNotSupported(final Supplier<String> message, final Throwable e) {
-    LOGGER.log(Level.WARNING, message);
-    LOGGER.log(Level.FINE, e, message);
   }
 
   final MutableColumnDataType lookupColumnDataType(

@@ -29,6 +29,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database tables. */
@@ -277,8 +278,9 @@ final class IndexRetriever extends AbstractRetriever {
           retrievalCounts.countIfIncluded(added);
         }
       } catch (final SQLException e) {
-        logPossiblyUnsupportedSQLFeature(
-            new StringFormat("Could not retrieve indexes for table <%s>", table), e);
+        new UtilityLogger(LOGGER)
+            .logPossiblyUnsupportedSQLFeature(
+                new StringFormat("Could not retrieve indexes for table <%s>", table), e);
       }
     }
     retrievalCounts.log();

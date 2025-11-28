@@ -36,6 +36,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database procedures. */
@@ -232,12 +233,13 @@ final class RoutineRetriever extends AbstractRetriever {
         }
         retrievalCounts.log(schema.key());
       } catch (final AbstractMethodError e) {
-        logSQLFeatureNotSupported(
-            new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
+        new UtilityLogger(LOGGER)
+            .logSQLFeatureNotSupported(
+                new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
       } catch (final SQLException e) {
-        // Continue with the next schema
-        logPossiblyUnsupportedSQLFeature(
-            new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
+        new UtilityLogger(LOGGER)
+            .logPossiblyUnsupportedSQLFeature(
+                new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
       }
     }
     retrievalCounts.log();
@@ -365,8 +367,9 @@ final class RoutineRetriever extends AbstractRetriever {
       } catch (final SQLException e) {
         // Note: Cassandra does not support procedures, but supports functions
         // Continue with the next schema
-        logPossiblyUnsupportedSQLFeature(
-            new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
+        new UtilityLogger(LOGGER)
+            .logPossiblyUnsupportedSQLFeature(
+                new StringFormat("Could not retrieve functions for schema <%s>", schema), e);
       }
     }
     retrievalCounts.log();
