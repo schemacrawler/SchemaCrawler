@@ -2,6 +2,10 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.1.7"></a>
+## Release 17.1.7 - 2025-12-02
+- Report PostgreSQL user-defined types to be reported correctly - fixes #2190
+
 
 <a name="v17.1.6"></a>
 ## Release 17.1.6 - 2025-11-20
