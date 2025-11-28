@@ -97,47 +97,6 @@ abstract class AbstractRetriever {
     return catalog.getAllSchemas();
   }
 
-  final DataTypeLookupCandidate parseDataTypeName(final String databaseSpecificTypeName) {
-
-    // Default schema to use if schema is not found
-    final Schema schema = null;
-
-    if (isBlank(databaseSpecificTypeName)) {
-      return new DataTypeLookupCandidate(schema, "");
-    }
-    if (!databaseSpecificTypeName.contains(".")) {
-      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
-    }
-
-    // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
-    final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
-    final String[] splitName = splitList(databaseSpecificTypeName, "\\.");
-    if (splitName.length == 0) {
-      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
-    }
-    for (int i = 0; i < splitName.length; i++) {
-      splitName[i] = identifiers.unquoteName(splitName[i]);
-    }
-
-    // Create lookup schema and lookup name
-    final Schema lookupSchema =
-        switch (splitName.length) {
-          default -> schema;
-          case 2 ->
-              catalog.getSchemas().stream()
-                  .filter(dbSchema -> dbSchema.getFullName().endsWith(splitName[0]))
-                  .findFirst()
-                  .orElse(schema);
-          case 3 -> {
-            final String schemaName = new SchemaReference(splitName[0], splitName[1]).getFullName();
-            yield catalog.lookupSchema(schemaName).orElse((SchemaReference) schema);
-          }
-        };
-    final String lookupTypeName = splitName[splitName.length - 1];
-
-    return new DataTypeLookupCandidate(lookupSchema, lookupTypeName);
-  }
-
   final Map<String, String> getLimitMap() {
     final Map<String, String> limitMap = new HashMap<>();
     limitMap.put(
@@ -348,5 +307,46 @@ abstract class AbstractRetriever {
             .lookupColumnDataType(lookupSchema, lookupTypeName)
             .orElse(new MutableColumnDataType(schema, lookupTypeName, type));
     return columnDataType;
+  }
+
+  private DataTypeLookupCandidate parseDataTypeName(final String databaseSpecificTypeName) {
+
+    // Default schema to use if schema is not found
+    final Schema schema = null;
+
+    if (isBlank(databaseSpecificTypeName)) {
+      return new DataTypeLookupCandidate(schema, "");
+    }
+    if (!databaseSpecificTypeName.contains(".")) {
+      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
+    }
+
+    // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
+    final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
+    final String[] splitName = splitList(databaseSpecificTypeName, "\\.");
+    if (splitName.length == 0) {
+      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
+    }
+    for (int i = 0; i < splitName.length; i++) {
+      splitName[i] = identifiers.unquoteName(splitName[i]);
+    }
+
+    // Create lookup schema and lookup name
+    final Schema lookupSchema =
+        switch (splitName.length) {
+          default -> schema;
+          case 2 ->
+              catalog.getSchemas().stream()
+                  .filter(dbSchema -> dbSchema.getFullName().endsWith(splitName[0]))
+                  .findFirst()
+                  .orElse(schema);
+          case 3 -> {
+            final String schemaName = new SchemaReference(splitName[0], splitName[1]).getFullName();
+            yield catalog.lookupSchema(schemaName).orElse((SchemaReference) schema);
+          }
+        };
+    final String lookupTypeName = splitName[splitName.length - 1];
+
+    return new DataTypeLookupCandidate(lookupSchema, lookupTypeName);
   }
 }
