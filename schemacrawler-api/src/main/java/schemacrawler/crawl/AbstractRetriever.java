@@ -9,7 +9,7 @@
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schema.DataTypeType.unknown;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
@@ -184,7 +184,7 @@ abstract class AbstractRetriever {
   }
 
   final MutableColumnDataType lookupColumnDataType(
-      final Schema schema, final String databaseSpecificTypeName) {
+      final Schema schema, final String databaseSpecificTypeName, final int dataType) {
 
     final DataTypeLookupCandidate dataTypeLookupCandidate =
         parseDataTypeName(databaseSpecificTypeName);
@@ -221,7 +221,8 @@ abstract class AbstractRetriever {
     }
     // 4. Fallback
     if (columnDataType == null) {
-      columnDataType = new MutableColumnDataType(schema, lookupTypeName, unknown);
+      columnDataType = lookupOrCreateColumnDataType(schema, lookupTypeName, user_defined, dataType);
+      catalog.addColumnDataType(columnDataType);
     }
 
     return columnDataType;

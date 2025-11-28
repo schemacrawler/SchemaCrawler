@@ -139,7 +139,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
-      parameter.setColumnDataType(lookupColumnDataType(function.getSchema(), typeName));
+      parameter.setColumnDataType(lookupColumnDataType(function.getSchema(), typeName, dataType));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);

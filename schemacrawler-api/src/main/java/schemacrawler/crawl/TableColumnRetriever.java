@@ -141,7 +141,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final boolean isHidden = hiddenTableColumnsLookupKeys.contains(column.key());
 
       column.setOrdinalPosition(ordinalPosition);
-      column.setColumnDataType(lookupColumnDataType(table.getSchema(), typeName));
+      column.setColumnDataType(lookupColumnDataType(table.getSchema(), typeName, dataType));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
