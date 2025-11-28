@@ -35,6 +35,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.WrappedSQLException;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database forign keys. */
@@ -240,8 +241,9 @@ final class ForeignKeyRetriever extends AbstractRetriever {
             retrievalCounts.countIfIncluded(added);
           }
         } catch (final SQLException e) {
-          logPossiblyUnsupportedSQLFeature(
-              new StringFormat("Could not retrieve foreign keys for table <%s>", table), e);
+          new UtilityLogger(LOGGER)
+              .logPossiblyUnsupportedSQLFeature(
+                  new StringFormat("Could not retrieve foreign keys for table <%s>", table), e);
         }
 
         // We need to get exported keys as well, since if only a single
@@ -260,9 +262,11 @@ final class ForeignKeyRetriever extends AbstractRetriever {
             retrievalCounts.countIfIncluded(added);
           }
         } catch (final SQLException e) {
-          logPossiblyUnsupportedSQLFeature(
-              new StringFormat("Could not retrieve exported foreign keys for table <%s>", table),
-              e);
+          new UtilityLogger(LOGGER)
+              .logPossiblyUnsupportedSQLFeature(
+                  new StringFormat(
+                      "Could not retrieve exported foreign keys for table <%s>", table),
+                  e);
         }
       }
       retrievalCounts.log();

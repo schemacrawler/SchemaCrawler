@@ -34,6 +34,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /** A retriever uses database metadata to get the details about the database function parameters. */
@@ -232,11 +233,13 @@ final class FunctionParameterRetriever extends AbstractRetriever {
           retrievalCounts.countIfIncluded(added);
         }
       } catch (final AbstractMethodError e) {
-        logSQLFeatureNotSupported(
-            new StringFormat("Could not retrieve parameters for function %s", function), e);
+        new UtilityLogger(LOGGER)
+            .logSQLFeatureNotSupported(
+                new StringFormat("Could not retrieve parameters for function %s", function), e);
       } catch (final SQLException e) {
-        logPossiblyUnsupportedSQLFeature(
-            new StringFormat("Could not retrieve parameters for function %s", function), e);
+        new UtilityLogger(LOGGER)
+            .logPossiblyUnsupportedSQLFeature(
+                new StringFormat("Could not retrieve parameters for function %s", function), e);
       }
     }
     retrievalCounts.log();

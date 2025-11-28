@@ -14,13 +14,16 @@ import static us.fatehi.utility.Utility.join;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringJoiner;
 import java.util.TreeMap;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -39,6 +42,22 @@ public final class UtilityLogger {
     }
 
     logger.log(Level.SEVERE, t.getMessage(), t);
+  }
+
+  public void logPossiblyUnsupportedSQLFeature(
+      final Supplier<String> message, final SQLException e) {
+    // HYC00 = Optional feature not implemented
+    // HY000 = General error
+    // (HY000 is thrown by the Teradata JDBC driver for unsupported
+    // functions)
+    if ("HYC00".equalsIgnoreCase(e.getSQLState())
+        || "HY000".equalsIgnoreCase(e.getSQLState())
+        || "0A000".equalsIgnoreCase(e.getSQLState())
+        || e instanceof SQLFeatureNotSupportedException) {
+      logSQLFeatureNotSupported(message, e);
+    } else {
+      logger.log(Level.WARNING, e, message);
+    }
   }
 
   public void logSafeArguments(final String[] args) {
@@ -67,6 +86,11 @@ public final class UtilityLogger {
     }
 
     logger.log(Level.INFO, "Command line: %n%s".formatted(argsList.toString()));
+  }
+
+  public void logSQLFeatureNotSupported(final Supplier<String> message, final Throwable e) {
+    logger.log(Level.WARNING, message);
+    logger.log(Level.FINE, e, message);
   }
 
   public void logSQLWarnings(final ResultSet resultSet) {
@@ -124,8 +148,7 @@ public final class UtilityLogger {
                       && !key.endsWith(".path");
                 })
             .collect(
-                Collectors.toMap(
-                    entry -> entry.getKey(), Map.Entry::getValue, (v1, v2) -> v1, TreeMap::new));
+                Collectors.toMap(Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1, TreeMap::new));
 
     logger.log(
         Level.CONFIG,
