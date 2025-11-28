@@ -479,7 +479,7 @@ public class TableColumnRetrieverTest {
 
       final MutableColumn testColumn = authorsTable.lookupColumn("NULL_TEST_COLUMN").get();
       assertThat(testColumn.isNullable(), is(false));
-      assertThat(testColumn.getColumnDataType().getName(), is(nullValue()));
+      assertThat(testColumn.getColumnDataType().getName(), is(""));
 
     } catch (final Exception e) {
       fail(e);

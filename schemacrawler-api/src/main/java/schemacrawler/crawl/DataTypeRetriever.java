@@ -139,7 +139,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
     final MutableColumnDataType columnDataType =
-        lookupOrCreateColumnDataType(system, systemSchema, dataType, typeName);
+        lookupOrCreateColumnDataType(systemSchema, typeName, system, dataType);
     columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
     // Set the Java SQL type code, but no mapped Java class is
     // available, so use the defaults
@@ -180,7 +180,7 @@ final class DataTypeRetriever extends AbstractRetriever {
       baseType = null;
     }
     final MutableColumnDataType columnDataType =
-        lookupOrCreateColumnDataType(user_defined, schema, dataType, typeName, className);
+        lookupOrCreateColumnDataType(schema, typeName, user_defined, dataType, className);
     columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
     columnDataType.setBaseType(baseType);

@@ -11,7 +11,6 @@ package schemacrawler.crawl;
 import static java.sql.DatabaseMetaData.functionNullable;
 import static java.sql.DatabaseMetaData.functionNullableUnknown;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
@@ -140,8 +139,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
-      parameter.setColumnDataType(
-          lookupOrCreateColumnDataType(user_defined, function.getSchema(), dataType, typeName));
+      parameter.setColumnDataType(lookupColumnDataType(function.getSchema(), typeName, dataType));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);

@@ -11,11 +11,9 @@ package schemacrawler.crawl;
 import static java.sql.DatabaseMetaData.columnNullable;
 import static java.sql.DatabaseMetaData.columnNullableUnknown;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -32,7 +30,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -144,9 +141,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final boolean isHidden = hiddenTableColumnsLookupKeys.contains(column.key());
 
       column.setOrdinalPosition(ordinalPosition);
-      column.setColumnDataType(
-          lookupOrCreateColumnDataType(
-              user_defined, table.getSchema(), dataType, getColumnTypeName(typeName)));
+      column.setColumnDataType(lookupColumnDataType(table.getSchema(), typeName, dataType));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
@@ -171,23 +166,6 @@ final class TableColumnRetriever extends AbstractRetriever {
       return true;
     }
     return false;
-  }
-
-  private String getColumnTypeName(final String typeName) {
-    String columnDataTypeName = null;
-    if (!isBlank(typeName)) {
-      final String[] split = splitList(typeName, "\\.");
-      if (split.length > 0) {
-        columnDataTypeName = split[split.length - 1];
-      }
-    }
-    // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
-    final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
-    columnDataTypeName = identifiers.unquoteName(columnDataTypeName);
-    if (isBlank(columnDataTypeName)) {
-      columnDataTypeName = typeName;
-    }
-    return columnDataTypeName;
   }
 
   private MutableColumn lookupOrCreateTableColumn(

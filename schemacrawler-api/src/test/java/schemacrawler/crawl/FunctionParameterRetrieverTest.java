@@ -34,8 +34,10 @@ import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.DisableLogging;
 import us.fatehi.test.utility.TestObjectUtility;
 
+@DisableLogging
 public class FunctionParameterRetrieverTest extends AbstractParameterRetrieverTest {
 
   @Test
