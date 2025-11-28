@@ -312,20 +312,20 @@ abstract class AbstractRetriever {
   private DataTypeLookupCandidate parseDataTypeName(final String databaseSpecificTypeName) {
 
     // Default schema to use if schema is not found
-    final Schema schema = null;
+    final SchemaReference unknownSchema = null;
 
     if (isBlank(databaseSpecificTypeName)) {
-      return new DataTypeLookupCandidate(schema, "");
+      return new DataTypeLookupCandidate(unknownSchema, "");
     }
     if (!databaseSpecificTypeName.contains(".")) {
-      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
+      return new DataTypeLookupCandidate(unknownSchema, databaseSpecificTypeName);
     }
 
     // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
     final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
     final String[] splitName = splitList(databaseSpecificTypeName, "\\.");
     if (splitName.length == 0) {
-      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
+      return new DataTypeLookupCandidate(unknownSchema, databaseSpecificTypeName);
     }
     for (int i = 0; i < splitName.length; i++) {
       splitName[i] = identifiers.unquoteName(splitName[i]);
@@ -334,15 +334,15 @@ abstract class AbstractRetriever {
     // Create lookup schema and lookup name
     final Schema lookupSchema =
         switch (splitName.length) {
-          default -> schema;
+          default -> unknownSchema;
           case 2 ->
               catalog.getSchemas().stream()
                   .filter(dbSchema -> dbSchema.getFullName().endsWith(splitName[0]))
                   .findFirst()
-                  .orElse(schema);
+                  .orElse(unknownSchema);
           case 3 -> {
             final String schemaName = new SchemaReference(splitName[0], splitName[1]).getFullName();
-            yield catalog.lookupSchema(schemaName).orElse((SchemaReference) schema);
+            yield catalog.lookupSchema(schemaName).orElse(unknownSchema);
           }
         };
     final String lookupTypeName = splitName[splitName.length - 1];
