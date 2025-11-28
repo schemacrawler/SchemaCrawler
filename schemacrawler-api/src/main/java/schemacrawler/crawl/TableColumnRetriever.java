@@ -11,7 +11,6 @@ package schemacrawler.crawl;
 import static java.sql.DatabaseMetaData.columnNullable;
 import static java.sql.DatabaseMetaData.columnNullableUnknown;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
@@ -142,8 +141,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final boolean isHidden = hiddenTableColumnsLookupKeys.contains(column.key());
 
       column.setOrdinalPosition(ordinalPosition);
-      column.setColumnDataType(
-          lookupOrCreateColumnDataType(table.getSchema(), typeName, user_defined, dataType));
+      column.setColumnDataType(lookupColumnDataType(table.getSchema(), typeName));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);

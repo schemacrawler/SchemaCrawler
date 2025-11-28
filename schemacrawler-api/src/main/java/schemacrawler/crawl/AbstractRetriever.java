@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schema.DataTypeType.unknown;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
@@ -39,7 +40,11 @@ import schemacrawler.utility.TypeMap;
 @Retriever
 abstract class AbstractRetriever {
 
-  record DataTypeLookupCandidate(Schema schema, String dataTypeName) {}
+  record DataTypeLookupCandidate(Schema schema, String dataTypeName) {
+    boolean hasSchema() {
+      return schema != null;
+    }
+  }
 
   private static final Logger LOGGER = Logger.getLogger(AbstractRetriever.class.getName());
   final MutableCatalog catalog;
@@ -92,17 +97,23 @@ abstract class AbstractRetriever {
     return catalog.getAllSchemas();
   }
 
-  final DataTypeLookupCandidate getDataTypeLookupCandidate(
-      final Schema schema, final String databaseSpecificTypeName) {
+  final DataTypeLookupCandidate parseDataTypeName(final String databaseSpecificTypeName) {
+
+    // Default schema to use if schema is not found
+    final Schema schema = null;
+
     if (isBlank(databaseSpecificTypeName)) {
       return new DataTypeLookupCandidate(schema, "");
+    }
+    if (!databaseSpecificTypeName.contains(".")) {
+      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
     }
 
     // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
     final Identifiers identifiers = getRetrieverConnection().getIdentifiers();
     final String[] splitName = splitList(databaseSpecificTypeName, "\\.");
     if (splitName.length == 0) {
-      return new DataTypeLookupCandidate(schema, "");
+      return new DataTypeLookupCandidate(schema, databaseSpecificTypeName);
     }
     for (int i = 0; i < splitName.length; i++) {
       splitName[i] = identifiers.unquoteName(splitName[i]);
@@ -170,6 +181,50 @@ abstract class AbstractRetriever {
   final void logSQLFeatureNotSupported(final Supplier<String> message, final Throwable e) {
     LOGGER.log(Level.WARNING, message);
     LOGGER.log(Level.FINE, e, message);
+  }
+
+  final MutableColumnDataType lookupColumnDataType(
+      final Schema schema, final String databaseSpecificTypeName) {
+
+    final DataTypeLookupCandidate dataTypeLookupCandidate =
+        parseDataTypeName(databaseSpecificTypeName);
+
+    final Schema lookupSchema = dataTypeLookupCandidate.schema();
+    final String lookupTypeName = dataTypeLookupCandidate.dataTypeName();
+
+    // Construct a "match" for the column data type, even if it is
+    // not available in the catalog
+    MutableColumnDataType columnDataType = null;
+    // 1. If lookup schema was specified, use that
+    if (lookupSchema != null) {
+      final Optional<MutableColumnDataType> lookupColumnDataType =
+          catalog.lookupColumnDataType(lookupSchema, lookupTypeName);
+      if (lookupColumnDataType.isPresent()) {
+        columnDataType = lookupColumnDataType.get();
+      }
+    }
+    // 2. Lookup as a system data-type
+    if (columnDataType == null) {
+      final Optional<MutableColumnDataType> lookupSystemColumnDataType =
+          catalog.lookupSystemColumnDataType(lookupTypeName);
+      if (lookupSystemColumnDataType.isPresent()) {
+        columnDataType = lookupSystemColumnDataType.get();
+      }
+    }
+    // 3. Lookup as a user-defined data-type
+    if (columnDataType == null) {
+      final Optional<MutableColumnDataType> lookupColumnDataType =
+          catalog.lookupColumnDataType(schema, lookupTypeName);
+      if (lookupColumnDataType.isPresent()) {
+        columnDataType = lookupColumnDataType.get();
+      }
+    }
+    // 4. Fallback
+    if (columnDataType == null) {
+      columnDataType = new MutableColumnDataType(schema, lookupTypeName, unknown);
+    }
+
+    return columnDataType;
   }
 
   /**
@@ -274,15 +329,17 @@ abstract class AbstractRetriever {
    */
   private MutableColumnDataType lookupColumnDataTypeForCreate(
       final Schema schema, final String databaseSpecificTypeName, final DataTypeType type) {
-    if (isBlank(databaseSpecificTypeName)) {
-      return new MutableColumnDataType(schema, "", type);
-    }
 
     final DataTypeLookupCandidate dataTypeLookupCandidate =
-        getDataTypeLookupCandidate(schema, databaseSpecificTypeName);
+        parseDataTypeName(databaseSpecificTypeName);
 
-    final Schema lookupSchema = dataTypeLookupCandidate.schema();
+    final Schema lookupSchema =
+        dataTypeLookupCandidate.hasSchema() ? dataTypeLookupCandidate.schema() : schema;
     final String lookupTypeName = dataTypeLookupCandidate.dataTypeName();
+
+    if (isBlank(lookupTypeName)) {
+      return new MutableColumnDataType(schema, lookupTypeName, type);
+    }
     // Construct a "match" for the column data type, even if it is
     // not available in the catalog
     final MutableColumnDataType columnDataType =

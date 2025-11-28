@@ -10,7 +10,6 @@ package schemacrawler.crawl;
 
 import static java.sql.DatabaseMetaData.procedureNullableUnknown;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
@@ -142,8 +141,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
-      parameter.setColumnDataType(
-          lookupOrCreateColumnDataType(procedure.getSchema(), typeName, user_defined, dataType));
+      parameter.setColumnDataType(lookupColumnDataType(procedure.getSchema(), typeName));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);

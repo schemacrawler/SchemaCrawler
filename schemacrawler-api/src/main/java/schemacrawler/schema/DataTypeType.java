@@ -9,6 +9,7 @@
 package schemacrawler.schema;
 
 public enum DataTypeType {
+  unknown,
   system,
   user_defined;
 }
