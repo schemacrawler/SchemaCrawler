@@ -9,7 +9,6 @@
 package schemacrawler.loader.attributes.model;
 
 import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
 
 import java.beans.ConstructorProperties;
 import java.io.Serial;
@@ -43,17 +42,17 @@ public final class CatalogAttributes extends ObjectAttributes {
     if (tables == null) {
       this.tables = emptyList();
     } else {
-      this.tables = unmodifiableList(tables);
+      this.tables = List.copyOf(tables);
     }
     if (weakAssociations == null) {
       this.weakAssociations = emptyList();
     } else {
-      this.weakAssociations = unmodifiableList(weakAssociations);
+      this.weakAssociations = List.copyOf(weakAssociations);
     }
     if (alternateKeys == null) {
       this.alternateKeys = emptyList();
     } else {
-      this.alternateKeys = unmodifiableList(alternateKeys);
+      this.alternateKeys = List.copyOf(alternateKeys);
     }
   }
 

@@ -8,7 +8,6 @@
 
 package schemacrawler.loader.attributes.model;
 
-import static java.util.Collections.unmodifiableList;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.beans.ConstructorProperties;
@@ -46,7 +45,7 @@ public class AlternateKeyAttributes extends ObjectAttributes {
     if (columns == null || columns.isEmpty()) {
       throw new IllegalArgumentException("No columns provided");
     }
-    this.columns = unmodifiableList(columns);
+    this.columns = List.copyOf(columns);
   }
 
   public List<String> getColumns() {

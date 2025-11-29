@@ -13,7 +13,6 @@ import static schemacrawler.utility.NamedObjectSort.alphabetical;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serial;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,10 +51,7 @@ public final class SchemaReference implements Schema {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof SchemaReference)) {
+    if ((obj == null) || !(obj instanceof SchemaReference)) {
       return false;
     }
     final Schema other = (Schema) obj;
@@ -75,19 +71,18 @@ public final class SchemaReference implements Schema {
     final Object attributeValue = attributeMap.get(name);
     if (attributeValue == null) {
       return defaultValue;
-    } else {
-      try {
-        return (T) attributeValue;
-      } catch (final ClassCastException e) {
-        return defaultValue;
-      }
+    }
+    try {
+      return (T) attributeValue;
+    } catch (final ClassCastException e) {
+      return defaultValue;
     }
   }
 
   /** {@inheritDoc} */
   @Override
   public Map<String, Object> getAttributes() {
-    return Collections.unmodifiableMap(attributeMap);
+    return Map.copyOf(attributeMap);
   }
 
   @Override
@@ -189,6 +184,6 @@ public final class SchemaReference implements Schema {
     if (key != null) {
       return;
     }
-    this.key = new NamedObjectKey(catalogName, schemaName);
+    key = new NamedObjectKey(catalogName, schemaName);
   }
 }

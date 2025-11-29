@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
-import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAndTypeAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -72,7 +72,7 @@ public class AttributesModelTest {
 
     assertThat(
         outputOf(serialized(catalogAttributes)),
-        hasSameContentAs(classpathResource("attributes.json")));
+        hasSameContentAndTypeAs(classpathResource("attributes.json"), "json"));
   }
 
   private Path serialized(final CatalogAttributes catalogAttributes) throws Exception {

@@ -10,7 +10,6 @@ package schemacrawler.crawl;
 
 import static java.lang.String.CASE_INSENSITIVE_ORDER;
 import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableSet;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
@@ -52,7 +51,7 @@ class ImmutableDatabaseProperty extends AbstractProperty {
       final Pattern pattern = Pattern.compile(acronym, CASE_INSENSITIVE);
       acronymsMap.put(pattern, acronym);
     }
-    acronyms = unmodifiableSet(acronymsMap.entrySet());
+    acronyms = Set.copyOf(acronymsMap.entrySet());
   }
 
   /**
