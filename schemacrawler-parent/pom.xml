@@ -11,7 +11,7 @@
 
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
-  <version>17.1.6</version>
+  <version>17.1.7</version>
   <packaging>pom</packaging>
 
   <name>SchemaCrawler [Parent]</name>
@@ -402,7 +402,7 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2000-2025 {organizationName}. All
+              <bottom>Copyright © 2000-2026 {organizationName}. All
                 rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
