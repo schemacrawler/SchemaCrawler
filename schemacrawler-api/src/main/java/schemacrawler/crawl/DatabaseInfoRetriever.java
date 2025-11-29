@@ -9,7 +9,6 @@
 package schemacrawler.crawl;
 
 import static java.util.Collections.sort;
-import static java.util.Collections.unmodifiableList;
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
 import static us.fatehi.utility.CollectionsUtility.splitList;
@@ -143,16 +142,14 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
             final String value = (String) methodReturnValue;
             final List<String> valuesList = Arrays.asList(splitList(value));
             sort(valuesList);
-            dbProperties.add(
-                new ImmutableDatabaseProperty(methodName, unmodifiableList(valuesList)));
+            dbProperties.add(new ImmutableDatabaseProperty(methodName, List.copyOf(valuesList)));
           } else if (isDatabasePropertyMethod(method)) {
             dbProperties.add(new ImmutableDatabaseProperty(methodName, methodReturnValue));
           } else if (isDatabasePropertiesResultSetMethod(method)) {
             final ResultSet results = (ResultSet) methodReturnValue;
             final List<String> valuesList = DatabaseUtility.readResultsVector(results);
             sort(valuesList);
-            dbProperties.add(
-                new ImmutableDatabaseProperty(methodName, unmodifiableList(valuesList)));
+            dbProperties.add(new ImmutableDatabaseProperty(methodName, List.copyOf(valuesList)));
           }
 
         } catch (final IllegalAccessException | InvocationTargetException e) {

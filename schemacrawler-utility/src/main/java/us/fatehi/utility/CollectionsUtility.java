@@ -76,7 +76,7 @@ public class CollectionsUtility {
    *
    * @param input A comma-separated input string; may be {@code null}, empty, or contain whitespace
    * @param delimiter Substring delimiter as a regex
-   * @return An unmodifiable list of unique, trimmed, non-empty strings in insertion order
+   * @return A list of unique, trimmed, non-empty strings in insertion order
    */
   public static String[] splitList(final String input, final String delimiter) {
     if (delimiter == null) {

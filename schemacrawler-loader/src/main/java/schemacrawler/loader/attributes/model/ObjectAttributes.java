@@ -10,8 +10,6 @@ package schemacrawler.loader.attributes.model;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
-import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.unmodifiableMap;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
@@ -45,12 +43,12 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
     if (remarks == null) {
       this.remarks = emptyList();
     } else {
-      this.remarks = unmodifiableList(remarks);
+      this.remarks = List.copyOf(remarks);
     }
     if (attributes == null) {
       this.attributes = emptyMap();
     } else {
-      this.attributes = unmodifiableMap(attributes);
+      this.attributes = Map.copyOf(attributes);
     }
   }
 
@@ -78,9 +76,8 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
   public boolean hasRemarks() {
     if (remarks.isEmpty()) {
       return false;
-    } else {
-      return !isBlank(getRemarks());
     }
+    return !isBlank(getRemarks());
   }
 
   @Override

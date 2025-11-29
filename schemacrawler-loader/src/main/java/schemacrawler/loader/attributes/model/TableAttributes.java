@@ -9,7 +9,6 @@
 package schemacrawler.loader.attributes.model;
 
 import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
 
 import java.beans.ConstructorProperties;
 import java.io.Serial;
@@ -41,7 +40,7 @@ public class TableAttributes extends ObjectAttributes implements Iterable<Column
     if (columns == null) {
       this.columns = emptyList();
     } else {
-      this.columns = unmodifiableList(columns);
+      this.columns = List.copyOf(columns);
     }
   }
 

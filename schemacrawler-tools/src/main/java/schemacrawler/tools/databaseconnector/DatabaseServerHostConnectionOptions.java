@@ -23,6 +23,6 @@ public record DatabaseServerHostConnectionOptions(
 
   public DatabaseServerHostConnectionOptions {
     databaseSystemIdentifier = requireNonNull(databaseSystemIdentifier, "No server provided");
-    urlx = urlx == null ? Collections.emptyMap() : Collections.unmodifiableMap(urlx);
+    urlx = urlx == null ? Collections.emptyMap() : Map.copyOf(urlx);
   }
 }
