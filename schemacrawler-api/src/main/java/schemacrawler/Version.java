@@ -1,7 +1,7 @@
 /*
  * SchemaCrawler
  * http://www.schemacrawler.com
- * Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+ * Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
@@ -24,7 +24,7 @@ public final class Version extends BaseProductVersion {
       SchemaCrawler 17.1.7
       Database schema discovery and comprehension tool
       https://www.schemacrawler.com/
-      Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
+      Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
 
       You can search for database schema objects using regular expressions,
       and output the schema and data in a readable text format. You can find

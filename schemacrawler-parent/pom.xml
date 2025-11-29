@@ -402,7 +402,7 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2000-2025 {organizationName}. All
+              <bottom>Copyright © 2000-2026 {organizationName}. All
                 rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
