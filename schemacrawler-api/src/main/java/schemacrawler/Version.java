@@ -21,7 +21,7 @@ public final class Version extends BaseProductVersion {
 
   private static final String ABOUT =
       """
-      SchemaCrawler 17.1.6
+      SchemaCrawler 17.1.7
       Database schema discovery and comprehension tool
       https://www.schemacrawler.com/
       Copyright (c) 2000-2025, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -34,7 +34,7 @@ public final class Version extends BaseProductVersion {
       """
           .stripIndent();
 
-  private static final Version VERSION = new Version("SchemaCrawler", "17.1.6");
+  private static final Version VERSION = new Version("SchemaCrawler", "17.1.7");
 
   /**
    * Information about this product.
