@@ -168,13 +168,17 @@ final class DataTypeLookup {
     if (databaseSpecificTypeName == null) {
       return new SimpleDataTypeName(unspecifiedSchema, "");
     }
-    // Use memo to return a parsed result early
+    // Use cache to return a parsed result early
     if (parsedDataTypeNames.containsKey(databaseSpecificTypeName)) {
       return parsedDataTypeNames.get(databaseSpecificTypeName);
     }
 
     if (!databaseSpecificTypeName.contains(".")) {
-      return new SimpleDataTypeName(unspecifiedSchema, databaseSpecificTypeName);
+      // Cache and return
+      final SimpleDataTypeName parsedDataTypeName =
+          new SimpleDataTypeName(unspecifiedSchema, databaseSpecificTypeName);
+      parsedDataTypeNames.put(databaseSpecificTypeName, parsedDataTypeName);
+      return parsedDataTypeName;
     }
 
     // PostgreSQL and IBM DB2 may quote column data type names, so "unquote" them
