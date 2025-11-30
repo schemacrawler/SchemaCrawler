@@ -25,6 +25,7 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.TypeMap;
+import us.fatehi.utility.string.StringFormat;
 
 /** Base class for retriever that uses database metadata to get the details about the schema. */
 @Retriever
@@ -86,8 +87,10 @@ final class DataTypeLookup {
     }
     // 4. Fallback
     if (columnDataType == null) {
-      LOGGER.log(Level.FINE, "Creating ");
       columnDataType = new MutableColumnDataType(schema, lookupTypeName, user_defined);
+      LOGGER.log(
+          Level.FINE,
+          new StringFormat("Creating data-type from column or parameter <%s>", columnDataType));
       setDataTypeFields(columnDataType, dataType, null);
       catalog.addColumnDataType(columnDataType);
     }
@@ -118,6 +121,7 @@ final class DataTypeLookup {
             .lookupColumnDataType(columnDataType.getSchema(), columnDataType.getName())
             .isEmpty();
     if (isNewColumnDataType) {
+      LOGGER.log(Level.FINE, new StringFormat("Creating data-type <%s>", columnDataType));
       setDataTypeFields(columnDataType, javaSqlTypeInt, mappedClassName);
       catalog.addColumnDataType(columnDataType);
     }
