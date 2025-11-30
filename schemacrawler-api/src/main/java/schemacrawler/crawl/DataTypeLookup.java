@@ -31,7 +31,7 @@ import us.fatehi.utility.string.StringFormat;
 @Retriever
 final class DataTypeLookup {
 
-  private record SimpleDataTypeName(Schema schema, String dataTypeName) {
+  private record ParsedDataTypeName(Schema schema, String dataTypeName) {
     boolean hasSchema() {
       return schema != null;
     }
@@ -41,7 +41,7 @@ final class DataTypeLookup {
 
   private final MutableCatalog catalog;
   private final RetrieverConnection retrieverConnection;
-  private final Map<String, SimpleDataTypeName> parsedDataTypeNames;
+  private final Map<String, ParsedDataTypeName> parsedDataTypeNames;
 
   DataTypeLookup(final RetrieverConnection retrieverConnection, final MutableCatalog catalog) {
     this.retrieverConnection =
@@ -53,7 +53,7 @@ final class DataTypeLookup {
   MutableColumnDataType lookupDataType(
       final Schema schema, final String databaseSpecificTypeName, final int dataType) {
 
-    final SimpleDataTypeName parsedDataTypeName = parseDataTypeName(databaseSpecificTypeName);
+    final ParsedDataTypeName parsedDataTypeName = parseDataTypeName(databaseSpecificTypeName);
 
     final Schema lookupSchema = parsedDataTypeName.schema();
     final String lookupTypeName = parsedDataTypeName.dataTypeName();
@@ -141,7 +141,7 @@ final class DataTypeLookup {
   private MutableColumnDataType constructColumnDataTypeForCreate(
       final Schema schema, final String databaseSpecificTypeName, final DataTypeType type) {
 
-    final SimpleDataTypeName parsedDataTypeName = parseDataTypeName(databaseSpecificTypeName);
+    final ParsedDataTypeName parsedDataTypeName = parseDataTypeName(databaseSpecificTypeName);
 
     final Schema lookupSchema =
         parsedDataTypeName.hasSchema() ? parsedDataTypeName.schema() : schema;
@@ -159,14 +159,14 @@ final class DataTypeLookup {
     return columnDataType;
   }
 
-  private SimpleDataTypeName parseDataTypeName(final String databaseSpecificTypeName) {
+  private ParsedDataTypeName parseDataTypeName(final String databaseSpecificTypeName) {
 
     // Default schema to use if schema is not found
     final SchemaReference unspecifiedSchema = null;
 
     // Check for null values and return early
     if (databaseSpecificTypeName == null) {
-      return new SimpleDataTypeName(unspecifiedSchema, "");
+      return new ParsedDataTypeName(unspecifiedSchema, "");
     }
     // Use cache to return a parsed result early
     if (parsedDataTypeNames.containsKey(databaseSpecificTypeName)) {
@@ -175,8 +175,8 @@ final class DataTypeLookup {
 
     if (!databaseSpecificTypeName.contains(".")) {
       // Cache and return
-      final SimpleDataTypeName parsedDataTypeName =
-          new SimpleDataTypeName(unspecifiedSchema, databaseSpecificTypeName);
+      final ParsedDataTypeName parsedDataTypeName =
+          new ParsedDataTypeName(unspecifiedSchema, databaseSpecificTypeName);
       parsedDataTypeNames.put(databaseSpecificTypeName, parsedDataTypeName);
       return parsedDataTypeName;
     }
@@ -185,7 +185,7 @@ final class DataTypeLookup {
     final Identifiers identifiers = retrieverConnection.getIdentifiers();
     final String[] splitName = splitList(databaseSpecificTypeName, "\\.");
     if (splitName.length == 0) {
-      return new SimpleDataTypeName(unspecifiedSchema, databaseSpecificTypeName);
+      return new ParsedDataTypeName(unspecifiedSchema, databaseSpecificTypeName);
     }
     for (int i = 0; i < splitName.length; i++) {
       splitName[i] = identifiers.unquoteName(splitName[i]);
@@ -207,8 +207,8 @@ final class DataTypeLookup {
         };
     final String simpleTypeName = splitName[splitName.length - 1];
 
-    final SimpleDataTypeName parsedDataTypeName =
-        new SimpleDataTypeName(lookupSchema, simpleTypeName);
+    final ParsedDataTypeName parsedDataTypeName =
+        new ParsedDataTypeName(lookupSchema, simpleTypeName);
     parsedDataTypeNames.put(databaseSpecificTypeName, parsedDataTypeName);
 
     return parsedDataTypeName;
