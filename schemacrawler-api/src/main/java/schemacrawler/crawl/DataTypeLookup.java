@@ -85,29 +85,12 @@ final class DataTypeLookup {
     }
     // 4. Fallback
     if (columnDataType == null) {
-      columnDataType = lookupOrCreateColumnDataType(schema, lookupTypeName, user_defined, dataType);
+      columnDataType =
+          lookupOrCreateColumnDataType(schema, lookupTypeName, user_defined, dataType, null);
       catalog.addColumnDataType(columnDataType);
     }
 
     return columnDataType;
-  }
-
-  /**
-   * Creates a data type from the JDBC data type id, and the database specific type name, if it does
-   * not exist.
-   *
-   * @param schema Schema
-   * @param databaseSpecificTypeName Database specific type name
-   * @param javaSqlTypeInt JDBC data type
-   * @return Column data type
-   */
-  final MutableColumnDataType lookupOrCreateColumnDataType(
-      final Schema schema,
-      final String databaseSpecificTypeName,
-      final DataTypeType type,
-      final int javaSqlTypeInt) {
-    return lookupOrCreateColumnDataType(
-        schema, databaseSpecificTypeName, type, javaSqlTypeInt, null);
   }
 
   /**
