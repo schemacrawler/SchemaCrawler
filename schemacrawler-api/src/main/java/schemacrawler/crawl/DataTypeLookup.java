@@ -121,7 +121,7 @@ final class DataTypeLookup {
             .lookupColumnDataType(columnDataType.getSchema(), columnDataType.getName())
             .isEmpty();
     if (isNewColumnDataType) {
-      LOGGER.log(Level.FINE, new StringFormat("Creating data-type <%s>", columnDataType));
+      LOGGER.log(Level.FINE, new StringFormat("Creating %s data-type <%s>", type, columnDataType));
       setDataTypeFields(columnDataType, javaSqlTypeInt, mappedClassName);
       catalog.addColumnDataType(columnDataType);
     }
