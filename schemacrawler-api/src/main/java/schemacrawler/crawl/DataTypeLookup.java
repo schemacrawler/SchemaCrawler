@@ -205,7 +205,7 @@ final class DataTypeLookup {
 
     final SimpleDataTypeName parsedDataTypeName =
         new SimpleDataTypeName(lookupSchema, simpleTypeName);
-    parsedDataTypeNames.put(simpleTypeName, parsedDataTypeName);
+    parsedDataTypeNames.put(databaseSpecificTypeName, parsedDataTypeName);
 
     return parsedDataTypeName;
   }
