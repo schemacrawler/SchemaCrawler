@@ -9,6 +9,8 @@
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schema.DataTypeType.system;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
@@ -17,7 +19,6 @@ import static us.fatehi.utility.Utility.trimToEmpty;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
@@ -106,7 +107,21 @@ abstract class AbstractRetriever {
 
   final MutableColumnDataType lookupColumnDataType(
       final Schema schema, final String databaseSpecificTypeName, final int dataType) {
-    return dataTypeLookup.lookupColumnDataType(schema, databaseSpecificTypeName, dataType);
+    return dataTypeLookup.lookupDataType(schema, databaseSpecificTypeName, dataType);
+  }
+
+  /**
+   * Creates a data type from the JDBC data type id, and the database specific type name, if it does
+   * not exist.
+   *
+   * @param databaseSpecificTypeName Database specific type name
+   * @param javaSqlTypeInt JDBC data type
+   * @return Column data type
+   */
+  final MutableColumnDataType lookupOrCreateSystemColumnDataType(
+      final String databaseSpecificTypeName, final int javaSqlTypeInt) {
+    return dataTypeLookup.lookupOrCreateDataType(
+        new SchemaReference(), databaseSpecificTypeName, system, javaSqlTypeInt, null);
   }
 
   /**
@@ -118,32 +133,13 @@ abstract class AbstractRetriever {
    * @param javaSqlTypeInt JDBC data type
    * @return Column data type
    */
-  final MutableColumnDataType lookupOrCreateColumnDataType(
+  final MutableColumnDataType lookupOrCreateUserDefinedColumnDataType(
       final Schema schema,
       final String databaseSpecificTypeName,
-      final DataTypeType type,
-      final int javaSqlTypeInt) {
-    return lookupOrCreateColumnDataType(
-        schema, databaseSpecificTypeName, type, javaSqlTypeInt, null);
-  }
-
-  /**
-   * Creates a data type from the JDBC data type id, and the database specific type name, if it does
-   * not exist.
-   *
-   * @param schema Schema
-   * @param databaseSpecificTypeName Database specific type name
-   * @param javaSqlTypeInt JDBC data type
-   * @return Column data type
-   */
-  final MutableColumnDataType lookupOrCreateColumnDataType(
-      final Schema schema,
-      final String databaseSpecificTypeName,
-      final DataTypeType type,
       final int javaSqlTypeInt,
       final String mappedClassName) {
-    return dataTypeLookup.lookupOrCreateColumnDataType(
-        schema, databaseSpecificTypeName, type, javaSqlTypeInt, mappedClassName);
+    return dataTypeLookup.lookupOrCreateDataType(
+        schema, databaseSpecificTypeName, user_defined, javaSqlTypeInt, mappedClassName);
   }
 
   final Optional<MutableRoutine> lookupRoutine(

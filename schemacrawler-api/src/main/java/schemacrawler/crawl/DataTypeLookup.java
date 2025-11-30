@@ -16,6 +16,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;
@@ -48,7 +49,7 @@ final class DataTypeLookup {
     parsedDataTypeNames = new ConcurrentHashMap<>();
   }
 
-  final MutableColumnDataType lookupColumnDataType(
+  MutableColumnDataType lookupDataType(
       final Schema schema, final String databaseSpecificTypeName, final int dataType) {
 
     final SimpleDataTypeName parsedDataTypeName = parseDataTypeName(databaseSpecificTypeName);
@@ -85,8 +86,9 @@ final class DataTypeLookup {
     }
     // 4. Fallback
     if (columnDataType == null) {
-      columnDataType =
-          lookupOrCreateColumnDataType(schema, lookupTypeName, user_defined, dataType, null);
+      LOGGER.log(Level.FINE, "Creating ");
+      columnDataType = new MutableColumnDataType(schema, lookupTypeName, user_defined);
+      setDataTypeFields(columnDataType, dataType, null);
       catalog.addColumnDataType(columnDataType);
     }
 
@@ -102,36 +104,21 @@ final class DataTypeLookup {
    * @param javaSqlTypeInt JDBC data type
    * @return Column data type
    */
-  final MutableColumnDataType lookupOrCreateColumnDataType(
+  MutableColumnDataType lookupOrCreateDataType(
       final Schema schema,
       final String databaseSpecificTypeName,
       final DataTypeType type,
       final int javaSqlTypeInt,
       final String mappedClassName) {
     final MutableColumnDataType columnDataType =
-        lookupColumnDataTypeForCreate(schema, databaseSpecificTypeName, type);
+        constructColumnDataTypeForCreate(schema, databaseSpecificTypeName, type);
     // If new data type, fill the fields
     final boolean isNewColumnDataType =
         catalog
             .lookupColumnDataType(columnDataType.getSchema(), columnDataType.getName())
             .isEmpty();
     if (isNewColumnDataType) {
-      final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes().valueOf(javaSqlTypeInt);
-      columnDataType.setJavaSqlType(javaSqlType);
-      if (isBlank(mappedClassName)) {
-        final TypeMap typeMap = retrieverConnection.getTypeMap();
-        final Class<?> mappedClass;
-        if (typeMap.containsKey(databaseSpecificTypeName)) {
-          mappedClass = typeMap.get(databaseSpecificTypeName);
-        } else {
-          mappedClass = typeMap.get(javaSqlType.getName());
-        }
-        columnDataType.setTypeMappedClass(mappedClass);
-      } else {
-        columnDataType.setTypeMappedClass(mappedClassName);
-      }
-      columnDataType.withQuoting(retrieverConnection.getIdentifiers());
-
+      setDataTypeFields(columnDataType, javaSqlTypeInt, mappedClassName);
       catalog.addColumnDataType(columnDataType);
     }
     return columnDataType;
@@ -147,7 +134,7 @@ final class DataTypeLookup {
    * @param type System or user defined
    * @return Column data type
    */
-  private MutableColumnDataType lookupColumnDataTypeForCreate(
+  private MutableColumnDataType constructColumnDataTypeForCreate(
       final Schema schema, final String databaseSpecificTypeName, final DataTypeType type) {
 
     final SimpleDataTypeName parsedDataTypeName = parseDataTypeName(databaseSpecificTypeName);
@@ -217,5 +204,27 @@ final class DataTypeLookup {
     parsedDataTypeNames.put(simpleTypeName, parsedDataTypeName);
 
     return parsedDataTypeName;
+  }
+
+  private void setDataTypeFields(
+      final MutableColumnDataType columnDataType,
+      final int javaSqlTypeInt,
+      final String mappedClassName) {
+    final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes().valueOf(javaSqlTypeInt);
+    columnDataType.setJavaSqlType(javaSqlType);
+    if (isBlank(mappedClassName)) {
+      final Class<?> mappedClass;
+      final String dataTypeName = columnDataType.getName();
+      final TypeMap typeMap = retrieverConnection.getTypeMap();
+      if (typeMap.containsKey(dataTypeName)) {
+        mappedClass = typeMap.get(dataTypeName);
+      } else {
+        mappedClass = typeMap.get(javaSqlType.getName());
+      }
+      columnDataType.setTypeMappedClass(mappedClass);
+    } else {
+      columnDataType.setTypeMappedClass(mappedClassName);
+    }
+    columnDataType.withQuoting(retrieverConnection.getIdentifiers());
   }
 }
