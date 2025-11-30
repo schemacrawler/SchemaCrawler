@@ -17,6 +17,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ty
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.Multimap;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
@@ -35,12 +37,15 @@ final class DataTypeRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(DataTypeRetriever.class.getName());
 
+  private final Multimap<Integer, ColumnDataType> baseColumnTypes;
+
   DataTypeRetriever(
       final RetrieverConnection retrieverConnection,
       final MutableCatalog catalog,
       final SchemaCrawlerOptions options)
       throws SQLException {
     super(retrieverConnection, catalog, options);
+    baseColumnTypes = new Multimap<>();
   }
 
   /**
@@ -158,6 +163,9 @@ final class DataTypeRetriever extends AbstractRetriever {
     columnDataType.addAttributes(results.getAttributes());
 
     // NOTE: Column data type was already added to the catalog during lookup and create
+
+    // Cache as a base column data type
+    baseColumnTypes.add(dataType, columnDataType);
   }
 
   private void createUserDefinedColumnDataType(
@@ -171,11 +179,13 @@ final class DataTypeRetriever extends AbstractRetriever {
     final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
 
     final ColumnDataType baseType;
-    if (baseTypeValue != 0) {
-      baseType = catalog.lookupBaseColumnDataTypeByType(baseTypeValue);
+    final List<ColumnDataType> baseColumnTypesList = baseColumnTypes.get((int) baseTypeValue);
+    if (baseColumnTypesList != null && baseColumnTypesList.size() == 1) {
+      baseType = baseColumnTypesList.get(0);
     } else {
       baseType = null;
     }
+
     final MutableColumnDataType columnDataType =
         lookupOrCreateUserDefinedColumnDataType(schema, typeName, dataType, className);
     columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
