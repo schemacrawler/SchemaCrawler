@@ -162,7 +162,7 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     columnDataType.addAttributes(results.getAttributes());
 
-    catalog.addColumnDataType(columnDataType);
+    // NOTE: Column data type was already added to the catalog during lookup and create
   }
 
   private void createUserDefinedColumnDataType(
@@ -190,7 +190,7 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     columnDataType.addAttributes(results.getAttributes());
 
-    catalog.addColumnDataType(columnDataType);
+    // NOTE: Column data type was already added to the catalog during lookup and create
   }
 
   private void retrieveSystemColumnDataTypesFromDataDictionary(final Schema systemSchema)
