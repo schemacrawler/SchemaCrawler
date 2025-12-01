@@ -1922,7 +1922,7 @@ regtype
 schema1."date"
   user_defined
   java.sql.Types: DISTINCT
-  based on date
+  based on 
 
 {"key": "null/schema1/int2"}
 schema1.int2

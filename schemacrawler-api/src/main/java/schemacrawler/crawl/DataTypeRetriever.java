@@ -11,14 +11,13 @@ package schemacrawler.crawl;
 import static java.sql.DatabaseMetaData.typeNullable;
 import static java.sql.DatabaseMetaData.typeNullableUnknown;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schema.DataTypeType.system;
-import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +29,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.Multimap;
 import us.fatehi.utility.UtilityLogger;
 import us.fatehi.utility.string.StringFormat;
 
@@ -37,12 +37,15 @@ final class DataTypeRetriever extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger.getLogger(DataTypeRetriever.class.getName());
 
+  private final Multimap<Integer, ColumnDataType> baseColumnTypes;
+
   DataTypeRetriever(
       final RetrieverConnection retrieverConnection,
       final MutableCatalog catalog,
       final SchemaCrawlerOptions options)
       throws SQLException {
     super(retrieverConnection, catalog, options);
+    baseColumnTypes = new Multimap<>();
   }
 
   /**
@@ -51,19 +54,17 @@ final class DataTypeRetriever extends AbstractRetriever {
    * @throws SQLException On a SQL exception
    */
   void retrieveSystemColumnDataTypes() throws SQLException {
-    final Schema systemSchema = new SchemaReference();
-
     switch (getRetrieverConnection().get(typeInfoRetrievalStrategy)) {
       case data_dictionary_all:
         LOGGER.log(
             Level.INFO,
             "Retrieving system column data types, using fast data dictionary retrieval");
-        retrieveSystemColumnDataTypesFromDataDictionary(systemSchema);
+        retrieveSystemColumnDataTypesFromDataDictionary();
         break;
 
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving system column data types");
-        retrieveSystemColumnDataTypesFromMetadata(systemSchema);
+        retrieveSystemColumnDataTypesFromMetadata();
         break;
 
       default:
@@ -117,8 +118,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     retrievalCounts.log();
   }
 
-  private void createSystemColumnDataType(
-      final MetadataResultSet results, final Schema systemSchema) {
+  private void createSystemColumnDataType(final MetadataResultSet results) {
     final String typeName = results.getString("TYPE_NAME");
     final int dataType = results.getInt("DATA_TYPE", 0);
     LOGGER.log(
@@ -141,7 +141,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
     final MutableColumnDataType columnDataType =
-        lookupOrCreateColumnDataType(systemSchema, typeName, system, dataType);
+        lookupOrCreateSystemColumnDataType(typeName, dataType);
     columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
     // Set the Java SQL type code, but no mapped Java class is
     // available, so use the defaults
@@ -162,7 +162,10 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     columnDataType.addAttributes(results.getAttributes());
 
-    catalog.addColumnDataType(columnDataType);
+    // NOTE: Column data type was already added to the catalog during lookup and create
+
+    // Cache as a base column data type
+    baseColumnTypes.add(dataType, columnDataType);
   }
 
   private void createUserDefinedColumnDataType(
@@ -176,13 +179,15 @@ final class DataTypeRetriever extends AbstractRetriever {
     final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
 
     final ColumnDataType baseType;
-    if (baseTypeValue != 0) {
-      baseType = catalog.lookupBaseColumnDataTypeByType(baseTypeValue);
+    final List<ColumnDataType> baseColumnTypesList = baseColumnTypes.get((int) baseTypeValue);
+    if (baseColumnTypesList != null && baseColumnTypesList.size() == 1) {
+      baseType = baseColumnTypesList.get(0);
     } else {
       baseType = null;
     }
+
     final MutableColumnDataType columnDataType =
-        lookupOrCreateColumnDataType(schema, typeName, user_defined, dataType, className);
+        lookupOrCreateUserDefinedColumnDataType(schema, typeName, dataType, className);
     columnDataType.withQuoting(getRetrieverConnection().getIdentifiers());
 
     columnDataType.setBaseType(baseType);
@@ -190,11 +195,10 @@ final class DataTypeRetriever extends AbstractRetriever {
 
     columnDataType.addAttributes(results.getAttributes());
 
-    catalog.addColumnDataType(columnDataType);
+    // NOTE: Column data type was already added to the catalog during lookup and create
   }
 
-  private void retrieveSystemColumnDataTypesFromDataDictionary(final Schema systemSchema)
-      throws SQLException {
+  private void retrieveSystemColumnDataTypesFromDataDictionary() throws SQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TYPE_INFO)) {
@@ -209,15 +213,14 @@ final class DataTypeRetriever extends AbstractRetriever {
             new MetadataResultSet(typeInfoSql, statement, getLimitMap()); ) {
       while (results.next()) {
         retrievalCounts.count();
-        createSystemColumnDataType(results, systemSchema);
+        createSystemColumnDataType(results);
         retrievalCounts.countIncluded();
       }
     }
     retrievalCounts.log();
   }
 
-  private void retrieveSystemColumnDataTypesFromMetadata(final Schema systemSchema)
-      throws SQLException {
+  private void retrieveSystemColumnDataTypesFromMetadata() throws SQLException {
     final String name = "system column data types";
     final RetrievalCounts retrievalCounts = new RetrievalCounts(name);
     try (final Connection connection = getRetrieverConnection().getConnection(name);
@@ -226,7 +229,7 @@ final class DataTypeRetriever extends AbstractRetriever {
                 connection.getMetaData().getTypeInfo(), "DatabaseMetaData::getTypeInfo"); ) {
       while (results.next()) {
         retrievalCounts.count();
-        createSystemColumnDataType(results, systemSchema);
+        createSystemColumnDataType(results);
         retrievalCounts.countIncluded();
       }
     } catch (final SQLException e) {

@@ -375,23 +375,6 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     return tables;
   }
 
-  MutableColumnDataType lookupBaseColumnDataTypeByType(final int baseType) {
-    final SchemaReference systemSchema = new SchemaReference();
-    MutableColumnDataType columnDataType = null;
-    int count = 0;
-    for (final MutableColumnDataType currentColumnDataType : columnDataTypes) {
-      if (baseType == currentColumnDataType.getJavaSqlType().getVendorTypeNumber()
-          && currentColumnDataType.getSchema().equals(systemSchema)) {
-        columnDataType = currentColumnDataType;
-        count = count + 1;
-      }
-    }
-    if (count == 1) {
-      return columnDataType;
-    }
-    return null;
-  }
-
   Optional<MutableRoutine> lookupRoutine(final NamedObjectKey routineLookupKey) {
     return routines.lookup(routineLookupKey);
   }
