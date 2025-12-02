@@ -1,10 +1,9 @@
 # Contributing to SchemaCrawler
 
-I really appreciate your interest in SchemaCrawler. At this point, I am not accepting any pull requests or contributions, since I am trying to figure out copyright and/ or patent issues.
+Thank you for your interest in SchemaCrawler. At present, I am not accepting pull requests or code contributions while I review copyright and patent considerations.
 
-Please feel free to file bug reports and enhancement requests, though, and I will do my best to address them quickly.
+Bug reports and enhancement requests are welcome, and I will address them as promptly as possible.
 
 Thank you.
 
-Sualeh Fatehi 
-@sualeh
+[Sualeh Fatehi](https://sualeh.github.io/)
