@@ -55,18 +55,27 @@ jobs:
         remove-codeql: 'true'
         remove-docker-images: 'true'
     - id: restart-docker
-      name: Restart Docker
+      name: Restart Docker and verify location
       shell: bash
       run: |
         # Restart Docker to take into account additional disk space
         # https://stackoverflow.com/a/71113148/100856
+        echo "Available storage:"
+        df -h /var/lib/docker
+        # Stop Docker
         sudo systemctl stop docker
+        # Move Docker to the large /mnt partition
         sudo rm -rf /var/lib/docker
+        sudo mkdir -p /mnt/docker
+        sudo ln -s /mnt/docker /var/lib/docker
+        # Start Docker
         sudo systemctl start docker
+        # Verify Docker is using the right location
+        docker info 2> /dev/null | grep "Docker Root Dir"
         echo "Docker used space:"
         sudo du -sh /var/lib/docker
         echo "Available storage:"
-        df -h
+        df -h /var/lib/docker
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.6.1
