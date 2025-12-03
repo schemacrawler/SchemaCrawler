@@ -48,14 +48,14 @@ jobs:
       name: Maximize build space
       uses: easimon/maximize-build-space@master
       with:
-        root-reserve-mb: '8192'
+        root-reserve-mb: '12288'
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
     - id: restart-docker
-      name: Restart Docker and verify location
+      name: Restart Docker
       shell: bash
       run: |
         # Restart Docker to take into account additional disk space
@@ -127,6 +127,15 @@ jobs:
           --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \
           clean verify
+    - id: disk-space
+      name: Show disk space
+      shell: bash
+      run: |
+        # Show disk space
+        echo "Docker used space:"
+        sudo du -sh /var/lib/docker
+        echo "Available storage:"
+        df -h
     - id: gather-expected-results
       name: Gather expected results for failed tests
       if: always()
@@ -141,7 +150,7 @@ jobs:
         find . -type d -name "unit_tests_results_output" -exec echo {} \;
         # Save expected results files
         echo "Zip expected results:"
-        .github/scripts/unit-tests-results-output.sh $(realpath .)        
+        .github/scripts/unit-tests-results-output.sh $(realpath .)
     - id: upload-unit-tests-results-output
       name: Upload expected results files
       uses: actions/upload-artifact@v5
