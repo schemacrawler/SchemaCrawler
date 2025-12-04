@@ -231,12 +231,31 @@
               <mainClass>schemacrawler.tools.commandline.utility.GenerateCliSupport</mainClass>
               <arguments>
                 <argument>--output-dir</argument>
-                <argument>${project.build.directory}/_expanded-distribution/cli-support</argument>
+                <argument>${project.build.directory}/generated-cli-support</argument>
                 <argument>--completion-script</argument>
                 <argument>schemacrawler-completion.bash</argument>
               </arguments>
             </configuration>
           </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+        <execution>
+          <id>asciidoc-to-man</id>
+          <phase>prepare-package</phase>
+          <goals>
+          <goal>process-asciidoc</goal>
+          </goals>
+          <configuration>
+          <backend>manpage</backend>
+          <sourceDirectory>${project.build.directory}/generated-cli-support</sourceDirectory>
+          <outputDirectory>${project.build.directory}/_expanded-distribution/cli-support</outputDirectory>
+          </configuration>
+        </execution>
         </executions>
       </plugin>
       <plugin>
