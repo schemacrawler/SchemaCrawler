@@ -50,7 +50,11 @@ COPY \
     . /opt/schemacrawler/
 # Ensure that the SchemaCrawler script is executable
 RUN \
-    chmod +rx /opt/schemacrawler/bin/schemacrawler.sh
+    chmod +rx /opt/schemacrawler/bin/schemacrawler.sh \
+ && mkdir -p /etc/bash_completion.d \
+ && cp \
+      /opt/schemacrawler/cli-support/schemacrawler-completion.bash \
+      /etc/bash_completion.d/schemacrawler
 
 # Run the image as a non-root user, "schcrwlr"
 RUN \

@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.1.8"></a>
+## Release 17.1.8 - 2025-12-06
+- Add bash completion in Docker bash
+
+
 <a name="v17.1.7"></a>
 ## Release 17.1.7 - 2025-12-02
 - Report PostgreSQL user-defined types to be reported correctly - fixes #2190
