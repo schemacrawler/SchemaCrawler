@@ -16,8 +16,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import picocli.AutoComplete;
 import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import picocli.codegen.docgen.manpage.ManPageGenerator;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineCommands;
+import schemacrawler.tools.commandline.command.ConfigFileCommand;
+import schemacrawler.tools.commandline.command.ConnectCommand;
+import schemacrawler.tools.commandline.command.ExecuteCommand;
+import schemacrawler.tools.commandline.command.FilterCommand;
+import schemacrawler.tools.commandline.command.GrepCommand;
+import schemacrawler.tools.commandline.command.LimitCommand;
+import schemacrawler.tools.commandline.command.LoadCommand;
+import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import us.fatehi.utility.UtilityMarker;
@@ -50,12 +59,10 @@ public final class GenerateCliSupport {
       outputDir = createOutputDirectory();
       final Path completionScript = outputDir.resolve(completionScriptFilename).toAbsolutePath();
 
-      final CommandLine commandLine = createCommandLine();
-
-      if (generateAsciiDoc(commandLine)) {
+      if (generateAsciiDoc()) {
         isErrored = true;
       }
-      if (generateAutoComplete(commandLine, completionScript)) {
+      if (generateAutoComplete(completionScript)) {
         isErrored = true;
       }
 
@@ -73,20 +80,38 @@ public final class GenerateCliSupport {
       return outputDir.toAbsolutePath();
     }
 
-    private CommandLine createCommandLine() {
+    private CommandLine createCommandLine(final Object commands) {
       final ShellState state = new ShellState();
       final StateFactory stateFactory = new StateFactory(state);
-      final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
       return CommandLineUtility.newCommandLine(commands, stateFactory);
     }
 
-    private boolean generateAsciiDoc(final CommandLine commandLine) {
+    private boolean generateAsciiDoc() {
+
+      @Command(
+          name = "schemacrawler",
+          subcommands = {
+            ConfigFileCommand.class,
+            ConnectCommand.class,
+            FilterCommand.class,
+            GrepCommand.class,
+            LimitCommand.class,
+            LoadCommand.class,
+            ExecuteCommand.class,
+            LogCommand.class,
+          })
+      final class SchemaCrawlerCli {}
+
       boolean isErrored = false;
       final boolean[] verbosity = new boolean[3];
       Arrays.fill(verbosity, true);
       try {
         ManPageGenerator.generateManPage(
-            outputDir.toFile(), null, verbosity, true, commandLine.getCommandSpec());
+            outputDir.toFile(),
+            null,
+            verbosity,
+            true,
+            createCommandLine(new SchemaCrawlerCli()).getCommandSpec());
       } catch (final IOException e) {
         isErrored = true;
         LOGGER.log(Level.SEVERE, "Could not generate man pages in AsciiDoc format", e);
@@ -94,10 +119,10 @@ public final class GenerateCliSupport {
       return isErrored;
     }
 
-    private boolean generateAutoComplete(
-        final CommandLine commandLine, final Path completionScript) {
+    private boolean generateAutoComplete(final Path completionScript) {
       boolean isErrored = false;
       try {
+        final CommandLine commandLine = createCommandLine(new SchemaCrawlerCommandLineCommands());
         AutoComplete.bash("schemacrawler", completionScript.toFile(), null, commandLine);
       } catch (final IOException e) {
         isErrored = true;
