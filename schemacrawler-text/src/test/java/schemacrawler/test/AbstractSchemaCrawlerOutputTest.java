@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schema.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;

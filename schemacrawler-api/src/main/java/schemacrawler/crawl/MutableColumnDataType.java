@@ -21,7 +21,7 @@ import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import us.fatehi.utility.string.StringFormat;
 
 /**

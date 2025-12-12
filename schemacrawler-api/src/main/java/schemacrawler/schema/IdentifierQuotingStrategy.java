@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.schema;
 
 public enum IdentifierQuotingStrategy {
   quote_none,

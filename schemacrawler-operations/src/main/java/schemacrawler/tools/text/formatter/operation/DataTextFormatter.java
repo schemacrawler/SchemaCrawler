@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.crawl.RetrievalCounts;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
