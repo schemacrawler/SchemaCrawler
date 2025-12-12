@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.command.text.operation;
 
-import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
+import static schemacrawler.schema.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.database.DatabaseUtility.createStatement;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;

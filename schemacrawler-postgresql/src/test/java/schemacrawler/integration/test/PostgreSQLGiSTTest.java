@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
+import static schemacrawler.schema.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;

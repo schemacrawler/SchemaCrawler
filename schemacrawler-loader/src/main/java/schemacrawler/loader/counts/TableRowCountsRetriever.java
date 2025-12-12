@@ -10,7 +10,7 @@ package schemacrawler.loader.counts;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.counts.TableRowCountsUtility.addRowCountToTable;
-import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
+import static schemacrawler.schema.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 import java.sql.Connection;
 import java.sql.SQLException;
