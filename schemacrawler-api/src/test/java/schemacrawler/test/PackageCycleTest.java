@@ -21,6 +21,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
+import schemacrawler.schema.NamedObject;
 
 /**
  * ArchUnit tests to ensure package architecture and prevent package cycles in schemacrawler-api.
@@ -72,7 +73,7 @@ public class PackageCycleTest {
         .that()
         .resideInAPackage("schemacrawler.schema..")
         .and()
-        .implement(com.tngtech.archunit.core.domain.JavaClass.Predicates.assignableTo("schemacrawler.schema.NamedObject"))
+        .implement(com.tngtech.archunit.core.domain.JavaClass.Predicates.assignableTo(NamedObject.class))
         .should()
         .dependOnClassesThat()
         .resideInAPackage("schemacrawler.schemacrawler..")
