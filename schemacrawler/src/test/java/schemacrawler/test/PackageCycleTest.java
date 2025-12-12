@@ -10,17 +10,16 @@ package schemacrawler.test;
 
 import static com.tngtech.archunit.core.importer.ImportOption.Predefined.DO_NOT_INCLUDE_TESTS;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
-import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+import com.tngtech.archunit.core.domain.JavaClass;
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.importer.ClassFileImporter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
 import schemacrawler.schema.NamedObject;
 
 /**
@@ -45,9 +44,9 @@ public class PackageCycleTest {
   }
 
   /**
-   * Test that Identifiers classes are NOT in the schemacrawler.schemacrawler package. This
-   * prevents a package cycle where schema depended on schemacrawler.Identifiers and schemacrawler
-   * depended on schema entities.
+   * Test that Identifiers classes are NOT in the schemacrawler.schemacrawler package. This prevents
+   * a package cycle where schema depended on schemacrawler.Identifiers and schemacrawler depended
+   * on schema entities.
    */
   @Test
   public void identifiersClassesAreNotInSchemaCrawlerPackage() {
@@ -57,7 +56,8 @@ public class PackageCycleTest {
         .should()
         .resideInAPackage("schemacrawler.schemacrawler..")
         .because(
-            "Identifiers classes should be in schema package to avoid package cycle - they were moved there in the refactoring")
+            "Identifiers classes should be in schema package to avoid package cycle - they were"
+                + " moved there in the refactoring")
         .check(classes);
   }
 
@@ -73,7 +73,7 @@ public class PackageCycleTest {
         .that()
         .resideInAPackage("schemacrawler.schema..")
         .and()
-        .implement(com.tngtech.archunit.core.domain.JavaClass.Predicates.assignableTo(NamedObject.class))
+        .implement(JavaClass.Predicates.assignableTo(NamedObject.class))
         .should()
         .dependOnClassesThat()
         .resideInAPackage("schemacrawler.schemacrawler..")
@@ -82,7 +82,8 @@ public class PackageCycleTest {
         .andShould()
         .haveSimpleNameNotContaining("Exception")
         .because(
-            "schema domain entities should not depend on concrete schemacrawler classes to avoid tight coupling")
+            "schema domain entities should not depend on concrete schemacrawler classes to avoid"
+                + " tight coupling")
         .allowEmptyShould(true)
         .check(classes);
   }
