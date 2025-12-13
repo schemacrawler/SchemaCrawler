@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.model.implementation.MutableTable;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.text.options.DatabaseObjectColorMap;
