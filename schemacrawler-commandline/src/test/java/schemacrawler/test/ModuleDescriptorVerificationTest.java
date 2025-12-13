@@ -32,9 +32,11 @@ public class ModuleDescriptorVerificationTest {
    */
   @Test
   public void testJarContainsModuleInfoWithoutCrawlExport() throws Exception {
+    // Get version dynamically from the Version class
+    final String version = schemacrawler.Version.version().getProductVersion();
+    
     // Find the schemacrawler jar in the local Maven repository
     final String userHome = System.getProperty("user.home");
-    final String version = "17.1.7"; // This should match the project version
     final Path schemacrawlerJarPath =
         Paths.get(
             userHome,
