@@ -122,8 +122,6 @@ public class ModuleEncapsulationTest {
     }
   }
 
-
-
   /**
    * Positive test: Verifies that public API classes are still accessible. This ensures our module
    * configuration exports the right packages.
