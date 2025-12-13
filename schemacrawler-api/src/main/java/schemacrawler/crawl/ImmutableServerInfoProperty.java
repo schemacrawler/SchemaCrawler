@@ -12,7 +12,7 @@ import java.io.Serial;
 import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.PropertyName;
 
-final class ImmutableServerInfoProperty extends AbstractProperty {
+public final class ImmutableServerInfoProperty extends AbstractProperty {
 
   @Serial private static final long serialVersionUID = -2744384718272515235L;
 

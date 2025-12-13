@@ -8,10 +8,16 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import schemacrawler.model.implementation.MutableColumnDataType;
+import schemacrawler.model.implementation.MutableResultsColumn;
+import schemacrawler.model.implementation.MutableResultsColumns;
+import schemacrawler.model.implementation.NamedObjectList;
+import schemacrawler.model.implementation.TablePartial;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;

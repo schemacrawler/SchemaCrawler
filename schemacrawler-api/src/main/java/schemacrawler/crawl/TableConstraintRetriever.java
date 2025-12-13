@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
@@ -17,6 +18,11 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableConstraintsRetrievalStrategy;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableTableConstraint;
+import schemacrawler.model.implementation.MutableTableConstraintColumn;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

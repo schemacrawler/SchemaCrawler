@@ -8,11 +8,18 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 import static schemacrawler.utility.MetaDataUtility.isView;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutablePrimaryKey;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableTableConstraintColumn;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

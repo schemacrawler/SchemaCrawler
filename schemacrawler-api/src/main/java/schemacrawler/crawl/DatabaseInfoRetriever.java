@@ -8,12 +8,16 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Collections.sort;
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
 import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableDatabaseInfo;
+import schemacrawler.model.implementation.MutableJdbcDriverInfo;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;

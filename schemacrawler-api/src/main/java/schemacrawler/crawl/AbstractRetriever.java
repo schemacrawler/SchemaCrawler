@@ -16,12 +16,19 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.utility.MetaDataUtility.inclusionRuleString;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumnDataType;
+import schemacrawler.model.implementation.MutableRoutine;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumnDataType;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;

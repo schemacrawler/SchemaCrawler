@@ -8,7 +8,14 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
+import schemacrawler.model.implementation.AbstractDatabaseObject;
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableRoutine;
+import schemacrawler.model.implementation.MutableSynonym;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

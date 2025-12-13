@@ -8,11 +8,18 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMN_PRIVILEGES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_PRIVILEGES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
 
+import schemacrawler.model.implementation.ColumnPointer;
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutablePrivilege;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.TablePointer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

@@ -8,12 +8,18 @@
 
 package schemacrawler.crawl;
 
+
 import static java.sql.DatabaseMetaData.procedureNullableUnknown;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableProcedure;
+import schemacrawler.model.implementation.MutableProcedureParameter;
+import schemacrawler.model.implementation.MutableRoutine;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;

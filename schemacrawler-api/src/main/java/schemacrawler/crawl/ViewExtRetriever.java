@@ -8,11 +8,15 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewInformationRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.viewTableUsageRetrievalStrategy;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableView;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

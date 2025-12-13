@@ -8,10 +8,12 @@
 
 package schemacrawler.crawl;
 
+
+import schemacrawler.model.implementation.AbstractNamedObjectWithAttributes;
 import java.io.Serial;
 import schemacrawler.schema.DatabaseUser;
 
-final class ImmutableDatabaseUser extends AbstractNamedObjectWithAttributes
+public final class ImmutableDatabaseUser extends AbstractNamedObjectWithAttributes
     implements DatabaseUser {
 
   /** */

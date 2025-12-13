@@ -28,7 +28,7 @@ import us.fatehi.utility.property.AbstractProperty;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.property.PropertyName;
 
-class ImmutableDatabaseProperty extends AbstractProperty {
+public class ImmutableDatabaseProperty extends AbstractProperty {
 
   @Serial private static final long serialVersionUID = -7150431683440256142L;
 

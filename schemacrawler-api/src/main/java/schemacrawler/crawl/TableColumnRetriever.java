@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+
 import static java.sql.DatabaseMetaData.columnNullable;
 import static java.sql.DatabaseMetaData.columnNullableUnknown;
 import static java.util.Objects.requireNonNull;
@@ -16,6 +17,10 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

@@ -8,12 +8,18 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableAdditionalAttributesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnAdditionalAttributesRetrievalStrategy;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutableColumnDataType;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

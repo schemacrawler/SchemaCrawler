@@ -1,0 +1,27 @@
+/*
+ * SchemaCrawler
+ * http://www.schemacrawler.com
+ * Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
+package schemacrawler.model.implementation;
+
+
+import schemacrawler.crawl.SchemaCrawler;
+
+import java.io.Serial;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureParameter;
+
+/** Represents a column in a database procedure. Created from metadata returned by a JDBC call. */
+public final class MutableProcedureParameter extends MutableRoutineParameter<Procedure>
+    implements ProcedureParameter {
+
+  @Serial private static final long serialVersionUID = 3546361725629772857L;
+
+  public MutableProcedureParameter(final Procedure parent, final String name) {
+    super(new ProcedurePointer(parent), name);
+  }
+}

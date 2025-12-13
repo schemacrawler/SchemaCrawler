@@ -8,12 +8,16 @@
 
 package schemacrawler.crawl;
 
+
 import static java.sql.DatabaseMetaData.typeNullable;
 import static java.sql.DatabaseMetaData.typeNullableUnknown;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumnDataType;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

@@ -8,10 +8,15 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.crawl.MutablePrimaryKey.newAlternateKey;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutablePrimaryKey;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableTableConstraintColumn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

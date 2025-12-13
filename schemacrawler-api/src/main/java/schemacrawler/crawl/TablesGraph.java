@@ -8,8 +8,12 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.utility.MetaDataUtility.isView;
 
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableView;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

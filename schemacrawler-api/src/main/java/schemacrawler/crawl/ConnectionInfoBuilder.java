@@ -8,9 +8,12 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.model.implementation.MutableDatabaseInfo;
+import schemacrawler.model.implementation.MutableJdbcDriverInfo;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;

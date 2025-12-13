@@ -8,11 +8,15 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINE_REFERENCES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routineReferencesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.routinesRetrievalStrategy;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableRoutine;
+import schemacrawler.model.implementation.MutableTable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

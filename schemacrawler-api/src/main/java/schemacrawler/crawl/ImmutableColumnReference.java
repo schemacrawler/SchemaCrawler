@@ -16,7 +16,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 
 /** Represents a single column mapping from a primary key column to a foreign key column. */
-final class ImmutableColumnReference implements ColumnReference {
+public final class ImmutableColumnReference implements ColumnReference {
 
   @Serial private static final long serialVersionUID = -4411771492159843382L;
 

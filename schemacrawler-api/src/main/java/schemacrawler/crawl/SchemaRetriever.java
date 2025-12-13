@@ -8,9 +8,11 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 import static us.fatehi.utility.database.DatabaseUtility.readResultsVector;
 
+import schemacrawler.model.implementation.MutableCatalog;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

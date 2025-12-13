@@ -8,11 +8,14 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.crawl.RetrieverUtility.lookupOrCreateColumn;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableWeakAssociation;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;

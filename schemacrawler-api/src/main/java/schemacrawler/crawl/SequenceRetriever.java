@@ -8,7 +8,11 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableSequence;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;

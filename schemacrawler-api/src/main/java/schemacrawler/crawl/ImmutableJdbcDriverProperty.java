@@ -26,7 +26,7 @@ import us.fatehi.utility.property.PropertyName;
  * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call,
  * and other sources of information.
  */
-final class ImmutableJdbcDriverProperty extends AbstractProperty implements JdbcDriverProperty {
+public final class ImmutableJdbcDriverProperty extends AbstractProperty implements JdbcDriverProperty {
 
   @Serial private static final long serialVersionUID = 8030156654422512161L;
   private final List<String> choices;

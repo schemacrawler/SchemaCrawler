@@ -8,6 +8,9 @@
 
 package schemacrawler.crawl;
 
+
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableTable;
 import java.sql.SQLException;
 import java.util.Collection;
 import schemacrawler.schema.DatabaseObject;

@@ -8,8 +8,13 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutablePrimaryKey;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Map.Entry;

@@ -8,9 +8,12 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.model.implementation.ColumnPartial;
+import schemacrawler.model.implementation.TablePartial;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;

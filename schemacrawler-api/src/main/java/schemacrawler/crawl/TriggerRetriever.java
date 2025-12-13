@@ -8,11 +8,15 @@
 
 package schemacrawler.crawl;
 
+
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.triggersRetrievalStrategy;
 import static us.fatehi.utility.EnumUtility.enumValues;
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableTrigger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

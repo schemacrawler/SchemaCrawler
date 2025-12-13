@@ -8,12 +8,20 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.model.implementation.ColumnPartial;
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutableIndex;
+import schemacrawler.model.implementation.MutableIndexColumn;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

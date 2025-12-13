@@ -8,6 +8,7 @@
 
 package schemacrawler.crawl;
 
+
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
 import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
@@ -54,6 +55,12 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveUserDefine
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableDatabaseInfo;
+import schemacrawler.model.implementation.MutableJdbcDriverInfo;
+import schemacrawler.model.implementation.MutableRoutine;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
