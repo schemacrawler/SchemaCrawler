@@ -14,15 +14,16 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
+import schemacrawler.Version;
+import us.fatehi.test.utility.TestUtility;
 
 /**
- * Integration test to verify the schemacrawler module descriptor by inspecting the actual jar
- * file. This test uses the jar command to examine the module-info.class.
+ * Integration test to verify the schemacrawler module descriptor by inspecting the actual jar file.
+ * This test uses the jar command to examine the module-info.class.
  */
 public class ModuleDescriptorVerificationTest {
 
@@ -33,37 +34,22 @@ public class ModuleDescriptorVerificationTest {
   @Test
   public void testJarContainsModuleInfoWithoutCrawlExport() throws Exception {
     // Get version dynamically from the Version class
-    final String version = schemacrawler.Version.version().getProductVersion();
-    
-    // Find the schemacrawler jar in the local Maven repository
-    final String userHome = System.getProperty("user.home");
-    final Path schemacrawlerJarPath =
-        Paths.get(
-            userHome,
-            ".m2",
-            "repository",
-            "us",
-            "fatehi",
-            "schemacrawler",
-            version,
-            "schemacrawler-" + version + ".jar");
+    final String version = Version.version().getProductVersion();
 
-    final File jarFile = schemacrawlerJarPath.toFile();
-    if (!jarFile.exists()) {
-      // Jar not yet built or not in repository - skip test
-      System.out.println(
-          "Skipping test: schemacrawler jar not found at " + schemacrawlerJarPath);
-      return;
-    }
+    // Find the schemacrawler jar in the local Maven repository
+    final Path projectRoot = TestUtility.buildDirectory().getParent().getParent();
+    final Path schemacrawlerJarPath =
+        projectRoot.resolve(
+            Paths.get("schemacrawler", "target", "schemacrawler-" + version + ".jar"));
 
     // Use java command to examine module descriptor
     final ProcessBuilder pb =
         new ProcessBuilder(
             "java",
             "--module-path",
-            jarFile.getAbsolutePath(),
+            schemacrawlerJarPath.toAbsolutePath().toString(),
             "--describe-module",
-            "us.fatehi.schemacrawler");
+            "us.fatehi.schemacrawler.schemacrawler");
     pb.redirectErrorStream(true);
     final Process process = pb.start();
 

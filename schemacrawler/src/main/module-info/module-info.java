@@ -6,7 +6,22 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-module us.fatehi.schemacrawler {
+module us.fatehi.schemacrawler.schemacrawler {
+  // Required modules
+  requires java.sql;
+  requires java.logging;
+
+  // Export public API packages from schemacrawler-utility
+  exports us.fatehi.utility.database;
+  exports us.fatehi.utility.datasource;
+  exports us.fatehi.utility.graph;
+  exports us.fatehi.utility.html;
+  exports us.fatehi.utility.ioresource;
+  exports us.fatehi.utility.property;
+  exports us.fatehi.utility.readconfig;
+  exports us.fatehi.utility.scheduler;
+  exports us.fatehi.utility.string;
+
   // Export public API packages from schemacrawler-api
   exports schemacrawler.schema;
   exports schemacrawler.schemacrawler;
@@ -15,6 +30,7 @@ module us.fatehi.schemacrawler {
   exports schemacrawler.inclusionrule;
   exports schemacrawler.plugin;
   exports schemacrawler.utility;
+  // Do NOT export schemacrawler.crawl - this is an internal implementation package
 
   // Export public API packages from schemacrawler-tools
   exports schemacrawler.tools.catalogloader;
@@ -46,24 +62,7 @@ module us.fatehi.schemacrawler {
   exports schemacrawler.tools.command.text.embeddeddiagram;
   exports schemacrawler.tools.text.formatter.diagram;
 
-  // Export public API packages from schemacrawler-utility
-  exports us.fatehi.utility.database;
-  exports us.fatehi.utility.datasource;
-  exports us.fatehi.utility.graph;
-  exports us.fatehi.utility.html;
-  exports us.fatehi.utility.ioresource;
-  exports us.fatehi.utility.property;
-  exports us.fatehi.utility.readconfig;
-  exports us.fatehi.utility.scheduler;
-  exports us.fatehi.utility.string;
-
-  // Do NOT export schemacrawler.crawl - this is an internal implementation package
-
   // ServiceLoader providers
   uses schemacrawler.tools.catalogloader.CatalogLoader;
   uses schemacrawler.tools.executable.CommandProvider;
-
-  // Required modules
-  requires java.sql;
-  requires java.logging;
 }
