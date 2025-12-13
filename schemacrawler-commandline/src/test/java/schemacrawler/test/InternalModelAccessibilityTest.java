@@ -22,8 +22,19 @@ import org.junit.jupiter.api.Test;
  * <p>This test ensures that the mutable model implementation classes remain internal
  * implementation details and are not part of the public API.
  *
- * <p>When JPMS (Java Platform Module System) is enabled, these classes should not be
- * accessible due to the package not being exported from the module descriptor.
+ * <p>The schemacrawler.model.implementation package is not exported from the module descriptor
+ * (configured via moditect-maven-plugin). This test verifies encapsulation by checking that
+ * internal classes cannot be loaded via Class.forName().
+ *
+ * <p><strong>Note:</strong> Class.forName() behavior differs between classpath and module path:
+ * <ul>
+ *   <li>On the <strong>classpath</strong>: Classes remain accessible regardless of module exports,
+ *       but this test may still pass if dependencies are properly isolated</li>
+ *   <li>On the <strong>module path</strong>: Non-exported packages are strictly inaccessible,
+ *       and Class.forName() will throw ClassNotFoundException</li>
+ * </ul>
+ *
+ * <p>This test validates proper dependency isolation and documents the expected JPMS behavior.
  */
 public class InternalModelAccessibilityTest {
 
@@ -31,8 +42,13 @@ public class InternalModelAccessibilityTest {
    * Test that internal model implementation classes cannot be directly imported or accessed.
    *
    * <p>This test uses reflection to verify that the internal implementation package is not
-   * accessible from this module. When JPMS is enabled, attempting to access classes from
-   * non-exported packages should fail.
+   * accessible from this module. The schemacrawler.model.implementation package is not exported
+   * in the module descriptor, so these classes should not be accessible via Class.forName().
+   *
+   * <p>When running on the module path with JPMS enabled, all internal classes should throw
+   * ClassNotFoundException. When running on the classpath, the test validates proper dependency
+   * isolation - the schemacrawler-commandline module should not have direct access to
+   * schemacrawler-api internals.
    */
   @Test
   public void internalModelShouldNotBeAccessible() {
@@ -53,15 +69,17 @@ public class InternalModelAccessibilityTest {
     };
 
     int inaccessibleCount = 0;
+    int accessibleCount = 0;
     
     for (final String className : internalClasses) {
       try {
         // Attempt to load the class
         final Class<?> clazz = Class.forName(className);
         
-        // If we reach here, the class is accessible (which may happen in some
-        // build configurations where all dependencies are flattened)
-        // This is not ideal, but documents the current state
+        // If we reach here, the class is accessible
+        // This should NOT happen when running on the module path with JPMS
+        // On classpath, this indicates the dependency isolation is not complete
+        accessibleCount++;
         
       } catch (final ClassNotFoundException e) {
         // This is the EXPECTED and DESIRED behavior!
@@ -71,16 +89,16 @@ public class InternalModelAccessibilityTest {
       }
     }
     
-    // Assert that all or most internal classes are not accessible
-    // In a properly configured build, all should be inaccessible
+    // All internal classes should be inaccessible for proper encapsulation
+    // On the module path with JPMS: all classes must be inaccessible (strict enforcement)
+    // On the classpath: all classes should be inaccessible (proper dependency isolation)
     assertThat(
-        "Internal model classes should not be accessible from external modules. " +
-        inaccessibleCount + " out of " + internalClasses.length + " are properly hidden.",
-        inaccessibleCount > 0,
-        is(true));
-    
-    // Ideally, with proper JPMS configuration (module-info.java that does NOT export
-    // schemacrawler.model.implementation), all internal classes should be inaccessible
+        "All internal model classes must be inaccessible from external modules. " +
+        "Found " + inaccessibleCount + " inaccessible and " + accessibleCount + " accessible " +
+        "out of " + internalClasses.length + " total. " +
+        "When JPMS is active, all internal classes should throw ClassNotFoundException.",
+        inaccessibleCount,
+        is(internalClasses.length));
   }
 
   /**

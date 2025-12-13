@@ -17,8 +17,10 @@
  * should not be used directly by external code. The public API exposes only the immutable interface
  * types from the {@link schemacrawler.schema} package.
  *
- * <p>When JPMS (Java Platform Module System) is fully adopted, this package will not be exported
- * from the module, ensuring that these implementation details remain encapsulated.
+ * <p>This package is not exported from the module, ensuring that these implementation details
+ * remain encapsulated when using JPMS (Java Platform Module System). The moditect-maven-plugin
+ * configuration in the schemacrawler module explicitly excludes this package from the module
+ * exports, providing proper encapsulation on the module path.
  *
  * <p>Package contents include:
  *
