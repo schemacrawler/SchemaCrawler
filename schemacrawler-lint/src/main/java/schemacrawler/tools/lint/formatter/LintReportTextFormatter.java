@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;

@@ -11,7 +11,7 @@ package schemacrawler.tools.text.options;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schema.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigOptionsBuilder;

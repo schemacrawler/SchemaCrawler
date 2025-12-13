@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.schema;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
@@ -16,10 +16,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.regex.Pattern;
-import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.DependantObject;
-import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Options;
 
 /**
  * Allows working with database object identifiers. All SQL 2003 keywords are considered

@@ -17,7 +17,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;

@@ -10,7 +10,7 @@ package schemacrawler.tools.text.formatter.base;
 
 import static us.fatehi.utility.Utility.isBlank;
 import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
