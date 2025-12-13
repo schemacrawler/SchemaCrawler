@@ -8,11 +8,9 @@
 
 package schemacrawler.model.implementation;
 
-
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.NotLoadedException;
-
 import static java.util.Objects.requireNonNull;
+
+import schemacrawler.crawl.NotLoadedException;
 
 import java.io.Serial;
 import java.util.Collection;
