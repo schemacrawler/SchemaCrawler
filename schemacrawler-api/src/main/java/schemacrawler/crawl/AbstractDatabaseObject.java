@@ -18,7 +18,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TypedObject;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 
 /** Represents a database object. */
 abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes

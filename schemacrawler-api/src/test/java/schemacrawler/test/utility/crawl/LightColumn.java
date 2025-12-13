@@ -27,7 +27,7 @@ import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
 
 public class LightColumn implements Column {

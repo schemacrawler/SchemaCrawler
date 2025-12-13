@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.command.text.operation;
 
-import static schemacrawler.schemacrawler.IdentifierQuotingStrategy.quote_all;
+import static schemacrawler.schema.IdentifierQuotingStrategy.quote_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.database.DatabaseUtility.createStatement;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
@@ -22,8 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.IdentifiersBuilder;
+import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;

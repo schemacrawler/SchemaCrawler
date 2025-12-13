@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
 import us.fatehi.utility.datasource.DatabaseServerType;

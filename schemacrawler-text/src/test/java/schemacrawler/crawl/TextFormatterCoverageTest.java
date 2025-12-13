@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;

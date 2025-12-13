@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.TypeMap;

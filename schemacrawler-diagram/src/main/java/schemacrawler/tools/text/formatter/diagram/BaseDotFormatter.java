@@ -17,7 +17,7 @@ import static us.fatehi.utility.html.TagOutputFormat.html;
 import java.util.Map;
 import java.util.Map.Entry;
 import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;

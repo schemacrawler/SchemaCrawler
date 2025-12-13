@@ -10,7 +10,7 @@ package schemacrawler.tools.text.options;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schema.IdentifierQuotingStrategy;
 import schemacrawler.tools.executable.CommandOptions;
 
 public abstract class BaseTextOptions implements CommandOptions {

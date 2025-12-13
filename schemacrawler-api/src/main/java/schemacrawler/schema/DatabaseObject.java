@@ -8,8 +8,6 @@
 
 package schemacrawler.schema;
 
-import schemacrawler.schemacrawler.Identifiers;
-
 /** Represents a database object. */
 public interface DatabaseObject extends NamedObject, AttributedObject, DescribedObject {
 

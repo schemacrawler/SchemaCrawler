@@ -50,9 +50,19 @@ public class GettersSettersTest {
   }
 
   // Configured for expectation, so we know when a class gets added or removed.
-  private static final int EXPECTED_CLASS_COUNT = 53;
+  private static final int EXPECTED_CLASS_COUNT = 56;
 
   private static final String PACKAGE_SCHEMACRAWLER_SCHEMA = "schemacrawler.schema";
+
+  // Classes that should be excluded from accessor validation (value objects, enums, etc.)
+  private static final String[] EXCLUDED_CLASSES = {
+    "NamedObjectKey",
+    "JavaSqlType",
+    "TableTypes",
+    "Identifiers",
+    "IdentifiersBuilder",
+    "IdentifierQuotingStrategy"
+  };
 
   @Test
   public void accessors() {
@@ -71,8 +81,6 @@ public class GettersSettersTest {
             .with(new GetterTester())
             .build();
 
-    validator.validate(
-        PACKAGE_SCHEMACRAWLER_SCHEMA,
-        new FilterPackageClasses("NamedObjectKey", "JavaSqlType", "TableTypes"));
+    validator.validate(PACKAGE_SCHEMACRAWLER_SCHEMA, new FilterPackageClasses(EXCLUDED_CLASSES));
   }
 }
