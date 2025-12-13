@@ -18,6 +18,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import schemacrawler.model.implementation.MutableCatalog;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;

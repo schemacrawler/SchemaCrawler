@@ -11,6 +11,8 @@ package schemacrawler.crawl;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;

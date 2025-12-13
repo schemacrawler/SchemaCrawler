@@ -15,6 +15,18 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import schemacrawler.model.implementation.ColumnPartial;
+import schemacrawler.model.implementation.ColumnPointer;
+import schemacrawler.model.implementation.FunctionPartial;
+import schemacrawler.model.implementation.FunctionPointer;
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutableForeignKey;
+import schemacrawler.model.implementation.MutableFunction;
+import schemacrawler.model.implementation.MutableProcedure;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.ProcedurePartial;
+import schemacrawler.model.implementation.ProcedurePointer;
+import schemacrawler.model.implementation.TablePartial;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Column;

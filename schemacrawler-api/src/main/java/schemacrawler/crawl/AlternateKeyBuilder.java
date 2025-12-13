@@ -10,7 +10,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.crawl.MutablePrimaryKey.newAlternateKey;
+import static schemacrawler.model.implementation.MutablePrimaryKey.newAlternateKey;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import schemacrawler.model.implementation.MutableColumn;

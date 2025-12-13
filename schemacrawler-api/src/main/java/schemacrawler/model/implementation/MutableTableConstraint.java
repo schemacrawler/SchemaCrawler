@@ -75,25 +75,25 @@ public class MutableTableConstraint extends AbstractDependantObject<Table> imple
     return initiallyDeferred;
   }
 
-  final void addColumn(final MutableTableConstraintColumn column) {
+  public final void addColumn(final MutableTableConstraintColumn column) {
     columns.add(column);
   }
 
-  final void setDeferrable(final boolean deferrable) {
+  public final void setDeferrable(final boolean deferrable) {
     this.deferrable = deferrable;
   }
 
-  final void setDefinition(final String definition) {
+  public final void setDefinition(final String definition) {
     if (!hasDefinition() && !isBlank(definition)) {
       this.definition = definition;
     }
   }
 
-  final void setInitiallyDeferred(final boolean initiallyDeferred) {
+  public final void setInitiallyDeferred(final boolean initiallyDeferred) {
     this.initiallyDeferred = initiallyDeferred;
   }
 
-  final void setTableConstraintType(final TableConstraintType tableConstraintType) {
+  public final void setTableConstraintType(final TableConstraintType tableConstraintType) {
     this.tableConstraintType = tableConstraintType;
   }
 }

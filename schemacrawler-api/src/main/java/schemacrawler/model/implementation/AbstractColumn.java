@@ -143,19 +143,19 @@ public abstract class AbstractColumn<P extends DatabaseObject> extends AbstractD
     return nullable;
   }
 
-  final void setColumnDataType(final ColumnDataType columnDataType) {
+  public final void setColumnDataType(final ColumnDataType columnDataType) {
     this.columnDataType = columnDataType;
   }
 
-  final void setDecimalDigits(final int decimalDigits) {
+  public final void setDecimalDigits(final int decimalDigits) {
     this.decimalDigits = decimalDigits;
   }
 
-  final void setNullable(final boolean nullable) {
+  public final void setNullable(final boolean nullable) {
     this.nullable = nullable;
   }
 
-  final void setOrdinalPosition(final int ordinalPosition) {
+  public final void setOrdinalPosition(final int ordinalPosition) {
     this.ordinalPosition = ordinalPosition;
   }
 
@@ -164,7 +164,7 @@ public abstract class AbstractColumn<P extends DatabaseObject> extends AbstractD
    *
    * @param size Size of the column
    */
-  final void setSize(final int size) {
+  public final void setSize(final int size) {
     this.size = size;
   }
 }

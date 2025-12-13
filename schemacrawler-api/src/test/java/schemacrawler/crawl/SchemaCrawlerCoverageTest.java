@@ -24,6 +24,8 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static us.fatehi.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static us.fatehi.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
 
+import schemacrawler.model.implementation.MutableFunction;
+import schemacrawler.model.implementation.MutableTableConstraint;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Optional;

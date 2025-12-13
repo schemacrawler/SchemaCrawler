@@ -13,6 +13,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableDatabaseInfo;
+import schemacrawler.model.implementation.MutableJdbcDriverInfo;
+import schemacrawler.model.implementation.MutableRoutine;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

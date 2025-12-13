@@ -15,6 +15,13 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
+import schemacrawler.model.implementation.MutableColumn;
+import schemacrawler.model.implementation.MutableForeignKey;
+import schemacrawler.model.implementation.MutableIndex;
+import schemacrawler.model.implementation.MutablePrimaryKey;
+import schemacrawler.model.implementation.MutablePrivilege;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableTrigger;
 import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;

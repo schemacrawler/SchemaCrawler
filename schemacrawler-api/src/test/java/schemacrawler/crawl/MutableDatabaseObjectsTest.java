@@ -14,6 +14,12 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import schemacrawler.model.implementation.MutableFunction;
+import schemacrawler.model.implementation.MutableProcedure;
+import schemacrawler.model.implementation.MutableSequence;
+import schemacrawler.model.implementation.MutableSynonym;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableView;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;

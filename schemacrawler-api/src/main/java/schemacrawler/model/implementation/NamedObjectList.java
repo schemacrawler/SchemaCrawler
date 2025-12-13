@@ -95,7 +95,7 @@ public final class NamedObjectList<N extends NamedObject> implements Serializabl
 
       private final Iterator<N> iterator;
 
-      UnmodifiableIterator(final Iterator<N> iterator) {
+      public UnmodifiableIterator(final Iterator<N> iterator) {
         this.iterator = iterator;
       }
 
@@ -146,22 +146,22 @@ public final class NamedObjectList<N extends NamedObject> implements Serializabl
    *
    * @param namedObject Named object
    */
-  boolean add(final N namedObject) {
+  public boolean add(final N namedObject) {
     requireNonNull(namedObject, "Cannot add a null object to the list");
     final NamedObjectKey key = makeLookupKey(namedObject);
     objects.put(key, namedObject);
     return true;
   }
 
-  boolean contains(final NamedObject namedObject) {
+  public boolean contains(final NamedObject namedObject) {
     return objects.containsKey(makeLookupKey(namedObject));
   }
 
-  boolean isEmpty() {
+  public boolean isEmpty() {
     return objects.isEmpty();
   }
 
-  Optional<N> lookup(final NamedObject namedObject, final String name) {
+  public Optional<N> lookup(final NamedObject namedObject, final String name) {
     final NamedObjectKey key = makeLookupKey(namedObject, name);
     return internalGet(key);
   }
@@ -172,7 +172,7 @@ public final class NamedObjectList<N extends NamedObject> implements Serializabl
    * @param lookupKey Internal lookup key
    * @return Named object
    */
-  Optional<N> lookup(final NamedObjectKey lookupKey) {
+  public Optional<N> lookup(final NamedObjectKey lookupKey) {
     return internalGet(lookupKey);
   }
 
@@ -185,7 +185,7 @@ public final class NamedObjectList<N extends NamedObject> implements Serializabl
    *
    * @return Number of elements in this list.
    */
-  int size() {
+  public int size() {
     return objects.size();
   }
 
@@ -194,7 +194,7 @@ public final class NamedObjectList<N extends NamedObject> implements Serializabl
    *
    * @return All named objects
    */
-  List<N> values() {
+  public List<N> values() {
     final List<N> all = new ArrayList<>(objects.values());
     all.sort(naturalOrder());
     return all;

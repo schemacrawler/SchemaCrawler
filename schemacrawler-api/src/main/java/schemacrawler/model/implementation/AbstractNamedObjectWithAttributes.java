@@ -118,7 +118,7 @@ public abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObj
     setAttribute(REMARKS_ATTRIBUTE, trimToEmpty(remarks));
   }
 
-  protected final void addAttributes(final Map<String, Object> values) {
+  public final void addAttributes(final Map<String, Object> values) {
     if (values == null) {
       return;
     }

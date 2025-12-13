@@ -25,11 +25,11 @@ public final class MutablePrimaryKey extends MutableTableConstraint implements P
 
   @Serial private static final long serialVersionUID = -7169206178562782087L;
 
-  static MutablePrimaryKey newAlternateKey(final Table parent, final String name) {
+  public static MutablePrimaryKey newAlternateKey(final Table parent, final String name) {
     return new MutablePrimaryKey(parent, name, alternate_key);
   }
 
-  static MutablePrimaryKey newPrimaryKey(final MutableTable parent, final String name) {
+  public static MutablePrimaryKey newPrimaryKey(final MutableTable parent, final String name) {
     return new MutablePrimaryKey(parent, name, primary_key);
   }
 

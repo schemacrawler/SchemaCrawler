@@ -16,6 +16,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
+import schemacrawler.model.implementation.ColumnPartial;
+import schemacrawler.model.implementation.ColumnPointer;
+import schemacrawler.model.implementation.MutableColumnDataType;
+import schemacrawler.model.implementation.MutableIndex;
+import schemacrawler.model.implementation.MutableIndexColumn;
+import schemacrawler.model.implementation.MutablePrivilege;
+import schemacrawler.model.implementation.MutableSequence;
+import schemacrawler.model.implementation.MutableSynonym;
+import schemacrawler.model.implementation.MutableTrigger;
+import schemacrawler.model.implementation.TablePartial;
+import schemacrawler.model.implementation.TablePointer;
 import java.sql.Connection;
 import java.util.Collection;
 import org.junit.jupiter.api.BeforeAll;

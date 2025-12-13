@@ -22,6 +22,9 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
+import schemacrawler.model.implementation.MutableCatalog;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.NamedObjectList;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.EnumSet;

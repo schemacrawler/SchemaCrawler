@@ -309,74 +309,74 @@ public class MutableTable extends AbstractDatabaseObject implements Table {
     return triggers.lookup(this, triggerName);
   }
 
-  final void addAlternateKey(final MutablePrimaryKey alternateKey) {
+  public final void addAlternateKey(final MutablePrimaryKey alternateKey) {
     alternateKeys.add(alternateKey);
   }
 
-  final void addColumn(final MutableColumn column) {
+  public final void addColumn(final MutableColumn column) {
     columns.add(column);
   }
 
-  final void addForeignKey(final MutableForeignKey foreignKey) {
+  public final void addForeignKey(final MutableForeignKey foreignKey) {
     foreignKeys.add(foreignKey);
   }
 
-  final void addHiddenColumn(final MutableColumn column) {
+  public final void addHiddenColumn(final MutableColumn column) {
     hiddenColumns.add(column);
   }
 
-  final void addIndex(final MutableIndex index) {
+  public final void addIndex(final MutableIndex index) {
     indexes.add(index);
   }
 
-  final void addPrivilege(final MutablePrivilege<Table> privilege) {
+  public final void addPrivilege(final MutablePrivilege<Table> privilege) {
     privileges.add(privilege);
   }
 
-  final void addReferencingObjects(final Collection<DatabaseObject> references) {
+  public final void addReferencingObjects(final Collection<DatabaseObject> references) {
     if (references == null || references.isEmpty()) {
       return;
     }
     usedByObjects.addAll(references);
   }
 
-  final void addTableConstraint(final TableConstraint tableConstraint) {
+  public final void addTableConstraint(final TableConstraint tableConstraint) {
     constraints.add(tableConstraint);
   }
 
-  final void addTrigger(final MutableTrigger trigger) {
+  public final void addTrigger(final MutableTrigger trigger) {
     triggers.add(trigger);
   }
 
-  final void addWeakAssociation(final MutableWeakAssociation weakAssociation) {
+  public final void addWeakAssociation(final MutableWeakAssociation weakAssociation) {
     weakAssociations.add(weakAssociation);
   }
 
-  final NamedObjectList<MutableColumn> getAllColumns() {
+  public final NamedObjectList<MutableColumn> getAllColumns() {
     return columns;
   }
 
-  final void removeTableConstraint(final TableConstraint tableConstraint) {
+  public final void removeTableConstraint(final TableConstraint tableConstraint) {
     constraints.remove(tableConstraint);
   }
 
-  final void setDefinition(final String definition) {
+  public final void setDefinition(final String definition) {
     if (!hasDefinition() && !isBlank(definition)) {
       this.definition = definition;
     }
   }
 
-  final void setPrimaryKey(final MutablePrimaryKey primaryKey) {
+  public final void setPrimaryKey(final MutablePrimaryKey primaryKey) {
     if (primaryKey != null) {
       this.primaryKey = primaryKey;
     }
   }
 
-  final void setSortIndex(final int sortIndex) {
+  public final void setSortIndex(final int sortIndex) {
     this.sortIndex = sortIndex;
   }
 
-  final void setTableType(final TableType tableType) {
+  public final void setTableType(final TableType tableType) {
     if (tableType == null) {
       this.tableType = TableType.UNKNOWN;
     } else {

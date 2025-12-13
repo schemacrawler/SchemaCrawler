@@ -159,35 +159,35 @@ public class MutableIndex extends AbstractDependantObject<Table> implements Inde
     return columns.lookup(getParent(), name);
   }
 
-  final void addColumn(final MutableIndexColumn column) {
+  public final void addColumn(final MutableIndexColumn column) {
     columns.add(column);
   }
 
-  final void setCardinality(final long cardinality) {
+  public final void setCardinality(final long cardinality) {
     this.cardinality = cardinality;
   }
 
-  final void setDefinition(final String definition) {
+  public final void setDefinition(final String definition) {
     if (!hasDefinition() && !isBlank(definition)) {
       this.definition = definition;
     }
   }
 
-  final void setFilterCondition(final String filterCondition) {
+  public final void setFilterCondition(final String filterCondition) {
     if (!hasFilterCondition() && !isBlank(filterCondition)) {
       this.filterCondition = filterCondition;
     }
   }
 
-  final void setIndexType(final IndexType indexType) {
+  public final void setIndexType(final IndexType indexType) {
     this.indexType = requireNonNull(indexType, "Null index type");
   }
 
-  final void setPages(final long pages) {
+  public final void setPages(final long pages) {
     this.pages = pages;
   }
 
-  final void setUnique(final boolean unique) {
+  public final void setUnique(final boolean unique) {
     isUnique = unique;
   }
 }

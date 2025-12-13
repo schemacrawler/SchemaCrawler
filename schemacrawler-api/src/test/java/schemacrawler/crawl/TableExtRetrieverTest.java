@@ -18,6 +18,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.utility.MetaDataUtility.isView;
 
+import schemacrawler.model.implementation.MutableCatalog;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.Collections;

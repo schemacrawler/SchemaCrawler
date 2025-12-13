@@ -51,7 +51,7 @@ public abstract class MutableRoutineParameter<R extends Routine> extends Abstrac
     this.parameterMode = parameterMode;
   }
 
-  final void setPrecision(final int precision) {
+  public final void setPrecision(final int precision) {
     setDecimalDigits(precision);
   }
 }

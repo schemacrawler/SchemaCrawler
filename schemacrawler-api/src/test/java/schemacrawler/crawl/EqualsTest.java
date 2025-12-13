@@ -8,10 +8,17 @@
 
 package schemacrawler.crawl;
 
+import schemacrawler.model.implementation.AbstractDatabaseObject;
+import schemacrawler.model.implementation.AbstractNamedObject;
+import schemacrawler.model.implementation.AbstractNamedObjectWithAttributes;
+import schemacrawler.model.implementation.DatabaseObjectReference;
+import schemacrawler.model.implementation.MutablePrivilege;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.TablePointer;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
-import schemacrawler.crawl.MutablePrivilege.PrivilegeGrant;
+import schemacrawler.model.implementation.MutablePrivilege.PrivilegeGrant;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.NamedObjectKey;

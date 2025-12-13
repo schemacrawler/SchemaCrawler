@@ -104,7 +104,7 @@ public abstract class AbstractTableReference extends MutableTableConstraint impl
     return columnReferences.iterator();
   }
 
-  boolean addColumnReference(final ColumnReference columnReference) {
+  public boolean addColumnReference(final ColumnReference columnReference) {
     if (columnReference == null) {
       return false;
     }

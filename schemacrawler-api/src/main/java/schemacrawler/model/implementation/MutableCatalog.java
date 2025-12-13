@@ -349,7 +349,7 @@ public final class MutableCatalog extends AbstractNamedObjectWithAttributes impl
     routines.add(routine);
   }
 
-  Schema addSchema(final SchemaReference schema) {
+  public Schema addSchema(final SchemaReference schema) {
     schemas.add(schema);
     return schema;
   }
@@ -366,23 +366,23 @@ public final class MutableCatalog extends AbstractNamedObjectWithAttributes impl
     tables.add(table);
   }
 
-  NamedObjectList<MutableRoutine> getAllRoutines() {
+  public NamedObjectList<MutableRoutine> getAllRoutines() {
     return routines;
   }
 
-  NamedObjectList<SchemaReference> getAllSchemas() {
+  public NamedObjectList<SchemaReference> getAllSchemas() {
     return schemas;
   }
 
-  NamedObjectList<MutableTable> getAllTables() {
+  public NamedObjectList<MutableTable> getAllTables() {
     return tables;
   }
 
-  Optional<MutableRoutine> lookupRoutine(final NamedObjectKey routineLookupKey) {
+  public Optional<MutableRoutine> lookupRoutine(final NamedObjectKey routineLookupKey) {
     return routines.lookup(routineLookupKey);
   }
 
-  Optional<MutableTable> lookupTable(final NamedObjectKey tableLookupKey) {
+  public Optional<MutableTable> lookupTable(final NamedObjectKey tableLookupKey) {
     return tables.lookup(tableLookupKey);
   }
 }

@@ -21,6 +21,8 @@ import static schemacrawler.schema.ParameterModeType.returnValue;
 import static schemacrawler.schema.ParameterModeType.unknown;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 
+import schemacrawler.model.implementation.MutableProcedure;
+import schemacrawler.model.implementation.MutableProcedureParameter;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;

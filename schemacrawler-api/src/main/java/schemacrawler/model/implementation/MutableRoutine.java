@@ -130,19 +130,19 @@ public abstract class MutableRoutine extends AbstractDatabaseObject implements R
     return key;
   }
 
-  final void addReferencedObject(final DatabaseObject referencedObject) {
+  public final void addReferencedObject(final DatabaseObject referencedObject) {
     if (referencedObject != null) {
       referencedObjects.add(referencedObject);
     }
   }
 
-  final void setDefinition(final String definition) {
+  public final void setDefinition(final String definition) {
     if (!hasDefinition() && !isBlank(definition)) {
       this.definition = definition;
     }
   }
 
-  final void setRoutineBodyType(final RoutineBodyType routineBodyType) {
+  public final void setRoutineBodyType(final RoutineBodyType routineBodyType) {
     this.routineBodyType = routineBodyType;
   }
 

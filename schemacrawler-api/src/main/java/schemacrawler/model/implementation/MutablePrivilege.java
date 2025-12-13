@@ -30,14 +30,14 @@ import schemacrawler.schema.Privilege;
 public final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependantObject<D>
     implements Privilege<D> {
 
-  final class PrivilegeGrant implements Grant<D> {
+  public final class PrivilegeGrant implements Grant<D> {
 
     @Serial private static final long serialVersionUID = 356151825191631484L;
     private final String grantee;
     private final String grantor;
     private final boolean isGrantable;
 
-    PrivilegeGrant(final String grantor, final String grantee, final boolean isGrantable) {
+    public PrivilegeGrant(final String grantor, final String grantee, final boolean isGrantable) {
       this.grantor = grantor;
       this.grantee = grantee;
       this.isGrantable = isGrantable;

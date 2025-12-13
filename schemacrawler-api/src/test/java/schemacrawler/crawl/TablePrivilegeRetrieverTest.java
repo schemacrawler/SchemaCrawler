@@ -22,6 +22,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablePrivilegesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
+import schemacrawler.model.implementation.MutableCatalog;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;

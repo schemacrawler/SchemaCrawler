@@ -13,6 +13,9 @@ import static org.hamcrest.number.OrderingComparison.comparesEqualTo;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.hamcrest.number.OrderingComparison.lessThan;
 
+import schemacrawler.model.implementation.AbstractDatabaseObject;
+import schemacrawler.model.implementation.MutableTable;
+import schemacrawler.model.implementation.MutableView;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
