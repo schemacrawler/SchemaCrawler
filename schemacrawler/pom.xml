@@ -145,6 +145,73 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Add module descriptor to the shaded JAR -->
+      <!-- This ensures schemacrawler.model.implementation is NOT exported -->
+      <plugin>
+        <groupId>org.moditect</groupId>
+        <artifactId>moditect-maven-plugin</artifactId>
+        <version>1.2.2.Final</version>
+        <executions>
+          <execution>
+            <id>add-module-info</id>
+            <phase>package</phase>
+            <goals>
+              <goal>add-module-info</goal>
+            </goals>
+            <configuration>
+              <overwriteExistingFiles>true</overwriteExistingFiles>
+              <module>
+                <moduleInfoSource>
+                  module us.fatehi.schemacrawler.schemacrawler {
+                    requires java.sql;
+                    requires java.xml;
+
+                    // Export public API packages from schemacrawler-api
+                    exports schemacrawler.crawl;
+                    exports schemacrawler.filter;
+                    exports schemacrawler.inclusionrule;
+                    exports schemacrawler.plugin;
+                    exports schemacrawler.schema;
+                    exports schemacrawler.schemacrawler;
+                    exports schemacrawler.schemacrawler.exceptions;
+                    exports schemacrawler.utility;
+
+                    // Export packages from schemacrawler-tools
+                    exports schemacrawler.tools.catalogloader;
+                    exports schemacrawler.tools.databaseconnector;
+                    exports schemacrawler.tools.executable;
+                    exports schemacrawler.tools.executable.commandline;
+                    exports schemacrawler.tools.options;
+                    exports schemacrawler.tools.registry;
+                    exports schemacrawler.tools.utility;
+
+                    // Export packages from schemacrawler-text, schemacrawler-diagram
+                    exports schemacrawler.tools.command.text.diagram;
+                    exports schemacrawler.tools.command.text.diagram.options;
+                    exports schemacrawler.tools.command.text.operation;
+                    exports schemacrawler.tools.command.text.operation.options;
+                    exports schemacrawler.tools.command.text.schema;
+                    exports schemacrawler.tools.command.text.schema.options;
+                    exports schemacrawler.tools.text.formatter.base;
+                    exports schemacrawler.tools.text.formatter.diagram;
+                    exports schemacrawler.tools.text.formatter.operation;
+                    exports schemacrawler.tools.text.formatter.schema;
+                    exports schemacrawler.tools.traversal;
+
+                    // Export loader packages
+                    exports schemacrawler.loader.attributes;
+                    exports schemacrawler.loader.counts;
+                    exports schemacrawler.loader.weakassociations;
+
+                    // CRITICAL: Do NOT export schemacrawler.model.implementation
+                    // This keeps mutable model implementation classes internal to the module
+                  }
+                </moduleInfoSource>
+              </module>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
