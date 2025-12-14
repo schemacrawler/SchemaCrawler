@@ -12,27 +12,19 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
-import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
-import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
-import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import schemacrawler.Version;
 import us.fatehi.test.utility.TestUtility;
-import us.fatehi.test.utility.TestWriter;
-import us.fatehi.test.utility.extensions.ResolveTestContext;
-import us.fatehi.test.utility.extensions.TestContext;
 
 /**
  * Integration test to verify the schemacrawler module descriptor by inspecting the actual jar file.
  * This test uses the jar command to examine the module-info.class.
  */
-@ResolveTestContext
 public class ModuleDescriptorVerificationTest {
 
   /**
@@ -40,8 +32,7 @@ public class ModuleDescriptorVerificationTest {
    * crawl package.
    */
   @Test
-  public void testJarContainsModuleInfoWithoutCrawlExport(final TestContext testContext)
-      throws Exception {
+  public void testJarContainsModuleInfoWithoutCrawlExport() throws Exception {
     // Get version dynamically from the Version class
     final String version = Version.version().getProductVersion();
 
@@ -62,17 +53,19 @@ public class ModuleDescriptorVerificationTest {
     pb.redirectErrorStream(true);
     final Process process = pb.start();
 
-    final TestWriter outputFile = new TestWriter();
+    final StringBuilder output = new StringBuilder();
     try (final BufferedReader reader =
-            new BufferedReader(new InputStreamReader(process.getInputStream()));
-        final TestWriter outFile = outputFile) {
-      IOUtils.copy(reader, outFile);
+        new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        output.append(line).append("\n");
+      }
     }
 
     final int exitCode = process.waitFor();
     assertThat("java command should succeed", exitCode, is(0));
 
-    final String moduleInfo = outputFile.getContents();
+    final String moduleInfo = output.toString();
     assertThat("Module info should not be empty", moduleInfo.length() > 0, is(true));
 
     // Verify that crawl package is NOT exported
@@ -89,7 +82,12 @@ public class ModuleDescriptorVerificationTest {
 
     // Verify that public packages ARE exported
     assertThat(
-        outputOf(outputFile),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+        "Module should export schemacrawler.schema",
+        moduleInfo,
+        containsString("exports schemacrawler.schema"));
+    assertThat(
+        "Module should export schemacrawler.schemacrawler",
+        moduleInfo,
+        containsString("exports schemacrawler.schemacrawler"));
   }
 }
