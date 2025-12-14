@@ -45,6 +45,8 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile(".*(Windows|Linux|Mac OS).*"),
     Pattern.compile(".*(Java|OpenJDK).*"),
     Pattern.compile(".*JVM Architecture.*"),
+    // Files
+    Pattern.compile(".*file:///.*"),
     // SQL Server
     // -- server-specific values
     Pattern.compile(".*ServerName.*"),

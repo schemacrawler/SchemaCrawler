@@ -137,10 +137,29 @@
                     <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
                     <Copyright>Copyright (c) 2000-2026, Sualeh Fatehi</Copyright>
                     <Website>https://www.SchemaCrawler.com</Website>
-                    <Automatic-Module-Name>us.fatehi.schemacrawler.schemacrawler</Automatic-Module-Name>
                   </manifestEntries>
                 </transformer>
               </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.moditect</groupId>
+        <artifactId>moditect-maven-plugin</artifactId>
+        <version>1.2.2.Final</version>
+        <executions>
+          <execution>
+            <id>add-module-info</id>
+            <phase>package</phase>
+            <goals>
+              <goal>add-module-info</goal>
+            </goals>
+            <configuration>
+              <overwriteExistingFiles>true</overwriteExistingFiles>
+              <module>
+                <moduleInfoFile>src/main/module-info/module-info.java</moduleInfoFile>
+              </module>
             </configuration>
           </execution>
         </executions>

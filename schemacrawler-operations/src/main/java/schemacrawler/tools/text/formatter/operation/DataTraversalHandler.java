@@ -6,11 +6,12 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.tools.traversal;
+package schemacrawler.tools.text.formatter.operation;
 
 import java.sql.ResultSet;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.tools.traversal.TraversalHandler;
 
 public interface DataTraversalHandler extends TraversalHandler {
 

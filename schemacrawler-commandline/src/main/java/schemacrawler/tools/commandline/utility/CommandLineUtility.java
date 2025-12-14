@@ -27,7 +27,7 @@ import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
-import schemacrawler.crawl.ConnectionInfoBuilder;
+import schemacrawler.utility.ConnectionInfo;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
@@ -92,13 +92,10 @@ public class CommandLineUtility {
       if (isConnectedState) {
         final DatabaseConnectionSource dbConnectionSource = state.getDataSource();
         try (final Connection connection = dbConnectionSource.get(); ) {
-          final ConnectionInfoBuilder connectionInfoBuilder =
-              ConnectionInfoBuilder.builder(connection);
-
           final ProductVersion databaseInfo =
-              new BaseProductVersion(connectionInfoBuilder.buildDatabaseInfo());
+              new BaseProductVersion(ConnectionInfo.getDatabaseInfo(connection));
           final ProductVersion jdbcDriverInfo =
-              new BaseProductVersion(connectionInfoBuilder.buildJdbcDriverInfo());
+              new BaseProductVersion(ConnectionInfo.getJdbcDriverInfo(connection));
           writer.printf("%n  %s%n  %s", databaseInfo, jdbcDriverInfo);
         } catch (final Exception e) {
           writer.printf("%n  %s", e.getMessage());
