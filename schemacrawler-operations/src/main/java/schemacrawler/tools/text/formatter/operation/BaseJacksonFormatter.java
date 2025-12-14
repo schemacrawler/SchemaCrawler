@@ -35,7 +35,6 @@ import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.BinaryData;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
