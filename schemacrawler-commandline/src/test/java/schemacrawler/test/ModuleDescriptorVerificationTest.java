@@ -15,8 +15,11 @@ import static org.hamcrest.Matchers.not;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import schemacrawler.Version;
 import us.fatehi.test.utility.TestUtility;
@@ -53,19 +56,17 @@ public class ModuleDescriptorVerificationTest {
     pb.redirectErrorStream(true);
     final Process process = pb.start();
 
-    final StringBuilder output = new StringBuilder();
+    final StringWriter writer = new StringWriter();
     try (final BufferedReader reader =
-        new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-      String line;
-      while ((line = reader.readLine()) != null) {
-        output.append(line).append("\n");
-      }
+            new BufferedReader(new InputStreamReader(process.getInputStream()));
+        final Writer writer1 = writer; ) {
+      IOUtils.copy(reader, writer);
     }
 
     final int exitCode = process.waitFor();
     assertThat("java command should succeed", exitCode, is(0));
 
-    final String moduleInfo = output.toString();
+    final String moduleInfo = writer.toString();
     assertThat("Module info should not be empty", moduleInfo.length() > 0, is(true));
 
     // Verify that crawl package is NOT exported
