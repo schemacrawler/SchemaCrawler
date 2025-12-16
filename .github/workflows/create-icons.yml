@@ -60,7 +60,7 @@ jobs:
 # UPLOAD ICONS
     - id: upload-icons
       name: Upload generated icons
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: icons
         path: ./schemacrawler-website/src/site/resources/images/schemacrawler_*.*
