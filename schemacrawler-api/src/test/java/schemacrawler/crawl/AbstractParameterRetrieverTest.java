@@ -25,6 +25,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TypeMap;
 import us.fatehi.test.utility.TestObjectUtility;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
 
 /** An abstract base class for parameter retriever tests to reduce code duplication. */
 public abstract class AbstractParameterRetrieverTest {
@@ -46,17 +47,18 @@ public abstract class AbstractParameterRetrieverTest {
     when(retrieverConnection.getJavaSqlTypes()).thenReturn(new JavaSqlTypes());
     when(retrieverConnection.getTypeMap()).thenReturn(new TypeMap());
 
+    final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
+    final MutableDatabaseInfo databaseInfo =
+        new MutableDatabaseInfo(connectionInfoBuilder.buildDatabaseInformation());
+    final MutableJdbcDriverInfo jdbcDriverInfo =
+        new MutableJdbcDriverInfo(connectionInfoBuilder.buildJdbcDriverInformation());
+
     // Setup IdentifierQuotingStrategy
     final Identifiers identifiers = mock(Identifiers.class);
     when(retrieverConnection.getIdentifiers()).thenReturn(identifiers);
 
     // Setup Catalog and Options
-    catalog =
-        new MutableCatalog(
-            "testCatalog",
-            new MutableDatabaseInfo("Test Database", "0.1", "SA"),
-            new MutableJdbcDriverInfo(
-                "com.example.Driver", "com.example.Driver", "0.1", 0, 0, 0, 0, false, "jdbc:test"));
+    catalog = new MutableCatalog("testCatalog", databaseInfo, jdbcDriverInfo);
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     // Setup InformationSchemaViews

@@ -13,7 +13,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import schemacrawler.utility.ConnectionInfo;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
 
 public class ConnectionCheck {
 
@@ -22,8 +22,9 @@ public class ConnectionCheck {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
 
     final Connection connection = DriverManager.getConnection(connectionUrl);
-    System.out.println(ConnectionInfo.getDatabaseInfo(connection));
-    System.out.println(ConnectionInfo.getJdbcDriverInfo(connection));
+    final ConnectionInfoBuilder builder = ConnectionInfoBuilder.builder(connection);
+    System.out.println(builder.buildDatabaseInformation());
+    System.out.println(builder.buildJdbcDriverInformation());
 
     final DatabaseMetaData dbMetaData = connection.getMetaData();
     final ResultSet results = dbMetaData.getTables(null, null, "%", null);

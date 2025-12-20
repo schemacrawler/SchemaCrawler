@@ -43,6 +43,7 @@ import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
 import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.Property;
@@ -223,9 +224,9 @@ public class DatabaseInfoRetrieverTest {
   public void loadBaseCatalog(final Connection connection) throws SQLException {
     final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
     final MutableDatabaseInfo databaseInfo =
-        (MutableDatabaseInfo) connectionInfoBuilder.buildDatabaseInfo();
+        new MutableDatabaseInfo(connectionInfoBuilder.buildDatabaseInformation());
     final MutableJdbcDriverInfo jdbcDriverInfo =
-        (MutableJdbcDriverInfo) connectionInfoBuilder.buildJdbcDriverInfo();
+        new MutableJdbcDriverInfo(connectionInfoBuilder.buildJdbcDriverInformation());
 
     catalog = new MutableCatalog("database_info_test", databaseInfo, jdbcDriverInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));

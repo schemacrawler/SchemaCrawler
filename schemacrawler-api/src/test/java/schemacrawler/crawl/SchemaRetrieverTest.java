@@ -35,6 +35,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
 import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -54,9 +55,9 @@ public class SchemaRetrieverTest {
 
     final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
     final MutableDatabaseInfo databaseInfo =
-        (MutableDatabaseInfo) connectionInfoBuilder.buildDatabaseInfo();
+        new MutableDatabaseInfo(connectionInfoBuilder.buildDatabaseInformation());
     final MutableJdbcDriverInfo jdbcDriverInfo =
-        (MutableJdbcDriverInfo) connectionInfoBuilder.buildJdbcDriverInfo();
+        new MutableJdbcDriverInfo(connectionInfoBuilder.buildJdbcDriverInformation());
 
     final MutableCatalog catalog = new MutableCatalog("test_catalog", databaseInfo, jdbcDriverInfo);
 

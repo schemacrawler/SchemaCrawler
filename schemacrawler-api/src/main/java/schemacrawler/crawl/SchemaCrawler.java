@@ -60,8 +60,6 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -76,6 +74,9 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
+import us.fatehi.utility.database.DatabaseInformation;
+import us.fatehi.utility.database.JdbcDriverInformation;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
@@ -126,8 +127,9 @@ public final class SchemaCrawler {
           retrieverConnection.getConnection("crawl connection information"); ) {
         final ConnectionInfoBuilder connectionInfoBuilder =
             ConnectionInfoBuilder.builder(connection);
-        final DatabaseInfo databaseInfo = connectionInfoBuilder.buildDatabaseInfo();
-        final JdbcDriverInfo jdbcDriverInfo = connectionInfoBuilder.buildJdbcDriverInfo();
+        final DatabaseInformation databaseInfo = connectionInfoBuilder.buildDatabaseInformation();
+        final JdbcDriverInformation jdbcDriverInfo =
+            connectionInfoBuilder.buildJdbcDriverInformation();
         LOGGER.log(
             Level.CONFIG,
             new StringFormat(
@@ -135,8 +137,8 @@ public final class SchemaCrawler {
         catalog =
             new MutableCatalog(
                 "catalog",
-                (MutableDatabaseInfo) databaseInfo,
-                (MutableJdbcDriverInfo) jdbcDriverInfo);
+                new MutableDatabaseInfo(databaseInfo),
+                new MutableJdbcDriverInfo(jdbcDriverInfo));
       }
 
       final String runId = catalog.getCrawlInfo().getRunId();
