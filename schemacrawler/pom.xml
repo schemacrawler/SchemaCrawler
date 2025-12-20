@@ -19,7 +19,6 @@
       <artifactId>schemacrawler-utility</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
-			<scope>
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
