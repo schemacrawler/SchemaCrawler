@@ -92,6 +92,8 @@
               <goal>jar</goal>
             </goals>
             <configuration>
+              <shadedArtifactAttached>false</shadedArtifactAttached>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
               <includeDependencySources>true</includeDependencySources>
               <dependencySourceIncludes>
                 <dependencySourceInclude>us.fatehi:schemacrawler-api</dependencySourceInclude>
