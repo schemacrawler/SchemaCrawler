@@ -48,10 +48,6 @@
                 <!--<include>src/</include>-->
             </includes>
             <excludes>
-                <!-- We don't want a static "hash" pom resolution (it would conflict the will to adjust the version in the manifest), -->
-                <!-- we exclude this specific file (as it is already by default since it is not in an include folder -->
-                <!-- The need to rebuild a project based on the pom is already computed with some intelligence by the extension. -->
-                <exclude>pom.xml</exclude>
                 <!-- Also excluding everything located in this project specific folder -->
                 <!--<exclude>src/main/javagen/**</exclude>-->
             </excludes>
