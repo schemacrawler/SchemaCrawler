@@ -29,6 +29,7 @@ final class CatalogModelInputStream extends ObjectInputStream {
   private final List<Pattern> acceptPatterns =
       Arrays.asList(
           Pattern.compile("us\\.fatehi\\.utility\\.property\\.[A-Z].*"),
+          Pattern.compile("us\\.fatehi\\.utility\\.database\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.(schema(crawler)?|crawl)\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.[A-Z].*"),
           Pattern.compile("(\\[L)?java\\.(lang|util)\\..*"),
