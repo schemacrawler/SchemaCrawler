@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.crawl.MetadataResultSet;
-import schemacrawler.crawl.RetrievalCounts;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
@@ -31,6 +30,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.InclusionCounts;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.string.StringFormat;
@@ -152,7 +152,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     formattingHelper.writeObjectNameRow("", title, "", Color.white);
 
     final String name = "Data for %s for <%s>".formatted(operation, title);
-    final RetrievalCounts retrievalCounts = new RetrievalCounts(name.toLowerCase());
+    final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase());
     try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {
       dataRows.setShowLobs(options.isShowLobs());
       dataRows.setMaxRows(options.getMaxRows());

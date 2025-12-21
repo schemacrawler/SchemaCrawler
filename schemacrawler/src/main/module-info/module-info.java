@@ -12,6 +12,7 @@ module us.fatehi.schemacrawler.schemacrawler {
   requires java.logging;
 
   // Export public API packages from schemacrawler-utility
+  exports us.fatehi.utility;
   exports us.fatehi.utility.database;
   exports us.fatehi.utility.datasource;
   exports us.fatehi.utility.graph;
