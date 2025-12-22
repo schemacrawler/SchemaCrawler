@@ -9,6 +9,7 @@
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
+
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.MetadataResultSet;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;

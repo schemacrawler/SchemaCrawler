@@ -14,6 +14,7 @@ import static picocli.CommandLine.populateCommand;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.Version;
 import schemacrawler.tools.commandline.ConnectionTest;
 import schemacrawler.tools.commandline.ConnectionTestOptions;
 import schemacrawler.tools.commandline.InteractiveShellOptions;

@@ -25,6 +25,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.MetadataResultSet;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;

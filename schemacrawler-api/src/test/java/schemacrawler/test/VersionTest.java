@@ -17,7 +17,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
-import schemacrawler.Version;
+import schemacrawler.schemacrawler.Version;
 import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 

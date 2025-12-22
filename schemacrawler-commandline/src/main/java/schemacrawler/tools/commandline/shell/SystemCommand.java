@@ -10,7 +10,7 @@ package schemacrawler.tools.commandline.shell;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import schemacrawler.Version;
+import schemacrawler.schemacrawler.Version;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;

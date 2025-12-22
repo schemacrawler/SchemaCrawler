@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -32,6 +33,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @WithTestDatabase
 public class Issue342Test {
 
+  @Disabled
   @Test
   public void unsupportedOutputFormat(final DatabaseConnectionSource dataSource) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =

@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
-import schemacrawler.Version;
+import schemacrawler.schemacrawler.Version;
 import schemacrawler.tools.offline.jdbc.OfflineDriver;
 
 public class OfflineDriverTest {

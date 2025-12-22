@@ -21,7 +21,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.Version;
+import schemacrawler.schemacrawler.Version;
 
 public class OfflineDriver implements Driver {
 

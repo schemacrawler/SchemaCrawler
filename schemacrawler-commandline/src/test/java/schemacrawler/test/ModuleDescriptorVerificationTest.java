@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
-import schemacrawler.Version;
+import schemacrawler.schemacrawler.Version;
 import us.fatehi.test.utility.TestUtility;
 
 /**

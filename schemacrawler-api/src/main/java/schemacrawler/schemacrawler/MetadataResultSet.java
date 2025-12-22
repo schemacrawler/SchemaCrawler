@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.crawl;
+package schemacrawler.schemacrawler;
 
 import static java.sql.Types.BLOB;
 import static java.sql.Types.CLOB;
@@ -14,14 +14,10 @@ import static java.sql.Types.LONGNVARCHAR;
 import static java.sql.Types.LONGVARBINARY;
 import static java.sql.Types.LONGVARCHAR;
 import static java.sql.Types.NCLOB;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static us.fatehi.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.EnumUtility.enumValueFromId;
 import static us.fatehi.utility.IOUtility.readFully;
-import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.Utility.isIntegral;
-import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Reader;
 import java.math.BigInteger;
@@ -38,9 +34,16 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.isIntegral;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
+import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.IdentifiedEnum;
 import us.fatehi.utility.UtilityLogger;
