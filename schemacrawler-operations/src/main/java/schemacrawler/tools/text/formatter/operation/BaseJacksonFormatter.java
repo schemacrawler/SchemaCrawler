@@ -24,10 +24,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.crawl.MetadataResultSet;
-import schemacrawler.crawl.RetrievalCounts;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.MetadataResultSet;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
@@ -40,6 +39,7 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.cfg.MapperBuilder;
+import us.fatehi.utility.InclusionCounts;
 import us.fatehi.utility.Utility;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
@@ -232,7 +232,7 @@ public abstract class BaseJacksonFormatter implements DataTraversalHandler {
   private void handleTableData(final String title, final ResultSet rows) {
     try {
       final String name = "Data for %s for <%s>".formatted(operation, title);
-      final RetrievalCounts retrievalCounts = new RetrievalCounts(name.toLowerCase());
+      final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase());
       generator.writeName("data");
       generator.writeStartArray();
       try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {

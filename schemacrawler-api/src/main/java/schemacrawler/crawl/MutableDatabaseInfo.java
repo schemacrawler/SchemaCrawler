@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import schemacrawler.schema.DatabaseInfo;
+import us.fatehi.utility.database.DatabaseInformation;
 import us.fatehi.utility.property.BaseProductVersion;
 import us.fatehi.utility.property.Property;
 
@@ -29,17 +30,14 @@ final class MutableDatabaseInfo extends BaseProductVersion implements DatabaseIn
 
   @Serial private static final long serialVersionUID = 4051323422934251828L;
 
-  private final String userName;
+  private final DatabaseInformation databaseInformation;
   // Mutable properties collection
   private final Set<Property> serverInfo;
   private final Set<Property> databaseProperties;
 
-  public MutableDatabaseInfo(
-      final String databaseProductName,
-      final String databaseProductVersion,
-      final String userName) {
-    super(databaseProductName, databaseProductVersion);
-    this.userName = userName;
+  public MutableDatabaseInfo(final DatabaseInformation databaseInformation) {
+    super(databaseInformation);
+    this.databaseInformation = databaseInformation;
 
     serverInfo = new HashSet<>();
     databaseProperties = new HashSet<>();
@@ -61,19 +59,13 @@ final class MutableDatabaseInfo extends BaseProductVersion implements DatabaseIn
   /** {@inheritDoc} */
   @Override
   public String getUserName() {
-    return userName;
+    return databaseInformation.getUserName();
   }
 
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    final StringBuilder info = new StringBuilder(1024);
-    info.append("-- database: ")
-        .append(getProductName())
-        .append(' ')
-        .append(getProductVersion())
-        .append(System.lineSeparator());
-    return info.toString();
+    return databaseInformation.toString();
   }
 
   void addAll(final Collection<ImmutableDatabaseProperty> dbProperties) {

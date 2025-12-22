@@ -15,6 +15,11 @@
 
   <dependencies>
 
+   <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-utility</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-text</artifactId>

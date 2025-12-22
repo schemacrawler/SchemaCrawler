@@ -26,8 +26,7 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
-import schemacrawler.Version;
-import schemacrawler.utility.ConnectionInfo;
+import schemacrawler.schemacrawler.Version;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
@@ -38,6 +37,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.BaseProductVersion;
 import us.fatehi.utility.property.JvmArchitectureInfo;
@@ -92,10 +92,11 @@ public class CommandLineUtility {
       if (isConnectedState) {
         final DatabaseConnectionSource dbConnectionSource = state.getDataSource();
         try (final Connection connection = dbConnectionSource.get(); ) {
+          final ConnectionInfoBuilder builder = ConnectionInfoBuilder.builder(connection);
           final ProductVersion databaseInfo =
-              new BaseProductVersion(ConnectionInfo.getDatabaseInfo(connection));
+              new BaseProductVersion(builder.buildDatabaseInformation());
           final ProductVersion jdbcDriverInfo =
-              new BaseProductVersion(ConnectionInfo.getJdbcDriverInfo(connection));
+              new BaseProductVersion(builder.buildJdbcDriverInformation());
           writer.printf("%n  %s%n  %s", databaseInfo, jdbcDriverInfo);
         } catch (final Exception e) {
           writer.printf("%n  %s", e.getMessage());

@@ -1,12 +1,7 @@
 
-Database Server Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-PROP1                                     VALUE1                        
-
-
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-database product name                     FakeDB                        
-database product version                  v0.0                          
-database user name                        nouser                        
+database product name                     Mocked Database               
+database product version                  0.0.1                         
+database user name                                                      
 

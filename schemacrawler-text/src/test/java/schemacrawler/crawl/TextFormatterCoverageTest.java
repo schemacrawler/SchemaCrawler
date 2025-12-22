@@ -15,13 +15,15 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DataTypeType;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -30,9 +32,11 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
+import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
 
 @ResolveTestContext
 public class TextFormatterCoverageTest {
@@ -89,9 +93,7 @@ public class TextFormatterCoverageTest {
 
   @Test
   public void nullCrawlInfo(final TestContext testContext) throws Exception {
-    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo("FakeDB", "v0.0", "nouser");
-    dbInfo.addServerInfo(
-        new ImmutableServerInfoProperty("PROP1", "VALUE1", "Server info property"));
+    final MutableDatabaseInfo dbInfo = makeDatabaseInfo();
 
     checkTextOutput(
         formatter -> {
@@ -110,9 +112,7 @@ public class TextFormatterCoverageTest {
   @Test
   public void serverInfo(final TestContext testContext) throws Exception {
 
-    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo("FakeDB", "v0.0", "nouser");
-    dbInfo.addServerInfo(
-        new ImmutableServerInfoProperty("PROP1", "VALUE1", "Server info property"));
+    final MutableDatabaseInfo dbInfo = makeDatabaseInfo();
 
     checkTextOutput(formatter -> formatter.handleInfo(dbInfo), testContext.testMethodFullName());
   }
@@ -147,5 +147,14 @@ public class TextFormatterCoverageTest {
 
   private void checkTextOutputForTable(final Table table, final String referenceFileName) {
     checkTextOutput(formatter -> formatter.handle(table), referenceFileName);
+  }
+
+  private MutableDatabaseInfo makeDatabaseInfo() throws SQLException {
+    final Connection mockConnection = TestObjectUtility.mockConnection();
+    final ConnectionInfoBuilder connectionInfoBuilder =
+        ConnectionInfoBuilder.builder(mockConnection);
+    final MutableDatabaseInfo dbInfo =
+        new MutableDatabaseInfo(connectionInfoBuilder.buildDatabaseInformation());
+    return dbInfo;
   }
 }

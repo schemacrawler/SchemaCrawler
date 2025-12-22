@@ -8,15 +8,14 @@
 
 package schemacrawler.crawl;
 
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.NamedObjectKey;
+import us.fatehi.utility.InclusionCounts;
 
-public final class RetrievalCounts {
+public final class RetrievalCounts extends InclusionCounts {
 
   private static class Counts {
 
@@ -54,50 +53,22 @@ public final class RetrievalCounts {
 
   private static final Logger LOGGER = Logger.getLogger(RetrievalCounts.class.getName());
 
-  private final String name;
-  private int count;
-  private int includedCount;
   private final Counts keyCount;
   private final Counts includedKeyCount;
 
   public RetrievalCounts(final String name) {
-    this.name = requireNotBlank(name, "No name provided");
-    count = 0;
-    includedCount = 0;
+    super(name);
     keyCount = new Counts();
     includedKeyCount = new Counts();
   }
 
-  public int getCount() {
-    return count;
-  }
-
-  public int getIncludedCount() {
-    return includedCount;
-  }
-
-  @Override
-  public String toString() {
-    return "%d/%d %s".formatted(includedCount, count, name);
-  }
-
-  public void count() {
-    count = count + 1;
-  }
-
-  void count(final NamedObjectKey key) {
+  public void count(final NamedObjectKey key) {
     if (key == null) {
       return;
     }
 
     keyCount.count(key);
-    count = count + 1;
-  }
-
-  public void countIfIncluded(final boolean included) {
-    if (included) {
-      includedCount = includedCount + 1;
-    }
+    count();
   }
 
   void countIfIncluded(final NamedObjectKey key, final boolean included) {
@@ -107,12 +78,8 @@ public final class RetrievalCounts {
 
     if (included) {
       includedKeyCount.count(key);
-      includedCount = includedCount + 1;
+      countIncluded();
     }
-  }
-
-  public void countIncluded() {
-    includedCount = includedCount + 1;
   }
 
   void countIncluded(final NamedObjectKey key) {
@@ -121,30 +88,24 @@ public final class RetrievalCounts {
     }
 
     includedKeyCount.count(key);
-    includedCount = includedCount + 1;
+    countIncluded();
   }
 
-  public void log() {
-    log(Level.INFO, count, includedCount, null);
-  }
-
-  void log(final NamedObjectKey key) {
+  public void log(final NamedObjectKey key) {
     if (key == null) {
       return;
     }
-    log(Level.INFO, keyCount.get(key), includedKeyCount.get(key), key);
-  }
 
-  private void log(
-      final Level level, final int count, final int includedCount, final NamedObjectKey key) {
-    if (level == null) {
-      return;
-    }
+    final Level level = Level.INFO;
+    if (LOGGER.isLoggable(level)) {}
+
     if (LOGGER.isLoggable(level)) {
+      final int count = keyCount.get(key);
+      final int includedCount = includedKeyCount.get(key);
       LOGGER.log(
           level,
           "Processed %d/%d %s %s"
-              .formatted(includedCount, count, name, key == null ? "" : " for " + key));
+              .formatted(includedCount, count, getName(), key == null ? "" : " for " + key));
     }
   }
 }

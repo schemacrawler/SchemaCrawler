@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler;
+package schemacrawler.schemacrawler;
 
 import java.io.Serial;
 import us.fatehi.utility.property.BaseProductVersion;

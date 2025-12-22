@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.crawl;
+package us.fatehi.utility.database;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
@@ -19,8 +19,6 @@ import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 import us.fatehi.utility.string.StringFormat;
 
 public final class ConnectionInfoBuilder {
@@ -89,14 +87,14 @@ public final class ConnectionInfoBuilder {
     requireNonNull(dbMetaData, "No database metadata available");
   }
 
-  public DatabaseInfo buildDatabaseInfo() throws SQLException {
-    return new MutableDatabaseInfo(
+  public DatabaseInformation buildDatabaseInformation() throws SQLException {
+    return new DatabaseInformation(
         getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductName(), ""),
         getConnectionInfoProperty(() -> dbMetaData.getDatabaseProductVersion(), ""),
         getConnectionInfoProperty(() -> dbMetaData.getUserName(), ""));
   }
 
-  public JdbcDriverInfo buildJdbcDriverInfo() throws SQLException {
+  public JdbcDriverInformation buildJdbcDriverInformation() throws SQLException {
     final String connectionUrl = getConnectionUrl(dbMetaData);
     final Driver jdbcDriver = getJdbcDriver(connectionUrl);
     final String jdbcDriverClassName;
@@ -109,7 +107,7 @@ public final class ConnectionInfoBuilder {
       isJdbcCompliant = false;
     }
 
-    return new MutableJdbcDriverInfo(
+    return new JdbcDriverInformation(
         getConnectionInfoProperty(() -> dbMetaData.getDriverName(), ""),
         jdbcDriverClassName,
         getConnectionInfoProperty(() -> dbMetaData.getDriverVersion(), ""),

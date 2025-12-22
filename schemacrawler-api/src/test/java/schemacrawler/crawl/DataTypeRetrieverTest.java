@@ -51,6 +51,7 @@ import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
+import us.fatehi.utility.database.ConnectionInfoBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
@@ -170,9 +171,9 @@ public class DataTypeRetrieverTest {
   public void loadBaseCatalog(final Connection connection) throws SQLException {
     final ConnectionInfoBuilder connectionInfoBuilder = ConnectionInfoBuilder.builder(connection);
     final MutableDatabaseInfo databaseInfo =
-        (MutableDatabaseInfo) connectionInfoBuilder.buildDatabaseInfo();
+        new MutableDatabaseInfo(connectionInfoBuilder.buildDatabaseInformation());
     final MutableJdbcDriverInfo jdbcDriverInfo =
-        (MutableJdbcDriverInfo) connectionInfoBuilder.buildJdbcDriverInfo();
+        new MutableJdbcDriverInfo(connectionInfoBuilder.buildJdbcDriverInformation());
 
     catalog = new MutableCatalog("datatype_test", databaseInfo, jdbcDriverInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));
