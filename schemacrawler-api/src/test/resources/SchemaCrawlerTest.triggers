@@ -1,7 +1,0 @@
-  trigger: PUBLIC.BOOKS.AUTHORS.TRG_AUTHORS
-    action condition: 
-    condition timing: after
-    action order: 0
-    action orientation: row
-    action statement: UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
-    event manipulation type: [delete]

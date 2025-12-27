@@ -1,8 +1,0 @@
-/schemacrawler.config.properties
-graphs/
-/derby.log
-*.accdb
-*.db
-*.pdf
-*.png
-!adr/

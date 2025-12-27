@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.7</version>
-    <relativePath>../schemacrawler-parent/pom.xml</relativePath>
+    <version>17.2.6</version>
   </parent>
   <artifactId>schemacrawler-website</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Website</name>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
   <dependencies>
+  
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>  
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
@@ -26,11 +29,13 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-scripting</artifactId>
       <version>${project.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-lint</artifactId>
       <version>${project.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -38,7 +43,7 @@
       <artifactId>schemacrawler-testdb</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>
+    </dependency>    
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-test-utility</artifactId>
@@ -47,16 +52,8 @@
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-api</artifactId>
+      <artifactId>schemacrawler-tests</artifactId>
       <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>

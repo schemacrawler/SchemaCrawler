@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.7</version>
+    <version>17.2.6</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-distrib</artifactId>
@@ -22,22 +22,7 @@
          so that jacoco can aggregate reports -->
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-utility</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-loader</artifactId>
+      <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

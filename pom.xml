@@ -11,8 +11,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.7</version>
-    <relativePath>./schemacrawler-parent/pom.xml</relativePath>
+    <version>17.2.6</version>
   </parent>
   <artifactId>schemacrawler-aggregator</artifactId>
   <packaging>pom</packaging>
@@ -20,23 +19,12 @@
   <name>SchemaCrawler [Aggregator]</name>
 
   <modules>
-    <!-- SchemaCrawler common -->
-    <module>schemacrawler-parent</module>
-    <module>schemacrawler-jdbc-drivers</module>
-    <module>schemacrawler-testdb</module>
-    <module>schemacrawler-test-utility</module>
-    <!-- SchemaCrawler jar -->
-    <module>schemacrawler-utility</module>
-    <module>schemacrawler-api</module>
-    <module>schemacrawler-tools</module>
-    <module>schemacrawler-loader</module>
+    <!-- Additional functionality -->
     <module>schemacrawler-text</module>
     <module>schemacrawler-diagram</module>
     <module>schemacrawler-operations</module>
-    <module>schemacrawler</module>
-    <!-- Additional functionality -->
-    <module>schemacrawler-commandline</module>
     <module>schemacrawler-scripting</module>
+    <module>schemacrawler-commandline</module>
     <module>schemacrawler-lint</module>
     <!-- Database plugins -->
     <module>schemacrawler-dbtest</module>
@@ -48,7 +36,7 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-offline</module>
-	<!-- Additional modules -->
+  <!-- Additional modules -->
     <module>schemacrawler-examplecode</module>
     <module>schemacrawler-library-bom</module>
   </modules>
@@ -62,7 +50,6 @@
         </property>
       </activation>
       <modules>
-        <module>schemacrawler-docs</module>
         <module>schemacrawler-distrib</module>
         <module>schemacrawler-docker</module>
         <module>schemacrawler-docker-compose</module>

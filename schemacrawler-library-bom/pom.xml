@@ -13,8 +13,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.7</version>
-    <relativePath>../schemacrawler-parent/pom.xml</relativePath>
+    <version>17.2.6</version>
   </parent>
   <artifactId>schemacrawler-library-bom</artifactId>
   <packaging>pom</packaging>
@@ -30,6 +29,16 @@
         <version>${project.version}</version>
       </dependency>
       <!-- Additional functionality -->
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-text</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-diagram</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>us.fatehi</groupId>
         <artifactId>schemacrawler-commandline</artifactId>
