@@ -89,27 +89,6 @@
     <fixcrlf srcdir="${main-distribution.staging.dir}" includes="**/*.sh"
       eol="unix" eof="remove" tab="remove" tablength="2" outputencoding="UTF-8" />
 
-    <echo>Create test database</echo>
-
-    <copy
-      file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
-      todir="${main-distribution.staging.dir}/_testdb/lib" />
-    <copy
-      file="${SchemaCrawler.home}/schemacrawler-utility/target/schemacrawler-utility-${SchemaCrawler.version}.jar"
-      todir="${main-distribution.staging.dir}/_testdb/lib" />
-    <copy todir="${main-distribution.staging.dir}/_testdb/lib">
-      <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
-        <include name="**/*.jar" />
-        <exclude name="**/schemacrawler-*.jar" />
-      </fileset>
-    </copy>
-    <copy
-      file="${schemacrawler.expanded-distribution}/sc.db"
-      todir="${main-distribution.staging.dir}/_testdb" />
-    <copy
-      file="${SchemaCrawler.home}/schemacrawler-testdb/src/main/resources/cassandra.create-database.cql"
-      todir="${main-distribution.staging.dir}/_testdb" />
-
   </target>
 
 
