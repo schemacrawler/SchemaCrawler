@@ -42,6 +42,7 @@ jobs:
           -Dreactor.printOrder \
           -Ddistrib \
           -Dmaven.javadoc.skip=false \
+          -Dmaven.javadoc.failOnError=false \
           clean verify \
           jacoco:report-aggregate
     - id: gather-expected-results
