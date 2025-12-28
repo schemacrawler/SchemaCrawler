@@ -470,10 +470,15 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private List<TableConstraint> filterPrintableConstraints(
       final Collection<TableConstraint> constraintsCollection) {
+
+    final List<TableConstraint> constraints = new ArrayList<>();
+    if (constraintsCollection.isEmpty()) {
+      return constraints;
+    }
+
     final EnumSet<TableConstraintType> printableConstraints =
         EnumSet.of(TableConstraintType.check, TableConstraintType.unique);
 
-    final List<TableConstraint> constraints = new ArrayList<>();
     for (final TableConstraint constraint : constraintsCollection) {
       // 1. There is no point in showing a constraint if there is no information
       // about the constrained columns, and the name is hidden

@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.crawl;
+package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
@@ -15,16 +15,15 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.DataTypeType;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightDatabaseInfo;
+import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -32,11 +31,9 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
-import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
-import us.fatehi.utility.database.ConnectionInfoBuilder;
 
 @ResolveTestContext
 public class TextFormatterCoverageTest {
@@ -46,7 +43,7 @@ public class TextFormatterCoverageTest {
   @Test
   public void blankTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
+    final Table table = new LightTable(new SchemaReference(), "TEST_TABLE");
 
     checkTextOutputForTable(table, testContext.testMethodFullName());
   }
@@ -54,13 +51,8 @@ public class TextFormatterCoverageTest {
   @Test
   public void enumValuesColumnTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
-    final MutableColumnDataType columnDataType =
-        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined);
-    columnDataType.setEnumValues(List.of("VALUE1", "VALUE2"));
-    final MutableColumn column = new MutableColumn(table, "ENUM_VALUES_COLUMN");
-    column.setColumnDataType(columnDataType);
-    table.addColumn(column);
+    final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
+    table.addEnumeratedColumn("ENUM_VALUES_COLUMN");
 
     checkTextOutputForTable(table, testContext.testMethodFullName());
   }
@@ -68,12 +60,8 @@ public class TextFormatterCoverageTest {
   @Test
   public void generatedColumnTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
-    final MutableColumn column = new MutableColumn(table, "GENERATED_COLUMN");
-    column.setColumnDataType(
-        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined));
-    column.setGenerated(true);
-    table.addColumn(column);
+    final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
+    table.addGeneratedColumn("GENERATED_COLUMN");
 
     checkTextOutputForTable(table, testContext.testMethodFullName());
   }
@@ -81,19 +69,15 @@ public class TextFormatterCoverageTest {
   @Test
   public void hiddenColumnTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
-    final MutableColumn column = new MutableColumn(table, "HIDDEN_COLUMN");
-    column.setColumnDataType(
-        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined));
-    column.setHidden(true);
-    table.addHiddenColumn(column);
+    final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
+    table.addHiddenColumn("HIDDEN_COLUMN");
 
     checkTextOutputForTable(table, testContext.testMethodFullName());
   }
 
   @Test
   public void nullCrawlInfo(final TestContext testContext) throws Exception {
-    final MutableDatabaseInfo dbInfo = makeDatabaseInfo();
+    final DatabaseInfo dbInfo = new LightDatabaseInfo();
 
     checkTextOutput(
         formatter -> {
@@ -105,14 +89,14 @@ public class TextFormatterCoverageTest {
 
   @Test
   public void nullTable(final TestContext testContext) throws Exception {
-    final MutableTable table = null;
+    final Table table = null;
     checkTextOutputForTable(table, null);
   }
 
   @Test
   public void serverInfo(final TestContext testContext) throws Exception {
 
-    final MutableDatabaseInfo dbInfo = makeDatabaseInfo();
+    final DatabaseInfo dbInfo = new LightDatabaseInfo();
 
     checkTextOutput(formatter -> formatter.handleInfo(dbInfo), testContext.testMethodFullName());
   }
@@ -147,14 +131,5 @@ public class TextFormatterCoverageTest {
 
   private void checkTextOutputForTable(final Table table, final String referenceFileName) {
     checkTextOutput(formatter -> formatter.handle(table), referenceFileName);
-  }
-
-  private MutableDatabaseInfo makeDatabaseInfo() throws SQLException {
-    final Connection mockConnection = TestObjectUtility.mockConnection();
-    final ConnectionInfoBuilder connectionInfoBuilder =
-        ConnectionInfoBuilder.builder(mockConnection);
-    final MutableDatabaseInfo dbInfo =
-        new MutableDatabaseInfo(connectionInfoBuilder.buildDatabaseInformation());
-    return dbInfo;
   }
 }

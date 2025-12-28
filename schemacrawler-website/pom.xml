@@ -12,13 +12,13 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler Website</name>
   <dependencies>
-  
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>  
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
@@ -43,7 +43,7 @@
       <artifactId>schemacrawler-testdb</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-test-utility</artifactId>
@@ -54,6 +54,7 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-tests</artifactId>
       <version>${project.version}</version>
+      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>

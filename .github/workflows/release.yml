@@ -1,8 +1,5 @@
 name: Create Release
 
-permissions:
-  contents: write
-
 on:
   workflow_dispatch:
   push:

@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.crawl;
+package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,10 +15,10 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.schema.DataTypeType;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -38,7 +38,7 @@ public class DotFormatterCoverageTest {
   @Test
   public void blankTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
+    final Table table = new LightTable(new SchemaReference(), "TEST_TABLE");
 
     checkDotOutputForTable(table, testContext.testMethodFullName());
   }
@@ -46,12 +46,8 @@ public class DotFormatterCoverageTest {
   @Test
   public void generatedColumnTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
-    final MutableColumn column = new MutableColumn(table, "GENERATED_COLUMN");
-    column.setColumnDataType(
-        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined));
-    column.setGenerated(true);
-    table.addColumn(column);
+    final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
+    table.addGeneratedColumn("GENERATED_COLUMN");
 
     checkDotOutputForTable(table, testContext.testMethodFullName());
   }
@@ -59,12 +55,8 @@ public class DotFormatterCoverageTest {
   @Test
   public void hiddenColumnTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
-    final MutableColumn column = new MutableColumn(table, "HIDDEN_COLUMN");
-    column.setColumnDataType(
-        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined));
-    column.setHidden(true);
-    table.addHiddenColumn(column);
+    final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
+    table.addHiddenColumn("HIDDEN_COLUMN");
 
     checkDotOutputForTable(table, testContext.testMethodFullName());
   }
@@ -72,7 +64,7 @@ public class DotFormatterCoverageTest {
   @Test
   public void nullTable(final TestContext testContext) throws Exception {
 
-    final MutableTable table = null;
+    final Table table = null;
     assertThrows(
         NullPointerException.class,
         () -> checkDotOutputForTable(table, testContext.testMethodFullName()));
