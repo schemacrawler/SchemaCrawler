@@ -1,4 +1,4 @@
-name: Quick Build
+name: Build with Dependencies
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ permissions: read-all
 
 jobs:
   build:
-    name: Quick build
+    name: Build with Dependencies
     runs-on: ubuntu-latest
     steps:
 
@@ -32,7 +32,7 @@ jobs:
 # BUILD DEPENDENCIES
     - id: build-schemacrawler-core
       name: Build SchemaCrawler-Core
-      uses: sualeh/build-maven-dependency@v1.0.0
+      uses: sualeh/build-maven-dependency@v1.0.1
       with:
         repository: schemacrawler/SchemaCrawler-Core
 
