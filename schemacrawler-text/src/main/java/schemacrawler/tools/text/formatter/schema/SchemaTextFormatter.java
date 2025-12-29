@@ -861,13 +861,17 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeWideRow(object.getRemarks(), "remarks");
   }
 
-  private void printRoutineParameters(final List<? extends RoutineParameter<?>> parameters) {
-    if (parameters.isEmpty() || options.is(hideRoutineParameters)) {
+  private void printRoutineParameters(
+      final List<? extends RoutineParameter<?>> parametersCollection) {
+    if (parametersCollection.isEmpty() || options.is(hideRoutineParameters)) {
       LOGGER.log(Level.FINER, "Not showing routine parameters");
       return;
     }
 
-    parameters.sort(
+    final List<? extends RoutineParameter<?>> parameters =
+        new ArrayList<RoutineParameter<?>>(parametersCollection);
+    Collections.sort(
+        parameters,
         NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForRoutineParameters()));
 
     for (final RoutineParameter<?> parameter : parameters) {
@@ -986,11 +990,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeDetailRow("", "", column.getRemarks(), true, false, "remarks");
   }
 
-  private void printTableColumns(final List<? extends Column> columns, final boolean extraDetails) {
-    if (columns.isEmpty()) {
+  private void printTableColumns(
+      final List<? extends Column> columnsCollection, final boolean extraDetails) {
+    if (columnsCollection.isEmpty()) {
       return;
     }
 
+    final List<Column> columns = new ArrayList<>(columnsCollection);
     Collections.sort(
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 

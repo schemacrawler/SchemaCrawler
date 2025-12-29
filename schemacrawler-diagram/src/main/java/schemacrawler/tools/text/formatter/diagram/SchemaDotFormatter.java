@@ -653,11 +653,12 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     formattingHelper.append(remarksRow.render(html)).println();
   }
 
-  private void printTableColumns(final List<Column> columns) {
-    if (columns.isEmpty()) {
+  private void printTableColumns(final List<Column> columnsCollection) {
+    if (columnsCollection.isEmpty()) {
       return;
     }
 
+    final List<Column> columns = new ArrayList<>(columnsCollection);
     Collections.sort(
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 
