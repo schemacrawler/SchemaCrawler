@@ -71,6 +71,6 @@ jobs:
       uses: actions/upload-artifact@v6
       if: always()
       with:
-        name: expected-results-${{ matrix.database }}
+        name: expected-results-java-${{ matrix.java }}
         path: ./unit_tests_results_output.zip
         retention-days: 5

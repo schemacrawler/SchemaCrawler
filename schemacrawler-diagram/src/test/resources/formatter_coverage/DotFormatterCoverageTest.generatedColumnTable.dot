@@ -7,7 +7,7 @@
 		<td bgcolor='#F2E6C2' align='right'>[unknown]</td>
 	</tr>
 	<tr>
-		<td port='generated_column_5829206.start' align='left'>GENERATED_COLUMN</td>
+		<td port='generated_column_5829206.start' align='left'><b><i>GENERATED_COLUMN</i></b></td>
 		<td align='left'> </td>
 		<td port='generated_column_5829206.end' align='left'>DATA_TYPE NOT NULL</td>
 	</tr>

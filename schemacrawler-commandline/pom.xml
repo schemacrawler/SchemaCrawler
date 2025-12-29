@@ -6,8 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.7</version>
-    <relativePath>../schemacrawler-parent/pom.xml</relativePath>
+    <version>17.2.7</version>
   </parent>
   <artifactId>schemacrawler-commandline</artifactId>
   <packaging>jar</packaging>
@@ -19,6 +18,16 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-text</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-diagram</artifactId>
+      <version>${project.version}</version>
+    </dependency>    
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-operations</artifactId>
@@ -36,19 +45,11 @@
       <artifactId>schemacrawler-test-utility</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>	
+    </dependency>      
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-api</artifactId>
+      <artifactId>schemacrawler-tests</artifactId>
       <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>

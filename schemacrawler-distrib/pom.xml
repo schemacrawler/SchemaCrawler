@@ -6,8 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.1.7</version>
-    <relativePath>../schemacrawler-parent/pom.xml</relativePath>
+    <version>17.2.7</version>
   </parent>
   <artifactId>schemacrawler-distrib</artifactId>
   <packaging>jar</packaging>
@@ -22,22 +21,7 @@
          so that jacoco can aggregate reports -->
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-utility</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-loader</artifactId>
+      <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -52,6 +36,11 @@
     </dependency>
 
     <!-- SchemaCrawler jars -->
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-testdb</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-jdbc-drivers</artifactId>
@@ -225,15 +214,35 @@
             <id>generate-cli-support</id>
             <phase>generate-resources</phase>
             <goals>
-              <goal>java</goal>
+              <goal>exec</goal>
             </goals>
             <configuration>
-              <mainClass>schemacrawler.tools.commandline.utility.GenerateCliSupport</mainClass>
+              <executable>java</executable>
               <arguments>
+                <argument>-classpath</argument>
+                <classpath />
+                <argument>schemacrawler.tools.commandline.utility.GenerateCliSupport</argument>
                 <argument>--output-dir</argument>
                 <argument>${project.build.directory}/generated-cli-support</argument>
                 <argument>--completion-script</argument>
                 <argument>schemacrawler-completion.bash</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-sqlite-db</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-classpath</argument>
+                <classpath />
+                <argument>schemacrawler.testdb.TestSchemaCreatorMain</argument>
+                <argument>--url</argument>
+                <argument>jdbc:sqlite:${project.build.directory}/sc.db</argument>
               </arguments>
             </configuration>
           </execution>

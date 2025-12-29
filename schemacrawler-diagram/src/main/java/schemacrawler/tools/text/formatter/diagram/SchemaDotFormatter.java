@@ -31,11 +31,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -47,7 +47,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.WeakAssociation;
-import schemacrawler.schema.Identifiers;
+import schemacrawler.schemacrawler.exceptions.NotLoadedException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
@@ -421,6 +421,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
   private <R extends ColumnReference> void printForeignKeys(
       final Table table, final Collection<? extends TableReference> foreignKeys) {
+    if (foreignKeys.isEmpty()) {
+      return;
+    }
     for (final TableReference foreignKey : foreignKeys) {
       final boolean isForeignKey = foreignKey.getType() == foreign_key;
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
@@ -650,11 +653,12 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     formattingHelper.append(remarksRow.render(html)).println();
   }
 
-  private void printTableColumns(final List<Column> columns) {
-    if (columns.isEmpty()) {
+  private void printTableColumns(final List<Column> columnsCollection) {
+    if (columnsCollection.isEmpty()) {
       return;
     }
 
+    final List<Column> columns = new ArrayList<>(columnsCollection);
     Collections.sort(
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 

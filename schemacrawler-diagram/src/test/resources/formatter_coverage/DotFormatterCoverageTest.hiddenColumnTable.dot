@@ -7,7 +7,7 @@
 		<td bgcolor='#F2E6C2' align='right'>[unknown]</td>
 	</tr>
 	<tr>
-		<td port='hidden_column_7b84016b.start' align='left'>HIDDEN_COLUMN</td>
+		<td port='hidden_column_7b84016b.start' align='left'><b><i>HIDDEN_COLUMN</i></b></td>
 		<td align='left'> </td>
 		<td port='hidden_column_7b84016b.end' align='left'>DATA_TYPE NOT NULL</td>
 	</tr>

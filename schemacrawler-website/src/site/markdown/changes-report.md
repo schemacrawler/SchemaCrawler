@@ -2,6 +2,14 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.2.7"></a>
+## Release 17.2.7 - 2025-12-27
+- Return immutable collections from the `Catalog` schema model
+- Run tests using the module path rather than the classpath
+- Split Core into a separate project and apply JPMS package permissions
+- Split text and diagram modules into separate jars
+
+
 <a name="v17.1.8"></a>
 ## Release 17.1.8 - 2025-12-06
 - Add bash completion in Docker bash

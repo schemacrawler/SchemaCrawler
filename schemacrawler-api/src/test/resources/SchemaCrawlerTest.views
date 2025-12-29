@@ -1,6 +1,0 @@
-PUBLIC.BOOKS.AUTHORSLIST [view]
-  - check option: none
-  - updatable?: true
-  - definition: SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
-  - table usage
-    - table: PUBLIC.BOOKS.AUTHORS

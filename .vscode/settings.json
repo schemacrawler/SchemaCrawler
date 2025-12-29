@@ -1,12 +1,37 @@
 {
-  "github.codespaces.defaultExtensions": [
-    "vscjava.vscode-java-pack",
-    "editorconfig.editorconfig",
-    "GitHub.codespaces",
-    "GitHub.vscode-pull-request-github"
-  ],
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    }
+  },
+  "editor.fontSize": 14,
+  "editor.lineHeight": 24,
+  "editor.minimap.enabled": false,
+  "editor.overviewRulerBorder": false,
+  "editor.wrappingIndent": "indent",
+  "editor.foldingImportsByDefault": true,
   "editor.tabSize": 2,
+  "files.trimTrailingWhitespace": true,
+  "git.autofetch": true,
+  "git.enableCommitSigning": true,
+  "git.enableSmartCommit": true,
+  "git.autoStash": true,
+  "git.confirmSync": false,
+  "git.postCommitCommand": "sync",
+  "git.showActionButton": {
+    "commit": false,
+    "publish": false,
+    "sync": false
+  },
   "scm.showActionButton": false,
+  "scm.showInputActionButton": false,
+  "window.zoomLevel": 1.2,
   "java.compile.nullAnalysis.mode": "automatic",
-  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable",
+  "workbench.editorAssociations": {
+    "*.md": "vscode.markdown.preview.editor"
+  },
+  "java.configuration.updateBuildConfiguration": "automatic"
 }

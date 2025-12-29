@@ -47,7 +47,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -61,6 +60,7 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Grant;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
@@ -80,7 +80,7 @@ import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociation;
-import schemacrawler.schema.Identifiers;
+import schemacrawler.schemacrawler.exceptions.NotLoadedException;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -470,10 +470,15 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private List<TableConstraint> filterPrintableConstraints(
       final Collection<TableConstraint> constraintsCollection) {
+
+    final List<TableConstraint> constraints = new ArrayList<>();
+    if (constraintsCollection.isEmpty()) {
+      return constraints;
+    }
+
     final EnumSet<TableConstraintType> printableConstraints =
         EnumSet.of(TableConstraintType.check, TableConstraintType.unique);
 
-    final List<TableConstraint> constraints = new ArrayList<>();
     for (final TableConstraint constraint : constraintsCollection) {
       // 1. There is no point in showing a constraint if there is no information
       // about the constrained columns, and the name is hidden
@@ -856,13 +861,17 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeWideRow(object.getRemarks(), "remarks");
   }
 
-  private void printRoutineParameters(final List<? extends RoutineParameter<?>> parameters) {
-    if (parameters.isEmpty() || options.is(hideRoutineParameters)) {
+  private void printRoutineParameters(
+      final List<? extends RoutineParameter<?>> parametersCollection) {
+    if (parametersCollection.isEmpty() || options.is(hideRoutineParameters)) {
       LOGGER.log(Level.FINER, "Not showing routine parameters");
       return;
     }
 
-    parameters.sort(
+    final List<? extends RoutineParameter<?>> parameters =
+        new ArrayList<RoutineParameter<?>>(parametersCollection);
+    Collections.sort(
+        parameters,
         NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForRoutineParameters()));
 
     for (final RoutineParameter<?> parameter : parameters) {
@@ -981,11 +990,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeDetailRow("", "", column.getRemarks(), true, false, "remarks");
   }
 
-  private void printTableColumns(final List<? extends Column> columns, final boolean extraDetails) {
-    if (columns.isEmpty()) {
+  private void printTableColumns(
+      final List<? extends Column> columnsCollection, final boolean extraDetails) {
+    if (columnsCollection.isEmpty()) {
       return;
     }
 
+    final List<Column> columns = new ArrayList<>(columnsCollection);
     Collections.sort(
         columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 
