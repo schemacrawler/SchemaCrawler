@@ -48,9 +48,6 @@
     </copy>
 
     <copy
-        file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
-        todir="${schemacrawler.expanded-distribution}/lib" />
-    <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.config.properties"
       todir="${schemacrawler.expanded-distribution}/config" />
     <copy
@@ -85,23 +82,13 @@
       eol="lf"
       eof="remove"/>
 
-    <!-- Create SQLite test database -->
-    <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
-      failonerror="true">
-      <arg value="--url" />
-      <arg value="jdbc:sqlite:${schemacrawler.expanded-distribution}/sc.db" />
-      <classpath>
-        <fileset dir="${SchemaCrawler.home}/schemacrawler-testdb/target">
-          <include name="schemacrawler-testdb-${SchemaCrawler.version}.jar" />
-        </fileset>
-        <fileset dir="${SchemaCrawler.home}/schemacrawler-utility/target">
-          <include name="schemacrawler-utility-${SchemaCrawler.version}.jar" />
-        </fileset>
-        <fileset dir="${schemacrawler.expanded-distribution}/lib">
-          <include name="**/*.jar" />
-        </fileset>
-      </classpath>
-    </java>
+    <copy todir="${schemacrawler.expanded-distribution}"
+      flatten="true"
+      overwrite="true">
+      <fileset dir="${distribution.target}">
+        <include name="**/sc.db" />
+      </fileset>
+    </copy>
 
   </target>
 

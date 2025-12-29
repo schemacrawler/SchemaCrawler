@@ -79,10 +79,12 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "bookauthors_ead84c5d":"authorid_f4422729.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<Z_FK_AUTHOR> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "bookauthors_ead84c5d":"authorid_f4422729.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<Z_FK_AUTHOR<br/>Overwritten foreign key remarks line 1> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "authorid_4ce6c7c0" [label=<PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID>];
   "authorid_4ce6c7c0":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<2_weak_partial_fk> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
-  "books_f4a675c8":"id_a0284c53.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<1_weak> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "authorid_deaf554e" [label=<PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID>];
+  "authorid_deaf554e":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<7_weak_duplicate> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "books_f4a675c8":"id_a0284c53.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<1_weak<br/>Overwritten remarks line 1> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
   /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -233,6 +235,8 @@ along with the latest updated information</td>
   "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10118> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "id_f8ccecea" [label=<PRIVATE.LIBRARY.BOOKS.ID>];
   "books_f4a675c8":"id_a0284c53.start":w -> "id_f8ccecea":e [label=<3_weak_partial_pk> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "othereditionid_59222581" [label=<PUBLIC.BOOKS.BOOKS.OTHEREDITIONID>];
+  "othereditionid_59222581":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<9_weak_self_reference> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
 
 
   /* PUBLIC.BOOKS."Celebrities" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
