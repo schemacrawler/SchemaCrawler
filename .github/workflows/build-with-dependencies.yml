@@ -32,7 +32,7 @@ jobs:
 # BUILD DEPENDENCIES
     - id: build-schemacrawler-core
       name: Build SchemaCrawler-Core
-      uses: sualeh/build-maven-dependency@v1.0.3
+      uses: sualeh/build-maven-dependency@v1.0.4
       with:
         repository: schemacrawler/SchemaCrawler-Core
         # artifact: us.fatehi/schemacrawler:v17.2.7
