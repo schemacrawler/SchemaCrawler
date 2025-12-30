@@ -88,7 +88,7 @@ jobs:
           linux/amd64
           linux/arm64
         tags: |-
-          schemacrawler/schemacrawler:v17.2.7
+          schemacrawler/schemacrawler:v17.2.8
           schemacrawler/schemacrawler:latest
         sbom: true
         provenance: true
@@ -99,12 +99,12 @@ jobs:
       name: Upload installers
       uses: actions/upload-artifact@v6
       with:
-        name: release-artifacts-v17.2.7
+        name: release-artifacts-v17.2.8
         path: |
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-bin.zip.SHA-512
         retention-days: 1
     - id: create-release
       name: Create GitHub release
@@ -120,10 +120,10 @@ jobs:
           See the change history at https://www.schemacrawler.com/changes-report.html
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.2.7-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.2.8-bin.zip.SHA-512
 
 # PUBLISH TO CENTRAL REPOSITORY
     - id: publish-to-central
