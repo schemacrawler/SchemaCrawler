@@ -19,6 +19,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -110,8 +111,7 @@ public class AcrossDatabaseDataTypeTest extends BaseAdditionalDatabaseTest {
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final List<ColumnDataType> columnDataTypes =
-          (List<ColumnDataType>) catalog.getColumnDataTypes();
+      final List<ColumnDataType> columnDataTypes = new ArrayList<>(catalog.getColumnDataTypes());
       Collections.sort(columnDataTypes, NamedObjectSort.alphabetical);
       for (final ColumnDataType columnDataType : columnDataTypes) {
         out.println(printColumnDataType(columnDataType));
