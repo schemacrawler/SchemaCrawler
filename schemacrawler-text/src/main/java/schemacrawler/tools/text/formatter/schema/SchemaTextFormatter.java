@@ -41,6 +41,7 @@ import static us.fatehi.utility.Utility.trimToEmpty;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
@@ -1098,10 +1099,18 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     if (table == null) {
       return;
     }
-    final Collection<DatabaseObject> usedByObjects = table.getUsedByObjects();
-    if (usedByObjects.isEmpty()) {
+    final Collection<DatabaseObject> usedByObjectsCollection = table.getUsedByObjects();
+    if (usedByObjectsCollection.isEmpty()) {
       return;
     }
+
+    final List<DatabaseObject> usedByObjects = new ArrayList<>(usedByObjectsCollection);
+    Collections.sort(
+        usedByObjects,
+        Comparator.comparing(
+                (DatabaseObject databaseObject) ->
+                    MetaDataUtility.getSimpleTypeName(databaseObject))
+            .thenComparing(DatabaseObject::getFullName));
 
     formattingHelper.writeEmptyRow();
     formattingHelper.writeWideRow("Used By Objects", "section");

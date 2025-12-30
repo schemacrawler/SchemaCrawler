@@ -135,9 +135,9 @@ FK_PREVIOUSEDITION                                    [non-unique index]
 
 Used By Objects
 
-PUBLIC.BOOKS.BOOKS                                               [table]
-PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+PUBLIC.BOOKS.BOOKS                                               [table]
 
 
 
