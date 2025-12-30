@@ -32,10 +32,10 @@ jobs:
 # BUILD DEPENDENCIES
     - id: build-schemacrawler-core
       name: Build SchemaCrawler-Core
-      uses: sualeh/build-maven-dependency@v1.0.5
+      uses: sualeh/build-maven-dependency@v1.0.6
       with:
         repository: schemacrawler/SchemaCrawler-Core
-        artifact: us.fatehi:schemacrawler:v17.2.7
+        artifact: us.fatehi:schemacrawler:17.2.7
 
 # BUILD AND TEST
     - id: build-test
