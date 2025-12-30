@@ -30,8 +30,8 @@ Indexes
 
 Used By Objects
 
-schema_a_b.a_b_table2                                            [table]
 schema_a_a.a_a_table2                                            [table]
+schema_a_b.a_b_table2                                            [table]
 
 
 
