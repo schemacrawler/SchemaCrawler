@@ -33,15 +33,13 @@ jobs:
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
 
-# SETUP BUILD ENVIRONMENT
-    - id: prepare-maven-build
-      name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.6.1
+# BUILD DEPENDENCIES
+    - id: build-schemacrawler-core
+      name: Build SchemaCrawler-Core
+      uses: sualeh/build-maven-dependency@v1.0.8
       with:
-        java-version: ${{ matrix.java }}
-    - id: install-graphviz
-      name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.3
+        repository: schemacrawler/SchemaCrawler-Core
+        artifact: us.fatehi:schemacrawler:17.2.7
 
 # BUILD FOR DISTRIBUTION
     - id: build
