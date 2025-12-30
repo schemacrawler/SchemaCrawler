@@ -12,6 +12,7 @@ import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
@@ -28,16 +29,21 @@ public final class SchemaRetrievalOptionsConfig {
     } else {
       builder = providedBuilder;
     }
+    // Get current schema retrieval options, so we can update the builder from
+    // the config
+    final SchemaRetrievalOptions currentSchemaRetrievalOptions = builder.toOptions();
 
     final Config configProperties = ConfigUtility.fromConfig(config);
     final InformationSchemaViewsBuilder informationSchemaViewsBuilder =
-        InformationSchemaViewsBuilder.builder(builder.getInformationSchemaViews());
+        InformationSchemaViewsBuilder.builder(
+            currentSchemaRetrievalOptions.getInformationSchemaViews());
     SchemaRetrievalOptionsConfig.fromConfig(informationSchemaViewsBuilder, configProperties);
     builder.withInformationSchemaViews(informationSchemaViewsBuilder.toOptions());
 
     for (final SchemaInfoMetadataRetrievalStrategy metadataRetrievalStrategy :
         SchemaInfoMetadataRetrievalStrategy.values()) {
-      final MetadataRetrievalStrategy currentValue = builder.get(metadataRetrievalStrategy);
+      final MetadataRetrievalStrategy currentValue =
+          currentSchemaRetrievalOptions.get(metadataRetrievalStrategy);
       final String configKey =
           "schemacrawler.schema.retrieval.strategy." + metadataRetrievalStrategy.getKey();
       final MetadataRetrievalStrategy configValue =
