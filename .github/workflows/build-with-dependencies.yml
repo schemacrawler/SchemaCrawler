@@ -35,7 +35,7 @@ jobs:
       uses: sualeh/build-maven-dependency@v1.0.5
       with:
         repository: schemacrawler/SchemaCrawler-Core
-        artifact: us.fatehi/schemacrawler:v17.2.7
+        artifact: us.fatehi:schemacrawler:v17.2.7
 
 # BUILD AND TEST
     - id: build-test
