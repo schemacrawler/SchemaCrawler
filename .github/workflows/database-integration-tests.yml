@@ -81,6 +81,14 @@ jobs:
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
 
+# BUILD DEPENDENCIES
+    - id: build-schemacrawler-core
+      name: Build SchemaCrawler-Core
+      uses: sualeh/build-maven-dependency@v1.0.8
+      with:
+        repository: schemacrawler/SchemaCrawler-Core
+        artifact: us.fatehi:schemacrawler:17.2.7
+
 # RUN DATABASE TESTS
     - id: build-test-databases
       name: Build and run database tests

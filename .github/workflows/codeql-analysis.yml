@@ -40,6 +40,14 @@ jobs:
         languages: java-kotlin
         build-mode: manual
 
+# BUILD DEPENDENCIES
+    - id: build-schemacrawler-core
+      name: Build SchemaCrawler-Core
+      uses: sualeh/build-maven-dependency@v1.0.8
+      with:
+        repository: schemacrawler/SchemaCrawler-Core
+        artifact: us.fatehi:schemacrawler:17.2.7
+
 # BUILD AND TEST
     - id: build-test
       name: Build all modules and run tests
@@ -51,8 +59,8 @@ jobs:
           --batch-mode \
           -DskipTests \
           clean package
-          
-# ANALYZE          
+
+# ANALYZE
     - id: perform-codeql-analysis
       name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
