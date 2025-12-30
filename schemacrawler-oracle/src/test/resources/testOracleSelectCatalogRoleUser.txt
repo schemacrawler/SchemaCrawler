@@ -71,15 +71,15 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 ALTER TABLE "AUTHORS" ADD CONSTRAINT "CHECK_UPPERCASE_STATE" CHECK (State=UPPER(State)) ENABLE;
 
-SYS_C008647                                           [check constraint]
+SYS_C008737                                           [check constraint]
   ID                                                            
 ALTER TABLE "AUTHORS" MODIFY ("ID" NOT NULL ENABLE);
 
-SYS_C008648                                           [check constraint]
+SYS_C008738                                           [check constraint]
   FIRSTNAME                                                     
 ALTER TABLE "AUTHORS" MODIFY ("FIRSTNAME" NOT NULL ENABLE);
 
-SYS_C008649                                           [check constraint]
+SYS_C008739                                           [check constraint]
   LASTNAME                                                      
 ALTER TABLE "AUTHORS" MODIFY ("LASTNAME" NOT NULL ENABLE);
 
@@ -103,8 +103,8 @@ CREATE TABLE "AUTHORS"
 Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
-BOOKS.JSON_BOOKS                                                  [view]
 BOOKS.AUTHORSLIST                                                 [view]
+BOOKS.JSON_BOOKS                                                  [view]
 
 
 
@@ -130,15 +130,15 @@ CREATE UNIQUE INDEX "SYS_C_SNAP$_1PK_AUTHORS" ON "AUTHORSCOUNTRIES" ("ID")
 
 Table Constraints
 
-SYS_C008674                                           [check constraint]
+SYS_C008764                                           [check constraint]
   ID                                                            
 ALTER TABLE "AUTHORSCOUNTRIES" MODIFY ("ID" NOT NULL ENABLE);
 
-SYS_C008675                                           [check constraint]
+SYS_C008765                                           [check constraint]
   FIRSTNAME                                                     
 ALTER TABLE "AUTHORSCOUNTRIES" MODIFY ("FIRSTNAME" NOT NULL ENABLE);
 
-SYS_C008676                                           [check constraint]
+SYS_C008766                                           [check constraint]
   LASTNAME                                                      
 ALTER TABLE "AUTHORSCOUNTRIES" MODIFY ("LASTNAME" NOT NULL ENABLE);
 
@@ -177,7 +177,7 @@ Foreign Keys
 Z_FK_AUTHOR                            [foreign key, on delete restrict]
   AUTHORID (0..many)--> BOOKS.AUTHORS.ID                              
 
-SYS_C008660                            [foreign key, on delete restrict]
+SYS_C008750                            [foreign key, on delete restrict]
   BOOKID (0..many)--> BOOKS.BOOKS.ID                              
 
 Indexes
@@ -190,11 +190,11 @@ CREATE UNIQUE INDEX "UIDX_BOOKAUTHORS" ON "BOOKAUTHORS" ("BOOKID", "AUTHORID")
 
 Table Constraints
 
-SYS_C008658                                           [check constraint]
+SYS_C008748                                           [check constraint]
   BOOKID                                                        
 ALTER TABLE "BOOKAUTHORS" MODIFY ("BOOKID" NOT NULL ENABLE);
 
-SYS_C008659                                           [check constraint]
+SYS_C008749                                           [check constraint]
   AUTHORID                                                      
 ALTER TABLE "BOOKAUTHORS" MODIFY ("AUTHORID" NOT NULL ENABLE);
 
@@ -241,7 +241,7 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-SYS_C008660                            [foreign key, on delete restrict]
+SYS_C008750                            [foreign key, on delete restrict]
   ID <--(0..many) BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                     [foreign key, on delete restrict]
@@ -266,15 +266,15 @@ U_PREVIOUSEDITION                                    [unique constraint]
 ALTER TABLE "BOOKS" ADD CONSTRAINT "U_PREVIOUSEDITION" UNIQUE ("PREVIOUSEDITIONID")
   USING INDEX  ENABLE;
 
-SYS_C008652                                           [check constraint]
+SYS_C008742                                           [check constraint]
   ID                                                            
 ALTER TABLE "BOOKS" MODIFY ("ID" NOT NULL ENABLE);
 
-SYS_C008653                                           [check constraint]
+SYS_C008743                                           [check constraint]
   TITLE                                                         
 ALTER TABLE "BOOKS" MODIFY ("TITLE" NOT NULL ENABLE);
 
-SYS_C008654                                           [check constraint]
+SYS_C008744                                           [check constraint]
   PUBLISHERID                                                   
 ALTER TABLE "BOOKS" MODIFY ("PUBLISHERID" NOT NULL ENABLE);
 
@@ -299,10 +299,10 @@ CREATE TABLE "BOOKS"
 Used By Objects
 
 BOOKS.BOOKAUTHORS                                                [table]
-BOOKS.JSON_BOOKS                                                  [view]
 BOOKS.BOOKS                                                      [table]
-BOOKS.PUBLICATIONS                                             [synonym]
+BOOKS.JSON_BOOKS                                                  [view]
 BOOKS.GETBOOKSCOUNT                                          [procedure]
+BOOKS.PUBLICATIONS                                             [synonym]
 
 Privileges and Grants
 
@@ -323,7 +323,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_C008668                            [foreign key, on delete restrict]
+SYS_C008758                            [foreign key, on delete restrict]
   "Id" <--(0..1) BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
@@ -335,7 +335,7 @@ CREATE UNIQUE INDEX "PK_Celebrities" ON "Celebrities" ("Id")
 
 Table Constraints
 
-SYS_C008664                                           [check constraint]
+SYS_C008754                                           [check constraint]
   "Id"                                                          
 ALTER TABLE "Celebrities" MODIFY ("Id" NOT NULL ENABLE);
 
@@ -366,7 +366,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_C008668                            [foreign key, on delete restrict]
+SYS_C008758                            [foreign key, on delete restrict]
   "Celebrity Id" (0..1)--> BOOKS."Celebrities"."Id"                              
 
 Indexes
@@ -378,7 +378,7 @@ CREATE UNIQUE INDEX "PK Celebrity Updates" ON "Celebrity Updates" ("Celebrity Id
 
 Table Constraints
 
-SYS_C008666                                           [check constraint]
+SYS_C008756                                           [check constraint]
   "Celebrity Id"                                                
 ALTER TABLE "Celebrity Updates" MODIFY ("Celebrity Id" NOT NULL ENABLE);
 
@@ -416,7 +416,7 @@ CREATE UNIQUE INDEX "PK_COUPONS" ON "COUPONS" ("ID")
 
 Table Constraints
 
-SYS_C008645                                           [check constraint]
+SYS_C008735                                           [check constraint]
   ID                                                            
 ALTER TABLE "COUPONS" MODIFY ("ID" NOT NULL ENABLE);
 
@@ -488,7 +488,7 @@ BOOKS.PUBLISHERS                                                 [table]
 ------------------------------------------------------------------------
 List of book publishers
   ID                                NUMBER(38, 0) NOT NULL      
-                                    default "BOOKS"."ISEQ$$_71700".nextval
+                                    default "BOOKS"."ISEQ$$_72401".nextval
                                     auto-incremented            
                                     Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR2(255)               
@@ -496,7 +496,7 @@ List of book publishers
 
 Primary Key
 
-SYS_C008663                                                [primary key]
+SYS_C008753                                                [primary key]
   ID                                                            
 
 Foreign Keys
@@ -506,14 +506,14 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                   [foreign key, on delete restrict]
 
 Indexes
 
-SYS_C008663                                               [unique index]
+SYS_C008753                                               [unique index]
   ID                                ascending                   
-CREATE UNIQUE INDEX "SYS_C008663" ON "PUBLISHERS" ("ID") 
+CREATE UNIQUE INDEX "SYS_C008753" ON "PUBLISHERS" ("ID") 
   ;
 
 Table Constraints
 
-SYS_C008662                                           [check constraint]
+SYS_C008752                                           [check constraint]
   ID                                                            
 ALTER TABLE "PUBLISHERS" MODIFY ("ID" NOT NULL ENABLE);
 
@@ -551,15 +551,15 @@ CREATE UNIQUE INDEX "PK_TMP_AUTHORS" ON "TEMP_AUTHOR_LIST" ("ID") ;
 
 Table Constraints
 
-SYS_C008678                                           [check constraint]
+SYS_C008768                                           [check constraint]
   ID                                                            
 ALTER TABLE "TEMP_AUTHOR_LIST" MODIFY ("ID" NOT NULL ENABLE);
 
-SYS_C008679                                           [check constraint]
+SYS_C008769                                           [check constraint]
   FIRSTNAME                                                     
 ALTER TABLE "TEMP_AUTHOR_LIST" MODIFY ("FIRSTNAME" NOT NULL ENABLE);
 
-SYS_C008680                                           [check constraint]
+SYS_C008770                                           [check constraint]
   LASTNAME                                                      
 ALTER TABLE "TEMP_AUTHOR_LIST" MODIFY ("LASTNAME" NOT NULL ENABLE);
 
@@ -583,7 +583,7 @@ BOOKS.X_CUSTOMERS                                                [table]
 
 Table Constraints
 
-SYS_C008683                                           [check constraint]
+SYS_C008773                                           [check constraint]
   CUSTOMERID                                                    
 ALTER TABLE "X_CUSTOMERS" MODIFY ("CUSTOMERID" NOT NULL ENABLE);
 
@@ -613,7 +613,7 @@ BOOKS.X_EMPLOYEES                                                [table]
 
 Table Constraints
 
-SYS_C008682                                           [check constraint]
+SYS_C008772                                           [check constraint]
   EMPLOYEEID                                                    
 ALTER TABLE "X_EMPLOYEES" MODIFY ("EMPLOYEEID" NOT NULL ENABLE);
 
@@ -657,15 +657,15 @@ CREATE UNIQUE INDEX "PK_ΒΙΒΛΊΑ" ON "ΒΙΒΛΊΑ" ("ΜΟΝΑΔΙΚΌΣ")
 
 Table Constraints
 
-SYS_C008669                                           [check constraint]
+SYS_C008759                                           [check constraint]
   ΜΟΝΑΔΙΚΌΣ                                                     
 ALTER TABLE "ΒΙΒΛΊΑ" MODIFY ("ΜΟΝΑΔΙΚΌΣ" NOT NULL ENABLE);
 
-SYS_C008670                                           [check constraint]
+SYS_C008760                                           [check constraint]
   ΤΊΤΛΟΣ                                                        
 ALTER TABLE "ΒΙΒΛΊΑ" MODIFY ("ΤΊΤΛΟΣ" NOT NULL ENABLE);
 
-SYS_C008671                                           [check constraint]
+SYS_C008761                                           [check constraint]
   ΕΚΔΌΤΗΣ                                                       
 ALTER TABLE "ΒΙΒΛΊΑ" MODIFY ("ΕΚΔΌΤΗΣ" NOT NULL ENABLE);
 
@@ -747,7 +747,7 @@ Sequences
 
 
 
-BOOKS."ISEQ$$_71700"                                          [sequence]
+BOOKS."ISEQ$$_72401"                                          [sequence]
 ------------------------------------------------------------------------
   increment                         1                           
   start value                                                   
