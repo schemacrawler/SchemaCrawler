@@ -2,6 +2,11 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.2.8"></a>
+## Release 17.2.8 - 2025-12-30
+- Further work on modularity
+
+
 <a name="v17.2.7"></a>
 ## Release 17.2.7 - 2025-12-27
 - Return immutable collections from the `Catalog` schema model
