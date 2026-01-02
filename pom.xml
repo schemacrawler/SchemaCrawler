@@ -57,6 +57,17 @@
         <module>schemacrawler-website</module>
       </modules>
     </profile>
+    <profile>
+      <id>verification-tests</id>
+      <activation>
+        <property>
+          <name>verify</name>
+        </property>
+      </activation>
+      <modules>
+        <module>schemacrawler-verify</module>
+      </modules>
+    </profile>
   </profiles>
 
 </project>
