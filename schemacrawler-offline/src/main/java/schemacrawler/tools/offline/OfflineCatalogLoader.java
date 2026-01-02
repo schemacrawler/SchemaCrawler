@@ -10,10 +10,12 @@ package schemacrawler.tools.offline;
 
 import static schemacrawler.tools.formatter.serialize.CatalogSerializationUtility.deserializeCatalog;
 import static schemacrawler.utility.MetaDataUtility.reduceCatalog;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -59,6 +61,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       }
 
       final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
+      LOGGER.log(Level.FINE, "Derserializing from path: " + offlineDatabasePath);
       catalog = deserializeCatalog(offlineDatabasePath);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
