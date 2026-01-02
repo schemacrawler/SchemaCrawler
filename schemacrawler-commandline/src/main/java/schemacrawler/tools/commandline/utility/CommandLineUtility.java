@@ -27,6 +27,7 @@ import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.schemacrawler.Version;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
@@ -191,7 +192,7 @@ public class CommandLineUtility {
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {
     requireNonNull(pluginCommand, "No plugin command provided");
     if (pluginCommand.isEmpty()) {
-      throw new NullPointerException("Empty plugin command provided");
+      throw new InternalRuntimeException("Empty plugin command provided");
     }
 
     final String pluginCommandName = pluginCommand.getName();
