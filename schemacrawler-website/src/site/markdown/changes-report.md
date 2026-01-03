@@ -2,6 +2,16 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.4.0"></a>
+## Release 17.4.0 - 2026-01-05
+- Drop support for Apache Derby, since the project has been discontinued
+
+
+<a name="v17.3.0"></a>
+## Release 17.3.0 - 2025-12-31
+- Milestone release with modularity
+
+
 <a name="v17.2.8"></a>
 ## Release 17.2.8 - 2025-12-30
 - Further work on modularity
