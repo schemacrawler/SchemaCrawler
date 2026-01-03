@@ -49,7 +49,7 @@
     <dependency>
       <groupId>io.github.spannm</groupId>
       <artifactId>ucanaccess</artifactId>
-      <version>5.1.4</version>
+      <version>5.1.5</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
