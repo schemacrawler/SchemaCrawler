@@ -18,6 +18,8 @@ import picocli.AutoComplete;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.codegen.docgen.manpage.ManPageGenerator;
+import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineCommands;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.command.ConnectCommand;
@@ -67,7 +69,7 @@ public final class GenerateCliSupport {
       }
 
       if (isErrored) {
-        throw new RuntimeException("Could not generate CLI support files");
+        throw new InternalRuntimeException("Could not generate CLI support files");
       }
     }
 
@@ -75,7 +77,7 @@ public final class GenerateCliSupport {
       try {
         Files.createDirectories(outputDir);
       } catch (final IOException e) {
-        throw new RuntimeException("Could not create output directory", e);
+        throw new IORuntimeException("Could not create output directory", e);
       }
       return outputDir.toAbsolutePath();
     }

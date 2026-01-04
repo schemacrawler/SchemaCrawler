@@ -30,18 +30,15 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
+
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.logging.Logger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
 public abstract class BaseSchemaTextOptionsBuilder<
         B extends BaseSchemaTextOptionsBuilder<B, O>, O extends SchemaTextOptions>
     extends BaseTextOptionsBuilder<BaseSchemaTextOptionsBuilder<B, O>, O> {
-
-  private static final Logger LOGGER =
-      Logger.getLogger(BaseSchemaTextOptionsBuilder.class.getName());
 
   private static final String SHOW_ORDINAL_NUMBERS =
       SCHEMACRAWLER_FORMAT_PREFIX + "show_ordinal_numbers";
