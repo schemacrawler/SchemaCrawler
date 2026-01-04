@@ -37,7 +37,6 @@
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-offline</module>
   <!-- Additional modules -->
-    <module>schemacrawler-examplecode</module>
     <module>schemacrawler-docs</module>
     <module>schemacrawler-library-bom</module>
   </modules>

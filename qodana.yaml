@@ -13,6 +13,5 @@ exclude:
       - schemacrawler-docker
       - schemacrawler-docker-compose
       - schemacrawler-docs
-      - schemacrawler-examplecode
       - schemacrawler-testdb
       - schemacrawler-website

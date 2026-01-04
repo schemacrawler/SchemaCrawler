@@ -132,7 +132,7 @@ SchemaCrawler provides metadata for the following database objects:
 * Privileges and grants
 
 The sample code below demonstrates just how easy it is to use SchemaCrawler.
-For more example code, take a look at the [examples project](https://github.com/schemacrawler/SchemaCrawler/tree/main/schemacrawler-examplecode).
+For more example code, take a look at the [example code](https://github.com/schemacrawler/SchemaCrawler-Usage).
 For more details, please refer to the [javadocs](https://javadoc.io/doc/us.fatehi/schemacrawler/).
 
 <script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
