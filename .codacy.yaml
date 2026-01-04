@@ -3,7 +3,6 @@ exclude_paths:
   - ".github/**"
   - "**/test/**"
   - "schemacrawler-testdb/**"
-  - "schemacrawler-examplecode/**"
   - "**/*.sql"
 coverage:
   goal: 85

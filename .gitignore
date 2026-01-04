@@ -13,10 +13,7 @@
 /schemacrawler/gpl-3.0.txt
 /schemacrawler/lgpl-3.0.txt
 /schemacrawler/src/assembly/schemacrawler.pom.asc
-/schemacrawler-examplecode/src/main/java/Issue166.java
-/schemacrawler-examplecode/src/main/java/Issue167.java
 
-/schemacrawler-examplecode/derby.log
 **/hsqldb.schemacrawler.lck
 **/hsqldb.schemacrawler.lobs
 **/hsqldb.schemacrawler.log

@@ -4,4 +4,3 @@ coverage:
 ignore:  # ignore folders and all their contents
   - "schemacrawler-testdb"
   - "schemacrawler-diff"
-  - "schemacrawler-examplecode"

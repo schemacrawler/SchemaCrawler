@@ -61,12 +61,6 @@
       </fileset>
     </copy>
 
-    <copy todir="${main-distribution.staging.dir}/examples/api">
-      <fileset
-        dir="${SchemaCrawler.home}/schemacrawler-examplecode/src/main/java">
-        <include name="**/*.java" />
-      </fileset>
-    </copy>
     <copy todir="${main-distribution.staging.dir}/examples/other-diagrams">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
         <include name="**/mermaid.py" />
