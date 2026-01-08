@@ -263,6 +263,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         return "crowodot";
       case one_one:
         return "teetee";
+      case one_many:
+        return "crowtee";
       default: // Including "unknown"
         return "box";
     }

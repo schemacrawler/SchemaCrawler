@@ -27,7 +27,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+  ID <--(1..many) BOOKAUTHORS.AUTHORID                              
 
 Indexes
 
@@ -86,10 +86,10 @@ along with the latest updated information
 Foreign Keys
 
                                            [foreign key, with no action]
-  AUTHORID (0..many)--> AUTHORS.ID                              
+  AUTHORID (1..many)--> AUTHORS.ID                              
 
                                            [foreign key, with no action]
-  BOOKID (0..many)--> BOOKS.ID                                  
+  BOOKID (1..many)--> BOOKS.ID                                  
 
 Indexes
 
@@ -142,7 +142,7 @@ Foreign Keys
   ID <--(0..many) SALES.BOOKID                                  
 
                                            [foreign key, with no action]
-  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
                                            [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
@@ -187,7 +187,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -214,7 +214,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> "Celebrities"."Id"                              
 
 Indexes
 
@@ -325,7 +325,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+  ID <--(1..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
 
 Indexes
 
@@ -378,7 +378,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+  ΕΚΔΌΤΗΣ (1..many)--> PUBLISHERS.ID                              
 
 Indexes
 
@@ -416,10 +416,10 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  PUBLICATIONID (0..many)--> PUBLICATIONS.ID                              
+  PUBLICATIONID (1..many)--> PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  WRITERID (0..many)--> WRITERS.ID                              
+  WRITERID (1..many)--> WRITERS.ID                              
 
 Indexes
 
@@ -471,16 +471,16 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) EXTRA_PK.PUBLICATIONID                              
+  ID <--(1..many) EXTRA_PK.PUBLICATIONID                              
 
                                            [foreign key, with no action]
-  WRITERID (0..many)--> WRITERS.ID                              
+  WRITERID (1..many)--> WRITERS.ID                              
 
                                            [foreign key, with no action]
-  ID <--(0..many) PUBLICATIONWRITERS.PUBLICATIONID                              
+  ID <--(1..many) PUBLICATIONWRITERS.PUBLICATIONID                              
 
                                            [foreign key, with no action]
-  ID <--(0..many) WRITERS.PUBLICATION_ID                              
+  ID <--(1..many) WRITERS.PUBLICATION_ID                              
 
 Indexes
 
@@ -511,10 +511,10 @@ PUBLICATIONWRITERS                                               [table]
 Foreign Keys
 
                                            [foreign key, with no action]
-  PUBLICATIONID (0..many)--> PUBLICATIONS.ID                              
+  PUBLICATIONID (1..many)--> PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
-  WRITERID (0..many)--> WRITERS.ID                              
+  WRITERID (1..many)--> WRITERS.ID                              
 
 Indexes
 
@@ -547,7 +547,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..1) ID                                               
+  ID <--(1..1) ID                                               
 
 Indexes
 
@@ -616,16 +616,16 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) EXTRA_PK.WRITERID                              
+  ID <--(1..many) EXTRA_PK.WRITERID                              
 
                                            [foreign key, with no action]
-  ID <--(0..many) PUBLICATIONS.WRITERID                              
+  ID <--(1..many) PUBLICATIONS.WRITERID                              
 
                                            [foreign key, with no action]
-  ID <--(0..many) PUBLICATIONWRITERS.WRITERID                              
+  ID <--(1..many) PUBLICATIONWRITERS.WRITERID                              
 
                                            [foreign key, with no action]
-  PUBLICATION_ID (0..many)--> PUBLICATIONS.ID                              
+  PUBLICATION_ID (1..many)--> PUBLICATIONS.ID                              
 
 Indexes
 
@@ -691,8 +691,8 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  POSTALCODE <--(0..many) SALES.POSTALCODE                              
-  COUNTRY <--(0..many) SALES.COUNTRY                              
+  POSTALCODE <--(1..many) SALES.POSTALCODE                              
+  COUNTRY <--(1..many) SALES.COUNTRY                              
 
 Indexes
 
@@ -735,8 +735,8 @@ Foreign Keys
   SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
 
                                            [foreign key, with no action]
-  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
-  COUNTRY (0..many)--> REGIONS.COUNTRY                              
+  POSTALCODE (1..many)--> REGIONS.POSTALCODE                              
+  COUNTRY (1..many)--> REGIONS.COUNTRY                              
 
 Indexes
 

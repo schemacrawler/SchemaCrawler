@@ -27,7 +27,7 @@ PK_AUTHORS                                                 [primary key]
 Foreign Keys
 
 Z_FK_AUTHOR                                [foreign key, with no action]
-  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 Indexes
 
@@ -114,10 +114,10 @@ along with the latest updated information
 Foreign Keys
 
 Z_FK_AUTHOR                                [foreign key, with no action]
-  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 SYS_FK_10118                               [foreign key, with no action]
-  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
 
@@ -182,7 +182,7 @@ FK_SALES_BOOK                              [foreign key, with no action]
   ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
 SYS_FK_10118                               [foreign key, with no action]
-  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+  ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
@@ -238,7 +238,7 @@ Primary Key
 Foreign Keys
 
 SYS_FK_10128                               [foreign key, with no action]
-  "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -284,7 +284,7 @@ Primary Key
 Foreign Keys
 
 SYS_FK_10128                               [foreign key, with no action]
-  "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 Indexes
 
@@ -449,7 +449,7 @@ SYS_PK_10124                                               [primary key]
 Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
-  ID <--(0..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
+  ID <--(1..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
 
 Indexes
 
@@ -497,7 +497,7 @@ PK_ΒΙΒΛΊΑ                                                  [primary key]
 Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
-  ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
+  ΕΚΔΌΤΗΣ (1..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 Indexes
 
